@@ -1,0 +1,49 @@
+$fa-font-path: '~font-awesome/fonts';
+// The proportion between what the design had and I did
+$proportion-factor: 0.5;
+
+// Colors
+$brand-primary: #2CA4AB;
+$brand-primary-darker-5: darken($brand-primary, 5%);
+$brand-primary-darker-10: darken($brand-primary, 10%);
+$light-green: $brand-primary;
+
+$beige: #F1ECD8;
+$cream: #c4bda1;
+$olive: #635e49;
+
+$dark-green: #1c6d68;
+$peach: #e29467;
+
+$brand-info: #c4beb0;
+
+// Tooltip bootstrap changes
+$tooltip-color: #fff;
+$tooltip-bg: $brand-primary;
+$tooltip-opacity: 1;
+$tooltip-max-width: 400px;
+
+
+
+$text-muted: #d1d0d0;
+
+$navbar-height: 280px * $proportion-factor;
+$navbar-default-bg: $beige;
+$navbar-default-link-active-bg: transparent;
+$navbar-default-border: transparent;
+
+$dropdown-bg: darken($olive, 5%);
+$dropdown-link-color: #fff;
+
+$input-border-focus: $light-green;
+$text-color: #939598;
+
+$label-default-bg: lighten($text-muted, 10%);
+
+$grid-columns: 12;
+$border-radius-base: 4px;
+
+
+$font-family-sans-serif: 'Montserrat', sans-serif;
+
+$icon-font-path: "bootstrap-sass/assets/fonts";

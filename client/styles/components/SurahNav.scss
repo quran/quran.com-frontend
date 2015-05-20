@@ -1,0 +1,50 @@
+@import '../bootstrap.scss';
+
+.left-nav{
+  background: $brand-primary-darker-5;
+  padding: 0px;
+  position: fixed;
+  z-index: 9999;
+
+  ul::-webkit-scrollbar{
+      display: none;
+      width: 6px;
+      background-color: $brand-primary;
+  }
+  ul{
+    padding-left: 0px;
+    height: calc(100vh - 190px);
+    overflow-y: scroll;
+    li{
+      color: #fff;
+      padding: 0px 15px 20px;
+      a{
+        color: rgba(255,255,255,0.75);
+        &:hover{
+          color: #fff;
+        }
+      }
+    }
+    .selected{
+        background-color: darken($brand-primary, 22.5%);
+        color: #fff;
+    }
+  }
+  .surah-num{
+    color: darken($brand-primary, 35%);
+  }
+  .shrink{
+    display: block;
+    text-align: right;
+    padding-right: 15px;
+    padding-left: 5px;
+  }
+
+  &.shrunk{
+    width: 50px;
+    .col-md-6,
+    .col-md-3{
+        display: none;
+    }
+  }
+}

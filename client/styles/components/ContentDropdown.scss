@@ -1,0 +1,94 @@
+$checkbox-left: 20px;
+$checkbox-top: 9px;
+$checkbox-height: 12px;
+$checkbox-width: 12px;
+
+.content-dropdown{
+  .dropdown-menu{
+    max-height: 500px;
+    overflow: auto;
+  }
+  .dropdown-header {
+    padding: 20px 20px;
+    font-size: 10px;
+    text-transform: uppercase;
+    color: $cream;
+
+    &.languages{
+      border-top: 1px solid darken($olive, 15%);
+      margin-top: 20px;
+    }
+  }
+  .content-checkbox{
+    padding-left: 40px !important;
+  }
+
+  [type="checkbox"]:not(:checked),
+  [type="checkbox"]:checked {
+    position: absolute;
+    left: -9999px;
+  }
+
+  [type="checkbox"]:not(:checked) + .content-checkbox,
+  [type="checkbox"]:checked + .content-checkbox {
+    position: relative;
+    padding-left: 25px;
+    cursor: pointer;
+  }
+
+  /* checkbox aspect */
+  [type="checkbox"]:not(:checked) + .content-checkbox:before,
+  [type="checkbox"]:checked + .content-checkbox:before {
+    content: '';
+    position: absolute;
+    left: $checkbox-left;
+    top: $checkbox-top;
+    width: $checkbox-width;
+    height: $checkbox-height;
+    border: 1px solid lighten($cream, 15%);;
+    background: transparent;
+  }
+  /* checked mark aspect */
+  [type="checkbox"]:not(:checked) + .content-checkbox:after,
+  [type="checkbox"]:checked + .content-checkbox:after {
+    content: '✔';
+    position: absolute;
+    top: $checkbox-top;
+    left: $checkbox-left + 2px;
+    font-size: 10px;
+    color: lighten($cream, 15%);;
+    transition: all .2s;
+  }
+  /* checked mark aspect changes */
+  [type="checkbox"]:not(:checked) + .content-checkbox:after {
+    opacity: 0;
+    transform: scale(0);
+  }
+  [type="checkbox"]:checked + .content-checkbox:after {
+    opacity: 1;
+    transform: scale(1);
+  }
+  /* disabled checkbox */
+  [type="checkbox"]:disabled:not(:checked) + .content-checkbox:before,
+  [type="checkbox"]:disabled:checked + .content-checkbox:before {
+    box-shadow: none;
+    border-color: #bbb;
+    background-color: #ddd;
+  }
+  [type="checkbox"]:disabled:checked + .content-checkbox:after {
+    color: #999;
+  }
+  [type="checkbox"]:disabled + .content-checkbox {
+    color: #aaa;
+  }
+  /* accessibility */
+  [type="checkbox"]:checked:focus + .content-checkbox:before,
+  [type="checkbox"]:not(:checked):focus + .content-checkbox:before {
+    border: 1px dotted blue;
+  }
+
+  /* hover style just for information */
+  .content-checkbox:hover:before {
+  }
+
+}

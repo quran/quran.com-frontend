@@ -1,0 +1,33 @@
+.dropdown{
+  &.open{
+    color: lighten($cream, 15%);
+    background: $olive;
+
+    a{
+      color: lighten($cream, 15%);
+      i.fa-caret-down:before{
+        content: "\f0d8"; // This is a bad sin, don't do this please. Force caret-up
+      }
+    }
+  }
+}
+
+.dropdown-menu{
+  margin-top: 0px;
+  border-radius: 0px;
+  border-color: $dropdown-bg;
+  @extend .montserrat;
+  min-width: 100%;
+
+  & > li > label,
+  & > li > a {
+    display: block;
+    padding: $label-padding;
+    clear: both;
+    font-weight: normal;
+    line-height: 1.428571429;
+    white-space: nowrap;
+    margin-bottom: 0px;
+    color: lighten($cream, 15%);
+  }
+}

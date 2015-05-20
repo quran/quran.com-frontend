@@ -1,0 +1,188 @@
+@import 'bootstrap';
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+@import '~font-awesome/scss/font-awesome';
+
+@import 'mixins/center';
+@import 'components/SurahNav';
+@import 'components/MasterHeader';
+@import 'components/Audioplayer';
+@import 'components/ContentDropdown';
+@import 'components/ReciterDropdown';
+@import 'components/HeaderDropdown';
+@import 'fonts/fonts';
+
+@import 'partials/index-surah-list';
+@import 'partials/index-header';
+@import 'partials/modal';
+@import 'partials/tooltip';
+
+
+html,body{
+    height: 100%;
+    min-height: 100%;
+}
+
+.surah-body{
+    padding-top: 190px;
+}
+
+body::-webkit-scrollbar{
+    display: none;
+    width: 6px;
+    background-color: $brand-primary;
+}
+
+.form-control:focus{
+    box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+.opening{
+    background-color: rgba(#C4BEB0, 0.25);
+}
+
+.ayah{
+    padding: 2% 3% 3%;
+    border-radius: $border-radius-base;
+
+    .text-info{
+        color: $brand-info;
+        &:hover{
+            color: $brand-primary;
+        }
+    }
+
+    &:hover{
+        // background-color: rgba($brand-info, 0.25);
+        .toggle-copy{
+            visibility: visible;
+        }
+    }
+
+    .toggle-copy{
+        visibility: hidden;
+    }
+
+    span{
+        @extend .montserrat;
+    }
+
+    .translation{
+        @extend .times-new;
+        h4{
+            color: $light-green;
+            margin-bottom: 5px;
+        }
+        small{
+            @extend .times-new;
+        }
+        h2{
+            margin-top: 5px;
+            margin-bottom: 25px;
+        }
+    }
+    .left-controls{
+        a{
+            margin: 5px 0px;
+            display: block;
+            text-decoration: none;
+            &:hover{
+                text-decoration: none;
+            }
+        }
+        @media (max-width: $screen-xs-max) {
+            h4,
+            a{
+                display: inline-block;
+                margin: 0px 10px;
+            }
+        }
+    }
+
+}
+.word-font{
+    color: #000;
+    font-size: 350%;
+    width: 100%;
+    overflow-wrap: break-word;
+    line-height: 150%;
+
+    b{
+        font-weight: 100;
+        margin: 0px 2px;
+    }
+
+    @media (max-width: $screen-xs-max) {
+        font-size: 300%;
+    }
+}
+.translation{
+    @extend .montserrat;
+    h4{
+        color: $light-green;
+        margin-bottom: 5px;
+    }
+    small{
+        @extend .montserrat;
+    }
+    h2{
+        margin-top: 5px;
+        margin-bottom: 25px;
+    }
+}
+
+.word_font{
+    line-height: 150%;
+}
+
+.font-sizes{
+    background-color: $brand-primary;
+    border-radius: 6px;
+    li{
+
+        &:hover{
+            cursor: pointer;
+            background-color: darken($brand-primary, 5%)
+        }
+    }
+}
+
+b{
+    &:hover{
+        // opacity: 0.8;
+        color: $brand-primary;
+        cursor: pointer;
+    }
+}
+.popover{
+    max-width: 600px;
+    width: auto;
+    min-width: 100px;
+}
+footer{
+    background-color: rgba(#C4BEB0, 0.25);
+    padding: 3% 0%;
+    ul{
+        padding-left: 0px;
+        li{
+            list-style: none;
+            padding: 3% 0%;
+        }
+    }
+}
+li em{
+    word-break: break-all;
+}
+.loading{
+    height: 400px;
+    h3{
+        margin: 0px;
+    }
+}
+.form-success-message{
+    padding: 5% 0%;
+}
+.label{
+    border-radius: 0px;
+}
