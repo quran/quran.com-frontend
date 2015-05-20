@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "gulp",
-    "lint": "eslint ./*.js ./**/*.js"
+    "lint": "eslint ./client/scripts/**/*.js"
   },
   "dependencies": {
     "apicache": "0.0.12",
@@ -43,6 +43,7 @@
     "bundle-loader": "~0.5.0",
     "del": "^1.1.1",
     "eslint": "^0.19.0",
+    "eslint-plugin-react": "^2.3.0",
     "extract-text-webpack-plugin": "^0.8.0",
     "font-awesome-webpack": "0.0.3",
     "gulp": "^3.8.11",
