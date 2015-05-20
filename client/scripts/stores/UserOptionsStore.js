@@ -16,7 +16,6 @@ class UserOptionsStore extends BaseStore {
             .replace(/\"/g, '').split(',').map(function(option) {
           return parseInt(option);
         });
-        console.log(this.options.content)
       }
 
       this.options.quran = parseInt(cookie.load('quran'));

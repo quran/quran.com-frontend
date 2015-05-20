@@ -2,6 +2,7 @@ import React from 'react';
 import {NavLink} from 'fluxible-router';
 import SurahsStore from 'stores/SurahsStore';
 import {connectToStores, provideContext} from 'fluxible/addons';
+import debug from 'utils/Debug';
 
 class SurahsNav extends React.Component{
   constructor(props) {
@@ -32,6 +33,10 @@ class SurahsNav extends React.Component{
         </li>
       );
     });
+  }
+
+  shouldComponentUpdate(nextState, nextProps) {
+    return this.props.surahs.length !== nextState.surahs.length
   }
 
   render() {

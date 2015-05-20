@@ -219,10 +219,9 @@ class Audioplayer extends React.Component {
   }
 
   render() {
-      var currentAyahId = this.state.currentAyah ?
-                          this.state.currentAyah.ayah :
-                          '';
-                          console.log('Audioplayer Init')
+    var currentAyahId = this.state.currentAyah ?
+      this.state.currentAyah.ayah : '';
+
       return (
         <div className="audioplayer col-md-2">
           <ul className="list-inline audioplayer-options">

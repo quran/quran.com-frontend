@@ -6,11 +6,12 @@ import ApplicationStore from 'stores/ApplicationStore';
 import provideContext from 'fluxible/addons/provideContext';
 import connectToStores from 'fluxible/addons/connectToStores';
 import { handleHistory } from 'fluxible-router';
+import debug from 'utils/Debug';
 
 // @TODO Upgrade to ES6 class when RouterMixin is replaced
 var Application = React.createClass({
     render: function () {
-      console.log('Application Rendered')
+      debug('Application Rendered')
         var Handler = this.props.currentRoute.get('handler');
 
         return (
@@ -18,6 +19,10 @@ var Application = React.createClass({
                 <Handler />
             </div>
         );
+    },
+
+    shouldComponentUpdate: function(nextState, nextProps) {
+      return this.props.currentRoute.get('handler') !== nextState.currentRoute.get('handler');
     },
 
     componentDidUpdate: function(prevProps, prevState) {

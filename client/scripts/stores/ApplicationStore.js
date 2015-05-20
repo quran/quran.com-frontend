@@ -1,6 +1,7 @@
 import BaseStore from 'fluxible/addons/BaseStore';
 import routesConfig from '../configs/routes';
 
+
 class ApplicationStore extends BaseStore {
     constructor(dispatcher) {
         super(dispatcher);

@@ -175,7 +175,10 @@ li em{
     word-break: break-all;
 }
 .loading{
-    height: 400px;
+    img{
+      width: 150px;
+      padding-top: 150px;
+    }
     h3{
         margin: 0px;
     }

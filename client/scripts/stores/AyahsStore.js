@@ -1,5 +1,6 @@
 import BaseStore from 'fluxible/addons/BaseStore';
 import * as Font from 'utils/FontFace';
+import debug from 'utils/Debug';
 
 class AyahsStore extends BaseStore {
   constructor(dispatcher) {
@@ -148,6 +149,11 @@ AyahsStore.handlers = {
       }
     }
     else {
+      // TODO: what happens if not on server....
+      if (typeof window !== 'undefined') {
+        Font.createFontFaces(payload.ayahs);
+      }
+
       this.ayahs = payload.ayahs;
     }
 
@@ -162,6 +168,10 @@ AyahsStore.handlers = {
   },
   userAgentReceived(payload) {
     this.audioUserAgent = payload;
+    this.emitChange();
+  },
+  'NAVIGATE_START': function() {
+    this.ayahs = [];
     this.emitChange();
   }
 };

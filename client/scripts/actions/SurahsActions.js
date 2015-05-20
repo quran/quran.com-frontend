@@ -1,15 +1,15 @@
-import request from 'superagent';
-import request2 from 'superagent';
+import request from 'superagent-promise';
 import settings from 'constants/Settings';
-
+import debug from 'utils/Debug';
 
 export function getSurahs(actionContext, payload, done) {
   if (actionContext.getStore('SurahsStore').hasAllSurahs()) {
     return;
   }
-  console.log('SURAHS CALLED')
+  debug('SURAHs-Actions');
   return request.get(settings.url + 'surahs')
-  .end(function(err, res) {
+  .end()
+  .then(function(res) {
     actionContext.dispatch('surahsReceived', {surahs: res.body, surah: payload});
 
     done();

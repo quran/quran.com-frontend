@@ -1,11 +1,10 @@
-'use strict';
-
-import request from 'superagent';
+import request from 'superagent-promise';
 import Settings from 'constants/Settings';
 import UserOptionsStore from 'stores/UserOptionsStore';
+import debug from 'utils/Debug';
 
 export function getAyahs(actionContext, params, done) {
-  console.log('AYAH ACTIONS CALLED');
+  debug('AYAHs Actions', 'quran-com:Actions');
   return request.get(Settings.url + 'surahs/' + params.surahId + '/ayat')
   .query(
     Object.assign({
@@ -13,7 +12,8 @@ export function getAyahs(actionContext, params, done) {
         to: params.to
     }, actionContext.getStore(UserOptionsStore).getOptions())
   )
-  .end(function(err, res) {
+  .end()
+  .then(function(res) {
     actionContext.dispatch('ayahsReceived', {
         ayahs: res.body,
         shouldReplace: params.shouldReplace

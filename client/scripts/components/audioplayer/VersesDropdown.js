@@ -43,7 +43,7 @@ class VersesDropdown extends React.Component {
 
     return list.map((i) => {
       return (
-        <li>
+        <li key={i+1}>
           <a href onClick={this.goToAyah.bind(this, i + 1)}>{i + 1}</a>
         </li>
       );

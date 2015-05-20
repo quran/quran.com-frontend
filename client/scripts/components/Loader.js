@@ -5,8 +5,8 @@ class Loader extends React.Component {
     return (
       <div className="loading" ng-hide="currentSurah.ayahs">
         <div className="row">
-          <div className="col-md-5 col-md-offset-2 text-center">
-            <i className="fa fa-spinner fa-3x" />
+          <div className="col-md-6 col-md-offset-3 text-center">
+            <img src="/images/loading.gif" />
             <h3>Loading...</h3>
           </div>
         </div>

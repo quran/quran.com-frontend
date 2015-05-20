@@ -26,7 +26,6 @@ class SurahsStore extends BaseStore {
   }
 
   getSurahs() {
-    console.log('GET SURAH')
     return this.surahs;
   }
 
@@ -56,8 +55,8 @@ class SurahsStore extends BaseStore {
 
 SurahsStore.storeName = 'SurahsStore';
 SurahsStore.handlers = {
-    'surahsReceived': '_surahsReceived',
-    'NAVIGATE_START': '_currentSurahChange'
+  'surahsReceived': '_surahsReceived',
+  'NAVIGATE_START': '_currentSurahChange'
 };
 
 export default SurahsStore;

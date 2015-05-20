@@ -5,7 +5,6 @@ import $ from 'jquery';
 
 class AudioplayerTracker extends React.Component {
   componentWillReceiveProps(nextProps) {
-    console.log('WHAT!!!');
     var $element = $(React.findDOMNode(this));
 
     $element.css(
