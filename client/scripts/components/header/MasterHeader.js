@@ -1,8 +1,9 @@
 import React from 'react';
-import {NavLink} from 'fluxible-router';
+import {NavLink, handleRoute} from 'fluxible-router';
 import SurahsStore from 'stores/SurahsStore';
 import {connectToStores, provideContext} from 'fluxible/addons';
 import DesktopOptions from 'components/header/DesktopOptions';
+import debug from 'utils/Debug';
 
 class MasterHeader extends React.Component{
   constructor(props) {
@@ -19,48 +20,44 @@ class MasterHeader extends React.Component{
   }
 
   previousChapter() {
-    if (this.props.surahId) {
-      var prev = '/' + (this.props.surahId - 1);
-      return (
-        <NavLink className="navbar-text" href={prev}>
-          <i className="fa fa-chevron-left"></i>
-          <span className="hidden-xs">&nbsp;Previous Chapter</span>
-        </NavLink>
-      );
-    }
+    var prev = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) - 1);
+    return (
+      <NavLink className="navbar-text" href={prev}>
+        <i className="fa fa-chevron-left"></i>
+        <span className="hidden-xs">&nbsp;Previous Chapter</span>
+      </NavLink>
+    );
   }
 
   nextChapter() {
-    if (this.props.surahId) {
-      var next = '/' + (parseInt(this.props.surahId) + 1);
-      return (
-        <NavLink className="navbar-text" href={next}>
-          <span className="hidden-xs">Next Chapter&nbsp;</span>
-          <i className="fa fa-chevron-right"></i>
-        </NavLink>
-      );
-    }
+    var next = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) + 1);
+    return (
+      <NavLink className="navbar-text" href={next}>
+        <span className="hidden-xs">Next Chapter&nbsp;</span>
+        <i className="fa fa-chevron-right"></i>
+      </NavLink>
+    );
   }
 
-  surahTitle() {
+  surahTitle(currentSurah) {
     function zeroPad(num, places) {
       var zero = places - num.toString().length + 1;
       return Array(+(zero > 0 && zero)).join("0") + num;
     }
 
-    if (this.props.surahId && this.props.surah) {
+    if (currentSurah) {
       return (
-        <img src={'/images/titles/' + zeroPad(this.props.surah.id, 3) + '.svg'} className="title"/>
+        <img src={'/images/titles/' + zeroPad(currentSurah.id, 3) + '.svg'} className="title"/>
       );
     }
   }
 
-  surahName() {
-    if (this.props.surahId && this.props.surah) {
+  surahName(currentSurah) {
+    if (currentSurah) {
       return (
         <p className="navbar-text text-uppercase">
-          {this.props.surah.name.simple}&nbsp;
-          ({this.props.surah.name.english})
+          {currentSurah.id}. {currentSurah.name.simple}&nbsp;
+          ({currentSurah.name.english})
         </p>
       );
     }
@@ -72,7 +69,16 @@ class MasterHeader extends React.Component{
     }
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.props.currentRoute.get('params').get('surahId') !==
+            nextProps.currentRoute.get('params').get('surahId'));
+  }
+
   render() {
+    var currentSurah = this.context.getStore('SurahsStore')
+      .getSurahs()[this.props.currentRoute.get('params').get('surahId') - 1]
+
+    debug('Component-MasterHeader');
     return (
       <nav className="navbar navbar-default navbar-fixed-top montserrat" role="navigation">
         <div className="container-fluid">
@@ -85,15 +91,15 @@ class MasterHeader extends React.Component{
                       MENU <i className="fa fa-caret-down"></i>
                 </span>
             </a>
-            {this.renderMobileOptions()}
+            {this.renderMobileOptions(currentSurah)}
             <div className="col-md-3 col-xs-3 surah-title">
               <img src="/images/ornament-left.png" className="ornament" />
               {this.previousChapter()}
             </div>
             <div className="col-md-4 col-xs-6 surah-title text-center">
-              {this.surahTitle()}
+              {this.surahTitle(currentSurah)}
               <br />
-              {this.surahName()}
+              {this.surahName(currentSurah)}
             </div>
             <div className="col-md-3 col-xs-3 surah-title text-right">
               {this.nextChapter()}
@@ -114,11 +120,6 @@ MasterHeader.contextTypes = {
   executeAction: React.PropTypes.func.isRequired
 };
 
-MasterHeader = connectToStores(MasterHeader, [SurahsStore], (stores, props) => {
-  return {
-    surah: stores.SurahsStore.getSurah()
-  }
-});
+MasterHeader = handleRoute(MasterHeader);
 
-// <DesktopOptions />
 export default MasterHeader;

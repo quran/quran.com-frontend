@@ -122,7 +122,6 @@ class AyahsStore extends BaseStore {
   }
 
   rehydrate(state) {
-    Font.createFontFaces(state.ayahs);
     this.ayahs = state.ayahs;
   }
 }
@@ -131,18 +130,24 @@ AyahsStore.storeName = 'AyahsStore';
 
 AyahsStore.handlers = {
   ayahsReceived(payload) {
-    console.log('AYAHS RECEIVED');
+    debug('STORES-AYAHS RECEIVED');
 
     if (this.ayahs.length > 0) {
       if (payload.ayahs[0].ayah === this.ayahs[this.ayahs.length -1].ayah + 1) {
         this.ayahs = this.ayahs.concat(payload.ayahs);
       }
       else {
-        console.error(
-          'Failed to concat the ayahs',
-          payload.ayahs[0].ayah,
-          this.ayahs[this.ayahs.length -1].ayah
-        );
+        if (this.ayahs[0].surah_id !== payload.ayahs[0].surah_id) {
+          console.log('New surah');
+        }
+        else {
+          console.error(
+            'Failed to concat the ayahs',
+            payload.ayahs[0].ayah,
+            this.ayahs[this.ayahs.length -1].ayah
+          );
+        }
+
         // Assuming this happens on new page
         Font.createFontFaces(payload.ayahs);
         this.ayahs = payload.ayahs;

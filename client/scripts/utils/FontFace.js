@@ -38,3 +38,35 @@ export function fontFace(className) {
   );
   return document.head.appendChild(style);
 }
+
+export function createFontFacesArray(ayahs) {
+  var fontFaces = [],
+      fontFacesArray = [];
+
+  ayahs.map(function(ayah) {
+    let font = ayah.quran[0].char.font;
+
+    if (fontFaces.indexOf(font) === -1) {
+      fontFaces.push(font);
+      fontFacesArray.push(
+        "@font-face {font-family: '" +
+        font +
+        "';src: url('/fonts/compressed/eot/" +
+        font +
+        ".eot?#iefix') format('embedded-opentype'),url('/fonts/woff/" +
+        font +
+        ".woff?-snx2rh') format('woff'),url('/fonts/ttf/" +
+        font +
+        ".ttf') format('truetype'),url('/fonts/compressed/svg/" +
+        font +
+        ".svg#') format('svg');}." +
+        font + "{font-family: '" +
+        font +
+        "';}"
+      )
+    }
+  }.bind(this));
+
+  return fontFacesArray;
+
+}

@@ -4,7 +4,7 @@ import UserOptionsStore from 'stores/UserOptionsStore';
 import debug from 'utils/Debug';
 
 export function getAyahs(actionContext, params, done) {
-  debug('AYAHs Actions', 'quran-com:Actions');
+  debug('ACTIONS-AYAHS');
   return request.get(Settings.url + 'surahs/' + params.surahId + '/ayat')
   .query(
     Object.assign({

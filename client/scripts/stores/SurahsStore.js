@@ -1,14 +1,31 @@
 import BaseStore from 'fluxible/addons/BaseStore';
+import debug from 'utils/Debug';
 
 class SurahsStore extends BaseStore {
   constructor(dispatcher) {
       super(dispatcher);
       this.surahs = [];
-      this.surah = null;
+      this.surah = {
+        page: null,
+        revelation: {
+          order: null,
+          place: null
+        },
+        name: {
+          arabic: null,
+          simple: null,
+          complex: null,
+          english: null
+        },
+        ayat: 0,
+        bismillah_pre:
+        false,
+        id: 0
+      };
   }
 
   _surahsReceived(data) {
-    console.log('SURAHS RECEIVED')
+    debug('STORES-SURAHS RECEIVED');
     this.surahs = data.surahs;
 
     if (data.surah) {
@@ -19,6 +36,7 @@ class SurahsStore extends BaseStore {
   }
 
   _currentSurahChange(payload, name) {
+    debug('STORES-CURRENT SURAH');
     if (this.dispatcher.getStore('RouteStore')._currentRoute.get('name') === 'surah') {
       this.surah = this.surahs[this.dispatcher.getStore('RouteStore')._currentRoute.get('params').get('surahId') - 1];
       this.emitChange();

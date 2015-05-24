@@ -5,6 +5,7 @@ import AyahsStore from 'stores/AyahsStore';
 import Loader from 'components/Loader';
 import * as Font from 'utils/FontFace';
 import { connectToStores, provideContext } from 'fluxible/addons';
+import debug from 'utils/Debug';
 
 class AyahsList extends React.Component {
   constructor(props, context) {
@@ -30,6 +31,7 @@ class AyahsList extends React.Component {
   }
 
   render() {
+    debug('COMPONENT-AYAHSLIST')
     if (this.state.readingMode) {
       return (
         <h1 className="word-font text-right" style={{fontSize: this.state.fontSize}}>

@@ -6,12 +6,11 @@ export function getSurahs(actionContext, payload, done) {
   if (actionContext.getStore('SurahsStore').hasAllSurahs()) {
     return;
   }
-  debug('SURAHs-Actions');
+  debug('ACTIONS-SURAHS');
   return request.get(settings.url + 'surahs')
   .end()
   .then(function(res) {
     actionContext.dispatch('surahsReceived', {surahs: res.body, surah: payload});
-
     done();
   });
 }

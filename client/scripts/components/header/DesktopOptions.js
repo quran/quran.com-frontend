@@ -7,6 +7,7 @@ import ContentDropdown from 'components/header/ContentDropdown';
 import Audioplayer from 'components/audioplayer/Audioplayer';
 import FontSizeInput from 'components/header/FontSizeInput';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
+import debug from 'utils/Debug';
 
 class DesktopOptions extends React.Component {
   constructor(props) {
@@ -14,6 +15,7 @@ class DesktopOptions extends React.Component {
   }
 
   render() {
+    debug('COMPONENT-DESKTOP OPTIONS');
     return (
       <div className="row navbar-bottom hidden-xs">
         <SearchInput className="col-md-2 search-input" />

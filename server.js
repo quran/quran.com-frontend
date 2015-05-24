@@ -16,6 +16,7 @@ import HtmlComponent from 'components/Html';
 import useragent from 'express-useragent';
 import * as ExpressActions from 'actions/ExpressActions';
 import favicon from 'serve-favicon';
+import * as Fonts from 'utils/FontFace';
 
 const htmlComponent = React.createFactory(HtmlComponent);
 const debug = debugLib('quran-com');
@@ -27,6 +28,7 @@ var ttl = 50;
 
 server.set('state namespace', 'App');
 server.set('view cache', true);
+// Use varnish for the static routes, which will cache too
 server.use('/public', express.static(path.join(__dirname, '/build')));
 server.use('/images', express.static(path.join(__dirname, '/client/images')));
 server.use('/fonts', express.static(path.join(__dirname, '/client/styles/fonts')));
@@ -55,12 +57,15 @@ server.use((req, res, next) => {
         debug('Exposing context state');
         const exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
 
+
+
         debug('Rendering Application component into html');
         // memoryCache.wrap(req.url, function(cacheCallback) {
           const html = React.renderToStaticMarkup(htmlComponent({
             context: context.getComponentContext(),
             state: exposed,
-            markup: React.renderToString(context.createElement())
+            markup: React.renderToString(context.createElement()),
+            fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs())
           }));
 
           // cacheCallback(null, html)

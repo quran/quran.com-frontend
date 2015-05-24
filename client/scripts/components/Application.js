@@ -11,7 +11,7 @@ import debug from 'utils/Debug';
 // @TODO Upgrade to ES6 class when RouterMixin is replaced
 var Application = React.createClass({
     render: function () {
-      debug('Application Rendered')
+      debug('COMPONENT-APPLICATION')
         var Handler = this.props.currentRoute.get('handler');
 
         return (
@@ -21,8 +21,8 @@ var Application = React.createClass({
         );
     },
 
-    shouldComponentUpdate: function(nextState, nextProps) {
-      return this.props.currentRoute.get('handler') !== nextState.currentRoute.get('handler');
+    shouldComponentUpdate: function(nextProps, nextState) {
+      return this.props.currentRoute.get('handler') !== nextProps.currentRoute.get('handler');
     },
 
     componentDidUpdate: function(prevProps, prevState) {

@@ -1,13 +1,10 @@
 import debug from 'debug';
-let bugger;
 
 export default function(name, namespace) {
   if (namespace) {
-    console.log(namespace)
-    bugger = debug(namespace);
+    return debug(namespace)(name);
   }
   else {
-    bugger = debug('quran-com');
+    return debug('quran-com')(name);
   }
-  return bugger(name);
 };

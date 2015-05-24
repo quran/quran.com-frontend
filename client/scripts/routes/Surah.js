@@ -8,6 +8,8 @@ import AyahsList from 'components/surah/AyahsList';
 import $ from 'jquery';
 import { connectToStores, provideContext } from 'fluxible/addons';
 import AyahsStore from 'stores/AyahsStore';
+import SurahsStore from 'stores/SurahsStore';
+import debug from 'utils/Debug';
 
 class Surah extends React.Component {
   constructor(props, context) {
@@ -96,12 +98,17 @@ class Surah extends React.Component {
     });
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.props.ayahs.length < nextProps.ayahs.length) && (nextProps.ayahs.length > this.props.ayahs.length);
+  }
+
   render() {
+    debug('COMPONENT-SURAH');
     this.onScroll();
 
     return (
       <div className="surah-body">
-        <MasterHeader surahId={this.props.currentRoute.get('params').get('surahId')}/>
+        <MasterHeader />
         <div className="container-fluid" onScroll={this._onScroll}>
           <div className="row">
             <SurahsNav className="hidden-xs"/>
@@ -130,7 +137,6 @@ Surah = connectToStores(Surah, [AyahsStore], (stores, props) => {
     ayahs: stores.AyahsStore.getAyahs()
   }
 });
-
 
 Surah = handleRoute(Surah);
 
