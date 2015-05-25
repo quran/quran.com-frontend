@@ -3,6 +3,7 @@ import {NavLink, handleRoute} from 'fluxible-router';
 import SurahsStore from 'stores/SurahsStore';
 import {connectToStores, provideContext} from 'fluxible/addons';
 import DesktopOptions from 'components/header/DesktopOptions';
+import MobileOptions from 'components/header/MobileOptions';
 import debug from 'utils/Debug';
 
 class MasterHeader extends React.Component{
@@ -65,7 +66,39 @@ class MasterHeader extends React.Component{
 
   renderMobileOptions() {
     if (this.state.showOptions) {
-      // return <MobileOptions />;
+      return <MobileOptions />;
+    }
+
+    if (this.state.width < 1000) {
+      return <MobileOptions />;
+    }
+  }
+
+  renderDesktopOptions() {
+    // if (this.state.width > 1000) {
+      return <DesktopOptions />;
+    // }
+  }
+
+  updateDimensions() {
+    if (typeof window !== 'undefined') {
+      this.setState({width: $(window).width(), height: $(window).height()});
+    }
+  }
+
+  componentWillMount() {
+    this.updateDimensions();
+  }
+
+  componentDidMount() {
+    if (typeof window !== 'undefined') {
+      window.addEventListener("resize", this.updateDimensions.bind(this));
+    }
+  }
+
+  componentWillUnmount() {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener("resize", this.updateDimensions);
     }
   }
 
@@ -91,7 +124,7 @@ class MasterHeader extends React.Component{
                       MENU <i className="fa fa-caret-down"></i>
                 </span>
             </a>
-            {this.renderMobileOptions(currentSurah)}
+            {this.renderMobileOptions()}
             <div className="col-md-3 col-xs-3 surah-title">
               <img src="/images/ornament-left.png" className="ornament" />
               {this.previousChapter()}
@@ -106,7 +139,7 @@ class MasterHeader extends React.Component{
               <img src="/images/ornament-right.png" className="ornament" />
             </div>
           </div>
-          <DesktopOptions />
+          {this.renderDesktopOptions()}
         </div>
       </nav>
     );

@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchInput from 'components/header/SearchInput';
 
-class IndexHeader extends React.Component {
+class SearchHeader extends React.Component {
   render() {
     return (
       <div className="index-header">
@@ -22,6 +22,6 @@ class IndexHeader extends React.Component {
   }
 }
 
-IndexHeader.displayName = 'IndexHeader';
+SearchHeader.displayName = 'SearchHeader';
 
-export default IndexHeader;
+export default SearchHeader;

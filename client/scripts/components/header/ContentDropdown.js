@@ -27,7 +27,7 @@ class ContentDropdown extends React.Component {
     }.bind(this));
   }
 
-  _chosenOption(id, e) {
+  chosenOption(id, e) {
     let chosenOptions = this.state.chosenOptions;
 
     if (chosenOptions.find(x => x === id)) {
@@ -47,10 +47,9 @@ class ContentDropdown extends React.Component {
       });
     }
 
-    this.context.executeAction(
-      AyahsActions.updateAyahs,
-      {content: chosenOptions}
-    );
+    this.context.executeAction(AyahsActions.updateAyahs, {
+      content: chosenOptions
+    });
   }
 
   returnList(option) {
@@ -60,10 +59,11 @@ class ContentDropdown extends React.Component {
       <li key={option.id}>
         <input
           type="checkbox"
-          id={option.name}
-          onChange={this._chosenOption.bind(this, option.id)}
+          id={option.id + option.language}
+          onChange={this.chosenOption.bind(this, option.id)}
           checked={checked} />
-        <label for={option.name} className="content-checkbox">
+        <label htmlFor={option.id + option.language}
+               className="content-checkbox">
           {option.name}
         </label>
       </li>

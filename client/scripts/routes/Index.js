@@ -1,8 +1,5 @@
-'use strict';
-
 import React from 'react';
 import IndexHeader from 'components/header/IndexHeader';
-import Settings from 'constants/Settings';
 import {NavLink} from 'fluxible-router';
 import {connectToStores, provideContext} from 'fluxible/addons';
 import SurahsStore from 'stores/SurahsStore';
@@ -59,8 +56,6 @@ class Index extends React.Component {
         </div>
     );
   }
-
-
 }
 
 Index = connectToStores(Index, [SurahsStore], (stores, props) => {

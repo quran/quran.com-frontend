@@ -1,23 +1,35 @@
 'use strict';
 
 import React from 'react';
+import {navigateAction} from 'fluxible-router';
 
 class SearchInput extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+  };
+
   search(e) {
-    // e.target.value;
-    console.log(e);
-    // var ayah, pattern, surah;
-    // pattern = new RegExp(/\d[\.,\:,\,]\d/);
-    // if (pattern.test(searching)) {
-    //   surah = searching.split(/[\.,\:,\,]/)[0];
-    //   ayah = parseInt(searching.split(/[\.,\:,\,]/)[1]);
-    //   $location.path('/' + surah + '/' + ayah + '-' + (ayah + 10));
-    // } else {
-    //   $location.path('/search').search({
-    //     q: searching
-    //   });
-    // }
-  }
+    if (e.keyCode === 13) {
+      let searching = e.target.value,
+          ayah, pattern, surah;
+
+      pattern = new RegExp(/\d[\.,\:,\,]\d/);
+
+      if (pattern.test(searching)) {
+        surah = searching.split(/[\.,\:,\,]/)[0];
+        ayah = parseInt(searching.split(/[\.,\:,\,]/)[1]);
+
+        this.context.executeAction(navigateAction, {
+          url: '/' + surah + '/' + ayah + '-' + (ayah + 10)
+        });
+      } else {
+        this.context.executeAction(navigateAction, {
+          url: '/search',
+          query: {q: searching}
+        });
+      }
+    }
+  };
 
   render() {
     var className = React.addons.classSet({
@@ -28,10 +40,14 @@ class SearchInput extends React.Component {
       <input type="text"
              placeholder="Search"
              className={className}
-             onKeyUp={this.search} />
+             onKeyUp={this.search.bind(this)} />
     );
   }
 }
+
+SearchInput.contextTypes = {
+  executeAction: React.PropTypes.func.isRequired
+};
 
 SearchInput.displayName = 'SearchInput';
 

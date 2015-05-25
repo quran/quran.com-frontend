@@ -7,7 +7,6 @@ class AyahsStore extends BaseStore {
     super(dispatcher);
     this.ayahs = [];
     this.readingMode = false;
-    this.fontSize = 49;
   }
 
   getAyahs() {
@@ -165,6 +164,7 @@ AyahsStore.handlers = {
     this.emitChange();
   },
   ayahsUpdated(payload) {
+    console.log(payload)
     this.ayahs = payload.ayahs.map((ayah, index) => {
       return Object.assign(this.ayahs[index], ayah);
     });
@@ -178,7 +178,7 @@ AyahsStore.handlers = {
   'NAVIGATE_START': function() {
     this.ayahs = [];
     this.emitChange();
-  }
+  },
 };
 
 export default AyahsStore;

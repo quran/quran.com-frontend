@@ -223,7 +223,7 @@ class Audioplayer extends React.Component {
       this.state.currentAyah.ayah : '';
 
       return (
-        <div className="audioplayer col-md-2">
+        <div className="audioplayer col-md-3 border-right">
           <ul className="list-inline audioplayer-options">
              <VersesDropdown ayahs={this.props.surah ? this.props.surah.ayat : 1}
                              currentAyah={currentAyahId}/>

@@ -37,7 +37,8 @@ class HeaderDropdown extends React.Component {
       'dropdown': true,
       'dropdownChange': true,
       'full-height': true,
-      'text-left': true
+      'text-left': true,
+      'border-right': true
     }) + ' ' + this.props.className;
 
     return (

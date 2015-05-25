@@ -12,12 +12,11 @@ class AyahsList extends React.Component {
     super(props, context);
 
     this.state = {
-      readingMode: false,
-      fontSize: this.context.getStore(AyahsStore).getFontSize()
+      readingMode: false
     };
   }
 
-  _list() {
+  list() {
     if (this.props.ayahs.length === 0) {
         return <Loader />;
     }
@@ -25,24 +24,27 @@ class AyahsList extends React.Component {
     return this.props.ayahs.map((ayah) => {
         return <Ayah ayah={ayah}
                      key={ayah.ayah + 'ayah'}
-                     readingMode={this.state.readingMode}
-                     fontSize={this.state.fontSize} />;
+                     readingMode={this.state.readingMode} />;
     });
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (this.props.ayahs.length === 0) && (nextProps.ayahs.length > 0);
   }
 
   render() {
     debug('COMPONENT-AYAHSLIST')
     if (this.state.readingMode) {
       return (
-        <h1 className="word-font text-right" style={{fontSize: this.state.fontSize}}>
-            {this._list()}
+        <h1 className="word-font text-right">
+            {this.list()}
         </h1>
       );
     }
 
     return (
       <div>
-          {this._list()}
+          {this.list()}
       </div>
     );
   }
@@ -56,7 +58,8 @@ AyahsList.contextTypes = {
 
 AyahsList = connectToStores(AyahsList, [AyahsStore], (stores, props) => {
   return {
-    ayahs: stores.AyahsStore.getAyahs()
+    ayahs: stores.AyahsStore.getAyahs(),
+    fontSize: stores.AyahsStore.getFontSize()
   }
 });
 

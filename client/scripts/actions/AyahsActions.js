@@ -42,3 +42,13 @@ export function updateAyahs(actionContext, params, done) {
     });
   });
 }
+
+export function search(actionContext, query, done) {
+  return request.get(Settings.url + 'search')
+  .query({q: query})
+  .end()
+  .then((res) => {
+    console.log(res);
+    done();
+  });
+}

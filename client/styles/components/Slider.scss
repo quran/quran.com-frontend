@@ -6,18 +6,21 @@ $slider-width: 80px;
 
 .input-range-container{
     height: 100%;
+    width: 90%;
     span{
-        top: 45%;
-        position: relative;
+        top: 33%;
+        position: absolute;
         display: inline-block;
-        transform: translateY(-50%);
-        height: 100%;
+        // transform: translateY(-50%);
+        // height: 100%;
         vertical-align: middle;
+        margin-left: -5px;
     }
     span.size2{
         font-size: 150%;
-        top: 30%;
+        top: 15%;
         margin-left: 5px;
+        position: absolute;
     }
 }
 
@@ -27,19 +30,21 @@ input[type=range] {
     position: relative;
     background: transparent;
     display: inline;
-    width: $slider-width;
+    width: 100%;
+    height: 100%;
     &:after{
         content: '';
         position: absolute;
         width: 0;
         height: 0;
-        border-left: $slider-width solid transparent;
+        border-left: 200px solid transparent;
         border-right: 0px solid transparent;
         border-bottom: 8px solid darken($cream, 20%);
         z-index: 98;
         top: 50%;
         left: 0px;
         transform: translateY(-50%);
+        width: 100%;
     }
 }
 input[type=range]::-webkit-slider-runnable-track {

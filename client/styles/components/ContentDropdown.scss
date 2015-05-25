@@ -84,7 +84,7 @@ $checkbox-width: 12px;
   /* accessibility */
   [type="checkbox"]:checked:focus + .content-checkbox:before,
   [type="checkbox"]:not(:checked):focus + .content-checkbox:before {
-    border: 1px dotted blue;
+    border: 1px solid $olive;
   }
 
   /* hover style just for information */

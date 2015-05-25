@@ -2,7 +2,7 @@ import request from 'superagent-promise';
 import settings from 'constants/Settings';
 import debug from 'utils/Debug';
 
-export function getSurahs(actionContext, payload, done) {
+export function getSurahs(actionContext, payload) {
   if (actionContext.getStore('SurahsStore').hasAllSurahs()) {
     return;
   }
@@ -10,8 +10,8 @@ export function getSurahs(actionContext, payload, done) {
   return request.get(settings.url + 'surahs')
   .end()
   .then(function(res) {
+    console.log('SURAHS RECEIVED....')
     actionContext.dispatch('surahsReceived', {surahs: res.body, surah: payload});
-    done();
   });
 }
 

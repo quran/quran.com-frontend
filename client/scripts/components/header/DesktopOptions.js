@@ -24,22 +24,18 @@ class DesktopOptions extends React.Component {
           <ReciterDropdown />
           <Audioplayer />
           <ContentDropdown />
-          <div className="col-md-4">
+          <div className="col-md-3 height-100">
             <div className="row">
-              <div className="col-md-5">
+              <div className="col-md-6 height-100 border-right">
                 <FontSizeInput />
               </div>
-              <div className="col-md-5 text-center">
-                <div className="row">
-                  <div className="col-md-5">
-                    <ReadingModeToggle />
-                  </div>
-                  <div className="col-md-5">
-                    <a href className="nav-link">
-                      <i className="fa fa-info-circle fa-2x pull-right"></i>
-                    </a>
-                  </div>
-                </div>
+              <div className="col-md-3 text-center height-100">
+                <ReadingModeToggle />
+              </div>
+              <div className="col-md-3 text-center height-100">
+                <a href className="nav-link">
+                  <i className="fa fa-info-circle fa-2x pull-right"></i>
+                </a>
               </div>
             </div>
           </div>
