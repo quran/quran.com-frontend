@@ -39,6 +39,9 @@ $input-border-focus: $light-green;
 $text-color: #939598;
 
 $label-default-bg: lighten($text-muted, 10%);
+.label{
+  padding: .5em .8em .5em;
+}
 
 $grid-columns: 12;
 $border-radius-base: 4px;

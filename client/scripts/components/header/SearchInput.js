@@ -24,8 +24,7 @@ class SearchInput extends React.Component {
         });
       } else {
         this.context.executeAction(navigateAction, {
-          url: '/search',
-          query: {q: searching}
+          url: `/search?q=${searching}`
         });
       }
     }

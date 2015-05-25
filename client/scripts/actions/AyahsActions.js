@@ -8,15 +8,14 @@ export function getAyahs(actionContext, params, done) {
   return request.get(Settings.url + 'surahs/' + params.surahId + '/ayat')
   .query(
     Object.assign({
-        from: params.from,
-        to: params.to
+      from: params.from,
+      to: params.to
     }, actionContext.getStore(UserOptionsStore).getOptions())
   )
   .end()
   .then(function(res) {
     actionContext.dispatch('ayahsReceived', {
-        ayahs: res.body,
-        shouldReplace: params.shouldReplace
+      ayahs: res.body
     });
 
     done();
@@ -43,12 +42,20 @@ export function updateAyahs(actionContext, params, done) {
   });
 }
 
+export function toggleReadingMode(actionContext) {
+  actionContext.dispatch('toggleReadingMode');
+}
+
 export function search(actionContext, query, done) {
+  debug('ACTIONS-AYAHS SEARCH');
   return request.get(Settings.url + 'search')
   .query({q: query})
+  // .end((err, res) => {
+  //   actionContext.dispatch('searchReceived', res.body);
+  // })
   .end()
   .then((res) => {
-    console.log(res);
+    actionContext.dispatch('searchReceived', res.body);
     done();
   });
 }

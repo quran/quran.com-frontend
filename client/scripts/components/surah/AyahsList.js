@@ -10,10 +10,6 @@ import debug from 'utils/Debug';
 class AyahsList extends React.Component {
   constructor(props, context) {
     super(props, context);
-
-    this.state = {
-      readingMode: false
-    };
   }
 
   list() {
@@ -24,17 +20,19 @@ class AyahsList extends React.Component {
     return this.props.ayahs.map((ayah) => {
         return <Ayah ayah={ayah}
                      key={ayah.ayah + 'ayah'}
-                     readingMode={this.state.readingMode} />;
+                     readingMode={this.props.isReadingMode} />;
     });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return (this.props.ayahs.length === 0) && (nextProps.ayahs.length > 0);
+    console.log(this.props.ayahs.length, nextProps.ayahs.length)
+    return (this.props.ayahs.length === nextProps.ayahs.length) ||
+           (this.props.isReadingMode !== nextProps.isReadingMode);
   }
 
   render() {
     debug('COMPONENT-AYAHSLIST')
-    if (this.state.readingMode) {
+    if (this.props.isReadingMode) {
       return (
         <h1 className="word-font text-right">
             {this.list()}
@@ -59,7 +57,7 @@ AyahsList.contextTypes = {
 AyahsList = connectToStores(AyahsList, [AyahsStore], (stores, props) => {
   return {
     ayahs: stores.AyahsStore.getAyahs(),
-    fontSize: stores.AyahsStore.getFontSize()
+    isReadingMode: stores.AyahsStore.isReadingMode()
   }
 });
 

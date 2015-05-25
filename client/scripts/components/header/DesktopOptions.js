@@ -7,6 +7,7 @@ import ContentDropdown from 'components/header/ContentDropdown';
 import Audioplayer from 'components/audioplayer/Audioplayer';
 import FontSizeInput from 'components/header/FontSizeInput';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
+import InformationToggle from 'components/header/InformationToggle';
 import debug from 'utils/Debug';
 
 class DesktopOptions extends React.Component {
@@ -33,9 +34,7 @@ class DesktopOptions extends React.Component {
                 <ReadingModeToggle />
               </div>
               <div className="col-md-3 text-center height-100">
-                <a href className="nav-link">
-                  <i className="fa fa-info-circle fa-2x pull-right"></i>
-                </a>
+                <InformationToggle />
               </div>
             </div>
           </div>

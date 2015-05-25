@@ -85,8 +85,6 @@ class Surah extends React.Component {
             surahId: this.props.currentRoute.get('params').get('surahId'),
             from: lastAyah,
             to: toAyah
-          }, () => {
-            this.setState({loading: false});
           });
         }
         else {
@@ -99,7 +97,12 @@ class Surah extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return (this.props.ayahs.length < nextProps.ayahs.length) && (nextProps.ayahs.length > this.props.ayahs.length);
+    if (this.props.ayahs.length < nextProps.ayahs.length) {
+      this.setState({loading: false});
+      return true;
+    };
+    
+    return false;
   }
 
   render() {

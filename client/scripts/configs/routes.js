@@ -25,6 +25,7 @@ export default {
     title: 'Search',
     handler: require('../routes/Search'),
     action(actionContext, currentRoute, done) {
+      console.log(currentRoute.toObject())
       actionContext.executeAction(
         AyahsActions.search,
         currentRoute.get('query').get('q'),

@@ -1,24 +1,24 @@
 import React from 'react';
-// import AyahListActions from 'actions/AyahListActions';
+import * as AyahsActions from 'actions/AyahsActions';
 
 
 class ReadingModeToggle extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
 
     this.state = {
       toggled: false
     };
   }
 
-  readingMode(e) {
+  toggleReadingMode(e) {
     e.preventDefault();
 
     this.setState({
         toggled: !this.state.toggled
     });
 
-    // AyahListActions.toggleReadingMode(this.context.dispatcher);
+    this.context.executeAction(AyahsActions.toggleReadingMode)
   }
 
   renderIcon() {
@@ -30,16 +30,20 @@ class ReadingModeToggle extends React.Component {
 
   render() {
     var classes = React.addons.classSet({
-        selected: this.state.toggled,
-        'nav-link': true
+      selected: this.state.toggled,
+      'nav-link': true
     });
 
     return (
-      <a href className={classes} onClick={this.readingMode}>
+      <a href className={classes} onClick={this.toggleReadingMode.bind(this)}>
         {this.renderIcon()}
       </a>
     );
   }
 }
+
+ReadingModeToggle.contextTypes = {
+  executeAction: React.PropTypes.func.isRequired
+};
 
 export default ReadingModeToggle;

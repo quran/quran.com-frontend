@@ -57,8 +57,6 @@ server.use((req, res, next) => {
         debug('Exposing context state');
         const exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
 
-
-
         debug('Rendering Application component into html');
         // memoryCache.wrap(req.url, function(cacheCallback) {
           const html = React.renderToStaticMarkup(htmlComponent({

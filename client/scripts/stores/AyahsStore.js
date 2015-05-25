@@ -7,6 +7,7 @@ class AyahsStore extends BaseStore {
     super(dispatcher);
     this.ayahs = [];
     this.readingMode = false;
+    this.searchStats = {};
   }
 
   getAyahs() {
@@ -19,6 +20,10 @@ class AyahsStore extends BaseStore {
 
   getLength() {
     return this.ayahs.length;
+  }
+
+  getSearchStats() {
+    return this.searchStats;
   }
 
   isEmpty() {
@@ -132,7 +137,10 @@ AyahsStore.handlers = {
     debug('STORES-AYAHS RECEIVED');
 
     if (this.ayahs.length > 0) {
+      console.log('asdkljasdlkajsldkajslkdjalsd123123123123123123123')
       if (payload.ayahs[0].ayah === this.ayahs[this.ayahs.length -1].ayah + 1) {
+        console.log('asdkljasdlkajsldkajslkdjalsd')
+        Font.createFontFaces(payload.ayahs);
         this.ayahs = this.ayahs.concat(payload.ayahs);
       }
       else {
@@ -146,7 +154,6 @@ AyahsStore.handlers = {
             this.ayahs[this.ayahs.length -1].ayah
           );
         }
-
         // Assuming this happens on new page
         Font.createFontFaces(payload.ayahs);
         this.ayahs = payload.ayahs;
@@ -179,6 +186,28 @@ AyahsStore.handlers = {
     this.ayahs = [];
     this.emitChange();
   },
+  searchReceived(payload) {
+    debug('STORES-SEARCH RECEIVED');
+    if (typeof window !== 'undefined') {
+      Font.createFontFaces(payload.results);
+    }
+
+    this.ayahs = payload.results;
+    this.searchStats = {
+      query: payload.query,
+      hits: payload.hits,
+      page: payload.page,
+      size: payload.size,
+      took: payload.took,
+      total: payload.total,
+    };
+
+    this.emitChange();
+  },
+  toggleReadingMode() {
+    this.readingMode = !this.readingMode;
+    this.emitChange();
+  }
 };
 
 export default AyahsStore;

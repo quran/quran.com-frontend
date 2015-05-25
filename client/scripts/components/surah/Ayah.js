@@ -8,6 +8,19 @@ import debug from 'utils/Debug';
 
 class Ayah extends React.Component {
   translations() {
+    if (!this.props.ayah.content && this.props.ayah.match.best) {
+      return this.props.ayah.match.best.map((content, i) => {
+        return (
+          <div className="translation" key={i}>
+            <h4>{content.name}</h4>
+            <h2 className="text-left">
+              <small dangerouslySetInnerHTML={{__html: content.text}} />
+            </h2>
+          </div>
+        );
+      });
+    }
+
     return this.props.ayah.content.map((content, i) => {
       return (
         <div className="translation" key={i}>
@@ -24,7 +37,7 @@ class Ayah extends React.Component {
 
   text() {
     if (!this.props.ayah.quran[0].char) {
-        return;
+      return;
     }
 
     let text =  this.props.ayah.quran.map((word) => {
@@ -66,11 +79,11 @@ class Ayah extends React.Component {
   }
 
   goToAyah(ayah, e) {
-      e.preventDefault();
-      this.setState({
-          open: false
-      });
-      // AudioplayerActions.changeAyah(this.context.dispatcher, ayah, true);
+    e.preventDefault();
+    this.setState({
+        open: false
+    });
+    // AudioplayerActions.changeAyah(this.context.dispatcher, ayah, true);
   }
 
   leftControls() {
@@ -86,9 +99,9 @@ class Ayah extends React.Component {
           <i className="fa fa-play" /> Play
         </a>
         <ReactZeroClipboard text={this.props.ayah.text} className="text-muted">
-          <span>
+          <a href className="text-muted">
             <i className="fa fa-clipboard" /> Copy
-          </span>
+          </a>
         </ReactZeroClipboard>
       </div>
     );

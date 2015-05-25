@@ -4,6 +4,7 @@ import React from 'react';
 import SearchHeader from 'components/header/SearchHeader';
 import {connectToStores, provideContext} from 'fluxible/addons';
 import AyahsStore from 'stores/AyahsStore';
+import AyahsList from 'components/surah/AyahsList';
 
 class Search extends React.Component {
   constructor(props) {
@@ -14,11 +15,12 @@ class Search extends React.Component {
     return (
       <div className="index-page">
         <SearchHeader />
+        {this.props.stats}
         <div className="container surah-list">
           <div className="row">
-            <div className="col-md-10 col-md-offset-1">
+            <div className="col-md-12">
               <div className="row">
-
+                <AyahsList />
               </div>
             </div>
           </div>
@@ -28,10 +30,10 @@ class Search extends React.Component {
   }
 }
 
-// Search = connectToStores(Search, [AyahsStore], (stores, props) => {
-//   return {
-//     ayahs: stores.AyahsStore.getAyahs()
-//   }
-// });
+Search = connectToStores(Search, [AyahsStore], (stores, props) => {
+  return {
+    stats: stores.AyahsStore.getSearchStats()
+  }
+});
 
 export default Search;
