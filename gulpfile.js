@@ -8,6 +8,7 @@ var webpackConfigPath = './webpack.config.js';
 var WebpackDevServer = require("webpack-dev-server");
 var webpack = require('webpack');
 var webpackConfig = require("./webpack.config.js");
+var webpackProConfig = require("./webpack.prod.config.js");
 
 
 gulp.task('default', ['clean', 'server', 'webpack:build-dev']);
@@ -45,8 +46,9 @@ gulp.task('watch', ['default'], function() {
   gulp.watch(['client/**/*.{js,scss}'], ['webpack:build-dev']);
 });
 
-var devCompiler = webpack(webpackConfig);
+
 gulp.task("webpack:build-dev", function(callback) {
+  var devCompiler = webpack(webpackConfig);
 	// run webpack
 	devCompiler.run(function(err, stats) {
 		if(err) throw new gutil.PluginError("webpack:build-dev", err);
@@ -55,4 +57,16 @@ gulp.task("webpack:build-dev", function(callback) {
 		}));
 		callback();
 	});
+});
+
+gulp.task('build', function(callback) {
+  var prodCompiler = webpack(webpackProConfig);
+
+  prodCompiler.run(function(err, stats) {
+    if(err) throw new gutil.PluginError("webpack:build-dev", err);
+    gutil.log("[webpack:build-dev]", stats.toString({
+      colors: true
+    }));
+    callback();
+  });
 });

@@ -60,7 +60,7 @@ module.exports = {
       reasons: true
     },
     devtool: 'source-map',
-    watch: true,
+    watch: false,
     keepalive: true,
     debug: true,
     cache: true,
