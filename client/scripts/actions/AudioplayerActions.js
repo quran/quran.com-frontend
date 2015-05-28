@@ -1,6 +1,6 @@
-export function changeAyah(actionContxt, nextAyah, shouldPlay) {
-  dispatcher.dispatch('currentAyahChanged', {
-    nextAyah: nextAyah,
-    shouldPlay: shouldPlay
+export function changeAyah(actionContxt, payload, done) {
+  actionContxt.dispatch('audioplayerAyahChange', {
+    ayah: payload.ayah,
+    shouldPlay: payload.shouldPlay || false
   });
 }

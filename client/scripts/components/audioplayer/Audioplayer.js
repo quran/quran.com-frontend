@@ -8,13 +8,13 @@ import AyahsActions from 'actions/AyahsActions';
 import {connectToStores} from 'fluxible/addons'
 import SurahsStore from 'stores/SurahsStore';
 import AyahsStore from 'stores/AyahsStore';
+import * as AudioplayerActions from 'actions/AudioplayerActions';
 
 class Audioplayer extends React.Component {
   constructor(props, context) {
     super(props, context);
 
     this.state = {
-      // surah: this.context.getStore('SurahStore').getSurah(),
       playing: false,
       shouldRepeat: false,
       progress: 0,
@@ -24,11 +24,20 @@ class Audioplayer extends React.Component {
     };
   }
 
-  // _ayahsReceived() {
-  //   let currentAyah = this.context.getStore('AyahsStore').getAyahs()[0];
-  //
-  //   this._setupAudio(currentAyah);
-  // }
+  componentDidMount() {
+    if (this.props.ayahs.length > 0 && typeof window !== 'undefined') {
+      this.context.getStore(AudioplayerStore).addChangeListener(this.setupAudio);
+    }
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log(this.props.currentAyah.ayah, nextProps.currentAyah.ayah)
+    if (this.props.currentAyah.ayah !== nextProps.currentAyah.ayah) {
+      // this.setupAudio();
+    }
+
+    return true;
+  }
 
   _ayahChanged() {
     // var currentAyah = this.getStore(AyatStore).getAyahs().find((a) => {
@@ -61,194 +70,192 @@ class Audioplayer extends React.Component {
 
     }
 
-    this._setupAudio(currentAyah);
+    this.setupAudio(currentAyah);
   }
 
-  _changeOffset(fraction) {
+  changeOffset(fraction) {
     this.setState({
-        progress: fraction * 100,
-        currentTime: fraction * this.state.currentAudio.duration
+      progress: fraction * 100,
+      currentTime: fraction * this.state.currentAudio.duration
     });
 
     this.state.currentAudio.currentTime = fraction *
-        this.state.currentAudio.duration;
+      this.state.currentAudio.duration;
   }
 
-  _setupAudio(currentAyah) {
-      var continueToPlay;
+  setupAudio() {
+    console.log(this.props.currentAyah);
+    if (this.state.playing) {
+      this.pause();
+    }
 
-      if (this.state.playing) {
-          this._pause();
-          continueToPlay = true;
+    // Default current time to zero. This will change
+    this.props.currentAudio.currentTime = 0;
+
+    this.props.currentAudio.addEventListener('timeupdate', () => {
+      let progress = (this.props.currentAudio.currentTime /
+        this.props.currentAudio.duration * 100);
+      this.setState({
+          progress: progress
+      });
+    }, false);
+
+    this.props.currentAudio.addEventListener('ended', () => {
+      if (this.state.shouldRepeat === true) {
+        this.context.executeAction(AudioplayerActions.changeAyah, {
+          ayah: this.props.currentAyah.ayah
+        });
       }
-
-      var currentAudio = currentAyah.scopedAudio;
-
-      // Default current time to zero. This will change
-      currentAudio.currentTime = 0;
-
-      currentAudio.addEventListener('timeupdate', function() {
-          let progress = (this.state.currentAudio.currentTime /
-                          this.state.currentAudio.duration * 100);
-          this.setState({
-              progress: progress
-          });
-          console.log('asdkas')
-      }.bind(this), false);
-
-      currentAudio.addEventListener('ended', function() {
-          if (this.state.shouldRepeat === true) {
-              this._setupAudio(this.state.currentAyah);
-          } else {
-              var currentAyah = this.getStore(AyatStore).getAyahs().find((a) => {
-                  return (this.state.currentAyah.ayah + 1)  === a.ayah;
-              });
-
-              this._setupAudio(currentAyah);
-          }
-      }.bind(this), false);
-
-      currentAudio.addEventListener('play', function() {
-          let currentTime = (this.state.progress /
-                             100 * this.state.currentAudio.duration);
-          this.setState({
-              currentTime: currentTime
-          });
-      }.bind(this), false);
-
-      this.setState({
-          surah: this.getStore(SurahStore).getSurah(),
-          currentAyah: currentAyah,
-          currentAudio: currentAudio,
-      });
-
-      if (this.state.shouldRepeat ||
-          continueToPlay ||
-          this.getStore(AudioplayerStore).shouldPlay()) {
-          this._play();
+      else {
+        this.context.executeAction(AudioplayerActions.changeAyah, {
+          ayah: this.props.currentAyah.ayah + 1,
+          shouldPlay: true
+        });
       }
-  }
+    }, false);
 
-  _startStopPlayer(e) {
-      e.preventDefault();
-      console.log('Audio was playing:', this.state.playing);
+    this.props.currentAudio.addEventListener('play', () => {
+      let currentTime = (
+        this.state.progress / 100 * this.props.currentAudio.duration
+      );
 
-      if (this.state.playing) {
-          this._pause();
-      } else {
-          this._play();
-      }
-
-  }
-
-  _pause() {
       this.setState({
-          playing: false
+        currentTime: currentTime
       });
-      this.state.currentAudio.pause();
+    }, false);
+
+    // this.setState({
+      // surah: this.props.surah,
+      // currentAyah: currentAyah,
+      // currentAudio: currentAudio,
+    // });
+
+    if (this.context.getStore(AudioplayerStore).getShouldPlay()) {
+      this.play();
+    }
   }
 
-  _play() {
-      this.setState({
-          playing: true
-      });
-      this.state.currentAudio.play();
+  startStopPlayer(e) {
+    e.preventDefault();
+    console.log('Audio was playing:', this.state.playing);
+
+    if (this.state.playing) {
+        this.pause();
+    } else {
+        this.play();
+    }
   }
 
-  _repeatSwitch() {
-      this.setState({
-          shouldRepeat: !this.state.shouldRepeat
-      });
+  pause() {
+    this.setState({
+        playing: false
+    });
+    this.props.currentAudio.pause();
   }
 
-  _forwardAyah(e) {
-      e.preventDefault();
+  play() {
+    this.setState({
+        playing: true
+    });
 
-      var currentAyah = this.getStore(AyatStore).getAyahs().find((a) => {
-        return (this.state.currentAyah.ayah + 1)  === a.ayah;
-      });
+    this.props.currentAudio.play();
+  }
 
-      this._setupAudio(currentAyah);
+  repeatSwitch() {
+    this.setState({
+      shouldRepeat: !this.state.shouldRepeat
+    });
+  }
+
+  forwardAyah(e) {
+    e.preventDefault();
+
+    this.context.executeAction(AudioplayerActions.changeAyah, {
+      ayah: this.props.currentAyah.ayah + 1
+    });
   }
 
   // UI components
 
-  _playStopButtons() {
-      var icon;
-      if (this.state.playing) {
-          icon = <i className="fa fa-pause" />;
-      } else {
-          icon = <i className="fa fa-play" />;
-      }
-      return (
-          <li className="audioplayer-controls">
-              <a className="buttons" onClick={this._startStopPlayer} href>
-                {icon}
-              </a>
-          </li>
-      );
+  playStopButtons() {
+    var icon;
+    if (this.state.playing) {
+        icon = <i className="fa fa-pause" />;
+    } else {
+        icon = <i className="fa fa-play" />;
+    }
+    return (
+        <li className="audioplayer-controls">
+            <a className="buttons" onClick={this.startStopPlayer.bind(this)} href>
+              {icon}
+            </a>
+        </li>
+    );
   }
 
-  _forwardButton() {
-      return (
-          <li className="text-center audioplayer-controls">
-            <a href className="buttons" onClick={this._forwardAyah}>
-              <i className="fa fa-fast-forward" />
-            </a>
-          </li>
-      );
+  forwardButton() {
+    return (
+      <li className="text-center audioplayer-controls">
+        <a href className="buttons" onClick={this.forwardAyah.bind(this)}>
+          <i className="fa fa-fast-forward" />
+        </a>
+      </li>
+    );
   }
 
-  _repeatButton() {
-      var classes = React.addons.classSet({
-          repeat: this.state.shouldRepeat
-      });
+  repeatButton() {
+    var classes = React.addons.classSet({
+        repeat: this.state.shouldRepeat
+    });
 
-      return (
-          <li className="text-center audioplayer-repeat">
-            <a href>
-              <input type="checkbox" id="repeat" />
-              <label htmlFor="repeat"
-                     onClick={this._repeatSwitch}
-                     className={classes}>
-                <i className="fa fa-repeat" />
-              </label>
-            </a>
-          </li>
-      );
+    return (
+      <li className="text-center audioplayer-repeat">
+        <a href>
+          <input type="checkbox" id="repeat" />
+          <label htmlFor="repeat"
+                 onClick={this.repeatSwitch}
+                 className={classes}>
+            <i className="fa fa-repeat" />
+          </label>
+        </a>
+      </li>
+    );
   }
 
   render() {
-    var currentAyahId = this.state.currentAyah ?
-      this.state.currentAyah.ayah : '';
+    var currentAyahId = this.props.currentAyah ?
+      this.props.currentAyah.ayah : '';
 
-      return (
-        <div className="audioplayer col-md-3 border-right">
-          <ul className="list-inline audioplayer-options">
-             <VersesDropdown ayahs={this.props.surah ? this.props.surah.ayat : 1}
-                             currentAyah={currentAyahId}/>
-            {this._playStopButtons()}
-            {this._forwardButton()}
-            {this._repeatButton()}
-          </ul>
-          <div className="audioplayer-wrapper">
-            <AudioplayerTrack progress={this.state.progress}
-                              changeOffset={this._changeOffset}/>
-          </div>
+    return (
+      <div className="audioplayer col-md-3 border-right">
+        <ul className="list-inline audioplayer-options">
+           <VersesDropdown ayahs={this.props.surah ? this.props.surah.ayat : 1}
+                           currentAyah={currentAyahId}/>
+          {this.playStopButtons()}
+          {this.forwardButton()}
+          {this.repeatButton()}
+        </ul>
+        <div className="audioplayer-wrapper">
+          <AudioplayerTrack progress={this.state.progress}
+                            changeOffset={this.changeOffset}/>
         </div>
-      );
+      </div>
+    );
   }
 
 }
 
 Audioplayer.contextTypes = {
-  getStore: React.PropTypes.func.isRequired
+  getStore: React.PropTypes.func.isRequired,
+  executeAction: React.PropTypes.func.isRequired
 };
 
-Audioplayer = connectToStores(Audioplayer, [SurahsStore, AyahsStore], function(stores, props) {
+Audioplayer = connectToStores(Audioplayer, [SurahsStore, AyahsStore, AudioplayerStore], function(stores, props) {
   return {
     surah: stores.SurahsStore.getSurah(),
-    ayahs: stores.AyahsStore.getAyahs()
+    ayahs: stores.AyahsStore.getAyahs(),
+    currentAudio: stores.AudioplayerStore.getCurrentAudio(),
+    currentAyah: stores.AudioplayerStore.getCurrentAyah()
   }
 })
 

@@ -6,6 +6,7 @@ import ApplicationStore from 'stores/ApplicationStore';
 import SurahsStore from 'stores/SurahsStore';
 import UserOptionsStore from 'stores/UserOptionsStore';
 import AyahsStore from 'stores/AyahsStore';
+import AudioplayerStore from 'stores/AudioplayerStore';
 
 // create new fluxible instance
 const app = new Fluxible({
@@ -19,6 +20,7 @@ app.registerStore(MyRouteStore);
 app.registerStore(ApplicationStore);
 app.registerStore(SurahsStore);
 app.registerStore(UserOptionsStore);
+app.registerStore(AudioplayerStore);
 app.registerStore(AyahsStore);
 
 module.exports = app;
