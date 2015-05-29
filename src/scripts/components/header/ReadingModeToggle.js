@@ -1,6 +1,6 @@
 import React from 'react';
 import * as AyahsActions from 'actions/AyahsActions';
-
+import classNames from 'classnames';
 
 class ReadingModeToggle extends React.Component {
   constructor(props, context) {
@@ -29,13 +29,13 @@ class ReadingModeToggle extends React.Component {
   }
 
   render() {
-    var classes = React.addons.classSet({
+    var classes = classNames({
       selected: this.state.toggled,
       'nav-link': true
     });
 
     return (
-      <a href className={classes} onClick={this.toggleReadingMode.bind(this)}>
+      <a className={classes} onClick={this.toggleReadingMode.bind(this)}>
         {this.renderIcon()}
       </a>
     );

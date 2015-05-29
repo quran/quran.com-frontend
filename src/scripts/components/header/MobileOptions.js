@@ -11,6 +11,8 @@ import ReadingModeToggle from './ReadingModeToggle';
 
 class MobileOptions extends React.Component {
   constructor(props) {
+    super(props);
+
     this.state = {
       readingMode: false,
       infoMode: false,
@@ -19,7 +21,7 @@ class MobileOptions extends React.Component {
       contentSelection: false,
       audioSelection: false,
       settingsSelection: false
-    }
+    };
   }
 
   _readingMode() {
@@ -120,12 +122,12 @@ class MobileOptions extends React.Component {
           <div className="mobile navbar-bottom visible-xs col-xs-10">
               <div className="row dark-bg">
                   <div className="toggle-options col-xs-8">
-                    <a href onClick={this._chapterSelection}>
+                    <a onClick={this._chapterSelection}>
                       Chapter / Surah&nbsp;<i className="fa fa-caret-up"></i>
                     </a>
                   </div>
                   <div className="toggle-options col-xs-2">
-                    <a href onClick={this._searchSelection}>
+                    <a onClick={this._searchSelection}>
                       <i className="fa fa-search"></i>
                     </a>
                   </div>
@@ -134,23 +136,23 @@ class MobileOptions extends React.Component {
               <div className="row options text-center">
                 <ul className="col-xs-10">
                   <li>
-                    <a href className="nav-link">
+                    <a className="nav-link">
                       <i className="fa fa-info-circle fa-2x"></i>
                     </a>
                   </li>
                   <li>
-                    <a href onClick={this._audioSelection}>
+                    <a onClick={this._audioSelection}>
                       <i className="fa fa-play fa-2x"></i>
                       <i className="fa fa-pause fa-2x"></i>
                     </a>
                   </li>
                   <li>
-                    <a href onClick={this._contentSelection}>
+                    <a onClick={this._contentSelection}>
                       <i className="fa fa-globe fa-2x"></i>
                     </a>
                   </li>
                   <li>
-                    <a href onClick={this._settingsSelection}>
+                    <a onClick={this._settingsSelection}>
                       <i className="fa fa-cog fa-2x"></i>
                     </a>
                   </li>
@@ -172,12 +174,12 @@ export default MobileOptions;
 //                     <div className="col-md-2">
 //                         <div className="row">
 //                             <div className="col-md-5 text-center">
-//                                 <a href className="nav-link" onClick={this._readingMode}>
+//                                 <a className="nav-link" onClick={this._readingMode}>
 //                                   <i className="fa fa-newspaper-o fa-2x pull-right"></i>
 //                                 </a>
 //                             </div>
 //                             <div className="col-md-5 text-left">
-//                                 <a href className="nav-link">
+//                                 <a className="nav-link">
 //                                     <i className="fa fa-info-circle fa-2x pull-right"></i>
 //                                 </a>
 //                             </div>

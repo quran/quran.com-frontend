@@ -131,14 +131,11 @@ class AyahsStore extends BaseStore {
   }
 }
 
-AyahsStore.storeName = 'AyahsStore';
-
 AyahsStore.handlers = {
   ayahsReceived(payload) {
     debug('STORES-AYAHS RECEIVED');
 
     if (this.ayahs.length > 0) {
-      console.log('asdkljasdlkajsldkajslkdjalsd123123123123123123123')
       if (payload.ayahs[0].ayah === this.ayahs[this.ayahs.length -1].ayah + 1) {
         console.log('asdkljasdlkajsldkajslkdjalsd')
         Font.createFontFaces(payload.ayahs);
@@ -158,6 +155,7 @@ AyahsStore.handlers = {
         // Assuming this happens on new page
         Font.createFontFaces(payload.ayahs);
         this.ayahs = payload.ayahs;
+        this.buildAudio(this.ayahs);
       }
     }
     else {
@@ -210,5 +208,7 @@ AyahsStore.handlers = {
     this.emitChange();
   }
 };
+
+AyahsStore.storeName = 'AyahsStore';
 
 export default AyahsStore;

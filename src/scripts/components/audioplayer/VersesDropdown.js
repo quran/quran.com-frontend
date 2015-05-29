@@ -3,9 +3,11 @@
 import React from 'react';
 import $ from 'jquery';
 import AudioplayerActions from 'actions/AudioplayerActions'
+import classNames from 'classnames';
 
 class VersesDropdown extends React.Component {
-  constructor() {
+  constructor(props) {
+    super(props);
     this.state = {
       open: false
     }
@@ -44,21 +46,21 @@ class VersesDropdown extends React.Component {
     return list.map((i) => {
       return (
         <li key={i+1}>
-          <a href onClick={this.goToAyah.bind(this, i + 1)}>{i + 1}</a>
+          <a onClick={this.goToAyah.bind(this, i + 1)}>{i + 1}</a>
         </li>
       );
     });
   }
 
   render() {
-    var classes = React.addons.classSet({
+    var classes = classNames({
       dropdown: true,
       open: this.state.open
     });
 
     return (
       <li className={classes}>
-        <a href className="dropdown-toggle" onClick={this.handleDropdownClick.bind(this)}>
+        <a className="dropdown-toggle" onClick={this.handleDropdownClick.bind(this)}>
           <ul className="verses">
             <li className="verses-title">Verses</li>
             <li className="verses-number">{this.props.currentAyah}</li>

@@ -37,4 +37,6 @@ AudioplayerStore.handlers = {
   }
 }
 
+AudioplayerStore.storeName = 'AudioplayerStore';
+
 export default AudioplayerStore;

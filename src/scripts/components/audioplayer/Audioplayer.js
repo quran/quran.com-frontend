@@ -9,6 +9,7 @@ import {connectToStores} from 'fluxible/addons'
 import SurahsStore from 'stores/SurahsStore';
 import AyahsStore from 'stores/AyahsStore';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
+import classNames from 'classnames';
 
 class Audioplayer extends React.Component {
   constructor(props, context) {
@@ -26,17 +27,16 @@ class Audioplayer extends React.Component {
 
   componentDidMount() {
     if (this.props.ayahs.length > 0 && typeof window !== 'undefined') {
-      this.context.getStore(AudioplayerStore).addChangeListener(this.setupAudio);
+      this.setupAudio();
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    console.log(this.props.currentAyah.ayah, nextProps.currentAyah.ayah)
-    if (this.props.currentAyah.ayah !== nextProps.currentAyah.ayah) {
-      // this.setupAudio();
-    }
 
-    return true;
+
+  componentDidUpdate (prevProps, prevState) {
+    if (prevProps.currentAyah.ayah !== this.props.currentAyah.ayah) {
+      this.setupAudio();
+    }
   }
 
   _ayahChanged() {
@@ -103,10 +103,12 @@ class Audioplayer extends React.Component {
     this.props.currentAudio.addEventListener('ended', () => {
       if (this.state.shouldRepeat === true) {
         this.context.executeAction(AudioplayerActions.changeAyah, {
-          ayah: this.props.currentAyah.ayah
+          ayah: this.props.currentAyah.ayah,
+          shouldPlay: true
         });
       }
       else {
+        this.props.currentAudio.pause();
         this.context.executeAction(AudioplayerActions.changeAyah, {
           ayah: this.props.currentAyah.ayah + 1,
           shouldPlay: true
@@ -124,11 +126,6 @@ class Audioplayer extends React.Component {
       });
     }, false);
 
-    // this.setState({
-      // surah: this.props.surah,
-      // currentAyah: currentAyah,
-      // currentAudio: currentAudio,
-    // });
 
     if (this.context.getStore(AudioplayerStore).getShouldPlay()) {
       this.play();
@@ -169,14 +166,17 @@ class Audioplayer extends React.Component {
 
   forwardAyah(e) {
     e.preventDefault();
+    let wasPlaying = this.state.playing;
+
+    this.pause();
 
     this.context.executeAction(AudioplayerActions.changeAyah, {
-      ayah: this.props.currentAyah.ayah + 1
+      ayah: this.props.currentAyah.ayah + 1,
+      shouldPlay: wasPlaying
     });
   }
 
   // UI components
-
   playStopButtons() {
     var icon;
     if (this.state.playing) {
@@ -185,18 +185,18 @@ class Audioplayer extends React.Component {
         icon = <i className="fa fa-play" />;
     }
     return (
-        <li className="audioplayer-controls">
-            <a className="buttons" onClick={this.startStopPlayer.bind(this)} href>
-              {icon}
-            </a>
-        </li>
+      <li className="audioplayer-controls">
+        <a className="buttons" onClick={this.startStopPlayer.bind(this)} href>
+          {icon}
+        </a>
+      </li>
     );
   }
 
   forwardButton() {
     return (
       <li className="text-center audioplayer-controls">
-        <a href className="buttons" onClick={this.forwardAyah.bind(this)}>
+        <a className="buttons" onClick={this.forwardAyah.bind(this)}>
           <i className="fa fa-fast-forward" />
         </a>
       </li>
@@ -204,13 +204,13 @@ class Audioplayer extends React.Component {
   }
 
   repeatButton() {
-    var classes = React.addons.classSet({
+    var classes = classNames({
         repeat: this.state.shouldRepeat
     });
 
     return (
       <li className="text-center audioplayer-repeat">
-        <a href>
+        <a>
           <input type="checkbox" id="repeat" />
           <label htmlFor="repeat"
                  onClick={this.repeatSwitch}
@@ -257,6 +257,6 @@ Audioplayer = connectToStores(Audioplayer, [SurahsStore, AyahsStore, Audioplayer
     currentAudio: stores.AudioplayerStore.getCurrentAudio(),
     currentAyah: stores.AudioplayerStore.getCurrentAyah()
   }
-})
+});
 
 export default Audioplayer;

@@ -12,10 +12,16 @@ class UserOptionsStore extends BaseStore {
 
     if (notNan && isNumber) {
       if (!Array.isArray(cookie.load('content'))) {
-        this.options.content = cookie.load('content')
-            .replace(/\"/g, '').split(',').map(function(option) {
-          return parseInt(option);
-        });
+        let content = cookie.load('content');
+        if (Number.isInteger(content)) {
+          this.options.content = [content];
+        }
+        else {
+          this.options.content = content
+              .replace(/\"/g, '').split(',').map(function(option) {
+            return parseInt(option);
+          });
+        }
       }
 
       this.options.quran = parseInt(cookie.load('quran'));

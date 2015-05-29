@@ -3,6 +3,7 @@ import {NavLink} from 'fluxible-router';
 import SurahsStore from 'stores/SurahsStore';
 import {connectToStores, provideContext} from 'fluxible/addons';
 import debug from 'utils/Debug';
+import classNames from 'classnames';
 
 class SurahsNav extends React.Component{
   constructor(props) {
@@ -40,7 +41,7 @@ class SurahsNav extends React.Component{
   }
 
   render() {
-    let classes = React.addons.classSet({
+    let classes = classNames({
       'left-nav col-md-2 col-xs-10': true
     }) + ' ' + this.props.className;
 

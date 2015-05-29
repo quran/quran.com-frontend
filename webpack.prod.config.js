@@ -12,7 +12,7 @@ module.exports = {
   devtool: false,
   entry: [
   './client.js',
-  './client/styles/main.scss'
+  './src/styles/main.scss'
   ],
   stats: {
     colors: true,
@@ -21,14 +21,14 @@ module.exports = {
   resolve: {
     extensions: ['', '.js'],
     alias: {
-      'styles': __dirname + '/client/styles',
-      'components': __dirname + '/client/scripts/components',
-      'actions': __dirname + '/client/scripts/actions',
-      'stores': __dirname + '/client/scripts/stores',
-      'constants': __dirname + '/client/scripts/constants',
-      'mixins': __dirname + '/client/scripts/mixins',
-      'configs': __dirname + '/client/scripts/configs',
-      'utils': __dirname + '/client/scripts/utils'
+      'styles': __dirname + '/src/styles',
+      'components': __dirname + '/src/scripts/components',
+      'actions': __dirname + '/src/scripts/actions',
+      'stores': __dirname + '/src/scripts/stores',
+      'constants': __dirname + '/src/scripts/constants',
+      'mixins': __dirname + '/src/scripts/mixins',
+      'configs': __dirname + '/src/scripts/configs',
+      'utils': __dirname + '/src/scripts/utils'
     }
   },
   module: {

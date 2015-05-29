@@ -1,10 +1,3 @@
-/**
- * This leverages Express to create and run the http server.
- * A Fluxible context is created and executes the navigateAction
- * based on the URL. Once completed, the store state is dehydrated
- * and the application is rendered via React.
- */
-
 import express from 'express';
 import path from 'path';
 import serialize from 'serialize-javascript';
@@ -12,12 +5,14 @@ import {navigateAction} from 'fluxible-router';
 import debugLib from 'debug';
 import React from 'react';
 import app from './app';
-import HtmlComponent from 'components/Html';
 import useragent from 'express-useragent';
-import * as ExpressActions from 'actions/ExpressActions';
+
 import favicon from 'serve-favicon';
+import * as ExpressActions from 'actions/ExpressActions';
+
 import * as Fonts from 'utils/FontFace';
 
+import HtmlComponent from 'components/Html';
 const htmlComponent = React.createFactory(HtmlComponent);
 const debug = debugLib('quran-com');
 const server = express();
@@ -30,10 +25,11 @@ server.set('state namespace', 'App');
 server.set('view cache', true);
 // Use varnish for the static routes, which will cache too
 server.use('/public', express.static(path.join(__dirname, '/build')));
-server.use('/images', express.static(path.join(__dirname, '/client/images')));
-server.use('/fonts', express.static(path.join(__dirname, '/client/styles/fonts')));
+server.use('/build', express.static(path.join(__dirname, '/build')));
+server.use('/images', express.static(path.join(__dirname, '/src/images')));
+server.use('/fonts', express.static(path.join(__dirname, '/src/styles/fonts')));
 server.use(useragent.express());
-server.use(favicon(__dirname + '/client/images/favicon.ico'));
+server.use(favicon(__dirname + '/src/images/favicon.ico'));
 
 server.use((req, res, next) => {
     let context = app.createContext();
@@ -56,6 +52,7 @@ server.use((req, res, next) => {
 
         debug('Exposing context state');
         const exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
+        const webserver = process.env.NODE_ENV === "production" ? "" : "//localhost:8080";
 
         debug('Rendering Application component into html');
         // memoryCache.wrap(req.url, function(cacheCallback) {
@@ -63,7 +60,8 @@ server.use((req, res, next) => {
             context: context.getComponentContext(),
             state: exposed,
             markup: React.renderToString(context.createElement()),
-            fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs())
+            fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs()),
+            clientScript: `${webserver}/build/main.js`
           }));
 
           // cacheCallback(null, html)

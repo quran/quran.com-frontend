@@ -13,6 +13,7 @@ import debug from 'utils/Debug';
 
 class Surah extends React.Component {
   constructor(props, context) {
+    super(props, context);
     this.state = {
       endOfSurah: false,
       loading: false
@@ -101,7 +102,7 @@ class Surah extends React.Component {
       this.setState({loading: false});
       return true;
     };
-    
+
     return false;
   }
 

@@ -8,7 +8,7 @@ import debug from 'utils/Debug';
 
 class Ayah extends React.Component {
   translations() {
-    if (!this.props.ayah.content && this.props.ayah.match.best) {
+    if (!this.props.ayah.content && this.props.ayah.match) {
       return this.props.ayah.match.best.map((content, i) => {
         return (
           <div className="translation" key={i}>
@@ -94,12 +94,12 @@ class Ayah extends React.Component {
             {this.props.ayah.surah_id}:{this.props.ayah.ayah}
           </span>
         </h4>
-        <a href onClick={this.goToAyah.bind(this, this.props.ayah.ayah)}
+        <a onClick={this.goToAyah.bind(this, this.props.ayah.ayah)}
                 className="text-muted">
           <i className="fa fa-play" /> Play
         </a>
         <ReactZeroClipboard text={this.props.ayah.text} className="text-muted">
-          <a href className="text-muted">
+          <a className="text-muted">
             <i className="fa fa-clipboard" /> Copy
           </a>
         </ReactZeroClipboard>

@@ -1,7 +1,6 @@
-'use strict';
-
 import React from 'react';
 import {navigateAction} from 'fluxible-router';
+import classNames from 'classnames';
 
 class SearchInput extends React.Component {
   constructor(props, context) {
@@ -31,7 +30,7 @@ class SearchInput extends React.Component {
   };
 
   render() {
-    var className = React.addons.classSet({
+    var className = classNames({
       'search-input': true
     }) + ' ' + this.props.className;
 

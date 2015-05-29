@@ -1,11 +1,11 @@
 import request from 'superagent-promise';
-import Settings from 'constants/Settings';
+import urlSettings from 'constants/Settings';
 import UserOptionsStore from 'stores/UserOptionsStore';
 import debug from 'utils/Debug';
 
 export function getAyahs(actionContext, params, done) {
   debug('ACTIONS-AYAHS');
-  return request.get(Settings.url + 'surahs/' + params.surahId + '/ayat')
+  return request.get(urlSettings.url + 'surahs/' + params.surahId + '/ayat')
   .query(
     Object.assign({
       from: params.from,
@@ -17,7 +17,7 @@ export function getAyahs(actionContext, params, done) {
     actionContext.dispatch('ayahsReceived', {
       ayahs: res.body
     });
-
+    
     done();
   });
 }
@@ -33,7 +33,7 @@ export function updateAyahs(actionContext, params, done) {
     to: firstAndLast[1]
   }, actionContext.getStore(UserOptionsStore).getOptions());
 
-  request.get(Settings.url + 'surahs/' + surahId + '/ayat')
+  request.get(urlSettings.url + 'surahs/' + surahId + '/ayat')
   .query(queryParams)
   .end(function(err, res) {
     actionContext.dispatch('ayahsUpdated', {
@@ -48,7 +48,7 @@ export function toggleReadingMode(actionContext) {
 
 export function search(actionContext, query, done) {
   debug('ACTIONS-AYAHS SEARCH');
-  return request.get(Settings.url + 'search')
+  return request.get(urlSettings.url + 'search')
   .query({q: query})
   // .end((err, res) => {
   //   actionContext.dispatch('searchReceived', res.body);

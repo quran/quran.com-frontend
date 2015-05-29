@@ -1,5 +1,5 @@
 import request from 'superagent-promise';
-import settings from 'constants/Settings';
+import urlSettings from 'constants/Settings';
 import debug from 'utils/Debug';
 
 export function getSurahs(actionContext, payload) {
@@ -7,7 +7,7 @@ export function getSurahs(actionContext, payload) {
     return;
   }
   debug('ACTIONS-SURAHS');
-  return request.get(settings.url + 'surahs')
+  return request.get(urlSettings.url + 'surahs')
   .end()
   .then(function(res) {
     console.log('SURAHS RECEIVED....')

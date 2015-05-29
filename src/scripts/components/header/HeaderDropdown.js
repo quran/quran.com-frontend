@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import {DropdownMenu} from 'react-bootstrap';
+import classNames from 'classnames';
 
 class HeaderDropdown extends React.Component {
   constructor(props) {
@@ -30,7 +31,7 @@ class HeaderDropdown extends React.Component {
 
   render() {
 
-    var classes = React.addons.classSet({
+    var classes = classNames({
       'open': this.state.open,
       'col-md-2': true,
       'col-xs-10': true,
@@ -43,7 +44,7 @@ class HeaderDropdown extends React.Component {
 
     return (
       <div className={classes} dropdown>
-        <a href className="dropdown-toggle" onClick={this.handleDropdownClick.bind(this)}>
+        <a className="dropdown-toggle" onClick={this.handleDropdownClick.bind(this)}>
           {this.props.linkContent} <i className="fa fa-caret-down fa-2x pull-right"/>
         </a>
         <DropdownMenu

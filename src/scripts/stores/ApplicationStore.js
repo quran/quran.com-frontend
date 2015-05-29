@@ -40,7 +40,7 @@ class ApplicationStore extends BaseStore {
 
 ApplicationStore.storeName = 'ApplicationStore';
 ApplicationStore.handlers = {
-    'UPDATE_PAGE_TITLE': 'handlePageTitle'
+  'UPDATE_PAGE_TITLE': 'handlePageTitle'
 };
 
 export default ApplicationStore;

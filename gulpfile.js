@@ -43,7 +43,7 @@ gulp.task('webpack:dev', ['clean'], function() {
 });
 
 gulp.task('watch', ['default'], function() {
-  gulp.watch(['client/**/*.{js,scss}'], ['webpack:build-dev']);
+  gulp.watch(['src/**/*.{js,scss}'], ['webpack:build-dev']);
 });
 
 
