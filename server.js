@@ -26,10 +26,11 @@ server.set('view cache', true);
 // Use varnish for the static routes, which will cache too
 server.use('/public', express.static(path.join(__dirname, '/build')));
 server.use('/build', express.static(path.join(__dirname, '/build')));
-server.use('/images', express.static(path.join(__dirname, '/src/images')));
+server.use('/static', express.static(path.join(__dirname, '/static')));
+server.use('/images', express.static(path.join(__dirname, '/static/images')));
 server.use('/fonts', express.static(path.join(__dirname, '/src/styles/fonts')));
 server.use(useragent.express());
-server.use(favicon(__dirname + '/src/images/favicon.ico'));
+server.use(favicon(__dirname + '/static/images/favicon.ico'));
 
 server.use((req, res, next) => {
     let context = app.createContext();

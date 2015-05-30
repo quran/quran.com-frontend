@@ -9,7 +9,8 @@ module.exports = {
     filename: '[name].js'
   },
   debug: false,
-  devtool: false,
+  devtool: 'eval',
+  target: 'web',
   entry: [
   './client.js',
   './src/styles/main.scss'
@@ -36,16 +37,15 @@ module.exports = {
       { test: /\.css$/, loader: 'style!css' },
       { test: /\.js$/, exclude: /node_modules/, loader: require.resolve('babel-loader') },
       { test: /\.json$/, loader: 'json-loader'},
-      { test: /\.(png|woff|woff2|eot|ttf|svg|jpg)$/, loader: 'url-loader?limit=8192' },
+      { test: /\.(png|svg|jpg)$/, loader: 'url-loader?limit=8192' },
+      { test: /\.(ttf|eot|svg|woff|woff(2))(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?name=/[name].[ext]"},
       { test: /\.scss$/,
         loader: ExtractTextPlugin.extract('style-loader',
           'css!sass?outputStyle=expanded&' +
           "includePaths[]=" +
           (path.resolve(__dirname, "./node_modules"))
           )
-      },
-      { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&minetype=application/font-woff" },
-      { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
+      }
     ]
   },
   plugins: [

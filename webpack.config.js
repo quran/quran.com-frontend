@@ -4,13 +4,13 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin'),
 
 module.exports = {
     entry: [
+      "bootstrap-sass!./bootstrap-sass.config.js",
       './client.js',
-      './src/styles/main.scss'
+      './src/styles/main.scss',
     ],
     output: {
         path: require("path").resolve("./build"),
         publicPath: '/public/',
-        // publicPath: "http://localhost:8081/assets/",
         filename: '[name].js'
     },
     resolve: {
@@ -28,6 +28,7 @@ module.exports = {
     },
     module: {
       loaders: [
+        { test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },
         { test: /\.css$/, loader: 'style!css' },
         { test: /\.js$/, exclude: /node_modules/, loaders: ['react-hot', require.resolve('babel-loader')] },
         { test: /\.json$/, loader: 'json-loader'},

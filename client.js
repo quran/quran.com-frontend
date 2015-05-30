@@ -16,6 +16,12 @@ window.fluxibleDebug = debug;
 
 debugClient('rehydrating app');
 
+// Init tooltips
+$('[data-toggle="tooltip"]').tooltip({
+  animation: false
+});
+
+
 // pass in the dehydrated server state from server.js
 app.rehydrate(dehydratedState, function (err, context) {
     if (err) {
@@ -23,7 +29,7 @@ app.rehydrate(dehydratedState, function (err, context) {
     }
     window.context = context;
     const mountNode = document.getElementById('app');
-    
+
     debugClient('React Rendering');
     React.render(context.createElement(), mountNode, function () {
         debugClient('React Rendered');

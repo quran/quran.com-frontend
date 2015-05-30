@@ -3,8 +3,8 @@
 import React from 'react';
 // import AudioplayerActions from 'actions/AudioplayerActions';
 import ReactZeroClipboard from 'react-zeroclipboard';
-import {Tooltip, OverlayTrigger} from 'react-bootstrap';
 import debug from 'utils/Debug';
+import $ from 'jquery';
 
 class Ayah extends React.Component {
   translations() {
@@ -42,15 +42,10 @@ class Ayah extends React.Component {
 
     let text =  this.props.ayah.quran.map((word) => {
       if (word.word.translation) {
-        let tooltip = <Tooltip key={word.char.code}>{word.word.translation}</Tooltip>;
+        let tooltip = word.word.translation;
         return (
-          <b key={word.char.code}>
-            <OverlayTrigger placement="top"
-                            overlay={tooltip}>
-              <b className={word.char.font}
-               dangerouslySetInnerHTML={{__html: word.char.code}}>
-              </b>
-            </OverlayTrigger>
+          <b key={word.char.code} className={word.char.font} data-toggle="tooltip" data-placement="top" title={tooltip}
+           dangerouslySetInnerHTML={{__html: word.char.code}}>
           </b>
         );
       } else {
@@ -112,6 +107,7 @@ class Ayah extends React.Component {
     if (this.props.readingMode) {
         return this.text();
     }
+
     return (
       <div className="row ayah">
         {this.leftControls()}

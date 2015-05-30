@@ -6,7 +6,7 @@
     "dev": "gulp",
     "lint": "eslint ./src/scripts/**/*.js; exit 0",
     "start": "NODE_PATH=\"./src\" node ./start",
-    "build": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack.client.js",
+    "build": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack.prod.config.js",
     "watch-client": "node ./node_modules/webpack/bin/webpack.js --history-api-fallback --verbose --colors --display-error-details --config webpack.watch.config.js && node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack.watch.config.js",
     "watch": "node ./node_modules/concurrently/src/main.js --kill-others \"npm run watch-client\" \"npm run start\""
   },
@@ -20,8 +20,7 @@
     "babel": "5.4.7",
     "body-parser": "^1.6.4",
     "bootstrap-sass": "^3.3.4",
-    "bootstrap-sass-loader": "justin808/bootstrap-sass-loader#fix-order-defaults-sass-import",
-    "bootstrap-webpack": "0.0.3",
+    "bootstrap-sass-loader": "^1.0.4",
     "cache-manager": "^0.19.0",
     "classnames": "^2.1.2",
     "concurrently": "^0.1.1",
