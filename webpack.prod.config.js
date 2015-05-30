@@ -12,6 +12,7 @@ module.exports = {
   devtool: 'eval',
   target: 'web',
   entry: [
+  'bootstrap-sass!./bootstrap-sass.config.js',
   './client.js',
   './src/styles/main.scss'
   ],

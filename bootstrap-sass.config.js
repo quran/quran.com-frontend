@@ -9,7 +9,7 @@ module.exports = {
   // NOTE, these are optional.
 
   //  preBootstrapCustomizations: "src/styles/bootstrap.scss",
-   mainSass: "src/styles/main.scss",
+  //  mainSass: "src/styles/main",
 
   // Default for the style loading
   // styleLoader: "style-loader!css-loader!sass-loader",
