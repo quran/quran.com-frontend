@@ -8,7 +8,7 @@ class InformationToggle extends React.Component {
   render() {
     return (
       <a className="nav-link">
-        <i className="fa fa-info-circle fa-2x pull-right"></i>
+        <i className="ss-icon ss-info pull-right"></i>
       </a>
     )
   }

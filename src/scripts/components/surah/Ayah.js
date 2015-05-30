@@ -4,7 +4,6 @@ import React from 'react';
 // import AudioplayerActions from 'actions/AudioplayerActions';
 import ReactZeroClipboard from 'react-zeroclipboard';
 import debug from 'utils/Debug';
-import $ from 'jquery';
 
 class Ayah extends React.Component {
   translations() {
@@ -31,14 +30,13 @@ class Ayah extends React.Component {
         </div>
       );
     });
-  }
-
-  readingModeText() {}
+  };
 
   text() {
     if (!this.props.ayah.quran[0].char) {
       return;
     }
+
 
     let text =  this.props.ayah.quran.map((word) => {
       if (word.word.translation) {
@@ -71,7 +69,7 @@ class Ayah extends React.Component {
         {text}
       </h1>
     );
-  }
+  };
 
   goToAyah(ayah, e) {
     e.preventDefault();
@@ -105,7 +103,7 @@ class Ayah extends React.Component {
   render() {
     debug(`COMPONENT-AYAH RENDERED ${this.props.ayah.ayah}`)
     if (this.props.readingMode) {
-        return this.text();
+      return this.text();
     }
 
     return (

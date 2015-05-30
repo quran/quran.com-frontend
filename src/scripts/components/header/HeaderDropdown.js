@@ -45,7 +45,11 @@ class HeaderDropdown extends React.Component {
     return (
       <div className={classes} dropdown>
         <a className="dropdown-toggle" onClick={this.handleDropdownClick.bind(this)}>
-          {this.props.linkContent} <i className="fa fa-caret-down fa-2x pull-right"/>
+          <i className={this.props.linkIcon}/> {this.props.linkContent}
+          {this.state.open ?
+            <i className="ss-icon ss-directup pull-right"/> :
+            <i className="ss-icon ss-dropdown pull-right"/>
+          }
         </a>
         <DropdownMenu
                 ref="menu"

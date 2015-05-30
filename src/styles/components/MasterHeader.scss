@@ -124,6 +124,7 @@ nav{
       text-decoration: none;
       line-height: $navbar-height * 0.3571;
       outline: none;
+      cursor: pointer;
       &.selected{
         i{
           color: $brand-primary;

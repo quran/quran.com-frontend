@@ -24,7 +24,7 @@ class MasterHeader extends React.Component{
     var prev = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) - 1);
     return (
       <NavLink className="navbar-text" href={prev}>
-        <i className="fa fa-chevron-left"></i>
+        <i className="ss-icon ss-navigateleft"></i>
         <span className="hidden-xs">&nbsp;Previous Chapter</span>
       </NavLink>
     );
@@ -35,7 +35,7 @@ class MasterHeader extends React.Component{
     return (
       <NavLink className="navbar-text" href={next}>
         <span className="hidden-xs">Next Chapter&nbsp;</span>
-        <i className="fa fa-chevron-right"></i>
+        <i className="ss-icon ss-navigateright"></i>
       </NavLink>
     );
   }

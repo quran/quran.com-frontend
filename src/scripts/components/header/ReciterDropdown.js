@@ -49,9 +49,8 @@ class ReciterDropdown extends React.Component {
   }
 
   render() {
-    var title = 'Reciter';
     return (
-        <HeaderDropdown linkContent={title} className="reciter-dropdown">
+        <HeaderDropdown linkContent="Reciter" linkIcon="ss-icon ss-highvolume" className="reciter-dropdown">
             {this.renderMenu()}
         </HeaderDropdown>
     );

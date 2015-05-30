@@ -16,11 +16,15 @@ window.fluxibleDebug = debug;
 
 debugClient('rehydrating app');
 
-// Init tooltips
-$('[data-toggle="tooltip"]').tooltip({
-  animation: false
-});
-
+// Init tooltip
+if (typeof window !== 'undefined') {
+  $(function () {
+    $(document.body).tooltip({
+      selector: '[data-toggle="tooltip"]',
+      animation: false
+    });
+  });
+}
 
 // pass in the dehydrated server state from server.js
 app.rehydrate(dehydratedState, function (err, context) {

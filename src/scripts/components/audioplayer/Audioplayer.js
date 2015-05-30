@@ -180,9 +180,9 @@ class Audioplayer extends React.Component {
   playStopButtons() {
     var icon;
     if (this.state.playing) {
-        icon = <i className="fa fa-pause" />;
+        icon = <i className="ss-icon ss-pause" />;
     } else {
-        icon = <i className="fa fa-play" />;
+        icon = <i className="ss-icon ss-play" />;
     }
     return (
       <li className="audioplayer-controls">
@@ -197,7 +197,7 @@ class Audioplayer extends React.Component {
     return (
       <li className="text-center audioplayer-controls">
         <a className="buttons" onClick={this.forwardAyah.bind(this)}>
-          <i className="fa fa-fast-forward" />
+          <i className="ss-icon ss-skipforward" />
         </a>
       </li>
     );
@@ -215,7 +215,7 @@ class Audioplayer extends React.Component {
           <label htmlFor="repeat"
                  onClick={this.repeatSwitch}
                  className={classes}>
-            <i className="fa fa-repeat" />
+            <i className="ss-icon ss-repeat" />
           </label>
         </a>
       </li>
