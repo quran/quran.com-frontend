@@ -8,8 +8,8 @@ module.exports = {
   // mainSass: gets loaded after bootstrap, so you can override a bootstrap style.
   // NOTE, these are optional.
 
-  //  preBootstrapCustomizations: "src/styles/bootstrap.scss",
-  //  mainSass: "src/styles/main",
+   preBootstrapCustomizations: "src/styles/_bootstrap-config.scss",
+   mainSass: "src/styles/_main.scss",
 
   // Default for the style loading
   // styleLoader: "style-loader!css-loader!sass-loader",
@@ -19,7 +19,7 @@ module.exports = {
       // styleLoader: ExtractTextPlugin.extract("style-loader", "css-loader!sass-loader"),
   //
   // If you want expanded CSS
-    // styleLoader: ExtractTextPlugin.extract("style-loader", "css-loader!sass?outputStyle=expanded"),
+  styleLoader: ExtractTextPlugin.extract("style-loader", "css-loader!sass?outputStyle=expanded"),
 
   scripts: {
     'transition': true,
@@ -36,47 +36,47 @@ module.exports = {
     'affix': true
   },
   styles: {
-    // "mixins": true,
-    //
-    // "normalize": true,
-    // "print": true,
-    //
-    // "scaffolding": true,
-    // "type": true,
-    // "code": true,
-    // "grid": true,
-    // "tables": true,
-    // "forms": true,
-    // "buttons": true,
-    //
-    // "component-animations": true,
-    // "glyphicons": true,
-    // "dropdowns": true,
-    // "button-groups": true,
-    // "input-groups": true,
-    // "navs": true,
-    // "navbar": true,
-    // "breadcrumbs": true,
-    // "pagination": true,
-    // "pager": true,
-    // "labels": true,
-    // "badges": true,
-    // "jumbotron": true,
-    // "thumbnails": true,
-    // "alerts": true,
-    // "progress-bars": true,
-    // "media": true,
-    // "list-group": true,
-    // "panels": true,
-    // "wells": true,
-    // "close": true,
-    //
-    // "modals": true,
-    // "tooltip": true,
-    // "popovers": true,
-    // "carousel": true,
-    //
-    // "utilities": true,
-    // "responsive-utilities": true
+    "mixins": true,
+
+    "normalize": true,
+    "print": false,
+
+    "scaffolding": true,
+    "type": true,
+    "code": true,
+    "grid": true,
+    "tables": true,
+    "forms": true,
+    "buttons": true,
+
+    "component-animations": true,
+    "glyphicons": false,
+    "dropdowns": true,
+    "button-groups": false,
+    "input-groups": false,
+    "navs": true,
+    "navbar": true,
+    "breadcrumbs": false,
+    "pagination": true,
+    "pager": true,
+    "labels": true,
+    "badges": true,
+    "jumbotron": false,
+    "thumbnails": false,
+    "alerts": false,
+    "progress-bars": false,
+    "media": false,
+    "list-group": false,
+    "panels": true,
+    "wells": false,
+    "close": true,
+
+    "modals": true,
+    "tooltip": true,
+    "popovers": true,
+    "carousel": false,
+
+    "utilities": true,
+    "responsive-utilities": true
   }
 };

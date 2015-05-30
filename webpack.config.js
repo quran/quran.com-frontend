@@ -6,7 +6,6 @@ module.exports = {
     entry: [
       'bootstrap-sass!./bootstrap-sass.config.js',
       './client.js',
-      './src/styles/main.scss',
     ],
     output: {
         path: require("path").resolve("./build"),
