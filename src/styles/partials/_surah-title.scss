@@ -1,0 +1,23 @@
+.surah-title {
+  padding: $content-padding;
+  height: $navbar-height;
+  .navbar-text{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    display: inline;
+    float: none;
+    margin-left: -15px;
+    margin-right: -15px;
+  }
+  img {
+    height: 100%;
+
+    &.title{
+      display: block;
+      margin: auto;
+      height: 200px;
+      margin-top: -70px;
+      margin-bottom: -70px;
+    }
+  }
+}
