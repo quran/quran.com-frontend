@@ -11,7 +11,7 @@ class Html extends React.Component {
           <title>{this.props.context.getStore(ApplicationStore).getPageTitle()}</title>
           <meta name="viewport" content="width=device-width, user-scalable=no" />
 
-          <link rel="stylesheet" href="/build/main.css" />
+          <link rel="stylesheet" href={this.props.hotModuleUrl + 'build/main.css'} />
           {this.props.fontFaces.map(function(font) {
             return (
               <style type="text/css" dangerouslySetInnerHTML={{__html: font}} />
@@ -22,7 +22,7 @@ class Html extends React.Component {
           <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
       </body>
       <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
-      <script src={this.props.clientScript}></script>
+      <script src={this.props.hotModuleUrl + 'build/main.js'}></script>
       </html>
     );
   }

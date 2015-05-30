@@ -6,7 +6,7 @@ var HtmlWebpackPlugin = require('html-webpack-plugin')
 
 config.cache = true;
 config.debug = true;
-config.devtool = "source-map";
+config.devtool = "cheap-module-eval-source-map";
 
 config.entry.unshift(
 	"webpack-dev-server/client?http://localhost:8080",
@@ -49,7 +49,7 @@ config.module = {
 
 config.devServer = {
 	publicPath:  "http://localhost:8080/build/",
-	contentBase: "./src",
+	contentBase: "./",
 	hot:         true,
 	inline:      true,
 	lazy:        false,

@@ -31,9 +31,12 @@ class Audioplayer extends React.Component {
     }
   }
 
-
-
   componentDidUpdate (prevProps, prevState) {
+    // When navigating from the index page, there is no ayah set and therefore,
+    // should bootstrap it!
+    if (!prevProps.currentAyah) {
+      return; 
+    }
     if (prevProps.currentAyah.ayah !== this.props.currentAyah.ayah) {
       this.setupAudio();
     }

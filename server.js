@@ -62,7 +62,7 @@ server.use((req, res, next) => {
             state: exposed,
             markup: React.renderToString(context.createElement()),
             fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs()),
-            clientScript: `${webserver}/build/main.js`
+            hotModuleUrl: `${webserver}/`
           }));
 
           // cacheCallback(null, html)

@@ -89,11 +89,11 @@ class Ayah extends React.Component {
         </h4>
         <a onClick={this.goToAyah.bind(this, this.props.ayah.ayah)}
                 className="text-muted">
-          <i className="fa fa-play" /> Play
+          <i className="ss-icon ss-play" /> Play
         </a>
         <ReactZeroClipboard text={this.props.ayah.text} className="text-muted">
           <a className="text-muted">
-            <i className="fa fa-clipboard" /> Copy
+            <i className="ss-icon ss-attach" /> Copy
           </a>
         </ReactZeroClipboard>
       </div>

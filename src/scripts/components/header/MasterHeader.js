@@ -121,7 +121,7 @@ class MasterHeader extends React.Component{
                 <span className="title">THE NOBLE QURAN</span>
                 <span className="menu visible-xs"
                       onClick={this.showOptions}>
-                      MENU <i className="fa fa-caret-down"></i>
+                      MENU <i className="ss-icon ss-dropdown"></i>
                 </span>
             </a>
             {this.renderMobileOptions()}

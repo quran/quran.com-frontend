@@ -123,12 +123,12 @@ class MobileOptions extends React.Component {
               <div className="row dark-bg">
                   <div className="toggle-options col-xs-8">
                     <a onClick={this._chapterSelection}>
-                      Chapter / Surah&nbsp;<i className="fa fa-caret-up"></i>
+                      Chapter / Surah&nbsp;<i className="ss-icon ss-directup" />
                     </a>
                   </div>
                   <div className="toggle-options col-xs-2">
                     <a onClick={this._searchSelection}>
-                      <i className="fa fa-search"></i>
+                      <i className="ss-icon ss-search"></i>
                     </a>
                   </div>
               </div>
@@ -137,23 +137,23 @@ class MobileOptions extends React.Component {
                 <ul className="col-xs-10">
                   <li>
                     <a className="nav-link">
-                      <i className="fa fa-info-circle fa-2x"></i>
+                      <i className="ss-icon ss-info" />
                     </a>
                   </li>
                   <li>
                     <a onClick={this._audioSelection}>
-                      <i className="fa fa-play fa-2x"></i>
-                      <i className="fa fa-pause fa-2x"></i>
+                      <i className="ss-icon ss-play" />
+                      <i className="ss-icon ss-pause" />
                     </a>
                   </li>
                   <li>
                     <a onClick={this._contentSelection}>
-                      <i className="fa fa-globe fa-2x"></i>
+                      <i className="ss-icon ss-globe" />
                     </a>
                   </li>
                   <li>
                     <a onClick={this._settingsSelection}>
-                      <i className="fa fa-cog fa-2x"></i>
+                      <i className="ss-icon ss-settings" />
                     </a>
                   </li>
                 </ul>

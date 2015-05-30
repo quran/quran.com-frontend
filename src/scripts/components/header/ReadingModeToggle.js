@@ -23,9 +23,9 @@ class ReadingModeToggle extends React.Component {
 
   renderIcon() {
     if (this.props.noPullRight) {
-      return <i className="ss-icon ss-openbook fa-2x"></i>;
+      return <i className="ss-icon ss-openbook" />;
     }
-    return <i className="ss-icon ss-openbook fa-2x pull-right"></i>;
+    return <i className="ss-icon ss-openbook pull-right" />;
   }
 
   render() {

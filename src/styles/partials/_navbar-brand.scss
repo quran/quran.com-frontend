@@ -1,0 +1,25 @@
+.navbar-brand {
+  background: url('/static/images/index-bg.jpg') center center no-repeat $brand-primary;
+  background-size: cover;
+  padding: $content-padding;
+  position: relative;
+  text-align: center;
+  margin-left: 0px !important;
+  .title{
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10px;
+    color: #fff;
+    opacity: 0.5;
+  }
+  img {
+    display: inline !important;
+    height: 100%;
+    &.logo{
+      height: 80%;
+      vertical-align: top;
+    }
+  }
+}

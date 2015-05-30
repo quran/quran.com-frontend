@@ -8,13 +8,10 @@ import app from './app';
 const debugClient = debug('quran-com');
 const dehydratedState = window.App; // Sent from the server
 
-window.React = React; // For chrome dev tool support
-
 // expose debug object to browser, so that it can be enabled/disabled from browser:
 // https://github.com/visionmedia/debug#browser-support
 window.fluxibleDebug = debug;
-
-debugClient('rehydrating app');
+window.React = React; // For chrome dev tool support
 
 // Init tooltip
 if (typeof window !== 'undefined') {
@@ -26,6 +23,7 @@ if (typeof window !== 'undefined') {
   });
 }
 
+debugClient('rehydrating app');
 // pass in the dehydrated server state from server.js
 app.rehydrate(dehydratedState, function (err, context) {
     if (err) {

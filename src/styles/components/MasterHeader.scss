@@ -15,32 +15,6 @@ nav{
   }
 }
 
-// Everything to do with the brand
-.navbar-brand {
-  background: url('/images/index-bg.jpg') center center no-repeat $brand-primary;
-  background-size: cover;
-  padding: $content-padding;
-  position: relative;
-  text-align: center;
-  margin-left: 0px !important;
-  .title{
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 10px;
-    color: #fff;
-    opacity: 0.5;
-  }
-  img {
-    display: inline !important;
-    height: 100%;
-    &.logo{
-      height: 80%;
-      vertical-align: top;
-    }
-  }
-}
 // The middle section of the navbar
 .surah-title {
   padding: $content-padding;
@@ -264,9 +238,7 @@ nav{
       }
     }
   }
-  i.fa-2x{
-    font-size: 1.5em;
-  }
+
   .options{
     .col-xs-10{
       padding: 0px;
@@ -292,11 +264,6 @@ nav{
           line-height: 45px;
         }
       }
-    }
-
-    i.fa-play,
-    i.fa-pause{
-      font-size: 1.15em;
     }
   }
 
