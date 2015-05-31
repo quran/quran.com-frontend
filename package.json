@@ -33,7 +33,6 @@
     "fluxible": "^0.4.10",
     "fluxible-plugin-fetchr": "^0.2.1",
     "fluxible-router": "^0.1.7",
-    "font-awesome": "^4.3.0",
     "html-webpack-plugin": "^1.4.0",
     "jquery": "^2.1.4",
     "jsx-loader": "^0.13.2",
