@@ -134,10 +134,8 @@ class AyahsStore extends BaseStore {
 AyahsStore.handlers = {
   ayahsReceived(payload) {
     debug('STORES-AYAHS RECEIVED');
-
     if (this.ayahs.length > 0) {
       if (payload.ayahs[0].ayah === this.ayahs[this.ayahs.length -1].ayah + 1) {
-        console.log('asdkljasdlkajsldkajslkdjalsd')
         Font.createFontFaces(payload.ayahs);
         this.ayahs = this.ayahs.concat(payload.ayahs);
       }
@@ -159,12 +157,12 @@ AyahsStore.handlers = {
       }
     }
     else {
-      // TODO: what happens if not on server....
+      this.ayahs = payload.ayahs;
+
       if (typeof window !== 'undefined') {
         Font.createFontFaces(payload.ayahs);
+        this.buildAudio(this.ayahs);
       }
-
-      this.ayahs = payload.ayahs;
     }
 
     this.emitChange();

@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
-import AudioplayerActions from 'actions/AudioplayerActions'
+import * as AudioplayerActions from 'actions/AudioplayerActions'
 import classNames from 'classnames';
 
 class VersesDropdown extends React.Component {
@@ -32,14 +32,18 @@ class VersesDropdown extends React.Component {
   goToAyah(ayah, e) {
     e.preventDefault();
     this.setState({
-        open: false
+      open: false
     });
-    // AudioplayerActions.changeAyah(this.context.dispatcher, ayah);
+
+    this.context.executeAction(AudioplayerActions.changeAyah, {
+      ayah: ayah,
+      shouldPlay: true
+    });
   }
 
   ayatList() {
     var list = Array(this.props.ayahs)
-                .join().split(',').map(function(e, i) {return i;});
+    .join().split(',').map(function(e, i) {return i;});
 
     return list.map((i) => {
       return (
@@ -70,12 +74,15 @@ class VersesDropdown extends React.Component {
       </li>
     );
   }
-
 }
 
 VersesDropdown.propTypes = {
   ayahs: React.PropTypes.number
-}
+};
+
+VersesDropdown.contextTypes = {
+  executeAction: React.PropTypes.func.isRequired
+};
 
 VersesDropdown.defaultProps = {
   ayahs: 0
