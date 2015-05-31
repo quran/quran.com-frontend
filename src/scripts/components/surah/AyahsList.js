@@ -32,7 +32,7 @@ class AyahsList extends React.Component {
     debug('COMPONENT-AYAHSLIST')
     if (this.props.isReadingMode) {
       return (
-        <h1 className="word-font text-right">
+        <h1 className="word-font text-justify">
             {this.list()}
         </h1>
       );

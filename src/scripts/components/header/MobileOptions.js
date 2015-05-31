@@ -30,7 +30,7 @@ class MobileOptions extends React.Component {
     AyatActions.triggerReading();
   }
 
-  setSelection(e, prop) {
+  setSelection(prop, e) {
     console.log(e, prop)
     // e.preventDefault();
 
@@ -70,14 +70,14 @@ class MobileOptions extends React.Component {
       selection = (
         <div className="row text-center">
           <Audioplayer />
-          <ReciterDropdown />
+          <ReciterDropdown className="open"/>
         </div>
       );
     }
     else if (this.state.settingsSelection) {
       selection = (
         <div className="row options">
-          <div className="col-xs-9 full-height">
+          <div className="col-xs-9 full-height border-right">
             <FontSizeInput />
           </div>
           <div className="col-xs-3 full-height text-center">
@@ -90,7 +90,7 @@ class MobileOptions extends React.Component {
     else if (this.state.contentSelection) {
       selection = (
         <div className="row text-center">
-          <ContentDropdown />;
+          <ContentDropdown className="open" />;
         </div>
       );
     }
@@ -116,18 +116,18 @@ class MobileOptions extends React.Component {
       {this.renderSelection()}
       <div className="row options text-center">
         <ul className="col-xs-12">
-          <li>
+          <li className="border-right">
             <a className="nav-link">
               <i className="ss-icon ss-info" />
             </a>
           </li>
-          <li>
+          <li className="border-right">
             <a onClick={this.setSelection.bind(this, 'audioSelection')}>
               <i className="ss-icon ss-play" />
               <i className="ss-icon ss-pause" />
             </a>
           </li>
-          <li>
+          <li className="border-right">
             <a onClick={this.setSelection.bind(this, 'contentSelection')}>
               <i className="ss-icon ss-globe" />
             </a>

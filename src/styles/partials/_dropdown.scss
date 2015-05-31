@@ -1,11 +1,4 @@
-// Dropdown icon
-.options .dropdown{
-  height: 100%;
-
-  .dropdown-icon.ss-icon:before{
-    content:"▾";
-  }
-
+nav{
   a.dropdown-toggle{
     @extend .nav-link;
 
@@ -21,6 +14,17 @@
       }
     }
   }
+}
+
+// Dropdown icon
+.options .dropdown{
+  height: 100%;
+
+  .dropdown-icon.ss-icon:before{
+    content:"▾";
+  }
+
+
 
   @media (max-width: $screen-xs-max) {
     background: $olive;

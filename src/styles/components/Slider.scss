@@ -22,6 +22,10 @@ $slider-width: 80px;
     margin-left: 5px;
     position: absolute;
     right: 15px;
+
+    @media (max-width: $screen-xs-max) {
+      right: 5px;
+    }
   }
 }
 

@@ -47,29 +47,30 @@ export default {
 
       actionContext.executeAction(
         SurahsActions.getSurahs,
-        currentRoute.get('params').get('surahId')
+        currentRoute.get('params').get('surahId'),
+        () => {
+          if (currentRoute.get('params').get('range')) {
+            if (currentRoute.get('params').get('range').indexOf('-') > -1) {
+              fromParam = currentRoute.get('params').get('range').split('-')[0];
+              toParam = currentRoute.get('params').get('range').split('-')[1];
+            }
+            else {
+              fromParam = currentRoute.get('params').get('range');
+              toParam = parseInt(fromParam) + 10
+            }
+          }
+          else {
+            fromParam = 1;
+            toParam = 10;
+          }
+
+          actionContext.executeAction(AyahsActions.getAyahs, {
+            surahId: surahId,
+            from: fromParam,
+            to: toParam
+          }, done);
+        }
       );
-
-      if (currentRoute.get('params').get('range')) {
-        if (currentRoute.get('params').get('range').indexOf('-') > -1) {
-          fromParam = currentRoute.get('params').get('range').split('-')[0];
-          toParam = currentRoute.get('params').get('range').split('-')[1];
-        }
-        else {
-          fromParam = currentRoute.get('params').get('range');
-          toParam = parseInt(fromParam) + 10
-        }
-      }
-      else {
-        fromParam = 1;
-        toParam = 10;
-      }
-
-      actionContext.executeAction(AyahsActions.getAyahs, {
-        surahId: surahId,
-        from: fromParam,
-        to: toParam
-      }, done);
     }
   },
 };

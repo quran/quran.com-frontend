@@ -9,7 +9,7 @@ class HeaderDropdown extends React.Component {
   render() {
     var classes = classNames({
       'col-md-2': true,
-      'col-xs-10': true,
+      'col-xs-12': true,
       'dropdown': true,
       'full-height': true,
       'text-left': true,

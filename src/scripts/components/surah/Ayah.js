@@ -57,7 +57,7 @@ class Ayah extends React.Component {
     if (this.props.readingMode) {
       return (
         <span>
-            {text}
+          {text}
         </span>
       );
     }
