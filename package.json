@@ -76,7 +76,6 @@
     "karma-phantomjs-launcher": "~0.1.4",
     "karma-script-launcher": "~0.1.0",
     "karma-webpack": "~1.5.1",
-    "nodemon": "^1.2.1",
     "path": "^0.11.14",
     "precommit-hook": "^1.0.7",
     "raw-loader": "^0.5.1",

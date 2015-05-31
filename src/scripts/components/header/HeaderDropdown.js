@@ -28,8 +28,7 @@ class HeaderDropdown extends React.Component {
            aria-haspopup="true"
            aria-expanded="false"
            className="dropdown-toggle">
-          <i className={this.props.linkIcon}/> &nbsp;
-          {this.props.linkContent}
+          <i className={this.props.linkIcon}/> {this.props.linkContent}
           <i className="ss-icon dropdown-icon pull-right"/>
         </a>
 

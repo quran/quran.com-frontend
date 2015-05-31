@@ -126,7 +126,7 @@ class MobileOptions extends React.Component {
         <div className="row dark-bg">
           <div className="toggle-options col-xs-9">
             <a onClick={this.chapterSelection.bind(this)}>
-              Chapter / Surah&nbsp;<i className={'ss-icon pull-right ' + (this.state.chapterSelection ? 'ss-directup' : 'ss-dropdown' )} />
+              Chapter / Surah <i className={'ss-icon pull-right ' + (this.state.chapterSelection ? 'ss-directup' : 'ss-dropdown' )} />
           </a>
         </div>
         <div className={'toggle-options col-xs-3 text-center ' + (this.state.searchSelection ? 'active' : '')}>

@@ -11,7 +11,9 @@ class MasterHeader extends React.Component{
     super(props);
 
     this.state = {
-      showOptions: false
+      showOptions: false,
+      showMobile: false,
+      showDesktop: true
     };
   }
 
@@ -25,7 +27,7 @@ class MasterHeader extends React.Component{
     return (
       <NavLink className="navbar-text previous-chapter" href={prev}>
         <i className="ss-icon ss-navigateleft"></i>
-        <span className="hidden-xs">&nbsp;Previous Chapter</span>
+        <span className="hidden-xs"> Previous Chapter</span>
       </NavLink>
     );
   }
@@ -34,7 +36,7 @@ class MasterHeader extends React.Component{
     var next = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) + 1);
     return (
       <NavLink className="navbar-text next-chapter" href={next}>
-        <span className="hidden-xs">Next Chapter&nbsp;</span>
+        <span className="hidden-xs">Next Chapter </span>
         <i className="ss-icon ss-navigateright"></i>
       </NavLink>
     );
@@ -57,59 +59,54 @@ class MasterHeader extends React.Component{
     if (currentSurah) {
       return (
         <p className="navbar-text text-uppercase">
-          {currentSurah.id}. {currentSurah.name.simple}&nbsp;
-          ({currentSurah.name.english})
+          {currentSurah.id}. {currentSurah.name.simple} ({currentSurah.name.english})
         </p>
       );
     }
   }
 
   renderMobileOptions() {
-    if (this.state.showOptions && this.state.width < 1000) {
+    if (this.state.showOptions && this.state.showMobile) {
       return <MobileOptions />;
     }
   }
 
   renderDesktopOptions() {
-    if (this.state.width > 1000) {
+    if (this.state.showDesktop) {
       return <DesktopOptions />;
     }
   }
 
-  renderNavBrandDesktop() {
-    return (
-      <NavLink className="col-md-2 col-xs-12 navbar-brand hidden-xs" href="/">
-        <img src="/images/logo-md-w.png" alt="" className="logo" />
-        <span className="title">THE NOBLE QURAN</span>
-      </NavLink>
-    );
-  }
-
-  renderNavBrandMobile() {
+  renderNavBrand() {
     let className = this.state.showOptions ? 'ss-icon ss-directup' : 'ss-icon ss-dropdown';
     return (
-      <a className="col-md-2 col-xs-12 navbar-brand visible-xs">
-        <img src="/images/logo-md-w.png" alt="" className="logo" />
+      <div className="col-md-2 col-xs-12 navbar-brand">
+        <NavLink href="/">
+          <img src="/images/logo-md-w.png" alt="" className="logo" />
+        </NavLink>
         <span className="title">THE NOBLE QURAN</span>
         <span className="menu visible-xs"
               onClick={this.showOptions.bind(this)}>
           MENU <i className={className} />
         </span>
-      </a>
+      </div>
     );
   }
 
   updateDimensions() {
     if (typeof window !== 'undefined') {
-      this.setState({width: $(window).width(), height: $(window).height()});
+      if ($(window).width() > 1000) {
+        return;
+        // this.setState({showDesktop: true, showMobile: false});
+      }
+      else {
+        this.setState({showDesktop: false, showMobile: true});
+      }
     }
   }
 
-  componentWillMount() {
-    this.updateDimensions();
-  }
-
   componentDidMount() {
+    this.updateDimensions();
     if (typeof window !== 'undefined') {
       window.addEventListener("resize", this.updateDimensions.bind(this));
     }
@@ -129,6 +126,9 @@ class MasterHeader extends React.Component{
     else if (this.state.showOptions !== nextState.showOptions) {
       return true;
     }
+    else if (this.state.width !== nextState.width) {
+      return true;
+    }
     return false;
   }
 
@@ -141,8 +141,7 @@ class MasterHeader extends React.Component{
       <nav className="navbar navbar-default navbar-fixed-top montserrat" role="navigation">
         <div className="container-fluid">
           <div className="row">
-            {this.renderNavBrandDesktop()}
-            {this.renderNavBrandMobile()}
+            {this.renderNavBrand()}
             {this.renderMobileOptions()}
             <div className="col-md-3 col-xs-3 surah-title">
               <img src="/images/ornament-left.png" className="ornament" />
