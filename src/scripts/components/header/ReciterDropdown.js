@@ -7,7 +7,6 @@ import Settings from 'constants/Settings';
 import HeaderDropdown from './HeaderDropdown';
 import UserOptionsStore from 'stores/UserOptionsStore';
 // import AyatActions from 'actions/AyatActions';
-import {MenuItem} from 'react-bootstrap';
 
 class ReciterDropdown extends React.Component {
   constructor(props, context) {
@@ -39,11 +38,11 @@ class ReciterDropdown extends React.Component {
   renderMenu() {
     return this.state.options.map((option) => {
       return (
-        <MenuItem eventKey={option.name.english}
+        <li eventKey={option.name.english}
                   onClick={this.chosenOption.bind(this, option.id)}
                   key={option.id}>
           {option.name.english}
-        </MenuItem>
+        </li>
       );
     });
   }

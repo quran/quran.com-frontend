@@ -3,8 +3,7 @@ import React from 'react';
 import Ayah from 'components/surah/Ayah';
 import AyahsStore from 'stores/AyahsStore';
 import Loader from 'components/Loader';
-import * as Font from 'utils/FontFace';
-import { connectToStores, provideContext } from 'fluxible/addons';
+import { connectToStores } from 'fluxible/addons';
 import debug from 'utils/Debug';
 
 class AyahsList extends React.Component {

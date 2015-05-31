@@ -48,6 +48,10 @@
       display: block;
       text-decoration: none;
       font-size: 12px;
+
+      &:hover{
+        cursor: pointer;
+      }
     }
     .label{
       padding: .65em 1.1em;

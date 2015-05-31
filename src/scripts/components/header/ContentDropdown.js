@@ -1,12 +1,9 @@
-'use strict';
-
 import React from 'react';
 import request from 'superagent';
 import Settings from 'constants/Settings';
 import HeaderDropdown from './HeaderDropdown';
 import UserOptionsStore from 'stores/UserOptionsStore';
 import * as AyahsActions from 'actions/AyahsActions';
-import {MenuItem} from 'react-bootstrap';
 
 class ContentDropdown extends React.Component {
   constructor(props, context) {

@@ -1,6 +1,4 @@
 import React from 'react';
-import $ from 'jquery';
-import {DropdownMenu} from 'react-bootstrap';
 import classNames from 'classnames';
 
 class HeaderDropdown extends React.Component {

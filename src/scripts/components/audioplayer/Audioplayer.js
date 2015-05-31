@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import AudioplayerStore from 'stores/AudioplayerStore';
 import AudioplayerTrack from './AudioplayerTrack';
@@ -35,7 +33,7 @@ class Audioplayer extends React.Component {
     // When navigating from the index page, there is no ayah set and therefore,
     // should bootstrap it!
     if (!prevProps.currentAyah) {
-      return; 
+      return;
     }
     if (prevProps.currentAyah.ayah !== this.props.currentAyah.ayah) {
       this.setupAudio();

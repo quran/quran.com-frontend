@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import SearchInput from './SearchInput';
 import ReciterDropdown from './ReciterDropdown';
@@ -33,7 +31,8 @@ class MobileOptions extends React.Component {
   }
 
   setSelection(e, prop) {
-    e.preventDefault();
+    console.log(e, prop)
+    // e.preventDefault();
 
     var defaultState = {
       infoMode: false,
@@ -47,27 +46,6 @@ class MobileOptions extends React.Component {
     defaultState[prop] = !this.state[prop];
 
     this.setState(defaultState);
-  }
-
-  chapterSelection(e) {
-    this.setSelection(e, 'chapterSelection');
-  }
-
-  searchSelection(e) {
-    this.setSelection(e, 'searchSelection');
-  }
-
-  audioSelection(e) {
-    this.setSelection(e, 'audioSelection');
-  }
-
-  contentSelection(e) {
-    console.log('jasdhkjashdkjashdk')
-    this.setSelection(e, 'contentSelection');
-  }
-
-  settingsSelection(e) {
-    this.setSelection(e, 'settingsSelection');
   }
 
   renderSelection() {
@@ -125,12 +103,12 @@ class MobileOptions extends React.Component {
       <div className="mobile navbar-bottom visible-xs col-xs-12">
         <div className="row dark-bg">
           <div className="toggle-options col-xs-9">
-            <a onClick={this.chapterSelection.bind(this)}>
+            <a onClick={this.setSelection.bind(this, 'chapterSelection')}>
               Chapter / Surah <i className={'ss-icon pull-right ' + (this.state.chapterSelection ? 'ss-directup' : 'ss-dropdown' )} />
           </a>
         </div>
         <div className={'toggle-options col-xs-3 text-center ' + (this.state.searchSelection ? 'active' : '')}>
-          <a onClick={this.searchSelection.bind(this)}>
+          <a onClick={this.setSelection.bind(this, 'searchSelection')}>
             <i className="ss-icon ss-search"></i>
           </a>
         </div>
@@ -144,18 +122,18 @@ class MobileOptions extends React.Component {
             </a>
           </li>
           <li>
-            <a onClick={this.audioSelection.bind(this)}>
+            <a onClick={this.setSelection.bind(this, 'audioSelection')}>
               <i className="ss-icon ss-play" />
               <i className="ss-icon ss-pause" />
             </a>
           </li>
           <li>
-            <a onClick={this.contentSelection.bind(this)}>
+            <a onClick={this.setSelection.bind(this, 'contentSelection')}>
               <i className="ss-icon ss-globe" />
             </a>
           </li>
           <li>
-            <a onClick={this.settingsSelection.bind(this)}>
+            <a onClick={this.setSelection.bind(this, 'settingsSelection')}>
               <i className="ss-icon ss-settings" />
             </a>
           </li>

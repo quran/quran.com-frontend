@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from 'fluxible-router';
 import SurahsStore from 'stores/SurahsStore';
-import {connectToStores, provideContext} from 'fluxible/addons';
+import {connectToStores} from 'fluxible/addons';
 import debug from 'utils/Debug';
 import classNames from 'classnames';
 

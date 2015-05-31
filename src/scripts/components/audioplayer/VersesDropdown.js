@@ -1,5 +1,3 @@
-'use strict';
-
 import React from 'react';
 import $ from 'jquery';
 import AudioplayerActions from 'actions/AudioplayerActions'
