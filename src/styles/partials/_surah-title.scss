@@ -65,7 +65,13 @@ $transition-timing: 0.5s;
 @media (max-width: $screen-xs-max) {
   .surah-title{
     padding:0px !important;
-    height: 50px;
+    height: 70px;
+
+    img.title{
+      height: 175%;
+      margin-top: -35px;
+      margin-bottom: -60px;
+    }
     h1{
       margin: 0px;
       font-size: 26px;

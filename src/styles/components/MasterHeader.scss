@@ -7,7 +7,7 @@ nav{
   &.navbar-fixed-top{
     border: none;
   }
-  
+
   a:hover{
     text-decoration: none;
   }
@@ -89,9 +89,26 @@ nav{
     }
   }
   .toggle-options{
-    @include center-align(v);
+    height: 100%;
+    &.active{
+      background: darken($brand-primary, 15%);
+    }
+
+    a{
+      height: 100%;
+      padding: 10px 0px;
+      display: block;
+      color: #fff;
+
+      .ss-search{
+        font-size: 18px;
+      }
+    }
+    & + &{
+      border-left: 1px solid rgba(#fff, 0.25);
+    }
   }
-  .left-nav{
+  .surahs-nav{
     position: relative !important;
     ul{
       height: 150px !important;
@@ -113,7 +130,7 @@ nav{
       height: 100%;
       margin: 0px;
       li{
-        width: 22%;
+        width: 25%;
         padding: 0 1.5%;
         height: 100%;
         vertical-align: top;
@@ -125,6 +142,7 @@ nav{
           height: 100%;
           display: block;
           line-height: 45px;
+          color: $olive;
         }
       }
     }

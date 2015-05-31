@@ -65,19 +65,38 @@ class MasterHeader extends React.Component{
   }
 
   renderMobileOptions() {
-    if (this.state.showOptions) {
-      return <MobileOptions />;
-    }
-
-    if (this.state.width < 1000) {
+    if (this.state.showOptions && this.state.width < 1000) {
       return <MobileOptions />;
     }
   }
 
   renderDesktopOptions() {
-    // if (this.state.width > 1000) {
+    if (this.state.width > 1000) {
       return <DesktopOptions />;
-    // }
+    }
+  }
+
+  renderNavBrandDesktop() {
+    return (
+      <NavLink className="col-md-2 col-xs-12 navbar-brand hidden-xs" href="/">
+        <img src="/images/logo-md-w.png" alt="" className="logo" />
+        <span className="title">THE NOBLE QURAN</span>
+      </NavLink>
+    );
+  }
+
+  renderNavBrandMobile() {
+    let className = this.state.showOptions ? 'ss-icon ss-directup' : 'ss-icon ss-dropdown';
+    return (
+      <a className="col-md-2 col-xs-12 navbar-brand visible-xs">
+        <img src="/images/logo-md-w.png" alt="" className="logo" />
+        <span className="title">THE NOBLE QURAN</span>
+        <span className="menu visible-xs"
+              onClick={this.showOptions.bind(this)}>
+          MENU <i className={className} />
+        </span>
+      </a>
+    );
   }
 
   updateDimensions() {
@@ -103,8 +122,14 @@ class MasterHeader extends React.Component{
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return (this.props.currentRoute.get('params').get('surahId') !==
-            nextProps.currentRoute.get('params').get('surahId'));
+    if (this.props.currentRoute.get('params').get('surahId') !==
+            nextProps.currentRoute.get('params').get('surahId')) {
+      return true;
+    }
+    else if (this.state.showOptions !== nextState.showOptions) {
+      return true;
+    }
+    return false;
   }
 
   render() {
@@ -116,14 +141,8 @@ class MasterHeader extends React.Component{
       <nav className="navbar navbar-default navbar-fixed-top montserrat" role="navigation">
         <div className="container-fluid">
           <div className="row">
-            <NavLink className="col-md-2 col-xs-12 navbar-brand" href="/">
-              <img src="/images/logo-md-w.png" alt="" className="logo" />
-              <span className="title">THE NOBLE QURAN</span>
-              <span className="menu visible-xs"
-                    onClick={this.showOptions}>
-                MENU <i className="ss-icon ss-dropdown"></i>
-              </span>
-            </NavLink>
+            {this.renderNavBrandDesktop()}
+            {this.renderNavBrandMobile()}
             {this.renderMobileOptions()}
             <div className="col-md-3 col-xs-3 surah-title">
               <img src="/images/ornament-left.png" className="ornament" />

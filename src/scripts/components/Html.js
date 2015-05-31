@@ -9,8 +9,7 @@ class Html extends React.Component {
       <head>
           <meta charSet="utf-8" />
           <title>{this.props.context.getStore(ApplicationStore).getPageTitle()}</title>
-          <meta name="viewport" content="width=device-width, user-scalable=no" />
-
+          <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
           <link rel="stylesheet" href={this.props.hotModuleUrl + 'build/main.css'} />
           {this.props.fontFaces.map(function(font) {
             return (
