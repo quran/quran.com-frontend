@@ -79,7 +79,7 @@ class MobileOptions extends React.Component {
       } else if (this.state.searchSelection) {
           return (
               <div className="row">
-                  <SearchInput className="col-md-2 col-xs-10" />
+                  <SearchInput className="col-md-2 col-xs-12" />
               </div>
           );
       }
@@ -119,7 +119,7 @@ class MobileOptions extends React.Component {
 
   render() {
       return (
-          <div className="mobile navbar-bottom visible-xs col-xs-10">
+          <div className="mobile navbar-bottom visible-xs col-xs-12">
               <div className="row dark-bg">
                   <div className="toggle-options col-xs-8">
                     <a onClick={this._chapterSelection}>
@@ -134,7 +134,7 @@ class MobileOptions extends React.Component {
               </div>
               {this._renderSelection()}
               <div className="row options text-center">
-                <ul className="col-xs-10">
+                <ul className="col-xs-12">
                   <li>
                     <a className="nav-link">
                       <i className="ss-icon ss-info" />

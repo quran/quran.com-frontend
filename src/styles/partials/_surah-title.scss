@@ -1,3 +1,6 @@
+$padding-between-icon-and-text: 7px;
+$transition-timing: 0.5s;
+
 .surah-title {
   padding: $content-padding;
   height: $navbar-height;
@@ -18,6 +21,57 @@
       height: 200px;
       margin-top: -70px;
       margin-bottom: -70px;
+    }
+    &.ornament{
+      opacity: 0.15;
+    }
+  }
+
+  .previous-chapter,
+  .next-chapter{
+    text-transform: uppercase;
+    font-size: 12px;
+
+    i {
+      font-size: 20px;
+      display: inline-block;
+      transform: translateY(17%);
+    }
+  }
+  .previous-chapter{
+    color: #fff;
+    transition: color $transition-timing;
+    &:hover{
+      color: $olive;
+    }
+
+    i{
+      padding-right: $padding-between-icon-and-text;
+    }
+  }
+  .next-chapter{
+    opacity: 0.20;
+    transition: opacity $transition-timing;
+    &:hover{
+      opacity: 1;
+    }
+
+    i{
+      padding-left: $padding-between-icon-and-text;
+    }
+  }
+}
+
+@media (max-width: $screen-xs-max) {
+  .surah-title{
+    padding:0px !important;
+    height: 50px;
+    h1{
+      margin: 0px;
+      font-size: 26px;
+    }
+    p{
+      font-size: 10px;
     }
   }
 }

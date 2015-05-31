@@ -25,13 +25,14 @@ class ReadingModeToggle extends React.Component {
     if (this.props.noPullRight) {
       return <i className="ss-icon ss-openbook" />;
     }
-    return <i className="ss-icon ss-openbook pull-right" />;
+    return <i className="ss-icon ss-openbook" />;
   }
 
   render() {
     var classes = classNames({
-      selected: this.state.toggled,
-      'nav-link': true
+      active: this.state.toggled,
+      'nav-link': true,
+      'toggle-icon': true
     });
 
     return (

@@ -12,47 +12,4 @@
     font-size: 160%;
     padding-bottom: 3.5%;
   }
-  input{
-    width: 100%;
-    padding: 20px 30px;
-    outline: none;
-    margin-bottom: 50px;
-    border: none;
-
-    &::-webkit-input-placeholder {
-       color: $brand-primary;
-       font-weight: 100;
-    }
-
-    &:-moz-placeholder { /* Firefox 18- */
-       color: $brand-primary;
-       font-weight: 100;
-    }
-
-    &::-moz-placeholder {  /* Firefox 19+ */
-       color: $brand-primary;
-       font-weight: 100;
-    }
-
-    &:-ms-input-placeholder {
-       color: $brand-primary;
-       font-weight: 100;
-    }
-  }
-  .right-inner-addon {
-      position: relative;
-      width: 100%;
-      margin: 0px auto;
-  }
-  .right-inner-addon input {
-      padding-right: 30px;
-  }
-  .right-inner-addon i {
-    position: absolute;
-    right: 0px;
-    padding: 19px 15px;
-    pointer-events: none;
-    font-size: 150%;
-    color: $brand-primary;
-  }
 }

@@ -1,0 +1,107 @@
+.ayah{
+  padding: 2.5% 0%;
+  border-bottom: 1px solid rgba($text-muted, 0.5);
+
+  .text-info{
+    color: $brand-info;
+    &:hover{
+      color: $brand-primary;
+    }
+  }
+
+  &:hover{
+    // background-color: rgba($brand-info, 0.25);
+    .toggle-copy{
+      visibility: visible;
+    }
+  }
+
+  .toggle-copy{
+    visibility: hidden;
+  }
+
+  span{
+    @extend .montserrat;
+  }
+
+  .translation{
+    @extend .times-new;
+    h4{
+      color: $light-green;
+      margin-bottom: 5px;
+      @extend .montserrat;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    small{
+      @extend .times-new;
+    }
+    h2{
+      margin-top: 5px;
+      margin-bottom: 25px;
+    }
+  }
+  .left-controls{
+    a{
+      margin-bottom: 15px;
+      display: block;
+      text-decoration: none;
+      font-size: 12px;
+    }
+    .label{
+      padding: .65em 1.1em;
+      border-radius: 0px;
+      display: inline-block;
+      margin-bottom: 15px;
+      color: darken($text-muted, 30%);
+      font-weight: 300;
+    }
+
+    @media (max-width: $screen-xs-max) {
+      h4,
+      a{
+        display: inline-block;
+        margin: 0px 10px;
+      }
+    }
+  }
+}
+.word-font{
+  color: #000;
+  font-size: 350%;
+  width: 100%;
+  overflow-wrap: break-word;
+  line-height: 150%;
+
+  b{
+    font-weight: 100;
+    margin: 0px 2px;
+    &:hover{
+      color: $brand-primary;
+      cursor: pointer;
+    }
+  }
+
+  @media (max-width: $screen-xs-max) {
+    font-size: 300%;
+  }
+}
+.translation{
+  @extend .montserrat;
+  h4{
+    color: $light-green;
+    margin-bottom: 5px;
+  }
+  small{
+    @extend .montserrat;
+  }
+  h2{
+    margin-top: 5px;
+    margin-bottom: 25px;
+  }
+}
+
+.word_font{
+  line-height: 150%;
+}

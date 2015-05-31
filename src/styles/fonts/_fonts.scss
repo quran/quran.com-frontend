@@ -1,32 +1,32 @@
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Montserrat);
-// @font-face{
-//   font-family: 'Montserrat';
-//   src: url('/montserrat/Montserrat-Regular.otf');
-// }
-//
-// @font-face{
-//   font-family: 'Montserrat';
-//   src: url('/montserrat/Montserrat-Bold.otf');
-//   font-weight: 700;
-// }
-//
-// @font-face{
-//   font-family: 'Montserrat';
-//   src: url('/montserrat/Montserrat-Light.otf');
-//   font-weight: 300;
-// }
-//
-// @font-face{
-//   font-family: 'Montserrat';
-//   src: url('/montserrat/Montserrat-Hairline.otf');
-//   font-weight: 100;
-// }
-//
-// @font-face{
-//   font-family: 'Montserrat';
-//   src: url('/montserrat/Montserrat-Black.otf');
-//   font-weight: 600;
-// }
+//@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600|Montserrat);
+ @font-face{
+   font-family: 'Montserrat';
+   src: url('/static/fonts/montserrat/Montserrat-Regular.otf');
+ }
+
+ @font-face{
+   font-family: 'Montserrat';
+   src: url('/static/fonts/montserrat/Montserrat-Bold.otf');
+   font-weight: 700;
+ }
+
+ @font-face{
+   font-family: 'Montserrat';
+   src: url('/static/fonts/montserrat/Montserrat-Light.otf');
+   font-weight: 300;
+ }
+
+ @font-face{
+   font-family: 'Montserrat';
+   src: url('/static/fonts/montserrat/Montserrat-Hairline.otf');
+   font-weight: 100;
+ }
+
+ @font-face{
+   font-family: 'Montserrat';
+   src: url('/static/fonts/montserrat/Montserrat-Black.otf');
+   font-weight: 600;
+ }
 
 .source-sans{
     font-family: 'Source Sans Pro', sans-serif;

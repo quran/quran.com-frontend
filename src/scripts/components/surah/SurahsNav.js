@@ -22,9 +22,9 @@ class SurahsNav extends React.Component{
                 </span>
               </div>
               <div className="col-md-7 col-xs-6">
-                <strong>{surah.name.simple}</strong>
+                <span className="suran-name">{surah.name.simple}</span>
                 <br />
-                <span className="text-capitalize">{surah.name.english}</span>
+                <span className="surah-meaning">{surah.name.english}</span>
               </div>
               <div className="col-md-3 col-xs-3 text-right">
                 {surah.name.arabic}
@@ -42,7 +42,7 @@ class SurahsNav extends React.Component{
 
   render() {
     let classes = classNames({
-      'left-nav col-md-2 col-xs-10': true
+      'surahs-nav col-md-2 col-xs-10': true
     }) + ' ' + this.props.className;
 
     return (

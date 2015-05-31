@@ -1,0 +1,82 @@
+//.search-input{
+//  background: $brand-primary-darker-10;
+//  height: 100%;
+//  border: 1px solid $brand-primary-darker-10;
+//  box-shadow: inset 0 7px 9px -10px rgba(0,0,0,0.4);
+//  color: #fff;
+//}
+
+.right-inner-addon.search-input{
+  padding: 0px;
+  height: 100%;
+  border: 1px solid darken($brand-primary, 10%);
+  box-shadow: inset 0 7px 9px -10px rgba(0,0,0,0.4);
+
+  input{
+    margin-bottom: 0px;
+    padding: 10px 20px;
+    height: 100%;
+    background: darken($brand-primary, 10%);
+  }
+  input::-webkit-input-placeholder { /* WebKit browsers */
+    color: $brand-primary;
+  }
+  input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: $brand-primary;
+  }
+  input::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: $brand-primary;
+  }
+  input:-ms-input-placeholder { /* Internet Explorer 10+ */
+    color: $brand-primary;
+  }
+  i{
+    font-size: 120%;
+    padding: 15px;
+    height: 100%;
+  }
+}
+.right-inner-addon {
+  position: relative;
+  margin: 0px auto;
+
+  input{
+    width: 100%;
+    padding: 20px 30px;
+    padding-right: 30px;
+    outline: none;
+    margin-bottom: 50px;
+    border: none;
+    background-color: #fff;
+    color: $brand-primary;
+
+    &::-webkit-input-placeholder {
+      color: $brand-primary;
+      font-weight: 300;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+      color: $brand-primary;
+      font-weight: 300;
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+      color: $brand-primary;
+      font-weight: 300;
+    }
+
+    &:-ms-input-placeholder {
+      color: $brand-primary;
+      font-weight: 300;
+    }
+  }
+
+  i {
+    position: absolute;
+    right: 0px;
+    padding: 19px 15px;
+    pointer-events: none;
+    font-size: 150%;
+    color: $brand-primary;
+  }
+}

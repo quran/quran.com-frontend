@@ -14,15 +14,15 @@ class Index extends React.Component {
       return (
         <li className="row link">
           <NavLink href={'/' + surah.id}>
-            <div className="col-md-2 text-muted">
+            <div className="col-xs-2 text-muted">
               {surah.id}
             </div>
-            <div className="col-md-7">
+            <div className="col-xs-7">
               {surah.name.simple}
               <br />
               <span className="english text-uppercase">{surah.name.english}</span>
             </div>
-            <div className="col-md-3 text-right arabic">
+            <div className="col-xs-3 text-right arabic">
               {surah.name.arabic}
             </div>
           </NavLink>

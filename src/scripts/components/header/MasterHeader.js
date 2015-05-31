@@ -23,7 +23,7 @@ class MasterHeader extends React.Component{
   previousChapter() {
     var prev = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) - 1);
     return (
-      <NavLink className="navbar-text" href={prev}>
+      <NavLink className="navbar-text previous-chapter" href={prev}>
         <i className="ss-icon ss-navigateleft"></i>
         <span className="hidden-xs">&nbsp;Previous Chapter</span>
       </NavLink>
@@ -33,7 +33,7 @@ class MasterHeader extends React.Component{
   nextChapter() {
     var next = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) + 1);
     return (
-      <NavLink className="navbar-text" href={next}>
+      <NavLink className="navbar-text next-chapter" href={next}>
         <span className="hidden-xs">Next Chapter&nbsp;</span>
         <i className="ss-icon ss-navigateright"></i>
       </NavLink>
@@ -116,14 +116,14 @@ class MasterHeader extends React.Component{
       <nav className="navbar navbar-default navbar-fixed-top montserrat" role="navigation">
         <div className="container-fluid">
           <div className="row">
-            <a className="col-md-2 col-xs-12 navbar-brand">
-                <img src="/images/logo-md-w.png" alt="" className="logo" />
-                <span className="title">THE NOBLE QURAN</span>
-                <span className="menu visible-xs"
-                      onClick={this.showOptions}>
-                      MENU <i className="ss-icon ss-dropdown"></i>
-                </span>
-            </a>
+            <NavLink className="col-md-2 col-xs-12 navbar-brand" href="/">
+              <img src="/images/logo-md-w.png" alt="" className="logo" />
+              <span className="title">THE NOBLE QURAN</span>
+              <span className="menu visible-xs"
+                    onClick={this.showOptions}>
+                MENU <i className="ss-icon ss-dropdown"></i>
+              </span>
+            </NavLink>
             {this.renderMobileOptions()}
             <div className="col-md-3 col-xs-3 surah-title">
               <img src="/images/ornament-left.png" className="ornament" />

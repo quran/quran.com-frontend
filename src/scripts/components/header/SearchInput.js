@@ -31,14 +31,16 @@ class SearchInput extends React.Component {
 
   render() {
     var className = classNames({
-      'search-input': true
+      'right-inner-addon': true,
     }) + ' ' + this.props.className;
 
     return (
-      <input type="text"
-             placeholder="Search"
-             className={className}
-             onKeyUp={this.search.bind(this)} />
+      <div className={className}>
+        <i className="ss-icon ss-search" />
+        <input type="text"
+               placeholder="Search"
+               onKeyUp={this.search.bind(this)} />
+      </div>
     );
   }
 }

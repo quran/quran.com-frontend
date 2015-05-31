@@ -10,10 +10,7 @@ class IndexHeader extends React.Component {
             <div className="col-md-10 col-md-offset-1 text-center">
               <img src="images/logo-lg-w.png" className="logo" />
               <h4 className="title">THE NOBLE QUR'AN</h4>
-              <div className="right-inner-addon">
-                <i className="ss-icon ss-search" />
-                <SearchInput />
-              </div>
+              <SearchInput />
             </div>
           </div>
         </div>

@@ -1,5 +1,4 @@
-
-.left-nav{
+.surahs-nav{
   background: $brand-primary-darker-5;
   padding: 0px;
   position: fixed;
@@ -15,35 +14,32 @@
     height: calc(100vh - 190px);
     overflow-y: scroll;
     li{
-      color: #fff;
       padding: 0px 15px 20px;
       a{
-        color: rgba(255,255,255,0.75);
+        color: rgba(#fff, 0.50);
         &:hover{
-          color: #fff;
+          color: #fff !important;
+          span{
+            color: #fff !important;
+          }
+        }
+
+        .surah-num{
+          color: rgba(darken($brand-primary, 35%), 0.8);
+        }
+        .surah-name{
+          font-weight: 500;
+        }
+        .surah-meaning{
+          font-weight: 300;
+          font-size: 10px;
+          text-transform: uppercase;
         }
       }
     }
     .selected{
-        background-color: darken($brand-primary, 22.5%);
-        color: #fff;
-    }
-  }
-  .surah-num{
-    color: darken($brand-primary, 35%);
-  }
-  .shrink{
-    display: block;
-    text-align: right;
-    padding-right: 15px;
-    padding-left: 5px;
-  }
-
-  &.shrunk{
-    width: 50px;
-    .col-md-6,
-    .col-md-3{
-        display: none;
+      background-color: darken($brand-primary, 22.5%);
+      color: #fff;
     }
   }
 }

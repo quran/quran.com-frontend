@@ -7,7 +7,7 @@ class FontSizeInput extends React.Component {
 
     this.state = {
       fontSize: 49,
-      initWidth: 150
+      initWidth: 100
     };
 
   };

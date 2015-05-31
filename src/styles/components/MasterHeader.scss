@@ -4,14 +4,12 @@ $content-padding: 15px 15px !important;
 $label-padding: 5px 20px;
 nav{
   background-color: $beige;
-
   &.navbar-fixed-top{
     border: none;
   }
-}
-.navbar{
-  .ornament{
-    opacity: 0.20;
+  
+  a:hover{
+    text-decoration: none;
   }
 }
 
@@ -22,74 +20,49 @@ nav{
     min-height: $navbar-height * 0.3571;
     height: auto;
   }
-
   .border-right{
-    border-right: 1px solid lighten($cream, 20%);
-  }
-
-  .search-input{
-    background: $brand-primary-darker-10;
-    height: 100%;
-    border: 1px solid $brand-primary-darker-10;
-    box-shadow: inset 0 7px 9px -10px rgba(0,0,0,0.4);
-    color: #fff;
-  }
-  .search-input::-webkit-input-placeholder { /* WebKit browsers */
-      color: $brand-primary;
-  }
-  .search-input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-      color: $brand-primary;
-  }
-  .search-input::-moz-placeholder { /* Mozilla Firefox 19+ */
-      color: $brand-primary;
-  }
-  .search-input:-ms-input-placeholder { /* Internet Explorer 10+ */
-      color: $brand-primary;
+    border-right: 1px solid rgba(lighten($cream, 20%), 0.5);
   }
   .options{
     background: $cream;
     height: 100%;
     box-shadow: inset 0 7px 9px -10px rgba(0,0,0,0.4);
     color: darken($cream, 20%);
-    &.click-options{
-      i{
-        margin-right: 0px;
-      }
-    }
-    a{
-      color: darken($cream, 20%);
-    }
-    .height-100{
-      height: 100%;
-    }
+
     .row{
       height: 100%;
     }
 
-    .dropdown-toggle,
-    .nav-link{
-      width: 100%;
-      display: block;
-      text-decoration: none;
-      line-height: $navbar-height * 0.3571;
-      outline: none;
-      cursor: pointer;
-      &.selected{
-        i{
-          color: $brand-primary;
-        }
-      }
-      i{
-        margin-right: 15px;
-        &.pull-right{
-          line-height: $navbar-height * 0.3571;
-        }
-      }
+    .height-100{
+      height: 100%;
     }
-    .dropdown-content{
-      width: 100%;
-    }
+  }
+  .nav-link{
+    color: $olive;
+    width: 100%;
+    display: block;
+    text-decoration: none;
+    line-height: $navbar-height * 0.3571;
+    outline: none;
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 
+    &.toggle-icon{
+      font-size: 20px;
+      line-height: 54px;
+
+      .ss-info{
+        font-size: 24px;
+      }
+    }
+    &.active{
+      color: $brand-primary;
+    }
   }
 }
 
@@ -97,45 +70,6 @@ nav{
 @media (max-width: $screen-xs-max) {
   .navbar{
     min-height: 100px;
-  }
-  .navbar-brand{
-    height: 50px;
-    padding: 10px 5px !important;
-    text-align: center;
-    background: $brand-primary !important;
-    .menu{
-      font-size: 12px;
-      color: #fff;
-      &.visible-xs{
-        display: inline !important;
-      }
-    }
-    .logo{
-      height: 100%;
-    }
-    .title{
-      position: static;
-      font-size: 12px;
-      margin: 0px 10%
-    }
-    .ornament{
-      display: none !important;
-      img{
-
-      }
-    }
-  }
-
-  .surah-title{
-    padding:0px !important;
-    height: 50px;
-    h1{
-      margin: 0px;
-      font-size: 26px;
-    }
-    p{
-      font-size: 10px;
-    }
   }
   .navbar-bottom.mobile{
     .full-height{
@@ -193,33 +127,6 @@ nav{
           line-height: 45px;
         }
       }
-    }
-  }
-
-  .dropdownChange{
-    background: $olive;
-    color: $cream;
-    a{
-      color: $cream;
-    }
-  }
-  .dropdown-menu{
-    width: 100%;
-    &.audio{
-      padding-top: 25px;
-    }
-
-    &.dropdown-content{
-      .languages{
-        padding: 15px 0px;
-      }
-    }
-  }
-
-  .navbar-bottom input[type=range]{
-    width: 200px;
-    &:after{
-      border-left: 200px solid transparent;
     }
   }
 }
