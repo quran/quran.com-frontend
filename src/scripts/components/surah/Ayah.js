@@ -1,7 +1,5 @@
-'use strict';
-
 import React from 'react';
-// import AudioplayerActions from 'actions/AudioplayerActions';
+import * as AudioplayerActions from 'actions/AudioplayerActions';
 import ReactZeroClipboard from 'react-zeroclipboard';
 import debug from 'utils/Debug';
 
@@ -73,10 +71,14 @@ class Ayah extends React.Component {
 
   goToAyah(ayah, e) {
     e.preventDefault();
+
     this.setState({
         open: false
     });
-    // AudioplayerActions.changeAyah(this.context.dispatcher, ayah, true);
+    this.context.executeAction(AudioplayerActions.changeAyah, {
+      ayah: ayah,
+      shouldPlay: true
+    });
   }
 
   leftControls() {
@@ -119,6 +121,10 @@ class Ayah extends React.Component {
 }
 
 Ayah.displayName = 'Ayah';
+
+Ayah.contextTypes = {
+  executeAction: React.PropTypes.func.isRequired
+};
 
 Ayah.propTypes = {
   ayah: React.PropTypes.object.isRequired

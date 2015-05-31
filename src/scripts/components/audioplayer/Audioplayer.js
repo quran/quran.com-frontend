@@ -36,42 +36,11 @@ class Audioplayer extends React.Component {
       return;
     }
     if (prevProps.currentAyah.ayah !== this.props.currentAyah.ayah) {
+      if (this.props.currentAudio) {
+        prevProps.currentAudio.pause();
+      }
       this.setupAudio();
     }
-  }
-
-  _ayahChanged() {
-    // var currentAyah = this.getStore(AyatStore).getAyahs().find((a) => {
-    //   return this.getStore(AudioplayerStore).getCurrentAyah()  === a.ayah;
-    // });
-
-    // If the ayah is beyond the range
-    if (currentAyah === undefined) {
-      if (this.getParams().range) {
-        var rangeArray = this.getParams().range.split('-');
-      } else {
-        var rangeArray = [1, 10];
-      }
-
-      var range = rangeArray.map(x => parseInt(x)),
-          spread = range[1] - range[0],
-          fromAyah = this.getStore(AudioplayerStore).getCurrentAyah(),
-          toAyah = fromAyah + spread;
-
-      // this.transitionTo(
-      //     '/' + this.getParams().surahId + '/' + fromAyah + '-' + toAyah);
-
-      // AyahsActions.getAyahs(this.context.dispatcher, {
-      //     surahId: this.getParams().surahId,
-      //     from: fromAyah,
-      //     to: toAyah,
-      //     shouldReplace: true
-      // });
-      return;
-
-    }
-
-    this.setupAudio(currentAyah);
   }
 
   changeOffset(fraction) {
@@ -85,7 +54,6 @@ class Audioplayer extends React.Component {
   }
 
   setupAudio() {
-    console.log(this.props.currentAyah);
     if (this.state.playing) {
       this.pause();
     }
@@ -126,7 +94,6 @@ class Audioplayer extends React.Component {
         currentTime: currentTime
       });
     }, false);
-
 
     if (this.context.getStore(AudioplayerStore).getShouldPlay()) {
       this.play();

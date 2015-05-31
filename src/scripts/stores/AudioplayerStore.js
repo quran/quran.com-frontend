@@ -6,7 +6,7 @@ class AudioplayerStore extends BaseStore {
 
     this.shouldPlay = false;
     this.currentAyah = this.dispatcher.getStore('AyahsStore').getAyahs()[0];
-    
+
     if (this.currentAyah) {
       this.currentAudio = this.currentAyah.scopedAudio;
     }
@@ -28,7 +28,7 @@ class AudioplayerStore extends BaseStore {
 AudioplayerStore.handlers = {
   audioplayerAyahChange(payload) {
     console.log('Audioplayer reached');
-
+    console.log(payload)
     this.currentAyah = this.dispatcher.getStore('AyahsStore').getAyahs().find((ayah) => {
       return ayah.ayah === payload.ayah;
     });
