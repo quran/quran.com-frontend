@@ -1,12 +1,8 @@
-'use strict';
-
 import React from 'react';
 import request from 'superagent';
 import Settings from 'constants/Settings';
-// import Icon from 'icon';
 import HeaderDropdown from './HeaderDropdown';
-import UserOptionsStore from 'stores/UserOptionsStore';
-// import AyatActions from 'actions/AyatActions';
+import * as AyahsActions from 'actions/AyahsActions';
 
 class ReciterDropdown extends React.Component {
   constructor(props, context) {
@@ -29,19 +25,21 @@ class ReciterDropdown extends React.Component {
   chosenOption(id, e) {
     e.preventDefault();
 
-    this.context.dispatcher
-        .getStore(UserOptionsStore).setSingleOption('audio', id);
-
-    // AyatActions.updateAyahs(this.context.dispatcher);
+    this.context.executeAction(AyahsActions.updateAyahs, {
+      audio: id
+    });
   }
 
   renderMenu() {
+    var selected = this.context.getStore('UserOptionsStore').getAudioOptions();
+
     return this.state.options.map((option) => {
       return (
         <li>
           <a eventKey={option.name.english}
-                  onClick={this.chosenOption.bind(this, option.id)}
-                  key={option.id}>
+             onClick={this.chosenOption.bind(this, option.id)}
+             key={option.id}
+             className={selected === option.id ? 'active': ''}>
             {option.name.english}
           </a>
         </li>
@@ -58,5 +56,10 @@ class ReciterDropdown extends React.Component {
     );
   }
 }
+
+ReciterDropdown.contextTypes = {
+  executeAction: React.PropTypes.func.isRequired,
+  getStore: React.PropTypes.func.isRequired
+};
 
 export default ReciterDropdown;

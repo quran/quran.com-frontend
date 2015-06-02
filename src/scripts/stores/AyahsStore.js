@@ -136,12 +136,13 @@ AyahsStore.handlers = {
     debug('STORES-AYAHS RECEIVED');
     if (this.ayahs.length > 0) {
       if (payload.ayahs[0].ayah === this.ayahs[this.ayahs.length -1].ayah + 1) {
+        console.log('Ayahs: Lazy load');
         Font.createFontFaces(payload.ayahs);
         this.ayahs = this.ayahs.concat(payload.ayahs);
       }
       else {
         if (this.ayahs[0].surah_id !== payload.ayahs[0].surah_id) {
-          console.log('New surah');
+          console.log('Ayahs: New surah');
         }
         else {
           console.error(
@@ -167,22 +168,29 @@ AyahsStore.handlers = {
 
     this.emitChange();
   },
+
   ayahsUpdated(payload) {
-    console.log(payload)
     this.ayahs = payload.ayahs.map((ayah, index) => {
       return Object.assign(this.ayahs[index], ayah);
     });
+    
+    if (!!~payload.difference.indexOf('audio')) {
+      this.buildAudio(this.ayahs);
+    }
 
     this.emitChange();
   },
+
   userAgentReceived(payload) {
     this.audioUserAgent = payload;
     this.emitChange();
   },
+
   'NAVIGATE_START': function() {
     this.ayahs = [];
     this.emitChange();
   },
+
   searchReceived(payload) {
     debug('STORES-SEARCH RECEIVED');
     if (typeof window !== 'undefined') {
@@ -201,6 +209,7 @@ AyahsStore.handlers = {
 
     this.emitChange();
   },
+
   toggleReadingMode() {
     this.readingMode = !this.readingMode;
     this.emitChange();

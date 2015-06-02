@@ -17,7 +17,7 @@ export function getAyahs(actionContext, params, done) {
     actionContext.dispatch('ayahsReceived', {
       ayahs: res.body
     });
-    
+
     done();
   });
 }
@@ -37,7 +37,8 @@ export function updateAyahs(actionContext, params, done) {
   .query(queryParams)
   .end(function(err, res) {
     actionContext.dispatch('ayahsUpdated', {
-      ayahs: res.body
+      ayahs: res.body,
+      difference: Object.keys(params)
     });
   });
 }

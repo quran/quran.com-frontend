@@ -78,4 +78,13 @@ nav{
     margin-bottom: 0px;
     color: $beige;
   }
+
+  & > li > a {
+    &:hover,
+    &.active{
+      background: $beige;
+      color: $olive;
+      cursor: pointer;
+    }
+  }
 }

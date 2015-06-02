@@ -31,6 +31,11 @@ $transition-timing: 0.5s;
   .next-chapter{
     text-transform: uppercase;
     font-size: 12px;
+    opacity: 0.25;
+    transition: opacity $transition-timing;
+    &:hover{
+      opacity: 1;
+    }
 
     i {
       font-size: 20px;
@@ -39,23 +44,11 @@ $transition-timing: 0.5s;
     }
   }
   .previous-chapter{
-    color: #fff;
-    transition: color $transition-timing;
-    &:hover{
-      color: $olive;
-    }
-
     i{
       padding-right: $padding-between-icon-and-text;
     }
   }
   .next-chapter{
-    opacity: 0.20;
-    transition: opacity $transition-timing;
-    &:hover{
-      opacity: 1;
-    }
-
     i{
       padding-left: $padding-between-icon-and-text;
     }
