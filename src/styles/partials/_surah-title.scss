@@ -4,6 +4,8 @@ $transition-timing: 0.5s;
 .surah-title {
   padding: $content-padding;
   height: $navbar-height;
+  transition: height 0.5s;
+
   .navbar-text{
     margin-top: 0px;
     margin-bottom: 0px;
@@ -18,9 +20,10 @@ $transition-timing: 0.5s;
     &.title{
       display: block;
       margin: auto;
-      height: 200px;
-      margin-top: -70px;
-      margin-bottom: -70px;
+      height: 250px;
+      margin-top: -85px;
+      margin-bottom: -96px;
+      transition: height 0.5s, margin-top 0.5s, margin-bottom 0.5s;
     }
     &.ornament{
       opacity: 0.15;
@@ -52,6 +55,24 @@ $transition-timing: 0.5s;
     i{
       padding-left: $padding-between-icon-and-text;
     }
+  }
+}
+.surah-name{
+  font-size: 13px;
+  color: $olive;
+}
+
+.shrink .surah-title{
+  height: 90px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  img.title{
+    display: block;
+    margin: auto;
+    height: 170px;
+    margin-top: -65px;
+    margin-bottom: -75px;
   }
 }
 

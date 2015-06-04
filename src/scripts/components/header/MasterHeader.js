@@ -59,8 +59,8 @@ class MasterHeader extends React.Component{
   surahName(currentSurah) {
     if (currentSurah) {
       return (
-        <p className="navbar-text text-uppercase">
-          {currentSurah.id}. {currentSurah.name.simple} ({currentSurah.name.english})
+        <p className="navbar-text text-uppercase surah-name">
+          {currentSurah.name.simple} ({currentSurah.name.english})
         </p>
       );
     }
