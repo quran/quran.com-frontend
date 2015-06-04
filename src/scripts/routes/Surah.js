@@ -9,6 +9,8 @@ import $ from 'jquery';
 import { connectToStores, provideContext } from 'fluxible/addons';
 import AyahsStore from 'stores/AyahsStore';
 import SurahsStore from 'stores/SurahsStore';
+import SearchInput from 'components/header/SearchInput';
+import NavBrand from 'components/header/NavBrand';
 import debug from 'utils/Debug';
 
 class Surah extends React.Component {
@@ -112,15 +114,22 @@ class Surah extends React.Component {
 
     return (
       <div className="surah-body">
-        <MasterHeader />
-        <div className="container-fluid" onScroll={this._onScroll}>
-          <div className="row">
-            <SurahsNav className="hidden-xs"/>
-            <div className="col-md-8 col-md-offset-3">
-              <AyahsList />
-            </div>
-            <div className="col-md-8 col-md-offset-3">
-              {this.renderPagination()}
+        <div className="left-side">
+          <NavBrand />
+          <SearchInput className="col-md-12 search-input" />
+          <SurahsNav className="hidden-xs"/>
+        </div>
+        <div className="right-side">
+          <MasterHeader />
+          <div className="container-fluid" onScroll={this._onScroll}>
+            <div className="row">
+
+              <div className="col-md-10 col-md-offset-1">
+                <AyahsList />
+              </div>
+              <div className="col-md-10 col-md-offset-1">
+                {this.renderPagination()}
+              </div>
             </div>
           </div>
         </div>

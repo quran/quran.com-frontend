@@ -82,7 +82,7 @@ class ContentDropdown extends React.Component {
   }
 
   render() {
-    var className = 'content-dropdown ' + this.props.className;
+    var className = 'content-dropdown col-md-3 ' + this.props.className;
     return (
       <HeaderDropdown linkContent='Translations' linkIcon='ss-icon ss-globe' className={className}>
         <li role="presentation" className="dropdown-header">English</li>

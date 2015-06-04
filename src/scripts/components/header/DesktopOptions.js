@@ -1,13 +1,13 @@
 'use strict';
 
 import React from 'react';
-import SearchInput from 'components/header/SearchInput';
 import ReciterDropdown from 'components/header/ReciterDropdown';
 import ContentDropdown from 'components/header/ContentDropdown';
 import Audioplayer from 'components/audioplayer/Audioplayer';
 import FontSizeInput from 'components/header/FontSizeInput';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import InformationToggle from 'components/header/InformationToggle';
+import NavCollapseToggle from 'components/header/NavCollapseToggle';
 import debug from 'utils/Debug';
 
 class DesktopOptions extends React.Component {
@@ -19,9 +19,8 @@ class DesktopOptions extends React.Component {
     debug('COMPONENT-DESKTOP OPTIONS');
     return (
       <div className="row navbar-bottom hidden-xs">
-        <SearchInput className="col-md-2 search-input" />
-
         <div className="options">
+          <NavCollapseToggle />
           <ReciterDropdown />
           <Audioplayer />
           <ContentDropdown />

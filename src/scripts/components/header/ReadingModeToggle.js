@@ -15,7 +15,7 @@ class ReadingModeToggle extends React.Component {
     e.preventDefault();
 
     this.setState({
-        toggled: !this.state.toggled
+      toggled: !this.state.toggled
     });
 
     this.context.executeAction(AyahsActions.toggleReadingMode)

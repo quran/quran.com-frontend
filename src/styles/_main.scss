@@ -32,7 +32,30 @@ a:hover{
 }
 
 .surah-body{
-  padding-top: 190px;
+  .left-side{
+    width: 16.6666666%;
+    height: 100vh;
+    float: left;
+    display: block;
+    position: fixed;
+  }
+  .right-side{
+    padding-top: 190px;
+    width: 83.33333333%;
+    float: right;
+    display: block;
+    position: relative;
+    background-color: #fff;
+    transition: width 0.5s;
+
+    &.active{
+      width: 99%;
+
+      .navbar{
+        width: 99; // This is almost like `noop` to get the css working
+      }
+    }
+  }
 }
 
 body::-webkit-scrollbar{

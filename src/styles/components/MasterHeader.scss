@@ -2,8 +2,11 @@
 
 $content-padding: 15px 15px !important;
 $label-padding: 5px 20px;
-nav.navba{
+nav.navbar{
   background-color: $beige;
+  width: inherit;
+  right: 0px;
+  left: inherit;
   &.navbar-fixed-top{
     border: none;
   }
@@ -54,7 +57,8 @@ nav.navba{
 
     &.toggle-icon{
       font-size: 20px;
-      line-height: 54px;
+      line-height: 100%;
+      margin-top: 16px;
 
       .ss-info{
         font-size: 24px;

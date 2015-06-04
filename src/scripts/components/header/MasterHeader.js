@@ -4,6 +4,7 @@ import SurahsStore from 'stores/SurahsStore';
 import {connectToStores} from 'fluxible/addons';
 import DesktopOptions from 'components/header/DesktopOptions';
 import MobileOptions from 'components/header/MobileOptions';
+import NavBrand from 'components/header/NavBrand';
 import debug from 'utils/Debug';
 
 class MasterHeader extends React.Component{
@@ -78,19 +79,7 @@ class MasterHeader extends React.Component{
   }
 
   renderNavBrand() {
-    let className = this.state.showOptions ? 'ss-icon ss-directup' : 'ss-icon ss-dropdown';
-    return (
-      <div className="col-md-2 col-xs-12 navbar-brand">
-        <NavLink href="/">
-          <img src="/images/logo-md-w.png" alt="" className="logo" />
-        </NavLink>
-        <span className="title">THE NOBLE QURAN</span>
-        <span className="menu visible-xs"
-              onClick={this.showOptions.bind(this)}>
-          MENU <i className={className} />
-        </span>
-      </div>
-    );
+    return <NavBrand showOptions={this.showOptions.bind(this)} />;
   }
 
   updateDimensions() {
@@ -141,13 +130,13 @@ class MasterHeader extends React.Component{
       <nav className="navbar navbar-default navbar-fixed-top montserrat" role="navigation">
         <div className="container-fluid">
           <div className="row">
-            {this.renderNavBrand()}
+
             {this.renderMobileOptions()}
             <div className="col-md-3 col-xs-3 surah-title">
               <img src="/images/ornament-left.png" className="ornament" />
               {this.previousChapter()}
             </div>
-            <div className="col-md-4 col-xs-6 surah-title text-center">
+            <div className="col-md-6 col-xs-6 surah-title text-center">
               {this.surahTitle(currentSurah)}
               <br />
               {this.surahName(currentSurah)}

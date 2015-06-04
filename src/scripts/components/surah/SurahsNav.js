@@ -42,7 +42,7 @@ class SurahsNav extends React.Component{
 
   render() {
     let classes = classNames({
-      'surahs-nav col-md-2 col-xs-12': true
+      'surahs-nav col-md-12 col-xs-12': true
     }) + ' ' + this.props.className;
 
     return (
