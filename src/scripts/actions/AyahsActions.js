@@ -47,13 +47,13 @@ export function toggleReadingMode(actionContext) {
   actionContext.dispatch('toggleReadingMode');
 }
 
-export function search(actionContext, query, done) {
+export function search(actionContext, payload, done) {
   debug('ACTIONS-AYAHS SEARCH');
   return request.get(urlSettings.url + 'search')
-  .query({q: query})
-  // .end((err, res) => {
-  //   actionContext.dispatch('searchReceived', res.body);
-  // })
+  .query({
+    q: payload.q,
+    p: payload.p
+  })
   .end()
   .then((res) => {
     actionContext.dispatch('searchReceived', res.body);

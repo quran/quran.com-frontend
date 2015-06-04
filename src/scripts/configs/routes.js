@@ -28,7 +28,10 @@ export default {
       console.log(currentRoute.toObject())
       actionContext.executeAction(
         AyahsActions.search,
-        currentRoute.get('query').get('q'),
+        {
+          q: currentRoute.get('query').get('q'),
+          p: currentRoute.get('query').get('p') || 1
+        },
         done
       );
     }

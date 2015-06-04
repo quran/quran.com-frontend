@@ -64,7 +64,11 @@ class AyahsStore extends BaseStore {
 
     return ayahs.map((ayah) => {
       if (hasErrored) {
-          return ayah;
+        return ayah;
+      }
+
+      if(!ayah.audio) {
+        return ayah;
       }
 
       if (typeof window === 'undefined') {
@@ -121,12 +125,14 @@ class AyahsStore extends BaseStore {
 
   dehydrate() {
     return {
-      ayahs: this.ayahs
+      ayahs: this.ayahs,
+      searchStats: this.searchStats
     }
   }
 
   rehydrate(state) {
     this.ayahs = state.ayahs;
+    this.searchStats = state.searchStats;
     this.buildAudio(this.ayahs);
   }
 }
@@ -173,7 +179,7 @@ AyahsStore.handlers = {
     this.ayahs = payload.ayahs.map((ayah, index) => {
       return Object.assign(this.ayahs[index], ayah);
     });
-    
+
     if (!!~payload.difference.indexOf('audio')) {
       this.buildAudio(this.ayahs);
     }

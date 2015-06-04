@@ -1,0 +1,36 @@
+.search-pagination-header{
+  background-color: #E7E6E6;
+  height: 50px;
+  padding: 15px 0px;
+  color: #414141;
+  font-weight: 400;
+
+  span.colored{
+    color: $brand-primary;
+  }
+
+  .pagination{
+    margin: 0px;
+
+    & > li:first-child > a,
+    & > li:last-child > a {
+      font-size: 12px;
+      &.disabled{
+        opacity: 0.5;
+      }
+    }
+
+    & > li > a{
+      background: transparent;
+      border: none;
+      color: #414141;
+      float: initial;
+      padding: 6px 18px;
+      font-weight: 300;
+
+      &.active{
+        color: $brand-primary;
+      }
+    }
+  }
+}

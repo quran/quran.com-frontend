@@ -1,10 +1,9 @@
-'use strict';
-
 import React from 'react';
 import SearchHeader from 'components/header/SearchHeader';
-import {connectToStores, provideContext} from 'fluxible/addons';
+import {connectToStores} from 'fluxible/addons';
 import AyahsStore from 'stores/AyahsStore';
 import AyahsList from 'components/surah/AyahsList';
+import Pagination from 'components/Pagination';
 
 class Search extends React.Component {
   constructor(props) {
@@ -15,7 +14,21 @@ class Search extends React.Component {
     return (
       <div className="index-page">
         <SearchHeader />
-        {this.props.stats}
+        <div className="search-pagination-header">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6 text-uppercase">
+                {this.props.stats.page}-{this.props.stats.hits} OF
+                <span className="colored"> {this.props.stats.total} </span>
+                SEARCH RESULTS FOR:
+                <span className="colored"> {this.props.stats.query}</span>
+              </div>
+              <div className="col-md-6 text-right">
+                <Pagination hitsPerPage={this.props.stats.hits} totalHits={this.props.stats.total} />
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="container surah-list">
           <div className="row">
             <div className="col-md-12">

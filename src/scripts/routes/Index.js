@@ -12,7 +12,7 @@ class Index extends React.Component {
   renderColumn(array) {
     return array.map((surah, i) => {
       return (
-        <li className="row link">
+        <li className="row link" key={surah.id}>
           <NavLink href={'/' + surah.id}>
             <div className="col-xs-2 text-muted">
               {surah.id}

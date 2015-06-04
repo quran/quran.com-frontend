@@ -19,7 +19,6 @@ var Application = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
-    console.log(this.props.currentRoute.get('handler'))
     return this.props.currentRoute.get('handler') !== nextProps.currentRoute.get('handler');
   },
 

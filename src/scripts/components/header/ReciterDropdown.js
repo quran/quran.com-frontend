@@ -35,7 +35,7 @@ class ReciterDropdown extends React.Component {
 
     return this.state.options.map((option) => {
       return (
-        <li>
+        <li key={option.id}>
           <a eventKey={option.name.english}
              onClick={this.chosenOption.bind(this, option.id)}
              key={option.id}
