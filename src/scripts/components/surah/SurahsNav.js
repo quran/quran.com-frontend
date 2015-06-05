@@ -16,12 +16,12 @@ class SurahsNav extends React.Component{
         <li key={surah.id + 'surah'}>
           <NavLink routeName="surah" navParams={{surahId: surah.id}}>
             <div className="row">
-              <div className="col-md-2 col-xs-1">
+              <div className="col-md-2 col-xs-2">
                 <span className="surah-num">
                   {surah.id}
                 </span>
               </div>
-              <div className="col-md-7 col-xs-8">
+              <div className="col-md-7 col-xs-7">
                 <span className="suran-name">{surah.name.simple}</span>
                 <br />
                 <span className="surah-meaning">{surah.name.english}</span>

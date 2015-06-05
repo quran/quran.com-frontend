@@ -81,7 +81,6 @@ nav.navbar{
       height: 45px;
       a{
         display: block;
-        @include center-align(v);
       }
     }
     .row{
