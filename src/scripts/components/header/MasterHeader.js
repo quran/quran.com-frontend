@@ -130,7 +130,7 @@ class MasterHeader extends React.Component{
       <nav className="navbar navbar-default navbar-fixed-top montserrat" role="navigation">
         <div className="container-fluid">
           <div className="row">
-
+            {this.renderNavBrand()}
             {this.renderMobileOptions()}
             <div className="col-md-3 col-xs-3 surah-title">
               <img src="/images/ornament-left.png" className="ornament" />

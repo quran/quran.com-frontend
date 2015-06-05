@@ -63,16 +63,18 @@ $transition-timing: 0.5s;
 }
 
 .shrink .surah-title{
-  height: 90px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  @media (min-width: $screen-xs-max) {
+    height: 90px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 
-  img.title{
-    display: block;
-    margin: auto;
-    height: 170px;
-    margin-top: -65px;
-    margin-bottom: -75px;
+    img.title{
+      display: block;
+      margin: auto;
+      height: 170px;
+      margin-top: -65px;
+      margin-bottom: -75px;
+    }
   }
 }
 

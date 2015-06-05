@@ -38,6 +38,10 @@ a:hover{
     float: left;
     display: block;
     position: fixed;
+
+    @media (max-width: $screen-xs-max) {
+      display: none;
+    }
   }
   .right-side{
     padding-top: 190px;
@@ -47,6 +51,19 @@ a:hover{
     position: relative;
     background-color: #fff;
     transition: width 0.5s;
+
+    .navbar-brand{
+      display: none;
+    }
+
+    @media (max-width: $screen-xs-max) {
+      width: 100%;
+      padding-top: 150px;
+
+      .navbar-brand{
+        display: block;
+      }
+    }
 
     &.active{
       width: 99%;

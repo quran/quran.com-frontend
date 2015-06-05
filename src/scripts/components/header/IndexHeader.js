@@ -9,7 +9,7 @@ class IndexHeader extends React.Component {
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
               <img src="images/logo-lg-w.png" className="logo" />
-              <h4 className="title">THE NOBLE QUR'AN</h4>
+              <h4 className="title">THE NOBLE QUR&#x27;AN</h4>
               <SearchInput />
             </div>
           </div>
