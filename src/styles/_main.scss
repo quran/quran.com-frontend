@@ -109,13 +109,26 @@ body::-webkit-scrollbar{
   min-width: 100px;
 }
 footer{
-  background-color: rgba(#C4BEB0, 0.25);
+  background-color: #32312C;
   padding: 3% 0%;
+  font-size: 14px;
+
   ul{
     padding-left: 0px;
     li{
       list-style: none;
       padding: 3% 0%;
+    }
+  }
+  .about{
+    a{
+      color: #fff;
+    }
+  }
+  .links{
+    text-transform: uppercase;
+    a{
+      color: rgba(#fff, 0.5);
     }
   }
 }
@@ -133,4 +146,33 @@ li em{
 }
 .form-success-message{
   padding: 5% 0%;
+}
+
+.about-text{
+  padding-top: 5%;
+  padding-bottom: 5%;
+  h3{
+    font-size: 130%;
+  }
+  .row{
+    padding-top: 1%;
+    padding-bottom: 1%;
+    h3{
+      color: $light-green;
+      @extend .montserrat;
+    }
+    h4{
+      font-weight: 300;
+      line-height: 150%;
+    }
+  }
+  .credits{
+    h3{
+      color: $text-color;
+    }
+    h4{
+      @extend .source-sans;
+
+    }
+  }
 }

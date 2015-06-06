@@ -13,7 +13,36 @@ var Application = React.createClass({
 
     return (
       <div>
-          <Handler />
+        <Handler />
+        <footer>
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-md-2 col-md-offset-2 col-xs-4 col-xs-offset-1 about">
+                <ul className="source-sans">
+                  <li><a href="/about">About</a></li>
+                  <li><a href="http://quran.zendesk.com">Support</a></li>
+                  <li><a href="/contact">Contact</a></li>
+                </ul>
+              </div>
+              <div className="col-md-2 col-xs-5 links">
+                <ul className="source-sans">
+                  <li><a href="http://sunnah.com/">Sunnah.com</a></li>
+                  <li><a href="http://salah.com/">Salah.com</a></li>
+                  <li><a href="http://quranicaudio.com/">Quranicaudio.com</a></li>
+                  <li><a href="">Word by Word</a></li>
+                </ul>
+              </div>
+              <div className="col-md-4 text-right">
+                <ul className="list-inline">
+                  <li><a><i className="fa fa-facebook"></i></a></li>
+                  <li><a><i className="fa fa-twitter"></i></a></li>
+                  <li><a><i className="fa fa-envelope"></i></a></li>
+                </ul>
+                <p className="monserrat">©QURAN.COM. ALL RIGHTS RESERVED 2015</p>
+              </div>
+            </div>
+          </div>
+        </footer>
       </div>
     );
   },

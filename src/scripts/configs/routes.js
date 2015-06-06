@@ -18,6 +18,20 @@ export default {
       );
     }
   },
+  about: {
+    path: '/about',
+    method: 'get',
+    page: 'about',
+    title: 'About Quran.com',
+    handler: require('../routes/About'),
+  },
+  contact: {
+    path: '/contact',
+    method: 'get',
+    page: 'contact',
+    title: 'Contact Quran.com',
+    handler: require('../routes/Contact'),
+  },
   search: {
     path: '/search',
     method: 'get',
