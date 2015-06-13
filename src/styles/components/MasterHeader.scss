@@ -138,7 +138,6 @@ nav.navbar{
         height: 100%;
         vertical-align: top;
         display: inline-block;
-        @include center-align(v);
         background: $cream;
         color: darken($cream, 20%);
         a{
@@ -153,12 +152,12 @@ nav.navbar{
 }
 
 @media (max-width: 767px) {
-.navbar-collapse .nav > .divider-vertical {
+  .navbar-collapse .nav > .divider-vertical {
     display: none;
-    }
+  }
 }
 
 .optionSelected{
-    background-color: $light-green;
-    color: white !important;
+  background-color: $light-green;
+  color: white !important;
 }

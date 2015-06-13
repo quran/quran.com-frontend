@@ -16,12 +16,12 @@ class MasterHeader extends React.Component{
       showMobile: false,
       showDesktop: true
     };
-  }
+  };
 
   showOptions(e) {
     e.preventDefault();
     this.setState({showOptions: !this.state.showOptions});
-  }
+  };
 
   previousChapter() {
     var prev = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) - 1);
@@ -31,7 +31,7 @@ class MasterHeader extends React.Component{
         <span className="hidden-xs"> Previous Chapter</span>
       </NavLink>
     );
-  }
+  };
 
   nextChapter() {
     var next = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) + 1);
@@ -79,7 +79,8 @@ class MasterHeader extends React.Component{
   }
 
   renderNavBrand() {
-    return <NavBrand showOptions={this.showOptions.bind(this)} />;
+    return <NavBrand showOptions={this.state.showOptions} 
+                     showOptionsFn={this.showOptions.bind(this)} />;
   }
 
   updateDimensions() {
@@ -103,7 +104,7 @@ class MasterHeader extends React.Component{
 
   componentWillUnmount() {
     if (typeof window !== 'undefined') {
-      window.removeEventListener("resize", this.updateDimensions);
+      window.removeEventListener("resize", this.updateDimensions.bind(this));
     }
   }
 

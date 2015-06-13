@@ -95,5 +95,10 @@ $transition-timing: 0.5s;
     p{
       font-size: 10px;
     }
+
+    .previous-chapter,
+    .next-chapter{
+      line-height: 50%;
+    }
   }
 }
