@@ -6,11 +6,16 @@ import connectToStores from 'fluxible/addons/connectToStores';
 import { handleHistory } from 'fluxible-router';
 import debug from 'utils/Debug';
 
+var ga = require('react-google-analytics');
+ga('create', 'UA-8496014-2', 'auto');
+ga('send', 'pageview');
+
+var GAInitiailizer = ga.Initializer;
+
 var Application = React.createClass({
   render: function () {
     debug('COMPONENT-APPLICATION')
     var Handler = this.props.currentRoute.get('handler');
-
     return (
       <div>
         <Handler />
@@ -43,6 +48,7 @@ var Application = React.createClass({
             </div>
           </div>
         </footer>
+        <GAInitiailizer />
       </div>
     );
   },
