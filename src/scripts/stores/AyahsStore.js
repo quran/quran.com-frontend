@@ -15,7 +15,12 @@ class AyahsStore extends BaseStore {
   }
 
   getLast() {
-    return this.ayahs[this.ayahs.length - 1].ayah;
+    if (this.ayahs.length) {
+      return this.ayahs[this.ayahs.length - 1].ayah
+    }
+    else {
+      return 10;
+    }
   }
 
   getLength() {

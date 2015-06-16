@@ -6,6 +6,7 @@ import debugLib from 'debug';
 import React from 'react';
 import app from './app';
 import useragent from 'express-useragent';
+import cookieParser from 'cookie-parser';
 
 import favicon from 'serve-favicon';
 import * as ExpressActions from 'actions/ExpressActions';
@@ -30,6 +31,7 @@ server.use('/static', express.static(path.join(__dirname, '/static')));
 server.use('/images', express.static(path.join(__dirname, '/static/images')));
 server.use('/fonts', express.static(path.join(__dirname, '/src/styles/fonts')));
 server.use(useragent.express());
+server.use(cookieParser());
 server.use(favicon(__dirname + '/static/images/favicon.ico'));
 
 server.use((req, res, next) => {
@@ -38,6 +40,7 @@ server.use((req, res, next) => {
     debug('Executing navigate action');
 
     context.getActionContext().executeAction(ExpressActions.userAgent, req.useragent);
+    context.getActionContext().executeAction(ExpressActions.cookies, req.cookies);
 
     context.getActionContext().executeAction(navigateAction, {
         url: req.url

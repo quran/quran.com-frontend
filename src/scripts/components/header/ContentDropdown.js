@@ -2,7 +2,7 @@ import React from 'react';
 import request from 'superagent';
 import Settings from 'constants/Settings';
 import HeaderDropdown from './HeaderDropdown';
-import UserOptionsStore from 'stores/UserOptionsStore';
+import UserStore from 'stores/UserStore';
 import * as AyahsActions from 'actions/AyahsActions';
 
 class ContentDropdown extends React.Component {
@@ -11,7 +11,7 @@ class ContentDropdown extends React.Component {
 
     this.state = {
       options: [],
-      chosenOptions: this.context.getStore(UserOptionsStore).getContentOptions()
+      chosenOptions: this.context.getStore(UserStore).getContentOptions()
     }
   }
 

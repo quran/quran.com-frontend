@@ -4,7 +4,7 @@ import Application from 'components/Application';
 import routes from 'configs/routes';
 import ApplicationStore from 'stores/ApplicationStore';
 import SurahsStore from 'stores/SurahsStore';
-import UserOptionsStore from 'stores/UserOptionsStore';
+import UserStore from 'stores/UserStore';
 import AyahsStore from 'stores/AyahsStore';
 import AudioplayerStore from 'stores/AudioplayerStore';
 
@@ -19,7 +19,7 @@ app.registerStore(MyRouteStore);
 // register other stores
 app.registerStore(ApplicationStore);
 app.registerStore(SurahsStore);
-app.registerStore(UserOptionsStore);
+app.registerStore(UserStore);
 app.registerStore(AudioplayerStore);
 app.registerStore(AyahsStore);
 

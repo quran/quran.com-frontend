@@ -2,7 +2,7 @@
 
 import request from 'superagent-promise';
 import Settings from 'constants/Settings';
-import UserOptionsStore from 'stores/UserOptionsStore';
+import UserStore from 'stores/UserStore';
 import debug from 'utils/Debug';
 
 export function search(actionContext, query, done) {

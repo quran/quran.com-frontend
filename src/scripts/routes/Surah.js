@@ -63,21 +63,24 @@ class Surah extends React.Component {
     $(window).unbind('scroll');
     $(window).bind('scroll', () => {
       var lastAyah, toAyah, sizeOfLoad, url;
-      var nav = $(document.querySelector('nav'));
+      var nav = $('nav');
+      var getAyahs = this.context.getStore('AyahsStore').getAyahs();
+      
       if ($(document).scrollTop() > 100) {
         nav.addClass('shrink');
       }
       else {
         nav.removeClass('shrink');
       }
-      if (!this.state.loading &&
-        window.pageYOffset > document.body.scrollHeight - window.innerHeight - 1000) {
-        if (this.context.getStore('AyahsStore').getAyahs().length !== this.context.getStore('SurahsStore').getSurah().ayat) {
+
+      if (!this.state.loading && window.pageYOffset > document.body.scrollHeight - window.innerHeight - 1000) {
+        if (getAyahs.length && getAyahs.length !== this.context.getStore('SurahsStore').getSurah().ayat) {
           this.setState({loading: true});
 
           if ((rangeArray[1] - rangeArray[0] + 1) < 10) {
             sizeOfLoad = rangeArray[1] - rangeArray[0] + 1;
-          } else {
+          }
+          else {
             sizeOfLoad = 10;
           }
 
@@ -121,9 +124,8 @@ class Surah extends React.Component {
         </div>
         <div className="right-side">
           <MasterHeader />
-          <div className="container-fluid" onScroll={this._onScroll}>
+          <div className="container-fluid">
             <div className="row">
-
               <div className="col-md-10 col-md-offset-1">
                 <AyahsList />
               </div>

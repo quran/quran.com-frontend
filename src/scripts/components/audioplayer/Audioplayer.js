@@ -30,17 +30,36 @@ class Audioplayer extends React.Component {
   }
 
   componentDidUpdate (prevProps, prevState) {
-    // When navigating from the index page, there is no ayah set and therefore,
-    // should bootstrap it!
+    if (prevProps.currentAyah !== this.props.currentAyah) {
+      if (prevProps.currentAyah === undefined && this.props.currentAyah) {
+        return this.setupAudio();
+      }
+
+      if (prevProps.currentAyah.ayah !== this.props.currentAyah.ayah) {
+        if (this.props.currentAudio) {
+          prevProps.currentAudio.pause();
+        }
+        return this.setupAudio();
+      }
+    }
+
+
     if (!prevProps.currentAyah) {
+      // When navigating from the index page, there is no ayah set and therefore,
+      // should bootstrap it!
+      // This could be used as a backup for bootstrapping from the component
+
+      // if (!this.props.currentAyah && this.props.ayahs.length > 0) {
+      //   this.context.executeAction(AudioplayerActions.changeAyah, {
+      //     ayah: 1,
+      //     shouldPlay: false
+      //   });
+      //   return;
+      // }
       return;
     }
-    if (prevProps.currentAyah.ayah !== this.props.currentAyah.ayah) {
-      if (this.props.currentAudio) {
-        prevProps.currentAudio.pause();
-      }
-      this.setupAudio();
-    }
+
+
   }
 
   changeOffset(fraction) {

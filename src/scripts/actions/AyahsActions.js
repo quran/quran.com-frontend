@@ -1,6 +1,6 @@
 import request from 'superagent-promise';
 import urlSettings from 'constants/Settings';
-import UserOptionsStore from 'stores/UserOptionsStore';
+import UserStore from 'stores/UserStore';
 import debug from 'utils/Debug';
 
 export function getAyahs(actionContext, params, done) {
@@ -10,13 +10,15 @@ export function getAyahs(actionContext, params, done) {
     Object.assign({
       from: params.from,
       to: params.to
-    }, actionContext.getStore(UserOptionsStore).getOptions())
+    }, actionContext.getStore(UserStore).getOptions())
   )
   .end()
   .then(function(res) {
     actionContext.dispatch('ayahsReceived', {
       ayahs: res.body
     });
+    
+    actionContext.dispatch('lastVisit', {surah: params.surahId, ayah: params.from});
 
     done();
   });
@@ -26,12 +28,12 @@ export function updateAyahs(actionContext, params, done) {
   var firstAndLast = actionContext.getStore('AyahsStore').getFirstAndLast(),
       surahId = actionContext.getStore('SurahsStore').getSurahId();
 
-  actionContext.getStore(UserOptionsStore).setOptions(params);
+  actionContext.getStore(UserStore).setOptions(params);
 
   var queryParams = Object.assign({
     from: firstAndLast[0],
     to: firstAndLast[1]
-  }, actionContext.getStore(UserOptionsStore).getOptions());
+  }, actionContext.getStore(UserStore).getOptions());
 
   request.get(urlSettings.url + 'surahs/' + surahId + '/ayat')
   .query(queryParams)

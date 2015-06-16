@@ -31,7 +31,7 @@ class ReciterDropdown extends React.Component {
   }
 
   renderMenu() {
-    var selected = this.context.getStore('UserOptionsStore').getAudioOptions();
+    var selected = this.context.getStore('UserStore').getAudioOptions();
 
     return this.state.options.map((option) => {
       return (
