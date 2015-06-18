@@ -24,6 +24,10 @@ class AyahsList extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.ayahs.length === 0) {
+      return true;
+    }
+
     return (this.props.ayahs.length === nextProps.ayahs.length) ||
            (this.props.isReadingMode !== nextProps.isReadingMode);
   }

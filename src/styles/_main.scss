@@ -51,6 +51,7 @@ a:hover{
     position: relative;
     background-color: #fff;
     transition: width 0.5s;
+    min-height: 100vh;
 
     .navbar-brand{
       display: none;
@@ -137,11 +138,13 @@ li em{
 }
 .loading{
   img{
-    width: 150px;
-    padding-top: 150px;
+    width: 100px;
+    padding-top: 100px;
   }
   h3{
     margin: 0px;
+    padding-bottom: 50%;
+    font-weight: 300;
   }
 }
 .form-success-message{
