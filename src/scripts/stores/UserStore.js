@@ -10,7 +10,6 @@ class UserStore extends BaseStore {
     let notNan = !Number.isNaN(parseInt(reactCookie.load('quran'))),
         isNumber = Number.isInteger(parseInt(reactCookie.load('quran')));
 
-    console.log(notNan, isNumber, reactCookie.load('quran'), reactCookie.load('audio'), reactCookie.load('content'))
     if (notNan && isNumber) {
       if (!Array.isArray(reactCookie.load('content'))) {
         let content = reactCookie.load('content');
@@ -30,7 +29,7 @@ class UserStore extends BaseStore {
     }
     else {
       this.options = {
-        content: [21],
+        content: [19],
         audio: 1,
         quran: 1
       };
