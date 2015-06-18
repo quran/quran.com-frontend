@@ -17,7 +17,7 @@ export function getAyahs(actionContext, params, done) {
     actionContext.dispatch('ayahsReceived', {
       ayahs: res.body
     });
-    
+
     actionContext.dispatch('lastVisit', {surah: params.surahId, ayah: params.from});
 
     done();
@@ -61,4 +61,8 @@ export function search(actionContext, payload, done) {
     actionContext.dispatch('searchReceived', res.body);
     done();
   });
+}
+
+export function buildAllAudio(actionContext) {
+  actionContext.dispatch('buildAllAudio');
 }

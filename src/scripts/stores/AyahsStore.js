@@ -138,7 +138,7 @@ class AyahsStore extends BaseStore {
   rehydrate(state) {
     this.ayahs = state.ayahs;
     this.searchStats = state.searchStats;
-    this.buildAudio(this.ayahs);
+    this.buildAudio([this.ayahs[0], this.ayahs[1]]);
   }
 }
 
@@ -165,7 +165,7 @@ AyahsStore.handlers = {
         // Assuming this happens on new page
         Font.createFontFaces(payload.ayahs);
         this.ayahs = payload.ayahs;
-        this.buildAudio(this.ayahs);
+        this.buildAudio([this.ayahs[0], this.ayahs[1]]);
       }
     }
     else {
@@ -173,11 +173,15 @@ AyahsStore.handlers = {
 
       if (typeof window !== 'undefined') {
         Font.createFontFaces(payload.ayahs);
-        this.buildAudio(this.ayahs);
+        this.buildAudio([this.ayahs[0], this.ayahs[1]]);
       }
     }
 
     this.emitChange();
+  },
+
+  buildAllAudio(payload) {
+    this.buildAudio(this.ayahs);
   },
 
   ayahsUpdated(payload) {

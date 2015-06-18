@@ -2,7 +2,7 @@ import React from 'react';
 import AudioplayerStore from 'stores/AudioplayerStore';
 import AudioplayerTrack from './AudioplayerTrack';
 import VersesDropdown from './VersesDropdown';
-import AyahsActions from 'actions/AyahsActions';
+import * as AyahsActions from 'actions/AyahsActions';
 import {connectToStores} from 'fluxible/addons'
 import SurahsStore from 'stores/SurahsStore';
 import AyahsStore from 'stores/AyahsStore';
@@ -119,6 +119,16 @@ class Audioplayer extends React.Component {
     }
   }
 
+  loadRestOfAudio() {
+    var audiosPresent = this.props.ayahs.every((ayah) => {
+      return !!ayah.scopedAudio;
+    });
+
+    if (!audiosPresent) {
+      this.context.executeAction(AyahsActions.buildAllAudio);
+    }
+  }
+
   startStopPlayer(e) {
     e.preventDefault();
     console.log('Audio was playing:', this.state.playing);
@@ -139,8 +149,10 @@ class Audioplayer extends React.Component {
 
   play() {
     this.setState({
-        playing: true
+      playing: true
     });
+
+    this.loadRestOfAudio();
 
     this.props.currentAudio.play();
   }
