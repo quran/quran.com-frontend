@@ -181,6 +181,9 @@ AyahsStore.handlers = {
   },
 
   buildAllAudio(payload) {
+    // The AyahsStore only builds the audio for the first 2 ayahs to conserve
+    // bandwidth on the servers. Only when we need all the audios should it load
+    // the remaining.
     this.buildAudio(this.ayahs);
   },
 

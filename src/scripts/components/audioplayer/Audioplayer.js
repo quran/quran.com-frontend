@@ -120,6 +120,9 @@ class Audioplayer extends React.Component {
   }
 
   loadRestOfAudio() {
+    // The AyahsStore only builds the audio for the first 2 ayahs to conserve
+    // bandwidth on the servers. Only when we need all the audios should it load
+    // the remaining.
     var audiosPresent = this.props.ayahs.every((ayah) => {
       return !!ayah.scopedAudio;
     });
