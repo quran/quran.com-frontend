@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import * as SurahsActions from 'actions/SurahsActions';
 
 class InformationToggle extends React.Component {
   constructor(props) {
@@ -14,10 +15,10 @@ class InformationToggle extends React.Component {
     e.preventDefault();
 
     this.setState({
-        toggled: !this.state.toggled
+      toggled: !this.state.toggled
     });
 
-    // this.context.executeAction(AyahsActions.toggleReadingMode)
+    this.context.executeAction(SurahsActions.showInfo);
   }
 
   render() {
@@ -28,11 +29,15 @@ class InformationToggle extends React.Component {
     });
 
     return (
-      <a className={classes}>
+      <a className={classes} onClick={this.toggleInformationMode.bind(this)}>
         <i className="ss-icon ss-info" />
       </a>
     )
   }
+};
+
+InformationToggle.contextTypes = {
+  executeAction: React.PropTypes.func.isRequired
 };
 
 export default InformationToggle;

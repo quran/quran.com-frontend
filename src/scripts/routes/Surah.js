@@ -6,12 +6,13 @@ import * as AyahsActions from 'actions/AyahsActions';
 import * as SurahsActions from 'actions/SurahsActions';
 import AyahsList from 'components/surah/AyahsList';
 import $ from 'jquery';
-import { connectToStores, provideContext } from 'fluxible/addons';
+import { connectToStores } from 'fluxible/addons';
 import AyahsStore from 'stores/AyahsStore';
 import SurahsStore from 'stores/SurahsStore';
 import SearchInput from 'components/header/SearchInput';
 import NavBrand from 'components/header/NavBrand';
 import debug from 'utils/Debug';
+import SurahInfo from 'components/surah/SurahInfo';
 
 class Surah extends React.Component {
   constructor(props, context) {
@@ -65,7 +66,7 @@ class Surah extends React.Component {
       var lastAyah, toAyah, sizeOfLoad, url;
       var nav = $('nav');
       var getAyahs = this.context.getStore('AyahsStore').getAyahs();
-      
+
       if ($(document).scrollTop() > 100) {
         nav.addClass('shrink');
       }
@@ -124,6 +125,7 @@ class Surah extends React.Component {
         </div>
         <div className="right-side">
           <MasterHeader />
+          <SurahInfo />
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-10 col-md-offset-1">

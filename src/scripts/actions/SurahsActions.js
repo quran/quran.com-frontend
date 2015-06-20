@@ -19,3 +19,7 @@ export function currentSurah(actionContext, payload, done) {
   actionContext.dispatch('currentSurahChange', payload);
   done();
 }
+
+export function showInfo(actionContext) {
+  actionContext.dispatch('showInfo');
+}
