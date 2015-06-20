@@ -12,6 +12,10 @@ class SurahInfo extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
+    if (!nextProps.isExpanded) {
+      return;
+    }
+
     var self = this;
     let link = this.props.wikiLinks[nextProps.currentSurah.id]
 
@@ -53,7 +57,7 @@ class SurahInfo extends React.Component {
 
   renderInformation() {
     var extract = this.state.page ? this.state.page.extract : '';
-    
+
     return (
       <div className="col-md-12 surah-info">
       <div className="row">
