@@ -11,7 +11,17 @@ class ApplicationStore extends BaseStore {
         this.pageTitle = '';
     }
     handlePageTitle(data) {
+      if (data.pageTitle) {
         this.pageTitle = data.pageTitle;
+      }
+      else {
+        if (this.dispatcher.getStore('RouteStore')._currentRoute.get('name') === 'surah') {
+          let currentSurah = this.dispatcher.getStore('SurahsStore').getSurah();
+          this.pageTitle = `Surah ${currentSurah.name.simple} - The Noble Qur'an - القرآن الكريم`;
+
+          this.emitChange();
+        }
+      }
     }
     getCurrentPageName() {
         return this.currentPageName;
@@ -40,7 +50,8 @@ class ApplicationStore extends BaseStore {
 
 ApplicationStore.storeName = 'ApplicationStore';
 ApplicationStore.handlers = {
-  'UPDATE_PAGE_TITLE': 'handlePageTitle'
+  'UPDATE_PAGE_TITLE': 'handlePageTitle',
+  'NAVIGATE_SUCCESS': 'handlePageTitle'
 };
 
 export default ApplicationStore;

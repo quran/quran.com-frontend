@@ -1,6 +1,4 @@
-'use strict';
 var React = require('react');
-var ApplicationStore = require('../stores/ApplicationStore');
 
 class Html extends React.Component {
   render() {
@@ -8,7 +6,15 @@ class Html extends React.Component {
       <html>
       <head>
           <meta charSet="utf-8" />
-          <title>{this.props.context.getStore(ApplicationStore).getPageTitle()}</title>
+          <meta httpEquiv="Content-Type" content="text/html; charset=utf-8"/>
+          <meta httpEquiv="Content-Language" content="EN"/>
+          <meta name="description" content="The Noble Qur'an in many languages in an easy-to-use interface."/>
+          <meta name="keywords" content="quran, koran, qur'an, al quran al kareem, holy, arabic, iman, islam, Allah, book, muslim, english, dutch, french, german, indonesian, italian, japanese, portuguese, russian, spanish, swahili"/>
+          <meta name="Charset" content="UTF-8"/>
+          <meta name="Distribution" content="Global"/>
+          <meta name="Rating" content="General"/>
+
+          <title>{this.props.context.getStore('ApplicationStore').getPageTitle()}</title>
           <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
           <link rel="stylesheet" href={this.props.hotModuleUrl + 'build/main.css'} />
           {this.props.fontFaces.map(function(font) {

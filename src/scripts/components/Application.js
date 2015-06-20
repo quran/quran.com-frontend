@@ -54,11 +54,17 @@ var Application = React.createClass({
   },
 
   shouldComponentUpdate: function(nextProps, nextState) {
+    if (this.props.pageTitle !== nextProps.pageTitle) {
+      document.title = nextProps.pageTitle;
+    }
+    
     return this.props.currentRoute.get('handler') !== nextProps.currentRoute.get('handler');
   },
 
   componentDidUpdate: function(prevProps, prevState) {
     const newProps = this.props;
+
+    console.log(newProps.pageTitle);
     if (newProps.pageTitle === prevProps.pageTitle) {
         return;
     }

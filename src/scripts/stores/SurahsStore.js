@@ -28,7 +28,6 @@ class SurahsStore extends BaseStore {
     this.isShowingInfo = false;
   }
 
-
   getSurahs() {
     return this.surahs;
   }
@@ -47,6 +46,14 @@ class SurahsStore extends BaseStore {
 
   getSurahId() {
     return this.surah.id;
+  }
+
+  getCurrentSurah() {
+    return this.surah;
+  }
+
+  getCurrentSurahId() {
+    return this.surah;
   }
 
   getWikiLinks() {
@@ -79,7 +86,6 @@ SurahsStore.handlers = {
   },
 
   'NAVIGATE_START': function(payload, name) {
-    debug('STORES-CURRENT SURAH');
     if (this.dispatcher.getStore('RouteStore')._currentRoute.get('name') === 'surah') {
       this.surah = this.surahs[this.dispatcher.getStore('RouteStore')._currentRoute.get('params').get('surahId') - 1];
       this.emitChange();

@@ -59,6 +59,7 @@ server.use((req, res, next) => {
         const webserver = process.env.NODE_ENV === "production" ? "" : "//localhost:8080";
 
         debug('Rendering Application component into html');
+
         // memoryCache.wrap(req.url, function(cacheCallback) {
           const html = React.renderToStaticMarkup(htmlComponent({
             context: context.getComponentContext(),
@@ -69,8 +70,10 @@ server.use((req, res, next) => {
           }));
 
           // cacheCallback(null, html)
+
         // }, ttl, function(err, html) {
           debug('Sending markup');
+
           res.type('html');
           res.setHeader('Cache-Control', 'public, max-age=31557600');
           res.write('<!DOCTYPE html>' + html);

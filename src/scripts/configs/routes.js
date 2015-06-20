@@ -57,7 +57,6 @@ export default {
     title: 'Surah',
     handler: require('../routes/Surah'),
     action(actionContext, currentRoute, done) {
-      console.log('ROUTES TRIGGERED')
       let fromParam,
           toParam,
           surahId = currentRoute.get('params').get('surahId');
