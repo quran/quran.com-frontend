@@ -1,5 +1,4 @@
 import React from 'react';
-import Nav from 'components/Nav';
 import ApplicationStore from 'stores/ApplicationStore';
 import provideContext from 'fluxible/addons/provideContext';
 import connectToStores from 'fluxible/addons/connectToStores';
@@ -57,7 +56,7 @@ var Application = React.createClass({
     if (this.props.pageTitle !== nextProps.pageTitle) {
       document.title = nextProps.pageTitle;
     }
-    
+
     return this.props.currentRoute.get('handler') !== nextProps.currentRoute.get('handler');
   },
 
