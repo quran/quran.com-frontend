@@ -14,6 +14,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      './node_modules/phantomjs-polyfill/bind-polyfill.js',
       // {pattern: 'public/build/lib.js', watched: true, served: true, included: true},
       //{pattern: 'client/dist/app.js', watched: true, served: true, included: true},
 
