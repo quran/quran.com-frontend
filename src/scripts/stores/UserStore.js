@@ -103,13 +103,19 @@ class UserStore extends BaseStore {
 
 UserStore.handlers = {
   cookiesReceived(expressCookies) {
+    var data = expressCookies.lastVisit.replace(/\"/g, '').split('-').map(function(option) {
+      return parseInt(option);
+    });
+
     this.options = {
       content: expressCookies.content.replace(/\"/g, '').split(',').map(function(option) {
         return parseInt(option);
       }),
       quran: parseInt(expressCookies.quran),
-      audio: parseInt(expressCookies.audio)
-    }
+      audio: parseInt(expressCookies.audio),
+    };
+
+    this.lastVisit = {surah: data[0], ayah: data[1]}
 
   },
   lastVisit(payload) {
