@@ -30,7 +30,7 @@ class UserStore extends BaseStore {
     else {
       this.options = {
         content: [19],
-        audio: 1,
+        audio: 8,
         quran: 1
       };
     }
