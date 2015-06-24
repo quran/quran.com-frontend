@@ -8,7 +8,7 @@ class SearchInput extends React.Component {
   };
 
   search(e) {
-    if (e.keyCode === 13) {
+    if (e.keyCode === 13 || e.type === 'click') {
       let searching = e.target.value,
           ayah, pattern, surah;
 
@@ -36,7 +36,7 @@ class SearchInput extends React.Component {
 
     return (
       <div className={className}>
-        <i className="ss-icon ss-search" />
+        <i className="ss-icon ss-search" onClick={this.search.bind(this)} />
         <input type="text"
                placeholder="Search"
                onKeyUp={this.search.bind(this)} />
