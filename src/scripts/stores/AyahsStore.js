@@ -52,10 +52,10 @@ class AyahsStore extends BaseStore {
 
   // @TODO: build audio once the audioplayer is interacted with to save on memory and load.
   buildAudio(ayahs) {
-    if (!!~~ayahs.length) {
+    if (!~~ayahs.length) {
       return;
     }
-    
+
     var firefox = /firefox/i,
         opera = /opera/i,
         chrome = /chrome/i,
@@ -71,7 +71,7 @@ class AyahsStore extends BaseStore {
       }
     };
 
-    return ayahs.map((ayah) => {
+    return ayahs.map(ayah => {
       if (hasErrored) {
         return ayah;
       }
@@ -130,6 +130,7 @@ class AyahsStore extends BaseStore {
 
       return ayah;
     });
+    console.log(this.ayahs)
   }
 
   dehydrate() {

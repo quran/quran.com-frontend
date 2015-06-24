@@ -86,8 +86,10 @@ SurahsStore.handlers = {
   },
 
   'NAVIGATE_START': function(payload, name) {
-    if (this.dispatcher.getStore('RouteStore')._currentRoute.get('name') === 'surah') {
-      this.surah = this.surahs[this.dispatcher.getStore('RouteStore')._currentRoute.get('params').get('surahId') - 1];
+    var currentRoute = this.dispatcher.getStore('RouteStore')._currentRoute;
+
+    if (currentRoute.get('name') === 'surah') {
+      this.surah = this.surahs[currentRoute.get('params').get('surahId') - 1];
       this.emitChange();
     }
   },
