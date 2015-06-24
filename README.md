@@ -23,4 +23,4 @@ all have good intentions while working with this project. But I must stress, ste
 this is unacceptable.
 
 #### Design
-We currently use invision. Again, contact me if you'd like access to it.
+We currently use InvisionApp. Again, contact me if you'd like access to it.
