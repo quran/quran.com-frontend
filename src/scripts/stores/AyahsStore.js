@@ -143,7 +143,10 @@ class AyahsStore extends BaseStore {
   rehydrate(state) {
     this.ayahs = state.ayahs;
     this.searchStats = state.searchStats;
-    this.buildAudio([this.ayahs[0], this.ayahs[1]]);
+
+    if (!!~~state.ayahs.length) {
+      this.buildAudio([this.ayahs[0], this.ayahs[1]]);
+    }
   }
 }
 

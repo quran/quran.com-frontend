@@ -9,8 +9,8 @@ module.exports = {
     filename: '[name].js'
   },
   debug: false,
-  devtool: 'eval',
   target: 'web',
+  cache: false,
   entry: [
   'bootstrap-sass!./bootstrap-sass.config.js',
   './client.js',
@@ -56,9 +56,12 @@ module.exports = {
       "windows.jQuery": "jquery"
     }),
     new ExtractTextPlugin("[name].css", {allChunks: true}),
-    new webpack.OldWatchingPlugin(),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+			compressor: {
+				warnings: false
+			}
+		}),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin()
   ],
