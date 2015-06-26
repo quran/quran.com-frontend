@@ -1,4 +1,3 @@
-console.log(process.env.NODE_ENV)
 let url;
 if (process.env.NODE_ENV === "production" && process.env.VERSION === "old") {
   url = 'http://45.55.158.85/';

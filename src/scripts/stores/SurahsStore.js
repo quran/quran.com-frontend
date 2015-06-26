@@ -53,7 +53,7 @@ class SurahsStore extends BaseStore {
   }
 
   getCurrentSurahId() {
-    return this.surah;
+    return this.surah.id;
   }
 
   getWikiLinks() {

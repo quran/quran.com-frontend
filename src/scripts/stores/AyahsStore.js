@@ -158,6 +158,9 @@ AyahsStore.handlers = {
         console.log('Ayahs: Lazy load');
         Font.createFontFaces(payload.ayahs);
         this.ayahs = this.ayahs.concat(payload.ayahs);
+
+        // @TODO: Figure out why this was not here before...
+        this.buildAudio(payload.ayahs);
       }
       else {
         if (this.ayahs[0].surah_id !== payload.ayahs[0].surah_id) {
