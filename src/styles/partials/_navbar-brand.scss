@@ -5,6 +5,8 @@
   position: relative;
   text-align: center;
   margin-left: 0px !important;
+  transition: height 0.5s;
+
   .title{
     position: absolute;
     bottom: 10px;
@@ -20,6 +22,18 @@
     &.logo{
       height: 80%;
       vertical-align: top;
+      transition: height 0.5s;
+    }
+  }
+
+  @media (min-width: $screen-md-max) {
+    .shrink &{
+      height: 90px;
+      img.logo{
+        margin: 0;
+        margin-top: -5px;
+        height: 79%;
+      }
     }
   }
 }
