@@ -8,6 +8,7 @@ import SurahsStore from 'stores/SurahsStore';
 import AyahsStore from 'stores/AyahsStore';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
 import classNames from 'classnames';
+import debug from 'utils/Debug';
 
 class Audioplayer extends React.Component {
   constructor(props, context) {
@@ -225,6 +226,8 @@ class Audioplayer extends React.Component {
   }
 
   render() {
+    debug('Component-Audioplayer');
+    
     var currentAyahId = this.props.currentAyah ?
       this.props.currentAyah.ayah : '';
 
