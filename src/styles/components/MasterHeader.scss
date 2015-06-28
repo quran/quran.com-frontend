@@ -40,7 +40,7 @@ nav.navbar{
       height: 100%;
     }
   }
-  .nav-link{
+  .nav-link {
     color: $olive;
     width: 100%;
     display: block;
@@ -160,4 +160,26 @@ nav.navbar{
 .optionSelected{
   background-color: $light-green;
   color: white !important;
+}
+
+.last-chapter {
+  pointer-events: none;
+  cursor: default;
+  color: #939598;
+  font-size: 12px;
+} 
+
+.last-chapter .ss-icon {
+  display: none;
+}
+
+.first-chapter {
+  pointer-events: none;
+  cursor: default;
+  color: #939598;
+  font-size: 12px;
+} 
+
+.first-chapter .ss-icon {
+  display: none;
 }
