@@ -18,6 +18,13 @@ export default {
       );
     }
   },
+  donations: {
+    path: '/donations',
+    method: 'get',
+    page: 'donations',
+    title: 'Contributing to Quran.com',
+    handler: require('../routes/Donations')
+  },
   about: {
     path: '/about',
     method: 'get',
