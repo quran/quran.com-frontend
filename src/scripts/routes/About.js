@@ -17,7 +17,7 @@ class About extends React.Component {
                     Allah (God).[1] All translations of the original Arabic text
                     are thus interpretations of the original meanings and should
                     be embraced as such. For more information about the Noble
-                    Qur'an, you may visit its Wikipedia article.
+                    Qur'an, you may visit its <a href="https://en.wikipedia.org/wiki/Quran">Wikipedia article.</a>
                   </h4>
               </div>
           </div>
