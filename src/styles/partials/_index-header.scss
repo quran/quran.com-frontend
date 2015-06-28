@@ -30,14 +30,22 @@
         }
       }
 
-      a{
-        color: #fff;
+      li{
+        display: inline-block;
+        padding-right: 15px;
+
+        a{
+          color: #fff;
+
+          &:hover{
+            opacity: 0.8;
+          }
+        }
       }
     }
 
   }
   .logo{
-    padding-top: 3.5%;
     padding-bottom: 10px;
     width: 30%;
   }
