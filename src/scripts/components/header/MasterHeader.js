@@ -23,24 +23,48 @@ class MasterHeader extends React.Component{
     this.setState({showOptions: !this.state.showOptions});
   };
 
+  // Disable hyperlink for previous surah if surah is Al-Faatihah.
   previousChapter() {
     var prev = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) - 1);
-    return (
-      <NavLink className="navbar-text previous-chapter" href={prev}>
-        <i className="ss-icon ss-navigateleft"></i>
-        <span className="hidden-xs"> Previous Chapter</span>
-      </NavLink>
-    );
+    var currentPos = parseInt(this.props.currentRoute.get('params').get('surahId'));
+    if (currentPos <= 1){
+      prev = "#";
+      return (
+        <NavLink className="first-chapter" href={prev}>
+          <span className="hidden-xs">YOU ARE AT THE FIRST SURAH</span>
+          <i className="ss-icon ss-navigateright"></i>
+        </NavLink>
+      );
+    } else {
+      return (
+        <NavLink className="navbar-text previous-chapter" href={prev}>
+          <i className="ss-icon ss-navigateleft"></i>
+          <span className="hidden-xs"> PREVIOUS SURAH</span>
+        </NavLink>
+      );
+    }
   };
 
+  // Disable hyperlink for next surah if surah is An-Nas.
   nextChapter() {
     var next = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) + 1);
-    return (
-      <NavLink className="navbar-text next-chapter" href={next}>
-        <span className="hidden-xs">Next Chapter </span>
-        <i className="ss-icon ss-navigateright"></i>
-      </NavLink>
+    var currentPos = parseInt(this.props.currentRoute.get('params').get('surahId'));
+    if (currentPos >= 114){
+      next = "#";
+      return (
+        <NavLink className="last-chapter" href={next}>
+          <span className="hidden-xs">YOU ARE AT THE LAST SURAH</span>
+          <i className="ss-icon ss-navigateright"></i>
+        </NavLink>
     );
+    } else {
+      return (
+        <NavLink className="navbar-text next-chapter" href={next}>
+          <span className="hidden-xs">NEXT SURAH </span>
+          <i className="ss-icon ss-navigateright"></i>
+        </NavLink>
+      );
+    }
   }
 
   surahTitle(currentSurah) {
