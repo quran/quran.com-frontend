@@ -28,13 +28,7 @@ class MasterHeader extends React.Component{
     var prev = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) - 1);
     var currentPos = parseInt(this.props.currentRoute.get('params').get('surahId'));
     if (currentPos <= 1){
-      prev = "#";
-      return (
-        <NavLink className="first-chapter" href={prev}>
-          <span className="hidden-xs">YOU ARE AT THE FIRST SURAH</span>
-          <i className="ss-icon ss-navigateright"></i>
-        </NavLink>
-      );
+      return;
     } else {
       return (
         <NavLink className="navbar-text previous-chapter" href={prev}>
@@ -50,13 +44,7 @@ class MasterHeader extends React.Component{
     var next = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) + 1);
     var currentPos = parseInt(this.props.currentRoute.get('params').get('surahId'));
     if (currentPos >= 114){
-      next = "#";
-      return (
-        <NavLink className="last-chapter" href={next}>
-          <span className="hidden-xs">YOU ARE AT THE LAST SURAH</span>
-          <i className="ss-icon ss-navigateright"></i>
-        </NavLink>
-    );
+      return;
     } else {
       return (
         <NavLink className="navbar-text next-chapter" href={next}>
@@ -103,7 +91,7 @@ class MasterHeader extends React.Component{
   }
 
   renderNavBrand() {
-    return <NavBrand showOptions={this.state.showOptions} 
+    return <NavBrand showOptions={this.state.showOptions}
                      showOptionsFn={this.showOptions.bind(this)} />;
   }
 
