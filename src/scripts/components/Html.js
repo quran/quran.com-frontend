@@ -14,6 +14,13 @@ class Html extends React.Component {
           <meta name="Distribution" content="Global"/>
           <meta name="Rating" content="General"/>
 
+          <meta property="og:title" content="The Noble Qur'an - القرآن الكريم" />
+          <meta property="og:description" content="Quran.com provides the best reading, listening and learning experience for Muslims all around the world." />
+          <meta property="og:type" content="website" />
+          <meta property="og:url" content="http://quran.com/" />
+          <meta property="og:image" content="http://quran.com/images/thumbnail.png" />
+
+
           <title>{this.props.context.getStore('ApplicationStore').getPageTitle()}</title>
           <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
           <link rel="stylesheet" href={this.props.hotModuleUrl + 'build/main.css'} />
