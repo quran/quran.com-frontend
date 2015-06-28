@@ -1,9 +1,11 @@
 import React from 'react';
+import IndexHeader from 'components/header/IndexHeader';
 
 class Donations extends React.Component {
   render() {
     return(
       <div className="top-section">
+        <IndexHeader noSearch={true} />
         <div className="container">
           <div className="row">
             <div className="col-md-12 text-center">

@@ -94,7 +94,7 @@ class Contact extends React.Component {
 
     return(
       <div>
-        <IndexHeader />
+        <IndexHeader noSearch={true} />
         <div className="container-fluid about-text">
           <div className="row">
             <div className="col-md-8 col-md-offset-2">

@@ -4,6 +4,16 @@ import IndexHeaderNav from 'components/header/IndexHeaderNav';
 import {NavLink} from 'fluxible-router';
 
 class IndexHeader extends React.Component {
+  renderSearch() {
+    if (this.props.noSearch) {
+      return;
+    }
+    else {
+      return (
+        <SearchInput />
+      );
+    }
+  }
   render() {
     return (
       <div className="index-header">
@@ -15,7 +25,7 @@ class IndexHeader extends React.Component {
                 <img src="images/logo-lg-w.png" className="logo" />
               </NavLink>
               <h4 className="title">THE NOBLE QUR&#x27;AN</h4>
-              <SearchInput />
+              {this.renderSearch()}
             </div>
           </div>
         </div>
