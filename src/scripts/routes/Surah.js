@@ -87,7 +87,7 @@ class Surah extends React.Component {
     $(window).unbind('scroll');
     $(window).bind('scroll', () => {
       var lastAyah, toAyah, sizeOfLoad, url;
-      var nav = $('nav');
+      var nav = $('nav, .left-side');
       var getAyahs = this.context.getStore('AyahsStore').getAyahs();
 
       if ($(document).scrollTop() > 100) {

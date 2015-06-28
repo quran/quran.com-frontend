@@ -13,10 +13,7 @@ class SearchHeader extends React.Component {
                 <img src="images/logo-lg-w.png" className="logo" />
               </NavLink>
               <h4 className="title">THE NOBLE QUR'AN</h4>
-              <div className="right-inner-addon">
-                <i className="ss-icon ss-search" />
-                <SearchInput />
-              </div>
+              <SearchInput />
             </div>
           </div>
         </div>

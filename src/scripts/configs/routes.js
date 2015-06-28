@@ -18,6 +18,13 @@ export default {
       );
     }
   },
+  donations: {
+    path: '/donations',
+    method: 'get',
+    page: 'donations',
+    title: 'Contributing to Quran.com',
+    handler: require('../routes/Donations')
+  },
   about: {
     path: '/about',
     method: 'get',
@@ -39,7 +46,6 @@ export default {
     title: 'Search',
     handler: require('../routes/Search'),
     action(actionContext, currentRoute, done) {
-      console.log(currentRoute.toObject())
       actionContext.executeAction(
         AyahsActions.search,
         {

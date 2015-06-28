@@ -33,7 +33,7 @@ var Application = React.createClass({
                   <li><a href="http://sunnah.com/">Sunnah.com</a></li>
                   <li><a href="http://salah.com/">Salah.com</a></li>
                   <li><a href="http://quranicaudio.com/">Quranicaudio.com</a></li>
-                  <li><a href="">Word by Word</a></li>
+                  <li><a href="http://corpus.quran.com/wordbyword.jsp">Corpus: Word by Word</a></li>
                 </ul>
               </div>
               <div className="col-md-4 text-right">

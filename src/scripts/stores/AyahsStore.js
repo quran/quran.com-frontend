@@ -52,10 +52,10 @@ class AyahsStore extends BaseStore {
 
   // @TODO: build audio once the audioplayer is interacted with to save on memory and load.
   buildAudio(ayahs) {
-    if (!!~~ayahs.length) {
+    if (!~~ayahs.length) {
       return;
     }
-    
+
     var firefox = /firefox/i,
         opera = /opera/i,
         chrome = /chrome/i,
@@ -71,7 +71,7 @@ class AyahsStore extends BaseStore {
       }
     };
 
-    return ayahs.map((ayah) => {
+    return ayahs.map(ayah => {
       if (hasErrored) {
         return ayah;
       }
@@ -130,6 +130,7 @@ class AyahsStore extends BaseStore {
 
       return ayah;
     });
+    console.log(this.ayahs)
   }
 
   dehydrate() {
@@ -142,7 +143,10 @@ class AyahsStore extends BaseStore {
   rehydrate(state) {
     this.ayahs = state.ayahs;
     this.searchStats = state.searchStats;
-    this.buildAudio([this.ayahs[0], this.ayahs[1]]);
+
+    if (!!~~state.ayahs.length) {
+      this.buildAudio([this.ayahs[0], this.ayahs[1]]);
+    }
   }
 }
 
@@ -154,6 +158,9 @@ AyahsStore.handlers = {
         console.log('Ayahs: Lazy load');
         Font.createFontFaces(payload.ayahs);
         this.ayahs = this.ayahs.concat(payload.ayahs);
+
+        // @TODO: Figure out why this was not here before...
+        this.buildAudio(payload.ayahs);
       }
       else {
         if (this.ayahs[0].surah_id !== payload.ayahs[0].surah_id) {

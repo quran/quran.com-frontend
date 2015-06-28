@@ -7,6 +7,8 @@ import React from 'react';
 import app from './app';
 import useragent from 'express-useragent';
 import cookieParser from 'cookie-parser';
+import superagent from 'superagent';
+import * as Settings from 'constants/Settings';
 
 import favicon from 'serve-favicon';
 import * as ExpressActions from 'actions/ExpressActions';
@@ -33,6 +35,13 @@ server.use('/fonts', express.static(path.join(__dirname, '/src/styles/fonts')));
 server.use(useragent.express());
 server.use(cookieParser());
 server.use(favicon(__dirname + '/static/images/favicon.ico'));
+
+server.get('/api/*', function(req, res, next) {
+  superagent.get(Settings.url + req.url.split('/api')[1])
+  .end(function(err, response) {
+    res.send(response.body);
+  });
+});
 
 server.use((req, res, next) => {
     let context = app.createContext();

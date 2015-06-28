@@ -23,6 +23,26 @@ class AudioplayerStore extends BaseStore {
   getShouldPlay() {
     return this.shouldPlay;
   };
+
+  dehydrate() {
+    return {
+      currentAyah: this.currentAyah,
+      currentAudio: this.currentAudio
+    }
+  }
+
+  rehydrate(state) {
+    this.currentAyah = state.currentAyah;
+    this.currentAudio = state.currentAudio;
+    if (!this.currentAyah.scopedAudio) {
+      this.shouldPlay = false;
+      this.currentAyah = this.dispatcher.getStore('AyahsStore').getAyahs()[0];
+
+      if (this.currentAyah) {
+        this.currentAudio = this.currentAyah.scopedAudio;
+      }
+    }
+  }
 }
 
 AudioplayerStore.handlers = {
@@ -41,12 +61,14 @@ AudioplayerStore.handlers = {
 
   ayahsReceived() {
     this.dispatcher.waitFor('AyahsStore', () => {
+      console.log(this.currentAyah)
       if (!this.currentAyah) {
         this.shouldPlay = false;
         this.currentAyah = this.dispatcher.getStore('AyahsStore').getAyahs()[0];
 
         if (this.currentAyah) {
           this.currentAudio = this.currentAyah.scopedAudio;
+          console.log(this.currentAudio)
         }
       }
       this.emitChange();

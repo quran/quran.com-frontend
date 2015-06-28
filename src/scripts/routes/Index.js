@@ -38,9 +38,11 @@ class Index extends React.Component {
 
       return (
         <div className="col-md-10 col-md-offset-1">
-          <h4 className="text-muted text-center title">Last Visit:</h4>
-          <div className="row">
-            <ul className="col-md-4 col-md-offset-4">
+          <div className="row last-visit">
+            <div className="col-md-4">
+              <h4 className="text-muted text-center title">LAST VISITED:</h4>
+            </div>
+            <ul className="col-md-4">
               <li className="row link">
                 <NavLink href={`/${this.props.lastVisit.surah}/${this.props.lastVisit.ayah}`}>
                   <div className="col-xs-2 text-muted">
