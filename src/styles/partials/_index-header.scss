@@ -2,6 +2,40 @@
   background: url('/static/images/index-bg.jpg') center center no-repeat;
   background-size: cover;
 
+  .nav{
+    width: 100%;
+    padding: 5px 15px;
+
+    .nav-button{
+      display: none;
+      float: right;
+
+      background-color: #fff;
+      color: $brand-primary;
+
+      @media(max-width: $screen-xs-max) {
+        display: block;
+      }
+    }
+
+    .links{
+      float: right;
+      list-style: none;
+
+      @media(max-width: $screen-xs-max) {
+        display: none;
+
+        &.open{
+          display: block;
+        }
+      }
+
+      a{
+        color: #fff;
+      }
+    }
+
+  }
   .logo{
     padding-top: 3.5%;
     padding-bottom: 10px;
