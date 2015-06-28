@@ -23,7 +23,7 @@ class IndexHeaderNav extends React.Component {
       <div className="nav">
         <ul className={classNames}>
           <li>
-            <a href="http://quran.com">Legacy Quran.com</a>
+            <a href="http://legacy.quran.com">Legacy Quran.com</a>
           </li>
           <li>
             <NavLink href="/donations">
