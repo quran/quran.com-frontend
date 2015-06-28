@@ -6,7 +6,7 @@ import { handleHistory } from 'fluxible-router';
 import debug from 'utils/Debug';
 
 var ga = require('react-google-analytics');
-ga('create', 'UA-8496014-2', 'auto');
+ga('create', 'UA-8496014-1', 'auto');
 ga('send', 'pageview');
 
 var GAInitiailizer = ga.Initializer;
