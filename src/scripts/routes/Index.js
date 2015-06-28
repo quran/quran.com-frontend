@@ -69,12 +69,48 @@ class Index extends React.Component {
     return;
   }
 
+  renderFirstTimeContent() {
+    if (this.props.isFirstTime) {
+      return (
+        <div className="col-md-10 col-md-offset-1">
+          <h4 style={{fontWeight: 300, lineHeight: '125%', paddingTop: '25px'}}>
+            Asalamu Alykom, welcome to the new Quran.com.
+            <br /><br />
+            Much has changed in the past few years in technology and we felt
+            that we need to catch up. After over a year of hard work we are excited
+            to present to you the new Quran.com.
+            <br /><br />
+            Firstly, it includes a fresh
+            new look - our religion is beautiful and we believe that everything
+            we create for Muslims should be beautiful too. Secondly, we have put
+            great effort to providing you with more content, a better search,
+            more reciters, word-by-word audio and an overall cleaner interface.
+            <br /><br />
+            If you wish to go back to the old site, feel free to click on the link
+            on the top nav or visit <a href="http://legacy.quran.com">legacy.quran.com</a>.
+            Also, feel free to contact us and let us know about bugs, feature requests,
+            improvements or help out with development.
+            <br /><br />
+            We hope you enjoy the new Quran.com as much as we do. We are all in this together
+            and want to improve the product to serve you better. Please feel free
+            to share it amongst family and friends, and let us know how we can
+            serve you better.
+            <br/><br/>
+            - Quran.com team
+          </h4>
+        </div>
+      );
+    }
+    return;
+  }
+
   render() {
     return (
         <div className="index-page">
           <IndexHeader />
           <div className="container surah-list">
             <div className="row">
+              {this.renderFirstTimeContent()}
               {this.renderLastVisit()}
               <div className="col-md-10 col-md-offset-1">
                 <h4 className="text-muted text-center title">SURAHS (CHAPTERS)</h4>
@@ -100,7 +136,8 @@ class Index extends React.Component {
 Index = connectToStores(Index, [SurahsStore, UserStore], (stores, props) => {
   return {
     surahs: stores.SurahsStore.getSurahs(),
-    lastVisit: stores.UserStore.getLastVisit()
+    lastVisit: stores.UserStore.getLastVisit(),
+    isFirstTime: stores.UserStore.getIsFirstTime()
   }
 });
 

@@ -39,6 +39,7 @@ a:hover{
     float: left;
     display: block;
     position: fixed;
+    top: 0px;
 
     @media (max-width: $screen-xs-max) {
       display: none;
@@ -53,6 +54,7 @@ a:hover{
     background-color: #fff;
     transition: width 0.5s;
     min-height: 100vh;
+    z-index: 9999;
 
     .navbar-brand{
       display: none;

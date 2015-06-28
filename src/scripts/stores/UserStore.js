@@ -45,10 +45,23 @@ class UserStore extends BaseStore {
         ayah: data[1]
       }
     }
+
+    if (reactCookie.load('isFirstTime') === undefined) {
+      this.isFirstTime = true;
+      reactCookie.save('isFirstTime', true);
+    }
+    else {
+      this.isFirstTime = false;
+      reactCookie.save('isFirstTime', false);
+    }
   }
 
   getLastVisit() {
     return this.lastVisit || false;
+  }
+
+  getIsFirstTime() {
+    return this.isFirstTime;
   }
 
   getOptions() {
@@ -115,8 +128,14 @@ UserStore.handlers = {
       audio: parseInt(expressCookies.audio),
     };
 
-    this.lastVisit = {surah: data[0], ayah: data[1]}
+    this.lastVisit = {surah: data[0], ayah: data[1]};
 
+    if (!expressCookies.isFirstTime) {
+      this.isFirstTime = true;
+    }
+    else {
+      this.isFirstTime = false;
+    }
   },
   lastVisit(payload) {
     reactCookie.save('lastVisit', `${payload.surah}-${payload.ayah}`);
