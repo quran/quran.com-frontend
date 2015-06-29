@@ -118,6 +118,8 @@ class UserStore extends BaseStore {
   }
 
   getOptions() {
+    console.log(this.options);
+    
     return {
       audio: this.options.audio,
       quran: this.options.quran,
