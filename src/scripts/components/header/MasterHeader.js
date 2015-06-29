@@ -23,10 +23,9 @@ class MasterHeader extends React.Component{
     this.setState({showOptions: !this.state.showOptions});
   };
 
-  // Disable hyperlink for previous surah if surah is Al-Faatihah.
   previousChapter() {
-    var prev = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) - 1);
     var currentPos = parseInt(this.props.currentRoute.get('params').get('surahId'));
+    var prev = '/' + (currentPos - 1);
     if (currentPos <= 1){
       return;
     } else {
@@ -39,10 +38,9 @@ class MasterHeader extends React.Component{
     }
   };
 
-  // Disable hyperlink for next surah if surah is An-Nas.
   nextChapter() {
-    var next = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) + 1);
     var currentPos = parseInt(this.props.currentRoute.get('params').get('surahId'));
+    var next = '/' + (currentPos + 1);
     if (currentPos >= 114){
       return;
     } else {
