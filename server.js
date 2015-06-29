@@ -20,10 +20,6 @@ const htmlComponent = React.createFactory(HtmlComponent);
 const debug = debugLib('quran-com');
 const server = express();
 
-var cacheManager = require('cache-manager');
-var memoryCache = cacheManager.caching({store: 'memory', max: 100, ttl: 60/*seconds*/});
-var ttl = 50;
-
 server.set('state namespace', 'App');
 server.set('view cache', true);
 // Use varnish for the static routes, which will cache too
@@ -46,11 +42,10 @@ server.get('/api/*', function(req, res, next) {
 server.use((req, res, next) => {
     let context = app.createContext();
 
-    debug('Executing navigate action');
-
     context.getActionContext().executeAction(ExpressActions.userAgent, req.useragent);
     context.getActionContext().executeAction(ExpressActions.cookies, req.cookies);
-
+    
+    debug('Executing navigate action');
     context.getActionContext().executeAction(navigateAction, {
         url: req.url
       }, (err) => {
@@ -68,26 +63,20 @@ server.use((req, res, next) => {
         const webserver = process.env.NODE_ENV === "production" ? "" : "//localhost:8080";
 
         debug('Rendering Application component into html');
+        const html = React.renderToStaticMarkup(htmlComponent({
+          context: context.getComponentContext(),
+          state: exposed,
+          markup: React.renderToString(context.createElement()),
+          fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs()),
+          hotModuleUrl: `${webserver}/`
+        }));
 
-        // memoryCache.wrap(req.url, function(cacheCallback) {
-          const html = React.renderToStaticMarkup(htmlComponent({
-            context: context.getComponentContext(),
-            state: exposed,
-            markup: React.renderToString(context.createElement()),
-            fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs()),
-            hotModuleUrl: `${webserver}/`
-          }));
+        debug('Sending markup');
 
-          // cacheCallback(null, html)
-
-        // }, ttl, function(err, html) {
-          debug('Sending markup');
-
-          res.type('html');
-          res.setHeader('Cache-Control', 'public, max-age=31557600');
-          res.write('<!DOCTYPE html>' + html);
-          res.end();
-        // });
+        res.type('html');
+        res.setHeader('Cache-Control', 'public, max-age=31557600');
+        res.write('<!DOCTYPE html>' + html);
+        res.end();
       });
 });
 

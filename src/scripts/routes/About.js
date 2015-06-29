@@ -1,11 +1,12 @@
 import React from 'react';
 import IndexHeader from 'components/header/IndexHeader';
+import {NavLink} from 'fluxible-router';
 
 class About extends React.Component {
   render() {
     return(
       <div>
-        <IndexHeader />
+        <IndexHeader noSearch={true} />
         <div className="container-fluid about-text">
           <div className="row">
               <div className="col-md-8 col-md-offset-2">
@@ -57,7 +58,7 @@ class About extends React.Component {
                 title or by page. In future iterations, we will be integrating
                 more search and audio features inshaAllah. If you have any
                 suggestions on how we can make the website a better experience
-                please do not hesitate to <a href="/contactus">contact us</a>.
+                please do not hesitate to <NavLink href="/contact">contact us</NavLink>.
               </h4>
             </div>
           </div>

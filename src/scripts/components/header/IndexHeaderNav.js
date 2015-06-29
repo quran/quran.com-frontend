@@ -30,6 +30,11 @@ class IndexHeaderNav extends React.Component {
               Contribute
             </NavLink>
           </li>
+          <li>
+            <NavLink href="/contact">
+              Contact us
+            </NavLink>
+          </li>
         </ul>
       </div>
     );

@@ -4,6 +4,7 @@ require('babel/polyfill');
 import React from 'react';
 import debug from 'debug';
 import app from './app';
+import reactCookie from 'react-cookie';
 
 const debugClient = debug('quran-com');
 const dehydratedState = window.App; // Sent from the server
@@ -12,6 +13,12 @@ const dehydratedState = window.App; // Sent from the server
 // https://github.com/visionmedia/debug#browser-support
 window.fluxibleDebug = debug;
 window.React = React; // For chrome dev tool support
+window.clearCookies = function() {
+  reactCookie.remove('quran');
+  reactCookie.remove('content');
+  reactCookie.remove('audio');
+  reactCookie.remove('isFirstTime');
+}
 
 // Init tooltip
 if (typeof window !== 'undefined') {

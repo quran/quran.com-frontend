@@ -1,5 +1,6 @@
 import BaseStore from 'fluxible/addons/BaseStore';
 import reactCookie from 'react-cookie';
+import * as Settings from 'constants/Settings';
 
 class UserStore extends BaseStore {
   constructor(dispatcher) {
@@ -7,12 +8,85 @@ class UserStore extends BaseStore {
 
     this.options = {};
 
-    let notNan = !Number.isNaN(parseInt(reactCookie.load('quran'))),
-        isNumber = Number.isInteger(parseInt(reactCookie.load('quran')));
+    this.version = Settings.version;
 
-    if (notNan && isNumber) {
-      if (!Array.isArray(reactCookie.load('content'))) {
-        let content = reactCookie.load('content');
+    // TODO: Research if we need these anymore or can get rid of them!
+    // this.setLastVisit(reactCookie.load('lastVisit'));
+    //
+    // this.setIsFirstTime(reactCookie.load('isFirstTime'));
+    //
+    // this.setOptionsCookie(
+    //   reactCookie.load('quran'),
+    //   reactCookie.load('content'),
+    //   reactCookie.load('audio')
+    // );
+    //
+    // this.setVersion(reactCookie.load('version'));
+  }
+
+  setVersion(cookie) {
+    if (cookie) {
+      this.version = cookie.replace(/\"/g, '').replace(/\\/g, '');
+    }
+  }
+
+  getVersion() {
+    return this.version;
+  }
+
+  getIsCurrentVersion() {
+    if (this.getVersion() !== Settings.version) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+
+  setLastVisit(cookie) {
+    if (cookie) {
+      var data = cookie.replace(/\"/g, '').split('-').map(function(option) {
+        return parseInt(option);
+      });
+
+      this.lastVisit = {
+        surah: data[0],
+        ayah: data[1]
+      };
+    }
+  }
+
+  getLastVisit() {
+    return this.lastVisit || false;
+  }
+
+  setIsFirstTime(cookie) {
+    if (cookie === undefined) {
+      this.isFirstTime = true;
+    }
+    else {
+      this.isFirstTime = false;
+    }
+  }
+
+  getIsFirstTime() {
+    return this.isFirstTime;
+  }
+
+  setOptionsCookie(quranCookie, contentCookie, audioCookie) {
+    if (!quranCookie && !contentCookie && !audioCookie) {
+      this.options = {
+        content: [19],
+        audio: 8,
+        quran: 1
+      };
+    }
+    else {
+      this.options = {};
+
+      if (!Array.isArray(contentCookie)) {
+        let content = contentCookie;
+
         if (Number.isInteger(content)) {
           this.options.content = [content];
         }
@@ -23,45 +97,24 @@ class UserStore extends BaseStore {
           });
         }
       }
+      else {
+        this.options.content = [19];
+      }
 
-      this.options.quran = parseInt(reactCookie.load('quran'));
-      this.options.audio = parseInt(reactCookie.load('audio'));
-    }
-    else {
-      this.options = {
-        content: [19],
-        audio: 8,
-        quran: 1
-      };
-    }
+      if (quranCookie) {
+        this.options.quran = parseInt(quranCookie);
+      }
+      else {
+        this.options.quran = 1;
+      }
 
-    if (reactCookie.load('lastVisit')) {
-      var data = reactCookie.load('lastVisit').replace(/\"/g, '').split('-').map(function(option) {
-        return parseInt(option);
-      });
-
-      this.lastVisit = {
-        surah: data[0],
-        ayah: data[1]
+      if (audioCookie) {
+        this.options.audio = parseInt(audioCookie);
+      }
+      else {
+        this.options.audio = 8;
       }
     }
-
-    if (reactCookie.load('isFirstTime') === undefined) {
-      this.isFirstTime = true;
-      reactCookie.save('isFirstTime', true);
-    }
-    else {
-      this.isFirstTime = false;
-      reactCookie.save('isFirstTime', false);
-    }
-  }
-
-  getLastVisit() {
-    return this.lastVisit || false;
-  }
-
-  getIsFirstTime() {
-    return this.isFirstTime;
   }
 
   getOptions() {
@@ -112,31 +165,51 @@ class UserStore extends BaseStore {
     reactCookie.remove('content');
     reactCookie.remove('audio');
   }
+
+  dehydrate() {
+    return {
+      options: this.options,
+      lastVisit: this.lastVisit,
+      isFirstTime: this.isFirstTime,
+      version: this.version
+    };
+  }
+
+  rehydrate(state) {
+    this.options = state.options;
+    this.lastVisit = state.lastVisit;
+    this.isFirstTime = state.isFirstTime;
+    this.version = state.version;
+
+    // TODO: Don't call this everytime.
+    if (reactCookie.load('isFirstTime') !== state.isFirstTime) {
+      reactCookie.save('isFirstTime', state.isFirstTime);
+    }
+
+    if (reactCookie.load('version') !== state.version) {
+      reactCookie.save('version', state.version.replace(/\"/g, '').replace(/\\/g, ''));
+    }
+  }
+
+  shouldDehydrate() {
+    return true;
+  }
 }
 
 UserStore.handlers = {
   cookiesReceived(expressCookies) {
-    var data = expressCookies.lastVisit.replace(/\"/g, '').split('-').map(function(option) {
-      return parseInt(option);
-    });
+    this.setLastVisit(expressCookies.lastVisit);
+    this.setIsFirstTime(expressCookies.isFirstTime);
 
-    this.options = {
-      content: expressCookies.content.replace(/\"/g, '').split(',').map(function(option) {
-        return parseInt(option);
-      }),
-      quran: parseInt(expressCookies.quran),
-      audio: parseInt(expressCookies.audio),
-    };
+    this.setOptionsCookie(
+      expressCookies.quran,
+      expressCookies.content,
+      expressCookies.audio
+    );
 
-    this.lastVisit = {surah: data[0], ayah: data[1]};
-
-    if (!expressCookies.isFirstTime) {
-      this.isFirstTime = true;
-    }
-    else {
-      this.isFirstTime = false;
-    }
+    this.setVersion(expressCookies.version);
   },
+
   lastVisit(payload) {
     reactCookie.save('lastVisit', `${payload.surah}-${payload.ayah}`);
   }
