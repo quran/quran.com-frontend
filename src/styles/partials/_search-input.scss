@@ -29,11 +29,13 @@
     padding: 15px;
     height: 100%;
     border: initial;
-    background-color: initial;
+    background-color: darken($brand-primary, 10%);
     color: $brand-primary;
+    right: 0px;
+    width: 12%;
 
     &:hover{
-      background-color: initial;
+      background-color: darken($brand-primary, 10%);
       color: #fff;
     }
   }
