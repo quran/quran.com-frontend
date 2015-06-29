@@ -27,6 +27,20 @@ class SearchInput extends React.Component {
         });
       }
     }
+
+    // This checks to see if the user is typing Arabic
+    // and adjusts the text-align. 
+    var classes = document.getElementsByClassName("SearchMeat");
+    classes[0].addEventListener("keydown",function(){
+      var arabic = new RegExp(/[\u0600-\u06FF]/);
+      var character = this.value;
+      var flag = arabic.test(character);
+      if(flag){
+        this.style.textAlign='right';
+      } else {
+        this.style.textAlign='left';
+      }
+    });
   };
 
   render() {
@@ -39,6 +53,7 @@ class SearchInput extends React.Component {
         <i className="ss-icon ss-search" onClick={this.search.bind(this)} />
         <input type="text"
                placeholder="Search"
+               className="SearchMeat"
                onKeyUp={this.search.bind(this)} />
       </div>
     );
