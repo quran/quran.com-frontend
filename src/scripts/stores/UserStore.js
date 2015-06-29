@@ -121,7 +121,7 @@ class UserStore extends BaseStore {
     return {
       audio: this.options.audio,
       quran: this.options.quran,
-      content: this.options.content.join(',')
+      content: this.options.content ? this.options.content.join(',') : [19]
     };
   }
 
