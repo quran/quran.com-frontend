@@ -11,6 +11,7 @@
     background: darken($brand-primary, 10%);
     color: #fff;
   }
+  
   input::-webkit-input-placeholder { /* WebKit browsers */
     color: $brand-primary;
   }
@@ -43,7 +44,7 @@
   margin-bottom: 50px;
 
   input{
-    width: 100%;
+    width: 93%;
     padding: 20px 30px;
     padding-right: 30px;
     outline: none;
@@ -74,7 +75,7 @@
 
   i.ss-icon {
     position: absolute;
-    right: 0px;
+    right: -18px;
     padding: 15px 15px;
     font-size: 150%;
     background-color: $brand-primary;
