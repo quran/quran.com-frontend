@@ -28,7 +28,7 @@ class Index extends React.Component {
             </div>
           </NavLink>
         </li>
-      )
+      );
     });
   }
 
@@ -63,10 +63,10 @@ class Index extends React.Component {
             </ul>
           </div>
         </div>
-      )
+      );
     }
 
-    return;
+    return null;
   }
 
   renderFirstTimeContent() {
@@ -101,7 +101,7 @@ class Index extends React.Component {
         </div>
       );
     }
-    return;
+    return null;
   }
 
   render() {
@@ -138,7 +138,7 @@ Index = connectToStores(Index, [SurahsStore, UserStore], (stores, props) => {
     surahs: stores.SurahsStore.getSurahs(),
     lastVisit: stores.UserStore.getLastVisit(),
     isFirstTime: stores.UserStore.getIsFirstTime()
-  }
+  };
 });
 
 export default Index;

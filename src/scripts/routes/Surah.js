@@ -25,63 +25,68 @@ class Surah extends React.Component {
 
   renderPagination() {
     var surahId = this.props.currentRoute.get('params').get('surahId');
+
     if (this.state.loading) {
-        return <p>Loading...</p>;
-    } else if (this.state.endOfSurah) {
-        return <p>End of Surah</p>;
-      // check if we're at Naas or Faatihah.
-    } else {
-        if(surahId >= 114){
-          return (
-            <ul className="pager">
-                <li className="previous">
-                    <a href={surahId * 1 - 1}>
-                        &larr; Previous Surah
-                    </a>
-                  </li>
-            </ul>
-          );
-        } else if (surahId <= 1){
-            return (
-              <ul className="pager">
-                  <li className="next">
-                    <a href={surahId * 1 + 1}>
-                        Next Surah &rarr;
-                    </a>
-                  </li>
-              </ul>
-            );
-        } else {
-            return (
-              <ul className="pager">
-                <li className="previous">
-                  <a href={surahId * 1 - 1}>
-                    &larr; Previous Surah
-                  </a>
-                </li>
-                <li className="next">
-                  <a href={surahId * 1 + 1}>
-                    Next Surah &rarr;
-                  </a>
-                </li>
-              </ul>
-            );
-          }
+      return <p>Loading...</p>;
+    }
+    else if (this.state.endOfSurah) {
+      return (<p>End of Surah</p>);
+    }
+    else {
+      if(surahId >= 114){
+        return (
+          <ul className="pager">
+            <li className="previous">
+              <a href={surahId * 1 - 1}>
+                &larr; Previous Surah
+              </a>
+            </li>
+          </ul>
+        );
       }
+      else if (surahId <= 1){
+        return (
+          <ul className="pager">
+            <li className="next">
+              <a href={surahId * 1 + 1}>
+                Next Surah &rarr;
+              </a>
+            </li>
+          </ul>
+        );
+      }
+      else {
+        return (
+          <ul className="pager">
+            <li className="previous">
+              <a href={surahId * 1 - 1}>
+                &larr; Previous Surah
+              </a>
+            </li>
+            <li className="next">
+              <a href={surahId * 1 + 1}>
+                Next Surah &rarr;
+              </a>
+            </li>
+          </ul>
+        );
+      }
+    }
   }
 
   onScroll() {
-    var self = this;
     if (typeof window === 'undefined') {
       return;
     }
 
+    var self = this, rangeArray;
     var range = this.props.currentRoute.get('params').get('range');
+
     if (range) {
-      var rangeArray = range.split('-');
+      rangeArray = range.split('-');
     }
     else {
-      var rangeArray = [1,10];
+      rangeArray = [1, 10];
     }
 
     $(window).unbind('scroll');
@@ -130,7 +135,7 @@ class Surah extends React.Component {
     if (this.props.ayahs.length < nextProps.ayahs.length) {
       this.setState({loading: false});
       return true;
-    };
+    }
 
     return false;
   }
@@ -170,12 +175,12 @@ Surah.displayName = 'Surah';
 Surah.contextTypes = {
   executeAction: React.PropTypes.func.isRequired,
   getStore: React.PropTypes.func.isRequired
-}
+};
 
 Surah = connectToStores(Surah, [AyahsStore], (stores, props) => {
   return {
     ayahs: stores.AyahsStore.getAyahs()
-  }
+  };
 });
 
 Surah = handleRoute(Surah);

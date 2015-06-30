@@ -10,7 +10,7 @@ class SurahsNav extends React.Component{
     super(props);
   }
 
-  _list() {
+  list() {
     return this.props.surahs.map((surah) => {
       return (
         <li key={surah.id + 'surah'}>
@@ -37,7 +37,7 @@ class SurahsNav extends React.Component{
   }
 
   shouldComponentUpdate(nextState, nextProps) {
-    return this.props.surahs.length !== nextState.surahs.length
+    return this.props.surahs.length !== nextState.surahs.length;
   }
 
   render() {
@@ -48,7 +48,7 @@ class SurahsNav extends React.Component{
     return (
       <div className={classes}>
         <ul>
-          {this._list()}
+          {this.list()}
         </ul>
       </div>
     );
@@ -63,7 +63,7 @@ SurahsNav.contextTypes = {
 SurahsNav = connectToStores(SurahsNav, [SurahsStore], (stores, props) => {
   return {
     surahs: stores.SurahsStore.getSurahs()
-  }
+  };
 });
 
 export default SurahsNav;

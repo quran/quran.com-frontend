@@ -18,7 +18,7 @@ class ReadingModeToggle extends React.Component {
       toggled: !this.state.toggled
     });
 
-    this.context.executeAction(AyahsActions.toggleReadingMode)
+    this.context.executeAction(AyahsActions.toggleReadingMode);
   }
 
   renderIcon() {

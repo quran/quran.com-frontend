@@ -1,6 +1,7 @@
 import React from 'react';
 import SurahsStore from 'stores/SurahsStore';
 import { connectToStores } from 'fluxible/addons';
+import $ from 'jquery';
 
 class SurahInfo extends React.Component {
   constructor() {
@@ -8,7 +9,7 @@ class SurahInfo extends React.Component {
 
     this.state = {
       page: null
-    }
+    };
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -17,7 +18,7 @@ class SurahInfo extends React.Component {
     }
 
     var self = this;
-    let link = this.props.wikiLinks[nextProps.currentSurah.id]
+    let link = this.props.wikiLinks[nextProps.currentSurah.id];
 
     $.ajax( {
       url: `http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&titles=${link}&redirects=true`,
@@ -29,7 +30,7 @@ class SurahInfo extends React.Component {
 
       self.setState({
         page: r.query.pages[page]
-      })
+      });
 
       return;
     });
@@ -95,8 +96,7 @@ SurahInfo = connectToStores(SurahInfo, [SurahsStore], (stores, props) => {
     isExpanded: stores.SurahsStore.getIsShowingInfo(),
     currentSurah: stores.SurahsStore.getSurah(),
     wikiLinks: stores.SurahsStore.getWikiLinks()
-  }
+  };
 });
-
 
 export default SurahInfo;

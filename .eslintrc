@@ -1,12 +1,40 @@
----
-  parser: "babel-eslint"
-  env:
-    node: true
-    browser: true
-  rules:
-    strict: 0
-    indent: [2, 4]
-    quotes: [2, 'single']
-    no-unused-vars: 0 // see https://github.com/babel/babel-eslint/issues/21
-  plugins:
-    - react
+{
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "node": true,
+    "browser": true,
+    "jquery": true
+  },
+  "ecmaFeatures": {
+    "arrowFunctions": true,
+    "binaryLiterals": true,
+    "blockBindings": true,
+    "classes": true,
+    "defaultParams": true,
+    "destructuring": true,
+    "forOf": true,
+    "generators": true,
+    "modules": true,
+    "objectLiteralComputedProperties": true,
+    "objectLiteralDuplicateProperties": true,
+    "objectLiteralShorthandMethods": true,
+    "objectLiteralShorthandProperties": true,
+    "octalLiterals": true,
+    "regexUFlag": true,
+    "regexYFlag": true,
+    "spread": true,
+    "superInFunctions": true,
+    "templateStrings": true,
+    "unicodeCodePointEscapes": true,
+    "globalReturn": true,
+    "jsx": false
+  },
+  "rules": {
+    "strict": 0,
+    "indent": [2, 2],
+    "quotes": [2, "single"],
+    "no-unused-vars": 0
+  },
+  "plugins": ["react"]
+}

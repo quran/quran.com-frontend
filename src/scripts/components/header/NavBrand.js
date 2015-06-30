@@ -16,6 +16,6 @@ class NavBrand extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default NavBrand;

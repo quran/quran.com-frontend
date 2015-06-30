@@ -1,3 +1,5 @@
+/* eslint-disable no-extra-boolean-cast, consistent-return */
+
 import request from 'superagent-promise';
 import urlSettings from 'constants/Settings';
 import debug from 'utils/Debug';
@@ -6,11 +8,13 @@ export function getSurahs(actionContext, payload) {
   if (actionContext.getStore('SurahsStore').hasAllSurahs()) {
     return;
   }
+
   debug('ACTIONS-SURAHS');
+
   return request.get(urlSettings.url + 'surahs')
   .end()
   .then(function(res) {
-    console.log('SURAHS RECEIVED....')
+    console.log('SURAHS RECEIVED....');
     actionContext.dispatch('surahsReceived', {surahs: res.body, surah: payload});
   });
 }

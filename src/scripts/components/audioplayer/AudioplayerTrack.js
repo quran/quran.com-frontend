@@ -3,7 +3,7 @@ import AudioplayerTracker from './AudioplayerTracker';
 import $ from 'jquery';
 
 class AudioplayerTrack extends React.Component {
-  _moveTracker(e) {
+  moveTracker(e) {
     e.preventDefault();
 
     this.props.changeOffset(
@@ -14,7 +14,7 @@ class AudioplayerTrack extends React.Component {
 
   render() {
     return (
-      <div className="audioplayer-track" onClick={this._moveTracker}>
+      <div className="audioplayer-track" onClick={this.moveTracker}>
           <AudioplayerTracker progress={this.props.progress}/>
       </div>
     );

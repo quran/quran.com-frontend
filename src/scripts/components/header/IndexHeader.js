@@ -6,7 +6,7 @@ import {NavLink} from 'fluxible-router';
 class IndexHeader extends React.Component {
   renderSearch() {
     if (this.props.noSearch) {
-      return;
+      return null;
     }
     else {
       return (

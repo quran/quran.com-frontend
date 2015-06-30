@@ -3,7 +3,7 @@ import AudioplayerStore from 'stores/AudioplayerStore';
 import AudioplayerTrack from './AudioplayerTrack';
 import VersesDropdown from './VersesDropdown';
 import * as AyahsActions from 'actions/AyahsActions';
-import {connectToStores} from 'fluxible/addons'
+import {connectToStores} from 'fluxible/addons';
 import SurahsStore from 'stores/SurahsStore';
 import AyahsStore from 'stores/AyahsStore';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
@@ -57,7 +57,7 @@ class Audioplayer extends React.Component {
       //   });
       //   return;
       // }
-      return;
+      return null;
     }
 
 
@@ -138,9 +138,10 @@ class Audioplayer extends React.Component {
     console.log('Audio was playing:', this.state.playing);
 
     if (this.state.playing) {
-        this.pause();
-    } else {
-        this.play();
+      this.pause();
+    }
+    else {
+      this.play();
     }
   }
 
@@ -183,9 +184,9 @@ class Audioplayer extends React.Component {
   playStopButtons() {
     var icon;
     if (this.state.playing) {
-        icon = <i className="ss-icon ss-pause" />;
+      icon = <i className="ss-icon ss-pause" />;
     } else {
-        icon = <i className="ss-icon ss-play" />;
+      icon = <i className="ss-icon ss-play" />;
     }
     return (
       <li className="audioplayer-controls">
@@ -227,9 +228,8 @@ class Audioplayer extends React.Component {
 
   render() {
     debug('Component-Audioplayer');
-    
-    var currentAyahId = this.props.currentAyah ?
-      this.props.currentAyah.ayah : '';
+
+    var currentAyahId = this.props.currentAyah ? this.props.currentAyah.ayah : '';
 
     return (
       <div className="audioplayer col-md-3 border-right">
@@ -261,7 +261,7 @@ Audioplayer = connectToStores(Audioplayer, [SurahsStore, AyahsStore, Audioplayer
     ayahs: stores.AyahsStore.getAyahs(),
     currentAudio: stores.AudioplayerStore.getCurrentAudio(),
     currentAyah: stores.AudioplayerStore.getCurrentAyah()
-  }
+  };
 });
 
 export default Audioplayer;

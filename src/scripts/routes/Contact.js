@@ -1,3 +1,5 @@
+/*eslint-disable camelcase */
+
 import React from 'react';
 import IndexHeader from 'components/header/IndexHeader';
 import Settings from 'constants/Settings';
@@ -9,7 +11,7 @@ class Contact extends React.Component {
 
     this.state = {
       success: false
-    }
+    };
   };
 
   submitSupport(e) {
@@ -36,7 +38,7 @@ class Contact extends React.Component {
   };
 
   renderForm() {
-    return(
+    return (
       <form className="form-horizontal" onSubmit={this.submitSupport.bind(this)}>
         <div className="form-group">
           <label htmlFor="name" className="col-sm-2 control-label">Name</label>
@@ -65,7 +67,7 @@ class Contact extends React.Component {
         <div className="form-group">
           <label htmlFor="message" className="col-sm-2 control-label">Message</label>
           <div className="col-sm-8">
-            <textarea  rows="4" cols="50" className="form-control" ref="body" />
+            <textarea rows="4" cols="50" className="form-control" ref="body" />
           </div>
         </div>
         <div className="form-group">
@@ -92,7 +94,7 @@ class Contact extends React.Component {
       body = this.renderForm();
     }
 
-    return(
+    return (
       <div>
         <IndexHeader noSearch={true} />
         <div className="container-fluid about-text">
@@ -105,6 +107,6 @@ class Contact extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default Contact;

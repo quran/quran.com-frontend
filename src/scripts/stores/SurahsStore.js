@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle, camelcase */
+
 import BaseStore from 'fluxible/addons/BaseStore';
 import debug from 'utils/Debug';
 import wikiLinks from 'constants/QuranWikiTitles';
@@ -86,7 +88,7 @@ SurahsStore.handlers = {
   },
 
   'NAVIGATE_START': function(payload, name) {
-    var currentRoute = this.dispatcher.getStore('RouteStore')._currentRoute;
+    var currentRoute = this.dispatcher.getStore('RouteStore').getCurrentRoute();
 
     if (currentRoute.get('name') === 'surah') {
       this.surah = this.surahs[currentRoute.get('params').get('surahId') - 1];

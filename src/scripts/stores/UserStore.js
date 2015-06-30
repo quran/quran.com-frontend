@@ -1,3 +1,5 @@
+
+
 import BaseStore from 'fluxible/addons/BaseStore';
 import reactCookie from 'react-cookie';
 import * as Settings from 'constants/Settings';
@@ -138,14 +140,14 @@ class UserStore extends BaseStore {
   }
 
   setOptions(obj) {
-    var self, value, _results;
+    var self, value, results;
     self = this;
-    _results = [];
+    results = [];
     for (var key in obj) {
       value = obj[key];
-      _results.push(self.setSingleOption(key, value));
+      results.push(self.setSingleOption(key, value));
     }
-    return _results;
+    return results;
   }
 
   setSingleOption(key, value) {

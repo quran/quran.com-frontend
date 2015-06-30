@@ -27,7 +27,7 @@ class Html extends React.Component {
           {this.props.fontFaces.map(function(font) {
             return (
               <style type="text/css" dangerouslySetInnerHTML={{__html: font}} />
-            )
+            );
           })}
       </head>
       <body>

@@ -16,6 +16,9 @@ export function getAyahs(actionContext, params, done) {
   .then(function(res) {
     actionContext.dispatch('ayahsReceived', {
       ayahs: res.body
+    },
+    function(err) {
+      console.error(err);
     });
 
     actionContext.dispatch('lastVisit', {surah: params.surahId, ayah: params.from});
@@ -38,6 +41,10 @@ export function updateAyahs(actionContext, params, done) {
   request.get(urlSettings.url + 'surahs/' + surahId + '/ayat')
   .query(queryParams)
   .end(function(err, res) {
+    if (err) {
+      console.error(err);
+    }
+
     actionContext.dispatch('ayahsUpdated', {
       ayahs: res.body,
       difference: Object.keys(params)

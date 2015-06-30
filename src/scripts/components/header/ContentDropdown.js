@@ -1,3 +1,5 @@
+/* eslint-disable handle-callback-err */
+
 import React from 'react';
 import request from 'superagent';
 import Settings from 'constants/Settings';
@@ -12,15 +14,15 @@ class ContentDropdown extends React.Component {
     this.state = {
       options: [],
       chosenOptions: this.context.getStore(UserStore).getContentOptions()
-    }
+    };
   }
 
   componentDidMount() {
     request.get(Settings.url + 'options/content')
     .end((err, res) => {
-        this.setState({
-            options: res.body
-        });
+      this.setState({
+          options: res.body
+      });
     }.bind(this));
   }
 

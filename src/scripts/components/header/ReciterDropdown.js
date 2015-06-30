@@ -1,3 +1,5 @@
+/* eslint-disable handle-callback-err */
+
 import React from 'react';
 import request from 'superagent';
 import Settings from 'constants/Settings';
@@ -16,9 +18,9 @@ class ReciterDropdown extends React.Component {
   componentDidMount() {
     request.get(Settings.url + 'options/audio')
     .end(function(err, res) {
-        this.setState({
-            options: res.body
-        });
+      this.setState({
+          options: res.body
+      });
     }.bind(this));
   }
 
@@ -39,7 +41,7 @@ class ReciterDropdown extends React.Component {
           <a eventKey={option.name.english}
              onClick={this.chosenOption.bind(this, option.id)}
              key={option.id}
-             className={selected === option.id ? 'active': ''}>
+             className={selected === option.id ? 'active' : ''}>
             {option.name.english}
           </a>
         </li>

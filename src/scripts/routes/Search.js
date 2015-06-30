@@ -46,7 +46,7 @@ class Search extends React.Component {
 Search = connectToStores(Search, [AyahsStore], (stores, props) => {
   return {
     stats: stores.AyahsStore.getSearchStats()
-  }
+  };
 });
 
 export default Search;
