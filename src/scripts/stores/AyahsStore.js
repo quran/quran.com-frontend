@@ -1,3 +1,5 @@
+/* eslint-disable no-extra-boolean-cast, consistent-return */
+
 import BaseStore from 'fluxible/addons/BaseStore';
 import * as Font from 'utils/FontFace';
 import debug from 'utils/Debug';
@@ -16,7 +18,7 @@ class AyahsStore extends BaseStore {
 
   getLast() {
     if (this.ayahs.length) {
-      return this.ayahs[this.ayahs.length - 1].ayah
+      return this.ayahs[this.ayahs.length - 1].ayah;
     }
     else {
       return 10;
@@ -38,7 +40,7 @@ class AyahsStore extends BaseStore {
   getFirstAndLast() {
     return [
       this.ayahs[0].ayah,
-      this.ayahs[this.ayahs.length-1].ayah
+      this.ayahs[this.ayahs.length - 1].ayah
     ];
   }
 
@@ -66,7 +68,7 @@ class AyahsStore extends BaseStore {
 
     var throwError = function() {
       if (!hasErrored) {
-        console.error('Not working')
+        console.error('Not working');
         hasErrored = true;
       }
     };
@@ -82,8 +84,7 @@ class AyahsStore extends BaseStore {
 
       if (typeof window === 'undefined') {
         if (!this.audioUserAgent) {
-          throw new Error('WHAT!?! userAgent me please')
-          return;
+          throw new Error('WHAT!?! userAgent me please');
         }
         if (this.audioUserAgent.isOpera || this.audioUserAgent.isFirefox) {
           if (ayah.audio.ogg.url) {
@@ -93,14 +94,17 @@ class AyahsStore extends BaseStore {
           }
         } else {
           if (ayah.audio.mp3.url) {
-            ayah.scopedAudio =  new Audio(ayah.audio.mp3.url);
-          } else if (ayah.audio.ogg.url) {
+            ayah.scopedAudio = new Audio(ayah.audio.mp3.url);
+          }
+          else if (ayah.audio.ogg.url) {
             if (this.audioUserAgent.isChrome) {
-              ayah.scopedAudio =  new Audio(ayah.audio.ogg.url);
-            } else {
+              ayah.scopedAudio = new Audio(ayah.audio.ogg.url);
+            }
+            else {
               throwError();
             }
-          } else {
+          }
+          else {
             throwError();
           }
         }
@@ -110,19 +114,24 @@ class AyahsStore extends BaseStore {
             firefox.test(window.navigator.userAgent)) {
           if (ayah.audio.ogg.url) {
             ayah.scopedAudio = new Audio(ayah.audio.ogg.url);
-          } else {
+          }
+          else {
             throwError();
           }
-        } else {
+        }
+        else {
           if (ayah.audio.mp3.url) {
-            ayah.scopedAudio =  new Audio(ayah.audio.mp3.url);
-          } else if (ayah.audio.ogg.url) {
+            ayah.scopedAudio = new Audio(ayah.audio.mp3.url);
+          }
+          else if (ayah.audio.ogg.url) {
             if (chrome.test(window.navigator.userAgent)) {
-              ayah.scopedAudio =  new Audio(ayah.audio.ogg.url);
-            } else {
+              ayah.scopedAudio = new Audio(ayah.audio.ogg.url);
+            }
+            else {
               throwError();
             }
-          } else {
+          }
+          else {
             throwError();
           }
         }
@@ -130,14 +139,13 @@ class AyahsStore extends BaseStore {
 
       return ayah;
     });
-    console.log(this.ayahs)
   }
 
   dehydrate() {
     return {
       ayahs: this.ayahs,
       searchStats: this.searchStats
-    }
+    };
   }
 
   rehydrate(state) {
@@ -154,7 +162,7 @@ AyahsStore.handlers = {
   ayahsReceived(payload) {
     debug('STORES-AYAHS RECEIVED');
     if (this.ayahs.length > 0) {
-      if (payload.ayahs[0].ayah === this.ayahs[this.ayahs.length -1].ayah + 1) {
+      if (payload.ayahs[0].ayah === this.ayahs[this.ayahs.length - 1].ayah + 1) {
         console.log('Ayahs: Lazy load');
         Font.createFontFaces(payload.ayahs);
         this.ayahs = this.ayahs.concat(payload.ayahs);
@@ -170,7 +178,7 @@ AyahsStore.handlers = {
           console.error(
             'Failed to concat the ayahs',
             payload.ayahs[0].ayah,
-            this.ayahs[this.ayahs.length -1].ayah
+            this.ayahs[this.ayahs.length - 1].ayah
           );
         }
         // Assuming this happens on new page
@@ -233,7 +241,7 @@ AyahsStore.handlers = {
       page: payload.page,
       size: payload.size,
       took: payload.took,
-      total: payload.total,
+      total: payload.total
     };
 
     this.emitChange();

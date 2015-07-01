@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+
 import React from 'react';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
 import ReactZeroClipboard from 'react-zeroclipboard';
@@ -35,9 +37,10 @@ class Ayah extends React.Component {
       return;
     }
 
-    let text =  this.props.ayah.quran.map((word) => {
+    let text = this.props.ayah.quran.map(word => {
       if (word.word.translation) {
         let tooltip = word.word.translation;
+
         return (
           <b key={word.char.code}
              className={word.char.font}
@@ -46,7 +49,8 @@ class Ayah extends React.Component {
              dangerouslySetInnerHTML={{__html: word.char.code}}>
           </b>
         );
-      } else {
+      }
+      else {
         return (
           <b className={word.char.font}
              key={word.char.code}
@@ -105,7 +109,8 @@ class Ayah extends React.Component {
   }
 
   render() {
-    debug(`COMPONENT-AYAH RENDERED ${this.props.ayah.ayah}`)
+    debug(`COMPONENT-AYAH RENDERED ${this.props.ayah.ayah}`);
+
     if (this.props.readingMode) {
       return this.text();
     }

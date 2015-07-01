@@ -2,22 +2,22 @@ import * as AyahsActions from 'actions/AyahsActions';
 import {navigateAction} from 'fluxible-router';
 
 export function changeAyah(actionContext, payload, done) {
+  var rangeArray, spread, fromAyah, toAyah;
   var currentAyah = actionContext.getStore('AyahsStore').getAyahs().find((a) => {
-    return a.ayah  === payload.ayah;
+    return a.ayah === payload.ayah;
   });
 
-  var params = actionContext.getStore('RouteStore')._currentRoute.get('params');
+  var params = actionContext.getStore('RouteStore').getCurrentRoute().get('params');
   if (params.get('range')) {
-    var rangeArray = params.get('range').split('-');
+    rangeArray = params.get('range').split('-').map(x => parseInt(x));
   } else {
-    var rangeArray = [1, 10]; //The default
+    rangeArray = [1, 10]; //The default
   }
 
   if ((actionContext.getStore('AyahsStore').getLast() - 3) === payload.ayah) {
-    var range = rangeArray.map(x => parseInt(x)),
-        spread = range[1] - range[0] + 1,
-        fromAyah = range[1] + 1,
-        toAyah = fromAyah + spread;
+    spread = (rangeArray[1] - rangeArray[0] + 1);
+    fromAyah = rangeArray[1] + 1;
+    toAyah = fromAyah + spread;
 
     actionContext.executeAction(AyahsActions.getAyahs, {
       surahId: params.get('surahId'),
@@ -26,14 +26,13 @@ export function changeAyah(actionContext, payload, done) {
     });
   }
 
-  // If the ayah is beyond the range
+  // If the ayah is beyond the rangeArray
   if (currentAyah === undefined) {
-    var range = rangeArray.map(x => parseInt(x)),
-        spread = range[1] - range[0] + 1,
-        fromAyah = payload.ayah,
-        toAyah = fromAyah + spread;
+    spread = (rangeArray[1] - rangeArray[0] + 1);
+    fromAyah = payload.ayah;
+    toAyah = fromAyah + spread;
 
-    if ((range[1] + spread) < payload.ayah) {
+    if ((rangeArray[1] + spread) < payload.ayah) {
       actionContext.executeAction(navigateAction, {
         url: `/${params.get('surahId')}/${fromAyah}-${toAyah}`
       });

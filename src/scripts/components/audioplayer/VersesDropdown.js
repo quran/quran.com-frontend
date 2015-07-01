@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
-import * as AudioplayerActions from 'actions/AudioplayerActions'
+import * as AudioplayerActions from 'actions/AudioplayerActions';
 import classNames from 'classnames';
 
 class VersesDropdown extends React.Component {
@@ -8,7 +8,7 @@ class VersesDropdown extends React.Component {
     super(props);
     this.state = {
       open: false
-    }
+    };
   }
 
   handleDropdownClick(e) {
@@ -19,8 +19,8 @@ class VersesDropdown extends React.Component {
     });
 
     // When the dropdown is open, monitor clicks to close
-    $(document).on('click.dropdownOpen', (e) => {
-      if ($(React.findDOMNode(this)).has(e.target).length === 0) {
+    $(document).on('click.dropdownOpen', (event) => {
+      if ($(React.findDOMNode(this)).has(event.target).length === 0) {
         this.setState({
           open: false
         });
@@ -43,11 +43,11 @@ class VersesDropdown extends React.Component {
 
   ayatList() {
     var list = Array(this.props.ayahs)
-    .join().split(',').map(function(e, i) {return i;});
+    .join().split(',').map(function(e, i) {return i; });
 
     return list.map((i) => {
       return (
-        <li key={i+1}>
+        <li key={i + 1}>
           <a onClick={this.goToAyah.bind(this, i + 1)}>{i + 1}</a>
         </li>
       );
@@ -86,6 +86,6 @@ VersesDropdown.contextTypes = {
 
 VersesDropdown.defaultProps = {
   ayahs: 0
-}
+};
 
 export default VersesDropdown;

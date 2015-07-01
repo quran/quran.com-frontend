@@ -28,7 +28,7 @@ class AudioplayerStore extends BaseStore {
     return {
       currentAyah: this.currentAyah,
       currentAudio: this.currentAudio
-    }
+    };
   }
 
   rehydrate(state) {
@@ -61,14 +61,12 @@ AudioplayerStore.handlers = {
 
   ayahsReceived() {
     this.dispatcher.waitFor('AyahsStore', () => {
-      console.log(this.currentAyah)
       if (!this.currentAyah) {
         this.shouldPlay = false;
         this.currentAyah = this.dispatcher.getStore('AyahsStore').getAyahs()[0];
 
         if (this.currentAyah) {
           this.currentAudio = this.currentAyah.scopedAudio;
-          console.log(this.currentAudio)
         }
       }
       this.emitChange();

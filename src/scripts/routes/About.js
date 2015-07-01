@@ -1,10 +1,10 @@
 import React from 'react';
 import IndexHeader from 'components/header/IndexHeader';
-import {NavLink} from 'fluxible-router';
+import { NavLink } from 'fluxible-router';
 
 class About extends React.Component {
   render() {
-    return(
+    return (
       <div>
         <IndexHeader noSearch={true} />
         <div className="container-fluid about-text">
@@ -78,6 +78,6 @@ class About extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default About;

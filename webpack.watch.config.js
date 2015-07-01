@@ -18,6 +18,7 @@ config.output.hotUpdateMainFilename = "update/[hash]/update.json";
 config.output.hotUpdateChunkFilename = "update/[hash]/[id].update.js";
 
 config.plugins = [
+	new webpack.PrefetchPlugin("react"),
 	new webpack.ProvidePlugin({
 			$: "jquery",
 			jQuery: "jquery",
@@ -27,14 +28,14 @@ config.plugins = [
 	new HtmlWebpackPlugin(),
 	new webpack.DefinePlugin({__CLIENT__: true, __SERVER__: false}),
 	new webpack.HotModuleReplacementPlugin(),
-	new webpack.NoErrorsPlugin()
+	// new webpack.NoErrorsPlugin()
 ];
 
 config.module = {
 	loaders: [
 		{ test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },
 		{include: /\.json$/, loaders: ["json-loader"]},
-		{include: /\.js$/, loaders: ["react-hot", "babel-loader?stage=0&optional=runtime&plugins=typecheck"], exclude: /node_modules/},
+		{include: /\.js$/, loaders: ["react-hot", "babel-loader?stage=0&optional=runtime&plugins=typecheck", "eslint-loader"], exclude: /node_modules/},
 		{test: /\.(ttf|eot|svg|woff|woff(2))(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?name=/[name].[ext]"},
 		{ test: /\.scss$/,
 			loader: ExtractTextPlugin.extract('style-loader',
@@ -46,6 +47,10 @@ config.module = {
 		},
 	]
 };
+
+config.eslint = {
+	configFile: './.eslintrc'
+}
 
 config.devServer = {
 	publicPath:  "http://localhost:8080/build/",

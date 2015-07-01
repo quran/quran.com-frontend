@@ -30,14 +30,14 @@ export default {
     method: 'get',
     page: 'about',
     title: 'About Quran.com',
-    handler: require('../routes/About'),
+    handler: require('../routes/About')
   },
   contact: {
     path: '/contact',
     method: 'get',
     page: 'contact',
     title: 'Contact Quran.com',
-    handler: require('../routes/Contact'),
+    handler: require('../routes/Contact')
   },
   search: {
     path: '/search',
@@ -78,7 +78,7 @@ export default {
             }
             else {
               fromParam = currentRoute.get('params').get('range');
-              toParam = parseInt(fromParam) + 10
+              toParam = parseInt(fromParam) + 10;
             }
           }
           else {
@@ -94,5 +94,5 @@ export default {
         }
       );
     }
-  },
+  }
 };

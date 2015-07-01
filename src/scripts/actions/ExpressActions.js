@@ -1,9 +1,9 @@
-export function userAgent(actionContext, userAgent, done) {
-  actionContext.dispatch('userAgentReceived', userAgent);
+export function userAgent(actionContext, userAgentPayload, done) {
+  actionContext.dispatch('userAgentReceived', userAgentPayload);
   done();
 }
 
-export function cookies(actionContext, cookies, done) {
-  actionContext.dispatch('cookiesReceived', cookies);
+export function cookies(actionContext, cookiesPayload, done) {
+  actionContext.dispatch('cookiesReceived', cookiesPayload);
   done();
 }

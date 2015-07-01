@@ -13,13 +13,13 @@ class AyahsList extends React.Component {
 
   list() {
     if (this.props.ayahs.length === 0) {
-        return <Loader />;
+      return <Loader />;
     }
 
     return this.props.ayahs.map(ayah => {
-        return <Ayah ayah={ayah}
-                     key={`${ayah.surah}-${ayah.ayah}-ayah`}
-                     readingMode={this.props.isReadingMode} />;
+      return <Ayah ayah={ayah}
+                   key={`${ayah.surah}-${ayah.ayah}-ayah`}
+                   readingMode={this.props.isReadingMode} />;
     });
   }
 
@@ -33,7 +33,8 @@ class AyahsList extends React.Component {
   }
 
   render() {
-    debug('COMPONENT-AYAHSLIST')
+    debug('COMPONENT-AYAHSLIST');
+
     if (this.props.isReadingMode) {
       return (
         <h1 className="word-font text-justify">
@@ -60,7 +61,7 @@ AyahsList = connectToStores(AyahsList, [AyahsStore], (stores, props) => {
   return {
     ayahs: stores.AyahsStore.getAyahs(),
     isReadingMode: stores.AyahsStore.isReadingMode()
-  }
+  };
 });
 
 export default AyahsList;

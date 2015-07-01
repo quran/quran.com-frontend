@@ -19,7 +19,7 @@ class IndexHeaderNav extends React.Component {
   render() {
     let classNames = `links ${this.state.open ? 'open' : ''}`;
 
-    return(
+    return (
       <div className="nav">
         <ul className={classNames}>
           <li>

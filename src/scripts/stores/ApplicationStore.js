@@ -1,51 +1,53 @@
+
+
 import BaseStore from 'fluxible/addons/BaseStore';
 import routesConfig from '../configs/routes';
 
 
 class ApplicationStore extends BaseStore {
-    constructor(dispatcher) {
-        super(dispatcher);
-        this.currentPageName = null;
-        this.currentPage = null;
-        this.pages = routesConfig;
-        this.pageTitle = '';
+  constructor(dispatcher) {
+    super(dispatcher);
+    this.currentPageName = null;
+    this.currentPage = null;
+    this.pages = routesConfig;
+    this.pageTitle = '';
+  }
+  handlePageTitle(data) {
+    if (data.pageTitle) {
+      this.pageTitle = data.pageTitle;
     }
-    handlePageTitle(data) {
-      if (data.pageTitle) {
-        this.pageTitle = data.pageTitle;
-      }
-      else {
-        if (this.dispatcher.getStore('RouteStore')._currentRoute.get('name') === 'surah') {
-          let currentSurah = this.dispatcher.getStore('SurahsStore').getSurah();
-          this.pageTitle = `Surah ${currentSurah.name.simple} - The Noble Qur'an - القرآن الكريم`;
+    else {
+      if (this.dispatcher.getStore('RouteStore').getCurrentRoute().get('name') === 'surah') {
+        let currentSurah = this.dispatcher.getStore('SurahsStore').getSurah();
+        this.pageTitle = `Surah ${currentSurah.name.simple} - The Noble Qur'an - القرآن الكريم`;
 
-          this.emitChange();
-        }
+        this.emitChange();
       }
     }
-    getCurrentPageName() {
-        return this.currentPageName;
-    }
-    getPageTitle() {
-        return this.pageTitle;
-    }
-    getPages() {
-        return this.pages;
-    }
-    dehydrate() {
-        return {
-            currentPageName: this.currentPageName,
-            currentPage: this.currentPage,
-            pages: this.pages,
-            pageTitle: this.pageTitle
-        };
-    }
-    rehydrate(state) {
-        this.currentPageName = state.currentPageName;
-        this.currentPage = state.currentPage;
-        this.pages = state.pages;
-        this.pageTitle = state.pageTitle;
-    }
+  }
+  getCurrentPageName() {
+    return this.currentPageName;
+  }
+  getPageTitle() {
+    return this.pageTitle;
+  }
+  getPages() {
+    return this.pages;
+  }
+  dehydrate() {
+    return {
+      currentPageName: this.currentPageName,
+      currentPage: this.currentPage,
+      pages: this.pages,
+      pageTitle: this.pageTitle
+    };
+  }
+  rehydrate(state) {
+    this.currentPageName = state.currentPageName;
+    this.currentPage = state.currentPage;
+    this.pages = state.pages;
+    this.pageTitle = state.pageTitle;
+  }
 }
 
 ApplicationStore.storeName = 'ApplicationStore';

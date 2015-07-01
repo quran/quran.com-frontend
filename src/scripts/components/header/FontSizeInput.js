@@ -1,5 +1,6 @@
 import React from 'react';
 import * as AyahsActions from 'actions/AyahsActions';
+import $ from 'jquery';
 
 class FontSizeInput extends React.Component {
   constructor(props, context) {

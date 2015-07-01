@@ -29,7 +29,7 @@ module.exports = {
       loaders: [
         { test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery' },
         { test: /\.css$/, loader: 'style!css' },
-        { test: /\.js$/, exclude: /node_modules/, loaders: ['react-hot', require.resolve('babel-loader')] },
+        { test: /\.js$/, exclude: /node_modules/, loaders: ['react-hot', require.resolve('babel-loader'), "eslint-loader"] },
         { test: /\.json$/, loader: 'json-loader'},
         { test: /\.(png|svg|jpg)$/, loader: 'url-loader?limit=8192' },
         { test: /\.(ttf|eot|svg|woff|woff(2))(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?name=/[name].[ext]"},

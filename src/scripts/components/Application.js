@@ -13,7 +13,8 @@ var GAInitiailizer = ga.Initializer;
 
 var Application = React.createClass({
   render: function () {
-    debug('COMPONENT-APPLICATION')
+    debug('COMPONENT-APPLICATION');
+
     var Handler = this.props.currentRoute.get('handler');
     return (
       <div>
@@ -65,7 +66,7 @@ var Application = React.createClass({
 
     console.log(newProps.pageTitle);
     if (newProps.pageTitle === prevProps.pageTitle) {
-        return;
+      return;
     }
     document.title = newProps.pageTitle;
   }

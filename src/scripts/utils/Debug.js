@@ -7,4 +7,4 @@ export default function(name, namespace) {
   else {
     return debug('quran-com')(name);
   }
-};
+}

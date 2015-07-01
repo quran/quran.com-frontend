@@ -1,5 +1,6 @@
 import React from 'react';
 import classNames from 'classnames';
+import $ from 'jquery';
 
 class NavCollapseToggle extends React.Component {
   constructor(props, context) {
@@ -28,7 +29,7 @@ class NavCollapseToggle extends React.Component {
       'toggle-icon': true
     });
 
-    return(
+    return (
       <div className="col-md-1 border-right text-center height-100">
       <a className={classes} onClick={this.toggleNavCollapse.bind(this)}>
         <i className="ss-icon ss-layout" />

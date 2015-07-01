@@ -32,9 +32,9 @@ class InformationToggle extends React.Component {
       <a className={classes} onClick={this.toggleInformationMode.bind(this)}>
         <i className="ss-icon ss-info" />
       </a>
-    )
+    );
   }
-};
+}
 
 InformationToggle.contextTypes = {
   executeAction: React.PropTypes.func.isRequired

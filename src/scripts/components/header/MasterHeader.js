@@ -6,6 +6,7 @@ import DesktopOptions from 'components/header/DesktopOptions';
 import MobileOptions from 'components/header/MobileOptions';
 import NavBrand from 'components/header/NavBrand';
 import debug from 'utils/Debug';
+import $ from 'jquery';
 
 class MasterHeader extends React.Component{
   constructor(props) {
@@ -28,8 +29,9 @@ class MasterHeader extends React.Component{
     var prev = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) - 1);
     var currentPos = parseInt(this.props.currentRoute.get('params').get('surahId'));
     if (currentPos <= 1){
-      return;
-    } else {
+      return null;
+    }
+    else {
       return (
         <NavLink className="navbar-text previous-chapter" href={prev}>
           <i className="ss-icon ss-navigateleft"></i>
@@ -44,8 +46,9 @@ class MasterHeader extends React.Component{
     var next = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) + 1);
     var currentPos = parseInt(this.props.currentRoute.get('params').get('surahId'));
     if (currentPos >= 114){
-      return;
-    } else {
+      return null;
+    }
+    else {
       return (
         <NavLink className="navbar-text next-chapter" href={next}>
           <span className="hidden-xs">NEXT SURAH </span>
@@ -58,7 +61,7 @@ class MasterHeader extends React.Component{
   surahTitle(currentSurah) {
     function zeroPad(num, places) {
       var zero = places - num.toString().length + 1;
-      return Array(+(zero > 0 && zero)).join("0") + num;
+      return Array(+(zero > 0 && zero)).join('0') + num;
     }
 
     if (currentSurah) {
@@ -110,13 +113,13 @@ class MasterHeader extends React.Component{
   componentDidMount() {
     this.updateDimensions();
     if (typeof window !== 'undefined') {
-      window.addEventListener("resize", this.updateDimensions.bind(this));
+      window.addEventListener('resize', this.updateDimensions.bind(this));
     }
   }
 
   componentWillUnmount() {
     if (typeof window !== 'undefined') {
-      window.removeEventListener("resize", this.updateDimensions.bind(this));
+      window.removeEventListener('resize', this.updateDimensions.bind(this));
     }
   }
 
@@ -136,7 +139,7 @@ class MasterHeader extends React.Component{
 
   render() {
     var currentSurah = this.context.getStore('SurahsStore')
-      .getSurahs()[this.props.currentRoute.get('params').get('surahId') - 1]
+      .getSurahs()[this.props.currentRoute.get('params').get('surahId') - 1];
 
     debug('Component-MasterHeader');
     return (

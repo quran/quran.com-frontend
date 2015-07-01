@@ -3,7 +3,7 @@ import IndexHeader from 'components/header/IndexHeader';
 
 class Donations extends React.Component {
   render() {
-    return(
+    return (
       <div className="top-section">
         <IndexHeader noSearch={true} />
         <div className="container">
