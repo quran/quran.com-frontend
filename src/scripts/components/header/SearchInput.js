@@ -27,6 +27,16 @@ class SearchInput extends React.Component {
         });
       }
     }
+
+    // This checks to see if the user is typing Arabic
+    // and adjusts the text-align.
+    var arabic = new RegExp(/[\u0600-\u06FF]/);
+    if (arabic.test(e.target.value)) {
+      React.findDOMNode(this).querySelector("search-content").style.textAlign = 'right';
+    }
+    else {
+      React.findDOMNode(this).querySelector("search-content").style.textAlign = 'left';
+    }
   };
 
   render() {
@@ -39,6 +49,7 @@ class SearchInput extends React.Component {
         <i className="ss-icon ss-search" onClick={this.search.bind(this)} />
         <input type="text"
                placeholder="Search"
+               className="search-content"
                onKeyUp={this.search.bind(this)} />
       </div>
     );
