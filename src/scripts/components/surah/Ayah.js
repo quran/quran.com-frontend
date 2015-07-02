@@ -7,15 +7,29 @@ class Ayah extends React.Component {
   translations() {
     if (!this.props.ayah.content && this.props.ayah.match) {
       return this.props.ayah.match.best.map((content, i) => {
-        return (
-          <div className="translation" key={i}>
-            <h4>{content.name}</h4>
-            <h2 className="text-left">
-              <small dangerouslySetInnerHTML={{__html: content.text}} />
-            </h2>
-          </div>
-        );
-      });
+        var arabic = new RegExp(/[\u0600-\u06FF]/);
+        var character = content.text;
+        var flag = arabic.test(character);
+        if(flag){
+            return (
+              <div className="translation-arabic" key={i}>
+                <h4>{content.name}</h4>
+                <h2 className="text-left-arabic">
+                  <small dangerouslySetInnerHTML={{__html: content.text}} />
+                </h2>
+             </div>
+            );
+        } else {
+            return (
+              <div className="translation" key={i}>
+                <h4>{content.name}</h4>
+                <h2 className="text-left">
+                  <small dangerouslySetInnerHTML={{__html: content.text}} />
+                </h2>
+              </div>
+            );
+          }
+       });
     }
 
     return this.props.ayah.content.map((content, i) => {

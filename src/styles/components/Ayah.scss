@@ -42,6 +42,28 @@
       margin-bottom: 25px;
     }
   }
+ .translation-arabic{
+    text-align: right;
+    @extend .times-new;
+    h4{
+      color: $light-green;
+      margin-bottom: 5px;
+      @extend .montserrat;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 400;
+    }
+    small{
+      @extend .times-new;
+    }
+    h2{
+      margin-top: 5px;
+      margin-bottom: 25px;
+    }
+  } 
+  .text-left-arabic{
+    text-align: right;
+  }
   .left-controls{
     a{
       margin-bottom: 15px;
