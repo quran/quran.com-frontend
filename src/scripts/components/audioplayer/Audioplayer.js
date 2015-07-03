@@ -20,7 +20,8 @@ class Audioplayer extends React.Component {
       progress: 0,
       currentTime: 0,
       currentAudio: null,
-      currentAyah: null
+      currentAyah: null,
+      isAudioLoaded: false
     };
   }
 
@@ -59,9 +60,24 @@ class Audioplayer extends React.Component {
       // }
       return null;
     }
-
-
   }
+
+  loader() {
+    return (
+      <div className="sequence">
+        <div className="seq-preloader">
+          <svg height="16" width="42" className="seq-preload-indicator" xmlns="http://www.w3.org/2000/svg">
+            <circle className="seq-preload-circle seq-preload-circle-1" cx="6" cy="8" r="5">
+            </circle>
+            <circle className="seq-preload-circle seq-preload-circle-2" cx="20" cy="8" r="5">
+            </circle>
+            <circle className="seq-preload-circle seq-preload-circle-3" cx="34" cy="8" r="5">
+            </circle>
+          </svg>
+        </div>
+      </div>
+    )
+  };
 
   changeOffset(fraction) {
     this.setState({
@@ -80,6 +96,10 @@ class Audioplayer extends React.Component {
 
     // Default current time to zero. This will change
     this.props.currentAudio.currentTime = 0;
+
+    this.props.currentAudio.addEventListener('loadeddata', () => {
+      this.setState({isAudioLoaded: true});
+    });
 
     this.props.currentAudio.addEventListener('timeupdate', () => {
       let progress = (this.props.currentAudio.currentTime /
@@ -185,9 +205,11 @@ class Audioplayer extends React.Component {
     var icon;
     if (this.state.playing) {
       icon = <i className="ss-icon ss-pause" />;
-    } else {
+    }
+    else {
       icon = <i className="ss-icon ss-play" />;
     }
+
     return (
       <li className="audioplayer-controls">
         <a className="buttons" onClick={this.startStopPlayer.bind(this)} href>
@@ -230,16 +252,30 @@ class Audioplayer extends React.Component {
     debug('Component-Audioplayer');
 
     var currentAyahId = this.props.currentAyah ? this.props.currentAyah.ayah : '';
+    var content;
+
+    if (this.state.isAudioLoaded) {
+      content = (
+        <ul className="list-inline audioplayer-options">
+        <VersesDropdown ayahs={this.props.surah ? this.props.surah.ayat : 1}
+                        currentAyah={currentAyahId}/>
+       {this.playStopButtons()}
+       {this.forwardButton()}
+       {this.repeatButton()}
+     </ul>
+     );
+    }
+    else {
+      content = (
+        <ul className="list-inline audioplayer-options">
+          {this.loader()}
+        </ul>
+      )
+    }
 
     return (
       <div className="audioplayer col-md-3 border-right">
-        <ul className="list-inline audioplayer-options">
-           <VersesDropdown ayahs={this.props.surah ? this.props.surah.ayat : 1}
-                           currentAyah={currentAyahId}/>
-          {this.playStopButtons()}
-          {this.forwardButton()}
-          {this.repeatButton()}
-        </ul>
+          {content}
         <div className="audioplayer-wrapper">
           <AudioplayerTrack progress={this.state.progress}
                             changeOffset={this.changeOffset}/>
