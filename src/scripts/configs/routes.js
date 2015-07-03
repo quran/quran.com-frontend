@@ -46,7 +46,7 @@ export default {
     title: 'Contact Quran.com',
     handler: require('../routes/Contact')
   },
-  contact: {
+  contactus: {
     path: '/contactus',
     method: 'get',
     page: 'contact',
