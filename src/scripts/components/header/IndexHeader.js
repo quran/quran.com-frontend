@@ -14,16 +14,31 @@ class IndexHeader extends React.Component {
       );
     }
   }
+  link() {
+    if (this.props.navlink === false) {
+      return (
+        <a href="/">
+          <img src="images/logo-lg-w.png" className="logo" />
+        </a>
+      );
+    }
+    else {
+      return (
+        <NavLink href="/">
+          <img src="images/logo-lg-w.png" className="logo" />
+        </NavLink>
+      );
+    }
+  };
+  
   render() {
     return (
       <div className="index-header">
-        <IndexHeaderNav />
+        <IndexHeaderNav navlink={this.props.navlink} />
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
-              <NavLink href="/">
-                <img src="images/logo-lg-w.png" className="logo" />
-              </NavLink>
+              {this.link()}
               <h4 className="title">THE NOBLE QUR&#x27;AN</h4>
               {this.renderSearch()}
             </div>

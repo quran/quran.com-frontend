@@ -15,6 +15,8 @@ import * as ExpressActions from 'actions/ExpressActions';
 
 import * as Fonts from 'utils/FontFace';
 
+import NotFound from 'components/NotFound';
+import Errored from 'components/Error';
 import HtmlComponent from 'components/Html';
 const htmlComponent = React.createFactory(HtmlComponent);
 const debug = debugLib('quran-com');
@@ -44,18 +46,25 @@ server.use((req, res, next) => {
 
     context.getActionContext().executeAction(ExpressActions.userAgent, req.useragent);
     context.getActionContext().executeAction(ExpressActions.cookies, req.cookies);
-    
+
     debug('Executing navigate action');
     context.getActionContext().executeAction(navigateAction, {
         url: req.url
       }, (err) => {
         if (err) {
-            if (err.status && err.status === 404) {
-                next();
-            } else {
-                next(err);
-            }
-            return;
+          if (err.statusCode && err.statusCode === 404) {
+            res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(NotFound)));
+            res.end();
+          }
+          else if (err.statusCode && err.statusCode === 500) {
+            res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(Errored)));
+            res.end();
+          }
+          else {
+            res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(Errored)));
+            res.end();
+          }
+          return;
         }
 
         debug('Exposing context state');
@@ -72,7 +81,6 @@ server.use((req, res, next) => {
         }));
 
         debug('Sending markup');
-
         res.type('html');
         res.setHeader('Cache-Control', 'public, max-age=31557600');
         res.write('<!DOCTYPE html>' + html);
