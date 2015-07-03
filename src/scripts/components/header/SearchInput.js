@@ -27,6 +27,16 @@ class SearchInput extends React.Component {
         });
       }
     }
+
+    // This checks to see if the user is typing Arabic
+    // and adjusts the text-align.
+    var arabic = new RegExp(/[\u0600-\u06FF]/);
+    if (arabic.test(e.target.value)) {
+      e.target.style.textAlign = 'right';
+    }
+    else {
+      e.target.style.textAlign = 'left';
+    }
   };
 
   render() {
