@@ -25,6 +25,13 @@ export default {
     title: 'Contributing to Quran.com',
     handler: require('../routes/Donations')
   },
+  contributions: {
+    path: '/contributions',
+    method: 'get',
+    page: 'contributions',
+    title: 'Contributing to Quran.com',
+    handler: require('../routes/Donations')
+  },
   about: {
     path: '/about',
     method: 'get',
@@ -34,6 +41,13 @@ export default {
   },
   contact: {
     path: '/contact',
+    method: 'get',
+    page: 'contact',
+    title: 'Contact Quran.com',
+    handler: require('../routes/Contact')
+  },
+  contactus: {
+    path: '/contactus',
     method: 'get',
     page: 'contact',
     title: 'Contact Quran.com',
@@ -63,6 +77,10 @@ export default {
     title: 'Surah',
     handler: require('../routes/Surah'),
     action(actionContext, currentRoute, done) {
+      if (!Number.isInteger(currentRoute.get('params').get('surahId'))) {
+        return done({message: 'Route not found', reason: 'wrongRoute', statusCode: 404});
+      }
+
       let fromParam,
           toParam,
           surahId = currentRoute.get('params').get('surahId');

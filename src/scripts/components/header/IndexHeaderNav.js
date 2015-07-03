@@ -16,11 +16,30 @@ class IndexHeaderNav extends React.Component {
     this.setState({open: !this.state.open});
   };
 
-  render() {
+  links() {
     let classNames = `links ${this.state.open ? 'open' : ''}`;
 
-    return (
-      <div className="nav">
+    if (this.props.navlink === false) {
+      return (
+        <ul className={classNames}>
+          <li>
+            <a href="http://legacy.quran.com">Legacy Quran.com</a>
+          </li>
+          <li>
+            <a href="/donations">
+              Contribute
+            </a>
+          </li>
+          <li>
+            <a href="/contact">
+              Contact us
+            </a>
+          </li>
+        </ul>
+      );
+    }
+    else {
+      return (
         <ul className={classNames}>
           <li>
             <a href="http://legacy.quran.com">Legacy Quran.com</a>
@@ -36,6 +55,14 @@ class IndexHeaderNav extends React.Component {
             </NavLink>
           </li>
         </ul>
+      );
+    }
+  }
+
+  render() {
+    return (
+      <div className="nav">
+        {this.links()}
       </div>
     );
   }
