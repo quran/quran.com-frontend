@@ -22,7 +22,7 @@ var Application = React.createClass({
         <footer>
           <div className="container-fluid">
             <div className="row">
-              <div className="col-md-2 col-md-offset-2 col-xs-4 col-xs-offset-1 about">
+              <div className="col-md-2 col-md-offset-3 col-xs-4 col-xs-offset-1 about">
                 <ul className="source-sans">
                   <li><a href="/about">About</a></li>
                   <li><a href="http://quran.zendesk.com">Support</a></li>
@@ -37,7 +37,7 @@ var Application = React.createClass({
                   <li><a href="http://corpus.quran.com/wordbyword.jsp">Corpus: Word by Word</a></li>
                 </ul>
               </div>
-              <div className="col-md-4 text-right">
+              <div className="col-md-2 text-right links">
                 <ul className="list-inline">
                   <li><a><i className="fa fa-facebook"></i></a></li>
                   <li><a><i className="fa fa-twitter"></i></a></li>
