@@ -10,19 +10,19 @@ class AudioplayerStore extends BaseStore {
     if (this.currentAyah) {
       this.currentAudio = this.currentAyah.scopedAudio;
     }
-  };
+  }
 
   getCurrentAudio() {
     return this.currentAudio;
-  };
+  }
 
   getCurrentAyah() {
     return this.currentAyah;
-  };
+  }
 
   getShouldPlay() {
     return this.shouldPlay;
-  };
+  }
 
   dehydrate() {
     return {

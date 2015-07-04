@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "gulp",
-    "test": "npm run lint; karma start --browsers PhantomJS --single-run",
+    "test": "npm run lint && karma start --browsers PhantomJS --single-run",
     "lint": "eslint ./src/scripts/**/*.js",
     "start": "NODE_PATH=\"./src\" node ./start",
     "build": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack.prod.config.js",
