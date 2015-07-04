@@ -194,10 +194,13 @@ class Audioplayer extends React.Component {
 
     this.pause();
 
-    this.context.executeAction(AudioplayerActions.changeAyah, {
-      ayah: this.props.currentAyah.ayah + 1,
-      shouldPlay: wasPlaying
-    });
+    // This was causing errors when listening viewing single ayah.
+    if(this.props.ayahs.length != 1){
+      this.context.executeAction(AudioplayerActions.changeAyah, {
+        ayah: this.props.currentAyah.ayah + 1,
+        shouldPlay: wasPlaying
+      });
+    } 
   }
 
   // UI components
