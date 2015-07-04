@@ -8,7 +8,7 @@ export default {
     path: '/',
     method: 'get',
     page: 'index',
-    title: 'Quran.com',
+    title: `The Noble Qur'an - القرآن الكريم`,
     handler: require('../routes/Index'),
     action(actionContext, currentRoute, done) {
       actionContext.executeAction(

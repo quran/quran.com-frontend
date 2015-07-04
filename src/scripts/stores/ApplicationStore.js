@@ -13,17 +13,17 @@ class ApplicationStore extends BaseStore {
     this.pageTitle = '';
   }
   handlePageTitle(data) {
-    if (data.pageTitle) {
-      this.pageTitle = data.pageTitle;
+    if (data.get('title') && data.get('name') !== 'surah') {
+      this.pageTitle = data.get('title');
     }
-    else {
+    else if (data.get('name') === 'surah'){
       if (this.dispatcher.getStore('RouteStore').getCurrentRoute().get('name') === 'surah') {
         let currentSurah = this.dispatcher.getStore('SurahsStore').getSurah();
         this.pageTitle = `Surah ${currentSurah.name.simple} - The Noble Qur'an - القرآن الكريم`;
-
-        this.emitChange();
       }
     }
+
+    this.emitChange();
   }
   getCurrentPageName() {
     return this.currentPageName;
