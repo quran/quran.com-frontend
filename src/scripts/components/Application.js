@@ -25,7 +25,6 @@ var Application = React.createClass({
               <div className="col-md-2 col-md-offset-3 col-xs-4 col-xs-offset-1 about">
                 <ul className="source-sans">
                   <li><a href="/about">About</a></li>
-                  <li><a href="http://quran.zendesk.com">Support</a></li>
                   <li><a href="/contact">Contact</a></li>
                 </ul>
               </div>
