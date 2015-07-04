@@ -12,7 +12,7 @@ class Contact extends React.Component {
     this.state = {
       success: false
     };
-  };
+  }
 
   submitSupport(e) {
     e.preventDefault();
@@ -35,7 +35,7 @@ class Contact extends React.Component {
         });
       }
     });
-  };
+  }
 
   renderForm() {
     return (
@@ -77,13 +77,13 @@ class Contact extends React.Component {
         </div>
       </form>
     );
-  };
+  }
 
   renderSubmitSuccess() {
     return (
       <h3 className="text-center form-success-message">Form submitted. Thank you</h3>
     );
-  };
+  }
 
   render() {
     let body;
