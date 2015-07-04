@@ -51,6 +51,8 @@ server.use((req, res, next) => {
     context.getActionContext().executeAction(navigateAction, {
         url: req.url
       }, (err) => {
+        console.log('Error:', err);
+
         if (err) {
           if (err.statusCode && err.statusCode === 404) {
             res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(NotFound)));
