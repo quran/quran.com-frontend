@@ -77,7 +77,7 @@ export default {
     title: 'Surah',
     handler: require('../routes/Surah'),
     action(actionContext, currentRoute, done) {
-      if (!Number.isInteger(currentRoute.get('params').get('surahId'))) {
+      if (isNaN(currentRoute.get('params').get('surahId'))) {
         return done({message: 'Route not found', reason: 'wrongRoute', statusCode: 404});
       }
 
