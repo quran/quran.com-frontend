@@ -14,7 +14,20 @@
 
     & > li:first-child > a,
     & > li:last-child > a {
-      font-size: 12px;
+      font-size: 14px;
+
+      &.disabled{
+        opacity: 0.5;
+      }
+    }
+
+    & > li{
+      &.active{
+        a{
+          color: $brand-primary;
+        }
+      }
+
       &.disabled{
         opacity: 0.5;
       }
@@ -27,9 +40,15 @@
       float: initial;
       padding: 6px 18px;
       font-weight: 300;
+      font-size: 14px;
 
-      &.active{
-        color: $brand-primary;
+      &:hover,
+      &:focus{
+        background: initial;
+      }
+
+      i{
+        font-size: 12px;
       }
     }
   }
