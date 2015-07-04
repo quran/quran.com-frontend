@@ -17,12 +17,12 @@ class MasterHeader extends React.Component{
       showMobile: false,
       showDesktop: true
     };
-  };
+  }
 
   showOptions(e) {
     e.preventDefault();
     this.setState({showOptions: !this.state.showOptions});
-  };
+  }
 
   // Disable hyperlink for previous surah if surah is Al-Faatihah.
   previousChapter() {
@@ -39,7 +39,7 @@ class MasterHeader extends React.Component{
         </NavLink>
       );
     }
-  };
+  }
 
   // Disable hyperlink for next surah if surah is An-Nas.
   nextChapter() {

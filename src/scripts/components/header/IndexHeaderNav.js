@@ -8,13 +8,13 @@ class IndexHeaderNav extends React.Component {
     this.state = {
       open: false
     };
-  };
+  }
 
   openNav(e) {
     e.preventDefault();
 
     this.setState({open: !this.state.open});
-  };
+  }
 
   links() {
     let classNames = `links ${this.state.open ? 'open' : ''}`;

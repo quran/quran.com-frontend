@@ -5,7 +5,7 @@ import classNames from 'classnames';
 class SearchInput extends React.Component {
   constructor(props, context) {
     super(props, context);
-  };
+  }
 
   search(e) {
     if (e.keyCode === 13 || e.type === 'click') {
@@ -37,7 +37,7 @@ class SearchInput extends React.Component {
     else {
       e.target.style.textAlign = 'left';
     }
-  };
+  }
 
   render() {
     var className = classNames({

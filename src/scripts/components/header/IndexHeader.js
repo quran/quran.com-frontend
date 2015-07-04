@@ -29,8 +29,8 @@ class IndexHeader extends React.Component {
         </NavLink>
       );
     }
-  };
-  
+  }
+
   render() {
     return (
       <div className="index-header">

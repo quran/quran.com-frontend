@@ -11,7 +11,7 @@ class FontSizeInput extends React.Component {
       initWidth: 100
     };
 
-  };
+  }
 
   componentDidMount() {
     this.setState({
@@ -32,7 +32,7 @@ class FontSizeInput extends React.Component {
     }
 
     this.setState({fontSize: fontSize});
-  };
+  }
 
   render() {
     let styleText = `
