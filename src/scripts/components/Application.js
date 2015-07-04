@@ -64,7 +64,6 @@ var Application = React.createClass({
   componentDidUpdate: function(prevProps, prevState) {
     const newProps = this.props;
 
-    console.log(newProps.pageTitle);
     if (newProps.pageTitle === prevProps.pageTitle) {
       return;
     }
