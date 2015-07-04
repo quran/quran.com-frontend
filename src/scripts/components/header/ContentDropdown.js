@@ -73,7 +73,7 @@ class ContentDropdown extends React.Component {
     var condition;
     return this.state.options.map((option) => {
       if (type === 'en') {
-        condition = option.language === 'en' && option.type === 'translation';
+        condition = option.language === 'en' && (option.type === 'translation' || option.type === 'transliteration');
       } else if (type === '!en') {
         condition = option.language !== 'en' && option.type === 'translation';
       }
