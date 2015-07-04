@@ -53,6 +53,7 @@
     "react-cookie": "^0.1.8",
     "react-google-analytics": "^0.2.0",
     "react-hot-loader": "^1.2.7",
+    "react-paginate": "^0.1.34",
     "react-zeroclipboard": "^1.1.0",
     "sass-loader": "^1.0.2",
     "serialize-javascript": "^1.0.0",

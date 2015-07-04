@@ -13,25 +13,26 @@ class Ayah extends React.Component {
         var character = content.text;
         var flag = arabic.test(character);
         if(flag){
-            return (
-              <div className="translation-arabic" key={i}>
-                <h4>{content.name}</h4>
-                <h2 className="text-left-arabic">
-                  <small dangerouslySetInnerHTML={{__html: content.text}} />
-                </h2>
-             </div>
-            );
-        } else {
-            return (
-              <div className="translation" key={i}>
-                <h4>{content.name}</h4>
-                <h2 className="text-left">
-                  <small dangerouslySetInnerHTML={{__html: content.text}} />
-                </h2>
-              </div>
-            );
-          }
-       });
+          return (
+            <div className="translation-arabic" key={i}>
+              <h4>{content.name}</h4>
+              <h2 className="text-left-arabic">
+                <small dangerouslySetInnerHTML={{__html: content.text}} />
+              </h2>
+           </div>
+          );
+        }
+        else {
+          return (
+            <div className="translation" key={i}>
+              <h4>{content.name}</h4>
+              <h2 className="text-left">
+                <small dangerouslySetInnerHTML={{__html: content.text}} />
+              </h2>
+            </div>
+          );
+        }
+      });
     }
 
     return this.props.ayah.content.map((content, i) => {
@@ -44,7 +45,7 @@ class Ayah extends React.Component {
         </div>
       );
     });
-  };
+  }
 
   text() {
     if (!this.props.ayah.quran[0].char) {
@@ -87,7 +88,7 @@ class Ayah extends React.Component {
         {text}
       </h1>
     );
-  };
+  }
 
   goToAyah(ayah, e) {
     e.preventDefault();
