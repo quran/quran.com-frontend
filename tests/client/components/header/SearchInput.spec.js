@@ -31,12 +31,6 @@ describe('SearchInput', function() {
 
     expect(context.executeAction).to.have.been.called;
     expect(context.executeAction.args[0][1].url).to.equal('/search?q=wife');
-
-    React.findDOMNode(component).querySelector('input').value = 'إن الله';
-    ReactTestUtils.Simulate.keyUp(React.findDOMNode(component).querySelector('input'), {keyCode: 13});
-
-    expect(context.executeAction).to.have.been.called;
-    expect(context.executeAction.args[0][1].url).to.equal('/search?q=إن الله');
   });
 
   it('should search on button clicked', function() {
@@ -45,6 +39,14 @@ describe('SearchInput', function() {
 
     expect(context.executeAction).to.have.been.called;
     expect(context.executeAction.args[0][1].url).to.equal('/search?q=wife');
+  });
+
+  it('should search arabic', function() {
+    React.findDOMNode(component).querySelector('input').value = 'إن الله';
+    ReactTestUtils.Simulate.keyUp(React.findDOMNode(component).querySelector('input'), {keyCode: 13});
+
+    expect(context.executeAction).to.have.been.called;
+    expect(context.executeAction.args[0][1].url).to.equal('/search?q=إن الله');
   });
 
   it('should redirect to surah and ayah', function() {
