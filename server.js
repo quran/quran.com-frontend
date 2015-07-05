@@ -51,9 +51,10 @@ server.use((req, res, next) => {
     context.getActionContext().executeAction(navigateAction, {
         url: req.url
       }, (err) => {
-        console.log('Error:', err);
 
         if (err) {
+          console.log('Error:', err, 'Request:', req.url, 'Cookies:', req.cookies);
+
           if (err.statusCode && err.statusCode === 404) {
             res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(NotFound)));
             res.end();
@@ -90,8 +91,8 @@ server.use((req, res, next) => {
       });
 });
 
+
 const port = process.env.PORT || 8000;
 server.listen(port);
-console.log('Listening on port ' + port);
-
+console.log(`Frontend app started at port: ${port} and backend url: ${Settings.url}`);
 export default server;
