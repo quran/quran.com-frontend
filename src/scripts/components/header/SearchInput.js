@@ -9,7 +9,7 @@ class SearchInput extends React.Component {
 
   search(e) {
     if (e.keyCode === 13 || e.type === 'click') {
-      let searching = e.target.value,
+      let searching = React.findDOMNode(this).querySelector('input').value,
           ayah, pattern, surah;
 
       pattern = new RegExp(/\d[\.,\:,\,]\d/);
