@@ -50,14 +50,14 @@ class ContentDropdown extends React.Component {
       content: chosenOptions
     });
 
-    if(chosenOptions.toString() === ''){
+    if (chosenOptions.length === 0) {
       this.context.executeAction(AyahsActions.toggleReadingMode);
       this.setState({
         toggled: true
       });
     }
 
-    if(this.state.toggled === true && chosenOptions.toString() !== ''){
+    if (this.state.toggled === true && chosenOptions.length !== 0) {
       this.context.executeAction(AyahsActions.toggleReadingMode);
       this.setState({
         toggled: false
