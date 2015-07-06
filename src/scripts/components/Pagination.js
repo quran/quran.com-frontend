@@ -10,10 +10,13 @@ class Pagination extends React.Component {
   }
 
   renderBack() {
+    var getP = this.props.currentRoute.get('query').get('p');
+    var getQ = this.props.currentRoute.get('query').get('q');
+    var getPath = this.props.currentRoute.get('path');
     var link, className;
-    if (this.props.currentRoute.get('query').get('p') &&
-        parseInt(this.props.currentRoute.get('query').get('p')) !== 1) {
-      link = `${this.props.currentRoute.get('path')}?q=${this.props.currentRoute.get('query').get('q')}&p=${this.props.currentRoute.get('query').get('p') - 1}`;
+    if (getP &&
+        parseInt(getP) !== 1) {
+      link = `${getPath}?q=${getQ}&p=${getP - 1}`;
     }
     else {
       link = '#';
@@ -30,13 +33,16 @@ class Pagination extends React.Component {
   }
 
   renderForward() {
+    var getP = this.props.currentRoute.get('query').get('p');
+    var getQ = this.props.currentRoute.get('query').get('q');
+    var getPath = this.props.currentRoute.get('path');
     var link;
 
-    if (this.props.currentRoute.get('query').get('p')) {
-      link = `${this.props.currentRoute.get('path')}?q=${this.props.currentRoute.get('query').get('q')}&p=${parseInt(this.props.currentRoute.get('query').get('p')) + 1}`;
+    if (getP) {
+      link = `${getPath}?q=${getQ}&p=${parseInt(getP) + 1}`;
     }
     else {
-      link = `${this.props.currentRoute.get('path')}?q=${this.props.currentRoute.get('query').get('q')}&p=2`;
+      link = `${getPath}?q=${getQ}&p=2`;
     }
 
     return (
@@ -49,12 +55,15 @@ class Pagination extends React.Component {
   }
 
   renderPages() {
+    var getP = this.props.currentRoute.get('query').get('p');
+    var getQ = this.props.currentRoute.get('query').get('q');
+    var getPath = this.props.currentRoute.get('path');
     var list = [], className;
     for (var i = 0; i < this.numberOfPages(); i++) {
-      var link = `${this.props.currentRoute.get('path')}?q=${this.props.currentRoute.get('query').get('q')}&p=${i + 1}`;
+      var link = `${getPath}?q=${getQ}&p=${i + 1}`;
 
-      if (parseInt(this.props.currentRoute.get('query').get('p')) === (i + 1) ||
-          (!this.props.currentRoute.get('query').get('p') && i === 0)) {
+      if (parseInt(getP) === (i + 1) ||
+          (!getP && i === 0)) {
         className = 'active';
       }
       else {
