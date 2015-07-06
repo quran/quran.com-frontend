@@ -55,7 +55,6 @@ class ContentDropdown extends React.Component {
       this.setState({
         toggled: true
       });
-      this.context.executeAction(ReadingModeToggle.renderIcon);
     }
 
     if(this.state.toggled === true && chosenOptions.toString() !== ''){
