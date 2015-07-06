@@ -76,8 +76,8 @@ class Audioplayer extends React.Component {
           </svg>
         </div>
       </div>
-    )
-  };
+    );
+  }
 
   changeOffset(fraction) {
     this.setState({
@@ -270,7 +270,7 @@ class Audioplayer extends React.Component {
         <ul className="list-inline audioplayer-options">
           {this.loader()}
         </ul>
-      )
+      );
     }
 
     return (
