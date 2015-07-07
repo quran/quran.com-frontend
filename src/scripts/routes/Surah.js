@@ -72,53 +72,50 @@ class Surah extends React.Component {
     var self = this, rangeArray;
     var range = this.props.currentRoute.get('params').get('range');
 
-    if (range) {
-      rangeArray = range.split('-');
-    }
-    else {
+    if (!range) {
       rangeArray = [1, 10];
-    }
 
-    $(window).unbind('scroll');
-    $(window).bind('scroll', () => {
-      var lastAyah, toAyah, sizeOfLoad, url;
-      var nav = $('nav, .left-side');
-      var getAyahs = this.context.getStore('AyahsStore').getAyahs();
+      $(window).unbind('scroll');
+      $(window).bind('scroll', () => {
+        var lastAyah, toAyah, sizeOfLoad, url;
+        var nav = $('nav, .left-side');
+        var getAyahs = this.context.getStore('AyahsStore').getAyahs();
 
-      if ($(document).scrollTop() > 100) {
-        nav.addClass('shrink');
-      }
-      else {
-        nav.removeClass('shrink');
-      }
-
-      if (!this.state.loading && window.pageYOffset > document.body.scrollHeight - window.innerHeight - 1000) {
-        if (getAyahs.length && getAyahs.length !== this.context.getStore('SurahsStore').getSurah().ayat) {
-          this.setState({loading: true});
-
-          if ((rangeArray[1] - rangeArray[0] + 1) < 10) {
-            sizeOfLoad = rangeArray[1] - rangeArray[0] + 1;
-          }
-          else {
-            sizeOfLoad = 10;
-          }
-
-          lastAyah = this.context.getStore('AyahsStore').getLast() + 1;
-          toAyah = (lastAyah + sizeOfLoad - 1);
-
-          this.context.executeAction(AyahsActions.getAyahs, {
-            surahId: this.props.currentRoute.get('params').get('surahId'),
-            from: lastAyah,
-            to: toAyah
-          });
+        if ($(document).scrollTop() > 100) {
+          nav.addClass('shrink');
         }
         else {
-          if (!this.state.endOfSurah) {
-            this.setState({endOfSurah: true});
+          nav.removeClass('shrink');
+        }
+
+        if (!this.state.loading && window.pageYOffset > document.body.scrollHeight - window.innerHeight - 1000) {
+          if (getAyahs.length && getAyahs.length !== this.context.getStore('SurahsStore').getSurah().ayat) {
+            this.setState({loading: true});
+
+            if ((rangeArray[1] - rangeArray[0] + 1) < 10) {
+              sizeOfLoad = rangeArray[1] - rangeArray[0] + 1;
+            }
+            else {
+              sizeOfLoad = 10;
+            }
+
+            lastAyah = this.context.getStore('AyahsStore').getLast() + 1;
+            toAyah = (lastAyah + sizeOfLoad - 1);
+
+            this.context.executeAction(AyahsActions.getAyahs, {
+              surahId: this.props.currentRoute.get('params').get('surahId'),
+              from: lastAyah,
+              to: toAyah
+            });
+          }
+          else {
+            if (!this.state.endOfSurah) {
+              this.setState({endOfSurah: true});
+            }
           }
         }
-      }
-    });
+      });
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {

@@ -106,7 +106,7 @@ class Ayah extends React.Component {
     return (
       <div className="col-md-1 left-controls">
         <h4>
-          <a href={"/" + this.props.ayah.surah_id.toString() + "/" +
+          <a href={'/' + this.props.ayah.surah_id.toString() + '/' +
                    this.props.ayah.ayah.toString()}>
           <span className="label label-default">
             {this.props.ayah.surah_id}:{this.props.ayah.ayah}

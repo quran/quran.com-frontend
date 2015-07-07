@@ -155,10 +155,10 @@ class AyahsStore extends BaseStore {
     if (!!~~state.ayahs.length) {
       // Fixed the audio breaking if a single ayah was passed because
       // This was automatially setting buildAudio to 2 ayah.
-      if(this.ayahs.length == 1){
+      if(this.ayahs.length === 1){
         this.buildAudio([this.ayahs[0], this.ayahs[0]]);
       } else {
-         this.buildAudio([this.ayahs[0], this.ayahs[1]]);
+        this.buildAudio([this.ayahs[0], this.ayahs[1]]);
       }
     }
   }
