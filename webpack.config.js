@@ -35,7 +35,7 @@ module.exports = {
         { test: /\.(ttf|eot|svg|woff|woff(2))(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?name=/[name].[ext]"},
         { test: /\.scss$/,
           loader: ExtractTextPlugin.extract('style-loader',
-            'css!sass?outputStyle=expanded&' +
+            'css!autoprefixer!sass?outputStyle=expanded&' +
               "includePaths[]=" +
                 (path.resolve(__dirname, "./node_modules"))
           )
