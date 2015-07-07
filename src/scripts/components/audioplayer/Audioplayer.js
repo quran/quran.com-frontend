@@ -94,10 +94,10 @@ class Audioplayer extends React.Component {
       this.pause();
     }
 
-    // Default current time to zero. This will change
-    this.props.currentAudio.currentTime = 0;
-
     this.props.currentAudio.addEventListener('loadeddata', () => {
+      // Default current time to zero. This will change
+      this.props.currentAudio.currentTime = 0;
+
       this.setState({isAudioLoaded: true});
     });
 
