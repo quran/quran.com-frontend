@@ -27,50 +27,39 @@ class Surah extends React.Component {
     var surahId = this.props.currentRoute.get('params').get('surahId');
     var range = this.props.currentRoute.get('params').get('range');
     if (this.state.loading) {
-        return <p>Loading...</p>;
+      return <p>Loading...</p>;
     } else if (this.state.endOfSurah) {
-        return <p>End of Surah</p>;
+      return <p>End of Surah</p>;
     } else {
-        if(range){
-          return;
-        } else {
-            if(surahId >= 114){
-              return (
-                <ul className="pager">
-                    <li className="previous">
-                        <a href={surahId * 1 - 1}>
-                            &larr; Previous Surah
-                        </a>
-                      </li>
-                </ul>
-              );
-            } else if (surahId <= 1){
-                return (
-                  <ul className="pager">
-                      <li className="next">
-                        <a href={surahId * 1 + 1}>
-                            Next Surah &rarr;
-                        </a>
-                      </li>
-                  </ul>
-                );
-            } else {
-                return (
-                  <ul className="pager">
-                    <li className="previous">
-                      <a href={surahId * 1 - 1}>
-                        &larr; Previous Surah
-                      </a>
-                    </li>
-                    <li className="next">
-                      <a href={surahId * 1 + 1}>
-                        Next Surah &rarr;
-                      </a>
-                    </li>
-                  </ul>
-                );
-              }
-          }
+      if (range) {
+        return {};
+      } else {
+        if (surahId >= 114) {
+          return (
+            <ul className = "pager">
+              <li className = "previous">
+                <a href = {surahId * 1 - 1}>
+                  &larr; Previous Surah
+                </a>
+              </li>
+            </ul>
+          );
+        } else if (surahId <= 1) {
+          return (
+            <ul className="pager">
+              <li className="previous">
+                <a href={surahId * 1 - 1}>
+                  &larr; Previous Surah
+                </a>
+              </li>
+              <li className="next">
+                <a href={surahId * 1 + 1}>
+                  Next Surah &rarr;
+                </a>
+              </li>
+            </ul>
+          );
+        }
       }
     }
   }

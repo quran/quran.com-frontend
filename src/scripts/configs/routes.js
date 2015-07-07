@@ -89,7 +89,7 @@ export default {
         SurahsActions.getSurahs,
         currentRoute.get('params').get('surahId'),
         () => {
-         var range = currentRoute.get('params').get('range');
+          var range = currentRoute.get('params').get('range');
           if (range) {
             if (range.indexOf('-') > -1) {
               fromParam = range.split('-')[0];
