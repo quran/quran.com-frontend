@@ -15,7 +15,7 @@ class About extends React.Component {
                     religious text of Islam. Muslims believe the Qur’an is the
                     book of Divine guidance and direction for mankind, and
                     consider the original Arabic text the final revelation of
-                    Allah (God).[1] All translations of the original Arabic text
+                    Allah (God).[<a href="en.wikipedia.org/wiki/Quran">1</a>] All translations of the original Arabic text
                     are thus interpretations of the original meanings and should
                     be embraced as such. For more information about the Noble
                     Qur'an, you may visit its <a href="https://en.wikipedia.org/wiki/Quran">Wikipedia article.</a>
@@ -69,8 +69,9 @@ class About extends React.Component {
                 This website was created by a few volunteers and was made
                 possible with the will of Allah (Glory be unto Him) and with the
                 help of the open source Muslim community online. Data sources
-                include Tanzil, QuranComplex, Zekr and Online Qur'an Project.
-                If you have any questions, you may visit the Contact page.
+                include <a href="http://www.tanzil.info">Tanzil</a>, <a href="http://www.qurancomplex.com">QuranComplex</a>,
+                        <a href="http://www.zekr.org"> Zekr</a> and <a href="http://www.al-quran.info">Online Qur'an Project</a>.
+                If you have any questions, you may visit the <a href="/contact">Contact</a> page.
                </h4>
             </div>
           </div>
