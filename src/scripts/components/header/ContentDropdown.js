@@ -13,7 +13,8 @@ class ContentDropdown extends React.Component {
 
     this.state = {
       options: [],
-      chosenOptions: this.context.getStore(UserStore).getContentOptions()
+      chosenOptions: this.context.getStore(UserStore).getContentOptions(),
+      toggled: false
     };
   }
 
@@ -28,7 +29,6 @@ class ContentDropdown extends React.Component {
 
   chosenOption(id, e) {
     let chosenOptions = this.state.chosenOptions;
-
     if (chosenOptions.find(x => x === id)) {
       chosenOptions.splice(
         chosenOptions.findIndex(x => x === id),
@@ -49,6 +49,20 @@ class ContentDropdown extends React.Component {
     this.context.executeAction(AyahsActions.updateAyahs, {
       content: chosenOptions
     });
+
+    if (chosenOptions.length === 0) {
+      this.context.executeAction(AyahsActions.toggleReadingMode);
+      this.setState({
+        toggled: true
+      });
+    }
+
+    if (this.state.toggled === true && chosenOptions.length !== 0) {
+      this.context.executeAction(AyahsActions.toggleReadingMode);
+      this.setState({
+        toggled: false
+      });
+    }
   }
 
   returnList(option) {
