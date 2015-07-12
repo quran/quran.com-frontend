@@ -14,8 +14,7 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
-      // {pattern: 'public/build/lib.js', watched: true, served: true, included: true},
-      //{pattern: 'client/dist/app.js', watched: true, served: true, included: true},
+      {pattern: "static/images/*", watched: false, included: false, served: true},
 
       // Actual tests here
       {pattern: 'tests/client/**/*.spec.js', watched: true, served: true, included: true}
@@ -27,7 +26,7 @@ module.exports = function(config) {
     ],
 
     proxies: {
-      '/images': '/images'
+      'static/images': '/images'
     },
 
     proxyValidateSSL: false,
