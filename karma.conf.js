@@ -13,7 +13,9 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'node_modules/babel-core/browser-polyfill.js',
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
+      './tests/polyfill/Event.js',
       {pattern: "static/images/*", watched: false, included: false, served: true},
 
       // Actual tests here
@@ -26,7 +28,7 @@ module.exports = function(config) {
     ],
 
     proxies: {
-      'static/images': '/images'
+      './static/images': '/images'
     },
 
     proxyValidateSSL: false,

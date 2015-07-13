@@ -44,6 +44,12 @@ describe('Audioplayer', function() {
     sinon.stub(foundComponent, 'loadRestOfAudio');
   });
 
+  afterEach(function() {
+    context.executeAction.restore();
+    foundComponent.changeAyah.restore();
+    foundComponent.loadRestOfAudio.restore();
+  });
+
   it('should render', function() {
     expect(node).to.exist;
   });
