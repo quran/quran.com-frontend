@@ -31,7 +31,9 @@ class NavCollapseToggle extends React.Component {
 
     return (
       <div className="col-md-1 border-right text-center height-100">
-      <a className={classes} onClick={this.toggleNavCollapse.bind(this)}>
+      <a className={classes}
+      title="Collapse / expand the navigation bar"
+      onClick={this.toggleNavCollapse.bind(this)}>
         <i className="ss-icon ss-layout" />
       </a>
       </div>
