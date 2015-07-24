@@ -25,51 +25,41 @@ class Surah extends React.Component {
 
   renderPagination() {
     var surahId = this.props.currentRoute.get('params').get('surahId');
-
+    var range = this.props.currentRoute.get('params').get('range');
     if (this.state.loading) {
       return <p>Loading...</p>;
-    }
-    else if (this.state.endOfSurah) {
-      return (<p>End of Surah</p>);
-    }
-    else {
-      if(surahId >= 114){
-        return (
-          <ul className="pager">
-            <li className="previous">
-              <a href={surahId * 1 - 1}>
-                &larr; Previous Surah
-              </a>
-            </li>
-          </ul>
-        );
-      }
-      else if (surahId <= 1){
-        return (
-          <ul className="pager">
-            <li className="next">
-              <a href={surahId * 1 + 1}>
-                Next Surah &rarr;
-              </a>
-            </li>
-          </ul>
-        );
-      }
-      else {
-        return (
-          <ul className="pager">
-            <li className="previous">
-              <a href={surahId * 1 - 1}>
-                &larr; Previous Surah
-              </a>
-            </li>
-            <li className="next">
-              <a href={surahId * 1 + 1}>
-                Next Surah &rarr;
-              </a>
-            </li>
-          </ul>
-        );
+    } else if (this.state.endOfSurah) {
+      return <p>End of Surah</p>;
+    } else {
+      if (range) {
+        return {};
+      } else {
+        if (surahId >= 114) {
+          return (
+            <ul className = "pager">
+              <li className = "previous">
+                <a href = {surahId * 1 - 1}>
+                  &larr; Previous Surah
+                </a>
+              </li>
+            </ul>
+          );
+        } else if (surahId <= 1) {
+          return (
+            <ul className="pager">
+              <li className="previous">
+                <a href={surahId * 1 - 1}>
+                  &larr; Previous Surah
+                </a>
+              </li>
+              <li className="next">
+                <a href={surahId * 1 + 1}>
+                  Next Surah &rarr;
+                </a>
+              </li>
+            </ul>
+          );
+        }
       }
     }
   }
@@ -82,53 +72,50 @@ class Surah extends React.Component {
     var self = this, rangeArray;
     var range = this.props.currentRoute.get('params').get('range');
 
-    if (range) {
-      rangeArray = range.split('-');
-    }
-    else {
+    if (!range) {
       rangeArray = [1, 10];
-    }
 
-    $(window).unbind('scroll');
-    $(window).bind('scroll', () => {
-      var lastAyah, toAyah, sizeOfLoad, url;
-      var nav = $('nav, .left-side');
-      var getAyahs = this.context.getStore('AyahsStore').getAyahs();
+      $(window).unbind('scroll');
+      $(window).bind('scroll', () => {
+        var lastAyah, toAyah, sizeOfLoad, url;
+        var nav = $('nav, .left-side');
+        var getAyahs = this.context.getStore('AyahsStore').getAyahs();
 
-      if ($(document).scrollTop() > 100) {
-        nav.addClass('shrink');
-      }
-      else {
-        nav.removeClass('shrink');
-      }
-
-      if (!this.state.loading && window.pageYOffset > document.body.scrollHeight - window.innerHeight - 1000) {
-        if (getAyahs.length && getAyahs.length !== this.context.getStore('SurahsStore').getSurah().ayat) {
-          this.setState({loading: true});
-
-          if ((rangeArray[1] - rangeArray[0] + 1) < 10) {
-            sizeOfLoad = rangeArray[1] - rangeArray[0] + 1;
-          }
-          else {
-            sizeOfLoad = 10;
-          }
-
-          lastAyah = this.context.getStore('AyahsStore').getLast() + 1;
-          toAyah = (lastAyah + sizeOfLoad - 1);
-
-          this.context.executeAction(AyahsActions.getAyahs, {
-            surahId: this.props.currentRoute.get('params').get('surahId'),
-            from: lastAyah,
-            to: toAyah
-          });
+        if ($(document).scrollTop() > 100) {
+          nav.addClass('shrink');
         }
         else {
-          if (!this.state.endOfSurah) {
-            this.setState({endOfSurah: true});
+          nav.removeClass('shrink');
+        }
+
+        if (!this.state.loading && window.pageYOffset > document.body.scrollHeight - window.innerHeight - 1000) {
+          if (getAyahs.length && getAyahs.length !== this.context.getStore('SurahsStore').getSurah().ayat) {
+            this.setState({loading: true});
+
+            if ((rangeArray[1] - rangeArray[0] + 1) < 10) {
+              sizeOfLoad = rangeArray[1] - rangeArray[0] + 1;
+            }
+            else {
+              sizeOfLoad = 10;
+            }
+
+            lastAyah = this.context.getStore('AyahsStore').getLast() + 1;
+            toAyah = (lastAyah + sizeOfLoad - 1);
+
+            this.context.executeAction(AyahsActions.getAyahs, {
+              surahId: this.props.currentRoute.get('params').get('surahId'),
+              from: lastAyah,
+              to: toAyah
+            });
+          }
+          else {
+            if (!this.state.endOfSurah) {
+              this.setState({endOfSurah: true});
+            }
           }
         }
-      }
-    });
+      });
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
