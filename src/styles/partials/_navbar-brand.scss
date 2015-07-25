@@ -49,8 +49,15 @@
       color: #fff;
       &.visible-xs{
         display: inline !important;
+        cursor: pointer;
+        padding: 10px 5px;
+
+        &:hover{
+          cursor: pointer;
+        }
       }
     }
+
     img.logo{
       height: 100%;
     }
