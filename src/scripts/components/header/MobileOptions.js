@@ -29,8 +29,7 @@ class MobileOptions extends React.Component {
   }
 
   setSelection(prop, e) {
-    console.log(e, prop);
-    // e.preventDefault();
+    e.preventDefault();
 
     var defaultState = {
       infoMode: false,
@@ -96,17 +95,21 @@ class MobileOptions extends React.Component {
     return selection;
   }
 
+  preventDefault(e) {
+    e.preventDefault();
+  }
+
   render() {
     return (
       <div className="mobile navbar-bottom visible-xs col-xs-12">
         <div className="row dark-bg">
           <div className="toggle-options col-xs-9">
-            <a onClick={this.setSelection.bind(this, 'chapterSelection')}>
+            <a onClick={this.setSelection.bind(this, 'chapterSelection')} href>
               Chapter / Surah <i className={'ss-icon pull-right ' + (this.state.chapterSelection ? 'ss-directup' : 'ss-dropdown' )} />
             </a>
           </div>
           <div className={'toggle-options col-xs-3 text-center ' + (this.state.searchSelection ? 'active' : '')}>
-            <a onClick={this.setSelection.bind(this, 'searchSelection')}>
+            <a onClick={this.setSelection.bind(this, 'searchSelection')} href>
               <i className="ss-icon ss-search"></i>
             </a>
           </div>
@@ -115,23 +118,23 @@ class MobileOptions extends React.Component {
         <div className="row options text-center">
           <ul className="col-xs-12">
             <li className="border-right">
-              <a className="nav-link">
+              <a className="nav-link" href onClick={this.preventDefault.bind(this)}>
                 <i className="ss-icon ss-info" />
               </a>
             </li>
             <li className="border-right">
-              <a onClick={this.setSelection.bind(this, 'audioSelection')}>
+              <a onClick={this.setSelection.bind(this, 'audioSelection')} href>
                 <i className="ss-icon ss-play" />
                 <i className="ss-icon ss-pause" />
               </a>
             </li>
             <li className="border-right">
-              <a onClick={this.setSelection.bind(this, 'contentSelection')}>
+              <a onClick={this.setSelection.bind(this, 'contentSelection')} href>
                 <i className="ss-icon ss-globe" />
               </a>
             </li>
             <li>
-              <a onClick={this.setSelection.bind(this, 'settingsSelection')}>
+              <a onClick={this.setSelection.bind(this, 'settingsSelection')} href>
                 <i className="ss-icon ss-settings" />
               </a>
             </li>
