@@ -8,6 +8,7 @@ export function changeAyah(actionContext, payload, done) {
   });
 
   var params = actionContext.getStore('RouteStore').getCurrentRoute().get('params');
+
   if (params.get('range')) {
     rangeArray = params.get('range').split('-').map(x => parseInt(x));
   } else {
@@ -15,9 +16,17 @@ export function changeAyah(actionContext, payload, done) {
   }
 
   if ((actionContext.getStore('AyahsStore').getLast() - 3) === payload.ayah) {
-    spread = (rangeArray[1] - rangeArray[0] + 1);
-    fromAyah = rangeArray[1] + 1;
-    toAyah = fromAyah + spread;
+    if (actionContext.getStore('AyahsStore').getLast() > rangeArray[1]) {
+      spread = (rangeArray[1] - rangeArray[0] + 1);
+      fromAyah = actionContext.getStore('AyahsStore').getLast() + 1;
+      toAyah = fromAyah + spread;
+    }
+    else {
+      spread = (rangeArray[1] - rangeArray[0] + 1);
+      fromAyah = rangeArray[1] + 1;
+      toAyah = fromAyah + spread;
+    }
+
 
     actionContext.executeAction(AyahsActions.getAyahs, {
       surahId: params.get('surahId'),
