@@ -31,7 +31,7 @@ export function updateAyahs(actionContext, params, done) {
   var firstAndLast = actionContext.getStore('AyahsStore').getFirstAndLast(),
       surahId = actionContext.getStore('SurahsStore').getSurahId();
 
-  actionContext.getStore(UserStore).setOptions(params);
+  actionContext.getStore(UserStore).setSingleOption(Object.keys(params)[0], params[Object.keys(params)[0]]);
 
   var queryParams = Object.assign({
     from: firstAndLast[0],

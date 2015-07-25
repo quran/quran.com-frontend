@@ -74,46 +74,41 @@ class UserStore extends BaseStore {
   }
 
   setOptionsCookie(quranCookie, contentCookie, audioCookie) {
-    if (!quranCookie && !contentCookie && !audioCookie) {
-      this.options = {
-        content: [19],
-        audio: 8,
-        quran: 1
-      };
+    this.options = {
+      quran: quranCookie ? quranCookie : 1,
+      content: contentCookie ? contentCookie : [19],
+      audio: audioCookie ? parseInt(audioCookie) : 8
+    };
+
+    if (!Array.isArray(contentCookie)) {
+      let content = contentCookie;
+
+      if (Number.isInteger(content)) {
+        this.options.content = [content];
+      }
+      else {
+        this.options.content = content
+            .replace(/\"/g, '').split(',').map(function(option) {
+          return parseInt(option);
+        });
+      }
     }
     else {
-      this.options = {};
+      this.options.content = [19];
+    }
 
-      if (!Array.isArray(contentCookie)) {
-        let content = contentCookie;
+    if (quranCookie) {
+      this.options.quran = parseInt(quranCookie);
+    }
+    else {
+      this.options.quran = 1;
+    }
 
-        if (Number.isInteger(content)) {
-          this.options.content = [content];
-        }
-        else {
-          this.options.content = content
-              .replace(/\"/g, '').split(',').map(function(option) {
-            return parseInt(option);
-          });
-        }
-      }
-      else {
-        this.options.content = [19];
-      }
-
-      if (quranCookie) {
-        this.options.quran = parseInt(quranCookie);
-      }
-      else {
-        this.options.quran = 1;
-      }
-
-      if (audioCookie) {
-        this.options.audio = parseInt(audioCookie);
-      }
-      else {
-        this.options.audio = 8;
-      }
+    if (audioCookie) {
+      this.options.audio = parseInt(audioCookie);
+    }
+    else {
+      this.options.audio = 8;
     }
   }
 
