@@ -1,11 +1,17 @@
-var webpack = require('webpack');
-
 module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
+    plugins: [
+      'karma-mocha',
+      'karma-chai-sinon',
+      'karma-sinon',
+      'karma-webpack',
+      'karma-chrome-launcher',
+      'karma-phantomjs-launcher'
+    ],
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -22,13 +28,13 @@ module.exports = function(config) {
       {pattern: 'tests/client/**/*.spec.js', watched: true, served: true, included: true}
     ],
 
-
     // list of files to exclude
     exclude: [
     ],
 
     proxies: {
-      './static/images': '/images'
+      '/images': __dirname + '/static/images',
+      '/images/': __dirname + '/static/images/',
     },
 
     proxyValidateSSL: false,
@@ -37,7 +43,7 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessors
 
     preprocessors: {
-      'tests/client/**/*.spec.js': ['webpack', 'sourcemap']
+      'tests/client/**/*.spec.js': ['webpack']
     },
 
     webpack: {
@@ -60,7 +66,7 @@ module.exports = function(config) {
 
       module: {
         loaders: [
-          { test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader' }
+          { test: /\.js?$/, exclude: [/node_modules/], loader: 'babel-loader' }
         ]
       },
 
@@ -74,13 +80,13 @@ module.exports = function(config) {
 
       plugins:[
         //only include moment.js 'en' locale
-        new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/)
+        // new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/)
       ],
 
       watch: true
     },
 
-    webpackServer: { noInfo: true },
+    webpackMiddleware: { noInfo: true },
 
     client: {
       mocha: {
@@ -91,7 +97,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['progress', 'junit'],
+    reporters: ['progress'],
 
     junitReporter: {
       outputFile: 'test-results.xml',
