@@ -2,3 +2,4 @@ build
 node_modules
 /node_modules
 test-results.xml
+npm-debug.log
