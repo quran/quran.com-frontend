@@ -41,7 +41,7 @@
 @media (max-width: $screen-xs-max) {
   .navbar-brand{
     height: 50px;
-    padding: 10px 5px !important;
+    padding: 10px 0px 10px 5px !important;
     text-align: center;
     background: $brand-primary !important;
     .menu{

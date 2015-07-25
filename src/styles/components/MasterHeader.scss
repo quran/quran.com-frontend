@@ -74,6 +74,11 @@ nav.navbar{
   .navbar{
     min-height: 100px;
   }
+
+  .navbar.shrink{
+    min-height: 80px;
+  }
+
   .navbar-bottom.mobile{
     z-index: 999999;
     .full-height{
@@ -167,7 +172,7 @@ nav.navbar{
   cursor: default;
   color: #939598;
   font-size: 12px;
-} 
+}
 
 .last-chapter .ss-icon {
   display: none;
@@ -178,8 +183,16 @@ nav.navbar{
   cursor: default;
   color: #939598;
   font-size: 12px;
-} 
+}
 
 .first-chapter .ss-icon {
   display: none;
+}
+.menu.visible-xs{
+  cursor: pointer;
+  display: inline-block !important;
+  padding: 10px 5px;
+  &:hover{
+    cursor: pointer;
+  }
 }

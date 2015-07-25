@@ -9,7 +9,7 @@ class NavBrand extends React.Component {
           <img src="/images/logo-md-w.png" alt="" className="logo" />
         </NavLink>
         <span className="title">THE NOBLE QURAN</span>
-        <span className="menu visible-xs" style={{cursor: 'pointer'}}
+        <span className="menu visible-xs"
               onClick={this.props.showOptionsFn}>
           MENU
         </span>
