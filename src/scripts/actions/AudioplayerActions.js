@@ -14,7 +14,7 @@ export function changeAyah(actionContext, payload, done) {
   } else {
     rangeArray = [1, 10]; //The default
   }
-  
+
   if ((actionContext.getStore('AyahsStore').getLast() - 3) === payload.ayah) {
     // If we already loaded 10 ayahs (initial) then the next 10, when we want to go from 20-30
     if (actionContext.getStore('AyahsStore').getLast() > rangeArray[1]) {
@@ -57,6 +57,4 @@ export function changeAyah(actionContext, payload, done) {
     ayah: payload.ayah,
     shouldPlay: payload.shouldPlay || false
   });
-
-  done && done();
 }
