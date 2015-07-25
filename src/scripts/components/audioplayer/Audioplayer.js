@@ -62,6 +62,13 @@ class Audioplayer extends React.Component {
     }
   }
 
+  changeAyah(ayah, shouldPlay) {
+    this.context.executeAction(AudioplayerActions.changeAyah, {
+      ayah: ayah,
+      shouldPlay: shouldPlay
+    });
+  }
+
   loader() {
     return (
       <div className="sequence">
@@ -111,17 +118,11 @@ class Audioplayer extends React.Component {
 
     this.props.currentAudio.addEventListener('ended', () => {
       if (this.state.shouldRepeat === true) {
-        this.context.executeAction(AudioplayerActions.changeAyah, {
-          ayah: this.props.currentAyah.ayah,
-          shouldPlay: true
-        });
+        this.changeAyah(this.props.currentAyah.ayah, true);
       }
       else {
         this.props.currentAudio.pause();
-        this.context.executeAction(AudioplayerActions.changeAyah, {
-          ayah: this.props.currentAyah.ayah + 1,
-          shouldPlay: true
-        });
+        this.changeAyah(this.props.currentAyah.ayah + 1, true);
       }
     }, false);
 
@@ -155,7 +156,6 @@ class Audioplayer extends React.Component {
 
   startStopPlayer(e) {
     e.preventDefault();
-    console.log('Audio was playing:', this.state.playing);
 
     if (this.state.playing) {
       this.pause();
@@ -182,7 +182,9 @@ class Audioplayer extends React.Component {
     this.props.currentAudio.play();
   }
 
-  repeatSwitch() {
+  repeatSwitch(e) {
+    e.preventDefault();
+
     this.setState({
       shouldRepeat: !this.state.shouldRepeat
     });
@@ -194,10 +196,7 @@ class Audioplayer extends React.Component {
 
     this.pause();
 
-    this.context.executeAction(AudioplayerActions.changeAyah, {
-      ayah: this.props.currentAyah.ayah + 1,
-      shouldPlay: wasPlaying
-    });
+    this.changeAyah(this.props.currentAyah.ayah + 1, wasPlaying);
   }
 
   // UI components
@@ -239,7 +238,7 @@ class Audioplayer extends React.Component {
         <a>
           <input type="checkbox" id="repeat" />
           <label htmlFor="repeat"
-                 onClick={this.repeatSwitch}
+                 onClick={this.repeatSwitch.bind(this)}
                  className={classes}>
             <i className="ss-icon ss-repeat" />
           </label>
@@ -275,7 +274,7 @@ class Audioplayer extends React.Component {
 
     return (
       <div className="audioplayer col-md-3 border-right">
-          {content}
+        {content}
         <div className="audioplayer-wrapper">
           <AudioplayerTrack progress={this.state.progress}
                             changeOffset={this.changeOffset}/>
@@ -283,7 +282,6 @@ class Audioplayer extends React.Component {
       </div>
     );
   }
-
 }
 
 Audioplayer.contextTypes = {

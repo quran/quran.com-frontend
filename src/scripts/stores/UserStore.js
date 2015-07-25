@@ -1,5 +1,3 @@
-
-
 import BaseStore from 'fluxible/addons/BaseStore';
 import reactCookie from 'react-cookie';
 import * as Settings from 'constants/Settings';
@@ -196,9 +194,7 @@ class UserStore extends BaseStore {
   shouldDehydrate() {
     return true;
   }
-}
 
-UserStore.handlers = {
   cookiesReceived(expressCookies) {
     this.setLastVisit(expressCookies.lastVisit);
     this.setIsFirstTime(expressCookies.isFirstTime);
@@ -210,11 +206,18 @@ UserStore.handlers = {
     );
 
     this.setVersion(expressCookies.version);
-  },
+  }
 
-  lastVisit(payload) {
+  lastVisitReceived(payload) {
+    this.lastVisit = {surah: payload.surah, ayah: payload.ayah};
+
     reactCookie.save('lastVisit', `${payload.surah}-${payload.ayah}`);
   }
+}
+
+UserStore.handlers = {
+  cookiesReceived: 'cookiesReceived',
+  lastVisit: 'lastVisitReceived'
 };
 
 UserStore.storeName = 'UserStore';

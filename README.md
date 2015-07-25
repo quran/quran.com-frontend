@@ -11,7 +11,11 @@ hot-module has been added that components will update without the need to refres
 the page.
 
 #### Tests
-TODO: need to create component tests
+Install karma and karma command line:
+```
+npm install -g karma
+npm install -g karma-cli
+```
 
 #### Backend
 Currently, the repo is on private. Contact me to require access.
