@@ -2,7 +2,7 @@ var ExtractTextPlugin = require("extract-text-webpack-plugin");
 // Example file. Copy this to your project
 module.exports = {
   verbose: true, // Set to true to show diagnostic information
-  debug: true,
+  debug: false,
 
   // IMPORTANT: Set next two configuration so you can customize
   // bootstrapCustomizations: gets loaded before bootstrap so you can configure the variables used by bootstrap

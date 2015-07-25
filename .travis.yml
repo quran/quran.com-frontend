@@ -11,3 +11,5 @@ cache:
     - node_modules
 install:
   - npm install
+notifications:
+  email: false
