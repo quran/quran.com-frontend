@@ -35,6 +35,10 @@ class Ayah extends React.Component {
       });
     }
 
+    if (!this.props.ayah.content) {
+      return [];
+    }
+
     return this.props.ayah.content.map((content, i) => {
       return (
         <div className="translation" key={i}>
