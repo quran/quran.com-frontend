@@ -16,9 +16,10 @@ class ApplicationStore extends BaseStore {
     if (data.get('title') && data.get('name') !== 'surah') {
       this.pageTitle = data.get('title');
     }
-    else if (data.get('name') === 'surah'){
+    else if (data.get('name') === 'surah' && this.dispatcher.getStore('SurahsStore').getSurah()){
       if (this.dispatcher.getStore('RouteStore').getCurrentRoute().get('name') === 'surah') {
         let currentSurah = this.dispatcher.getStore('SurahsStore').getSurah();
+        
         this.pageTitle = `Surah ${currentSurah.name.simple} - The Noble Qur'an - القرآن الكريم`;
       }
     }
