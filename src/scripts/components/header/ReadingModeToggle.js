@@ -36,7 +36,7 @@ class ReadingModeToggle extends React.Component {
     });
 
     return (
-      <a className={classes} onClick={this.toggleReadingMode.bind(this)}>
+      <a title="Toggle Reading Mode" className={classes} onClick={this.toggleReadingMode.bind(this)}>
         {this.renderIcon()}
       </a>
     );

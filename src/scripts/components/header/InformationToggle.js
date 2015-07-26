@@ -29,7 +29,8 @@ class InformationToggle extends React.Component {
     });
 
     return (
-      <a className={classes} onClick={this.toggleInformationMode.bind(this)}>
+      <a title="See information for this surah"
+      className={classes} onClick={this.toggleInformationMode.bind(this)}>
         <i className="ss-icon ss-info" />
       </a>
     );
