@@ -7,13 +7,19 @@ import debug from 'utils/Debug';
 class AyahsStore extends BaseStore {
   constructor(dispatcher) {
     super(dispatcher);
+    this.lines = [];
     this.ayahs = [];
     this.readingMode = false;
     this.searchStats = {};
+    this.lastLine = -1;
   }
 
   getAyahs() {
     return this.ayahs;
+  }
+
+  getLines() {
+    return this.lines;
   }
 
   getLast() {
@@ -141,9 +147,49 @@ class AyahsStore extends BaseStore {
     });
   }
 
+  buildLines(ayahs) {
+    // the line data structure will be a two-dimensional array:
+    // the structure is a set of lines and each line is a set of words
+    // like this:
+    // [ [ word, word, word, word, word ],
+    //   [ word, word, word, word, word ],
+    //   [ word, word, word, word, word ],
+    //   [ word, word, word, word, word ],
+    //   [ word, word, word, word, word ] ]
+    //
+    // how this is rendered:
+    // first lines is left aligned
+    // middle lines are justified middle lines are justified
+    // middle lines are justified middle lines are justified
+    // middle lines are justified middle lines are justified
+    //                            last line is right aligned
+    //
+    // not implemented yet:
+    // prepending (if we allow prepending)
+
+    if (this.ayahs === ayahs ) {
+      // if the 'ayahs' passed in are exactly the same as this.ayahs, then
+      // we want to rebuild the whole set of lines instead of append/prepend:
+      this.lines = []
+    }
+
+    console.log( 'wtf bbq', self );
+    ayahs.forEach( ( ayah ) => {
+      ayah.quran.forEach( ( data ) => {
+        if ( data.char.line != this.lastLine ) {
+          // new line
+          this.lines[ this.lines.length ] = [];
+          this.lastLine = data.char.line;
+        }
+        this.lines[ this.lines.length - 1 ].push( data );
+      } );
+    } );
+  }
+
   dehydrate() {
     return {
       ayahs: this.ayahs,
+      lines: this.lines, // TODO this is useless, doesn't restore state
       searchStats: this.searchStats
     };
   }
@@ -151,6 +197,8 @@ class AyahsStore extends BaseStore {
   rehydrate(state) {
     this.ayahs = state.ayahs;
     this.searchStats = state.searchStats;
+
+    this.buildLines(state.ayahs);
 
     if (!!~~state.ayahs.length) {
       this.buildAudio([this.ayahs[0], this.ayahs[1]]);
@@ -166,6 +214,7 @@ AyahsStore.handlers = {
         console.log('Ayahs: Lazy load');
         Font.createFontFaces(payload.ayahs);
         this.ayahs = this.ayahs.concat(payload.ayahs);
+        this.buildLines(payload.ayahs);
 
         // @TODO: Figure out why this was not here before...
         this.buildAudio(payload.ayahs);
@@ -184,11 +233,13 @@ AyahsStore.handlers = {
         // Assuming this happens on new page
         Font.createFontFaces(payload.ayahs);
         this.ayahs = payload.ayahs;
+        this.buildLines(payload.ayahs);
         this.buildAudio([this.ayahs[0], this.ayahs[1]]);
       }
     }
     else {
       this.ayahs = payload.ayahs;
+      this.buildLines(payload.ayahs);
 
       if (typeof window !== 'undefined') {
         Font.createFontFaces(payload.ayahs);
@@ -210,6 +261,7 @@ AyahsStore.handlers = {
     this.ayahs = payload.ayahs.map((ayah, index) => {
       return Object.assign(this.ayahs[index], ayah);
     });
+    this.buildLines(this.ayahs);
 
     if (!!~payload.difference.indexOf('audio')) {
       this.buildAudio(this.ayahs);
@@ -224,7 +276,8 @@ AyahsStore.handlers = {
   },
 
   'NAVIGATE_START': function() {
-    this.ayahs = [];
+    this.ayahs = []; // technically,
+    this.lines = []; // we don't need these (they were already set in the constructor).
     this.emitChange();
   },
 
@@ -235,6 +288,7 @@ AyahsStore.handlers = {
     }
 
     this.ayahs = payload.results;
+    this.buildLines(this.ayahs);
     this.searchStats = {
       query: payload.query,
       hits: payload.hits,

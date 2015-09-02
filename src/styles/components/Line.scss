@@ -1,0 +1,24 @@
+.word-font.text-justify{
+  display: inline-block;
+  min-width: 100%;
+  width: auto;
+  direction: rtl;
+
+  .line {
+    display: flex;
+    justify-content: space-between;
+    white-space: nowrap;
+
+    b {
+      display: inline-block;
+    }
+  }
+  .line:first-child {
+    text-align: left !important;
+  }
+  .line:last-child {
+    text-align: right !important;
+  }
+
+}
+
