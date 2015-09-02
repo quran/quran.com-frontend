@@ -5,6 +5,8 @@ import * as AudioplayerActions from 'actions/AudioplayerActions';
 import ReactZeroClipboard from 'react-zeroclipboard';
 import debug from 'utils/Debug';
 
+//TODO by nour factor our isReadingMode, it's not relevant here
+
 class Ayah extends React.Component {
   translations() {
     if (!this.props.ayah.content && this.props.ayah.match) {
@@ -79,6 +81,7 @@ class Ayah extends React.Component {
       }
     });
 
+    /*
     if (this.props.readingMode) {
       return (
         <span>
@@ -86,6 +89,7 @@ class Ayah extends React.Component {
         </span>
       );
     }
+    */
 
     return (
       <h1 className="word-font text-right">
@@ -130,9 +134,11 @@ class Ayah extends React.Component {
   render() {
     debug(`COMPONENT-AYAH RENDERED ${this.props.ayah.ayah}`);
 
+    /*
     if (this.props.readingMode) {
       return this.text();
     }
+    */
 
     return (
       <div className="row ayah">

@@ -1,4 +1,5 @@
 import React from 'react';
+import jQuery from 'jquery';
 import ApplicationStore from 'stores/ApplicationStore';
 import provideContext from 'fluxible/addons/provideContext';
 import connectToStores from 'fluxible/addons/connectToStores';
@@ -14,6 +15,8 @@ var GAInitiailizer = ga.Initializer;
 var Application = React.createClass({
   render: function () {
     debug('COMPONENT-APPLICATION');
+    console.log( 'OMG OMGO MGOMGOMGOGM', 'jquery', jQuery, 'window', window );
+    window.jQuery = jQuery;
 
     var Handler = this.props.currentRoute.get('handler');
     return (
