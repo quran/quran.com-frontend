@@ -1,11 +1,11 @@
 /* eslint-disable consistent-return */
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
 import CopyToClipboard from 'copy-to-clipboard';
 import {NavLink} from 'fluxible-router';
 import Keen from 'utils/Keen';
-
 import debug from 'utils/Debug';
 
 class Ayah extends React.Component {
@@ -97,14 +97,6 @@ class Ayah extends React.Component {
         );
       }
     });
-
-    if (this.props.readingMode) {
-      return (
-        <span>
-          {text}
-        </span>
-      );
-    }
 
     return (
       <h1 className="word-font text-right">
