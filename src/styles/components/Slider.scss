@@ -23,7 +23,7 @@ $slider-width: 80px;
     position: absolute;
     right: 15px;
 
-    @media (max-width: $screen-xs-max) {
+    @media (max-width: $screen-sm-max) {
       right: 5px;
     }
   }
@@ -137,7 +137,7 @@ input[type=range]:focus::-ms-fill-upper {
   background: transparent;
 }
 
-@media (max-width: $screen-xs-max) {
+@media (max-width: $screen-sm-max) {
   .navbar-bottom input[type=range]{
     width: 200px;
     &:after{
