@@ -3,7 +3,7 @@ import {createMockComponentContext} from 'fluxible/utils';
 import React from 'react';
 import ReactTestUtils from 'react/lib/ReactTestUtils';
 import Audioplayer from 'components/audioplayer/Audioplayer';
-import provideContext from 'fluxible/addons/provideContext';
+import provideContext from 'fluxible-addons-react/provideContext';
 import SurahsStore from 'stores/SurahsStore';
 import AyahsStore from 'stores/AyahsStore';
 import AudioplayerStore from 'stores/AudioplayerStore';

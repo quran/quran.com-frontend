@@ -10,7 +10,7 @@ import AudioplayerStore from 'stores/AudioplayerStore';
 
 // create new fluxible instance
 const app = new Fluxible({
-    component: Application
+  component: Application
 });
 // register routes
 var MyRouteStore = RouteStore.withStaticRoutes(routes);

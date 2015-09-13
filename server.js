@@ -2,6 +2,7 @@ import express from 'express';
 import path from 'path';
 import serialize from 'serialize-javascript';
 import {navigateAction} from 'fluxible-router';
+import createElementWithContext from 'fluxible-addons-react/createElementWithContext';
 import debugLib from 'debug';
 import React from 'react';
 import app from './app';
@@ -21,6 +22,11 @@ import HtmlComponent from 'components/Html';
 const htmlComponent = React.createFactory(HtmlComponent);
 const debug = debugLib('quran-com');
 const server = express();
+
+import Logger from 'le_node';
+let logger = new Logger({
+  token:'bf07a2f4-0b1a-4645-8c1d-de41742b6abb'
+});
 
 server.set('state namespace', 'App');
 server.set('view cache', true);
@@ -53,7 +59,14 @@ server.use((req, res, next) => {
       }, (err) => {
 
         if (err) {
-          console.log('Error:', err, 'Request:', req.url, 'Cookies:', req.cookies);
+          logger.log('err', {Error: err, Request: req.url, Cookies: req.cookies, Stack: err.stack});
+
+          console.log(
+            `Error: ${err},
+            Request: ${req.url},
+            Cookies: ${req.cookies},
+            Stack: ${err.stack}`
+          );
 
           if (err.statusCode && err.statusCode === 404) {
             res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(NotFound)));
@@ -78,7 +91,7 @@ server.use((req, res, next) => {
         const html = React.renderToStaticMarkup(htmlComponent({
           context: context.getComponentContext(),
           state: exposed,
-          markup: React.renderToString(context.createElement()),
+          markup: React.renderToString(createElementWithContext(context)),
           fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs()),
           hotModuleUrl: `${webserver}/`
         }));

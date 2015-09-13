@@ -78,7 +78,7 @@ $transition-timing: 0.5s;
   }
 }
 
-@media (max-width: $screen-xs-max) {
+@media (max-width: $screen-sm-max) {
   .surah-title{
     padding:0px !important;
     height: 70px;

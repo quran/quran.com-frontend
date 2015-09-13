@@ -1,4 +1,6 @@
-import request from 'superagent-promise';
+var Promise = require('promise');
+var request = require('superagent-promise')(require('superagent'), Promise);
+
 import urlSettings from 'constants/Settings';
 import UserStore from 'stores/UserStore';
 import debug from 'utils/Debug';
@@ -29,7 +31,7 @@ export function getAyahs(actionContext, params, done) {
 
 export function updateAyahs(actionContext, params, done) {
   var firstAndLast = actionContext.getStore('AyahsStore').getFirstAndLast(),
-      surahId = actionContext.getStore('SurahsStore').getSurahId();
+    surahId = actionContext.getStore('SurahsStore').getSurahId();
 
   actionContext.getStore(UserStore).setSingleOption(Object.keys(params)[0], params[Object.keys(params)[0]]);
 

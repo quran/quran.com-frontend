@@ -32,7 +32,7 @@ export function fontFace(className) {
 
 export function createFontFacesArray(ayahs) {
   var fontFaces = [],
-      fontFacesArray = [];
+    fontFacesArray = [];
 
   ayahs.map(function(ayah) {
     let font = ayah.quran[0].char.font;

@@ -15,7 +15,7 @@ class NavCollapseToggle extends React.Component {
     e.preventDefault();
 
     this.setState({
-        toggled: !this.state.toggled
+      toggled: !this.state.toggled
     });
 
     // This is bad! @TODO: change this please :)

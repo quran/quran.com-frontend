@@ -1,7 +1,7 @@
 import React from 'react';
 import {NavLink} from 'fluxible-router';
 import SurahsStore from 'stores/SurahsStore';
-import {connectToStores} from 'fluxible/addons';
+import connectToStores from 'fluxible-addons-react/connectToStores';
 import debug from 'utils/Debug';
 import classNames from 'classnames';
 
@@ -60,9 +60,11 @@ SurahsNav.contextTypes = {
   executeAction: React.PropTypes.func.isRequired
 };
 
-SurahsNav = connectToStores(SurahsNav, [SurahsStore], (stores, props) => {
+SurahsNav = connectToStores(SurahsNav, [SurahsStore], (context, props) => {
+  const surahsStore = context.getStore(SurahsStore);
+
   return {
-    surahs: stores.SurahsStore.getSurahs()
+    surahs: surahsStore.getSurahs()
   };
 });
 

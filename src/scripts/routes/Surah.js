@@ -6,7 +6,7 @@ import * as AyahsActions from 'actions/AyahsActions';
 import * as SurahsActions from 'actions/SurahsActions';
 import AyahsList from 'components/surah/AyahsList';
 import $ from 'jquery';
-import { connectToStores } from 'fluxible/addons';
+import connectToStores from 'fluxible-addons-react/connectToStores';
 import AyahsStore from 'stores/AyahsStore';
 import SurahsStore from 'stores/SurahsStore';
 import SearchInput from 'components/header/SearchInput';
@@ -177,9 +177,10 @@ Surah.contextTypes = {
   getStore: React.PropTypes.func.isRequired
 };
 
-Surah = connectToStores(Surah, [AyahsStore], (stores, props) => {
+Surah = connectToStores(Surah, [AyahsStore], (context, props) => {
+  const ayahsStore = context.getStore(AyahsStore);
   return {
-    ayahs: stores.AyahsStore.getAyahs()
+    ayahs: ayahsStore.getAyahs()
   };
 });
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchHeader from 'components/header/SearchHeader';
-import {connectToStores} from 'fluxible/addons';
+import connectToStores from 'fluxible-addons-react/connectToStores';
 import AyahsStore from 'stores/AyahsStore';
 import AyahsList from 'components/surah/AyahsList';
 import ReactPaginate from 'react-paginate';
@@ -20,7 +20,7 @@ class Search extends React.Component {
 
   render() {
     let pageNum = Math.ceil(this.props.stats.total / this.props.stats.size),
-        currentPage = (parseInt(this.props.currentRoute.get('query').get('p')) - 1) || 0;
+      currentPage = (parseInt(this.props.currentRoute.get('query').get('p')) - 1) || 0;
 
     return (
       <div className="index-page">
@@ -70,9 +70,11 @@ Search.contextTypes = {
   getStore: React.PropTypes.func.isRequired
 };
 
-Search = connectToStores(Search, [AyahsStore], (stores, props) => {
+Search = connectToStores(Search, [AyahsStore], (context, props) => {
+  const ayahsStore = context.getStore(AyahsStore);
+
   return {
-    stats: stores.AyahsStore.getSearchStats()
+    stats: ayahsStore.getSearchStats()
   };
 });
 

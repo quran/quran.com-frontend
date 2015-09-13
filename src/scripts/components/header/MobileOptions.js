@@ -101,7 +101,7 @@ class MobileOptions extends React.Component {
 
   render() {
     return (
-      <div className="mobile navbar-bottom visible-xs col-xs-12">
+      <div className="mobile navbar-bottom visible-xs visible-sm col-xs-12">
         <div className="row dark-bg">
           <div className="toggle-options col-xs-9">
             <a onClick={this.setSelection.bind(this, 'chapterSelection')} href>

@@ -98,7 +98,7 @@ class Ayah extends React.Component {
     e.preventDefault();
 
     this.setState({
-        open: false
+      open: false
     });
     this.context.executeAction(AudioplayerActions.changeAyah, {
       ayah: ayah,

@@ -1,6 +1,6 @@
 import React from 'react';
 import SurahsStore from 'stores/SurahsStore';
-import { connectToStores } from 'fluxible/addons';
+import connectToStores from 'fluxible-addons-react/connectToStores';
 import $ from 'jquery';
 
 class SurahInfo extends React.Component {
@@ -91,11 +91,13 @@ class SurahInfo extends React.Component {
   }
 }
 
-SurahInfo = connectToStores(SurahInfo, [SurahsStore], (stores, props) => {
+SurahInfo = connectToStores(SurahInfo, [SurahsStore], (context, props) => {
+  const surahsStore = context.getStore(SurahsStore);
+
   return {
-    isExpanded: stores.SurahsStore.getIsShowingInfo(),
-    currentSurah: stores.SurahsStore.getSurah(),
-    wikiLinks: stores.SurahsStore.getWikiLinks()
+    isExpanded: surahsStore.getIsShowingInfo(),
+    currentSurah: surahsStore.getSurah(),
+    wikiLinks: surahsStore.getWikiLinks()
   };
 });
 

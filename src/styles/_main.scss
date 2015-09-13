@@ -41,7 +41,7 @@ a:hover{
     position: fixed;
     top: 0px;
 
-    @media (max-width: $screen-xs-max) {
+    @media (max-width: $screen-sm-max) {
       display: none;
     }
   }
@@ -60,7 +60,7 @@ a:hover{
       display: none;
     }
 
-    @media (max-width: $screen-xs-max) {
+    @media (max-width: $screen-sm-max) {
       width: 100%;
       padding-top: 150px;
 

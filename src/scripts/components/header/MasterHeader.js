@@ -1,7 +1,6 @@
 import React from 'react';
 import {NavLink, handleRoute} from 'fluxible-router';
 import SurahsStore from 'stores/SurahsStore';
-import {connectToStores} from 'fluxible/addons';
 import DesktopOptions from 'components/header/DesktopOptions';
 import MobileOptions from 'components/header/MobileOptions';
 import NavBrand from 'components/header/NavBrand';
@@ -35,7 +34,7 @@ class MasterHeader extends React.Component{
       return (
         <NavLink className="navbar-text previous-chapter" href={prev}>
           <i className="ss-icon ss-navigateleft"></i>
-          <span className="hidden-xs"> PREVIOUS SURAH</span>
+          <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
         </NavLink>
       );
     }
@@ -51,7 +50,7 @@ class MasterHeader extends React.Component{
     else {
       return (
         <NavLink className="navbar-text next-chapter" href={next}>
-          <span className="hidden-xs">NEXT SURAH </span>
+          <span className="hidden-xs hidden-sm">NEXT SURAH </span>
           <i className="ss-icon ss-navigateright"></i>
         </NavLink>
       );
