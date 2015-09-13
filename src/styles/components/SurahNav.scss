@@ -1,14 +1,8 @@
 .surahs-nav{
   background: $brand-primary-darker-5;
   padding: 0px;
-  //position: fixed;
   z-index: 9999;
 
-  ul::-webkit-scrollbar{
-      display: none;
-      width: 6px;
-      background-color: $brand-primary;
-  }
   ul{
     padding-left: 0px;
     height: calc(100vh - 190px);

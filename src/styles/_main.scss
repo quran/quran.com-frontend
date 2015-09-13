@@ -79,12 +79,6 @@ a:hover{
   }
 }
 
-body::-webkit-scrollbar{
-  display: none;
-  width: 6px;
-  background-color: $brand-primary;
-}
-
 .form-control:focus{
   box-shadow: none;
   -webkit-box-shadow: none;
