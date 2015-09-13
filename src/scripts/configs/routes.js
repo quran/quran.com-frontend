@@ -82,8 +82,8 @@ export default {
       }
 
       let fromParam,
-          toParam,
-          surahId = currentRoute.get('params').get('surahId');
+        toParam,
+        surahId = currentRoute.get('params').get('surahId');
 
       actionContext.executeAction(
         SurahsActions.getSurahs,

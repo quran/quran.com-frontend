@@ -59,12 +59,12 @@ class AyahsStore extends BaseStore {
     }
 
     var firefox = /firefox/i,
-        opera = /opera/i,
-        chrome = /chrome/i,
-        errorMessage = 'The current reciter does not have audio that suits' +
-                        ' your browser. Either select another reciter or try' +
-                        ' on another browser.',
-        hasErrored = false;
+      opera = /opera/i,
+      chrome = /chrome/i,
+      errorMessage = 'The current reciter does not have audio that suits' +
+                      ' your browser. Either select another reciter or try' +
+                      ' on another browser.',
+      hasErrored = false;
 
     var throwError = function() {
       if (!hasErrored) {

@@ -29,7 +29,7 @@ export function getAyahs(actionContext, params, done) {
 
 export function updateAyahs(actionContext, params, done) {
   var firstAndLast = actionContext.getStore('AyahsStore').getFirstAndLast(),
-      surahId = actionContext.getStore('SurahsStore').getSurahId();
+    surahId = actionContext.getStore('SurahsStore').getSurahId();
 
   actionContext.getStore(UserStore).setSingleOption(Object.keys(params)[0], params[Object.keys(params)[0]]);
 

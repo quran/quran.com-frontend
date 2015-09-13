@@ -20,7 +20,7 @@ class Search extends React.Component {
 
   render() {
     let pageNum = Math.ceil(this.props.stats.total / this.props.stats.size),
-        currentPage = (parseInt(this.props.currentRoute.get('query').get('p')) - 1) || 0;
+      currentPage = (parseInt(this.props.currentRoute.get('query').get('p')) - 1) || 0;
 
     return (
       <div className="index-page">
