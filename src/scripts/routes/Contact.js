@@ -56,10 +56,11 @@ class Contact extends React.Component {
         <div className="form-group">
           <label htmlFor="message" className="col-sm-2 control-label">Purpose</label>
           <div className="col-sm-8">
-            <select className="form-control" ref="purpose">
-              <option value="feedback" selected>Feedback</option>
-              <option value="bug">Bug</option>
-              <option value="improvement">Improvement</option>
+            <select className="form-control" ref="purpose" defaultValue="feedback">
+              <option value="feedback">Feedback & Suggestions</option>
+              <option value="translation-bug">Translation Error</option>
+              <option value="bug">Site Bug</option>
+              <option value="talent">Contributing (monetary or talent)</option>
               <option value="help">Help</option>
             </select>
           </div>
@@ -81,7 +82,11 @@ class Contact extends React.Component {
 
   renderSubmitSuccess() {
     return (
-      <h3 className="text-center form-success-message">Form submitted. Thank you</h3>
+      <h3 className="text-center form-success-message">
+        Thank you for contacting us - we look forward to speaking with you. While this is a
+        volunteer effort, we do experience many
+        support tickets on a daily basis and would love to get back to everyone on a timely manner.
+      </h3>
     );
   }
 
@@ -99,6 +104,14 @@ class Contact extends React.Component {
         <IndexHeader noSearch={true} />
         <div className="container-fluid about-text">
           <div className="row">
+            <div className="col-md-6 col-md-offset-3">
+              <h4>
+                Contacting us - thank you for taking time to speak to us. Please be as concise as possible
+                and include screenshots where applicable to help us help you as quickly as we can.
+                <br/>
+                <br/>
+              </h4>
+            </div>
             <div className="col-md-8 col-md-offset-2">
             {body}
             </div>
