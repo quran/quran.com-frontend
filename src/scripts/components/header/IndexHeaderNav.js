@@ -26,11 +26,6 @@ class IndexHeaderNav extends React.Component {
             <a href="http://legacy.quran.com">Legacy Quran.com</a>
           </li>
           <li>
-            <a href="/donations">
-              Contribute
-            </a>
-          </li>
-          <li>
             <a href="/contact">
               Contact us
             </a>
