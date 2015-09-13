@@ -23,6 +23,12 @@ nav.navbar{
     min-height: $navbar-height * 0.3571;
     height: auto;
   }
+
+  @media(max-width: $screen-sm-max) {
+    min-height: $navbar-height * 0.3571;
+    height: auto;
+  }
+
   .border-right{
     border-right: 1px solid rgba(lighten($cream, 20%), 0.5);
   }

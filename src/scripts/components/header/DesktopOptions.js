@@ -18,7 +18,7 @@ class DesktopOptions extends React.Component {
   render() {
     debug('COMPONENT-DESKTOP OPTIONS');
     return (
-      <div className="row navbar-bottom hidden-xs">
+      <div className="row navbar-bottom hidden-xs hidden-sm">
         <div className="options">
           <NavCollapseToggle />
           <ReciterDropdown />
