@@ -3,7 +3,7 @@ import {createMockComponentContext} from 'fluxible/utils';
 import React from 'react';
 import ReactTestUtils from 'react/lib/ReactTestUtils';
 import SearchInput from 'components/header/SearchInput';
-import provideContext from 'fluxible/addons/provideContext';
+import provideContext from 'fluxible-addons-react/provideContext';
 
 var component, node, makeComponent, context;
 

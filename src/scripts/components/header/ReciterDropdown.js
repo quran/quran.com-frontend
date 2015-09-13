@@ -19,7 +19,7 @@ class ReciterDropdown extends React.Component {
     request.get(Settings.url + 'options/audio')
     .end(function(err, res) {
       this.setState({
-          options: res.body
+        options: res.body
       });
     }.bind(this));
   }

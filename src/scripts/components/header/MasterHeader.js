@@ -1,7 +1,6 @@
 import React from 'react';
 import {NavLink, handleRoute} from 'fluxible-router';
 import SurahsStore from 'stores/SurahsStore';
-import {connectToStores} from 'fluxible/addons';
 import DesktopOptions from 'components/header/DesktopOptions';
 import MobileOptions from 'components/header/MobileOptions';
 import NavBrand from 'components/header/NavBrand';

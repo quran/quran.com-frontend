@@ -1,7 +1,7 @@
 import React from 'react';
 import IndexHeader from 'components/header/IndexHeader';
 import {NavLink} from 'fluxible-router';
-import {connectToStores, provideContext} from 'fluxible/addons';
+import {connectToStores, provideContext} from 'fluxible-addons-react';
 import SurahsStore from 'stores/SurahsStore';
 import UserStore from 'stores/UserStore';
 
@@ -133,11 +133,14 @@ class Index extends React.Component {
   }
 }
 
-Index = connectToStores(Index, [SurahsStore, UserStore], (stores, props) => {
+Index = connectToStores(Index, [SurahsStore, UserStore], (context, props) => {
+  const surahsStore = context.getStore(SurahsStore);
+  const userStore = context.getStore(UserStore);
+
   return {
-    surahs: stores.SurahsStore.getSurahs(),
-    lastVisit: stores.UserStore.getLastVisit(),
-    isFirstTime: stores.UserStore.getIsFirstTime()
+    surahs: surahsStore.getSurahs(),
+    lastVisit: userStore.getLastVisit(),
+    isFirstTime: userStore.getIsFirstTime()
   };
 });
 

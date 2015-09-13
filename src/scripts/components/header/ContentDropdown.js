@@ -22,7 +22,7 @@ class ContentDropdown extends React.Component {
     request.get(Settings.url + 'options/content')
     .end((err, res) => {
       this.setState({
-          options: res.body
+        options: res.body
       });
     }.bind(this));
   }

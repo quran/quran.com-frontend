@@ -18,14 +18,14 @@ class IndexHeader extends React.Component {
     if (this.props.navlink === false) {
       return (
         <a href="/">
-          <img src="images/logo-lg-w.png" className="logo" />
+          <img src="/images/logo-lg-w.png" className="logo" />
         </a>
       );
     }
     else {
       return (
         <NavLink href="/">
-          <img src="images/logo-lg-w.png" className="logo" />
+          <img src="/images/logo-lg-w.png" className="logo" />
         </NavLink>
       );
     }

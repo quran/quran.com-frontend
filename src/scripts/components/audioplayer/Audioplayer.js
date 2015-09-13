@@ -3,7 +3,7 @@ import AudioplayerStore from 'stores/AudioplayerStore';
 import AudioplayerTrack from './AudioplayerTrack';
 import VersesDropdown from './VersesDropdown';
 import * as AyahsActions from 'actions/AyahsActions';
-import {connectToStores} from 'fluxible/addons';
+import connectToStores from 'fluxible-addons-react/connectToStores';
 import SurahsStore from 'stores/SurahsStore';
 import AyahsStore from 'stores/AyahsStore';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
@@ -72,16 +72,16 @@ class Audioplayer extends React.Component {
   loader() {
     return (
       <div className="sequence">
-        <div className="seq-preloader">
-          <svg height="16" width="42" className="seq-preload-indicator" xmlns="http://www.w3.org/2000/svg">
-            <circle className="seq-preload-circle seq-preload-circle-1" cx="6" cy="8" r="5">
-            </circle>
-            <circle className="seq-preload-circle seq-preload-circle-2" cx="20" cy="8" r="5">
-            </circle>
-            <circle className="seq-preload-circle seq-preload-circle-3" cx="34" cy="8" r="5">
-            </circle>
-          </svg>
-        </div>
+      <div className="seq-preloader">
+      <svg height="16" width="42" className="seq-preload-indicator" xmlns="http://www.w3.org/2000/svg">
+      <circle className="seq-preload-circle seq-preload-circle-1" cx="6" cy="8" r="5">
+      </circle>
+      <circle className="seq-preload-circle seq-preload-circle-2" cx="20" cy="8" r="5">
+      </circle>
+      <circle className="seq-preload-circle seq-preload-circle-3" cx="34" cy="8" r="5">
+      </circle>
+      </svg>
+      </div>
       </div>
     );
   }
@@ -93,7 +93,7 @@ class Audioplayer extends React.Component {
     });
 
     this.state.currentAudio.currentTime = fraction *
-      this.state.currentAudio.duration;
+    this.state.currentAudio.duration;
   }
 
   setupAudio() {
@@ -112,7 +112,7 @@ class Audioplayer extends React.Component {
       let progress = (this.props.currentAudio.currentTime /
         this.props.currentAudio.duration * 100);
       this.setState({
-          progress: progress
+        progress: progress
       });
     }, false);
 
@@ -167,7 +167,7 @@ class Audioplayer extends React.Component {
 
   pause() {
     this.setState({
-        playing: false
+      playing: false
     });
     this.props.currentAudio.pause();
   }
@@ -211,9 +211,9 @@ class Audioplayer extends React.Component {
 
     return (
       <li className="audioplayer-controls">
-        <a className="buttons" onClick={this.startStopPlayer.bind(this)} href>
-          {icon}
-        </a>
+      <a className="buttons" onClick={this.startStopPlayer.bind(this)} href>
+      {icon}
+      </a>
       </li>
     );
   }
@@ -221,28 +221,28 @@ class Audioplayer extends React.Component {
   forwardButton() {
     return (
       <li className="text-center audioplayer-controls">
-        <a className="buttons" onClick={this.forwardAyah.bind(this)}>
-          <i className="ss-icon ss-skipforward" />
-        </a>
+      <a className="buttons" onClick={this.forwardAyah.bind(this)}>
+      <i className="ss-icon ss-skipforward" />
+      </a>
       </li>
     );
   }
 
   repeatButton() {
     var classes = classNames({
-        repeat: this.state.shouldRepeat
+      repeat: this.state.shouldRepeat
     });
 
     return (
       <li className="text-center audioplayer-repeat">
-        <a>
-          <input type="checkbox" id="repeat" />
-          <label htmlFor="repeat"
-                 onClick={this.repeatSwitch.bind(this)}
-                 className={classes}>
-            <i className="ss-icon ss-repeat" />
-          </label>
-        </a>
+      <a>
+      <input type="checkbox" id="repeat" />
+      <label htmlFor="repeat"
+      onClick={this.repeatSwitch.bind(this)}
+      className={classes}>
+      <i className="ss-icon ss-repeat" />
+      </label>
+      </a>
       </li>
     );
   }
@@ -257,28 +257,28 @@ class Audioplayer extends React.Component {
       content = (
         <ul className="list-inline audioplayer-options">
         <VersesDropdown ayahs={this.props.surah ? this.props.surah.ayat : 1}
-                        currentAyah={currentAyahId}/>
-       {this.playStopButtons()}
-       {this.forwardButton()}
-       {this.repeatButton()}
-     </ul>
-     );
+        currentAyah={currentAyahId}/>
+        {this.playStopButtons()}
+        {this.forwardButton()}
+        {this.repeatButton()}
+        </ul>
+      );
     }
     else {
       content = (
         <ul className="list-inline audioplayer-options">
-          {this.loader()}
+        {this.loader()}
         </ul>
       );
     }
 
     return (
       <div className="audioplayer col-md-3 border-right">
-        {content}
-        <div className="audioplayer-wrapper">
-          <AudioplayerTrack progress={this.state.progress}
-                            changeOffset={this.changeOffset}/>
-        </div>
+      {content}
+      <div className="audioplayer-wrapper">
+      <AudioplayerTrack progress={this.state.progress}
+      changeOffset={this.changeOffset}/>
+      </div>
       </div>
     );
   }
@@ -289,12 +289,15 @@ Audioplayer.contextTypes = {
   executeAction: React.PropTypes.func.isRequired
 };
 
-Audioplayer = connectToStores(Audioplayer, [SurahsStore, AyahsStore, AudioplayerStore], function(stores, props) {
+Audioplayer = connectToStores(Audioplayer, [SurahsStore, AyahsStore, AudioplayerStore], function(context, props) {
+  const surahsStore = context.getStore(SurahsStore);
+  const ayahsStore = context.getStore(AyahsStore);
+  const audioplayerStore = context.getStore(AudioplayerStore);
   return {
-    surah: stores.SurahsStore.getSurah(),
-    ayahs: stores.AyahsStore.getAyahs(),
-    currentAudio: stores.AudioplayerStore.getCurrentAudio(),
-    currentAyah: stores.AudioplayerStore.getCurrentAyah()
+    surah: surahsStore.getSurah(),
+    ayahs: ayahsStore.getAyahs(),
+    currentAudio: audioplayerStore.getCurrentAudio(),
+    currentAyah: audioplayerStore.getCurrentAyah()
   };
 });
 

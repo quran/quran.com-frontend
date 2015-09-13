@@ -5,7 +5,7 @@ import ReactTestUtils from 'react/lib/ReactTestUtils';
 import Pagination from 'components/Pagination';
 import Immutable from 'immutable';
 import { RouteStore } from 'fluxible-router';
-import provideContext from 'fluxible/addons/provideContext';
+import provideContext from 'fluxible-addons-react/provideContext';
 
 var component, node, makeComponent;
 

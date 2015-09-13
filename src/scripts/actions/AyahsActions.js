@@ -1,4 +1,6 @@
-import request from 'superagent-promise';
+var Promise = require('promise');
+var request = require('superagent-promise')(require('superagent'), Promise);
+
 import urlSettings from 'constants/Settings';
 import UserStore from 'stores/UserStore';
 import debug from 'utils/Debug';

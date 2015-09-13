@@ -3,7 +3,7 @@ import React from 'react';
 import Ayah from 'components/surah/Ayah';
 import AyahsStore from 'stores/AyahsStore';
 import Loader from 'components/Loader';
-import { connectToStores } from 'fluxible/addons';
+import {connectToStores} from 'fluxible-addons-react';
 import debug from 'utils/Debug';
 
 class AyahsList extends React.Component {
@@ -57,10 +57,12 @@ AyahsList.contextTypes = {
   getStore: React.PropTypes.func.isRequired
 };
 
-AyahsList = connectToStores(AyahsList, [AyahsStore], (stores, props) => {
+AyahsList = connectToStores(AyahsList, [AyahsStore], (context, props) => {
+  const ayahsStore = context.getStore(AyahsStore);
+
   return {
-    ayahs: stores.AyahsStore.getAyahs(),
-    isReadingMode: stores.AyahsStore.isReadingMode()
+    ayahs: ayahsStore.getAyahs(),
+    isReadingMode: ayahsStore.isReadingMode()
   };
 });
 

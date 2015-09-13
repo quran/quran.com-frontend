@@ -21,8 +21,8 @@ class FontSizeInput extends React.Component {
 
   onChange(e) {
     var sliderVal = e.target.value,
-        fraction = sliderVal / 100,
-        fontSize;
+      fraction = sliderVal / 100,
+      fontSize;
 
     if (fraction < 0.1) {
       fontSize = 49;
