@@ -1,5 +1,6 @@
 import * as SurahsActions from 'actions/SurahsActions';
 import * as AyahsActions from 'actions/AyahsActions';
+import RouteNotFound from 'utils/RouteNotFound';
 import debug from 'debug';
 const debugRoutes = debug('quran-com');
 
@@ -78,7 +79,7 @@ export default {
     handler: require('../routes/Surah'),
     action(actionContext, currentRoute, done) {
       if (isNaN(currentRoute.get('params').get('surahId'))) {
-        return done({message: 'Route not found', reason: 'wrongRoute', statusCode: 404});
+        done(new RouteNotFound(currentRoute.get('url')));
       }
 
       let fromParam,

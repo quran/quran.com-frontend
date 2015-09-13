@@ -24,7 +24,7 @@ class NotFound extends React.Component {
 
           <title>Page not found.</title>
           <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
-          <link rel="stylesheet" href={'build/main.css'} />
+          <link rel="stylesheet" href={'/build/main.css'} />
       </head>
       <body>
       <div>

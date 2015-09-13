@@ -23,6 +23,11 @@ const htmlComponent = React.createFactory(HtmlComponent);
 const debug = debugLib('quran-com');
 const server = express();
 
+import Logger from 'le_node';
+let logger = new Logger({
+  token:'bf07a2f4-0b1a-4645-8c1d-de41742b6abb'
+});
+
 server.set('state namespace', 'App');
 server.set('view cache', true);
 // Use varnish for the static routes, which will cache too
@@ -54,6 +59,8 @@ server.use((req, res, next) => {
       }, (err) => {
 
         if (err) {
+          logger.log('err', {Error: err, Request: req.url, Cookies: req.cookies, Stack: err.stack});
+
           console.log(
             `Error: ${err},
             Request: ${req.url},
@@ -66,8 +73,7 @@ server.use((req, res, next) => {
             res.end();
           }
           else if (err.statusCode && err.statusCode === 500) {
-            // res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(Errored)));
-            res.write('<!DOCTYPE html>' + err.stack);
+            res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(Errored)));
             res.end();
           }
           else {

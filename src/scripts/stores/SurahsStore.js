@@ -88,9 +88,9 @@ SurahsStore.handlers = {
   },
 
   'NAVIGATE_START': function(payload, name) {
-    var currentRoute = this.dispatcher.getStore('RouteStore').getCurrentRoute();
+    let currentRoute = this.dispatcher.getStore('RouteStore').getCurrentRoute();
 
-    if (currentRoute.get('name') === 'surah') {
+    if (currentRoute && currentRoute.get('name') === 'surah') {
       this.surah = this.surahs[currentRoute.get('params').get('surahId') - 1];
       this.emitChange();
     }
