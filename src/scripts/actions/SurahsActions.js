@@ -5,7 +5,7 @@ var request = require('superagent-promise')(require('superagent'), Promise);
 import urlSettings from 'constants/Settings';
 import debug from 'utils/Debug';
 
-export function getSurahs(actionContext, payload) {
+export function getSurahs(actionContext, payload, done) {
   if (actionContext.getStore('SurahsStore').hasAllSurahs()) {
     return;
   }
@@ -18,6 +18,7 @@ export function getSurahs(actionContext, payload) {
     debug('SURAHS RECEIVED....');
 
     actionContext.dispatch('surahsReceived', {surahs: res.body, surah: payload});
+    done();
   });
 }
 
