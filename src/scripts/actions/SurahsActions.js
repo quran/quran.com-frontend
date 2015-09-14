@@ -13,8 +13,7 @@ export function getSurahs(actionContext, payload, done) {
   debug('ACTIONS-SURAHS');
 
   return request.get(urlSettings.url + 'surahs')
-  .end()
-  .then(function(res) {
+  .end(function(err, res) {
     debug('SURAHS RECEIVED....');
 
     actionContext.dispatch('surahsReceived', {surahs: res.body, surah: payload});
