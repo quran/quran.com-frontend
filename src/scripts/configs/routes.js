@@ -86,6 +86,7 @@ export default {
         toParam,
         surahId = currentRoute.get('params').get('surahId');
 
+
       actionContext.executeAction(
         SurahsActions.getSurahs,
         currentRoute.get('params').get('surahId'),
@@ -98,6 +99,11 @@ export default {
             else {
               fromParam = currentRoute.get('params').get('range');
               toParam = parseInt(fromParam) + 10;
+            }
+
+            // This is the case when someone has a range but it's not valid. Eg: /1/asdasd
+            if (isNaN(fromParam) || isNaN(toParam)) {
+              done(new RouteNotFound(currentRoute.get('url')));
             }
           }
           else {
