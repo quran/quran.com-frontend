@@ -61,13 +61,6 @@ server.use((req, res, next) => {
         if (err) {
           logger.log('err', {Error: err, Request: req.url, Cookies: req.cookies, Stack: err.stack});
 
-          console.log(
-            `Error: ${err},
-            Request: ${req.url},
-            Cookies: ${req.cookies},
-            Stack: ${err.stack}`
-          );
-
           if (err.statusCode && err.statusCode === 404) {
             res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(NotFound)));
             res.end();
