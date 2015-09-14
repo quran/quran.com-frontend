@@ -38,14 +38,14 @@ class AyahsList extends React.Component {
     if (this.props.isReadingMode) {
       return (
         <h1 className="word-font text-justify">
-            {this.list()}
+          {this.list()}
         </h1>
       );
     }
 
     return (
       <div>
-          {this.list()}
+        {this.list()}
       </div>
     );
   }

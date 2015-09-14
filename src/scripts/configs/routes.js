@@ -79,13 +79,12 @@ export default {
     handler: require('../routes/Surah'),
     action(actionContext, currentRoute, done) {
       if (isNaN(currentRoute.get('params').get('surahId'))) {
-        done(new RouteNotFound(currentRoute.get('url')));
+        return done(new RouteNotFound(currentRoute.get('url')));
       }
 
       let fromParam,
         toParam,
         surahId = currentRoute.get('params').get('surahId');
-
 
       actionContext.executeAction(
         SurahsActions.getSurahs,
@@ -102,8 +101,8 @@ export default {
             }
 
             // This is the case when someone has a range but it's not valid. Eg: /1/asdasd
-            if (isNaN(fromParam) || isNaN(toParam)) {
-              done(new RouteNotFound(currentRoute.get('url')));
+            if (isNaN(parseInt(fromParam)) || isNaN(parseInt(toParam))) {
+              return done(new RouteNotFound(currentRoute.get('url')));
             }
           }
           else {
