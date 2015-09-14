@@ -36,6 +36,10 @@ class Index extends React.Component {
     if (this.props.lastVisit) {
       let surah = this.props.surahs[this.props.lastVisit.surah - 1];
 
+      if (!surah) {
+        return;
+      }
+
       return (
         <div className="col-md-10 col-md-offset-1">
           <div className="row last-visit">

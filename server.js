@@ -64,7 +64,8 @@ server.use((req, res, next) => {
           console.log(
             `Error: ${err},
             Request: ${req.url},
-            Host: ${req.get('host')},
+            IP: ${req.ip},
+            Host: ${req.hostname},
             Cookies: ${req.cookies},
             Stack: ${err.stack}`
           );
