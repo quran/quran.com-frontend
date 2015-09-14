@@ -24,7 +24,7 @@ class Html extends React.Component {
           <title>{this.props.context.getStore('ApplicationStore').getPageTitle()}</title>
           <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
           <link rel="apple-touch-icon" href="/images/apple-touch-icon.png"/>
-          <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+          <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png" />
           <link rel="stylesheet" href={this.props.hotModuleUrl + 'build/main.css'} />
           {this.props.fontFaces.map(function(font) {
             return (
