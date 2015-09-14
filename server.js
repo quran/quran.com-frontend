@@ -18,6 +18,7 @@ import * as Fonts from 'utils/FontFace';
 
 import NotFound from 'components/NotFound';
 import Errored from 'components/Error';
+import ErroredMessage from 'components/ErrorMessage';
 import HtmlComponent from 'components/Html';
 const htmlComponent = React.createFactory(HtmlComponent);
 const debug = debugLib('quran-com');
@@ -65,8 +66,8 @@ server.use((req, res, next) => {
             res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(NotFound)));
             res.end();
           }
-          else if (err.statusCode && err.statusCode === 500) {
-            res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(Errored)));
+          else if (err.message) {
+            res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(ErroredMessage, {error: err})));
             res.end();
           }
           else {

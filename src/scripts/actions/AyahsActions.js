@@ -18,14 +18,14 @@ export function getAyahs(actionContext, params, done) {
   .then(function(res) {
     actionContext.dispatch('ayahsReceived', {
       ayahs: res.body
-    },
-    function(err) {
-      console.error(err);
     });
 
     actionContext.dispatch('lastVisit', {surah: params.surahId, ayah: params.from});
 
     done();
+  },
+  function(err) {
+    console.error(err);
   });
 }
 
