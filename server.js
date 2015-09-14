@@ -9,7 +9,6 @@ import app from './app';
 import useragent from 'express-useragent';
 import cookieParser from 'cookie-parser';
 import superagent from 'superagent';
-import morgan from 'morgan';
 import * as Settings from 'constants/Settings';
 
 import favicon from 'serve-favicon';
@@ -39,9 +38,6 @@ server.use('/images', express.static(path.join(__dirname, '/static/images')));
 server.use('/fonts', express.static(path.join(__dirname, '/src/styles/fonts')));
 server.use(useragent.express());
 server.use(cookieParser());
-server.use(morgan('combined'));
-
-
 server.use(favicon(__dirname + '/static/images/favicon.ico'));
 
 server.get('/api/*', function(req, res, next) {
@@ -68,7 +64,6 @@ server.use((req, res, next) => {
           console.log(
             `Error: ${err},
             Request: ${req.url},
-            IP: ${req.ip},
             Cookies: ${req.cookies},
             Stack: ${err.stack}`
           );
