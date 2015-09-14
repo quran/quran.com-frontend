@@ -13,7 +13,6 @@ export default {
     title: `The Noble Qur'an - القرآن الكريم`,
     handler: require('../routes/Index'),
     action(actionContext, currentRoute, done) {
-      console.dir(currentRoute);
       actionContext.executeAction(
         SurahsActions.getSurahs,
         null,
