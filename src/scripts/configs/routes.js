@@ -1,6 +1,7 @@
 import * as SurahsActions from 'actions/SurahsActions';
 import * as AyahsActions from 'actions/AyahsActions';
 import RouteNotFound from 'utils/RouteNotFound';
+import AyahRangeError from 'utils/AyahRangeError';
 import debug from 'debug';
 const debugRoutes = debug('quran-com');
 
@@ -103,6 +104,10 @@ export default {
             // This is the case when someone has a range but it's not valid. Eg: /1/asdasd
             if (isNaN(parseInt(fromParam)) || isNaN(parseInt(toParam))) {
               return done(new RouteNotFound(currentRoute.get('url')));
+            }
+
+            if ((toParam - fromParam) > 50) {
+              return done(new AyahRangeError(fromParam, toParam));
             }
           }
           else {
