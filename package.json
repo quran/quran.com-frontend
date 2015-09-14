@@ -50,6 +50,7 @@
     "json-loader": "~0.5.1",
     "jsx-loader": "^0.13.2",
     "le_node": "^1.1.0",
+    "morgan": "^1.6.1",
     "node-sass": "^3.2.0",
     "piping": "^0.2.0",
     "promise": "^7.0.4",
