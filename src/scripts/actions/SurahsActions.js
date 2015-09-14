@@ -15,6 +15,7 @@ export function getSurahs(actionContext, payload, done) {
   return request.get(urlSettings.url + 'surahs')
   .end(function(err, res) {
     debug('SURAHS RECEIVED....');
+    console.dir(res);
 
     actionContext.dispatch('surahsReceived', {surahs: res.body, surah: payload});
     done();

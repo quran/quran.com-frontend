@@ -13,6 +13,7 @@ export default {
     title: `The Noble Qur'an - القرآن الكريم`,
     handler: require('../routes/Index'),
     action(actionContext, currentRoute, done) {
+      console.dir(currentRoute);
       actionContext.executeAction(
         SurahsActions.getSurahs,
         null,
@@ -101,8 +102,10 @@ export default {
               toParam = parseInt(fromParam) + 10;
             }
 
+            fromParam = parseInt(fromParam);
+            toParam = parseInt(toParam);
             // This is the case when someone has a range but it's not valid. Eg: /1/asdasd
-            if (isNaN(parseInt(fromParam)) || isNaN(parseInt(toParam))) {
+            if (isNaN(fromParam) || isNaN(toParam)) {
               return done(new RouteNotFound(currentRoute.get('url')));
             }
 
