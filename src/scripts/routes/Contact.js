@@ -1,9 +1,10 @@
 /*eslint-disable camelcase */
+var Promise = require('promise');
+var request = require('superagent-promise')(require('superagent'), Promise);
 
 import React from 'react';
 import IndexHeader from 'components/header/IndexHeader';
 import Settings from 'constants/Settings';
-import request from 'superagent-promise';
 
 class Contact extends React.Component {
   constructor(props) {
