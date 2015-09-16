@@ -2,7 +2,7 @@
 
 import React from 'react';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
-import CopyToClipboard from 'react-copy-to-clipboard';
+import CopyToClipboard from 'copy-to-clipboard';
 
 import debug from 'utils/Debug';
 
@@ -107,6 +107,10 @@ class Ayah extends React.Component {
     });
   }
 
+  onCopy(text) {
+    CopyToClipboard(text);
+  }
+
   leftControls() {
     return (
       <div className="col-md-1 left-controls">
@@ -116,14 +120,13 @@ class Ayah extends React.Component {
           </span>
         </h4>
         <a onClick={this.goToAyah.bind(this, this.props.ayah.ayah)}
-                className="text-muted">
+           className="text-muted">
           <i className="ss-icon ss-play" /> Play
         </a>
-        <CopyToClipboard text={this.props.ayah.text}>
-          <a href="javasript:void(0)" className="text-muted">
-            <i className="ss-icon ss-attach" /> Copy
-          </a>
-        </CopyToClipboard>
+        <a onClick={this.onCopy.bind(this, this.props.ayah.text)}
+           className="text-muted">
+          <i className="ss-icon ss-attach" /> Copy
+        </a>
       </div>
     );
   }
