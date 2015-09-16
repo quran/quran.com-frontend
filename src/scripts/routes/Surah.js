@@ -74,6 +74,18 @@ class Surah extends React.Component {
     }
   }
 
+  renderBismillah() {
+    const surah = this.context.getStore('SurahsStore').getSurah();
+
+    if (surah.bismillah_pre) {
+      return (
+        <div className="bismillah text-center word-font">
+          ﭑﭒﭓ
+        </div>
+      )
+    }
+  }
+
   onScroll() {
     if (typeof window === 'undefined') {
       return;
@@ -157,6 +169,7 @@ class Surah extends React.Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-10 col-md-offset-1">
+                {this.renderBismillah()}
                 <AyahsList />
               </div>
               <div className="col-md-10 col-md-offset-1">
