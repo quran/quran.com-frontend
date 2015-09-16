@@ -2,7 +2,8 @@
 
 import React from 'react';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
-import ReactZeroClipboard from 'react-zeroclipboard';
+import CopyToClipboard from 'react-copy-to-clipboard';
+
 import debug from 'utils/Debug';
 
 class Ayah extends React.Component {
@@ -118,11 +119,11 @@ class Ayah extends React.Component {
                 className="text-muted">
           <i className="ss-icon ss-play" /> Play
         </a>
-        <ReactZeroClipboard text={this.props.ayah.text} className="text-muted">
-          <a className="text-muted">
+        <CopyToClipboard text={this.props.ayah.text}>
+          <a href="javasript:void(0)" className="text-muted">
             <i className="ss-icon ss-attach" /> Copy
           </a>
-        </ReactZeroClipboard>
+        </CopyToClipboard>
       </div>
     );
   }
