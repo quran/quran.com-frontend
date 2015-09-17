@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "gulp",
     "test": "npm run lint && ./node_modules/karma/bin/karma start --browsers PhantomJS --single-run",
-    "watch-test": "./node_modules/karma/bin/karma start",
+    "test:watch": "./node_modules/karma/bin/karma start",
     "lint": "eslint ./src/scripts/**/*.js",
     "start": "NODE_PATH=\"./src\" node ./start",
     "build": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack.prod.config.js",
