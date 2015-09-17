@@ -117,8 +117,11 @@ class Audioplayer extends React.Component {
     }, false);
 
     this.props.currentAudio.addEventListener('ended', () => {
-      if (this.state.shouldRepeat === true) {
-        this.changeAyah(this.props.currentAyah.ayah, true);
+      if (this.state.shouldRepeat) {
+        this.props.currentAudio.pause();
+        this.props.currentAudio.currentTime = 0;
+        this.props.currentAudio.play();
+        // this.changeAyah(this.props.currentAyah.ayah, true);
       }
       else {
         this.props.currentAudio.pause();
