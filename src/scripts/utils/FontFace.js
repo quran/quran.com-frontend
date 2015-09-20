@@ -20,10 +20,10 @@ export function fontFace(className) {
   style.appendChild(
       document.createTextNode(
           "@font-face {font-family: '" + className + "';" +
-          "src: url('/fonts/compressed/eot/" + className + ".eot?#iefix') format('embedded-opentype')," +
-          "url('/fonts/ttf/" + className + ".ttf') format('truetype')," +
-          "url('/fonts/woff/" + className + ".woff?-snx2rh') format('woff')," +
-          "url('/fonts/compressed/svg/" + className + ".svg#') format('svg');}." +
+          "src: url('//quran-1f14.kxcdn.com/fonts/compressed/eot/" + className + ".eot?#iefix') format('embedded-opentype')," +
+          "url('//quran-1f14.kxcdn.com/fonts/ttf/" + className + ".ttf') format('truetype')," +
+          "url('//quran-1f14.kxcdn.com/fonts/woff/" + className + ".woff?-snx2rh') format('woff')," +
+          "url('//quran-1f14.kxcdn.com/fonts/compressed/svg/" + className + ".svg#') format('svg');}." +
           className + "{font-family: '" + className + "';}"
       )
   );
@@ -41,10 +41,10 @@ export function createFontFacesArray(ayahs) {
       fontFaces.push(font);
       fontFacesArray.push(
         "@font-face {font-family: '" + font + "';" +
-        "src: url('/fonts/compressed/eot/" + font + ".eot?#iefix') format('embedded-opentype')," +
-        "url('/fonts/ttf/" + font + ".ttf') format('truetype')," +
-        "url('/fonts/woff/" + font + ".woff?-snx2rh') format('woff')," +
-        "url('/fonts/compressed/svg/" + font + ".svg#') format('svg');}." + font +
+        "src: url('//quran-1f14.kxcdn.com/fonts/compressed/eot/" + font + ".eot?#iefix') format('embedded-opentype')," +
+        "url('//quran-1f14.kxcdn.com/fonts/ttf/" + font + ".ttf') format('truetype')," +
+        "url('//quran-1f14.kxcdn.com/fonts/woff/" + font + ".woff?-snx2rh') format('woff')," +
+        "url('//quran-1f14.kxcdn.com/fonts/compressed/svg/" + font + ".svg#') format('svg');}." + font +
         "{font-family: '" + font + "';}"
       );
     }

@@ -6,7 +6,7 @@ class Loader extends React.Component {
       <div className="loading" ng-hide="currentSurah.ayahs">
         <div className="row">
           <div className="col-md-6 col-md-offset-3 text-center">
-            <img src="/images/loading.gif" />
+            <img src="//quran-1f14.kxcdn.com/images/loading.gif" />
             <h3>Loading...</h3>
           </div>
         </div>
