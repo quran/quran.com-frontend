@@ -39,15 +39,17 @@ server.use(cookieParser());
 server.use(favicon(__dirname + '/static/images/favicon.ico'));
 
 server.get('/api/*', function(req, res, next) {
-  superagent.get(Settings.url + req.url.split('/api')[1])
+  console.log(req);
+  superagent.get(Settings.api + req.url.split('/api')[1])
   .end(function(err, response) {
     res.send(response.body);
   });
 });
+
 server.get(/^\/(images|fonts)\/.*/, function(req, res) {
-    res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
-})
-;
+  res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
+});
+
 server.use((req, res, next) => {
 
     let context = app.createContext();

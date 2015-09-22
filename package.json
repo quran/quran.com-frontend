@@ -57,7 +57,7 @@
     "promise": "^7.0.4",
     "proxy-middleware": "^0.14.0",
     "raw-loader": "^0.5.1",
-    "react": "^0.13.0",
+    "react": "^0.13.3",
     "react-cookie": "^0.3.4",
     "react-google-analytics": "^0.2.0",
     "react-hot-loader": "^1.2.7",
