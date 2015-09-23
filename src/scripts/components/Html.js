@@ -39,6 +39,7 @@ class Html extends React.Component {
 
       <script src="https://code.jquery.com/jquery-2.1.4.min.js" />
       <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.13.3/react.min.js" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.min.js" />
       <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
       <script src={this.props.hotModuleUrl + 'build/main.js'}></script>
       </html>

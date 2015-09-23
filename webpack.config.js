@@ -61,7 +61,8 @@ module.exports = {
     },
     externals: {
       'jquery': 'jQuery',
-      'react': 'react'
+      'react': 'react',
+      'superagent': 'superagent'
     },
     devtool: 'source-map',
     watch: false,

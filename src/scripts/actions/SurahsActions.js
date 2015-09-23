@@ -1,6 +1,5 @@
 /* eslint-disable no-extra-boolean-cast, consistent-return */
-var Promise = require('promise');
-var request = require('superagent-promise')(require('superagent'), Promise);
+import request from 'utils/Request';
 
 import urlSettings from 'constants/Settings';
 import debug from 'utils/Debug';

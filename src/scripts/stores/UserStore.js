@@ -87,8 +87,7 @@ class UserStore extends BaseStore {
         this.options.content = [content];
       }
       else {
-        this.options.content = content
-            .replace(/\"/g, '').split(',').map(function(option) {
+        this.options.content = content.replace(/\"/g, '').split(',').map(function(option) {
           return parseInt(option);
         });
       }
