@@ -44,7 +44,6 @@ module.exports = {
       ]
     },
     plugins: [
-      new webpack.PrefetchPlugin("react"),
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin(),
       new webpack.ProvidePlugin({
@@ -59,6 +58,11 @@ module.exports = {
     stats: {
       colors: true,
       reasons: true
+    },
+    externals: {
+      'jquery': 'jQuery',
+      'react': 'react',
+      'superagent': 'superagent'
     },
     devtool: 'source-map',
     watch: false,

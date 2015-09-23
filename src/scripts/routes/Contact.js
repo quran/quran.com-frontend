@@ -1,6 +1,5 @@
 /*eslint-disable camelcase */
-var Promise = require('promise');
-var request = require('superagent-promise')(require('superagent'), Promise);
+import request from 'utils/Request';
 
 import React from 'react';
 import IndexHeader from 'components/header/IndexHeader';

@@ -1,6 +1,5 @@
 /* eslint-disable no-extra-boolean-cast, consistent-return */
-var Promise = require('promise');
-var request = require('superagent-promise')(require('superagent'), Promise);
+import request from 'utils/Request';
 
 import urlSettings from 'constants/Settings';
 import debug from 'utils/Debug';
@@ -14,6 +13,7 @@ export function getSurahs(actionContext, payload) {
 
   return request.get(urlSettings.url + 'surahs')
   .end(function(err, res) {
+    console.log(err);
     debug('SURAHS RECEIVED....');
 
     actionContext.dispatch('surahsReceived', {surahs: res.body, surah: payload});
