@@ -58,7 +58,7 @@ class About extends React.Component {
                 title or by page. In future iterations, we will be integrating
                 more search and audio features inshaAllah. If you have any
                 suggestions on how we can make the website a better experience
-                please do not hesitate to <NavLink href="https://quran.zendesk.com/hc/en-us">contact us</NavLink>.
+                please do not hesitate to <a href="https://quran.zendesk.com/hc/en-us">contact us</a>.
               </h4>
             </div>
           </div>
