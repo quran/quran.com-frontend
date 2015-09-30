@@ -92,7 +92,7 @@ class Index extends React.Component {
             <br /><br />
             If you wish to go back to the old site, feel free to click on the link
             on the top nav or visit <a href="http://legacy.quran.com">legacy.quran.com</a>.
-            Also, feel free to <NavLink href="/contact">contact us</NavLink> and let us know about bugs, feature requests,
+            Also, feel free to <NavLink href="https://quran.zendesk.com/hc/en-us">contact us</NavLink> and let us know about bugs, feature requests,
             improvements or help out with development.
             <br /><br />
             We hope you enjoy the new Quran.com as much as we do. We are all in this together

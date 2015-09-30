@@ -26,7 +26,7 @@ class IndexHeaderNav extends React.Component {
             <a href="http://legacy.quran.com">Legacy Quran.com</a>
           </li>
           <li>
-            <a href="/contact">
+            <a href="https://quran.zendesk.com/hc/en-us">
               Contact us
             </a>
           </li>
@@ -45,9 +45,9 @@ class IndexHeaderNav extends React.Component {
             </NavLink>
           </li>
           <li>
-            <NavLink href="/contact">
+            <a href="https://quran.zendesk.com/hc/en-us">
               Contact us
-            </NavLink>
+            </a>
           </li>
         </ul>
       );
