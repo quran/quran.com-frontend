@@ -34,7 +34,7 @@ class Donations extends React.Component {
               <h3>Make a difference.</h3>
               <p>
                 Making a difference for Quran.com is as simple as a Tweet, Facebook share or email us feedback.
-                For those looking to make a <a data-ct-checkout="quran.quran-com" href>stronger impact</a>, support us by contributing any monetary amount.
+                For those looking to make a stronger impact, support us by contributing any monetary amount.
               </p>
             </div>
 
