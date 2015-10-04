@@ -12,7 +12,7 @@ class Donations extends React.Component {
               <h1>Quran.com</h1>
             </div>
             <div className="col-md-8 col-md-offset-2">
-              <h3>Who are we.</h3>
+              <h3>Who we are.</h3>
               <p>
                 Since 2008, Alhamdulilah Quran.com now serves over 3.1 million
                 visits from all corners of the world - and we continue to grow everyday.
