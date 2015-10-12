@@ -142,7 +142,7 @@ class MasterHeader extends React.Component{
 
     debug('Component-MasterHeader');
     return (
-      <nav className="navbar navbar-default navbar-fixed-top montserrat" role="navigation">
+      <nav className="navbar navbar-default navbar-fixed-top montserrat shrink" role="navigation">
         <div className="container-fluid">
           <div className="row">
             {this.renderNavBrand()}

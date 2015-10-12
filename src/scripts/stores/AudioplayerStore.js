@@ -50,7 +50,7 @@ AudioplayerStore.handlers = {
     console.log('Audioplayer reached');
 
     this.currentAyah = this.dispatcher.getStore('AyahsStore').getAyahs().find((ayah) => {
-      return ayah.ayah === payload.ayah;
+      return ayah.ayah_num === payload.ayah_num;
     });
 
     this.currentAudio = this.currentAyah.scopedAudio;

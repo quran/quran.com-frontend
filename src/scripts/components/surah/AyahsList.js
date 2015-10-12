@@ -18,8 +18,9 @@ class AyahsList extends React.Component {
 
     return this.props.ayahs.map(ayah => {
       return <Ayah ayah={ayah}
-                   key={`${ayah.surah}-${ayah.ayah}-ayah`}
-                   readingMode={this.props.isReadingMode} />;
+                   key={`${ayah.surah_id}-${ayah.ayah_num}-ayah`}
+                   readingMode={this.props.isReadingMode}
+                   isSearch={this.props.isSearch} />;
     });
   }
 
