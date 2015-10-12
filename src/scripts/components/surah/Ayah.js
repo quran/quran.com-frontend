@@ -62,17 +62,21 @@ class Ayah extends React.Component {
       if (word.word.translation) {
         let tooltip = word.word.translation;
 
+        let className = `${word.char.font} ${word.highlight ? word.highlight: null}`;
+
         return (
           <b key={word.char.code}
-             className={word.char.font}
+             className={className}
              data-toggle="tooltip"
              data-placement="top" title={tooltip}
              dangerouslySetInnerHTML={{__html: word.char.code}} />
         );
       }
       else {
+        let className = `${word.char.font} ${word.highlight ? word.highlight: null}`;
+
         return (
-          <b className={word.char.font}
+          <b className={className}
              key={word.char.code}
              dangerouslySetInnerHTML={{__html: word.char.code}} />
         );
