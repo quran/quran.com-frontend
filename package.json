@@ -49,6 +49,7 @@
     "jquery": "^2.1.4",
     "json-loader": "~0.5.1",
     "jsx-loader": "^0.13.2",
+    "keen-js": "^3.2.7",
     "le_node": "^1.1.0",
     "morgan": "^1.6.1",
     "node-sass": "^3.2.0",
