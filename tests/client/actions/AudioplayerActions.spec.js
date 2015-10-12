@@ -35,22 +35,22 @@ describe('AudioplayerActions', function() {
   });
 
   it('should dispatch to next ayah', function() {
-    AudioplayerActions.changeAyah(actionContext, {ayah: 2, shouldPlay: false}, function() {
+    AudioplayerActions.changeAyah(actionContext, {ayah_num: 2, shouldPlay: false}, function() {
       return;
     });
     expect(actionContext.dispatchCalls.length).to.equal(1);
     expect(actionContext.dispatchCalls[0].name).to.equal('audioplayerAyahChange');
-    expect(actionContext.dispatchCalls[0].payload).to.eql({ayah: 2, shouldPlay: false});
+    expect(actionContext.dispatchCalls[0].payload).to.eql({ayah_num: 2, shouldPlay: false});
   });
 
   it('should dispatch to next ayah and call for additional ayahs', function() {
-    AudioplayerActions.changeAyah(actionContext, {ayah: 7, shouldPlay: false}, function() {
+    AudioplayerActions.changeAyah(actionContext, {ayah_num: 7, shouldPlay: false}, function() {
       return;
     });
 
     expect(actionContext.dispatchCalls.length).to.equal(1);
     expect(actionContext.dispatchCalls[0].name).to.equal('audioplayerAyahChange');
-    expect(actionContext.dispatchCalls[0].payload).to.eql({ayah: 7, shouldPlay: false});
+    expect(actionContext.dispatchCalls[0].payload).to.eql({ayah_num: 7, shouldPlay: false});
     expect(actionContext.executeAction).to.have.been.called;
     expect(actionContext.executeAction.args[0][1].from).to.eql(11);
     expect(actionContext.executeAction.args[0][1].to).to.eql(20);
@@ -59,13 +59,13 @@ describe('AudioplayerActions', function() {
   it('should dispatch to next ayah and call for additional ayahs when already called', function() {
     actionContext.getStore('AyahsStore').ayahs = getAyahs.slice(0, 20);
 
-    AudioplayerActions.changeAyah(actionContext, {ayah: 17, shouldPlay: false}, function() {
+    AudioplayerActions.changeAyah(actionContext, {ayah_num: 17, shouldPlay: false}, function() {
       return;
     });
 
     expect(actionContext.dispatchCalls.length).to.equal(1);
     expect(actionContext.dispatchCalls[0].name).to.equal('audioplayerAyahChange');
-    expect(actionContext.dispatchCalls[0].payload).to.eql({ayah: 17, shouldPlay: false});
+    expect(actionContext.dispatchCalls[0].payload).to.eql({ayah_num: 17, shouldPlay: false});
     expect(actionContext.executeAction).to.have.been.called;
     expect(actionContext.executeAction.args[0][1].from).to.eql(21);
     expect(actionContext.executeAction.args[0][1].to).to.eql(30);
