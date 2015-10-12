@@ -32,7 +32,7 @@ describe('UserStore', function() {
       quran: 1,
       audio: 1,
       content: '18,19',
-      version: '1.0.0'
+      version: '1.0.1'
     });
 
     expect(storeInstance.lastVisit).to.eql({surah: 2, ayah: 50});
