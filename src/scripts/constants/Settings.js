@@ -10,6 +10,6 @@ else {
 }
 
 export default {
-  url: 'http://localhost:3000/',
+  url: url,
   version: '1.0.1'
 };
