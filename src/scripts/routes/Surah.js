@@ -107,13 +107,6 @@ class Surah extends React.Component {
       var nav = $('nav, .left-side');
       var getAyahs = this.context.getStore('AyahsStore').getAyahs();
 
-      if ($(document).scrollTop() > 100) {
-        nav.addClass('shrink');
-      }
-      else {
-        nav.removeClass('shrink');
-      }
-
       if (!this.state.loading && window.pageYOffset > document.body.scrollHeight - window.innerHeight - 1000) {
         if (getAyahs.length && getAyahs.length !== this.context.getStore('SurahsStore').getSurah().ayat) {
           this.setState({loading: true});
@@ -158,7 +151,7 @@ class Surah extends React.Component {
 
     return (
       <div className="surah-body">
-        <div className="left-side">
+        <div className="left-side shrink">
           <NavBrand />
           <SearchInput className="col-md-12 search-input" />
           <SurahsNav className="hidden-xs"/>

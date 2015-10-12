@@ -3,7 +3,6 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "gulp",
     "test": "npm run lint && ./node_modules/karma/bin/karma start --browsers PhantomJS --single-run",
     "watch-test": "./node_modules/karma/bin/karma start",
     "lint": "eslint ./src/scripts/**/*.js",

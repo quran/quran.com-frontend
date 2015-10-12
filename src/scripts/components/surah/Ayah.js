@@ -3,13 +3,14 @@
 import React from 'react';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
 import CopyToClipboard from 'copy-to-clipboard';
+import {NavLink} from 'fluxible-router';
 
 import debug from 'utils/Debug';
 
 class Ayah extends React.Component {
   translations() {
     if (!this.props.ayah.content && this.props.ayah.match) {
-      return this.props.ayah.match.best.map((content, i) => {
+      return this.props.ayah.match.map((content, i) => {
         var arabic = new RegExp(/[\u0600-\u06FF]/);
         var character = content.text;
         var flag = arabic.test(character);
@@ -66,16 +67,14 @@ class Ayah extends React.Component {
              className={word.char.font}
              data-toggle="tooltip"
              data-placement="top" title={tooltip}
-             dangerouslySetInnerHTML={{__html: word.char.code}}>
-          </b>
+             dangerouslySetInnerHTML={{__html: word.char.code}} />
         );
       }
       else {
         return (
           <b className={word.char.font}
              key={word.char.code}
-             dangerouslySetInnerHTML={{__html: word.char.code}}>
-          </b>
+             dangerouslySetInnerHTML={{__html: word.char.code}} />
         );
       }
     });
@@ -111,28 +110,60 @@ class Ayah extends React.Component {
     CopyToClipboard(text);
   }
 
-  leftControls() {
-    return (
-      <div className="col-md-1 left-controls">
-        <h4>
-          <span className="label label-default">
-            {this.props.ayah.surah_id}:{this.props.ayah.ayah}
-          </span>
-        </h4>
-        <a onClick={this.goToAyah.bind(this, this.props.ayah.ayah)}
-           className="text-muted">
-          <i className="ss-icon ss-play" /> Play
-        </a>
+  playLink() {
+    if (!this.props.isSearch) {
+      <a onClick={this.goToAyah.bind(this, this.props.ayah.ayah_num)}
+         className="text-muted">
+        <i className="ss-icon ss-play" /> Play
+      </a>
+    }
+  }
+
+  copyLink() {
+    if (!this.props.isSearch) {
+      return (
         <a onClick={this.onCopy.bind(this, this.props.ayah.text)}
            className="text-muted">
           <i className="ss-icon ss-attach" /> Copy
         </a>
+      );
+    }
+  }
+
+  ayahBadge() {
+    if (this.props.isSearch) {
+      return (
+
+        <NavLink href={`/${this.props.ayah.surah_id}/${this.props.ayah.ayah_num}`} style={{fontSize: 18}}>
+          <span className="label label-default">
+            {this.props.ayah.surah_id}:{this.props.ayah.ayah_num}
+          </span>
+        </NavLink>
+      )
+    }
+    else {
+      return (
+        <h4>
+          <span className="label label-default">
+            {this.props.ayah.surah_id}:{this.props.ayah.ayah_num}
+          </span>
+        </h4>
+      );
+    }
+  }
+
+  leftControls() {
+    return (
+      <div className="col-md-1 left-controls">
+        {this.ayahBadge()}
+        {this.playLink()}
+        {this.copyLink()}
       </div>
     );
   }
 
   render() {
-    debug(`COMPONENT-AYAH RENDERED ${this.props.ayah.ayah}`);
+    debug(`COMPONENT-AYAH RENDERED ${this.props.ayah.ayah_num}`);
 
     if (this.props.readingMode) {
       return this.text();

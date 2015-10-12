@@ -29,7 +29,7 @@ class Search extends React.Component {
           <div className="container">
             <div className="row">
               <div className="col-md-6 text-uppercase">
-                {this.props.stats.page}-{this.props.stats.hits} OF
+                {this.props.stats.from}-{this.props.stats.from + this.props.stats.size - 1} OF
                 <span className="colored"> {this.props.stats.total} </span>
                 SEARCH RESULTS FOR:
                 <span className="colored"> {this.props.stats.query}</span>
@@ -55,7 +55,7 @@ class Search extends React.Component {
           <div className="row">
             <div className="col-md-12">
               <div className="row">
-                <AyahsList />
+                <AyahsList isSearch={true} />
               </div>
             </div>
           </div>
