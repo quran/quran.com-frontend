@@ -59,10 +59,10 @@ class Ayah extends React.Component {
     }
 
     let text = this.props.ayah.quran.map(word => {
+      let className = `${word.char.font} ${word.highlight ? word.highlight: null}`;
+
       if (word.word.translation) {
         let tooltip = word.word.translation;
-
-        let className = `${word.char.font} ${word.highlight ? word.highlight: null}`;
 
         return (
           <b key={word.char.code}
@@ -73,8 +73,6 @@ class Ayah extends React.Component {
         );
       }
       else {
-        let className = `${word.char.font} ${word.highlight ? word.highlight: null}`;
-
         return (
           <b className={className}
              key={word.char.code}
