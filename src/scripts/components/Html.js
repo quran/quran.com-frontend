@@ -25,7 +25,9 @@ class Html extends React.Component {
           <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
           <link rel="apple-touch-icon" href="/images/apple-touch-icon.png"/>
           <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png" />
-          <link rel="stylesheet" href={this.props.hotModuleUrl + 'build/main.css'} />
+          {Object.keys(this.props.assets.styles).map((style, i) =>
+            <link href={this.props.assets.styles[style]} key={i} media="screen, projection"
+                  rel="stylesheet" type="text/css"/>)}
           {this.props.fontFaces.map(function(font) {
             return (
               <style type="text/css" dangerouslySetInnerHTML={{__html: font}} />
@@ -36,7 +38,9 @@ class Html extends React.Component {
           <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
       </body>
       <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
-      <script src={this.props.hotModuleUrl + 'build/main.js'}></script>
+      {Object.keys(this.props.assets.javascript).map((script, i) =>
+        <script src={this.props.assets.javascript[script]} key={i}/>
+      )}
       </html>
     );
   }
