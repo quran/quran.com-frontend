@@ -43,8 +43,11 @@ class Audioplayer extends React.Component {
         }
         return this.setupAudio();
       }
-    }
 
+      if (prevProps.currentAyah.surah_id !== this.props.currentAyah.surah_id) {
+        return this.setupAudio();
+      }
+    }
 
     if (!prevProps.currentAyah) {
       // When navigating from the index page, there is no ayah set and therefore,
@@ -60,6 +63,16 @@ class Audioplayer extends React.Component {
       // }
       return null;
     }
+  }
+
+  // TODO: Revisit this later.
+  // shouldComponentUpdate(nextProps, nextState) {
+  // }
+
+  componentWillUnmount() {
+    this.pause();
+    this.props.currentAudio.src = null;
+    this.props.currentAudio = null;
   }
 
   changeAyah(ayah_num, shouldPlay) {
