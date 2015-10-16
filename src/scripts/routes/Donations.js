@@ -40,7 +40,7 @@ class Donations extends React.Component {
 
             <div className="col-md-4 col-md-offset-4 text-center">
               <br/><br/>
-              <button className="btn btn-lg btn-block btn-primary" data-ct-checkout="quran.quran-com">Support Quran.com</button>
+              <button className="btn btn-lg btn-block btn-primary" data-ct-checkout="quran.quran">Support Quran.com</button>
               <br/><br/>
               If you have any questions, please don't hesitate to contact us at <a href="mailto:support@quran.zendesk.com">support@quran.zendesk.com.</a>
             </div>

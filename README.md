@@ -28,3 +28,11 @@ this is unacceptable.
 
 #### Design
 We currently use InvisionApp. Again, contact me if you'd like access to it.
+
+#### Making sure main.js is small
+Follow: https://www.npmjs.com/package/webpack-bundle-size-analyzer
+```
+env NODE_ENV=development webpack --json > bundle-stats.json
+subl bundle-stats.json #so that you can the output
+analyze-bundle-size bundle-stats.json
+```

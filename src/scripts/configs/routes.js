@@ -3,7 +3,7 @@ import * as AyahsActions from 'actions/AyahsActions';
 import RouteNotFound from 'utils/RouteNotFound';
 import AyahRangeError from 'utils/AyahRangeError';
 import debug from 'debug';
-const debugRoutes = debug('quran-com');
+const debugRoutes = debug('quran');
 
 export default {
   index: {

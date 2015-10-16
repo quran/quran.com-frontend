@@ -6,16 +6,16 @@ import { handleHistory } from 'fluxible-router';
 import debug from 'utils/Debug';
 
 var ga = require('react-google-analytics');
+
 ga('create', 'UA-8496014-1', 'auto');
 ga('send', 'pageview');
+const GAInitiailizer = ga.Initializer;
 
-var GAInitiailizer = ga.Initializer;
+class Application extends React.Component {
+  render() {
+    const Handler = this.props.currentRoute.get('handler');
 
-var Application = React.createClass({
-  render: function () {
     debug('COMPONENT-APPLICATION');
-
-    var Handler = this.props.currentRoute.get('handler');
     return (
       <div>
         <Handler />
@@ -50,17 +50,17 @@ var Application = React.createClass({
         <GAInitiailizer />
       </div>
     );
-  },
+  }
 
-  shouldComponentUpdate: function(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState) {
     if (this.props.pageTitle !== nextProps.pageTitle) {
       document.title = nextProps.pageTitle;
     }
 
     return this.props.currentRoute.get('handler') !== nextProps.currentRoute.get('handler');
-  },
+  }
 
-  componentDidUpdate: function(prevProps, prevState) {
+  componentDidUpdate(prevProps, prevState) {
     const newProps = this.props;
 
     if (newProps.pageTitle === prevProps.pageTitle) {
@@ -68,7 +68,7 @@ var Application = React.createClass({
     }
     document.title = newProps.pageTitle;
   }
-});
+};
 
 export default handleHistory(provideContext(connectToStores(
   Application,

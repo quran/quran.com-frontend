@@ -7,10 +7,11 @@ import SurahsStore from 'stores/SurahsStore';
 import UserStore from 'stores/UserStore';
 import AyahsStore from 'stores/AyahsStore';
 import AudioplayerStore from 'stores/AudioplayerStore';
+import React from 'react';
 
 // create new fluxible instance
 const app = new Fluxible({
-  component: Application
+  component: React.createFactory(Application)
 });
 // register routes
 var MyRouteStore = RouteStore.withStaticRoutes(routes);
@@ -23,4 +24,4 @@ app.registerStore(UserStore);
 app.registerStore(AudioplayerStore);
 app.registerStore(AyahsStore);
 
-module.exports = app;
+export default app;

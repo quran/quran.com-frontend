@@ -5,6 +5,6 @@ export default function(name, namespace) {
     return debug(namespace)(name);
   }
   else {
-    return debug('quran-com')(name);
+    return debug('quran')(name);
   }
 }
