@@ -37,7 +37,7 @@ class Audioplayer extends React.Component {
         return this.setupAudio();
       }
 
-      if (prevProps.currentAyah.ayah !== this.props.currentAyah.ayah) {
+      if (prevProps.currentAyah.ayah_num !== this.props.currentAyah.ayah_num) {
         if (this.props.currentAudio) {
           prevProps.currentAudio.pause();
         }
@@ -62,9 +62,9 @@ class Audioplayer extends React.Component {
     }
   }
 
-  changeAyah(ayah, shouldPlay) {
+  changeAyah(ayah_num, shouldPlay) {
     this.context.executeAction(AudioplayerActions.changeAyah, {
-      ayah: ayah,
+      ayah_num: ayah_num,
       shouldPlay: shouldPlay
     });
   }
@@ -125,7 +125,7 @@ class Audioplayer extends React.Component {
       }
       else {
         this.props.currentAudio.pause();
-        this.changeAyah(this.props.currentAyah.ayah + 1, true);
+        this.changeAyah(this.props.currentAyah.ayah_num + 1, true);
       }
     }, false);
 
@@ -199,7 +199,7 @@ class Audioplayer extends React.Component {
 
     this.pause();
 
-    this.changeAyah(this.props.currentAyah.ayah + 1, wasPlaying);
+    this.changeAyah(this.props.currentAyah.ayah_num + 1, wasPlaying);
   }
 
   // UI components
@@ -253,7 +253,7 @@ class Audioplayer extends React.Component {
   render() {
     debug('Component-Audioplayer');
 
-    var currentAyahId = this.props.currentAyah ? this.props.currentAyah.ayah : '';
+    var currentAyahId = this.props.currentAyah ? this.props.currentAyah.ayah_num : '';
     var content;
 
     if (this.state.isAudioLoaded) {

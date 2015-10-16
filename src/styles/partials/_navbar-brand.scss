@@ -1,5 +1,5 @@
 .navbar-brand {
-  background: url('/static/images/index-bg.jpg') center center no-repeat $brand-primary;
+  background: url('//quran-1f14.kxcdn.com/images/index-bg.jpg') center center no-repeat $brand-primary;
   background-size: cover;
   padding: $content-padding;
   position: relative;
@@ -9,7 +9,7 @@
 
   .title{
     position: absolute;
-    bottom: 10px;
+    bottom: 5px;
     left: 50%;
     transform: translateX(-50%);
     font-size: 10px;

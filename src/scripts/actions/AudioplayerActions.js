@@ -1,10 +1,12 @@
 import * as AyahsActions from 'actions/AyahsActions';
 import {navigateAction} from 'fluxible-router';
+import Keen from 'utils/Keen';
 
 export function changeAyah(actionContext, payload, done) {
+
   var rangeArray, spread, fromAyah, toAyah;
   var currentAyah = actionContext.getStore('AyahsStore').getAyahs().find((a) => {
-    return a.ayah === payload.ayah;
+    return a.ayah_num === payload.ayah_num;
   });
 
   var params = actionContext.getStore('RouteStore').getCurrentRoute().get('params');
@@ -15,7 +17,11 @@ export function changeAyah(actionContext, payload, done) {
     rangeArray = [1, 10]; //The default
   }
 
-  if ((actionContext.getStore('AyahsStore').getLast() - 3) === payload.ayah) {
+  if (rangeArray.length === 1) {
+    rangeArray[1] = rangeArray[0] + 10;
+  }
+
+  if ((actionContext.getStore('AyahsStore').getLast() - 3) === payload.ayah_num) {
     // If we already loaded 10 ayahs (initial) then the next 10, when we want to go from 20-30
     if (actionContext.getStore('AyahsStore').getLast() > rangeArray[1]) {
       spread = (rangeArray[1] - rangeArray[0]);
@@ -38,23 +44,25 @@ export function changeAyah(actionContext, payload, done) {
   // If the ayah is beyond the rangeArray
   if (currentAyah === undefined) {
     spread = (rangeArray[1] - rangeArray[0] + 1);
-    fromAyah = payload.ayah;
+    fromAyah = payload.ayah_num;
     toAyah = fromAyah + spread;
 
-    if ((rangeArray[1] + spread) < payload.ayah) {
+    if ((rangeArray[1] + spread) < payload.ayah_num) {
       actionContext.executeAction(navigateAction, {
         url: `/${params.get('surahId')}/${fromAyah}-${toAyah}`
       });
 
       actionContext.dispatch('audioplayerAyahChange', {
-        ayah: payload.ayah,
+        ayah_num: payload.ayah_num,
         shouldPlay: false
       });
     }
   }
 
+  Keen.addEvent('AudioplayerActions:changeAyah', {next: payload.ayah_num, shouldPlay: payload.shouldPlay || false, surah_id: currentAyah.surah_id, range: rangeArray});
+
   actionContext.dispatch('audioplayerAyahChange', {
-    ayah: payload.ayah,
+    ayah_num: payload.ayah_num,
     shouldPlay: payload.shouldPlay || false
   });
 }

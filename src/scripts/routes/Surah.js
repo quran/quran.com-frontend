@@ -74,6 +74,18 @@ class Surah extends React.Component {
     }
   }
 
+  renderBismillah() {
+    const surah = this.context.getStore('SurahsStore').getSurah();
+
+    if (surah.bismillah_pre) {
+      return (
+        <div className="bismillah text-center word-font">
+          ﭑﭒﭓ
+        </div>
+      )
+    }
+  }
+
   onScroll() {
     if (typeof window === 'undefined') {
       return;
@@ -94,13 +106,6 @@ class Surah extends React.Component {
       var lastAyah, toAyah, sizeOfLoad, url;
       var nav = $('nav, .left-side');
       var getAyahs = this.context.getStore('AyahsStore').getAyahs();
-
-      if ($(document).scrollTop() > 100) {
-        nav.addClass('shrink');
-      }
-      else {
-        nav.removeClass('shrink');
-      }
 
       if (!this.state.loading && window.pageYOffset > document.body.scrollHeight - window.innerHeight - 1000) {
         if (getAyahs.length && getAyahs.length !== this.context.getStore('SurahsStore').getSurah().ayat) {
@@ -146,7 +151,7 @@ class Surah extends React.Component {
 
     return (
       <div className="surah-body">
-        <div className="left-side">
+        <div className="left-side shrink">
           <NavBrand />
           <SearchInput className="col-md-12 search-input" />
           <SurahsNav className="hidden-xs"/>
@@ -157,6 +162,7 @@ class Surah extends React.Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-10 col-md-offset-1">
+                {this.renderBismillah()}
                 <AyahsList />
               </div>
               <div className="col-md-10 col-md-offset-1">

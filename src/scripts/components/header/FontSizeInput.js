@@ -36,7 +36,7 @@ class FontSizeInput extends React.Component {
 
   render() {
     let styleText = `
-      .ayah b, .word-font{font-size: ${this.state.fontSize}px !important}
+      .ayah_num b, .word-font{font-size: ${this.state.fontSize}px !important}
       input[type=range]:after{border-left-width: ${this.state.initWidth}px}`;
     return (
       <div className="input-range-container">

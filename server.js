@@ -34,9 +34,6 @@ server.set('view cache', true);
 // Use varnish for the static routes, which will cache too
 server.use('/public', express.static(path.join(__dirname, '/build')));
 server.use('/build', express.static(path.join(__dirname, '/build')));
-server.use('/static', express.static(path.join(__dirname, '/static')));
-server.use('/images', express.static(path.join(__dirname, '/static/images')));
-server.use('/fonts', express.static(path.join(__dirname, '/src/styles/fonts')));
 server.use(useragent.express());
 server.use(cookieParser());
 server.use(favicon(__dirname + '/static/images/favicon.ico'));
@@ -47,8 +44,12 @@ server.get('/api/*', function(req, res, next) {
     res.send(response.body);
   });
 });
-
+server.get(/^\/(images|fonts)\/.*/, function(req, res) {
+    res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
+})
+;
 server.use((req, res, next) => {
+
     let context = app.createContext();
 
     context.getActionContext().executeAction(ExpressActions.userAgent, req.useragent);

@@ -65,7 +65,7 @@ class MasterHeader extends React.Component{
 
     if (currentSurah) {
       return (
-        <img src={'/images/titles/' + zeroPad(currentSurah.id, 3) + '.svg'} className="title"/>
+        <img src={'//quran-1f14.kxcdn.com/images/titles/' + zeroPad(currentSurah.id, 3) + '.svg'} className="title"/>
       );
     }
   }
@@ -142,13 +142,13 @@ class MasterHeader extends React.Component{
 
     debug('Component-MasterHeader');
     return (
-      <nav className="navbar navbar-default navbar-fixed-top montserrat" role="navigation">
+      <nav className="navbar navbar-default navbar-fixed-top montserrat shrink" role="navigation">
         <div className="container-fluid">
           <div className="row">
             {this.renderNavBrand()}
             {this.renderMobileOptions()}
             <div className="col-md-3 col-xs-3 surah-title">
-              <img src="/images/ornament-left.png" className="ornament" />
+              <img src="//quran-1f14.kxcdn.com/images/ornament-left.png" className="ornament" />
               {this.previousChapter()}
             </div>
             <div className="col-md-6 col-xs-6 surah-title text-center">
@@ -158,7 +158,7 @@ class MasterHeader extends React.Component{
             </div>
             <div className="col-md-3 col-xs-3 surah-title text-right">
               {this.nextChapter()}
-              <img src="/images/ornament-right.png" className="ornament" />
+              <img src="//quran-1f14.kxcdn.com/images/ornament-right.png" className="ornament" />
             </div>
           </div>
           {this.renderDesktopOptions()}

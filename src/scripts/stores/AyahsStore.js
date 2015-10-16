@@ -18,7 +18,7 @@ class AyahsStore extends BaseStore {
 
   getLast() {
     if (this.ayahs.length) {
-      return this.ayahs[this.ayahs.length - 1].ayah;
+      return this.ayahs[this.ayahs.length - 1].ayah_num;
     }
     else {
       return 10;
@@ -39,8 +39,8 @@ class AyahsStore extends BaseStore {
 
   getFirstAndLast() {
     return [
-      this.ayahs[0].ayah,
-      this.ayahs[this.ayahs.length - 1].ayah
+      this.ayahs[0].ayah_num,
+      this.ayahs[this.ayahs.length - 1].ayah_num
     ];
   }
 
@@ -162,7 +162,7 @@ AyahsStore.handlers = {
   ayahsReceived(payload) {
     debug('STORES-AYAHS RECEIVED');
     if (this.ayahs.length > 0) {
-      if (payload.ayahs[0].ayah === this.ayahs[this.ayahs.length - 1].ayah + 1) {
+      if (payload.ayahs[0].ayah_num === this.ayahs[this.ayahs.length - 1].ayah_num + 1) {
         console.log('Ayahs: Lazy load');
         Font.createFontFaces(payload.ayahs);
         this.ayahs = this.ayahs.concat(payload.ayahs);
@@ -241,7 +241,8 @@ AyahsStore.handlers = {
       page: payload.page,
       size: payload.size,
       took: payload.took,
-      total: payload.total
+      total: payload.total,
+      from: payload.from
     };
 
     this.emitChange();
