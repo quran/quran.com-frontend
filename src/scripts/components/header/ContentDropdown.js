@@ -85,16 +85,27 @@ class ContentDropdown extends React.Component {
 
   renderContent(type) {
     var condition;
-    return this.state.options.map((option) => {
-      if (type === 'en') {
-        condition = option.language === 'en' && (option.type === 'translation' || option.type === 'transliteration');
-      } else if (type === '!en') {
-        condition = option.language !== 'en' && option.type === 'translation';
-      }
-      if (condition) {
-        return this.returnList(option);
-      }
-    });
+    return this.state.options
+      // Sort all options to ensure translation languages are in alphabetical order
+      .sort((a, b) => {
+          return (a.slug < b.slug) ? -1 : (a.slug > b.slug) ? 1 : 0;
+      })
+      .map((option) => {
+        switch(type) {
+          case 'en':
+            condition = option.language === 'en' && option.type === 'translation';
+            break;
+          case '!en':
+            condition = option.language !== 'en' && option.type === 'translation';
+            break;
+          case 'transliteration':
+            condition = option.language === 'en' && option.type === 'transliteration';
+            break;
+        }
+        if (condition) {
+          return this.returnList(option);
+        }
+      });
   }
 
   render() {
@@ -103,6 +114,7 @@ class ContentDropdown extends React.Component {
       <HeaderDropdown linkContent='Translations' linkIcon='ss-icon ss-globe' className={className}>
         <li role="presentation" className="dropdown-header">English</li>
         {this.renderContent('en')}
+        {this.renderContent('transliteration')}
         <li role="presentation" className="dropdown-header languages">Other Languages</li>
         {this.renderContent('!en')}
 

@@ -1,4 +1,5 @@
 import BaseStore from 'fluxible/addons/BaseStore';
+import debug from 'utils/Debug';
 
 class AudioplayerStore extends BaseStore {
   constructor(dispatcher) {
@@ -47,29 +48,31 @@ class AudioplayerStore extends BaseStore {
 
 AudioplayerStore.handlers = {
   audioplayerAyahChange(payload) {
-    console.log('Audioplayer reached');
+    debug('Audioplayer reached');
 
     this.currentAyah = this.dispatcher.getStore('AyahsStore').getAyahs().find((ayah) => {
       return ayah.ayah_num === payload.ayah_num;
     });
 
-    this.currentAudio = this.currentAyah.scopedAudio;
-    this.shouldPlay = payload.shouldPlay;
+    if (this.currentAyah) {
+      this.currentAudio = this.currentAyah.scopedAudio;
+      this.shouldPlay = payload.shouldPlay;
 
-    this.emitChange();
+      this.emitChange();
+    }
   },
 
   ayahsReceived() {
     this.dispatcher.waitFor('AyahsStore', () => {
-      if (!this.currentAyah) {
+      if (this.currentAyah !== this.dispatcher.getStore('AyahsStore').getAyahs()[0]) {
         this.shouldPlay = false;
         this.currentAyah = this.dispatcher.getStore('AyahsStore').getAyahs()[0];
 
         if (this.currentAyah) {
           this.currentAudio = this.currentAyah.scopedAudio;
         }
+        this.emitChange();
       }
-      this.emitChange();
     });
   }
 };

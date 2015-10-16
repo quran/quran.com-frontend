@@ -49,6 +49,9 @@ server.get(/^\/(images|fonts)\/.*/, function(req, res) {
 })
 ;
 server.use((req, res, next) => {
+  if (process.env.NODE_ENV === 'development') {
+    webpack_isomorphic_tools.refresh()
+  }
 
     let context = app.createContext();
 
@@ -80,15 +83,15 @@ server.use((req, res, next) => {
 
         debug('Exposing context state');
         const exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
-        const webserver = process.env.NODE_ENV === "production" ? "" : "//localhost:8080";
+        const webserver = process.env.NODE_ENV === "production" ? "" : "//localhost:3001";
 
         debug('Rendering Application component into html');
         const html = React.renderToStaticMarkup(htmlComponent({
           context: context.getComponentContext(),
           state: exposed,
+          assets: webpack_isomorphic_tools.assets(),
           markup: React.renderToString(createElementWithContext(context)),
-          fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs()),
-          hotModuleUrl: `${webserver}/`
+          fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs())
         }));
 
         debug('Sending markup');

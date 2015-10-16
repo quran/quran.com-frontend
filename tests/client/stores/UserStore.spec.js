@@ -16,7 +16,7 @@ describe('UserStore', function() {
   });
 
   it('should have version number', function() {
-    expect(storeInstance.version).to.eql('1.0.0');
+    expect(storeInstance.version).to.eql('1.0.1');
   });
 
   it('should save last visit', function() {
@@ -39,6 +39,6 @@ describe('UserStore', function() {
     expect(storeInstance.getContentOptions()).to.eql([18, 19]);
     expect(storeInstance.getAudioOptions()).to.eql(1);
     expect(storeInstance.getQuranOptions()).to.eql(1);
-    expect(storeInstance.version).to.eql('1.0.0');
+    expect(storeInstance.version).to.eql('1.0.1');
   });
 });
