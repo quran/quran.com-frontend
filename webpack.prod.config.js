@@ -1,12 +1,15 @@
-var ExtractTextPlugin = require('extract-text-webpack-plugin'),
-path = require('path'),
-webpack = require('webpack');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var path = require('path');
+var webpack = require('webpack');
+var Webpack_isomorphic_tools_plugin = require('webpack-isomorphic-tools/plugin')
+var webpack_isomorphic_tools_plugin = new Webpack_isomorphic_tools_plugin(require('./webpack-isomorphic-tools-configuration'));
+
 
 module.exports = {
   output: {
     path: './build',
     publicPath: '/public/',
-    filename: '[name].js'
+    filename: '[name]-[hash].js'
   },
   debug: false,
   target: 'web',
@@ -41,7 +44,7 @@ module.exports = {
       { test: /\.(ttf|eot|svg|woff|woff(2))(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?name=/[name].[ext]"},
       { test: /\.scss$/,
         loader: ExtractTextPlugin.extract('style-loader',
-          'css!sass?outputStyle=expanded&' +
+          'css!autoprefixer!sass?outputStyle=expanded&' +
           "includePaths[]=" +
           (path.resolve(__dirname, "./node_modules"))
           )
@@ -55,7 +58,7 @@ module.exports = {
       jQuery: "jquery",
       "windows.jQuery": "jquery"
     }),
-    new ExtractTextPlugin("[name].css", {allChunks: true}),
+    new ExtractTextPlugin("[name]-[hash].css", {allChunks: true}),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
 			compressor: {
@@ -63,7 +66,8 @@ module.exports = {
 			}
 		}),
     new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.AggressiveMergingPlugin()
+    new webpack.optimize.AggressiveMergingPlugin(),
+    webpack_isomorphic_tools_plugin
   ],
 
 };
