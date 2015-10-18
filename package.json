@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "test": "npm run lint && ./node_modules/karma/bin/karma start --browsers PhantomJS --single-run",
+    "test:watch": "./node_modules/karma/bin/karma start",
     "dev": "NODE_ENV=developement node webpack-dev-server.js & PORT=3001 NODE_ENV=developement nodemon  start.js -e js,jsx",
-    "watch:test": "./node_modules/karma/bin/karma start",
     "lint": "eslint ./src/scripts/**/*.js",
     "start": "NODE_PATH=\"./src\" node ./start",
     "build": "node ./node_modules/webpack/bin/webpack.js --verbose --colors --display-error-details --config webpack.prod.config.js",

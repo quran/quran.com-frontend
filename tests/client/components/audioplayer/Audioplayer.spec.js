@@ -131,10 +131,9 @@ describe('Audioplayer', function() {
     ReactTestUtils.Simulate.click(node.querySelector('.audioplayer-repeat label'));
     ReactTestUtils.Simulate.click(node.querySelector('.ss-play'));
 
-    clock.tick(1001);
+    clock.tick(1002);
 
-    expect(foundComponent.changeAyah.args[0][0]).to.eql(1);
-    expect(foundComponent.changeAyah.args[0][1]).to.eql(true);
+    expect(foundComponent.props.currentAudio.currentTime).to.eql(0);
     foundComponent.props.currentAudio.pause();
     done();
   });
