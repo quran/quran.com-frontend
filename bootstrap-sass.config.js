@@ -1,7 +1,7 @@
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 // Example file. Copy this to your project
 module.exports = {
-  verbose: true, // Set to true to show diagnostic information
+  verbose: false, // Set to true to show diagnostic information
   debug: false,
 
   // IMPORTANT: Set next two configuration so you can customize

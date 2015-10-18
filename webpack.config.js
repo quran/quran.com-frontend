@@ -1,3 +1,4 @@
+require('dotenv').config({path: (process.env.NODE_ENV || 'development') + '.env'});
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -40,7 +41,7 @@ var webpackConfig = {
     loaders: [
       {
         test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: [/server/, /node_modules/, /tests/],
         loader: 'babel',
         query: {
           stage: 0,
@@ -60,7 +61,6 @@ var webpackConfig = {
     setImmediate: false
   },
   plugins: [
-    new webpack.PrefetchPlugin("react"),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new ExtractTextPlugin("[name].css", {allChunks: true}),
@@ -70,13 +70,23 @@ var webpackConfig = {
       "windows.jQuery": "jquery"
     }),
     new webpack.DefinePlugin({
+      BROWSER: true,
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        'BROWSER': true
+        API_URL: JSON.stringify(process.env.API_URL),
+        CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
       }
     }),
     webpack_isomorphic_tools_plugin
   ],
+  externals: {
+    'jquery': 'jQuery',
+    'jquery': '$',
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    'keen-js': 'Keen',
+    'immutable': 'Immutable',
+    'superagent': 'superagent'
+  },
   stats: {
     colors: true,
     reasons: true

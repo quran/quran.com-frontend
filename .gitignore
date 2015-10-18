@@ -5,3 +5,4 @@ node_modules
 test-results.xml
 npm-debug.log
 webpack-stats.json
+bundle-stats.json

@@ -1,13 +1,13 @@
 /*global document, window, $ */
 require('babel/polyfill');
 
-import React from 'react';
+import ReactDOM from 'react-dom';
 import debug from 'debug';
 import app from './app';
 import reactCookie from 'react-cookie';
 import createElementWithContext from 'fluxible-addons-react/createElementWithContext';
 
-const debugClient = debug('quran-com');
+const debugClient = debug('quran');
 const dehydratedState = window.App; // Sent from the server
 
 // expose debug object to browser, so that it can be enabled/disabled from browser:

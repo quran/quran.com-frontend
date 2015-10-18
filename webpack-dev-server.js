@@ -26,5 +26,5 @@ new WebpackDevServer(webpack(config), {
     '*': { target: 'http://localhost:3001' }
   }
 }).listen(3002, function () {
-  console.log('Webpack Dev Server listening on port 3002');
+  console.info(`==> 💻  Webpack Dev Server at http://localhost:3002`)
 });

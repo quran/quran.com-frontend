@@ -1,3 +1,4 @@
+require('dotenv').config({path: (process.env.NODE_ENV || 'development') + '.env'});
 require('app-module-path').addPath(__dirname);
 require('app-module-path').addPath('./src/scripts');
 
@@ -32,6 +33,4 @@ global.webpack_isomorphic_tools = new Webpack_isomorphic_tools(require('./webpac
   // webpack-isomorphic-tools is all set now.
   // here goes all your web application code:
   require('./server')
-})
-
-// module.exports = require('./server');
+});

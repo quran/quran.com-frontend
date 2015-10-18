@@ -1,9 +1,9 @@
+require('dotenv').config({path: (process.env.NODE_ENV || 'production') + '.env'});
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var webpack = require('webpack');
 var Webpack_isomorphic_tools_plugin = require('webpack-isomorphic-tools/plugin')
 var webpack_isomorphic_tools_plugin = new Webpack_isomorphic_tools_plugin(require('./webpack-isomorphic-tools-configuration'));
-
 
 module.exports = {
   output: {
@@ -65,9 +65,24 @@ module.exports = {
 				warnings: false
 			}
 		}),
+    new webpack.DefinePlugin({
+      BROWSER: true,
+      'process.env': {
+        API_URL: JSON.stringify(process.env.API_URL),
+        CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
+      }
+    }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     webpack_isomorphic_tools_plugin
   ],
-
+  externals: {
+    'jquery': 'jQuery',
+    'jquery': '$',
+    'react': 'React',
+    'react-dom': 'ReactDOM',
+    'keen-js': 'Keen',
+    'immutable': 'Immutable',
+    'superagent': 'superagent'
+  },
 };
