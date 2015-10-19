@@ -20,9 +20,9 @@ export default function(server) {
   server.use(cors());
 
   // Static content
-  server.use(favicon(path.join(process.env.PWD, '/static/images/favicon.ico')));
-  server.use('/public', express.static(path.join(process.env.PWD, '/build')));
-  server.use('/build', express.static(path.join(process.env.PWD, '/build')));
+  server.use(favicon(path.join((process.env.PWD || process.env.pm_cwd) , '/static/images/favicon.ico')));
+  server.use('/public', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
+  server.use('/build', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
 
   server.set('state namespace', 'App');
   server.set('view cache', true);
