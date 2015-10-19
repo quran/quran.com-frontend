@@ -37,11 +37,6 @@ class Html extends React.Component {
       <body>
           <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
       </body>
-      <script>
-        var Keen = {
-          addEvent: function() {}
-        };
-      </script>
       <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
       <script src="https://code.jquery.com/jquery-2.1.4.min.js" />
       <script src="https://fb.me/react-0.14.0.min.js" />
@@ -50,7 +45,7 @@ class Html extends React.Component {
       <script src="https://fb.me/react-dom-0.14.0.min.js" />
       <script src="https://cdnjs.cloudflare.com/ajax/libs/superagent/1.2.0/superagent.min.js" />
       <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.7.5/immutable.min.js" />
-      <script src="https://d26b395fwzu5fz.cloudfront.net/3.2.7/keen.min.js" type="text/javascript"></script>
+      <script src="//cdn.jsdelivr.net/keen.js/3.2.7/keen.min.js" type="text/javascript"></script>
       {Object.keys(this.props.assets.javascript).map((script, i) =>
         <script src={this.props.assets.javascript[script]} key={i}/>
       )}
