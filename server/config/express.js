@@ -20,7 +20,7 @@ export default function(server) {
   server.use(cors());
 
   // Static content
-  server.use(favicon(process.env.PWD + '/static/images/favicon.ico'));
+  server.use(favicon(path.join(process.env.PWD, '/static/images/favicon.ico')));
   server.use('/public', express.static(path.join(process.env.PWD, '/build')));
   server.use('/build', express.static(path.join(process.env.PWD, '/build')));
 
