@@ -64,6 +64,17 @@ class Ayah extends React.Component {
       if (word.word.translation) {
         let tooltip = word.word.translation;
 
+        if (this.props.isSearch) {
+          return (
+            <NavLink key={word.char.code}
+               className={className}
+               data-toggle="tooltip"
+               data-placement="top" title={tooltip}
+               href={`/search?q=${word.word.arabic}&p=1`}
+               dangerouslySetInnerHTML={{__html: word.char.code}} />
+          );
+        }
+
         return (
           <b key={word.char.code}
              className={className}
