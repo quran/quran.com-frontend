@@ -27,7 +27,7 @@ var webpackConfig = {
     }
   },
   entry: [
-    'webpack-dev-server/client?http://localhost:3002',
+    'webpack-dev-server/client?http://localhost:8001',
     'webpack/hot/only-dev-server',
     'bootstrap-sass!./bootstrap-sass.config.js',
     './client.js'

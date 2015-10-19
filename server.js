@@ -75,7 +75,7 @@ server.use((req, res, next) => {
   });
 });
 
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 8000;
 server.listen(port);
 
 console.info(`
