@@ -4,6 +4,7 @@ import React from 'react';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
 import CopyToClipboard from 'copy-to-clipboard';
 import {NavLink} from 'fluxible-router';
+import Keen from 'utils/Keen';
 
 import debug from 'utils/Debug';
 
@@ -53,6 +54,10 @@ class Ayah extends React.Component {
     });
   }
 
+  trackClickSearch(word) {
+    Keen.addEvent('Ayah:clickSearch', {word: word});
+  }
+
   text() {
     if (!this.props.ayah.quran[0].char) {
       return;
@@ -63,6 +68,18 @@ class Ayah extends React.Component {
 
       if (word.word.translation) {
         let tooltip = word.word.translation;
+
+        if (this.props.isSearch) {
+          return (
+            <NavLink key={word.char.code}
+               className={className}
+               data-toggle="tooltip"
+               data-placement="top" title={tooltip}
+               href={`/search?q=${word.word.arabic}&p=1`}
+               dangerouslySetInnerHTML={{__html: word.char.code}}
+               onClick={this.trackClickSearch.bind(this, word)} />
+          );
+        }
 
         return (
           <b key={word.char.code}
