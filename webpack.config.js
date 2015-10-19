@@ -83,7 +83,6 @@ var webpackConfig = {
     'jquery': '$',
     'react': 'React',
     'react-dom': 'ReactDOM',
-    'keen-js': 'Keen',
     'immutable': 'Immutable',
     'superagent': 'superagent'
   },
