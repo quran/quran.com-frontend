@@ -14,7 +14,7 @@ export default function(server) {
   server.get('/api/*', apicache('60 minutes'), function(req, res) {
     debug(`To API: ${req.url}`);
 
-    superagent.get(Settings.api + req.url.substr(4))
+    superagent.get(Settings.api + req.url.substr(5))
     .end(function(err, response) {
       if (err) {
         return res.status(500).send(response.body);
