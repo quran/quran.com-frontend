@@ -37,6 +37,11 @@ class Html extends React.Component {
       <body>
           <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
       </body>
+      <script>
+        var Keen = {
+          addEvent: function() {}
+        };
+      </script>
       <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
       <script src="https://code.jquery.com/jquery-2.1.4.min.js" />
       <script src="https://fb.me/react-0.14.0.min.js" />
