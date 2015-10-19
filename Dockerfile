@@ -26,5 +26,5 @@ WORKDIR /quran
 ADD . /quran/
 RUN npm run build
 
-EXPOSE 8000
+EXPOSE 3001
 CMD ["supervisord", "--nodaemon", "-c", "/etc/supervisor/supervisord.conf"]
