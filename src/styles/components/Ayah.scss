@@ -82,6 +82,10 @@
       margin-bottom: 15px;
       color: darken($text-muted, 30%);
       font-weight: 300;
+
+      &:hover{
+        opacity: 0.7;
+      }
     }
 
     @media (max-width: $screen-xs-max) {
