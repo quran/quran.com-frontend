@@ -1,4 +1,4 @@
-## Beta.Quran.com
+## Quran.com
 This is the project soon to be the Quran.com facing site. This is built in
 Reactjs + Flux (Fluxible by Yahoo) + Expressjs + Webpack. It is isomorphic (javascript shared
 between both the server and the client) for SEO reasons.
@@ -11,14 +11,11 @@ hot-module has been added that components will update without the need to refres
 the page.
 
 #### Tests
-Install karma and karma command line:
-```
-npm install -g karma
-npm install -g karma-cli
-```
+Run `npm run test:watch` to run the tests locally and watching. Otherwise use `npm run test` for CI level tests.
 
 #### Backend
-Currently, the repo is on private. Contact me to require access.
+Current at: https://github.com/quran/quran-api-rails
+DB is private, message me for acceess.
 
 #### How to contribute
 Fork this repo, then create a PR for specific fixes, improvements, etc. We trust that
