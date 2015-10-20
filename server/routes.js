@@ -11,7 +11,7 @@ export default function(server) {
     res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
   });
 
-  server.get('/api/*', function(req, res) {
+  server.get('/api/*', apicache('60 minutes'), function(req, res) {
     debug(`To API: ${req.url}`);
 
     superagent.get(Settings.api + req.url.substr(5))
