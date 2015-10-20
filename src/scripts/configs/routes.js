@@ -79,13 +79,12 @@ export default {
     title: 'Surah',
     handler: require('../routes/Surah'),
     action(actionContext, currentRoute, done) {
-      if (isNaN(currentRoute.get('params').get('surahId'))) {
+      const surahId = currentRoute.get('params').get('surahId');
+      let fromParam, toParam;
+
+      if (isNaN(surahId) || surahId > 114 || surahId < 1) {
         return done(new RouteNotFound(currentRoute.get('url')));
       }
-
-      let fromParam,
-        toParam,
-        surahId = currentRoute.get('params').get('surahId');
 
       actionContext.executeAction(
         SurahsActions.getSurahs,
