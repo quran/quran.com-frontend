@@ -17,6 +17,7 @@ export default function(server) {
     superagent.get(Settings.api + req.url.substr(5))
     .end(function(err, response) {
       if (err) {
+        console.info('Errored API at: ' + req.url);
         return res.status(500).send(response);
       }
 
