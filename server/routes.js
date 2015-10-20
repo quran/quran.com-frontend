@@ -7,6 +7,15 @@ import debugLib from 'debug';
 const debug = debugLib('quran');
 
 export default function(server) {
+  // server.get('/api/cache/index', function(req, res, next) {
+  //   return res.status(200).send(require('apicache').getIndex());
+  // });
+
+  // GET apicache index (for the curious)
+  // server.get('/api/cache/clear', function(req, res, next) {
+  //   return res.send(200, apicache.clear());
+  // });
+
   server.get(/^\/(images|fonts)\/.*/, function(req, res) {
     res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
   });
@@ -24,5 +33,6 @@ export default function(server) {
       return res.status(200).send(response.body);
     });
   });
+
   // server.use('/auth', require('./auth'));
 };
