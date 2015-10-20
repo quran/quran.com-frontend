@@ -77,7 +77,7 @@ class Surah extends React.Component {
   renderBismillah() {
     const surah = this.context.getStore('SurahsStore').getSurah();
 
-    if (surah.bismillah_pre) {
+    if (surah && surah.bismillah_pre) {
       return (
         <div className="bismillah text-center word-font">
           ﭑﭒﭓ
