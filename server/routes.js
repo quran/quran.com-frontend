@@ -1,7 +1,7 @@
 import superagent from 'superagent';
 import * as Settings from 'constants/Settings';
 // Cache for the time being until we change this
-const apicache = require('apicache').options({ debug: true }).middleware;
+// const apicache = require('apicache').options({ debug: true }).middleware;
 
 import debugLib from 'debug';
 const debug = debugLib('quran');
@@ -11,7 +11,7 @@ export default function(server) {
     res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
   });
 
-  server.get('/api/*', apicache('60 minutes'), function(req, res) {
+  server.get('/api/*', function(req, res) {
     debug(`To API: ${req.url}`);
 
     superagent.get(Settings.api + req.url.substr(5))
