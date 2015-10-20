@@ -12,11 +12,18 @@ class SearchInput extends React.Component {
       let searching = React.findDOMNode(this).querySelector('input').value,
         ayah, pattern, surah;
 
-      pattern = new RegExp(/\d[\.,\:,\,]\d/);
+      const shortcutSearch = /\d[\.,\:,\,,\\,//]/g;
+      const splitSearch = /[\.,\:,\,,\\,//]/g;
+
+      pattern = new RegExp(shortcutSearch);
 
       if (pattern.test(searching)) {
-        surah = searching.split(/[\.,\:,\,]/)[0];
-        ayah = parseInt(searching.split(/[\.,\:,\,]/)[1]);
+        surah = parseInt(searching.split(splitSearch)[0]);
+        ayah = parseInt(searching.split(splitSearch)[1]);
+
+        if (isNaN(ayah)) {
+          ayah = 1;
+        }
 
         this.context.executeAction(navigateAction, {
           url: '/' + surah + '/' + ayah + '-' + (ayah + 10)
