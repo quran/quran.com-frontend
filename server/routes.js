@@ -1,26 +1,25 @@
 import superagent from 'superagent';
 import * as Settings from 'constants/Settings';
 // Cache for the time being until we change this
-// const apicache = require('apicache').options({ debug: true }).middleware;
+const apicache = require('apicache')
+const cache = apicache.options({ debug: true }).middleware;
 
 import debugLib from 'debug';
 const debug = debugLib('quran');
 
 export default function(server) {
-  // server.get('/api/cache/index', function(req, res, next) {
-  //   return res.status(200).send(require('apicache').getIndex());
-  // });
-
-  // GET apicache index (for the curious)
-  // server.get('/api/cache/clear', function(req, res, next) {
-  //   return res.send(200, apicache.clear());
-  // });
+  server.get('/api/cache/index', function(req, res, next) {
+    return res.status(200).send(apicache.getIndex());
+  });
+  server.get('/api/cache/clear', function(req, res, next) {
+    return res.send(200, apicache.clear());
+  });
 
   server.get(/^\/(images|fonts)\/.*/, function(req, res) {
     res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
   });
 
-  server.get('/api/*', function(req, res) {
+  server.get('/api/*', cache('60 minutes'), function(req, res) {
     debug(`To API: ${req.url}`);
 
     superagent.get(Settings.api + req.url.substr(5))
