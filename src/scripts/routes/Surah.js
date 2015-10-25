@@ -26,10 +26,7 @@ class Surah extends React.Component {
   renderPagination() {
     const surahId = this.props.currentRoute.get('params').get('surahId');
 
-    if (this.state.loading) {
-      return <p>Loading...</p>;
-    }
-    else if (this.state.endOfSurah && !this.state.loading) {
+    if (this.state.endOfSurah && !this.state.loading) {
       if(surahId >= 114){
         return (
           <ul className="pager">
@@ -69,6 +66,8 @@ class Surah extends React.Component {
         );
       }
     }
+
+    return <p>Loading...</p>;
   }
 
   renderBismillah() {
