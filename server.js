@@ -7,6 +7,7 @@ import serialize from 'serialize-javascript';
 import {navigateAction} from 'fluxible-router';
 import createElementWithContext from 'fluxible-addons-react/createElementWithContext';
 import React from 'react';
+import ReactDOM from 'react-dom/server';
 
 import debugLib from 'debug';
 const debug = debugLib('quran');
@@ -41,15 +42,15 @@ server.use((req, res, next) => {
 
     if (err) {
       if (err.statusCode && err.statusCode === 404) {
-        res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(NotFound)));
+        res.write('<!DOCTYPE html>' + ReactDOM.renderToStaticMarkup(React.createElement(NotFound)));
         res.end();
       }
       else if (err.message) {
-        res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(ErroredMessage, {error: err})));
+        res.write('<!DOCTYPE html>' + ReactDOM.renderToStaticMarkup(React.createElement(ErroredMessage, {error: err})));
         res.end();
       }
       else {
-        res.write('<!DOCTYPE html>' + React.renderToStaticMarkup(React.createElement(Errored)));
+        res.write('<!DOCTYPE html>' + ReactDOM.renderToStaticMarkup(React.createElement(Errored)));
         res.end();
       }
       return;
@@ -59,11 +60,11 @@ server.use((req, res, next) => {
     const exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
 
     debug('Rendering Application component into html');
-    const html = React.renderToStaticMarkup(htmlComponent({
+    const html = ReactDOM.renderToStaticMarkup(htmlComponent({
       context: context.getComponentContext(),
       state: exposed,
       assets: webpack_isomorphic_tools.assets(),
-      markup: React.renderToString(createElementWithContext(context)),
+      markup: ReactDOM.renderToString(createElementWithContext(context)),
       fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs())
     }));
 

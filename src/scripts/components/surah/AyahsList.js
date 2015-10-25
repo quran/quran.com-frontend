@@ -1,6 +1,7 @@
 'use strict';
 import React from 'react';
 import Ayah from 'components/surah/Ayah';
+import Line from 'components/surah/Line';
 import AyahsStore from 'stores/AyahsStore';
 import Loader from 'components/Loader';
 import {connectToStores} from 'fluxible-addons-react';
@@ -16,12 +17,19 @@ class AyahsList extends React.Component {
       return <Loader />;
     }
 
-    return this.props.ayahs.map(ayah => {
-      return <Ayah ayah={ayah}
-                   key={`${ayah.surah_id}-${ayah.ayah_num}-ayah`}
-                   readingMode={this.props.isReadingMode}
-                   isSearch={this.props.isSearch} />;
-    });
+    if (this.props.isReadingMode) {
+      return this.props.lines.map((line, index) => {
+        return <Line line={line} key={`${index}-line`} />;
+      });
+    }
+    else {
+      return this.props.ayahs.map(ayah => {
+        return <Ayah ayah={ayah}
+                     key={`${ayah.surah_id}-${ayah.ayah_num}-ayah`}
+                     readingMode={this.props.isReadingMode}
+                     isSearch={this.props.isSearch} />;
+      });
+    }
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -63,7 +71,8 @@ AyahsList = connectToStores(AyahsList, [AyahsStore], (context, props) => {
 
   return {
     ayahs: ayahsStore.getAyahs(),
-    isReadingMode: ayahsStore.isReadingMode()
+    isReadingMode: ayahsStore.isReadingMode(),
+    lines: ayahsStore.getLines()
   };
 });
 
