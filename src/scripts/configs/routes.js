@@ -90,14 +90,16 @@ export default {
         SurahsActions.getSurahs,
         currentRoute.get('params').get('surahId'),
         () => {
-          if (currentRoute.get('params').get('range')) {
-            if (currentRoute.get('params').get('range').indexOf('-') > -1) {
-              fromParam = currentRoute.get('params').get('range').split('-')[0];
-              toParam = currentRoute.get('params').get('range').split('-')[1];
+          const rangeParam = currentRoute.get('params').get('range');
+          if (rangeParam) {
+            if (rangeParam.indexOf('-') > -1) {
+              fromParam = rangeParam.split('-')[0];
+              toParam = rangeParam.split('-')[1];
             }
             else {
-              fromParam = currentRoute.get('params').get('range');
-              toParam = parseInt(fromParam) + 10;
+              // Single ayah
+              fromParam = rangeParam;
+              toParam = fromParam;
             }
 
             fromParam = parseInt(fromParam);

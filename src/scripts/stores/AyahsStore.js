@@ -81,6 +81,10 @@ class AyahsStore extends BaseStore {
     return this.ayahs.length === 0;
   }
 
+  isSingleAyah() {
+    return this.ayahs.length === 1;
+  }
+
   getFirstAndLast() {
     return [
       this.ayahs[0].ayah_num,
@@ -199,7 +203,13 @@ class AyahsStore extends BaseStore {
     this.searchStats = state.searchStats;
 
     if (!!~~state.ayahs.length) {
-      this.buildAudio([this.ayahs[0], this.ayahs[1]]);
+      // If single ayah view
+      if (state.ayahs.length > 1) {
+        this.buildAudio([this.ayahs[0], this.ayahs[1]]);
+      }
+      else {
+        this.buildAudio([this.ayahs[0]]);
+      }
     }
   }
 }
