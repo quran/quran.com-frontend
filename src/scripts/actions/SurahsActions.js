@@ -4,7 +4,6 @@ var request = require('superagent-promise')(require('superagent'), Promise);
 
 import urlSettings from 'constants/Settings';
 import debug from 'utils/Debug';
-import Keen from 'utils/Keen';
 
 export function getSurahs(actionContext, payload) {
   if (actionContext.getStore('SurahsStore').hasAllSurahs()) {
@@ -22,7 +21,6 @@ export function getSurahs(actionContext, payload) {
 }
 
 export function currentSurah(actionContext, payload, done) {
-  Keen.addEvent('SurahsActions:currentSurah', payload);
   actionContext.dispatch('currentSurahChange', payload);
   done();
 }

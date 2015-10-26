@@ -3,7 +3,6 @@ import {createMockActionContext} from 'fluxible/utils';
 import React from 'react';
 import ReactTestUtils from 'react/lib/ReactTestUtils';
 import Immutable from 'immutable';
-import Keen from 'keen-js';
 
 import AyahsStore from 'stores/AyahsStore';
 import { RouteStore } from 'fluxible-router';
