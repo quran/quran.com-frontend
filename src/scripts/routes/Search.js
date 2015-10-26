@@ -18,13 +18,9 @@ class Search extends React.Component {
     });
   }
 
-  render() {
-    let pageNum = Math.ceil(this.props.stats.total / this.props.stats.size),
-      currentPage = (parseInt(this.props.currentRoute.get('query').get('p')) - 1) || 0;
-
-    return (
-      <div className="index-page">
-        <SearchHeader />
+  renderStatsBar() {
+    if (this.props.stats.from) {
+      return (
         <div className="search-pagination-header">
           <div className="container">
             <div className="row">
@@ -51,11 +47,33 @@ class Search extends React.Component {
             </div>
           </div>
         </div>
+      );
+    }
+
+    return false;
+  }
+
+  renderBody() {
+    if (this.props.stats.errored) {
+      return <h3 className="text-center" style={{padding: '15%'}}>Sorry, there was an error with your search.</h3>;
+    }
+
+    return <AyahsList isSearch={true} />;
+  }
+
+  render() {
+    let pageNum = Math.ceil(this.props.stats.total / this.props.stats.size),
+      currentPage = (parseInt(this.props.currentRoute.get('query').get('p')) - 1) || 0;
+
+    return (
+      <div className="index-page">
+        <SearchHeader />
+        {this.renderStatsBar()}
         <div className="container surah-list">
           <div className="row">
             <div className="col-md-12">
               <div className="row">
-                <AyahsList isSearch={true} />
+                {this.renderBody()}
               </div>
             </div>
           </div>
