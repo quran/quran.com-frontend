@@ -292,6 +292,12 @@ AyahsStore.handlers = {
 
   searchReceived(payload) {
     debug('STORES-SEARCH RECEIVED');
+    if (!!payload.error) {
+      return this.searchStats = {
+        errored: payload.error
+      };
+    }
+
     if (typeof window !== 'undefined') {
       Font.createFontFaces(payload.results);
     }
