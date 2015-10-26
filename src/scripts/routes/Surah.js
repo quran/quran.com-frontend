@@ -67,6 +67,10 @@ class Surah extends React.Component {
       }
     }
 
+    if (this.context.getStore('AyahsStore').isSingleAyah()) {
+      return false;
+    }
+
     return <p>Loading...</p>;
   }
 
@@ -108,6 +112,10 @@ class Surah extends React.Component {
           endOfSurah: true,
           loading: false
         });
+      }
+
+      if (this.context.getStore('AyahsStore').isSingleAyah()) {
+        return $(window).unbind('scroll');
       }
 
       if (!this.state.loading && window.pageYOffset > (document.body.scrollHeight - window.innerHeight - 1000)) {
