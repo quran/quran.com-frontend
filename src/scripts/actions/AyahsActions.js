@@ -4,10 +4,8 @@ var request = require('superagent-promise')(require('superagent'), Promise);
 import urlSettings from 'constants/Settings';
 import UserStore from 'stores/UserStore';
 import debug from 'utils/Debug';
-import Keen from 'utils/Keen';
 
 export function getAyahs(actionContext, params, done) {
-  Keen.addEvent('AyahsActions:getAyahs', {from: params.from, to: params.to, surah: params.surahId, userOptions: actionContext.getStore(UserStore).getOptions()});
   debug('ACTIONS-AYAHS');
   return request.get(urlSettings.url + 'surahs/' + params.surahId + '/ayat')
   .query(
@@ -57,12 +55,10 @@ export function updateAyahs(actionContext, params, done) {
 }
 
 export function toggleReadingMode(actionContext) {
-  Keen.addEvent('AyahsActions:toggleReadingMode');
   actionContext.dispatch('toggleReadingMode');
 }
 
 export function search(actionContext, payload, done) {
-  Keen.addEvent('AyahsActions:search', {query: payload.q, page: payload.p});
   debug('ACTIONS-AYAHS SEARCH');
   return request.get(urlSettings.url + 'search')
   .query({
@@ -71,7 +67,6 @@ export function search(actionContext, payload, done) {
   })
   .end()
   .then((res) => {
-    Keen.addEvent('AyahsActions:searchReceived', {query: payload.q, page: payload.p, total: res.body.total});
     actionContext.dispatch('searchReceived', res.body);
     done();
   });

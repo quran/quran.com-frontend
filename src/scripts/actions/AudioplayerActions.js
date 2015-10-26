@@ -1,6 +1,5 @@
 import * as AyahsActions from 'actions/AyahsActions';
 import {navigateAction} from 'fluxible-router';
-import Keen from 'utils/Keen';
 
 export function changeAyah(actionContext, payload, done) {
 
@@ -58,8 +57,6 @@ export function changeAyah(actionContext, payload, done) {
       });
     }
   }
-
-  Keen.addEvent('AudioplayerActions:changeAyah', {next: payload.ayah_num, shouldPlay: payload.shouldPlay || false, surah_id: currentAyah.surah_id, range: rangeArray});
 
   actionContext.dispatch('audioplayerAyahChange', {
     ayah_num: payload.ayah_num,

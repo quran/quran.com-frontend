@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
 import CopyToClipboard from 'copy-to-clipboard';
 import {NavLink} from 'fluxible-router';
-import Keen from 'utils/Keen';
 import debug from 'utils/Debug';
 
 class Ayah extends React.Component {
@@ -52,10 +51,6 @@ class Ayah extends React.Component {
         </div>
       );
     });
-  }
-
-  trackClickSearch(word) {
-    Keen.addEvent('Ayah:clickSearch', {word: word});
   }
 
   text() {
