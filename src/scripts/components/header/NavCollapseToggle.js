@@ -26,16 +26,17 @@ class NavCollapseToggle extends React.Component {
     var classes = classNames({
       active: this.state.toggled,
       'nav-link': true,
-      'toggle-icon': true
+      'toggle-icon': true,
+      'nav-toggle': true
     });
 
     return (
       <div className="col-md-1 border-right text-center height-100">
-      <a className={classes}
-      title="Collapse / expand the navigation bar"
-      onClick={this.toggleNavCollapse.bind(this)}>
-        <i className="ss-icon ss-layout" />
-      </a>
+        <a className={classes}
+        title="Collapse / expand the navigation bar"
+        onClick={this.toggleNavCollapse.bind(this)}>
+          <i className="ss-icon ss-layout" />
+        </a>
       </div>
     );
   }

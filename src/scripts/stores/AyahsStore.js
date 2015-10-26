@@ -41,6 +41,7 @@ class AyahsStore extends BaseStore {
     //
     // not implemented yet:
     // prepending (if we allow prepending)
+    const self = this;
 
     if (this.ayahs === ayahs ) {
       // if the 'ayahs' passed in are exactly the same as this.ayahs, then
@@ -50,12 +51,12 @@ class AyahsStore extends BaseStore {
 
     ayahs.forEach((ayah) => {
       ayah.quran.forEach((data) => {
-        if (data.char.line !== this.lastLine) {
+        if (data.char.line !== self.lastLine) {
           // new line
-          this.lines[this.lines.length] = [];
-          this.lastLine = data.char.line;
+          self.lines[self.lines.length] = [];
+          self.lastLine = data.char.line;
         }
-        this.lines[this.lines.length - 1].push(data);
+        self.lines[self.lines.length - 1].push(data);
       });
     });
   }
