@@ -18,6 +18,7 @@ class ReadingModeToggle extends React.Component {
       toggled: !this.state.toggled
     });
 
+    document.querySelector('.nav-toggle').click();
     this.context.executeAction(AyahsActions.toggleReadingMode);
   }
 

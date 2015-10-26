@@ -7,7 +7,7 @@ export default function(elem, options) {
   const settings = $.extend({
     maximum   : 1680,
     minimum   : 400,
-    maxFont   : 49,
+    maxFont   : 70,
     minFont   : 1,
     fontRatio : 20
   }, options),
