@@ -71,8 +71,7 @@ class Ayah extends React.Component {
                data-toggle="tooltip"
                data-placement="top" title={tooltip}
                href={`/search?q=${word.word.arabic}&p=1`}
-               dangerouslySetInnerHTML={{__html: word.char.code}}
-               onClick={this.trackClickSearch.bind(this, word)} />
+               dangerouslySetInnerHTML={{__html: word.char.code}}/>
           );
         }
 

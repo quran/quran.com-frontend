@@ -19,7 +19,7 @@ class Search extends React.Component {
   }
 
   renderStatsBar() {
-    if (this.props.stats.from) {
+    if (this.props.stats.total) {
       let pageNum = Math.ceil(this.props.stats.total / this.props.stats.size),
         currentPage = (parseInt(this.props.currentRoute.get('query').get('p')) - 1) || 0;
 
@@ -59,6 +59,10 @@ class Search extends React.Component {
   renderBody() {
     if (this.props.stats.errored) {
       return <h3 className="text-center" style={{padding: '15%'}}>Sorry, there was an error with your search.</h3>;
+    }
+
+    if (this.props.stats.total === 0) {
+      return <h3 className="text-center" style={{padding: '15%'}}>No results found.</h3>;
     }
 
     return <AyahsList isSearch={true} />;

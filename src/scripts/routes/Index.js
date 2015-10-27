@@ -40,6 +40,8 @@ class Index extends React.Component {
         return;
       }
 
+      const lastVisitedAyah = parseInt(this.props.lastVisit.ayah);
+
       return (
         <div className="col-md-10 col-md-offset-1">
           <div className="row last-visit">
@@ -48,7 +50,7 @@ class Index extends React.Component {
             </div>
             <ul className="col-md-4">
               <li className="row link">
-                <NavLink href={`/${this.props.lastVisit.surah}/${this.props.lastVisit.ayah}`}>
+                <NavLink href={`/${this.props.lastVisit.surah}/${lastVisitedAyah}-${lastVisitedAyah + 10}`}>
                   <div className="col-xs-2 text-muted">
                     {surah.id}:{this.props.lastVisit.ayah}
                   </div>

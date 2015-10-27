@@ -17,7 +17,7 @@ class AyahsList extends React.Component {
       return <Loader />;
     }
 
-    if (this.props.isReadingMode) {
+    if (this.props.isReadingMode) {pass
       return this.props.lines.map((line, index) => {
         return <Line line={line} key={`${index}-line`} />;
       });
