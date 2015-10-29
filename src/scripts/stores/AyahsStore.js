@@ -43,10 +43,12 @@ class AyahsStore extends BaseStore {
     // prepending (if we allow prepending)
     const self = this;
 
-    if (this.ayahs === ayahs ) {
+    debug('stores:AyahsStore', 'Building Lines');
+    if (this.ayahs === ayahs) {
       // if the 'ayahs' passed in are exactly the same as this.ayahs, then
       // we want to rebuild the whole set of lines instead of append/prepend:
-      this.lines = []
+      this.lines = [];
+      this.lastLine = -1;
     }
 
     ayahs.forEach((ayah) => {
@@ -206,7 +208,6 @@ class AyahsStore extends BaseStore {
 
   rehydrate(state) {
     this.ayahs = state.ayahs;
-    this.buildLines(this.ayahs);
     this.searchStats = state.searchStats;
 
     if (!!~~state.ayahs.length) {
@@ -223,20 +224,23 @@ class AyahsStore extends BaseStore {
 
 AyahsStore.handlers = {
   ayahsReceived(payload) {
-    debug('STORES-AYAHS RECEIVED');
+    debug('stores:AyahsStore', 'Ayahs Received');
     if (this.ayahs.length > 0) {
       if (payload.ayahs[0].ayah_num === this.ayahs[this.ayahs.length - 1].ayah_num + 1) {
-        debug('Ayahs: Lazy load');
+        debug('stores:AyahsStore', 'Lazy Loading Ayahs');
         Font.createFontFaces(payload.ayahs);
         this.ayahs = this.ayahs.concat(payload.ayahs);
-        this.buildLines(this.ayahs);
+
+        if (this.isReadingMode()) {
+          this.buildLines(this.ayahs);
+        }
 
         // @TODO: Figure out why this was not here before...
         this.buildAudio(payload.ayahs);
       }
       else {
         if (this.ayahs[0].surah_id !== payload.ayahs[0].surah_id) {
-          debug('Ayahs: New surah');
+          debug('stores:AyahsStore', 'New Surah');
         }
         else {
           console.info(
@@ -248,13 +252,17 @@ AyahsStore.handlers = {
         // Assuming this happens on new page
         Font.createFontFaces(payload.ayahs);
         this.ayahs = payload.ayahs;
-        this.buildLines(this.ayahs);
+        if (this.isReadingMode()) {
+          this.buildLines(this.ayahs);
+        }
         this.buildAudio([this.ayahs[0], this.ayahs[1]]);
       }
     }
     else {
       this.ayahs = payload.ayahs;
-      this.buildLines(this.ayahs);
+      if (this.isReadingMode()) {
+        this.buildLines(this.ayahs);
+      }
 
       if (typeof window !== 'undefined') {
         Font.createFontFaces(payload.ayahs);
@@ -277,7 +285,9 @@ AyahsStore.handlers = {
       return Object.assign(this.ayahs[index], ayah);
     });
 
-    this.buildLines(this.ayahs);
+    if (this.isReadingMode()) {
+      this.buildLines(this.ayahs);
+    }
 
     if (!!~payload.difference.indexOf('audio')) {
       this.buildAudio(this.ayahs);
@@ -298,7 +308,7 @@ AyahsStore.handlers = {
   },
 
   searchReceived(payload) {
-    debug('STORES-SEARCH RECEIVED');
+    debug('stores:AyahsStore', 'Search Received');
     if (!!payload.error) {
       return this.searchStats = {
         errored: payload.error
@@ -326,6 +336,7 @@ AyahsStore.handlers = {
 
   toggleReadingMode() {
     this.readingMode = !this.readingMode;
+    this.buildLines(this.ayahs);
     this.emitChange();
   }
 };
