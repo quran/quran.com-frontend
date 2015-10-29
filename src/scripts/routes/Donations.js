@@ -40,13 +40,14 @@ class Donations extends React.Component {
 
             <div className="col-md-4 col-md-offset-4 text-center">
               <br/><br/>
-              <button className="btn btn-lg btn-block btn-primary" data-ct-checkout="quran.support-quran-com-preorder">Support Quran.com</button>
+              <a target="_blank" href="https://quran.tilt.com/support-quran-com-preorder/checkout/payment" className="btn btn-lg btn-block btn-primary">
+                Support Quran.com
+              </a>
               <br/><br/>
               If you have any questions, please don't hesitate to contact us at <a href="mailto:support@quran.zendesk.com">support@quran.zendesk.com.</a>
             </div>
           </div>
         </div>
-        <script type="text/javascript" src="https://open.tilt.com/checkout-1-2-1.js"></script>
       </div>
     );
   }

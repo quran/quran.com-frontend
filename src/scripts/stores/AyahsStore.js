@@ -61,6 +61,12 @@ class AyahsStore extends BaseStore {
     });
   }
 
+  getFirst() {
+    if (this.ayahs.length) {
+      return this.ayahs[0].ayah_num;
+    }
+  }
+
   getLast() {
     if (this.ayahs.length) {
       return this.ayahs[this.ayahs.length - 1].ayah_num;
@@ -220,7 +226,7 @@ AyahsStore.handlers = {
     debug('STORES-AYAHS RECEIVED');
     if (this.ayahs.length > 0) {
       if (payload.ayahs[0].ayah_num === this.ayahs[this.ayahs.length - 1].ayah_num + 1) {
-        console.log('Ayahs: Lazy load');
+        debug('Ayahs: Lazy load');
         Font.createFontFaces(payload.ayahs);
         this.ayahs = this.ayahs.concat(payload.ayahs);
         this.buildLines(this.ayahs);
@@ -230,13 +236,13 @@ AyahsStore.handlers = {
       }
       else {
         if (this.ayahs[0].surah_id !== payload.ayahs[0].surah_id) {
-          console.log('Ayahs: New surah');
+          debug('Ayahs: New surah');
         }
         else {
-          console.error(
+          console.info(
             'Failed to concat the ayahs',
-            payload.ayahs[0].ayah,
-            this.ayahs[this.ayahs.length - 1].ayah
+            payload.ayahs[0].ayah_num,
+            this.ayahs[this.ayahs.length - 1].ayah_num
           );
         }
         // Assuming this happens on new page
