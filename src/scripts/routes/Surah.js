@@ -107,7 +107,7 @@ class Surah extends React.Component {
     this.context.executeAction(navigateAction, {
       url: '/' + surahId + '/' + currentAyah + '-' + toAyah
     });
-}
+  }
 
   renderLoadMore(direction) {
     if (this.context.getStore('AyahsStore').isSingleAyah()) {
