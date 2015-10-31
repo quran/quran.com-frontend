@@ -112,9 +112,9 @@ class Surah extends React.Component {
     if (this.context.getStore('AyahsStore').isSingleAyah()) {
 
       if(direction === 'before' && currentAyah === 1 ||
-        direction === 'after' && currentAyah === lastAyahInSurah) {
+      direction === 'after' && currentAyah === lastAyahInSurah) {
         return;
-      } 
+      }
 
       return (
         <div className="text-center padding" style={{margin: '5% 0%'}}>
