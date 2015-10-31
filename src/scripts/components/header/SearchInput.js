@@ -9,8 +9,16 @@ class SearchInput extends React.Component {
 
   search(e) {
     if (e.key === 'Enter' || e.keyCode === 13 || e.type === 'click') {
-      let searching = React.findDOMNode(this).querySelector('input').value,
+			let inputEl = React.findDOMNode(this).querySelector('input'),
+				searching = inputEl.value.trim(),
         ayah, pattern, surah;
+
+      // prevent search function while search input field is empty
+      if(searching === ''){
+				// reset input to display "Search" placeholder text
+				inputEl.value = '';
+				return;
+      }
 
       const shortcutSearch = /\d[\.,\:,\,,\\,//]/g;
       const splitSearch = /[\.,\:,\,,\\,//]/g;
