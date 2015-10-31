@@ -4,6 +4,7 @@ import SurahsNav from 'components/surah/SurahsNav';
 import MasterHeader from 'components/header/MasterHeader';
 import * as AyahsActions from 'actions/AyahsActions';
 import * as SurahsActions from 'actions/SurahsActions';
+import {navigateAction} from 'fluxible-router';
 import AyahsList from 'components/surah/AyahsList';
 import $ from 'jquery';
 import connectToStores from 'fluxible-addons-react/connectToStores';
@@ -86,22 +87,34 @@ class Surah extends React.Component {
     }
   }
 
-  loadMoreFromButton(e) {
-    const currentAyah = this.context.getStore('AyahsStore').getFirst();
+  loadMoreFromButton(direction, e) {
+    let currentAyah = this.context.getStore('AyahsStore').getFirst(),
+      toAyah = (direction === 'after') ? currentAyah + 10 : currentAyah,
+      surahId = this.props.currentRoute.get('params').get('surahId');
+
+    if (direction === 'before') {
+      currentAyah = (currentAyah <= 10) ? 1 : currentAyah - 10;
+    }
 
     e.preventDefault();
-    this.context.executeAction(AyahsActions.getAyahs, {
-      surahId: this.props.currentRoute.get('params').get('surahId'),
-      from: currentAyah,
-      to: currentAyah + 10
-    });
-  }
 
-  renderLoadMore() {
+    this.context.executeAction(AyahsActions.getAyahs, {
+      surahId: surahId,
+      from: currentAyah,
+      to: toAyah
+    });
+
+    this.context.executeAction(navigateAction, {
+      url: '/' + surahId + '/' + currentAyah + '-' + toAyah
+    });
+}
+
+  renderLoadMore(direction) {
     if (this.context.getStore('AyahsStore').isSingleAyah()) {
       return (
         <div className="text-center padding" style={{margin: '5% 0%'}}>
-          <a href="#" onClick={this.loadMoreFromButton.bind(this)}>Load more</a>
+          <a href="#" onClick={this.loadMoreFromButton.bind(this, direction)}>
+          Load more</a>
         </div>
       )
     }
@@ -195,8 +208,9 @@ class Surah extends React.Component {
             <div className="row">
               <div className="col-md-10 col-md-offset-1">
                 {this.renderBismillah()}
+                {this.renderLoadMore('before')}
                 <AyahsList />
-                {this.renderLoadMore()}
+                {this.renderLoadMore('after')}
               </div>
               <div className="col-md-10 col-md-offset-1">
                 {this.renderPagination()}
