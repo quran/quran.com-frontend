@@ -103,10 +103,6 @@ class Surah extends React.Component {
       from: currentAyah,
       to: toAyah
     });
-
-    this.context.executeAction(navigateAction, {
-      url: '/' + surahId + '/' + currentAyah + '-' + toAyah
-    });
   }
 
   renderLoadMore(direction) {
