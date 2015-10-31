@@ -106,7 +106,16 @@ class Surah extends React.Component {
   }
 
   renderLoadMore(direction) {
+    let currentAyah = this.context.getStore('AyahsStore').getFirst(),
+    lastAyahInSurah = this.context.getStore('SurahsStore').getSurah().ayat;
+
     if (this.context.getStore('AyahsStore').isSingleAyah()) {
+
+      if(direction === 'before' && currentAyah === 1 ||
+        direction === 'after' && currentAyah === lastAyahInSurah) {
+        return;
+      } 
+
       return (
         <div className="text-center padding" style={{margin: '5% 0%'}}>
           <a href="#" onClick={this.loadMoreFromButton.bind(this, direction)}>
