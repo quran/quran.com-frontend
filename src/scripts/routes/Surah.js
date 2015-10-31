@@ -107,12 +107,11 @@ class Surah extends React.Component {
 
   renderLoadMore(direction) {
     let currentAyah = this.context.getStore('AyahsStore').getFirst(),
-    lastAyahInSurah = this.context.getStore('SurahsStore').getSurah().ayat;
+      lastAyahInSurah = this.context.getStore('SurahsStore').getSurah().ayat;
 
     if (this.context.getStore('AyahsStore').isSingleAyah()) {
 
-      if(direction === 'before' && currentAyah === 1 ||
-      direction === 'after' && currentAyah === lastAyahInSurah) {
+      if(direction === 'before' && currentAyah === 1 || direction === 'after' && currentAyah === lastAyahInSurah) {
         return;
       }
 
