@@ -1,77 +1,85 @@
 import React from 'react';
-import {navigateAction} from 'fluxible-router';
+import {
+    navigateAction
+}
+from 'fluxible-router';
 import classNames from 'classnames';
 
 class SearchInput extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-  }
+    constructor(props, context) {
+        super(props, context);
+    }
 
-  search(e) {
-    if (e.key === 'Enter' || e.keyCode === 13 || e.type === 'click') {
-			let inputEl = React.findDOMNode(this).querySelector('input'),
-				searching = inputEl.value.trim(),
-        ayah, pattern, surah;
+    search(e) {
+        if (e.key === 'Enter' || e.keyCode === 13 || e.type === 'click') {
+            let inputEl = React.findDOMNode(this).querySelector('input'),
+                searching = inputEl.value.trim(),
+                ayah, pattern, surah;
 
-      // prevent search function while search input field is empty
-      if(searching === ''){
-				// reset input to display "Search" placeholder text
-				inputEl.value = '';
-				return;
-      }
+            // prevent search function while search input field is empty
+            if (searching === '') {
+                // reset input to display "Search" placeholder text
+                inputEl.value = '';
+                return;
+            }
 
-      const shortcutSearch = /\d[\.,\:,\,,\\,//]/g;
-      const splitSearch = /[\.,\:,\,,\\,//]/g;
+            const shortcutSearch = /\d[\.,\:,\,,\\,//]/g;
+            const splitSearch = /[\.,\:,\,,\\,//]/g;
 
-      pattern = new RegExp(shortcutSearch);
+            pattern = new RegExp(shortcutSearch);
 
-      if (pattern.test(searching)) {
-        surah = parseInt(searching.split(splitSearch)[0]);
-        ayah = parseInt(searching.split(splitSearch)[1]);
+            if (pattern.test(searching)) {
+                surah = parseInt(searching.split(splitSearch)[0]);
+                ayah = parseInt(searching.split(splitSearch)[1]);
 
-        if (isNaN(ayah)) {
-          ayah = 1;
+                if (isNaN(ayah)) {
+                    ayah = 1;
+                }
+
+                this.context.executeAction(navigateAction, {
+                    url: '/' + surah + '/' + ayah + '-' + (ayah + 10)
+                });
+            } else {
+                this.context.executeAction(navigateAction, {
+                    url: `/search?q=${searching}`
+                });
+            }
         }
 
-        this.context.executeAction(navigateAction, {
-          url: '/' + surah + '/' + ayah + '-' + (ayah + 10)
-        });
-      } else {
-        this.context.executeAction(navigateAction, {
-          url: `/search?q=${searching}`
-        });
-      }
+        // This checks to see if the user is typing Arabic
+        // and adjusts the text-align.
+        var arabic = new RegExp(/[\u0600-\u06FF]/);
+        if (arabic.test(e.target.value)) {
+            e.target.style.textAlign = 'right';
+        } else {
+            e.target.style.textAlign = 'left';
+        }
     }
 
-    // This checks to see if the user is typing Arabic
-    // and adjusts the text-align.
-    var arabic = new RegExp(/[\u0600-\u06FF]/);
-    if (arabic.test(e.target.value)) {
-      e.target.style.textAlign = 'right';
-    }
-    else {
-      e.target.style.textAlign = 'left';
-    }
-  }
+    render() {
+        var className = classNames({
+            'right-inner-addon': true
+        }) + ' ' + this.props.className;
 
-  render() {
-    var className = classNames({
-      'right-inner-addon': true
-    }) + ' ' + this.props.className;
-
-    return (
-      <div className={className}>
-        <i className="ss-icon ss-search" onClick={this.search.bind(this)} />
-        <input type="text"
-               placeholder="Search"
-               onKeyUp={this.search.bind(this)} />
-      </div>
-    );
-  }
+        return ( < div className = {
+                className
+            } >
+            < i className = "ss-icon ss-search"
+            onClick = {
+                this.search.bind(this)
+            }
+            /> < input type = "text"
+            placeholder = "Search"
+            onKeyUp = {
+                this.search.bind(this)
+            }
+            /> < /div >
+        );
+    }
 }
 
 SearchInput.contextTypes = {
-  executeAction: React.PropTypes.func.isRequired
+    executeAction: React.PropTypes.func.isRequired
 };
 
 SearchInput.displayName = 'SearchInput';
