@@ -13,6 +13,11 @@ the page.
 #### Tests
 Run `npm run test:watch` to run the tests locally and watching. Otherwise use `npm run test` for CI level tests.
 
+We also have nightwatch function tests. You can install nightwatch globally and can run tests like this:
+```
+nightwatch --test tests/functional/specs/Index_spec.js
+```
+
 #### Backend
 Current at: https://github.com/quran/quran-api-rails
 DB is private, message me for acceess.

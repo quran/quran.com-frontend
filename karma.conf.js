@@ -25,7 +25,7 @@ module.exports = function(config) {
       {pattern: "static/images/*", watched: false, included: false, served: true},
 
       // Actual tests here
-      {pattern: 'tests/client/**/*.spec.js', watched: true, served: true, included: true}
+      {pattern: 'tests/unit/**/*.spec.js', watched: true, served: true, included: true}
     ],
 
     // list of files to exclude
@@ -43,7 +43,7 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessors
 
     preprocessors: {
-      'tests/client/**/*.spec.js': ['webpack']
+      'tests/unit/**/*.spec.js': ['webpack']
     },
 
     webpack: {

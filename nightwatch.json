@@ -1,0 +1,78 @@
+{
+  "src_folders": ["tests/functional/specs"],
+  "output_folder": "tests/functional/output",
+  "custom_commands_path": "tests/functional/commands",
+  "custom_assertions_path": "tests/functional/assertions",
+  "page_objects_path": "tests/functional/pages",
+  "globals_path": "tests/functional/globals.js",
+  "selenium" : {
+    "start_process" : true,
+    "server_path" : "node_modules/selenium-server/lib/runner/selenium-server-standalone-2.48.2.jar",
+    "log_path" : "",
+    "host" : "127.0.0.1",
+    "port" : 5555,
+    "cli_args" : {
+      "webdriver.chrome.driver" : "node_modules/chromedriver/lib/chromedriver/chromedriver"
+    }
+  },
+  "test_settings" : {
+    "default" : {
+      "exclude": ["./pages", "./commands"],
+      "filter": "*.spec.js",
+      "launch_url" : "http://localhost",
+      "selenium_port" : 5555,
+      "selenium_host" : "localhost",
+      "silent": true,
+      "screenshots" : {
+        "enabled" : true,
+        "path" : "tests/functional/screenshots"
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true
+      }
+    },
+    "production" : {
+      "exclude": ["./pages", "./commands"],
+      "filter": "*.spec.js",
+      "launch_url" : "http://localhost",
+      "selenium_port" : 5555,
+      "selenium_host" : "localhost",
+      "silent": true,
+      "screenshots" : {
+        "enabled" : true,
+        "path" : "tests/functional/screenshots"
+      },
+      "desiredCapabilities": {
+        "browserName" : "phantomjs",
+        "javascriptEnabled" : true,
+        "acceptSslCerts" : true,
+        "phantomjs.binary.path" : "/usr/local/phantomjs/bin/phantomjs"
+      }
+    },
+    "mobile": {
+      "exclude": ["./pages", "./commands"],
+      "filter": "**/*.spec.js",
+      "launch_url" : "http://localhost",
+      "selenium_port" : 5555,
+      "selenium_host" : "localhost",
+      "silent": true,
+      "screenshots" : {
+        "enabled" : true,
+        "path" : "tests/functional/screenshots"
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "javascriptEnabled": true,
+        "acceptSslCerts": true,
+        "chromeOptions": {
+          "args": [
+            "--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_2 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A4449d Safari/9537.53",
+            "--window-size=320,568"
+          ]
+        }
+      }
+    }
+  }
+}
