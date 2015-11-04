@@ -5,7 +5,7 @@ import urlSettings from 'constants/Settings';
 import UserStore from 'stores/UserStore';
 import debug from 'utils/Debug';
 
-export function getAyahs(actionContext, params, done) {
+export function getAyahs(actionContext, params) {
   debug('ACTIONS-AYAHS');
   return request.get(urlSettings.url + 'surahs/' + params.surahId + '/ayat')
   .query(
@@ -22,7 +22,7 @@ export function getAyahs(actionContext, params, done) {
 
     actionContext.dispatch('lastVisit', {surah: params.surahId, ayah: params.from});
 
-    done();
+    // done();
   },
   function(err) {
     console.error(err);
