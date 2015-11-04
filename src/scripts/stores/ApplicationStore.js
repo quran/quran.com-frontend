@@ -13,6 +13,12 @@ class ApplicationStore extends BaseStore {
     this.pageTitle = '';
   }
   handlePageTitle(data) {
+    if (typeof window !== 'undefined') {
+      if (window.ga) {
+        window.ga("send", "pageview", data.get('url'));
+      }
+    }
+
     if (data.get('title') && data.get('name') !== 'surah') {
       this.pageTitle = data.get('title');
     }
