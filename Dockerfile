@@ -2,10 +2,8 @@ FROM ubuntu
 
 ENV NODE_ENV production
 
-RUN apt-get update
-RUN apt-get -y upgrade
-RUN apt-get -y install nodejs npm supervisor
-RUN apt-get -y install nodejs-legacy
+RUN apt-get -y update && apt-get -y install \
+nodejs npm supervisor nodejs-legacy ssh rsync
 
 # logrotate
 RUN apt-get -y install logrotate
@@ -25,6 +23,17 @@ RUN cp -a /tmp/node_modules /quran
 WORKDIR /quran
 ADD . /quran/
 RUN npm run build
+
+# ssh keys
+WORKDIR /root
+RUN mv /quran/.ssh /root/
+
+# upload js and css
+WORKDIR /quran/build
+RUN rsync --update --progress -raz main* ahmedre@rsync.keycdn.com:zones/assets/
+
+# go back to /quran
+WORKDIR /quran
 
 EXPOSE 8000
 CMD ["supervisord", "--nodaemon", "-c", "/etc/supervisor/supervisord.conf"]
