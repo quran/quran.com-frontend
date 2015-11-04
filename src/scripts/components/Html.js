@@ -13,6 +13,7 @@ class Html extends React.Component {
             <meta name="Charset" content="UTF-8"/>
             <meta name="Distribution" content="Global"/>
             <meta name="Rating" content="General"/>
+            <meta name="google-site-verification" content="ehFz7FvmL7V9MzP40F8_kLABhCzqGzMDMrCnUP44Too" />
 
             <meta property="og:title" content="The Noble Qur'an - القرآن الكريم" />
             <meta property="og:description" content="Quran.com provides the best reading, listening and learning experience for Muslims all around the world." />
