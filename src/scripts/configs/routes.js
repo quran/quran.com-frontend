@@ -79,6 +79,7 @@ export default {
     title: 'Surah',
     handler: require('../routes/Surah'),
     action(actionContext, currentRoute, done) {
+      const rangeParam = currentRoute.get('params').get('range');
       const surahId = currentRoute.get('params').get('surahId');
       let fromParam, toParam;
 
@@ -86,45 +87,48 @@ export default {
         return done(new RouteNotFound(currentRoute.get('url')));
       }
 
-      actionContext.executeAction(
-        SurahsActions.getSurahs,
-        currentRoute.get('params').get('surahId'),
-        () => {
-          const rangeParam = currentRoute.get('params').get('range');
-          if (rangeParam) {
-            if (rangeParam.indexOf('-') > -1) {
-              fromParam = rangeParam.split('-')[0];
-              toParam = rangeParam.split('-')[1];
-            }
-            else {
-              // Single ayah
-              fromParam = rangeParam;
-              toParam = fromParam;
-            }
-
-            fromParam = parseInt(fromParam);
-            toParam = parseInt(toParam);
-            // This is the case when someone has a range but it's not valid. Eg: /1/asdasd
-            if (isNaN(fromParam) || isNaN(toParam)) {
-              return done(new RouteNotFound(currentRoute.get('url')));
-            }
-
-            if ((toParam - fromParam) > 50) {
-              return done(new AyahRangeError(fromParam, toParam));
-            }
-          }
-          else {
-            fromParam = 1;
-            toParam = 10;
-          }
-
-          actionContext.executeAction(AyahsActions.getAyahs, {
-            surahId: surahId,
-            from: fromParam,
-            to: toParam
-          }, done);
+      // Retrieve Ayah now.
+      if (rangeParam) {
+        if (rangeParam.indexOf('-') > -1) {
+          fromParam = rangeParam.split('-')[0];
+          toParam = rangeParam.split('-')[1];
         }
+        else {
+          // Single ayah
+          fromParam = rangeParam;
+          toParam = fromParam;
+        }
+
+        fromParam = parseInt(fromParam);
+        toParam = parseInt(toParam);
+        // This is the case when someone has a range but it's not valid. Eg: /1/asdasd
+        if (isNaN(fromParam) || isNaN(toParam)) {
+          return done(new RouteNotFound(currentRoute.get('url')));
+        }
+
+        if ((toParam - fromParam) > 50) {
+          return done(new AyahRangeError(fromParam, toParam));
+        }
+      }
+      else {
+        fromParam = 1;
+        toParam = 10;
+      }
+
+      const getSurahs = actionContext.executeAction(
+        SurahsActions.getSurahs,
+        currentRoute.get('params').get('surahId')
       );
+
+      const getAyahs = actionContext.executeAction(AyahsActions.getAyahs, {
+        surahId: surahId,
+        from: fromParam,
+        to: toParam
+      });
+
+      Promise.all([getSurahs, getAyahs]).then(function() {
+        return done();
+      });
     }
   }
 };

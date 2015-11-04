@@ -78,14 +78,6 @@ var webpackConfig = {
     }),
     webpack_isomorphic_tools_plugin
   ],
-  externals: {
-    'jquery': 'jQuery',
-    'jquery': '$',
-    'react': 'React',
-    'react-dom': 'ReactDOM',
-    'immutable': 'Immutable',
-    'superagent': 'superagent'
-  },
   stats: {
     colors: true,
     reasons: true

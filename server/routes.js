@@ -28,7 +28,6 @@ export default function(server) {
         console.info('Errored API at: ' + req.url);
         return res.status(500).send(response);
       }
-
       return res.status(200).send(response.body);
     });
   });
