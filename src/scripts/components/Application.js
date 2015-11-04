@@ -4,10 +4,10 @@ import provideContext from 'fluxible-addons-react/provideContext';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import { handleHistory } from 'fluxible-router';
 import debug from 'utils/Debug';
-
-var ga = require('react-google-analytics');
+import ga from 'react-google-analytics';
 
 ga('create', 'UA-8496014-1', 'auto');
+ga('require', 'linkid');
 ga('send', 'pageview');
 const GAInitiailizer = ga.Initializer;
 
