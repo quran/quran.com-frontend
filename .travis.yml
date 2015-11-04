@@ -1,10 +1,12 @@
 sudo: false
 language: node_js
 matrix:
-  allow_failures:
-    - node_js: "0.13"
+  include:
+    - env: TEST_SUITE=functional NODE_ENV=testing
+      before_script:
+        - npm run build
+env: TEST_SUITE=unit
 node_js:
-  - "iojs"
   - "0.12"
 cache:
   directories:
@@ -13,3 +15,5 @@ install:
   - npm install
 notifications:
   email: false
+
+script: "npm run test:ci:$TEST_SUITE"

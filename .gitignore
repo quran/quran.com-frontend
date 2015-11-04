@@ -6,3 +6,6 @@ test-results.xml
 npm-debug.log
 webpack-stats.json
 bundle-stats.json
+selenium-debug.log
+tests/functional/output/*
+test/functional/screenshots/*

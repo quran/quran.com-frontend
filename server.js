@@ -77,12 +77,15 @@ server.use((req, res, next) => {
 });
 
 const port = process.env.PORT || 8000;
-server.listen(port);
 
-console.info(`
-  ==> 🌎  ENV=${process.env.NODE_ENV}
-  ==> ✅  Server is listening at http://localhost:${port}
-  ==> 🎯  API at ${Settings.api}
-`);
+export default function serve(cb) {
+  return server.listen(port, function() {
+    console.info(`
+      ==> 🌎  ENV=${process.env.NODE_ENV}
+      ==> ✅  Server is listening at http://localhost:${port}
+      ==> 🎯  API at ${Settings.api}
+    `);
 
-export default server;
+    cb && cb(this);
+  });
+};

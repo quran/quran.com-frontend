@@ -56,7 +56,8 @@ class SearchInput extends React.Component {
 
   render() {
     var className = classNames({
-      'right-inner-addon': true
+      'right-inner-addon': true,
+      'searchinput': true
     }) + ' ' + this.props.className;
 
     return (
