@@ -55,6 +55,7 @@ class Application extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.pageTitle !== nextProps.pageTitle) {
       document.title = nextProps.pageTitle;
+      ga('send', 'pageview', nextProps.url);
     }
 
     return this.props.currentRoute.get('handler') !== nextProps.currentRoute.get('handler');
@@ -78,7 +79,8 @@ export default handleHistory(provideContext(connectToStores(
     return {
       currentPageName: appStore.getCurrentPageName(),
       pageTitle: appStore.getPageTitle(),
-      pages: appStore.getPages()
+      pages: appStore.getPages(),
+      url: appStore.getUrl()
     };
   }
 )));
