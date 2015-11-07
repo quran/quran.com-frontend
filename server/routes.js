@@ -16,7 +16,7 @@ export default function(server) {
   });
 
   server.get(/^\/(images|fonts)\/.*/, function(req, res) {
-    res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
+    res.redirect(301, 'https://quran-1f14.kxcdn.com' + req.path);
   });
 
   server.get('/api/*', cache('60 minutes'), function(req, res) {
