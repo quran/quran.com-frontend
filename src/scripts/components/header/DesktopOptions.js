@@ -16,7 +16,7 @@ class DesktopOptions extends React.Component {
   }
 
   render() {
-    debug('COMPONENT-DESKTOP OPTIONS');
+    debug('component:DESKTOP OPTIONS', 'Render');
     return (
       <div className="row navbar-bottom hidden-xs hidden-sm">
         <div className="options">

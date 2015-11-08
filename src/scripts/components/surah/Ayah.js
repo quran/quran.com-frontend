@@ -168,7 +168,7 @@ class Ayah extends React.Component {
   }
 
   render() {
-    debug(`COMPONENT-AYAH RENDERED ${this.props.ayah.ayah_num}`);
+    debug(`component:Ayah`, `Render ${this.props.ayah.ayah_num}`);
 
     if (this.props.readingMode) {
       return this.text();

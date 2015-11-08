@@ -6,8 +6,8 @@ import debug from 'utils/Debug';
 import classNames from 'classnames';
 
 class SurahsNav extends React.Component{
-  constructor(props) {
-    super(props);
+  constructor(props, context) {
+    super(props, context);
   }
 
   list() {
@@ -37,10 +37,12 @@ class SurahsNav extends React.Component{
   }
 
   shouldComponentUpdate(nextState, nextProps) {
-    return this.props.surahs.length !== nextState.surahs.length;
+    return false;
   }
 
   render() {
+    debug('component:SurahsNav', 'Render');
+
     let classes = classNames({
       'surahs-nav col-md-12 col-xs-12': true
     }) + ' ' + this.props.className;
@@ -57,7 +59,6 @@ class SurahsNav extends React.Component{
 
 SurahsNav.contextTypes = {
   getStore: React.PropTypes.func.isRequired,
-  executeAction: React.PropTypes.func.isRequired
 };
 
 SurahsNav = connectToStores(SurahsNav, [SurahsStore], (context, props) => {

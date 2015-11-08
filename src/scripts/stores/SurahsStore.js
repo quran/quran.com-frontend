@@ -77,7 +77,7 @@ class SurahsStore extends BaseStore {
 SurahsStore.storeName = 'SurahsStore';
 SurahsStore.handlers = {
   surahsReceived(data) {
-    debug('STORES-SURAHS RECEIVED');
+    debug('stores:Surahs', 'Surahs Received');
     this.surahs = data.surahs;
 
     if (data.surah) {

@@ -181,6 +181,10 @@ class Surah extends React.Component {
     });
   }
 
+  componentDidUpdate() {
+    debug('component:Surah', 'componentDidUpdate');
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.ayahs.length < nextProps.ayahs.length) {
       this.setState({loading: false, endOfSurah: false});
@@ -195,7 +199,7 @@ class Surah extends React.Component {
   }
 
   render() {
-    debug('COMPONENT-SURAH');
+    debug('component:Surah', 'Render');
     this.onScroll();
 
     return (
@@ -235,6 +239,7 @@ Surah.contextTypes = {
 };
 
 Surah = connectToStores(Surah, [AyahsStore], (context, props) => {
+  debug('component:Surah', 'connectToStores');
   const ayahsStore = context.getStore(AyahsStore);
   return {
     ayahs: ayahsStore.getAyahs()

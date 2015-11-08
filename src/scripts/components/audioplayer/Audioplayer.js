@@ -264,7 +264,7 @@ class Audioplayer extends React.Component {
   }
 
   render() {
-    debug('Component-Audioplayer');
+    debug('component:Audioplayer', 'Render');
 
     var currentAyahId = this.props.currentAyah ? this.props.currentAyah.ayah_num : '';
     var content;

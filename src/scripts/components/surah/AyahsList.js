@@ -42,7 +42,7 @@ class AyahsList extends React.Component {
   }
 
   render() {
-    debug('COMPONENT-AYAHSLIST');
+    debug('component:AYAHSLIST', 'Render');
 
     if (this.props.isReadingMode) {
       return (

@@ -1,11 +1,12 @@
-import superagent from 'superagent';
+var Promise = require('promise');
+var request = require('superagent-promise')(require('superagent'), Promise);
+
 import * as Settings from 'constants/Settings';
 // Cache for the time being until we change this
 const apicache = require('apicache')
 const cache = apicache.options({ debug: true }).middleware;
 
-import debugLib from 'debug';
-const debug = debugLib('quran');
+import debug from 'utils/Debug';
 
 export default function(server) {
   server.get('/api/cache/index', function(req, res, next) {
@@ -19,16 +20,17 @@ export default function(server) {
     res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
   });
 
-  server.get('/api/*', cache('60 minutes'), function(req, res) {
-    debug(`To API: ${req.url}`);
+  server.use('/api/*', function(req, res) {
+    debug('api:API', `Request: ${req.url}`);
 
-    superagent.get(Settings.api + req.url.substr(5))
-    .end(function(err, response) {
-      if (err) {
-        console.info('Errored API at: ' + req.url);
-        return res.status(500).send(response);
-      }
+    request.get(`${Settings.api}/${req.originalUrl.substr(4)}`)
+    .end()
+    .then(function(response) {
+      debug('api:API', `Respond: ${req.url}`);
       return res.status(200).send(response.body);
+    }, function() {
+      console.info('Errored API at: ' + req.url);
+      return res.status(500).send(response);
     });
   });
 

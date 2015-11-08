@@ -10,12 +10,12 @@ export function getSurahs(actionContext, payload) {
     return;
   }
 
-  debug('ACTIONS-SURAHS');
+  debug('action:Surahs', 'getSurahs');
 
   return request.get(urlSettings.url + 'surahs')
   .end()
   .then(function(res) {
-    debug('SURAHS RECEIVED....');
+    debug('action:Surahs', 'getSurahs Resolved');
 
     actionContext.dispatch('surahsReceived', {surahs: res.body, surah: payload});
   });

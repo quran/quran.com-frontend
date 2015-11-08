@@ -15,7 +15,7 @@ class Application extends React.Component {
   render() {
     const Handler = this.props.currentRoute.get('handler');
 
-    debug('COMPONENT-APPLICATION');
+    debug('component:APPLICATION', 'Render');
     return (
       <div>
         <Handler />

@@ -140,7 +140,7 @@ class MasterHeader extends React.Component{
     var currentSurah = this.context.getStore('SurahsStore')
       .getSurahs()[this.props.currentRoute.get('params').get('surahId') - 1];
 
-    debug('Component-MasterHeader');
+    debug('component:MasterHeader', 'Render');
     return (
       <nav className="navbar navbar-default navbar-fixed-top montserrat shrink" role="navigation">
         <div className="container-fluid">

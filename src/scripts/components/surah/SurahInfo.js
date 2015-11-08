@@ -2,6 +2,7 @@ import React from 'react';
 import SurahsStore from 'stores/SurahsStore';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import $ from 'jquery';
+import debug from 'utils/Debug';
 
 class SurahInfo extends React.Component {
   constructor() {
@@ -82,6 +83,8 @@ class SurahInfo extends React.Component {
   }
 
   render() {
+    debug('component:SurahInfo', 'Render');
+
     if (this.props.isExpanded) {
       return this.renderInformation();
     }

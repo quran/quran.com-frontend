@@ -29,9 +29,9 @@ class Html extends React.Component {
             {Object.keys(this.props.assets.styles).map((style, i) =>
               <link href={this.props.assets.styles[style]} key={i} media="screen, projection"
                     rel="stylesheet" type="text/css"/>)}
-            {this.props.fontFaces.map(function(font) {
+            {this.props.fontFaces.map(function(font, i) {
               return (
-                <style type="text/css" dangerouslySetInnerHTML={{__html: font}} />
+                <style type="text/css" dangerouslySetInnerHTML={{__html: font}} key={i} />
               );
             })}
 
