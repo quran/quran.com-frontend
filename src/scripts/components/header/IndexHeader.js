@@ -2,6 +2,7 @@ import React from 'react';
 import SearchInput from 'components/header/SearchInput';
 import IndexHeaderNav from 'components/header/IndexHeaderNav';
 import {NavLink} from 'fluxible-router';
+import debug from 'utils/Debug';
 
 class IndexHeader extends React.Component {
   renderSearch() {
@@ -32,6 +33,8 @@ class IndexHeader extends React.Component {
   }
 
   render() {
+    debug('component:IndexHeader', 'Render');
+
     return (
       <div className="index-header">
         <IndexHeaderNav navlink={this.props.navlink} />

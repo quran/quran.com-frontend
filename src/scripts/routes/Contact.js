@@ -3,6 +3,7 @@ var Promise = require('promise');
 var request = require('superagent-promise')(require('superagent'), Promise);
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import IndexHeader from 'components/header/IndexHeader';
 import Settings from 'constants/Settings';
 
@@ -19,11 +20,11 @@ class Contact extends React.Component {
     e.preventDefault();
 
     let toSubmit = {
-      subject: React.findDOMNode(this.refs.purpose).value.trim(),
-      description: React.findDOMNode(this.refs.body).value.trim(),
+      subject: ReactDOM.findDOMNode(this.refs.purpose).value.trim(),
+      description: ReactDOM.findDOMNode(this.refs.body).value.trim(),
       requester: {
-        name: React.findDOMNode(this.refs.name).value.trim(),
-        email: React.findDOMNode(this.refs.email).value.trim(),
+        name: ReactDOM.findDOMNode(this.refs.name).value.trim(),
+        email: ReactDOM.findDOMNode(this.refs.email).value.trim(),
         locale_id: 8
       }
     };

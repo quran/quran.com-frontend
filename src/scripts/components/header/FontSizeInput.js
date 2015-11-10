@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import * as AyahsActions from 'actions/AyahsActions';
 import $ from 'jquery';
 
@@ -15,7 +16,7 @@ class FontSizeInput extends React.Component {
 
   componentDidMount() {
     this.setState({
-      initWidth: $(React.findDOMNode(this)).width()
+      initWidth: $(ReactDOM.findDOMNode(this)).width()
     });
   }
 

@@ -186,6 +186,7 @@ class Surah extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    debug('component:Surah', 'shouldComponentUpdate');
     if (this.props.ayahs.length < nextProps.ayahs.length) {
       this.setState({loading: false, endOfSurah: false});
       return true;

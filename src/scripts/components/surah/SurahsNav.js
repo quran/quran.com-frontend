@@ -11,10 +11,10 @@ class SurahsNav extends React.Component{
   }
 
   list() {
-    return this.props.surahs.map((surah) => {
+    return this.props.surahs.map((surah, index) => {
       return (
-        <li key={surah.id + 'surah'}>
-          <NavLink routeName="surah" navParams={{surahId: surah.id}}>
+        <li key={`surah-${index}`}>
+          <NavLink routeName="surah" navParams={{surahId: surah.id}} activeClass="active">
             <div className="row">
               <div className="col-md-2 col-xs-2">
                 <span className="surah-num">
@@ -44,8 +44,9 @@ class SurahsNav extends React.Component{
     debug('component:SurahsNav', 'Render');
 
     let classes = classNames({
-      'surahs-nav col-md-12 col-xs-12': true
-    }) + ' ' + this.props.className;
+      'surahs-nav col-md-12 col-xs-12': true,
+      [this.props.className]: true
+    });
 
     return (
       <div className={classes}>

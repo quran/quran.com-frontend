@@ -4,6 +4,7 @@ import {NavLink} from 'fluxible-router';
 import {connectToStores, provideContext} from 'fluxible-addons-react';
 import SurahsStore from 'stores/SurahsStore';
 import UserStore from 'stores/UserStore';
+import debug from 'utils/Debug';
 
 class Index extends React.Component {
   constructor(props) {
@@ -11,6 +12,8 @@ class Index extends React.Component {
   }
 
   renderColumn(array) {
+    debug('component:Index', 'renderColumn');
+
     return array.map((surah, i) => {
       return (
         <li className="row link" key={surah.id}>
@@ -76,6 +79,7 @@ class Index extends React.Component {
   }
 
   render() {
+    debug('component:Index', 'Render');
     return (
         <div className="index-page">
           <IndexHeader />

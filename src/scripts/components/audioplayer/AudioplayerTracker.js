@@ -1,9 +1,10 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import $ from 'jquery';
 
 class AudioplayerTracker extends React.Component {
   componentWillReceiveProps(nextProps) {
-    var $element = $(React.findDOMNode(this));
+    var $element = $(ReactDOM.findDOMNode(this));
 
     $element.css(
       'left',

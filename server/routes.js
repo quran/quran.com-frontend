@@ -1,6 +1,7 @@
 var Promise = require('promise');
 var request = require('superagent-promise')(require('superagent'), Promise);
 
+import ls from 'loopstacks';
 import * as Settings from 'constants/Settings';
 // Cache for the time being until we change this
 const apicache = require('apicache')
@@ -9,6 +10,11 @@ const cache = apicache.options({ debug: true }).middleware;
 import debug from 'utils/Debug';
 
 export default function(server) {
+  server.use(ls({
+    app: server,
+    path: '/loopstacks'
+  }));
+
   server.get('/api/cache/index', function(req, res, next) {
     return res.status(200).send(apicache.getIndex());
   });
@@ -20,10 +26,10 @@ export default function(server) {
     res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
   });
 
-  server.use('/api/*', function(req, res) {
+  server.all('/api/*', cache('60 minutes'), function(req, res) {
     debug('api:API', `Request: ${req.url}`);
 
-    request.get(`${Settings.api}/${req.originalUrl.substr(4)}`)
+    request.get(`${Settings.api}/${req.url.substr(4)}`)
     .end()
     .then(function(response) {
       debug('api:API', `Respond: ${req.url}`);

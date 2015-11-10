@@ -17,6 +17,7 @@
       padding: 0px 15px 20px;
       a{
         color: rgba(#fff, 0.50);
+        &.active,
         &:hover{
           color: #fff !important;
           span{
