@@ -42,9 +42,7 @@ input[type=range] {
     position: absolute;
     width: 0;
     height: 0;
-    border-left: 200px solid transparent;
-    border-right: 0px solid transparent;
-    border-bottom: 8px solid darken($cream, 20%);
+    border-bottom: 4px solid darken($cream, 20%);
     z-index: 98;
     top: 50%;
     left: 0px;

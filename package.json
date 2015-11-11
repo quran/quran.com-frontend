@@ -59,6 +59,7 @@
     "json-loader": "~0.5.1",
     "jsx-loader": "^0.13.2",
     "keen-js": "^3.2.7",
+    "loopstacks": "0.0.3",
     "morgan": "^1.6.1",
     "node-sass": "^3.2.0",
     "promise": "^7.0.4",

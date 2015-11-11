@@ -1,6 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import {navigateAction} from 'fluxible-router';
 import classNames from 'classnames';
+import debug from 'utils/Debug';
 
 class SearchInput extends React.Component {
   constructor(props, context) {
@@ -9,7 +11,7 @@ class SearchInput extends React.Component {
 
   search(e) {
     if (e.key === 'Enter' || e.keyCode === 13 || e.type === 'click') {
-      let inputEl = React.findDOMNode(this).querySelector('input'),
+      let inputEl = ReactDOM.findDOMNode(this).querySelector('input'),
         searching = inputEl.value.trim(),
         ayah, pattern, surah;
 
@@ -57,8 +59,11 @@ class SearchInput extends React.Component {
   render() {
     var className = classNames({
       'right-inner-addon': true,
-      'searchinput': true
-    }) + ' ' + this.props.className;
+      'searchinput': true,
+      [this.props.className]: true
+    });
+
+    debug('component:SearchInput', 'Render');
 
     return (
       <div className={className}>

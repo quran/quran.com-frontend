@@ -1,6 +1,7 @@
 import {createMockComponentContext} from 'fluxible/utils';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react/lib/ReactTestUtils';
 import Audioplayer from 'components/audioplayer/Audioplayer';
 import provideContext from 'fluxible-addons-react/provideContext';
@@ -33,7 +34,7 @@ describe('Audioplayer', function() {
       <AudioplayerClass context={context}  />
     );
 
-    node = React.findDOMNode(component);
+    node = ReactDOM.findDOMNode(component);
 
     foundComponent = ReactTestUtils.findAllInRenderedTree(component, function(t) {
       return t.constructor.name === 'Audioplayer';

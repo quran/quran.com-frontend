@@ -1,6 +1,7 @@
 import {createMockComponentContext} from 'fluxible/utils';
 
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ReactTestUtils from 'react/lib/ReactTestUtils';
 import Pagination from 'components/Pagination';
 import Immutable from 'immutable';
@@ -31,7 +32,7 @@ describe('Pagination', function() {
         <PaginationClass totalHits={100} hitsPerPage={20} context={context}/>
       );
 
-      node = React.findDOMNode(component);
+      node = ReactDOM.findDOMNode(component);
     }
   });
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import * as AyahsActions from 'actions/AyahsActions';
 import $ from 'jquery';
 
@@ -7,16 +8,9 @@ class FontSizeInput extends React.Component {
     super(props, context);
 
     this.state = {
-      fontSize: 49,
-      initWidth: 100
+      fontSize: 49
     };
 
-  }
-
-  componentDidMount() {
-    this.setState({
-      initWidth: $(React.findDOMNode(this)).width()
-    });
   }
 
   onChange(e) {
@@ -37,7 +31,7 @@ class FontSizeInput extends React.Component {
   render() {
     let styleText = `
       .ayah_num b, .word-font{font-size: ${this.state.fontSize}px !important}
-      input[type=range]:after{border-left-width: ${this.state.initWidth}px}`;
+      `;
     return (
       <div className="input-range-container">
         <style dangerouslySetInnerHTML={{__html: styleText}} />

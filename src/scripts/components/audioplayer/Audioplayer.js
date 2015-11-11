@@ -72,7 +72,6 @@ class Audioplayer extends React.Component {
   componentWillUnmount() {
     this.pause();
     this.props.currentAudio.src = null;
-    this.props.currentAudio = null;
   }
 
   changeAyah(ayah_num, shouldPlay) {

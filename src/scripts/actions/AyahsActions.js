@@ -6,7 +6,7 @@ import UserStore from 'stores/UserStore';
 import debug from 'utils/Debug';
 
 export function getAyahs(actionContext, params) {
-  debug('ACTIONS-AYAHS');
+  debug('action:Ayahs', 'getAyahs');
   return request.get(urlSettings.url + 'surahs/' + params.surahId + '/ayat')
   .query(
     Object.assign({
@@ -16,6 +16,8 @@ export function getAyahs(actionContext, params) {
   )
   .end()
   .then(function(res) {
+    debug('action:Ayahs', 'getAyahs Resolved');
+
     actionContext.dispatch('ayahsReceived', {
       ayahs: res.body
     });
@@ -33,6 +35,8 @@ export function updateAyahs(actionContext, params, done) {
   var firstAndLast = actionContext.getStore('AyahsStore').getFirstAndLast(),
     surahId = actionContext.getStore('SurahsStore').getSurahId();
 
+  debug('action:Ayahs', 'updateAyahs');
+
   actionContext.getStore(UserStore).setSingleOption(Object.keys(params)[0], params[Object.keys(params)[0]]);
 
   var queryParams = Object.assign({
@@ -42,15 +46,18 @@ export function updateAyahs(actionContext, params, done) {
 
   request.get(urlSettings.url + 'surahs/' + surahId + '/ayat')
   .query(queryParams)
-  .end(function(err, res) {
-    if (err) {
-      console.error(err);
-    }
+  .end()
+  .then((res) => {
+    debug('action:Ayahs', 'updateAyahs Resolved');
 
     actionContext.dispatch('ayahsUpdated', {
       ayahs: res.body,
       difference: Object.keys(params)
     });
+  }, () => {
+    if (err) {
+      console.error(err);
+    }
   });
 }
 
@@ -59,7 +66,8 @@ export function toggleReadingMode(actionContext) {
 }
 
 export function search(actionContext, payload, done) {
-  debug('ACTIONS-AYAHS SEARCH');
+  debug('action:Ayahs', 'search');
+
   return request.get(urlSettings.url + 'search')
   .query({
     q: payload.q,
@@ -67,6 +75,8 @@ export function search(actionContext, payload, done) {
   })
   .end()
   .then((res) => {
+    debug('action:Ayahs', 'search Resolved');
+
     actionContext.dispatch('searchReceived', res.body);
     done();
   });

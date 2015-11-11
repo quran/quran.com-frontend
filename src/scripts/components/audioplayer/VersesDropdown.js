@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
 import classNames from 'classnames';
@@ -20,7 +21,7 @@ class VersesDropdown extends React.Component {
 
     // When the dropdown is open, monitor clicks to close
     $(document).on('click.dropdownOpen', (event) => {
-      if ($(React.findDOMNode(this)).has(event.target).length === 0) {
+      if ($(ReactDOM.findDOMNode(this)).has(event.target).length === 0) {
         this.setState({
           open: false
         });

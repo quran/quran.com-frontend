@@ -34,14 +34,13 @@ class Html extends React.Component {
                 <style type="text/css" dangerouslySetInnerHTML={{__html: font}} key={i} />
               );
             })}
-
+        </head>
+        <body>
+            <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
             <script dangerouslySetInnerHTML={{__html: this.props.state}}></script>
             {Object.keys(this.props.assets.javascript).map((script, i) =>
               <script src={this.props.assets.javascript[script]} key={i}/>
             )}
-        </head>
-        <body>
-            <div id="app" dangerouslySetInnerHTML={{__html: this.props.markup}}></div>
         </body>
 
       </html>

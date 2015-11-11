@@ -2,18 +2,18 @@
 require('babel/polyfill');
 
 import ReactDOM from 'react-dom';
-import debug from 'debug';
 import app from './app';
 import reactCookie from 'react-cookie';
 import createElementWithContext from 'fluxible-addons-react/createElementWithContext';
+import debug from 'utils/Debug';
 
-const debugClient = debug('quran');
 const dehydratedState = window.App; // Sent from the server
 
 // expose debug object to browser, so that it can be enabled/disabled from browser:
 // https://github.com/visionmedia/debug#browser-support
 window.fluxibleDebug = debug;
-window.React = ReactDOM; // For chrome dev tool support
+window.ReactDOM = ReactDOM; // For chrome dev tool support
+
 window.clearCookies = function() {
   reactCookie.remove('quran');
   reactCookie.remove('content');
@@ -31,17 +31,18 @@ if (typeof window !== 'undefined') {
   });
 }
 
-debugClient('rehydrating app');
+debug('client', 'rehydrating app');
 // pass in the dehydrated server state from server.js
 app.rehydrate(dehydratedState, function (err, context) {
   if (err) {
     throw err;
   }
+
   window.context = context;
   const mountNode = document.getElementById('app');
 
-  debugClient('React Rendering');
-  React.render(createElementWithContext(context), mountNode, function () {
-    debugClient('React Rendered');
+  debug('client', 'React Rendering');
+  ReactDOM.render(createElementWithContext(context), mountNode, function () {
+    debug('client', 'React Rendered');
   });
 });

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import AudioplayerTracker from './AudioplayerTracker';
 import $ from 'jquery';
 
@@ -8,7 +9,7 @@ class AudioplayerTrack extends React.Component {
 
     this.props.changeOffset(
       e.nativeEvent.offsetX /
-      $(React.findDOMNode(this)).parent()[0].getBoundingClientRect().width
+      $(ReactDOM.findDOMNode(this)).parent()[0].getBoundingClientRect().width
     );
   }
 

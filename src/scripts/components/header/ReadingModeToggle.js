@@ -16,10 +16,10 @@ class ReadingModeToggle extends React.Component {
 
     this.setState({
       toggled: !this.state.toggled
+    }, () => {
+      document.querySelector('.nav-toggle').click();
+      this.context.executeAction(AyahsActions.toggleReadingMode);
     });
-
-    document.querySelector('.nav-toggle').click();
-    this.context.executeAction(AyahsActions.toggleReadingMode);
   }
 
   renderIcon() {
