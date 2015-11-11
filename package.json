@@ -61,6 +61,7 @@
     "keen-js": "^3.2.7",
     "loopstacks": "0.0.3",
     "morgan": "^1.6.1",
+    "newrelic": "^1.23.1",
     "node-sass": "^3.2.0",
     "promise": "^7.0.4",
     "proxy-middleware": "^0.14.0",
