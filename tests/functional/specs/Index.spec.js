@@ -22,9 +22,9 @@ module.exports = {
     index.expect.element('@firstSurah').to.be.present;
     index.expect.element('@lastSurah').to.be.present;
 
-    index.expect.element('@firstSurah').text.to.contain('THE OPENER');
+    index.expect.element('@firstSurah').text.to.contain('The Opener');
     index.expect.element('@firstSurah').text.to.contain('Al-Fatihah');
-    index.expect.element('@lastSurah').text.to.contain('THE MANKIND');
+    index.expect.element('@lastSurah').text.to.contain('The Mankind');
     index.expect.element('@lastSurah').text.to.contain('An-Nas');
 
     client.end();
