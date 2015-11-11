@@ -36,7 +36,7 @@ class IndexHeader extends React.Component {
     debug('component:IndexHeader', 'Render');
 
     return (
-      <div className="index-header">
+      <div className="index-header" style={{backgroundColor: '#2CA4AB'}}>
         <IndexHeaderNav navlink={this.props.navlink} />
         <div className="container">
           <div className="row">
