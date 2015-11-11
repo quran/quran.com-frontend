@@ -6,7 +6,7 @@ class NavBrand extends React.Component {
     return (
       <div className="col-md-12 col-xs-12 navbar-brand">
         <NavLink href="/">
-          <img src="//quran-1f14.kxcdn.com/images/logo-md-w.png" alt="" className="logo" />
+          <img src="https://quran-1f14.kxcdn.com/images/logo-md-w.png" alt="" className="logo" />
         </NavLink>
         <span className="title">THE NOBLE QURAN</span>
         <span className="menu visible-xs"

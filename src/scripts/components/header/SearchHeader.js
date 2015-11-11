@@ -10,7 +10,7 @@ class SearchHeader extends React.Component {
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
               <NavLink href="/">
-                <img src="//quran-1f14.kxcdn.com/images/logo-lg-w.png" className="logo" />
+                <img src="https://quran-1f14.kxcdn.com/images/logo-lg-w.png" className="logo" />
               </NavLink>
               <h4 className="title">THE NOBLE QUR'AN</h4>
               <SearchInput />

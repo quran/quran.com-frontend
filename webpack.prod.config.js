@@ -8,7 +8,7 @@ var webpack_isomorphic_tools_plugin = new Webpack_isomorphic_tools_plugin(requir
 module.exports = {
   output: {
     path: './build',
-    publicPath: '//assets-1f14.kxcdn.com/',
+    publicPath: 'https://assets-1f14.kxcdn.com/',
     filename: '[name]-[hash].js'
   },
   debug: false,
