@@ -6,8 +6,17 @@ import * as AudioplayerActions from 'actions/AudioplayerActions';
 import CopyToClipboard from 'copy-to-clipboard';
 import {NavLink} from 'fluxible-router';
 import debug from 'utils/Debug';
+import { I13nAnchor } from 'react-i13n';
 
 class Ayah extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      fbShareLink: `https://www.facebook.com/sharer/sharer.php?u=http://www.quran.com/${props.ayah.surah_id}/${props.ayah.ayah_num}&t=${props.ayah.text}`,
+      twShareLink: `http://www.twitter.com/intent/tweet?url=http://www.quran.com/${props.ayah.surah_id}/${props.ayah.ayah_num}&text=Quran.com ${props.ayah.surah_id}:${props.ayah.ayah_num} ${props.ayah.text}`
+    };
+  }
   translations() {
     if (!this.props.ayah.content && this.props.ayah.match) {
       return this.props.ayah.match.map((content, i) => {
@@ -157,12 +166,31 @@ class Ayah extends React.Component {
     }
   }
 
+  shareDialog(href) {
+    window.open(href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600')
+  }
+
   leftControls() {
     return (
       <div className="col-md-1 left-controls">
         {this.ayahBadge()}
         {this.playLink()}
         {this.copyLink()}
+        <I13nAnchor href={this.state.fbShareLink}
+          i13nModel={{category: 'social', action: 'click'}}
+          onClick={this.shareDialog.bind(this, this.state.fbShareLink)}
+          target="_blank" title="Share on Facebook"
+          className="text-muted">
+          Facebook
+        </I13nAnchor>
+        <I13nAnchor href={this.state.twShareLink}
+          i13nModel={{category: 'social', action: 'click'}}
+          onClick={this.shareDialog.bind(this, this.state.twShareLink)}
+          target="_blank" title="Share on Twitter"
+          className="text-muted">
+          Twitter
+        </I13nAnchor>
+
       </div>
     );
   }

@@ -66,8 +66,8 @@ module.exports = {
 			}
 		}),
     new webpack.DefinePlugin({
-      BROWSER: true,
       'process.env': {
+        BROWSER: true,
         API_URL: JSON.stringify(process.env.API_URL),
         CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
       }

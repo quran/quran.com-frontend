@@ -4,12 +4,13 @@ import provideContext from 'fluxible-addons-react/provideContext';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import { handleHistory } from 'fluxible-router';
 import debug from 'utils/Debug';
-import ga from 'react-google-analytics';
 
-ga('create', 'UA-8496014-1', 'auto');
-ga('require', 'linkid');
-ga('send', 'pageview');
-const GAInitiailizer = ga.Initializer;
+import { ReactI13n, setupI13n } from 'react-i13n';
+import reactI13nGoogleAnalytics from 'react-i13n-ga';
+
+const gaPlugin = new reactI13nGoogleAnalytics('UA-8496014-1');
+if (process.env.BROWSER) ga('require', 'linkid');
+
 
 class Application extends React.Component {
   render() {
@@ -47,7 +48,6 @@ class Application extends React.Component {
             </div>
           </div>
         </footer>
-        <GAInitiailizer />
       </div>
     );
   }
@@ -55,10 +55,21 @@ class Application extends React.Component {
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.pageTitle !== nextProps.pageTitle) {
       document.title = nextProps.pageTitle;
-      ga('send', 'pageview', nextProps.url);
+      // ga('send', 'pageview', nextProps.url);
+      nextProps.i13n.executeEvent('pageview', {
+        url: nextProps.url,
+        title: nextProps.pageTitle
+      });
     }
 
     return this.props.currentRoute.get('handler') !== nextProps.currentRoute.get('handler');
+  }
+
+  componentDidMount() {
+    this.props.i13n.executeEvent('pageview', {
+      url: this.props.currentNavigate.url,
+      title: this.props.pageTitle
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -72,7 +83,10 @@ class Application extends React.Component {
 };
 
 export default handleHistory(provideContext(connectToStores(
-  Application,
+  setupI13n(Application, {
+    rootModelData: {site: 'application'},
+    isViewportEnabled: true
+  }, [gaPlugin.getPlugin()]),
   [ApplicationStore],
   function (context, props) {
     var appStore = context.getStore(ApplicationStore);
