@@ -45,7 +45,9 @@ var webpackConfig = {
         loader: 'babel',
         query: {
           stage: 0,
-          plugins: []
+          plugins: [
+            'babel-plugin-object-assign'
+          ]
         }
       },
       { test: /\.json$/, loader: 'json-loader'},

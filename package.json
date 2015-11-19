@@ -26,6 +26,7 @@
     "autoprefixer-loader": "^3.1.0",
     "babel": "^5.8.23",
     "babel-loader": "5.3.2",
+    "babel-plugin-transform-object-assign": "^6.1.18",
     "babel-plugin-typecheck": "1.2.0",
     "body-parser": "^1.14.1",
     "bootstrap-sass": "~3.3.1",
