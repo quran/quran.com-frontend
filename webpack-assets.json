@@ -1,0 +1,9 @@
+{
+  "javascript": {
+    "main": "/public/main.js"
+  },
+  "styles": {
+    "main": "/public/main.css"
+  },
+  "assets": {}
+}

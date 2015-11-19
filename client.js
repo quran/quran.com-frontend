@@ -1,5 +1,5 @@
 /*global document, window, $ */
-require('babel/polyfill');
+import 'babel-polyfill';
 
 import ReactDOM from 'react-dom';
 import app from './app';

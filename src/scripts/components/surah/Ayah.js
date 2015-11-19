@@ -67,7 +67,7 @@ class Ayah extends React.Component {
       return;
     }
 
-    let text = this.props.ayah.quran.map(word => {
+    let ayahText = this.props.ayah.quran.map(word => {
       let className = `${word.char.font} ${word.highlight ? word.highlight: null}`;
 
       if (word.word.translation) {
@@ -103,7 +103,7 @@ class Ayah extends React.Component {
 
     return (
       <h1 className="word-font text-right">
-        {text}
+        {ayahText}
       </h1>
     );
   }
