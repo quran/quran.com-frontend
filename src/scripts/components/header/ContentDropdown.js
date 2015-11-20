@@ -24,7 +24,7 @@ class ContentDropdown extends React.Component {
       this.setState({
         options: res.body
       });
-    }.bind(this));
+    });
   }
 
   chosenOption(id, e) {

@@ -44,8 +44,14 @@ var webpackConfig = {
         exclude: [/server/, /node_modules/, /tests/],
         loader: 'babel',
         query: {
-          stage: 0,
-          plugins: []
+          presets: [
+            'react',
+            'stage-0',
+            'es2015'
+          ],
+          plugins: [
+            'transform-object-assign'
+          ]
         }
       },
       { test: /\.json$/, loader: 'json-loader'},
@@ -70,8 +76,8 @@ var webpackConfig = {
       "windows.jQuery": "jquery"
     }),
     new webpack.DefinePlugin({
+      BROWSER: true,
       'process.env': {
-        BROWSER: true,
         API_URL: JSON.stringify(process.env.API_URL),
         CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
       }
@@ -95,19 +101,19 @@ var webpackConfig = {
 };
 // The reason this is here and NOT in .babelrc like it should is because our
 // nodejs server picks up babel too and isn't happy with this!
-webpackConfig.module.loaders[0].query.plugins.push('react-transform');
-webpackConfig.module.loaders[0].query.extra = {
-  'react-transform': {
-    transforms: [{
-      transform: 'react-transform-hmr',
-      imports: ['react'],
-      locals: ['module']
-    },
-    {
-      "transform": "react-transform-catch-errors",
-      "imports": ["react", "redbox-react"]
-    }]
-  }
-};
+// webpackConfig.module.loaders[0].query.plugins.push('react-transform');
+// webpackConfig.module.loaders[0].query.extra = {
+//   'react-transform': {
+//     transforms: [{
+//       transform: 'react-transform-hmr',
+//       imports: ['react'],
+//       locals: ['module']
+//     },
+//     {
+//       "transform": "react-transform-catch-errors",
+//       "imports": ["react", "redbox-react"]
+//     }]
+//   }
+// };
 
 module.exports = webpackConfig;

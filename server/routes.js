@@ -2,7 +2,7 @@ var Promise = require('promise');
 var request = require('superagent-promise')(require('superagent'), Promise);
 
 import ls from 'loopstacks';
-import * as Settings from 'constants/Settings';
+import Settings from 'constants/Settings';
 import debug from 'utils/Debug';
 
 export default function(server) {
