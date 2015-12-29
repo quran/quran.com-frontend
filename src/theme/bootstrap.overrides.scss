@@ -1,0 +1,78 @@
+// These will appear global. They are here cause this is after boostrap has compiled
+@import "./helpers.scss";
+@import "./fonts.scss";
+
+// Override your favorite components!
+.navbar-brand {
+  position: relative;
+  width: 6.5em;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  // Leaving this empty cause I will end up changing things here.
+}
+
+.btn{
+  border-bottom: 2px solid $peek_light_black;
+
+  &:hover{
+    border-bottom: 2px solid $peek_light_black;
+  }
+}
+
+
+.carousel-fade {
+  .carousel-inner {
+    .item {
+      transition-property: opacity;
+    }
+
+    .item,
+    .active.left,
+    .active.right {
+      opacity: 0;
+    }
+
+    .active,
+    .next.left,
+    .prev.right {
+      opacity: 1;
+    }
+
+    .next,
+    .prev,
+    .active.left,
+    .active.right {
+      left: 0;
+      transform: translate3d(0, 0, 0);
+    }
+  }
+
+  .carousel-control {
+    z-index: 2;
+  }
+}
+
+.no-active{
+  a{
+    color: $link-color !important;
+    background-color: initial !important;
+  }
+}
+
+.slick-slider{
+  border: 1px solid $peek_light_gray;
+}
+.slick-prev{
+  left: -40px;
+}
+.slick-next{
+  right: -30px;
+}
+.slick-next:before,
+.slick-prev:before{
+  color: $link-color;
+  font-size: 30px;
+}

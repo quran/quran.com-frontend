@@ -1,0 +1,60 @@
+@import '../../theme/variables.scss';
+
+:local(.header){
+  background: url('../../../static/images/index-bg.jpg') center center no-repeat;
+  background-size: cover;
+
+  .nav{
+    width: 100%;
+    padding: 5px 15px;
+
+    .nav-button{
+      display: none;
+      float: right;
+
+      background-color: #fff;
+      color: $brand-primary;
+
+      @media(max-width: $screen-xs-max) {
+        display: block;
+      }
+    }
+
+    .links{
+      float: right;
+      list-style: none;
+
+      @media(max-width: $screen-xs-max) {
+        display: none;
+
+        &.open{
+          display: block;
+        }
+      }
+
+      li{
+        display: inline-block;
+        padding-right: 15px;
+
+        a{
+          color: #fff;
+
+          &:hover{
+            opacity: 0.8;
+          }
+        }
+      }
+    }
+
+  }
+  .logo{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 30%;
+  }
+  .title{
+    color: lighten($brand-primary, 30%);
+    font-size: 160%;
+    padding-bottom: 3.5%;
+  }
+}

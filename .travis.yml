@@ -1,0 +1,19 @@
+sudo: false
+language: node_js
+matrix:
+  include:
+    - env: TEST_SUITE=functional NODE_ENV=test PORT=4600 NODE_PATH="./src"
+      before_script:
+        - npm run build
+env: TEST_SUITE=unit NODE_ENV=test
+node_js:
+  - "5.1.0"
+cache:
+  directories:
+    - node_modules
+install:
+  - npm install
+notifications:
+  email: false
+
+script: "npm run test:ci:$TEST_SUITE"

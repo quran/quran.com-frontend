@@ -1,0 +1,13 @@
+.idea/
+node_modules/
+dist/
+coverage/
+*.iml
+webpack-assets.json
+webpack-stats.json
+npm-debug.log
+selenium-debug.log
+phantomjsdriver.log
+stats.json
+tests/functional/output/*
+tests/functional/screenshots/*

@@ -1,0 +1,10 @@
+@import '../../../theme/variables.scss';
+
+:local .track{
+  background: $track-bg;
+  display: block;
+  height: 100%;
+  width: 100%;
+  user-select: none;
+  cursor: pointer;
+}

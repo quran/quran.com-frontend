@@ -1,0 +1,8 @@
+:local .container{
+  text-align: center;
+}
+:local .loader {
+  background: transparent url('../../../static/images/loading.gif') no-repeat center center;
+  background-size: contain;
+  min-height: 70px;
+}

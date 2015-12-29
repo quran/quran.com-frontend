@@ -1,0 +1,88 @@
+@import '../../../../theme/variables.scss';
+
+:local .dropdown{
+  min-width: 300px;
+
+  :global(ul){
+    height: 400px;
+    overflow: auto;
+    width: 100%;
+  }
+}
+
+.item{
+  $checkbox-left: 20px;
+  $checkbox-top: 4px;
+  $checkbox-height: 12px;
+  $checkbox-width: 12px;
+
+  .label{
+    color: #fff;
+    font-weight: 300;
+  }
+
+  .checkbox:not(:checked),
+  .checkbox:checked {
+    position: absolute;
+    left: -9999px;
+  }
+
+  .checkbox:not(:checked) + .label,
+  .checkbox:checked + .label {
+    position: relative;
+    padding-left: $checkbox-left + 20;
+    cursor: pointer;
+    width: 100%;
+  }
+
+  /* checkbox aspect */
+  .checkbox:not(:checked) + .label:before,
+  .checkbox:checked + .label:before {
+    content: '';
+    position: absolute;
+    left: $checkbox-left;
+    top: $checkbox-top;
+    width: $checkbox-width;
+    height: $checkbox-height;
+    border: 1px solid lighten($cream, 15%);;
+    background: transparent;
+  }
+  /* checked mark aspect */
+  .checkbox:not(:checked) + .label:after,
+  .checkbox:checked + .label:after {
+    content: '✔';
+    position: absolute;
+    top: $checkbox-top - 1;
+    left: $checkbox-left + 2px;
+    font-size: 10px;
+    color: lighten($cream, 15%);;
+    transition: all .2s;
+  }
+  /* checked mark aspect changes */
+  .checkbox:not(:checked) + .label:after {
+    opacity: 0;
+    transform: scale(0);
+  }
+  .checkbox:checked + .label:after {
+    opacity: 1;
+    transform: scale(1);
+  }
+  /* disabled checkbox */
+  .checkbox:disabled:not(:checked) + .label:before,
+  .checkbox:disabled:checked + .label:before {
+    box-shadow: none;
+    border-color: #bbb;
+    background-color: #ddd;
+  }
+  .checkbox:disabled:checked + .label:after {
+    color: #999;
+  }
+  .checkbox:disabled + .label {
+    color: #aaa;
+  }
+  /* accessibility */
+  .checkbox:checked:focus + .label:before,
+  .checkbox:not(:checked):focus + .label:before {
+    border: 1px solid $olive;
+  }
+}

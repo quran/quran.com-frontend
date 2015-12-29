@@ -1,0 +1,66 @@
+$sizes: (
+  xs: 0.25,
+  sm: 0.5,
+  md: 1.0,
+  lg: 2.1
+);
+
+$attributes: (
+  'margin',
+  'padding'
+);
+
+@each $size, $measurement in $sizes{
+  @each $attribute in $attributes{
+    .#{$attribute}-#{$size}-all{
+      #{$attribute}: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-top{
+      #{$attribute}-top: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-bottom{
+      #{$attribute}-bottom: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}{
+      #{$attribute}: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-left{
+      #{$attribute}-left: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-right{
+      #{$attribute}-right: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-v{
+      #{$attribute}-top: #{$measurement}em;
+      #{$attribute}-bottom: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-h{
+      #{$attribute}-left: #{$measurement}em;
+      #{$attribute}-right: #{$measurement}em;
+    }
+  }
+}
+.margin-none{
+  margin: 0;
+}
+.padding-none{
+  padding: 0;
+}
+
+.inline{
+  display: inline;
+}
+.inline-block{
+  display: inline-block;
+}
+.block{
+  display: block;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.text-peek{
+  color: $peek_yellow;
+}
