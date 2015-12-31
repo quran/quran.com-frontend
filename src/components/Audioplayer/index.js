@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Col } from 'react-bootstrap';
 
-import { play, pause, repeat, setCurrentFile } from 'redux/modules/audioplayer';
+import { play, pause, repeat, setCurrentFile, buildOnClient } from 'redux/modules/audioplayer';
 
 import Track from './Track';
 
@@ -17,6 +17,7 @@ const style = require('./style.scss');
     currentFile: state.audioplayer.currentFile,
     isSupported: state.audioplayer.isSupported,
     isPlaying: state.audioplayer.isPlaying,
+    isLoadedOnClient: state.audioplayer.isLoadedOnClient,
     shouldRepeat: state.audioplayer.shouldRepeat
   }),
   (dispatch) => {
@@ -24,7 +25,8 @@ const style = require('./style.scss');
       play: bindActionCreators(play, dispatch),
       pause: bindActionCreators(pause, dispatch),
       repeat: bindActionCreators(repeat, dispatch),
-      setCurrentFile: bindActionCreators(setCurrentFile, dispatch)
+      setCurrentFile: bindActionCreators(setCurrentFile, dispatch),
+      buildOnClient: bindActionCreators(buildOnClient, dispatch)
     };
   },
   (stateProps, dispatchProps, ownProps) => {
@@ -49,8 +51,10 @@ export default class Audioplayer extends Component {
     currentSurah: PropTypes.object,
     files: PropTypes.object,
     currentFile: PropTypes.string,
+    buildOnClient: PropTypes.func.isRequired,
     lazyLoadAyahs: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool.isRequired,
+    isLoadedOnClient: PropTypes.bool.isRequired,
     isSupported: PropTypes.bool.isRequired,
     shouldRepeat: PropTypes.bool.isRequired,
     setCurrentFile: PropTypes.func.isRequired,
@@ -68,6 +72,14 @@ export default class Audioplayer extends Component {
       currentAudio: null,
       currentAyah: null
     };
+  }
+
+  componentDidMount() {
+    const { isLoadedOnClient, buildOnClient, currentSurah } = this.props; // eslint-disable-line no-shadow
+
+    if (!isLoadedOnClient && __CLIENT__) {
+      return buildOnClient(currentSurah.id);
+    }
   }
 
   componentWillUnmount() {
@@ -224,7 +236,8 @@ export default class Audioplayer extends Component {
       currentFile,
       isPlaying,
       shouldRepeat,
-      isSupported
+      isSupported,
+      isLoadedOnClient
     } = this.props; // eslint-disable-line no-shadow
 
     if (!isSupported) {
@@ -262,13 +275,16 @@ export default class Audioplayer extends Component {
         <div className={style.verse}>{currentFile.split(':')[1]}</div>
         {content}
         <div className={style.wrapper}>
-          <Track
-            file={files[currentFile]}
-            isPlaying={isPlaying}
-            shouldRepeat={shouldRepeat}
-            onPlay={play}
-            onPause={pause}
-            onEnd={this.onNextAyah.bind(this)} />
+          {isLoadedOnClient ?
+            <Track
+              file={files[currentFile]}
+              isPlaying={isPlaying}
+              shouldRepeat={shouldRepeat}
+              onPlay={play}
+              onPause={pause}
+              onEnd={this.onNextAyah.bind(this)} /> :
+              null
+            }
         </div>
       </li>
     );

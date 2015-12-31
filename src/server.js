@@ -79,7 +79,7 @@ app.use((req, res) => {
       // Workaround redux-router query string issue:
       // https://github.com/rackt/redux-router/issues/106
       if (routerState.location.search && !routerState.location.query) {
-        routerState.location.query = qs.parse(routerState.location.search);
+        routerState.location.query = qs.parse(routerState.location.search.slice(1));
       }
 
       store.getState().router.then(() => {

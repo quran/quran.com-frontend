@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
+import DocumentMeta from 'react-document-meta';
 
 import connectData from 'helpers/connectData';
 import createFontFaces from 'helpers/buildFontFaces';
@@ -54,6 +55,7 @@ function fetchData(getState, dispatch, location, params) {
     const ayahIds = ayahKeys.map(key => parseInt(key.split(':')[1], 10));
     const ayahs = stateProps.ayahs[ownProps.params.surahId];
 
+    // TODO: Better manage duplication of this
     createFontFaces(
       ayahKeys.map(key => ayahs[key])
     );
@@ -177,6 +179,7 @@ export default class Surah extends Component {
 
     return (
       <div>
+        <DocumentMeta title={`${currentSurah.name.simple} - The Noble Qur'an - القرآن الكريم`} extend />
         <SurahNavBar
           currentSurah={currentSurah}
           handleOptionUpdate={this.handleOptionUpdate.bind(this)}

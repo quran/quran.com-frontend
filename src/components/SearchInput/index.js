@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import ReactDOM from 'react-dom';
 import { pushState } from 'redux-router';
 import { connect } from 'react-redux';
 
@@ -8,12 +9,18 @@ const style = require('./style.scss');
 export default class SearchInput extends Component {
   static propTypes = {
     pushState: PropTypes.func,
-    className: PropTypes.string
+    className: PropTypes.string,
+    isInNavbar: PropTypes.bool,
+    value: PropTypes.string
+  }
+
+  static defaultProps = {
+    value: ''
   }
 
   search(event) {
     if (event.key === 'Enter' || event.keyCode === 13 || event.type === 'click') {
-      const searchValue = React.findDOMNode(this).querySelector('input').value;
+      const searchValue = ReactDOM.findDOMNode(this).querySelector('input').value;
       const pattern = new RegExp(/\d[\.,\:,\,]\d/);
       let ayah;
       let surah;
@@ -40,13 +47,14 @@ export default class SearchInput extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, isInNavbar, value } = this.props;
 
     return (
-      <div className={`right-inner-addon ${className} ${style.searchInput}`}>
+      <div className={`right-inner-addon ${className ? className : ''} ${style.searchInput} ${isInNavbar ? style.isInNavbar : ''}`}>
         <i className={`ss-icon ss-search ${style.icon}`} onClick={this.search.bind(this)} />
         <input type="text"
                placeholder="Search"
+               defaultValue={value}
                onKeyUp={this.search.bind(this)} />
       </div>
     );

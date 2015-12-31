@@ -7,6 +7,7 @@ import connectData from 'helpers/connectData';
 import debug from 'helpers/debug';
 
 import ImageHeader from 'components/ImageHeader';
+import SearchInput from 'components/SearchInput';
 
 import { isAllLoaded, loadAll } from 'redux/modules/surahs';
 
@@ -72,7 +73,9 @@ export default class Home extends Component {
   render() {
     return (
       <div className="index-page">
-        <ImageHeader />
+        <ImageHeader>
+          <SearchInput />
+        </ImageHeader>
         <Grid>
           <Row>
             <Col md={10} mdOffset={1}>

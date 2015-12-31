@@ -60,7 +60,7 @@ export default class SurahNavBar extends Component {
           </Nav>
 
           <Nav navbar right>
-            <SearchInput />
+            <SearchInput isInNavbar />
           </Nav>
         </CollapsibleNav>
       </Navbar>

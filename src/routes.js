@@ -8,7 +8,8 @@ import {
     Login,
     LoginSuccess,
     NotFound,
-    Surah
+    Surah,
+    Search
   } from 'containers';
 
 export default (store) => {
@@ -44,7 +45,7 @@ export default (store) => {
       { /* Routes */ }
       <Route path="about" component={About}/>
       <Route path="login" component={Login}/>
-
+      <Route path="search" component={Search}/>
       <Route path="/:surahId(/:range)" component={Surah}/>
       { /* Catch all route */ }
       <Route path="*" component={NotFound} status={404} />

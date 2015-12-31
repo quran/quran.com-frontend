@@ -31,7 +31,7 @@ export default class Ayah extends Component {
     const { ayah } = this.props;
 
     if (!ayah.content && ayah.match) {
-      return ayah.match.best.map((content, index) => {
+      return ayah.match.map((content, index) => {
         const arabic = new RegExp(/[\u0600-\u06FF]/);
         const character = content.text;
         const flag = arabic.test(character);

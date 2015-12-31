@@ -8,6 +8,7 @@ const PLAY = '@@quran/audioplayer/PLAY';
 const PAUSE = '@@quran/audioplayer/PAUSE';
 const PLAY_PAUSE = '@@quran/audioplayer/PLAY_PAUSE';
 const REPEAT = '@@quran/audioplayer/REPEAT';
+const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
 
 const initialState = {
   files: {},
@@ -15,11 +16,27 @@ const initialState = {
   currentFile: null,
   isSupported: true,
   isPlaying: false,
-  shouldRepeat: false
+  shouldRepeat: false,
+  isLoadedOnClient: false
 };
+
+let newFiles;
+let files;
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case BUILD_ON_CLIENT:
+      newFiles = buildAudioFromHash(state.files[action.surahId], state.userAgent);
+      files = Object.assign({}, state.files[action.surahId], newFiles);
+
+      return {
+        ...state,
+        isLoadedOnClient: true,
+        files: {
+          ...state.files,
+          [action.surahId]: files
+        }
+      };
     case AYAHS_LOAD_SUCCESS:
       const isSupported = testIfSupported(
         action.result.entities.ayahs[action.result.result[0]],
@@ -33,17 +50,16 @@ export default function reducer(state = initialState, action = {}) {
         };
       }
 
-      const [surahId] = action.result.result[0].split(':');
       const incoming = action.result.entities.ayahs;
-      const newFiles = buildAudioFromHash(incoming, state.userAgent);
-      const files = Object.assign({}, state.files[surahId], newFiles);
+      newFiles = __CLIENT__ ? buildAudioFromHash(incoming, state.userAgent) : incoming;
+      files = Object.assign({}, state.files[action.surahId], newFiles);
 
       return {
         ...state,
         currentFile: state.currentFile ? state.currentFile : action.result.result[0],
         files: {
           ...state.files,
-          [surahId]: files
+          [action.surahId]: files
         }
       };
     case SET_USER_AGENT:
@@ -116,5 +132,12 @@ export function playPause() {
 export function repeat() {
   return {
     type: REPEAT
+  };
+}
+
+export function buildOnClient(surahId) {
+  return {
+    type: BUILD_ON_CLIENT,
+    surahId
   };
 }

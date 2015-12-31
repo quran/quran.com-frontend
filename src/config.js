@@ -15,22 +15,33 @@ module.exports = Object.assign({
   apiUrl: process.env.API_URL,
   pirateUrl: process.env.PIRATE_URL,
   app: {
-    title: 'React Redux Example',
-    description: 'All the modern best practices in one example.',
+    title: 'The Noble Qur\'an - القرآن الكريم',
+    description: 'The Noble Qur\'an in many languages in an easy-to-use interface.',
     meta: {
       charSet: 'utf-8',
+      httpEquiv: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Content-Language': 'EN; AR'
+      },
+      name: {
+        'description': 'The Noble Qur\'an in many languages in an easy-to-use interface.',
+        'keywords': 'quran, koran, qur\'an, al quran, al kareem, surah yasin, surah yaseen, yasin, surah, holy, arabic, iman, islam, Allah, book, muslim',
+        'Charset': 'UTF-8',
+        'Distribution': 'Global',
+        'Rating': 'General'
+      },
       property: {
-        'og:site_name': 'React Redux Example',
-        'og:image': 'https://react-redux.herokuapp.com/logo.jpg',
+        'og:site_name': 'The Noble Qur\'an - القرآن الكريم',
+        'og:image': 'http://quran.com/images/thumbnail.png',
         'og:locale': 'en_US',
-        'og:title': 'React Redux Example',
-        'og:description': 'All the modern best practices in one example.',
+        'og:title': 'The Noble Qur\'an - القرآن الكريم',
+        'og:description': 'The Noble Qur\'an in many languages in an easy-to-use interface.',
+        'og:url': 'http://quran.com',
+        'og:type': 'website',
         'twitter:card': 'summary',
-        'twitter:site': '@erikras',
-        'twitter:creator': '@erikras',
-        'twitter:title': 'React Redux Example',
-        'twitter:description': 'All the modern best practices in one example.',
-        'twitter:image': 'https://react-redux.herokuapp.com/logo.jpg',
+        'twitter:title': 'The Noble Qur\'an - القرآن الكريم',
+        'twitter:description': 'The Noble Qur\'an in many languages in an easy-to-use interface.',
+        'twitter:image': 'http://quran.com/images/thumbnail.png',
         'twitter:image:width': '200',
         'twitter:image:height': '200'
       }

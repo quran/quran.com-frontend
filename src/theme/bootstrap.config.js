@@ -48,7 +48,7 @@ module.exports = {
     navs: true,
     navbar: true,
     breadcrumbs: false,
-    pagination: false,
+    pagination: true,
     pager: false,
     labels: true,
     badges: false,

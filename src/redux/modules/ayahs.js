@@ -24,8 +24,6 @@ export default function reducer(state = initialState, action = {}) {
         loading: true
       };
     case LOAD_SUCCESS:
-      const [surahId] = action.result.result[0].split(':');
-
       return {
         ...state,
         loaded: true,
@@ -33,7 +31,7 @@ export default function reducer(state = initialState, action = {}) {
         errored: false,
         entities: {
           ...state.entities,
-          [surahId]: Object.assign({}, state.entities[surahId], action.result.entities.ayahs)
+          [action.surahId]: Object.assign({}, state.entities[action.surahId], action.result.entities.ayahs)
         },
         result: Object.assign({}, state.result, action.result.result),
         fontFaces: createFontFacesArray(action.result.result.map(key => action.result.entities.ayahs[key]))
@@ -67,7 +65,8 @@ export function load(id, from, to, options = defaultOptions) {
         quran: quran,
         content: content
       }
-    })
+    }),
+    surahId: id
   };
 }
 

@@ -10,8 +10,8 @@ export default ({getState, dispatch}) => next => action => {
     }
 
     const {components, location, params} = action.payload;
-    const promise = new Promise((resolve) => {
 
+    const promise = new Promise((resolve) => {
       const doTransition = () => {
         next(action);
         Promise.all(getDataDependencies(components, getState, dispatch, location, params, true))

@@ -6,6 +6,7 @@ import { routerStateReducer } from 'redux-router';
 // import {reducer as form} from 'redux-form';
 import surahs from './surahs';
 import ayahs from './ayahs';
+import searchResults from './searchResults';
 import options from './options';
 import lines from './lines';
 import audioplayer from './audioplayer';
@@ -16,6 +17,7 @@ export default combineReducers({
   // auth,
   // form,
   ayahs,
+  searchResults,
   lines,
   surahs,
   experiments,

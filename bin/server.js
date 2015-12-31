@@ -12,7 +12,7 @@ require('app-module-path').addPath('../src');
 global.__CLIENT__ = false;
 global.__SERVER__ = true;
 // global.__DISABLE_SSR__ = (process.env.DISABLE_SSR === 'true');  // <----- DISABLES SERVER SIDE RENDERING FOR ERROR DEBUGGING
-global.__DISABLE_SSR__ = true;
+global.__DISABLE_SSR__ = false;
 global.__DEVELOPMENT__ = (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test');
 global.__TEST__ = process.env.NODE_ENV === 'test';
 
