@@ -4,7 +4,6 @@ import { Grid, Row, Col } from 'react-bootstrap';
 import DocumentMeta from 'react-document-meta';
 
 import connectData from 'helpers/connectData';
-import createFontFaces from 'helpers/buildFontFaces';
 
 import { isLoaded, load as loadAyahs } from 'redux/modules/ayahs';
 import { setCurrent as setCurrentSurah } from 'redux/modules/surahs';
@@ -54,11 +53,6 @@ function fetchData(getState, dispatch, location, params) {
     const ayahKeys = Object.keys(stateProps.ayahs[ownProps.params.surahId]);
     const ayahIds = ayahKeys.map(key => parseInt(key.split(':')[1], 10));
     const ayahs = stateProps.ayahs[ownProps.params.surahId];
-
-    // TODO: Better manage duplication of this
-    createFontFaces(
-      ayahKeys.map(key => ayahs[key])
-    );
 
     return {
       ...stateProps, ...dispatchProps, ...ownProps,

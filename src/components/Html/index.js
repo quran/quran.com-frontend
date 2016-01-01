@@ -42,12 +42,6 @@ export default class Html extends Component {
                   rel="stylesheet" type="text/css" charSet="UTF-8"/>
           )}
 
-          {(store.getState().ayahs || store.getState().searchResults).fontFaces.map((font, index) => {
-            return (
-              <style type="text/css" dangerouslySetInnerHTML={{__html: font}} key={index} />
-            );
-          })}
-
           {/* (will be present only in development mode) */}
           {/* outputs a <style/> tag with all bootstrap styles + App.scss + it could be CurrentPage.scss. */}
           {/* can smoothen the initial style flash (flicker) on page load in development mode. */}

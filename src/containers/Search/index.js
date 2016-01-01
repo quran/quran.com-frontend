@@ -8,7 +8,7 @@ import qs from 'qs';
 
 import { search, isQueried } from 'redux/modules/searchResults';
 
-import createFontFaces from 'helpers/buildFontFaces';
+// import createFontFaces from 'helpers/buildFontFaces';
 
 import connectData from 'helpers/connectData';
 
@@ -41,19 +41,7 @@ function fetchData(getState, dispatch, location) {
     results: state.searchResults.results,
     ayahs: state.searchResults.entities
   }),
-  { pushState },
-  (stateProps, dispatchProps, ownProps) => {
-    const { ayahs, results } = stateProps;
-
-    // TODO: Better manage duplication of this
-    createFontFaces(
-      results.map(key => ayahs[key])
-    );
-
-    return {
-      ...stateProps, ...dispatchProps, ...ownProps
-    };
-  }
+  { pushState }
 )
 export default class Search extends Component {
   static propTypes = {
