@@ -2,27 +2,30 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router';
+import { pushState } from 'redux-router';
 import DocumentMeta from 'react-document-meta';
 
 import connectData from 'helpers/connectData';
 import debug from 'helpers/debug';
 
-import { isLoaded, load as loadAyahs } from 'redux/modules/ayahs';
+import { clearCurrent, isLoaded, load as loadAyahs } from 'redux/modules/ayahs';
 import { setCurrent as setCurrentSurah } from 'redux/modules/surahs';
 import { setOption } from 'redux/modules/options';
 
 import Ayah from 'components/Ayah';
 import Line from 'components/Line';
+import VersesDropdown from 'components/VersesDropdown';
 import CoreLoader from 'components/CoreLoader';
 import SurahNavBar from './SurahNavBar';
 
 function fetchData(getState, dispatch, location, params) {
+  dispatch(setCurrentSurah(params.surahId));
+
   if (!isLoaded(getState())) {
     let from;
     let to;
     const { range } = params;
     const { options } = getState();
-
 
     if (range) {
       [from, to] = range.split('-');
@@ -30,8 +33,7 @@ function fetchData(getState, dispatch, location, params) {
       [from, to] = [1, 10];
     }
 
-    dispatch(setCurrentSurah(params.surahId));
-
+    dispatch(clearCurrent(params.surahId)); // In the case where you go to same surah but later ayahs.
     return dispatch(loadAyahs(params.surahId, from, to, options));
   }
 }
@@ -51,7 +53,8 @@ function fetchData(getState, dispatch, location, params) {
   }),
   {
     loadAyahsDispatch: loadAyahs,
-    setOptionDispatch: setOption
+    setOptionDispatch: setOption,
+    pushState
   },
   (stateProps, dispatchProps, ownProps) => {
     const ayahs = stateProps.ayahs[ownProps.params.surahId];
@@ -82,6 +85,7 @@ export default class Surah extends Component {
     currentSurah: PropTypes.object,
     loadAyahsDispatch: PropTypes.func,
     setOptionDispatch: PropTypes.func,
+    pushState: PropTypes.func,
     location: PropTypes.object
   }
 
@@ -97,6 +101,26 @@ export default class Surah extends Component {
       lazyLoadFinished ||
       readingModeTriggered
     );
+  }
+
+  onVerseDropdownClick(ayahNum) {
+    const { ayahIds, pushState, currentSurah } = this.props; // eslint-disable-line no-shadow
+
+    if (ayahNum > (ayahIds[ayahIds.length - 1] + 10)) {
+      // This is beyond lazy loading next page.
+      return pushState(null, `/${currentSurah.id}/${ayahNum}-${ayahNum + 10}`);
+    }
+
+    this.lazyLoadAyahs();
+  }
+
+  handleOptionUpdate(payload) {
+    const { setOptionDispatch, loadAyahsDispatch, currentSurah, ayahIds, options } = this.props;
+    const from = ayahIds[0];
+    const to = ayahIds[ayahIds.length - 1];
+
+    setOptionDispatch(payload);
+    loadAyahsDispatch(currentSurah.id, from, to, Object.assign({}, options, payload));
   }
 
   lazyLoadAyahs() {
@@ -138,15 +162,6 @@ export default class Surah extends Component {
       window.removeEventListener('scroll', onScroll, false);
       window.addEventListener('scroll', onScroll.bind(this), false);
     }
-  }
-
-  handleOptionUpdate(payload) {
-    const { setOptionDispatch, loadAyahsDispatch, currentSurah, ayahIds, options } = this.props;
-    const from = ayahIds[0];
-    const to = ayahIds[ayahIds.length - 1];
-
-    setOptionDispatch(payload);
-    loadAyahsDispatch(currentSurah.id, from, to, Object.assign({}, options, payload));
   }
 
   renderAyahs() {
@@ -210,7 +225,7 @@ export default class Surah extends Component {
 
   render() {
     debug('component:Surah', 'Render');
-    const { currentSurah, options: { isReadingMode } } = this.props;
+    const { currentSurah, ayahIds, options: { isReadingMode } } = this.props;
 
     this.initScroll();
 
@@ -220,7 +235,9 @@ export default class Surah extends Component {
         <SurahNavBar
           currentSurah={currentSurah}
           handleOptionUpdate={this.handleOptionUpdate.bind(this)}
-          lazyLoadAyahs={this.lazyLoadAyahs.bind(this)} />
+          lazyLoadAyahs={this.lazyLoadAyahs.bind(this)}>
+          <VersesDropdown ayat={currentSurah.ayat} loaded={ayahIds} onClick={this.onVerseDropdownClick.bind(this)}/>
+        </SurahNavBar>
         <Grid style={{paddingTop: 150}}>
           {currentSurah && currentSurah.bismillahPre ?
             <div className="bismillah text-center">

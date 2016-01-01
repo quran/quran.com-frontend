@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import copy from 'copy-to-clipboard';
 import { Col, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Element } from 'react-scroll';
 
 import debug from 'helpers/debug';
 
@@ -146,13 +147,13 @@ export default class Ayah extends Component {
     debug(`Component:Ayah`, `Render ${ayah.ayahNum}`);
 
     return (
-      <div className={`row ${style.ayah}`}>
+      <Element name={`ayah:${ayah.ayahNum}`} className={`row ${style.ayah}`}>
         {this.controls()}
         <Col md={11}>
           {this.text()}
           {this.translations()}
         </Col>
-      </div>
+      </Element>
     );
   }
 }

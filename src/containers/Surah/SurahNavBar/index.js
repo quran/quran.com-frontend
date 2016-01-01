@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-// import { IndexLink } from 'react-router';
 import {
   Col,
   Navbar,
@@ -13,7 +12,6 @@ import SurahsDropdown from './SurahsDropdown';
 import ReadingModeToggle from './ReadingModeToggle';
 import FontSizeDropdown from './FontSizeDropdown';
 import Audioplayer from 'components/Audioplayer';
-import VersesDropdown from 'components/VersesDropdown';
 import SearchInput from 'components/SearchInput';
 
 const style = require('./style.scss');
@@ -27,12 +25,13 @@ function zeroPad(num, places) {
 export default class SurahNavBar extends Component {
   static propTypes = {
     currentSurah: PropTypes.object,
+    children: PropTypes.object,
     handleOptionUpdate: PropTypes.func,
     lazyLoadAyahs: PropTypes.func
   }
 
   render() {
-    const { currentSurah, handleOptionUpdate, lazyLoadAyahs } = this.props;
+    const { currentSurah, handleOptionUpdate, lazyLoadAyahs, children } = this.props;
 
     return (
       <Navbar fixedTop toggleNavKey={0} fluid>
@@ -51,7 +50,7 @@ export default class SurahNavBar extends Component {
         <CollapsibleNav eventKey={0} className={style.bottomNav}>
           <Nav navbar>
             <SurahsDropdown currentSurah={currentSurah} />
-            <VersesDropdown ayat={currentSurah.ayat} />
+            {children}
             <ReciterDropdown />
             <Audioplayer currentSurah={currentSurah} lazyLoadAyahs={lazyLoadAyahs} />
             <ContentDropdown handleOptionUpdate={handleOptionUpdate} />
@@ -67,22 +66,3 @@ export default class SurahNavBar extends Component {
     );
   }
 }
-
-
-// <div className="row">
-//             {this.renderNavBrand()}
-//             {this.renderMobileOptions()}
-//             <div className="col-md-3 col-xs-3 surah-title">
-//               <img src="//quran-1f14.kxcdn.com/images/ornament-left.png" className="ornament" />
-//               {this.previousChapter()}
-//             </div>
-//             <div className="col-md-6 col-xs-6 surah-title text-center">
-//               {this.surahTitle(currentSurah)}
-//               <br />
-//               {this.surahName(currentSurah)}
-//             </div>
-//             <div className="col-md-3 col-xs-3 surah-title text-right">
-//               {this.nextChapter()}
-//               <img src="//quran-1f14.kxcdn.com/images/ornament-right.png" className="ornament" />
-//             </div>
-//           </div>
