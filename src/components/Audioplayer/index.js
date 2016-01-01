@@ -15,6 +15,7 @@ const style = require('./style.scss');
   state => ({
     files: state.audioplayer.files,
     currentFile: state.audioplayer.currentFile,
+    currentSurahId: state.audioplayer.currentSurahId,
     isSupported: state.audioplayer.isSupported,
     isPlaying: state.audioplayer.isPlaying,
     isLoadedOnClient: state.audioplayer.isLoadedOnClient,
@@ -36,7 +37,7 @@ const style = require('./style.scss');
       };
     }
 
-    const files = stateProps.files[ownProps.currentSurah.id];
+    const files = stateProps.files[stateProps.currentSurahId];
     const ayahIds = Object.keys(files);
 
     return {

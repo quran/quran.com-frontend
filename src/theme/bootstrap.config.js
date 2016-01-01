@@ -49,7 +49,7 @@ module.exports = {
     navbar: true,
     breadcrumbs: false,
     pagination: true,
-    pager: false,
+    pager: true,
     labels: true,
     badges: false,
     jumbotron: false,

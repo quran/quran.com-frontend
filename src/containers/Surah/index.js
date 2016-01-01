@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
+import { Link } from 'react-router';
 import DocumentMeta from 'react-document-meta';
 
 import connectData from 'helpers/connectData';
+import debug from 'helpers/debug';
 
 import { isLoaded, load as loadAyahs } from 'redux/modules/ayahs';
 import { setCurrent as setCurrentSurah } from 'redux/modules/surahs';
@@ -36,29 +38,33 @@ function fetchData(getState, dispatch, location, params) {
 
 @connectData(fetchData, null)
 @connect(
-  state => ({
+  (state, ownProps) => ({
     surahs: state.surahs.entities,
     ayahs: state.ayahs.entities,
     lines: state.lines.lines,
     options: state.options,
     isLoaded: state.ayahs.loaded,
     isLoading: state.ayahs.loading,
+    isChangingSurah: state.surahs.current !== ownProps.params.surahId,
     currentSurah: state.surahs.entities[state.surahs.current],
+    ayahKeys: []
   }),
   {
     loadAyahsDispatch: loadAyahs,
     setOptionDispatch: setOption
   },
   (stateProps, dispatchProps, ownProps) => {
-    const ayahKeys = Object.keys(stateProps.ayahs[ownProps.params.surahId]);
-    const ayahIds = ayahKeys.map(key => parseInt(key.split(':')[1], 10));
     const ayahs = stateProps.ayahs[ownProps.params.surahId];
+    const ayahKeys = Object.keys(ayahs);
+    const ayahIds = ayahKeys.map(key => parseInt(key.split(':')[1], 10));
+    const isEndOfSurah = ayahIds.length === stateProps.currentSurah.ayat;
 
     return {
       ...stateProps, ...dispatchProps, ...ownProps,
       ayahs,
       ayahKeys,
-      ayahIds
+      ayahIds,
+      isEndOfSurah
     };
   }
 )
@@ -68,18 +74,28 @@ export default class Surah extends Component {
     lines: PropTypes.array,
     isLoaded: PropTypes.bool,
     isLoading: PropTypes.bool,
+    isChangingSurah: PropTypes.bool,
+    isEndOfSurah: PropTypes.bool,
     options: PropTypes.object,
     ayahKeys: PropTypes.array,
     ayahIds: PropTypes.array,
     currentSurah: PropTypes.object,
     loadAyahsDispatch: PropTypes.func,
-    setOptionDispatch: PropTypes.func
+    setOptionDispatch: PropTypes.func,
+    location: PropTypes.object
   }
 
   shouldComponentUpdate(nextProps) {
+    const routingToSameComponent = !this.props.isChangingSurah && nextProps.isChangingSurah;
+    const routingToSameComponentFinished = this.props.isChangingSurah && !nextProps.isChangingSurah;
+    const lazyLoadFinished = !routingToSameComponent && (!this.props.isLoaded && nextProps.isLoaded);
+    const readingModeTriggered = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
+
     return (
-      (nextProps.isLoaded) ||
-      (this.props.options.isReadingMode !== nextProps.options.isReadingMode)
+      routingToSameComponent ||
+      routingToSameComponentFinished ||
+      lazyLoadFinished ||
+      readingModeTriggered
     );
   }
 
@@ -107,13 +123,10 @@ export default class Surah extends Component {
   initScroll() {
     if (__CLIENT__) {
       const onScroll = () => {
-        const { currentSurah, ayahIds, isLoading } = this.props;
+        const { isLoading, isEndOfSurah } = this.props;
 
-        if (ayahIds.length === currentSurah.ayat) {
-          // End of surah.
-          this.setState({
-            endOfSurah: true
-          });
+        if (isEndOfSurah) {
+          return false;
         }
 
         if (!isLoading && window.pageYOffset > (document.body.scrollHeight - window.innerHeight - 1000)) {
@@ -137,7 +150,15 @@ export default class Surah extends Component {
   }
 
   renderAyahs() {
-    const { ayahKeys, ayahs } = this.props;
+    const { ayahKeys, ayahs, isChangingSurah } = this.props;
+
+    if (isChangingSurah) {
+      return (
+        <div style={{paddingTop: '15%'}}>
+          <CoreLoader minHeight={125}>Loading...</CoreLoader>
+        </div>
+      );
+    }
 
     return ayahKeys.map(key => {
       return (
@@ -155,18 +176,40 @@ export default class Surah extends Component {
   }
 
   renderFooter() {
-    const { isLoading } = this.props;
+    const { isLoading, isEndOfSurah, isChangingSurah, currentSurah } = this.props;
+
+    const adjacentSurahs = (
+      <ul className="pager">
+        {currentSurah.id > 1 ?
+          <li className="previous">
+            <Link to={`/${currentSurah.id * 1 - 1}`}>
+              &larr; Previous Surah
+            </Link>
+          </li>
+          : null
+        }
+        {currentSurah.id < 114 ?
+          <li className="next">
+            <Link to={`/${currentSurah.id * 1 + 1}`}>
+              Next Surah &rarr;
+            </Link>
+          </li>
+          : null}
+      </ul>
+    );
 
     return (
       <Row>
-        <Col xs={6} xsOffset={3} className="footer">
-          {isLoading ? <CoreLoader/> : null}
+        <Col xs={12} className="text-center">
+          {isLoading && !isChangingSurah ? <CoreLoader/> : null}
+          {isEndOfSurah ? adjacentSurahs : null}
         </Col>
       </Row>
     );
   }
 
   render() {
+    debug('component:Surah', 'Render');
     const { currentSurah, options: { isReadingMode } } = this.props;
 
     this.initScroll();
@@ -179,6 +222,12 @@ export default class Surah extends Component {
           handleOptionUpdate={this.handleOptionUpdate.bind(this)}
           lazyLoadAyahs={this.lazyLoadAyahs.bind(this)} />
         <Grid style={{paddingTop: 150}}>
+          {currentSurah && currentSurah.bismillahPre ?
+            <div className="bismillah text-center">
+              ﭑﭒﭓ
+            </div>
+            : null
+          }
           {isReadingMode ? this.renderLines() : this.renderAyahs()}
           {this.renderFooter()}
         </Grid>

@@ -91,8 +91,8 @@ $border-radius-large: 0px;
 $border-radius-small: 0px;
 
 $text-color: #333;
-$link-color: $peek_light_blue;
-$link-hover-color: #41a8f5;
+$link-color: $brand-primary;
+$link-hover-color: lighten($brand-primary, 0.7);
 
 $font-size-base: 14px;
 $font-family-sans-serif: $primary_font, Helvetica, sans-serif;

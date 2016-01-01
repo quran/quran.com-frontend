@@ -56,7 +56,8 @@ export default function reducer(state = initialState, action = {}) {
 
       return {
         ...state,
-        currentFile: state.currentFile ? state.currentFile : action.result.result[0],
+        currentFile: action.result.result[0],
+        currentSurahId: action.surahId,
         files: {
           ...state.files,
           [action.surahId]: files
