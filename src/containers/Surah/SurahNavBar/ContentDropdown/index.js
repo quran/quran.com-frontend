@@ -508,7 +508,7 @@ export default class ContentDropdown extends Component {
     );
 
     return (
-      <NavDropdown eventKey={3} title={title} id="content-dropdown" className={style.dropdown}>
+      <NavDropdown eventKey={3} title={title} id="content-dropdown" className={`${style.dropdown} bordered`}>
         <MenuItem header>English</MenuItem>
         {this.renderEnglishList()}
         <MenuItem divider/>

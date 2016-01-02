@@ -14,65 +14,50 @@
   // Leaving this empty cause I will end up changing things here.
 }
 
-.btn{
-  border-bottom: 2px solid $peek_light_black;
-
-  &:hover{
-    border-bottom: 2px solid $peek_light_black;
+// To make the ipad and small window view collapsed
+@media (max-width: 1000px) {
+  .navbar-header {
+      float: none;
   }
-}
-
-
-.carousel-fade {
-  .carousel-inner {
-    .item {
-      transition-property: opacity;
-    }
-
-    .item,
-    .active.left,
-    .active.right {
-      opacity: 0;
-    }
-
-    .active,
-    .next.left,
-    .prev.right {
-      opacity: 1;
-    }
-
-    .next,
-    .prev,
-    .active.left,
-    .active.right {
-      left: 0;
-      transform: translate3d(0, 0, 0);
-    }
+  .navbar-left,.navbar-right {
+      float: none !important;
   }
-
-  .carousel-control {
-    z-index: 2;
+  .navbar-toggle {
+      display: block;
   }
-}
-
-.no-active{
-  a{
-    color: $link-color !important;
-    background-color: initial !important;
+  .navbar-collapse {
+      border-top: 1px solid transparent;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
   }
-}
-
-.slick-slider{
-  border: 1px solid $peek_light_gray;
-}
-.slick-prev{
-  left: -40px;
-}
-.slick-next{
-  right: -30px;
-}
-.slick-next:before,
-.slick-prev:before{
-  color: $link-color;
-  font-size: 30px;
+  .navbar-fixed-top {
+      top: 0;
+      border-width: 0 0 1px;
+  }
+  .navbar-collapse.collapse {
+      display: none!important;
+  }
+  .navbar-nav {
+      float: none!important;
+      margin-top: 7.5px;
+  }
+  .navbar-nav>li {
+      float: none;
+  }
+  .navbar-nav>li>a {
+      padding-top: 10px;
+      padding-bottom: 10px;
+  }
+  .collapse.in{
+      display:block !important;
+  }
+  .navbar-nav .open .dropdown-menu {
+     position: static;
+     float: none;
+     width: auto;
+     margin-top: 0;
+     background-color: transparent;
+     border: 0;
+     -webkit-box-shadow: none;
+     box-shadow: none;
+  }
 }

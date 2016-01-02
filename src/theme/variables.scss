@@ -115,7 +115,6 @@ $tooltip-max-width: 400px;
 
 $text-muted: #d1d0d0;
 
-// $navbar-height: 180px * $proportion-factor;
 $navbar-height: 50px;
 $navbar-default-bg: $cream;
 $navbar-default-link-active-bg: transparent;
@@ -142,7 +141,6 @@ $tracker-width: 4px;
 $tracker-height: 4px;
 $tracker-height-hundred-boolean: false;
 @if $tracker-height-hundred-boolean {$tracker-height: 100%;}
-
 
 $font-family-sans-serif: 'Montserrat', sans-serif;
 

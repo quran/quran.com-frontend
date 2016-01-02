@@ -1,5 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { NavDropdown, MenuItem } from 'react-bootstrap';
+
+const style = require('./style.scss');
 
 // To save API calls.
 export const slugs = [
@@ -141,10 +143,23 @@ export const slugs = [
 ];
 
 export default class ReciterDropdown extends Component {
+  static propTypes = {
+    handleOptionUpdate: PropTypes.func,
+    options: PropTypes.object
+  }
+
+  handleOptionUpdate(id) {
+    return this.props.handleOptionUpdate({audio: id});
+  }
+
   renderMenu() {
+    const { options } = this.props;
+
     return slugs.map(slug => {
       return (
-        <MenuItem key={slug.name.english} eventKey={slug.name.english}>{slug.name.english}</MenuItem>
+        <MenuItem key={slug.name.english} active={slug.id === options.audio} onClick={this.handleOptionUpdate.bind(this, slug.id)}>
+          {slug.name.english}
+        </MenuItem>
       );
     });
   }
@@ -158,7 +173,7 @@ export default class ReciterDropdown extends Component {
     );
 
     return (
-      <NavDropdown eventKey={3} title={title} id="reciters-dropdown">
+      <NavDropdown eventKey={3} title={title} id="reciters-dropdown" className={style.dropdown}>
         {this.renderMenu()}
       </NavDropdown>
     );

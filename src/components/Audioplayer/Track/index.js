@@ -29,6 +29,16 @@ export default class Track extends Component {
     this.onFileLoad(this.props.file);
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return [
+      this.props.file.src !== nextProps.file.src,
+      this.props.isPlaying !== nextProps.isPlaying,
+      this.props.shouldRepeat !== nextProps.shouldRepeat,
+      this.state.progress !== nextState.progress,
+      this.state.currentTime !== nextState.currentTime
+    ].some(test => test);
+  }
+
   componentWillUpdate(nextProps) {
     if (this.props.file.src !== nextProps.file.src) {
       this.props.file.pause();
@@ -36,6 +46,7 @@ export default class Track extends Component {
       this.setState({
         progress: 0
       });
+
       this.onFileLoad(nextProps.file);
     }
   }

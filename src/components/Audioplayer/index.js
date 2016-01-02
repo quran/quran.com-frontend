@@ -272,7 +272,7 @@ export default class Audioplayer extends Component {
     );
 
     return (
-      <li className={style.container}>
+      <li className={`${style.container}`}>
         <div className={style.verse}>{currentFile.split(':')[1]}</div>
         {content}
         <div className={style.wrapper}>

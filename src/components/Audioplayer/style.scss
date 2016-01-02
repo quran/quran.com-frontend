@@ -6,8 +6,8 @@
   user-select: none;
   height: 100%;
   padding: 16px 40px 8px;
-  margin-left: 15px;
-  margin-right: 15px;
+  border-right: 1px solid $beige;
+  border-left: 1px solid $beige;
 }
 
 :local .wrapper{

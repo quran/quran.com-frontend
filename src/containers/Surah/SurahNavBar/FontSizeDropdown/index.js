@@ -76,7 +76,7 @@ export default class FontSizeDropdown extends Component {
       <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
         <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={<Tooltip id="FontSizeDropdown">Font size</Tooltip>}>
           <NavItem eventKey={1} onSelect={this.onSelect.bind(this)}>
-            <i className="ss-icon ss-text" />
+            <small>A</small><span style={{fontSize: '1.25em'}}>A</span>
           </NavItem>
         </OverlayTrigger>
       </OverlayTrigger>

@@ -46,13 +46,13 @@ export default class SurahsDropdown extends Component {
 
     const title = (
       <span>
-        <i className="ss-icon ss-list margin-md-right" />
+        {/* <i className="ss-icon ss-list margin-md-right" /> */}
         Surahs
       </span>
     );
 
     return (
-      <NavDropdown eventKey={3} title={title} id="surahs-dropdown"className={style.dropdown}>
+      <NavDropdown eventKey={3} title={title} id="surahs-dropdown"className={`${style.dropdown} bordered`}>
         {this.renderMenu()}
       </NavDropdown>
     );

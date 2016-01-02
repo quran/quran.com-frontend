@@ -55,6 +55,7 @@
     padding: 0px;
     height: 50px;
     margin-bottom: 0px;
+    border-left: 1px solid $beige;
 
     :global(input){
       padding: 10px 15px;
@@ -89,7 +90,7 @@
       border: initial;
       background: transparent;
       color: $olive;
-      right: 6px;
+      right: 8px;
       width: 15%;
       padding: 12px;
 

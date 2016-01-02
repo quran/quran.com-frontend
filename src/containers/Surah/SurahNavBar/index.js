@@ -5,6 +5,7 @@ import {
   CollapsibleNav,
   Nav
 } from 'react-bootstrap';
+import { Link } from 'react-router';
 
 import ReciterDropdown from './ReciterDropdown';
 import ContentDropdown from './ContentDropdown';
@@ -25,25 +26,40 @@ function zeroPad(num, places) {
 export default class SurahNavBar extends Component {
   static propTypes = {
     currentSurah: PropTypes.object,
+    options: PropTypes.object,
     children: PropTypes.object,
     handleOptionUpdate: PropTypes.func,
     lazyLoadAyahs: PropTypes.func
   }
 
   render() {
-    const { currentSurah, handleOptionUpdate, lazyLoadAyahs, children } = this.props;
+    const { currentSurah, handleOptionUpdate, lazyLoadAyahs, options, children } = this.props;
 
     return (
       <Navbar fixedTop toggleNavKey={0} fluid>
         <div className={`row ${style.primaryNav}`}>
           <Col xs={3} className="padding-none">
             <img src="http://quran-1f14.kxcdn.com/images/ornament-left.png" className={style.ornament} />
+            {currentSurah.id > 1 ?
+              <Link to={`/${currentSurah.id + 1}`} className={style.chapter}>
+                <i className="ss-icon ss-navigateleft"></i>
+                <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
+              </Link>
+              : null
+            }
           </Col>
           <Col xs={6} className={`text-center ${style.title}`}>
             <img src={`http://quran-1f14.kxcdn.com/images/titles/${zeroPad(currentSurah.id, 3)}.svg`}/>
             <span>{currentSurah.name.simple} ({currentSurah.name.english})</span>
           </Col>
           <Col xs={3} className="text-right padding-none">
+            {currentSurah.id < 114 ?
+              <Link to={`/${currentSurah.id - 1}`} className={style.chapter}>
+                <span className="hidden-xs hidden-sm"> NEXT SURAH</span>
+                <i className="ss-icon ss-navigateright"></i>
+              </Link>
+              : null
+            }
             <img src="http://quran-1f14.kxcdn.com/images/ornament-right.png" className={style.ornament} />
           </Col>
         </div>
@@ -51,9 +67,9 @@ export default class SurahNavBar extends Component {
           <Nav navbar>
             <SurahsDropdown currentSurah={currentSurah} />
             {children}
-            <ReciterDropdown />
+            <ReciterDropdown handleOptionUpdate={handleOptionUpdate} options={options} />
             <Audioplayer currentSurah={currentSurah} lazyLoadAyahs={lazyLoadAyahs} />
-            <ContentDropdown handleOptionUpdate={handleOptionUpdate} />
+            <ContentDropdown handleOptionUpdate={handleOptionUpdate} options={options} />
             <FontSizeDropdown />
             <ReadingModeToggle />
           </Nav>

@@ -225,7 +225,7 @@ export default class Surah extends Component {
 
   render() {
     debug('component:Surah', 'Render');
-    const { currentSurah, ayahIds, options: { isReadingMode } } = this.props;
+    const { currentSurah, ayahIds, options } = this.props; // eslint-disable-line no-shadow
 
     this.initScroll();
 
@@ -235,7 +235,8 @@ export default class Surah extends Component {
         <SurahNavBar
           currentSurah={currentSurah}
           handleOptionUpdate={this.handleOptionUpdate.bind(this)}
-          lazyLoadAyahs={this.lazyLoadAyahs.bind(this)}>
+          lazyLoadAyahs={this.lazyLoadAyahs.bind(this)}
+          options={options}>
           <VersesDropdown ayat={currentSurah.ayat} loaded={ayahIds} onClick={this.onVerseDropdownClick.bind(this)}/>
         </SurahNavBar>
         <Grid style={{paddingTop: 150}}>
@@ -245,7 +246,7 @@ export default class Surah extends Component {
             </div>
             : null
           }
-          {isReadingMode ? this.renderLines() : this.renderAyahs()}
+          {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
           {this.renderFooter()}
         </Grid>
       </div>

@@ -4,12 +4,35 @@
   background: $beige;
   box-shadow: 0 8px 12px -12px rgba(0, 0, 0, 0.75);
 }
+.chapter{
+  text-transform: uppercase;
+  font-size: 12px;
+  opacity: 0.15;
+  transition: opacity 0.5s, color 0.5s;
+  color: #000;
+
+  &:hover{
+    opacity: 1;
+    text-decoration: none;
+    color: $text-color;
+  }
+
+  i {
+    font-size: 20px;
+    display: inline-block;
+    transform: translateY(17%);
+  }
+}
 
 :local .bottomNav{
   $caret-size: 6px;
 
   :global(.navbar-nav) {
     padding-top: 2px;
+  }
+
+  :global(.bordered) {
+    border-right: 1px solid $beige;
   }
 
   :global(.dropdown){

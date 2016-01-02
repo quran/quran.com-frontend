@@ -1,7 +1,15 @@
 @import '../../../../theme/variables.scss';
 
 :local .dropdown{
-  min-width: 300px;
+  min-width: 200px;
+
+  @media (max-width: 1150px) {
+    min-width: initial;
+
+    :global(i + span){
+      display: none;
+    }
+  }
 
   :global(ul){
     height: 400px;

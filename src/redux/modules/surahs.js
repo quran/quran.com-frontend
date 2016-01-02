@@ -6,6 +6,9 @@ import surahs from 'redux/static/surahs';
 export const LOAD = '@@quran/surahs/LOAD';
 export const LOAD_SUCCESS = '@@quran/surahs/LOAD_SUCCESS';
 export const LOAD_FAIL = '@@quran/surahs/LOAD_FAIL';
+export const LOAD_INFO = '@@quran/surahs/LOAD_INFO';
+export const LOAD_INFO_SUCCESS = '@@quran/surahs/LOAD_INFO_SUCCESS';
+export const LOAD_INFO_FAIL = '@@quran/surahs/LOAD_INFO_FAIL';
 export const SET_CURRENT = '@@quran/surahs/SET_CURRENT';
 
 const initialState = {
@@ -51,6 +54,13 @@ export function load(id) {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: arrayOf(surahsSchema),
     promise: (client) => client.get(`/surahs/${id}`)
+  };
+}
+
+export function loadInfo(link) {
+  return {
+    types: [LOAD_INFO, LOAD_INFO_SUCCESS, LOAD_INFO_FAIL],
+    promise: (client) => client.get(`http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&titles=${link}&redirects=true`)
   };
 }
 
