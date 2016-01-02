@@ -24,7 +24,7 @@ export default class SurahsDropdown extends Component {
       return (
         <MenuItem key={surah.name.english} eventKey={surah.id} onSelect={this.onSelect.bind(this)} active={surah.id === currentSurah.id}>
           <Row>
-            <Col xs={2} className="text-muted">
+            <Col xs={2}>
               {surah.id}
             </Col>
             <Col xs={7}>

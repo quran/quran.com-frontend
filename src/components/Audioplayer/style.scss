@@ -6,8 +6,11 @@
   user-select: none;
   height: 100%;
   padding: 16px 40px 8px;
-  border-right: 1px solid $beige;
-  border-left: 1px solid $beige;
+
+  @media(min-width: $navbar-collapse-width) {
+    border-right: 1px solid $beige;
+    border-left: 1px solid $beige;
+  }
 }
 
 :local .wrapper{

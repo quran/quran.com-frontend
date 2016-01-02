@@ -173,7 +173,7 @@ export default class ReciterDropdown extends Component {
     );
 
     return (
-      <NavDropdown eventKey={3} title={title} id="reciters-dropdown" className={style.dropdown}>
+      <NavDropdown eventKey={3} title={title} id="reciters-dropdown" className={`${style.dropdown}`}>
         {this.renderMenu()}
       </NavDropdown>
     );

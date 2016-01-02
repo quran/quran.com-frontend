@@ -4,4 +4,10 @@
       display: none;
     }
   }
+
+  @media (max-width: 1000px) {
+    :global(i + span){
+      display: initial;
+    }
+  }
 }

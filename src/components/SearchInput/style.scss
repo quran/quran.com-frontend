@@ -44,7 +44,7 @@
     color: #fff;
     cursor: pointer;
     height: 100%;
-      border: 3px solid #fff;
+    border: 3px solid #fff;
 
     &:hover{
       background-color: lighten($brand-primary, 10%);
@@ -55,7 +55,9 @@
     padding: 0px;
     height: 50px;
     margin-bottom: 0px;
-    border-left: 1px solid $beige;
+    @media(min-width: $navbar-collapse-width) {
+      border-left: 1px solid $beige;
+    }
 
     :global(input){
       padding: 10px 15px;

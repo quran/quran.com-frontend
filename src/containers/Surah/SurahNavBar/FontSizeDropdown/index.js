@@ -71,12 +71,17 @@ export default class FontSizeDropdown extends Component {
   }
 
   render() {
+    const helperText = 'Change font size';
 
     return (
       <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
-        <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={<Tooltip id="FontSizeDropdown">Font size</Tooltip>}>
+        <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={<Tooltip id="FontSizeDropdown" className="hidden-xs hidden-sm">{helperText}</Tooltip>}>
           <NavItem eventKey={1} onSelect={this.onSelect.bind(this)}>
-            <small>A</small><span style={{fontSize: '1.25em'}}>A</span>
+            <small className="hidden-xs hidden-sm">A</small><span className="hidden-xs hidden-sm" style={{fontSize: '1.25em'}}>A</span>
+            <span className="inline visible-sm visible-xs">
+              <small>A</small><span style={{fontSize: '1.25em'}} className="margin-sm-right">A</span>
+              {helperText}
+            </span>
           </NavItem>
         </OverlayTrigger>
       </OverlayTrigger>

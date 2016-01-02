@@ -119,9 +119,10 @@ $navbar-height: 50px;
 $navbar-default-bg: $cream;
 $navbar-default-link-active-bg: transparent;
 $navbar-default-border: transparent;
+$navbar-collapse-width: 1000px;
 
 $dropdown-bg: darken($olive, 5%);
-$dropdown-link-color: #fff;
+$dropdown-link-color: lighten($cream, 15%);
 
 $popover-bg: darken($olive, 5%);
 $popover-title-bg: darken($olive, 5%);

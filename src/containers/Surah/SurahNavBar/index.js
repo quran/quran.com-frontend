@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import {
   Col,
   Navbar,
-  CollapsibleNav,
   Nav
 } from 'react-bootstrap';
 import { Link } from 'react-router';
@@ -32,38 +31,49 @@ export default class SurahNavBar extends Component {
     lazyLoadAyahs: PropTypes.func
   }
 
+  renderPrimaryNav() {
+    const { currentSurah } = this.props;
+
+    return (
+      <div className={`row ${style.primaryNav} nav-drawer`}>
+        <Col xs={3} className="padding-none">
+          <img src="http://quran-1f14.kxcdn.com/images/ornament-left.png" className={style.ornament} />
+          {currentSurah.id > 1 ?
+            <Link to={`/${currentSurah.id - 1}`} className={style.chapter}>
+              <i className="ss-icon ss-navigateleft"></i>
+              <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
+            </Link>
+            : null
+          }
+        </Col>
+        <Col xs={6} className={`text-center ${style.title}`}>
+          <img src={`http://quran-1f14.kxcdn.com/images/titles/${zeroPad(currentSurah.id, 3)}.svg`}/>
+          <span className="hidden-sm hidden-xs">{currentSurah.name.simple} ({currentSurah.name.english})</span>
+        </Col>
+        <Col xs={3} className="text-right padding-none">
+          {currentSurah.id < 114 ?
+            <Link to={`/${currentSurah.id + 1}`} className={style.chapter}>
+              <span className="hidden-xs hidden-sm"> NEXT SURAH</span>
+              <i className="ss-icon ss-navigateright"></i>
+            </Link>
+            : null
+          }
+          <img src="http://quran-1f14.kxcdn.com/images/ornament-right.png" className={style.ornament} />
+        </Col>
+      </div>
+    );
+  }
+
   render() {
     const { currentSurah, handleOptionUpdate, lazyLoadAyahs, options, children } = this.props;
 
     return (
-      <Navbar fixedTop toggleNavKey={0} fluid>
-        <div className={`row ${style.primaryNav}`}>
-          <Col xs={3} className="padding-none">
-            <img src="http://quran-1f14.kxcdn.com/images/ornament-left.png" className={style.ornament} />
-            {currentSurah.id > 1 ?
-              <Link to={`/${currentSurah.id + 1}`} className={style.chapter}>
-                <i className="ss-icon ss-navigateleft"></i>
-                <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
-              </Link>
-              : null
-            }
-          </Col>
-          <Col xs={6} className={`text-center ${style.title}`}>
-            <img src={`http://quran-1f14.kxcdn.com/images/titles/${zeroPad(currentSurah.id, 3)}.svg`}/>
-            <span>{currentSurah.name.simple} ({currentSurah.name.english})</span>
-          </Col>
-          <Col xs={3} className="text-right padding-none">
-            {currentSurah.id < 114 ?
-              <Link to={`/${currentSurah.id - 1}`} className={style.chapter}>
-                <span className="hidden-xs hidden-sm"> NEXT SURAH</span>
-                <i className="ss-icon ss-navigateright"></i>
-              </Link>
-              : null
-            }
-            <img src="http://quran-1f14.kxcdn.com/images/ornament-right.png" className={style.ornament} />
-          </Col>
-        </div>
-        <CollapsibleNav eventKey={0} className={style.bottomNav}>
+      <Navbar fixedTop fluid>
+        <Navbar.Header>
+          <Navbar.Toggle />
+        </Navbar.Header>
+        {this.renderPrimaryNav()}
+        <Navbar.Collapse eventKey={0} className={style.bottomNav}>
           <Nav navbar>
             <SurahsDropdown currentSurah={currentSurah} />
             {children}
@@ -74,10 +84,10 @@ export default class SurahNavBar extends Component {
             <ReadingModeToggle />
           </Nav>
 
-          <Nav navbar right>
+          <Nav navbar pullRight>
             <SearchInput isInNavbar />
           </Nav>
-        </CollapsibleNav>
+        </Navbar.Collapse>
       </Navbar>
     );
   }

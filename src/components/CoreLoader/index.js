@@ -4,8 +4,16 @@ const style = require('./style.scss');
 
 export default class CoreLoader extends Component {
   static propTypes = {
-    children: PropTypes.object,
-    minHeight: PropTypes.oneOf(['string', 'number'])
+    children: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.object
+    ]),
+    minHeight: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number,
+      PropTypes.object
+    ])
   }
 
   render() {

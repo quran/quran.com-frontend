@@ -51,11 +51,12 @@ export default class SearchInput extends Component {
 
     return (
       <div className={`right-inner-addon ${className ? className : ''} ${style.searchInput} ${isInNavbar ? style.isInNavbar : ''}`}>
-        <i className={`ss-icon ss-search ${style.icon}`} onClick={this.search.bind(this)} />
-        <input type="text"
-               placeholder="Search"
-               defaultValue={value}
-               onKeyUp={this.search.bind(this)} />
+        <i className={`ss-icon ss-search ${style.icon} text-center`} onClick={this.search.bind(this)} />
+        <input
+          type="text"
+          placeholder="Search"
+          defaultValue={value}
+          onKeyUp={this.search.bind(this)} />
       </div>
     );
   }

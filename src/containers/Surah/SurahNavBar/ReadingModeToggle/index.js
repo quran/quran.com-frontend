@@ -17,11 +17,16 @@ export default class ReadingModeToggle extends Component {
 
   render() {
     const { isReadingMode } = this.props;
+    const helperText = 'Toggle reading mode';
 
     return (
-      <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={<Tooltip id="ReadingModeToggle">Toggle reading mode</Tooltip>}>
+      <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={<Tooltip id="ReadingModeToggle" className="hidden-xs hidden-sm">{helperText}</Tooltip>}>
         <NavItem eventKey={1} onSelect={this.onSelect.bind(this)} active={isReadingMode}>
-          <i className="ss-icon ss-openbook" />
+          <i className="ss-icon ss-openbook hidden-xs hidden-sm" />
+          <span className="visible-sm visible-xs">
+            <i className="ss-icon ss-openbook margin-md-right" />
+            {helperText}
+          </span>
         </NavItem>
       </OverlayTrigger>
     );

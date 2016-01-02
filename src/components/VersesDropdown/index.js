@@ -45,7 +45,7 @@ export default class VersesDropdown extends Component {
     );
 
     return (
-      <NavDropdown eventKey={3} title={title} id="verses-dropdown" className={`${style.dropdown} bordered`}>
+      <NavDropdown eventKey={3} title={title} id="verses-dropdown" className={`${style.dropdown} bordered `}>
         {this.renderMenu()}
       </NavDropdown>
     );

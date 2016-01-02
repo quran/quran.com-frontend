@@ -97,4 +97,8 @@
 .ornament{
   height: 80px;
   opacity: 0.15;
+
+  @media(max-width: $navbar-collapse-width) {
+    height: 50px;
+  }
 }

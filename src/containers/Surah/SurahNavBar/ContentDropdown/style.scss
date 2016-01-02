@@ -11,10 +11,29 @@
     }
   }
 
+  @media (max-width: 1000px) {
+    :global(i + span){
+      display: initial;
+    }
+  }
+
   :global(ul){
     height: 400px;
     overflow: auto;
     width: 100%;
+  }
+}
+
+:global(.in) {
+  .item{
+    .label{
+      color: $olive;
+
+      &:after, &:before{
+        color: $olive !important;
+        border-color: $olive !important;
+      }
+    }
   }
 }
 
@@ -25,7 +44,7 @@
   $checkbox-width: 12px;
 
   .label{
-    color: #fff;
+    color: lighten($cream, 15%);
     font-weight: 300;
   }
 
@@ -52,7 +71,7 @@
     top: $checkbox-top;
     width: $checkbox-width;
     height: $checkbox-height;
-    border: 1px solid lighten($cream, 15%);;
+    border: 1px solid lighten($cream, 15%);
     background: transparent;
   }
   /* checked mark aspect */
