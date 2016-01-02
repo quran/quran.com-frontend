@@ -47,6 +47,10 @@
         border-right: none;
       }
     }
+
+    .navbar-inverse & > li{
+      border-bottom: initial;
+    }
   }
   .navbar-nav>li {
     float: none;

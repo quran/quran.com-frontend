@@ -1,50 +1,84 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import DocumentMeta from 'react-document-meta';
-import { MiniInfoBar } from 'components';
-import config from '../../config';
+import ImageHeader from 'components/ImageHeader';
+
+const style = require('./style.scss');
 
 export default class About extends Component {
-
-  state = {
-    showKitten: false
-  }
-
-  handleToggleKitten = () => this.setState({showKitten: !this.state.showKitten});
-
   render() {
-    const {showKitten} = this.state;
-    const kitten = require('./kitten.jpg');
     return (
-      <div className="container">
-        <h1>About Us</h1>
-        <DocumentMeta title={config.app.title + ': About Us'}/>
-
-        <p>This project was orginally created by Erik Rasmussen
-          (<a href="https://twitter.com/erikras" target="_blank">@erikras</a>), but has since seen many contributions
-          from the open source community. Thank you to <a
-            href="https://github.com/erikras/react-redux-universal-hot-example/graphs/contributors"
-            target="_blank">all the contributors</a>.
-        </p>
-
-        <h3>Mini Bar <span style={{color: '#aaa'}}>(not that kind)</span></h3>
-
-        <p>Hey! You found the mini info bar! The following component is display-only. Note that it shows the same
-          time as the info bar.</p>
-
-        <MiniInfoBar/>
-
-        <h3>Images</h3>
-
-        <p>
-          Psst! Would you like to see a kitten?
-
-          <button className={'btn btn-' + (showKitten ? 'danger' : 'success')}
-                  style={{marginLeft: 50}}
-                  onClick={this.handleToggleKitten}>
-            {showKitten ? 'No! Take it away!' : 'Yes! Please!'}</button>
-        </p>
-
-        {showKitten && <div><img src={kitten}/></div>}
+      <div>
+        <DocumentMeta title="About Quran.com" />
+        <ImageHeader />
+        <div className={`container-fluid ${style.about}`}>
+          <div className="row">
+              <div className="col-md-8 col-md-offset-2">
+                  <h4 className="source-sans">
+                    The Noble Qur'an is the central
+                    religious text of Islam. Muslims believe the Qur'an is the
+                    book of Divine guidance and direction for mankind, and
+                    consider the original Arabic text the final revelation of
+                    Allah (God).[<a href="en.wikipedia.org/wiki/Quran">1</a>] All translations of the original Arabic text
+                    are thus interpretations of the original meanings and should
+                    be embraced as such. For more information about the Noble
+                    Qur'an, you may visit its <a href="https://en.wikipedia.org/wiki/Quran">Wikipedia article.</a>
+                  </h4>
+              </div>
+          </div>
+          <div className="row">
+              <div className="col-md-8 col-md-offset-2">
+                <h3>MECCAN SURAHS</h3>
+                <h4 className="source-sans">
+                  The Meccan suras are the chronologically earlier chapters
+                  (suras) of the Qur'an that were, according to Islamic
+                  tradition, revealed anytime before the migration of the
+                  Islamic prophet Muhammed and his followers from Mecca to
+                  Medina (Hijra). The Medinan suras are those revelations that
+                  occurred after the move to the city of that name.
+                </h4>
+              </div>
+          </div>
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2">
+              <h3>MEDINAN SURAHS</h3>
+              <h4 className="source-sans">
+                The Medinan suras or Medinan chapters of the Qur'an are the
+                latest 24 suras that, according to Islamic tradition, were
+                revealed at Medina after Muhammad's hijra from Mecca. These
+                suras were revealed by Allah when the Muslim community was
+                larger and more developed, as opposed to their minority position
+                in Mecca.
+              </h4>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-8 col-md-offset-2">
+              <h3>BROWSING SURAHS ON THIS WEBSITE</h3>
+              <h4 className="source-sans">
+                We have redesigned the website with a user friendly approach in
+                mind. To browse through the surahs, click on the button
+                (shown left) in the READ & LISTEN page and navigate surah by
+                title or by page. In future iterations, we will be integrating
+                more search and audio features inshaAllah. If you have any
+                suggestions on how we can make the website a better experience
+                please do not hesitate to <a href="https://quran.zendesk.com/hc/en-us">contact us</a>.
+              </h4>
+            </div>
+          </div>
+          <div className={`row ${style.credits}`}>
+            <div className="col-md-8 col-md-offset-2">
+              <h3><strong>CREDITS</strong></h3>
+              <h4>
+                This website was created by a few volunteers and was made
+                possible with the will of Allah (Glory be unto Him) and with the
+                help of the open source Muslim community online. Data sources
+                include <a href="http://www.tanzil.info">Tanzil</a>, <a href="http://www.qurancomplex.com">QuranComplex</a>,
+                        <a href="http://www.zekr.org"> Zekr</a> and <a href="http://www.al-quran.info">Online Qur'an Project</a>.
+                If you have any questions, you may visit the <a href="/contact">Contact</a> page.
+               </h4>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

@@ -4,6 +4,8 @@ import { IndexLink } from 'react-router';
 
 import debug from 'helpers/debug';
 
+import ImageHeaderNav from './ImageHeaderNav';
+
 const logoImage = require('../../../static/images/logo-lg-w.png');
 const style = require('./style.scss');
 
@@ -27,6 +29,7 @@ export default class ImageHeader extends Component {
 
     return (
       <div className={style.header} style={{backgroundColor: '#2CA4AB'}}>
+        <ImageHeaderNav />
         <Grid>
           <Row>
             <Col md={10} mdOffset={1} className="text-center">

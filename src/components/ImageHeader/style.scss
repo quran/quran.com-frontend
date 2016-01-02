@@ -51,6 +51,11 @@
     padding-top: 10px;
     padding-bottom: 10px;
     width: 30%;
+
+    @media(max-width: $screen-xs-max) {
+      width: 50%;
+      margin-top: -50px;
+    }
   }
   .title{
     color: lighten($brand-primary, 30%);

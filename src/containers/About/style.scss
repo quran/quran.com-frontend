@@ -1,0 +1,25 @@
+@import '../../theme/variables.scss';
+
+.about{
+  padding-top: 5%;
+  padding-bottom: 5%;
+
+  :global(h3){
+    color: $light-green;
+    font-size: 130%;
+  }
+
+  :global(h4){
+    font-weight: 300;
+    line-height: 150%;
+  }
+
+  .credits{
+    :global(h3){
+      color: $text-color;
+    }
+    :global(h4){
+      @extend .source-sans;
+    }
+  }
+}
