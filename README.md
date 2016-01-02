@@ -1,4 +1,4 @@
-# Sparrow
+# Quran.com
 
 ## About
 

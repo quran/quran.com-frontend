@@ -9,12 +9,18 @@ import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import debug from 'debug';
+import jquery from 'jquery';
 // import io from 'socket.io-client';
 import {Provider} from 'react-redux';
 import {reduxReactRouter, ReduxRouter} from 'redux-router';
 
 import getRoutes from './routes';
 import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
+
+jquery(document.body).tooltip({
+  selector: '[data-toggle="tooltip"]',
+  animation: false
+});
 
 const client = new ApiClient();
 

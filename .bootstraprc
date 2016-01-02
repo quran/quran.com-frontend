@@ -1,20 +1,15 @@
-/**
- * Bootstrap configuration for bootstrap-sass-loader
- *
- * Scripts are disabled to not load jQuery.
- * If you depend on Bootstrap scripts consider react-bootstrap instead.
- * https://github.com/react-bootstrap/react-bootstrap
- *
- * In order to keep the bundle size low in production
- * disable components you don't use.
- *
- */
-
-module.exports = {
+{
+  bootstrapVersion: 3,
   preBootstrapCustomizations: './src/theme/variables.scss',
-  mainSass: './src/theme/bootstrap.overrides.scss',
+  appStyles: './src/theme/bootstrap.overrides.scss',
   verbose: false,
   debug: false,
+  styleLoaders: [
+  "style",
+  "css?sourceMap",
+  "resolve-url?sourceMap",
+  "sass?sourceMap"
+  ],
   scripts: {
     transition: false,
     alert: false,
@@ -69,4 +64,4 @@ module.exports = {
     utilities: true,
     'responsive-utilities': true
   }
-};
+}

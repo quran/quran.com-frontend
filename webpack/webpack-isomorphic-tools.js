@@ -4,13 +4,13 @@ var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 module.exports = {
 
-  // when adding "js" extension to asset types 
+  // when adding "js" extension to asset types
   // and then enabling debug mode, it may cause a weird error:
   //
   // [0] npm run start-prod exited with code 1
   // Sending SIGTERM to other processes..
   //
-  // debug: true, 
+  // debug: true,
 
   assets: {
     images: {
@@ -39,17 +39,17 @@ module.exports = {
     // the only place it's used is the Html.js file
     // where a <style/> tag is created with the contents of the
     // './src/theme/bootstrap.config.js' file.
-    // (the aforementioned <style/> tag can reduce the white flash 
+    // (the aforementioned <style/> tag can reduce the white flash
     //  when refreshing page in development mode)
     //
     // hooking into 'js' extension require()s isn't the best solution
     // and I'm leaving this comment here in case anyone finds a better idea.
     bootstrap: {
       extension: 'js',
-      include: ['./src/theme/bootstrap.config.js'],
+      include: ['bootstrap-loader'],
       filter: function(module, regex, options, log) {
         function is_bootstrap_style(name) {
-          return name.indexOf('./src/theme/bootstrap.config.js') >= 0;
+          return name.indexOf('bootstrap-loader') >= 0;
         }
         if (options.development) {
           return is_bootstrap_style(module.name) && WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log);

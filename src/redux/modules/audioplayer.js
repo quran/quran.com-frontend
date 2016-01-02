@@ -43,6 +43,12 @@ export default function reducer(state = initialState, action = {}) {
         state.userAgent
       );
 
+      let currentFile = state.currentFile ? state.currentFile : action.result.result[0];
+
+      if (parseInt(state.currentSurahId, 10) !== action.surahId) {
+        currentFile = action.result.result[0];
+      }
+
       if (!isSupported) {
         return {
           ...state,
@@ -56,7 +62,7 @@ export default function reducer(state = initialState, action = {}) {
 
       return {
         ...state,
-        currentFile: action.result.result[0],
+        currentFile: currentFile,
         currentSurahId: action.surahId,
         files: {
           ...state.files,
