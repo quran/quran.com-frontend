@@ -1,0 +1,87 @@
+$sizes: (
+  xs: 0.25,
+  sm: 0.5,
+  md: 1.0,
+  lg: 2.1
+);
+
+$attributes: (
+  'margin',
+  'padding'
+);
+
+@each $size, $measurement in $sizes{
+  @each $attribute in $attributes{
+    .#{$attribute}-#{$size}-all{
+      #{$attribute}: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-top{
+      #{$attribute}-top: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-bottom{
+      #{$attribute}-bottom: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}{
+      #{$attribute}: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-left{
+      #{$attribute}-left: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-right{
+      #{$attribute}-right: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-v{
+      #{$attribute}-top: #{$measurement}em;
+      #{$attribute}-bottom: #{$measurement}em;
+    }
+    .#{$attribute}-#{$size}-h{
+      #{$attribute}-left: #{$measurement}em;
+      #{$attribute}-right: #{$measurement}em;
+    }
+  }
+}
+.margin-none{
+  margin: 0;
+}
+.padding-none{
+  padding: 0;
+}
+
+.inline{
+  display: inline;
+}
+.inline-block{
+  display: inline-block;
+}
+.block{
+  display: block;
+}
+
+.pointer{
+  cursor: pointer;
+}
+
+.hlt1, .hlt10{
+  color: $light-green !important;
+}
+.hlt2, .hlt9{
+  color: #f1c40f !important;
+}
+.hlt3{
+  color: $peach !important;
+}
+.hlt4{
+  color: #C50F90 !important;
+}
+.hlt5{
+  color: #e67e22 !important;
+}
+.hlt6{
+  color: #f39c12 !important;
+}
+.hlt7{
+  color: #1abc9c !important;
+}
+.hlt8{
+  color: #e61e22 !important;
+}

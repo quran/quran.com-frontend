@@ -1,9 +1,9 @@
 {
   "src_folders": ["tests/functional/specs"],
+  "page_objects_path": ["tests/functional/pages"],
   "output_folder": "tests/functional/output",
   "custom_commands_path": "tests/functional/commands",
   "custom_assertions_path": "tests/functional/assertions",
-  "page_objects_path": "tests/functional/pages",
   "globals_path": "tests/functional/globals.js",
   "selenium" : {
     "start_process" : true,
@@ -48,7 +48,8 @@
         "browserName" : "phantomjs",
         "javascriptEnabled" : true,
         "acceptSslCerts" : true,
-        "phantomjs.binary.path" : "/usr/local/phantomjs/bin/phantomjs"
+        "phantomjs.binary.path" : "/usr/local/phantomjs/bin/phantomjs",
+        "phantomjs.page.viewportSize": "{width:1280,height:680}"
       }
     },
     "mobile": {

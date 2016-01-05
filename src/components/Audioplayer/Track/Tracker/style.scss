@@ -1,0 +1,23 @@
+@import '../../../../theme/variables';
+
+:local .tracker{
+  height: 100%;  // This is optional if you'd like your tracker to fit nicely within the track. We don't right now.
+  width: $tracker-width;
+  background-color: darken($brand-primary, 20%);
+  display: inline-block;
+  position: absolute;
+  user-select: none;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1.2);
+  transition: transform 0.1s cubic-bezier(0,1.15,.76,3.0); // This is if your tracker is a circle and you want that bounce effect.
+
+  &:hover{
+    cursor: -webkit-grab; cursor: -moz-grab;
+  }
+
+  &.active{
+    transform:  translate(-50%, -50%);
+    box-shadow: 0px 1px 1px 1px rgba(5,5,5,0);
+    cursor: -webkit-grabbing; cursor: -moz-grabbing;
+  }
+}

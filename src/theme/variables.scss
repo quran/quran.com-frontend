@@ -1,0 +1,162 @@
+// Fonts
+$font_timesnewroman_stack: Cambria, "Hoefler Text", Utopia, "Liberation Serif", "Nimbus Roman No9 L Regular", Times, "Times New Roman", serif;
+$font_georgia_stack: Constantia, "Lucida Bright", Lucidabright, "Lucida Serif", Lucida, "DejaVu Serif," "Bitstream Vera Serif", "Liberation Serif", Georgia, serif;
+$font_garamond_stack: "Palatino Linotype", Palatino, Palladio, "URW Palladio L", "Book Antiqua", Baskerville, "Bookman Old Style", "Bitstream Charter", "Nimbus Roman No9 L", Garamond, "Apple Garamond", "ITC Garamond Narrow", "New Century Schoolbook", "Century Schoolbook", "Century Schoolbook L", Georgia, serif;
+$font_helvetica_stack: Frutiger, "Frutiger Linotype", Univers, Calibri, "Gill Sans", "Gill Sans MT", "Myriad Pro", Myriad, "DejaVu Sans Condensed", "Liberation Sans", "Nimbus Sans L", Tahoma, Geneva, "Helvetica Neue", Helvetica, Arial, sans-serif;
+$font_verdana_stack: Corbel, "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", "DejaVu Sans", "Bitstream Vera Sans", "Liberation Sans", Verdana, "Verdana Ref", sans-serif;
+$font_trebuchet_stack: "Segoe UI", Candara, "Bitstream Vera Sans", "DejaVu Sans", "Bitstream Vera Sans", "Trebuchet MS", Verdana, "Verdana Ref", sans-serif;
+$font_impact_stack: Impact, Haettenschweiler, "Franklin Gothic Bold", Charcoal, "Helvetica Inserat", "Bitstream Vera Sans Bold", "Arial Black", sans-serif;
+$font_monospace_stack: Consolas, "Andale Mono WT", "Andale Mono", "Lucida Console", "Lucida Sans Typewriter", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", "Liberation Mono", "Nimbus Mono L", Monaco, "Courier New", Courier, monospace;
+
+$font_helvetica: "Helvetica Neue", "Helvetica", Arial, sans-serif;
+$font-times-new-roman: "Times New Roman", "Times", serif;
+$font_georgia: "Georgia", "Palatino", "Times", serif;
+
+$font_sofia_light: 'SofiaProLight', $font_helvetica;
+$font_sofia_regular: 'SofiaProRegular', $font_helvetica;
+$font_sofia_bold: 'SofiaProBold', $font_helvetica;
+$font_gillsans: 'Gill Sans', $font_helvetica;
+
+$primary_font: $font_sofia_regular;
+$font_price: $font_georgia;
+$basic_font_style: normal 12px $primary_font;
+
+$font_pictos: 'Pictos Custom';
+
+// Legacy Peek.com
+$hero_gallery_width: 1440px;
+$footer_height: 300px;
+
+$yellow_bg: #FFFCD3;
+$secondary_font_color: #999;
+$secondary_link_color: #2971AD;
+$bg_color: white;
+$avail_green: #b0f6a3;
+$avail_green_hover: #009649;
+$light_blue: #21c3fc;
+$bright_blue: #00a3ff;
+$darker_blue: #0083d9;
+$humility: #777;
+
+$bg_highlight_color: #FF8;
+$bg_highlight_color_hover: rgba(67, 73, 80, 0.1); // 10% of #434950 ($color_classy_gray_blue)
+
+// Colors
+$peek_yellow: #FFF200;
+$peek_yellow_hover: #f1eb21;
+$peek_slight_dark: #dfc134;
+$peek_yellow_dark: #c79030;
+$peek_yellow_very_dark: #ad7d28;
+$peek_blue: #639bcf;
+$peek_light_blue: #30a0ff;
+$dark_bg_color: #184559;
+$peek_gray: #C4C4C4;
+$peek_light_gray: #F0F0F0;
+$peek_light_black: #444444;
+$peek_black: #1D1D1D;
+$error_red: #d52234;
+$success_green: #009649;
+$placeholder_text: #514e4e;
+
+// Images
+$peek_sprite: image-url("shared/peek_sprite.png");
+$peek_icon_sprite: image-url("shared/peek_icon_sprite.png");
+$peek_icon_sprite_mobile: image-url("shared/peek_icon_sprite_mobile.png");
+$peek_loader: image-url("shared/loading.gif");
+
+// Sizes
+$full_width: 1250px;
+$left_col_width: 144px;
+
+// Bootstrap Variables
+$brand-primary: #2CA4AB;
+$brand-secondary: $peek_light_blue;
+$brand-success: $success_green;
+$brand-warning: #f0ad4e;
+$brand-danger: $error_red;
+$brand-info: #c4beb0;
+
+// Colors
+$brand-primary-darker-5: darken($brand-primary, 5%);
+$light-green: $brand-primary;
+
+$beige: #F1ECD8;
+$cream: #c4bda1;
+$olive: #635e49;
+$peach: #e29467;
+
+
+$border-radius-base: 0px;
+$border-radius-large: 0px;
+$border-radius-small: 0px;
+
+$text-color: #333;
+$link-color: $brand-primary;
+$link-hover-color: lighten($brand-primary, 0.7);
+
+$font-size-base: 14px;
+$font-family-sans-serif: $primary_font, Helvetica, sans-serif;
+
+$btn-primary-color: $text-color;
+
+$navbar-default-bg: #fff;
+$navbar-default-color: $link_color;
+$navbar-default-link-color: $olive;
+$navbar-default-link-active-color: $brand-primary;
+$navbar-inverse-bg: transparent;
+$navbar-inverse-link-color: #fff;
+$navbar-inverse-toggle-border-color: #fff;
+$navbar-inverse-toggle-hover-bg: #fff;
+
+// The proportion between what the design had and I did
+$proportion-factor: 0.5;
+
+// Tooltip bootstrap changes
+$tooltip-color: #fff;
+$tooltip-bg: $brand-primary;
+$tooltip-opacity: 1;
+$tooltip-max-width: 400px;
+
+$text-muted: #d1d0d0;
+
+$navbar-height: 50px;
+$navbar-default-bg: $cream;
+$navbar-default-link-active-bg: transparent;
+$navbar-default-border: transparent;
+$navbar-collapse-width: 1000px;
+
+$dropdown-bg: darken($olive, 5%);
+$dropdown-link-color: lighten($cream, 15%);
+$dropdown-link-hover-bg: lighten($cream, 15%);
+
+$popover-bg: darken($olive, 5%);
+$popover-title-bg: darken($olive, 5%);
+
+$input-border-focus: $light-green;
+$text-color: #939598;
+
+$label-default-bg: lighten($text-muted, 13%);
+
+$grid-columns: 12;
+$border-radius-base: 4px;
+
+$track-tracker-border-radius: 10px;
+$track-bg: $brand-primary;
+$tracker-width: 4px;
+$tracker-height: 4px;
+$tracker-height-hundred-boolean: false;
+@if $tracker-height-hundred-boolean {$tracker-height: 100%;}
+
+$font-family-sans-serif: 'Montserrat', sans-serif;
+
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+.source-sans{
+    font-family: 'Source Sans Pro', sans-serif;
+}
+.montserrat{
+    font-family: 'Montserrat', sans-serif;
+}
+.times-new{
+  font-family: 'Times New Roman', sans-serif;
+}

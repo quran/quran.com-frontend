@@ -1,0 +1,21 @@
+@import '../../../../theme/variables.scss';
+
+:local .popover{
+  :global(.popover-title){
+    @extend .montserrat;
+    text-transform: uppercase;
+    color: $cream;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 0.75em;
+  }
+
+  :global(.popover-content){
+    color: #fff;
+
+    :global(a){
+      color: #fff;
+      font-size: 0.8em;
+    }
+  }
+}
