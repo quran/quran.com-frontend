@@ -225,6 +225,7 @@ export default class Surah extends Component {
 
   render() {
     debug('component:Surah', 'Render');
+
     const { currentSurah, ayahIds, options } = this.props; // eslint-disable-line no-shadow
 
     this.initScroll();
