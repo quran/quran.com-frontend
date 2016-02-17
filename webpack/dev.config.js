@@ -32,6 +32,7 @@ babelLoaderQuery.presets = ['react-hmre'];
 module.exports = {
   devtool: 'inline-source-map',
   // devtool: 'inline-eval-cheap-source-map', // This is faster.
+  cache: true,
   context: path.resolve(__dirname, '..'),
   entry: {
     'main': [
