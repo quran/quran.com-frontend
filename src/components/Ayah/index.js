@@ -11,7 +11,7 @@ const style = require('./style.scss');
 export default class Ayah extends Component {
   static propTypes = {
     ayah: PropTypes.object.isRequired
-  }
+  };
 
   onAudioChange(ayah, event) {
     event.preventDefault();

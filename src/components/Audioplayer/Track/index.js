@@ -14,7 +14,7 @@ export default class Track extends Component {
     onPlay: PropTypes.func.isRequired,
     onPause: PropTypes.func.isRequired,
     onEnd: PropTypes.func.isRequired
-  }
+  };
 
   constructor() {
     super(...arguments);
@@ -56,7 +56,7 @@ export default class Track extends Component {
 
     file.addEventListener('loadeddata', () => {
       // Default current time to zero. This will change
-      file.currentTime = 0;
+      file.currentTime = 0; // eslint-disable-line no-param-reassign
 
       // this.setState({isAudioLoaded: true});
     });
@@ -77,7 +77,7 @@ export default class Track extends Component {
 
       if (shouldRepeat) {
         file.pause();
-        file.currentTime = 0;
+        file.currentTime = 0; // eslint-disable-line no-param-reassign
         file.play();
       } else {
         file.pause();

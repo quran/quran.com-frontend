@@ -10,7 +10,7 @@ const style = require('../Ayah/style.scss');
 export default class Line extends Component {
   static propTypes = {
     line: PropTypes.array.isRequired,
-  }
+  };
 
   componentDidMount() {
     flowType(ReactDOM.findDOMNode(this));
@@ -30,14 +30,16 @@ export default class Line extends Component {
             className={word.char.font}
             data-toggle="tooltip"
             data-placement="top" title={word.word.translation}
-            dangerouslySetInnerHTML={{__html: word.char.code}} />
+            dangerouslySetInnerHTML={{__html: word.char.code}}
+          />
         );
       }
 
       return (
         <b key={word.char.code}
           className={word.char.font}
-          dangerouslySetInnerHTML={{__html: word.char.code}} />
+          dangerouslySetInnerHTML={{__html: word.char.code}}
+        />
       );
     });
 

@@ -3,7 +3,6 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 
-import connectData from 'helpers/connectData';
 import debug from 'helpers/debug';
 
 import ImageHeader from 'components/ImageHeader';
@@ -13,47 +12,44 @@ import { isAllLoaded, loadAll } from 'redux/modules/surahs';
 
 const style = require('./style.scss');
 
-function fetchData(getState, dispatch) {
-  if (!isAllLoaded(getState())) {
-    return dispatch(loadAll());
-  }
-}
-
-@connectData(fetchData, null)
 @connect(
-  state => ({surahs: Object.keys(state.surahs.entities).map(id => state.surahs.entities[id])})
+  state => ({surahs: state.surahs.entities})
 )
 export default class Home extends Component {
   static propTypes = {
-    surahs: PropTypes.array
+    surahs: PropTypes.object
+  };
+
+  static reduxAsyncConnect(params, store) {
+    if (!isAllLoaded(store.getState())) {
+      return store.dispatch(loadAll());
+    }
   }
 
   renderColumn(array) {
     debug('component:Index', 'renderColumn');
 
-    return array.map(surah => {
-      return (
-        <li className={`row ${style.link}`} key={surah.id}>
-          <Link to={`/${surah.id}`}>
-            <Col xs={2} className="text-muted">
-              {surah.id}
-            </Col>
-            <Col xs={7}>
-              {surah.name.simple}
-              <br />
-              <span className={`text-uppercase ${style.english}`}>{surah.name.english}</span>
-            </Col>
-            <Col xs={3} className={`text-right ${style.arabic}`}>
-              {surah.name.arabic}
-            </Col>
-          </Link>
-        </li>
-      );
-    });
+    return array.map(surah => (
+      <li className={`row ${style.link}`} key={surah.id}>
+        <Link to={`/${surah.id}`}>
+          <Col xs={2} className="text-muted">
+            {surah.id}
+          </Col>
+          <Col xs={7}>
+            {surah.name.simple}
+            <br />
+            <span className={`text-uppercase ${style.english}`}>{surah.name.english}</span>
+          </Col>
+          <Col xs={3} className={`text-right ${style.arabic}`}>
+            {surah.name.arabic}
+          </Col>
+        </Link>
+      </li>
+    ));
   }
 
   renderColumns() {
-    const { surahs } = this.props;
+    const surahs = Object.keys(this.props.surahs).map(id => this.props.surahs[id]);
 
     return (
       <Row>

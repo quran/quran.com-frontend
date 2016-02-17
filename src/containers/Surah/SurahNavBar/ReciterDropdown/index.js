@@ -6,139 +6,139 @@ const style = require('./style.scss');
 // To save API calls.
 export const slugs = [
   {
-    'reciter': {
-      'slug': 'abdulbaset',
-      'id': 1
+    reciter: {
+      slug: 'abdulbaset',
+      id: 1
     },
-    'name': {
-      'english': 'AbdulBaset AbdulSamad (Mujawwad)',
-      'arabic': 'عبد الباسط عبد الصمد (مجود)'
+    name: {
+      english: 'AbdulBaset AbdulSamad (Mujawwad)',
+      arabic: 'عبد الباسط عبد الصمد (مجود)'
     },
-    'style': {
-      'slug': 'mujawwad',
-      'id': 1
+    style: {
+      slug: 'mujawwad',
+      id: 1
     },
-    'id': 1
+    id: 1
   },
   {
-    'reciter': {
-      'slug': 'abdulbaset',
-      'id': 1
+    reciter: {
+      slug: 'abdulbaset',
+      id: 1
     },
-    'name': {
-      'english': 'AbdulBaset AbdulSamad (Murattal)',
-      'arabic': 'عبد الباسط عبد الصمد (مرتل)'
+    name: {
+      english: 'AbdulBaset AbdulSamad (Murattal)',
+      arabic: 'عبد الباسط عبد الصمد (مرتل)'
     },
-    'style': {
-      'slug': 'murattal',
-      'id': 2
+    style: {
+      slug: 'murattal',
+      id: 2
     },
-    'id': 2
+    id: 2
   },
   {
-    'reciter': {
-      'slug': 'sudais',
-      'id': 2
+    reciter: {
+      slug: 'sudais',
+      id: 2
     },
-    'name': {
-      'english': 'Abdur-Rahman as-Sudais',
-      'arabic': 'عبدالرحمن السديس'
+    name: {
+      english: 'Abdur-Rahman as-Sudais',
+      arabic: 'عبدالرحمن السديس'
     },
-    'style': {
-      'slug': null,
-      'id': null
+    style: {
+      slug: null,
+      id: null
     },
-    'id': 3
+    id: 3
   },
   {
-    'reciter': {
-      'slug': 'shatri',
-      'id': 3
+    reciter: {
+      slug: 'shatri',
+      id: 3
     },
-    'name': {
-      'english': 'Abu Bakr al-Shatri',
-      'arabic': 'أبو بكر الشاطرى'
+    name: {
+      english: 'Abu Bakr al-Shatri',
+      arabic: 'أبو بكر الشاطرى'
     },
-    'style': {
-      'slug': null,
-      'id': null
+    style: {
+      slug: null,
+      id: null
     },
-    'id': 4
+    id: 4
   },
   {
-    'reciter': {
-      'slug': 'rifai',
-      'id': 4
+    reciter: {
+      slug: 'rifai',
+      id: 4
     },
-    'name': {
-      'english': 'Hani ar-Rifai',
-      'arabic': 'هاني الرفاعي'
+    name: {
+      english: 'Hani ar-Rifai',
+      arabic: 'هاني الرفاعي'
     },
-    'style': {
-      'slug': null,
-      'id': null
+    style: {
+      slug: null,
+      id: null
     },
-    'id': 5
+    id: 5
   },
   {
-    'reciter': {
-      'slug': 'alafasy',
-      'id': 6
+    reciter: {
+      slug: 'alafasy',
+      id: 6
     },
-    'name': {
-      'english': 'Mishari Rashid al-`Afasy',
-      'arabic': 'مشاري راشد العفاسي'
+    name: {
+      english: 'Mishari Rashid al-`Afasy',
+      arabic: 'مشاري راشد العفاسي'
     },
-    'style': {
-      'slug': null,
-      'id': null
+    style: {
+      slug: null,
+      id: null
     },
-    'id': 8
+    id: 8
   },
   {
-    'reciter': {
-      'slug': 'minshawi',
-      'id': 7
+    reciter: {
+      slug: 'minshawi',
+      id: 7
     },
-    'name': {
-      'english': 'Muhammad Siddiq al-Minshawi (Mujawwad)',
-      'arabic': 'محمد صديق المنشاوي (مجود)'
+    name: {
+      english: 'Muhammad Siddiq al-Minshawi (Mujawwad)',
+      arabic: 'محمد صديق المنشاوي (مجود)'
     },
-    'style': {
-      'slug': 'mujawwad',
-      'id': 1
+    style: {
+      slug: 'mujawwad',
+      id: 1
     },
-    'id': 9
+    id: 9
   },
   {
-    'reciter': {
-      'slug': 'minshawi',
-      'id': 7
+    reciter: {
+      slug: 'minshawi',
+      id: 7
     },
-    'name': {
-      'english': 'Muhammad Siddiq al-Minshawi (Murattal)',
-      'arabic': 'محمد صديق المنشاوي (مرتل)'
+    name: {
+      english: 'Muhammad Siddiq al-Minshawi (Murattal)',
+      arabic: 'محمد صديق المنشاوي (مرتل)'
     },
-    'style': {
-      'slug': 'murattal',
-      'id': 2
+    style: {
+      slug: 'murattal',
+      id: 2
     },
-    'id': 10
+    id: 10
   },
   {
-    'reciter': {
-      'slug': 'shuraym',
-      'id': 8
+    reciter: {
+      slug: 'shuraym',
+      id: 8
     },
-    'name': {
-      'english': 'Sa`ud ash-Shuraym',
-      'arabic': 'سعود الشريم'
+    name: {
+      english: 'Sa`ud ash-Shuraym',
+      arabic: 'سعود الشريم'
     },
-    'style': {
-      'slug': null,
-      'id': null
+    style: {
+      slug: null,
+      id: null
     },
-    'id': 11
+    id: 11
   }
 ];
 
@@ -146,7 +146,7 @@ export default class ReciterDropdown extends Component {
   static propTypes = {
     handleOptionUpdate: PropTypes.func,
     options: PropTypes.object
-  }
+  };
 
   handleOptionUpdate(id) {
     return this.props.handleOptionUpdate({audio: id});
@@ -155,13 +155,11 @@ export default class ReciterDropdown extends Component {
   renderMenu() {
     const { options } = this.props;
 
-    return slugs.map(slug => {
-      return (
+    return slugs.map(slug => (
         <MenuItem key={slug.name.english} active={slug.id === options.audio} onClick={this.handleOptionUpdate.bind(this, slug.id)}>
           {slug.name.english}
         </MenuItem>
-      );
-    });
+    ));
   }
 
   render() {

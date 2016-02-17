@@ -1,5 +1,4 @@
-require('babel/polyfill');
-require('dotenv').load();
+require('babel-polyfill');
 
 // Webpack config for development
 var fs = require('fs');
@@ -28,23 +27,7 @@ var babelrcObjectDevelopment = babelrcObject.env && babelrcObject.env.developmen
 var babelLoaderQuery = Object.assign({}, babelrcObject, babelrcObjectDevelopment);
 delete babelLoaderQuery.env;
 
-babelLoaderQuery.plugins = babelLoaderQuery.plugins || [];
-if (babelLoaderQuery.plugins.indexOf('react-transform') < 0) {
-  babelLoaderQuery.plugins.push('react-transform');
-}
-
-babelLoaderQuery.extra = babelLoaderQuery.extra || {};
-if (!babelLoaderQuery.extra['react-transform']) {
-  babelLoaderQuery.extra['react-transform'] = {};
-}
-if (!babelLoaderQuery.extra['react-transform'].transforms) {
-  babelLoaderQuery.extra['react-transform'].transforms = [];
-}
-babelLoaderQuery.extra['react-transform'].transforms.push({
-  transform: 'react-transform-hmr',
-  imports: ['react'],
-  locals: ['module']
-});
+babelLoaderQuery.presets = ['react-hmre'];
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -94,7 +77,6 @@ module.exports = {
       // TODO: Make this better please!
       'process.env': JSON.stringify({
         API_URL: process.env.API_URL,
-        PIRATE_URL: process.env.PIRATE_URL,
         HOST: process.env.HOST,
         PORT: process.env.PORT
       }),

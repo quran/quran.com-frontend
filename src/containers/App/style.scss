@@ -7,7 +7,6 @@
     top: -10px;
     left: 0px;
     display: inline-block;
-    background: $peek_yellow url('../Home/logo.png') no-repeat center bottom;
     width: $size;
     height: $size + 0.5em;
     background-size: 100%;
@@ -72,5 +71,37 @@
       margin: auto;
     }
   }
+}
 
+footer{
+  background-color: #32312C;
+  padding: 3% 0%;
+  font-size: 14px;
+  margin-top: 50px;
+
+  a{
+    color: #fff;
+  }
+  ul{
+    padding-left: 0px;
+    li{
+      list-style: none;
+      padding: 3% 0%;
+    }
+  }
+  .about,
+  .links{
+    padding-top: 30px;
+  }
+  .about{
+    a{
+      color: #fff;
+    }
+  }
+  .links{
+    text-transform: uppercase;
+    a{
+      color: rgba(#fff, 0.5);
+    }
+  }
 }

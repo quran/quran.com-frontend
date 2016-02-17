@@ -7,33 +7,38 @@ import { pushState } from 'redux-router';
 export default class SurahsDropdown extends Component {
   static propTypes = {
     surahs: PropTypes.object,
-    currentSurah: PropTypes.object,
+    surah: PropTypes.object,
     pushState: PropTypes.func
-  }
+  };
 
   onSelect(event, surahId) {
     this.props.pushState(null, `/${surahId}`);
   }
 
   renderMenu() {
-    const { surahs, currentSurah } = this.props;
+    const { surahs, surah } = this.props;
 
     return Object.keys(surahs).map(surahId => {
-      const surah = surahs[surahId];
+      const surahItem = surahs[surahId];
 
       return (
-        <MenuItem key={surah.name.english} eventKey={surah.id} onSelect={this.onSelect.bind(this)} active={surah.id === currentSurah.id}>
+        <MenuItem
+          key={surahItem.name.english}
+          eventKey={surahItem.id}
+          onSelect={this.onSelect.bind(this)}
+          active={surahItem.id === surah.id}
+        >
           <Row>
             <Col xs={2}>
-              {surah.id}
+              {surahItem.id}
             </Col>
             <Col xs={7}>
-              {surah.name.simple}
+              {surahItem.name.simple}
               <br />
-              <small className={`text-uppercase`}>{surah.name.english}</small>
+              <small className={`text-uppercase`}>{surahItem.name.english}</small>
             </Col>
             <Col xs={3} className={`text-right`}>
-              {surah.name.arabic}
+              {surahItem.name.arabic}
             </Col>
             </Row>
         </MenuItem>

@@ -1,5 +1,4 @@
-require('babel/polyfill');
-
+require('babel-polyfill');
 // Webpack config for creating the production bundle.
 var path = require('path');
 var webpack = require('webpack');
@@ -71,7 +70,6 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env': JSON.stringify({
         API_URL: process.env.API_URL,
-        PIRATE_URL: process.env.PIRATE_URL,
         HOST: process.env.HOST,
         PORT: process.env.PORT,
         NODE_ENV: 'production'

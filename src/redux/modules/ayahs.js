@@ -70,9 +70,9 @@ export function load(id, from, to, options = defaultOptions) {
       params: {
         from,
         to,
-        audio: audio,
-        quran: quran,
-        content: content
+        audio,
+        quran,
+        content
       }
     }),
     surahId: id
@@ -86,6 +86,10 @@ export function clearCurrent(id) {
   };
 }
 
-export function isLoaded() {
-  return false;
+export function isLoaded(globalState, surahId, from, to) {
+  return (
+    globalState.ayahs.entities[surahId] &&
+    globalState.ayahs.entities[surahId][`${surahId}:${from}`] &&
+    globalState.ayahs.entities[surahId][`${surahId}:${to}`]
+  );
 }

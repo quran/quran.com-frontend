@@ -1,4 +1,4 @@
-require('babel/polyfill');
+require('babel-polyfill');
 
 const environment = {
   development: {
@@ -13,7 +13,6 @@ module.exports = Object.assign({
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
   apiUrl: process.env.API_URL,
-  pirateUrl: process.env.PIRATE_URL,
   app: {
     title: 'The Noble Qur\'an - القرآن الكريم',
     description: 'The Noble Qur\'an in many languages in an easy-to-use interface.',
@@ -24,11 +23,11 @@ module.exports = Object.assign({
         'Content-Language': 'EN; AR'
       },
       name: {
-        'description': 'The Noble Qur\'an in many languages in an easy-to-use interface.',
-        'keywords': 'quran, koran, qur\'an, al quran, al kareem, surah yasin, surah yaseen, yasin, surah, holy, arabic, iman, islam, Allah, book, muslim',
-        'Charset': 'UTF-8',
-        'Distribution': 'Global',
-        'Rating': 'General'
+        description: 'The Noble Qur\'an in many languages in an easy-to-use interface.',
+        keywords: 'quran, koran, qur\'an, al quran, al kareem, surah yasin, surah yaseen, yasin, surah, holy, arabic, iman, islam, Allah, book, muslim', // eslint-disable-line max-len
+        Charset: 'UTF-8',
+        Distribution: 'Global',
+        Rating: 'General'
       },
       property: {
         'og:site_name': 'The Noble Qur\'an - القرآن الكريم',

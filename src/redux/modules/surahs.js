@@ -60,7 +60,7 @@ export function load(id) {
 export function loadInfo(link) {
   return {
     types: [LOAD_INFO, LOAD_INFO_SUCCESS, LOAD_INFO_FAIL],
-    promise: (client) => client.get(`http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&titles=${link}&redirects=true`)
+    promise: (client) => client.get(`http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&titles=${link}&redirects=true`) // eslint-disable-line max-len
   };
 }
 

@@ -15,21 +15,19 @@ const style = require('./style.scss');
   state => ({
     files: state.audioplayer.files,
     currentFile: state.audioplayer.currentFile,
-    currentSurahId: state.audioplayer.currentSurahId,
+    surahId: state.audioplayer.surahId,
     isSupported: state.audioplayer.isSupported,
     isPlaying: state.audioplayer.isPlaying,
     isLoadedOnClient: state.audioplayer.isLoadedOnClient,
     shouldRepeat: state.audioplayer.shouldRepeat
   }),
-  (dispatch) => {
-    return {
-      play: bindActionCreators(play, dispatch),
-      pause: bindActionCreators(pause, dispatch),
-      repeat: bindActionCreators(repeat, dispatch),
-      setCurrentFile: bindActionCreators(setCurrentFile, dispatch),
-      buildOnClient: bindActionCreators(buildOnClient, dispatch)
-    };
-  },
+  (dispatch) => ({
+    play: bindActionCreators(play, dispatch),
+    pause: bindActionCreators(pause, dispatch),
+    repeat: bindActionCreators(repeat, dispatch),
+    setCurrentFile: bindActionCreators(setCurrentFile, dispatch),
+    buildOnClient: bindActionCreators(buildOnClient, dispatch)
+  }),
   (stateProps, dispatchProps, ownProps) => {
     if (!stateProps.isSupported) {
       return {
@@ -37,7 +35,7 @@ const style = require('./style.scss');
       };
     }
 
-    const files = stateProps.files[stateProps.currentSurahId];
+    const files = stateProps.files[stateProps.surahId];
     const ayahIds = Object.keys(files);
 
     return {
@@ -49,7 +47,7 @@ const style = require('./style.scss');
 )
 export default class Audioplayer extends Component {
   static propTypes = {
-    currentSurah: PropTypes.object,
+    surah: PropTypes.object,
     files: PropTypes.object,
     currentFile: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
@@ -63,7 +61,7 @@ export default class Audioplayer extends Component {
     pause: PropTypes.func.isRequired,
     repeat: PropTypes.func.isRequired,
     ayahIds: PropTypes.array
-  }
+  };
 
   constructor() {
     super(...arguments);
@@ -76,11 +74,11 @@ export default class Audioplayer extends Component {
   }
 
   componentDidMount() {
-    const { isLoadedOnClient, buildOnClient, currentSurah } = this.props; // eslint-disable-line no-shadow
-
-    if (!isLoadedOnClient && __CLIENT__) {
-      return buildOnClient(currentSurah.id);
-    }
+    // const { isLoadedOnClient, buildOnClient, surah } = this.props; // eslint-disable-line no-shadow
+    //
+    // if (!isLoadedOnClient && __CLIENT__) {
+    //   return buildOnClient(surah.id);
+    // }
   }
 
   componentWillUnmount() {
@@ -220,7 +218,8 @@ export default class Audioplayer extends Component {
         <label
           htmlFor="repeat"
           className={`pointer ${style.buttons} ${shouldRepeat ? style.repeat : ''}`}
-          onClick={this.repeat.bind(this)}>
+          onClick={this.repeat.bind(this)}
+        >
           <i className="ss-icon ss-repeat" />
         </label>
       </Col>
@@ -283,8 +282,9 @@ export default class Audioplayer extends Component {
               shouldRepeat={shouldRepeat}
               onPlay={play}
               onPause={pause}
-              onEnd={this.onNextAyah.bind(this)} /> :
-              null
+              onEnd={this.onNextAyah.bind(this)}
+            /> :
+            null
             }
         </div>
       </li>

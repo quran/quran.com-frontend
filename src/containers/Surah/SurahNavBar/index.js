@@ -24,22 +24,22 @@ function zeroPad(num, places) {
 
 export default class SurahNavBar extends Component {
   static propTypes = {
-    currentSurah: PropTypes.object,
+    surah: PropTypes.object,
     options: PropTypes.object,
     children: PropTypes.object,
     handleOptionUpdate: PropTypes.func,
     lazyLoadAyahs: PropTypes.func
-  }
+  };
 
   renderPrimaryNav() {
-    const { currentSurah } = this.props;
+    const { surah } = this.props;
 
     return (
       <div className={`row ${style.primaryNav} nav-drawer`}>
         <Col xs={3} className="padding-none">
           <img src="http://quran-1f14.kxcdn.com/images/ornament-left.png" className={style.ornament} />
-          {currentSurah.id > 1 ?
-            <Link to={`/${currentSurah.id - 1}`} className={style.chapter}>
+          {surah.id > 1 ?
+            <Link to={`/${surah.id - 1}`} className={style.chapter}>
               <i className="ss-icon ss-navigateleft"></i>
               <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
             </Link>
@@ -47,12 +47,12 @@ export default class SurahNavBar extends Component {
           }
         </Col>
         <Col xs={6} className={`text-center ${style.title}`}>
-          <img src={`http://quran-1f14.kxcdn.com/images/titles/${zeroPad(currentSurah.id, 3)}.svg`}/>
-          <span className="hidden-sm hidden-xs">{currentSurah.name.simple} ({currentSurah.name.english})</span>
+          <img src={`http://quran-1f14.kxcdn.com/images/titles/${zeroPad(surah.id, 3)}.svg`}/>
+          <span className="hidden-sm hidden-xs">{surah.name.simple} ({surah.name.english})</span>
         </Col>
         <Col xs={3} className="text-right padding-none">
-          {currentSurah.id < 114 ?
-            <Link to={`/${currentSurah.id + 1}`} className={style.chapter}>
+          {surah.id < 114 ?
+            <Link to={`/${surah.id + 1}`} className={style.chapter}>
               <span className="hidden-xs hidden-sm"> NEXT SURAH</span>
               <i className="ss-icon ss-navigateright"></i>
             </Link>
@@ -65,7 +65,7 @@ export default class SurahNavBar extends Component {
   }
 
   render() {
-    const { currentSurah, handleOptionUpdate, lazyLoadAyahs, options, children } = this.props;
+    const { surah, handleOptionUpdate, lazyLoadAyahs, options, children } = this.props;
 
     return (
       <Navbar fixedTop fluid>
@@ -75,10 +75,10 @@ export default class SurahNavBar extends Component {
         {this.renderPrimaryNav()}
         <Navbar.Collapse eventKey={0} className={style.bottomNav}>
           <Nav navbar>
-            <SurahsDropdown currentSurah={currentSurah} />
+            <SurahsDropdown surah={surah} />
             {children}
             <ReciterDropdown handleOptionUpdate={handleOptionUpdate} options={options} />
-            <Audioplayer currentSurah={currentSurah} lazyLoadAyahs={lazyLoadAyahs} />
+            <Audioplayer surah={surah} lazyLoadAyahs={lazyLoadAyahs} />
             <ContentDropdown handleOptionUpdate={handleOptionUpdate} options={options} />
             <FontSizeDropdown />
             <ReadingModeToggle />

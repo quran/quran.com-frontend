@@ -7,18 +7,14 @@ export default class Tracker extends Component {
   componentWillReceiveProps(nextProps) {
     const element = ReactDOM.findDOMNode(this);
 
-    element.style.left = (
+    element.style.left = `${(
       nextProps.progress *
       element.parentElement.getBoundingClientRect().width /
       100
-    ) + 'px';
+    )}px`;
 
     element.parentElement.style.background = (
-      'linear-gradient(to right,  #2CA4AB 0%,#2CA4AB ' +
-      nextProps.progress +
-      '%,#635e49 ' +
-      nextProps.progress +
-      '%,#635e49 100%'
+      `linear-gradient(to right,  #2CA4AB 0%,#2CA4AB ${nextProps.progress}%,#635e49 ${nextProps.progress}%,#635e49 100%)`
     );
   }
 

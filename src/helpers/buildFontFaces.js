@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default function createFontFaces(ayahs) {
   if (__SERVER__) {
     return false;

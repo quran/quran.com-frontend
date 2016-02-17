@@ -12,7 +12,7 @@ const style = require('./style.scss');
 export default class ImageHeader extends Component {
   static propTypes = {
     children: PropTypes.object
-  }
+  };
 
   link() {
     return (

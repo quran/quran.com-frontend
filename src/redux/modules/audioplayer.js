@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import { buildAudioFromHash, testIfSupported } from 'helpers/buildAudio';
 
 import { LOAD_SUCCESS as AYAHS_LOAD_SUCCESS } from './ayahs';
@@ -45,7 +46,7 @@ export default function reducer(state = initialState, action = {}) {
 
       let currentFile = state.currentFile ? state.currentFile : action.result.result[0];
 
-      if (parseInt(state.currentSurahId, 10) !== action.surahId) {
+      if (parseInt(state.surahId, 10) !== action.surahId) {
         currentFile = action.result.result[0];
       }
 
@@ -62,8 +63,8 @@ export default function reducer(state = initialState, action = {}) {
 
       return {
         ...state,
-        currentFile: currentFile,
-        currentSurahId: action.surahId,
+        currentFile,
+        surahId: action.surahId,
         files: {
           ...state.files,
           [action.surahId]: files

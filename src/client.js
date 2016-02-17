@@ -1,21 +1,19 @@
 /**
  * THIS IS THE ENTRY POINT FOR THE CLIENT, JUST LIKE server.js IS THE ENTRY POINT FOR THE SERVER.
  */
-import 'babel/polyfill';
+import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createHistory from 'history/lib/createBrowserHistory';
 import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import debug from 'debug';
 import jquery from 'jquery';
-// import io from 'socket.io-client';
-import {Provider} from 'react-redux';
-import {reduxReactRouter, ReduxRouter} from 'redux-router';
+import { Provider } from 'react-redux';
+import { Router, browserHistory } from 'react-router';
+import { ReduxAsyncConnect } from 'redux-async-connect';
 
 import getRoutes from './routes';
-import makeRouteHooksSafe from './helpers/makeRouteHooksSafe';
 
 jquery(document.body).tooltip({
   selector: '[data-toggle="tooltip"]',
@@ -26,30 +24,21 @@ const client = new ApiClient();
 
 // Three different types of scroll behavior available.
 // Documented here: https://github.com/rackt/scroll-behavior
-const scrollablehistory = useScroll(createHistory);
+const scrollHistory = useScroll(() => browserHistory)();
 
 window.quranDebug = debug;
 
 const dest = document.getElementById('content');
-const store = createStore(reduxReactRouter, makeRouteHooksSafe(getRoutes), scrollablehistory, client, window.__data);
+const store = createStore(getRoutes, scrollHistory, client, window.__data);
 window.__store = store;
-// function initSocket() {
-//   const socket = io('', {path: '/api/ws', transports: ['polling']});
-//   socket.on('news', (data) => {
-//     console.log(data);
-//     socket.emit('my other event', { my: 'data from client' });
-//   });
-//   socket.on('msg', (data) => {
-//     console.log(data);
-//   });
-//
-//   return socket;
-// }
-
-// global.socket = initSocket();
 
 const component = (
-  <ReduxRouter routes={getRoutes(store)} />
+  <Router
+    render={(props) => <ReduxAsyncConnect {...props} helpers={{ client }} />} // eslint-disable-line react/jsx-no-bind
+    history={scrollHistory}
+  >
+    {getRoutes(store)}
+  </Router>
 );
 
 ReactDOM.render(
@@ -63,8 +52,14 @@ if (process.env.NODE_ENV !== 'production') {
   window.Perf = require('react-addons-perf');
   window.React = React; // enable debugger
 
-  if (!dest || !dest.firstChild || !dest.firstChild.attributes || !dest.firstChild.attributes['data-react-checksum']) {
-    console.error('Server-side React render was discarded. Make sure that your initial render does not contain any client-side code.');
+  if (!dest ||
+      !dest.firstChild ||
+      !dest.firstChild.attributes ||
+      !dest.firstChild.attributes['data-react-checksum']) {
+    console.error(
+      `Server-side React render was discarded. Make sure that your
+      initial render does not contain any client-side code.`
+    );
   }
 }
 

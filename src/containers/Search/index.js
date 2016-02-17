@@ -4,13 +4,8 @@ import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
 import { pushState } from 'redux-router';
 import DocumentMeta from 'react-document-meta';
-import qs from 'qs';
-
-import { search, isQueried } from 'redux/modules/searchResults';
 
 // import createFontFaces from 'helpers/buildFontFaces';
-
-import connectData from 'helpers/connectData';
 
 import ImageHeader from 'components/ImageHeader';
 import SearchInput from 'components/SearchInput';
@@ -19,15 +14,6 @@ import CoreLoader from 'components/CoreLoader';
 
 const style = require('./style.scss');
 
-function fetchData(getState, dispatch, location) {
-  const query = qs.parse(location.search.slice(1));
-
-  if (!isQueried(getState(), query)) {
-    return dispatch(search(query));
-  }
-}
-
-@connectData(fetchData, null)
 @connect(
   state => ({
     isErrored: state.searchResults.errored,
@@ -56,7 +42,7 @@ export default class Search extends Component {
     results: PropTypes.array,
     ayahs: PropTypes.object,
     pushState: PropTypes.func.isRequired
-  }
+  };
 
   shouldComponentUpdate(nextProps) {
     // Avoid double render when the pushState takes affect and changes the router props.
@@ -78,6 +64,15 @@ export default class Search extends Component {
     }
 
     return true;
+  }
+
+  static reduxAsyncConnect() {
+    return;
+    // const query = qs.parse(location.search.slice(1));
+    //
+    // if (!isQueried(getState(), query)) {
+    //   return dispatch(search(query));
+    // }
   }
 
   renderStatsBar() {
@@ -108,7 +103,8 @@ export default class Search extends Component {
                   clickCallback={this.onPaginate.bind(this)}
                   containerClassName={"pagination"}
                   subContainerClassName={"pages pagination"}
-                  activeClass={style.active} />
+                  activeClass={style.active}
+                />
               </Col>
             </Row>
           </Grid>
@@ -134,11 +130,7 @@ export default class Search extends Component {
       return <div style={{padding: '15%'}}><CoreLoader /></div>;
     }
 
-    return results.map(key => {
-      return (
-        <Ayah ayah={ayahs[key]} key={key} isSearched />
-      );
-    });
+    return results.map(key => <Ayah ayah={ayahs[key]} key={key} isSearched />);
   }
 
   render() {

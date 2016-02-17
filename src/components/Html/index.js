@@ -4,10 +4,10 @@ import serialize from 'serialize-javascript';
 import DocumentMeta from 'react-document-meta';
 
 const styles = (
-  require('../../theme/bootstrap.config.js') +
-  require('../../containers/App/style.scss')._style +
-  require('../../containers/Surah/SurahNavBar/style.scss')._style +
-  require('../../components/Ayah/style.scss')._style
+  require('bootstrap-loader/no-op') +
+  require('../../containers/Home/style.scss')._style
+  // require('../../containers/Surah/SurahNavBar/style.scss')._style +
+  // require('../../components/Ayah/style.scss')._style
 );
 /**
  * Wrapper component containing HTML metadata and boilerplate tags.
@@ -23,7 +23,7 @@ export default class Html extends Component {
     assets: PropTypes.object,
     component: PropTypes.node,
     store: PropTypes.object
-  }
+  };
 
   render() {
     const {assets, component, store} = this.props;

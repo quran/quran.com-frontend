@@ -6,7 +6,6 @@ import * as actions from './actions/index';
 import {mapUrl} from 'utils/url.js';
 import PrettyError from 'pretty-error';
 import http from 'http';
-import SocketIo from 'socket.io';
 
 const pretty = new PrettyError();
 const app = express();

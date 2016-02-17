@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
   LOAD as AYAHS_LOAD,
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
@@ -18,35 +19,9 @@ export default function reducer(state = initialState, action = {}) {
         loading: true
       };
     case AYAHS_LOAD_SUCCESS:
-      // the line data structure will be a two-dimensional array:
-      // the structure is a set of lines and each line is a set of words
-      // like this:
-      // [ [ word, word, word, word, word ],
-      //   [ word, word, word, word, word ],
-      //   [ word, word, word, word, word ],
-      //   [ word, word, word, word, word ],
-      //   [ word, word, word, word, word ] ]
-      //
-      // how this is rendered:
-      // first lines is left aligned
-      // middle lines are justified middle lines are justified
-      // middle lines are justified middle lines are justified
-      // middle lines are justified middle lines are justified
-      //                            last line is right aligned
-      //
-      // not implemented yet:
-      // prepending (if we allow prepending)
-
+      const ayahs = action.result.entities.ayahs;
       const lines = [];
       let lastLine = -1;
-
-    //   if (this.ayahs === ayahs) {
-    //   // if the 'ayahs' passed in are exactly the same as this.ayahs, then
-    //   // we want to rebuild the whole set of lines instead of append/prepend:
-    //   this.lines = [];
-    //   this.lastLine = -1;
-    // }
-      const ayahs = action.result.entities.ayahs;
 
       action.result.result.forEach(ayahId => {
         const ayah = ayahs[ayahId];
@@ -66,8 +41,8 @@ export default function reducer(state = initialState, action = {}) {
         loaded: true,
         loading: false,
         errored: false,
-        lines: lines,
-        lastLine: lastLine
+        lines,
+        lastLine
       };
     case AYAHS_LOAD_FAIL:
       console.log(action);

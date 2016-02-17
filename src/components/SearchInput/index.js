@@ -12,11 +12,11 @@ export default class SearchInput extends Component {
     className: PropTypes.string,
     isInNavbar: PropTypes.bool,
     value: PropTypes.string
-  }
+  };
 
   static defaultProps = {
     value: ''
-  }
+  };
 
   search(event) {
     if (event.key === 'Enter' || event.keyCode === 13 || event.type === 'click') {
@@ -50,13 +50,14 @@ export default class SearchInput extends Component {
     const { className, isInNavbar, value } = this.props;
 
     return (
-      <div className={`right-inner-addon ${className ? className : ''} ${style.searchInput} ${isInNavbar ? style.isInNavbar : ''}`}>
+      <div className={`right-inner-addon ${className} ${style.searchInput} ${isInNavbar ? style.isInNavbar : ''}`}>
         <i className={`ss-icon ss-search ${style.icon} text-center`} onClick={this.search.bind(this)} />
         <input
           type="text"
           placeholder="Search"
           defaultValue={value}
-          onKeyUp={this.search.bind(this)} />
+          onKeyUp={this.search.bind(this)}
+        />
       </div>
     );
   }

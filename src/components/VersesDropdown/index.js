@@ -9,7 +9,7 @@ export default class VersesDropdown extends Component {
     ayat: PropTypes.number.isRequired,
     loaded: PropTypes.array.isRequired,
     onClick: PropTypes.func.isRequired
-  }
+  };
 
   onNonScrollClick(index) {
     return this.props.onClick(index);

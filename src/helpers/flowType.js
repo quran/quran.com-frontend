@@ -20,7 +20,7 @@ export default function(componentDOM) {
 
   const calculateChange = (elem) => {
     if (!elem.getAttribute('fontSizeChanged')) {
-      elem.style.fontSize = getFontSize() + 'px';
+      elem.style.fontSize = `${getFontSize()}px`;
     }
   };
 

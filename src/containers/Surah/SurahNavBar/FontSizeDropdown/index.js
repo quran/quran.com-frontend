@@ -16,7 +16,7 @@ export default class FontSizeDropdown extends Component {
     Array.from(document.querySelectorAll('[class^="font"]')).forEach(node => {
       const fontSize = parseInt(node.style.fontSize.split('px')[0], 10);
 
-      node.style.fontSize = fontSize + incrementValue + 'px';
+      node.style.fontSize = `${fontSize + incrementValue}px`; // eslint-disable-line no-param-reassign
       node.setAttribute('fontSizeChanged', true);
     });
   }
@@ -25,7 +25,7 @@ export default class FontSizeDropdown extends Component {
     Array.from(document.querySelectorAll('[class^="translation"] small')).forEach(node => {
       const fontSize = parseInt(node.style.fontSize.split('px')[0], 10);
 
-      node.style.fontSize = fontSize + incrementValue + 'px';
+      node.style.fontSize = `${fontSize + incrementValue}px`; // eslint-disable-line no-param-reassign
     });
   }
 
@@ -72,10 +72,11 @@ export default class FontSizeDropdown extends Component {
 
   render() {
     const helperText = 'Change font size';
+    const tooltip = <Tooltip id="FontSizeDropdown" className="hidden-xs hidden-sm">{helperText}</Tooltip>;
 
     return (
       <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
-        <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={<Tooltip id="FontSizeDropdown" className="hidden-xs hidden-sm">{helperText}</Tooltip>}>
+        <OverlayTrigger trigger={['hover', 'focus']} placement="bottom" overlay={tooltip}>
           <NavItem eventKey={1} onSelect={this.onSelect.bind(this)}>
             <small className="hidden-xs hidden-sm">A</small><span className="hidden-xs hidden-sm" style={{fontSize: '1.25em'}}>A</span>
             <span className="inline visible-sm visible-xs">

@@ -14,7 +14,7 @@ export default class CoreLoader extends Component {
       PropTypes.number,
       PropTypes.object
     ])
-  }
+  };
 
   render() {
     const { children, minHeight } = this.props;

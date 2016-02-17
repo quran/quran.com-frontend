@@ -13,7 +13,7 @@ const bismillah = `@font-face {font-family: 'bismillah';
 export default class FontStyles extends Component {
   static propTypes = {
     fontFaces: PropTypes.array
-  }
+  };
 
   render() {
     return (
