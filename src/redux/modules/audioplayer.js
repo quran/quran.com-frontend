@@ -65,6 +65,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         currentFile,
         surahId: action.surahId,
+        isLoadedOnClient: __CLIENT__,
         files: {
           ...state.files,
           [action.surahId]: files

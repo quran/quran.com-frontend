@@ -147,7 +147,7 @@ export default class Ayah extends Component {
           <MenuItem header>Translations</MenuItem>
           {
             ayah.content.map(content => {
-              return <MenuItem eventKey={content.id}>{content.name}</MenuItem>
+              return <MenuItem key={content.id} eventKey={content.id}>{content.name}</MenuItem>
             })
           }
         </DropdownButton>

@@ -1,14 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { pushState } from 'redux-router';
+import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
 const style = require('./style.scss');
 
-@connect(null, { pushState })
+@connect(null, { push })
 export default class SearchInput extends Component {
   static propTypes = {
-    pushState: PropTypes.func,
+    push: PropTypes.func,
     className: PropTypes.string,
     isInNavbar: PropTypes.bool,
     value: PropTypes.string
@@ -29,9 +29,9 @@ export default class SearchInput extends Component {
         surah = searchValue.split(/[\.,\:,\,]/)[0];
         ayah = parseInt(searchValue.split(/[\.,\:,\,]/)[1], 10);
 
-        this.props.pushState(null, `/${surah}/${ayah}-${ayah + 10}`);
+        this.props.push(`/${surah}/${ayah}-${ayah + 10}`);
       } else {
-        this.props.pushState(null, `/search`, {q: searchValue});
+        this.props.push(`/search`, {q: searchValue});
       }
     }
 

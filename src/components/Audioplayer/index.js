@@ -74,11 +74,11 @@ export default class Audioplayer extends Component {
   }
 
   componentDidMount() {
-    // const { isLoadedOnClient, buildOnClient, surah } = this.props; // eslint-disable-line no-shadow
-    //
-    // if (!isLoadedOnClient && __CLIENT__) {
-    //   return buildOnClient(surah.id);
-    // }
+    const { isLoadedOnClient, buildOnClient, surah } = this.props; // eslint-disable-line no-shadow
+
+    if (!isLoadedOnClient && __CLIENT__) {
+      return buildOnClient(surah.id);
+    }
   }
 
   componentWillUnmount() {

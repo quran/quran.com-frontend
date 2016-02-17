@@ -58,6 +58,16 @@
   }
 }
 
+.tooltip{
+  font-size: 16px;
+  font-weight: 300;
+  @extend .montserrat;
+
+  .tooltip-inner{
+    padding: 10px 15px;
+  }
+}
+
 // To make the ipad and small window view collapsed
 @media (max-width: $navbar-collapse-width) {
   .navbar-header {

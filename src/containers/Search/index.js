@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactPaginate from 'react-paginate';
 import { connect } from 'react-redux';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { pushState } from 'redux-router';
+import { push } from 'react-router-redux';
 import DocumentMeta from 'react-document-meta';
 
 // import createFontFaces from 'helpers/buildFontFaces';
@@ -27,7 +27,7 @@ const style = require('./style.scss');
     results: state.searchResults.results,
     ayahs: state.searchResults.entities
   }),
-  { pushState }
+  { push }
 )
 export default class Search extends Component {
   static propTypes = {
@@ -41,11 +41,11 @@ export default class Search extends Component {
     query: PropTypes.string,
     results: PropTypes.array,
     ayahs: PropTypes.object,
-    pushState: PropTypes.func.isRequired
+    push: PropTypes.func.isRequired
   };
 
   shouldComponentUpdate(nextProps) {
-    // Avoid double render when the pushState takes affect and changes the router props.
+    // Avoid double render when the push takes affect and changes the router props.
     return [
       this.props.isErrored !== nextProps.isErrored,
       this.props.isLoading !== nextProps.isLoading,
@@ -57,10 +57,10 @@ export default class Search extends Component {
   }
 
   onPaginate(payload) {
-    const { pushState, query, page } = this.props; // eslint-disable-line no-shadow
+    const { push, query, page } = this.props; // eslint-disable-line no-shadow
 
     if (page !== payload.selected + 1) {
-      return pushState(null, '/search', {p: payload.selected + 1, q: query});
+      return push('/search', {p: payload.selected + 1, q: query});
     }
 
     return true;
