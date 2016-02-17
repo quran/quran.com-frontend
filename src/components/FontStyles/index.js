@@ -7,7 +7,7 @@ const bismillah = `@font-face {font-family: 'bismillah';
 
 @connect(
   state => ({
-    fontFaces: [].concat(state.ayahs.fontFaces, state.searchResults.fontFaces, [bismillah])
+    fontFaces: [...state.ayahs.fontFaces, ...state.searchResults.fontFaces, bismillah]
   })
 )
 export default class FontStyles extends Component {

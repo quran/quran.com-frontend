@@ -13,6 +13,10 @@ export default class Ayah extends Component {
     ayah: PropTypes.object.isRequired
   };
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.ayah !== nextProps.ayah;
+  }
+
   onAudioChange(ayah, event) {
     event.preventDefault();
 

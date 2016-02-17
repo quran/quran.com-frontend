@@ -4,7 +4,7 @@
 import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import useScroll from 'scroll-behavior/lib/useStandardScroll';
+import useScroll from 'scroll-behavior/lib/useSimpleScroll';
 import createStore from './redux/create';
 import ApiClient from './helpers/ApiClient';
 import debug from 'debug';

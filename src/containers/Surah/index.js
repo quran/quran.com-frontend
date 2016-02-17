@@ -31,7 +31,8 @@ import SurahNavBar from './SurahNavBar';
       ayahKeys,
       isEndOfSurah,
       ayahIds,
-      isLoading: state.ayahs.isLoading,
+      isLoading: state.ayahs.loading,
+      isLoaded: state.ayahs.loaded,
       lines: state.lines.lines,
       options: state.options,
       isChangingSurah: state.surahs.current !== ownProps.params.surahId
@@ -50,6 +51,7 @@ export default class Surah extends Component {
     isChangingSurah: PropTypes.bool,
     isEndOfSurah: PropTypes.bool,
     isLoading: PropTypes.bool,
+    isLoaded: PropTypes.bool,
     options: PropTypes.object,
     ayahKeys: PropTypes.array,
     ayahIds: PropTypes.array,
@@ -60,16 +62,20 @@ export default class Surah extends Component {
     location: PropTypes.object
   };
 
+  state = {
+    lazyLoading: false
+  };
+
   shouldComponentUpdate(nextProps) {
     const routingToSameComponent = !this.props.isChangingSurah && nextProps.isChangingSurah;
     const routingToSameComponentFinished = this.props.isChangingSurah && !nextProps.isChangingSurah;
-    // const lazyLoadFinished = !routingToSameComponent && (!this.props.isLoaded && nextProps.isLoaded);
+    const lazyLoadFinished = !routingToSameComponent && (!this.props.isLoaded && nextProps.isLoaded);
     const readingModeTriggered = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
 
     return (
       routingToSameComponent ||
       routingToSameComponentFinished ||
-      // lazyLoadFinished ||
+      lazyLoadFinished ||
       readingModeTriggered
     );
   }
@@ -133,7 +139,7 @@ export default class Surah extends Component {
     const to = (from + size);
 
     if (!ayahIds.includes(to)) {
-      loadAyahsDispatch(surah.id, from, to, options);
+      loadAyahsDispatch(surah.id, from, to, options).then(() => this.setState({lazyLoading: false}));
     }
   }
 
@@ -146,10 +152,13 @@ export default class Surah extends Component {
           return false;
         }
 
-        if (!isLoading && window.pageYOffset > (document.body.scrollHeight - window.innerHeight - 1000)) {
+        if (!isLoading && !this.state.lazyLoading && window.pageYOffset > (document.body.scrollHeight - window.innerHeight - 1000)) {
           // Reached the end.
-          // this.lazyLoadAyahs();
-          console.log('LAZYLOAD');
+          this.setState({
+            lazyLoading: true
+          });
+
+          this.lazyLoadAyahs();
         }
       };
 

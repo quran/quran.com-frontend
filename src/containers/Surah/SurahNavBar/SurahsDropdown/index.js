@@ -1,18 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import { NavDropdown, MenuItem, Row, Col } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { pushState } from 'redux-router';
+import { push } from 'react-router-redux';
 
-@connect(state => ({surahs: state.surahs.entities}), { pushState })
+@connect(state => ({surahs: state.surahs.entities}), { push })
 export default class SurahsDropdown extends Component {
   static propTypes = {
     surahs: PropTypes.object,
     surah: PropTypes.object,
-    pushState: PropTypes.func
+    push: PropTypes.func
   };
 
   onSelect(event, surahId) {
-    this.props.pushState(null, `/${surahId}`);
+    this.props.push(`/${surahId}`);
   }
 
   renderMenu() {
