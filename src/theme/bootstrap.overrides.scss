@@ -14,6 +14,50 @@
   // Leaving this empty cause I will end up changing things here.
 }
 
+.dropdown{
+  a.dropdown-toggle{
+    color: $olive;
+
+    .caret{
+      border-right-width: $caret-size;
+      border-left-width: $caret-size;
+      border-top-width: $caret-size;
+      float: right;
+      margin-top: 8px;
+    }
+  }
+}
+
+.dropdown.open{
+  a.dropdown-toggle{
+    color: $beige;
+    background: $olive;
+
+    .caret{
+      border-top: initial;
+      border-bottom: $caret-size dashed;
+    }
+  }
+}
+
+.dropdown-menu{
+  a{
+    font-weight: 300;
+  }
+
+  .dropdown-header{
+    @extend .montserrat;
+    text-transform: uppercase;
+    color: $cream;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 0.75em;
+  }
+  .divider{
+    background-color: $olive;
+  }
+}
+
 // To make the ipad and small window view collapsed
 @media (max-width: $navbar-collapse-width) {
   .navbar-header {

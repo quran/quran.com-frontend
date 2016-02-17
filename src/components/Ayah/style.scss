@@ -65,7 +65,9 @@
     }
   }
   .controls{
-    a{
+    button, & > a{
+      color: #d1d0d0 !important;
+      padding: 0;
       margin-bottom: 15px;
       display: block;
       text-decoration: none;

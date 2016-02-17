@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { Component, PropTypes } from 'react';
 import copy from 'copy-to-clipboard';
-import { Col } from 'react-bootstrap';
+import { DropdownButton, MenuItem, Col } from 'react-bootstrap';
 import { Element } from 'react-scroll';
 
 import debug from 'helpers/debug';
@@ -29,8 +29,16 @@ export default class Ayah extends Component {
     // });
   }
 
-  onCopy(text) {
-    return copy(text);
+  onCopy(text, key) {
+    const { ayah } = this.props;
+
+    if (key === 'with') {
+      return false;
+    } else if (key === 'without') {
+      return copy(ayah.text);
+    } else {
+      return copy(ayah.content.find(translation => translation.id === key).text);
+    }
   }
 
   translations() {
@@ -126,10 +134,27 @@ export default class Ayah extends Component {
            className="text-muted">
           <i className="ss-icon ss-play" /> Play
         </a>
-        <a onClick={this.onCopy.bind(this, ayah.text)}
+        <DropdownButton
+          noCaret
+          bsStyle={"link"}
+          title={<span><i className="ss-icon ss-attach" /> Copy</span>}
+          id={`dropdown-copy`}
+          onSelect={this.onCopy.bind(this)}
+        >
+          <MenuItem eventKey="without">Without Tashkeel</MenuItem>
+          {/*<MenuItem eventKey="with">With Tashkeel</MenuItem>*/}
+          <MenuItem divider />
+          <MenuItem header>Translations</MenuItem>
+          {
+            ayah.content.map(content => {
+              return <MenuItem eventKey={content.id}>{content.name}</MenuItem>
+            })
+          }
+        </DropdownButton>
+        {/*<a onClick={this.onCopy.bind(this, ayah.text)}
            className="text-muted">
-          <i className="ss-icon ss-attach" /> Copy
-        </a>
+
+        </a>*/}
       </Col>
     );
   }
