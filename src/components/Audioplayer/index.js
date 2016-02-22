@@ -36,7 +36,7 @@ const style = require('./style.scss');
     }
 
     const files = stateProps.files[stateProps.surahId];
-    const ayahIds = Object.keys(files);
+    const ayahIds = files ? Object.keys(files) : [];
 
     return {
       ...stateProps, ...dispatchProps, ...ownProps,
@@ -269,6 +269,14 @@ export default class Audioplayer extends Component {
         {this.renderRepeatButton()}
       </div>
     );
+
+    if (!currentFile) {
+      return (
+        <li className={`${style.container}`}>
+          Loading...
+        </li>
+      );
+    }
 
     return (
       <li className={`${style.container}`}>

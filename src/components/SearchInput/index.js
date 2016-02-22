@@ -31,7 +31,10 @@ export default class SearchInput extends Component {
 
         this.props.push(`/${surah}/${ayah}-${ayah + 10}`);
       } else {
-        this.props.push(`/search`, {q: searchValue});
+        this.props.push({
+          pathname: `/search`,
+          query: {q: searchValue}
+        });
       }
     }
 

@@ -60,7 +60,10 @@ export default class Search extends Component {
     const { push, query, page } = this.props; // eslint-disable-line no-shadow
 
     if (page !== payload.selected + 1) {
-      return push('/search', {p: payload.selected + 1, q: query});
+      return push({
+        pathname: '/search',
+        query: {p: payload.selected + 1, q: query}
+      });
     }
 
     return true;

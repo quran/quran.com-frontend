@@ -35,7 +35,6 @@ import SurahNavBar from './SurahNavBar';
       isLoaded: state.ayahs.loaded,
       lines: state.lines.lines,
       options: state.options,
-      isChangingSurah: state.surahs.current !== ownProps.params.surahId
     };
   },
   {
@@ -48,7 +47,7 @@ export default class Surah extends Component {
   static propTypes = {
     ayahs: PropTypes.object,
     lines: PropTypes.array,
-    isChangingSurah: PropTypes.bool,
+    params: PropTypes.object,
     isEndOfSurah: PropTypes.bool,
     isLoading: PropTypes.bool,
     isLoaded: PropTypes.bool,
@@ -62,22 +61,43 @@ export default class Surah extends Component {
     location: PropTypes.object
   };
 
+  constructor() {
+    super(...arguments);
+
+    this.onScroll = this.onScroll.bind(this);
+  }
+
   state = {
     lazyLoading: false
   };
 
-  shouldComponentUpdate(nextProps) {
-    const routingToSameComponent = !this.props.isChangingSurah && nextProps.isChangingSurah;
-    const routingToSameComponentFinished = this.props.isChangingSurah && !nextProps.isChangingSurah;
-    const lazyLoadFinished = !routingToSameComponent && (!this.props.isLoaded && nextProps.isLoaded);
-    const readingModeTriggered = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
+  componentDidMount() {
+    if (__CLIENT__) {
+      window.removeEventListener('scroll', this.onScroll, true);
+      window.addEventListener('scroll', this.onScroll, true);
+    }
+  }
 
+  shouldComponentUpdate(nextProps) {
+    const sameSurahIdRouting = this.props.params.surahId === nextProps.params.surahId;
+    const lazyLoadFinished = sameSurahIdRouting && (!this.props.isLoaded && nextProps.isLoaded);
+    const readingModeTriggered = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
+    console.log(
+      !sameSurahIdRouting,
+      lazyLoadFinished,
+      readingModeTriggered
+    );
     return (
-      routingToSameComponent ||
-      routingToSameComponentFinished ||
+      !sameSurahIdRouting ||
       lazyLoadFinished ||
       readingModeTriggered
     );
+  }
+
+  componentWillUnmount() {
+    if (__CLIENT__) {
+      window.removeEventListener('scroll', this.onScroll, true);
+    }
   }
 
   onVerseDropdownClick(ayahNum) {
@@ -89,6 +109,23 @@ export default class Surah extends Component {
     }
 
     this.lazyLoadAyahs();
+  }
+
+  onScroll() {
+    const { isLoading, isEndOfSurah } = this.props;
+
+    if (isEndOfSurah) {
+      return false;
+    }
+
+    if (!isLoading && !this.state.lazyLoading && window.pageYOffset > (document.body.scrollHeight - window.innerHeight - 1000)) {
+      // Reached the end.
+      this.setState({
+        lazyLoading: true
+      });
+
+      this.lazyLoadAyahs();
+    }
   }
 
   static reduxAsyncConnect(params, store) {
@@ -143,40 +180,16 @@ export default class Surah extends Component {
     }
   }
 
-  initScroll() {
-    if (__CLIENT__) {
-      const onScroll = () => {
-        const { isLoading, isEndOfSurah } = this.props;
-
-        if (isEndOfSurah) {
-          return false;
-        }
-
-        if (!isLoading && !this.state.lazyLoading && window.pageYOffset > (document.body.scrollHeight - window.innerHeight - 1000)) {
-          // Reached the end.
-          this.setState({
-            lazyLoading: true
-          });
-
-          this.lazyLoadAyahs();
-        }
-      };
-
-      window.removeEventListener('scroll', onScroll.bind(this), false);
-      window.addEventListener('scroll', onScroll.bind(this), false);
-    }
-  }
-
   renderAyahs() {
-    const { ayahKeys, ayahs, isChangingSurah } = this.props;
+    const { ayahKeys, ayahs } = this.props;
 
-    if (isChangingSurah) {
-      return (
-        <div style={{paddingTop: '15%'}}>
-          <CoreLoader minHeight={125}>Loading...</CoreLoader>
-        </div>
-      );
-    }
+    // if (isChangingSurah) {
+    //   return (
+    //     <div style={{paddingTop: '15%'}}>
+    //       <CoreLoader minHeight={125}>Loading...</CoreLoader>
+    //     </div>
+    //   );
+    // }
 
     return ayahKeys.map(key => (
       <Ayah ayah={ayahs[key]} key={key} />
@@ -190,7 +203,7 @@ export default class Surah extends Component {
   }
 
   renderFooter() {
-    const { isLoading, isEndOfSurah, isChangingSurah, surah } = this.props;
+    const { isLoading, isEndOfSurah, surah } = this.props;
 
     const adjacentSurahs = (
       <ul className="pager">
@@ -215,7 +228,7 @@ export default class Surah extends Component {
     return (
       <Row>
         <Col xs={12} className="text-center">
-          {isLoading && !isChangingSurah ? <CoreLoader/> : null}
+          {isLoading ? <CoreLoader/> : null}
           {isEndOfSurah ? adjacentSurahs : null}
         </Col>
       </Row>
@@ -226,8 +239,6 @@ export default class Surah extends Component {
     debug('component:Surah', 'Render');
 
     const { surah, ayahIds, options } = this.props; // eslint-disable-line no-shadow
-
-    this.initScroll();
 
     return (
       <div>

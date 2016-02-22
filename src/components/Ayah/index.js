@@ -1,7 +1,7 @@
 /* eslint-disable */
 import React, { Component, PropTypes } from 'react';
 import copy from 'copy-to-clipboard';
-import { DropdownButton, MenuItem, Col } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
 import { Element } from 'react-scroll';
 
 import debug from 'helpers/debug';
@@ -29,16 +29,8 @@ export default class Ayah extends Component {
     // });
   }
 
-  onCopy(text, key) {
-    const { ayah } = this.props;
-
-    if (key === 'with') {
-      return false;
-    } else if (key === 'without') {
-      return copy(ayah.text);
-    } else {
-      return copy(ayah.content.find(translation => translation.id === key).text);
-    }
+  onCopy(text) {
+    return copy(text);
   }
 
   translations() {
@@ -63,7 +55,13 @@ export default class Ayah extends Component {
 
         return (
           <div className={style.translation} key={index}>
-            <h4>{content.name}</h4>
+            <h4>
+              {content.name}
+              <a onClick={this.onCopy.bind(this, content.text)}
+                 className="text-muted">
+                Copy
+              </a>
+            </h4>
             <h2 className="text-left">
               <small dangerouslySetInnerHTML={{__html: content.text}} />
             </h2>
@@ -79,7 +77,13 @@ export default class Ayah extends Component {
     return ayah.content.map((content, index) => {
       return (
         <div className={style.translation} key={index}>
-          <h4>{content.name}</h4>
+          <h4>
+            {content.name}
+          </h4>
+          <a onClick={this.onCopy.bind(this, content.text)}
+             className="text-muted pointer">
+            Copy
+          </a>
           <h2 className="text-left">
             <small style={{fontSize: 19.5}}>{content.text}</small>
           </h2>
@@ -134,27 +138,10 @@ export default class Ayah extends Component {
            className="text-muted">
           <i className="ss-icon ss-play" /> Play
         </a>
-        <DropdownButton
-          noCaret
-          bsStyle={"link"}
-          title={<span><i className="ss-icon ss-attach" /> Copy</span>}
-          id={`dropdown-copy`}
-          onSelect={this.onCopy.bind(this)}
-        >
-          <MenuItem eventKey="without">Without Tashkeel</MenuItem>
-          {/*<MenuItem eventKey="with">With Tashkeel</MenuItem>*/}
-          <MenuItem divider />
-          <MenuItem header>Translations</MenuItem>
-          {
-            ayah.content.map(content => {
-              return <MenuItem key={content.id} eventKey={content.id}>{content.name}</MenuItem>
-            })
-          }
-        </DropdownButton>
-        {/*<a onClick={this.onCopy.bind(this, ayah.text)}
+        <a onClick={this.onCopy.bind(this, ayah.text)}
            className="text-muted">
-
-        </a>*/}
+          <i className="ss-icon ss-attach" /> Copy
+        </a>
       </Col>
     );
   }

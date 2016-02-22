@@ -35,6 +35,8 @@
       text-transform: uppercase;
       font-size: 14px;
       font-weight: 400;
+      display: inline-block;
+      margin-right: 10px;
     }
     small{
       @extend .times-new;
