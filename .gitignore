@@ -1,9 +1,12 @@
 .idea/
-build
-node_modules
-/node_modules
+build/
+node_modules/
+dist/
+coverage/
 test-results.xml
+*.iml
 npm-debug.log
+webpack-assets.json
 webpack-stats.json
 bundle-stats.json
 selenium-debug.log
@@ -11,3 +14,5 @@ tests/functional/output/*
 test/functional/screenshots/*
 .ssh
 webpack-stats.debug.json
+phantomjsdriver.log
+stats.json

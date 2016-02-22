@@ -1,0 +1,70 @@
+@import '../../theme/variables.scss';
+
+:local .container{
+  position:relative;
+  display: block;
+  user-select: none;
+  height: 100%;
+  padding: 16px 40px 8px;
+
+  @media(min-width: $navbar-collapse-width) {
+    border-right: 1px solid $beige;
+    border-left: 1px solid $beige;
+  }
+}
+
+:local .wrapper{
+  width: 100%;
+  position: absolute;
+  top: 90%;
+  left: 0px;
+  height: 10%;
+  transition: all 0.5s;
+  &:hover{
+    height: 20%;
+    top: 80%;
+  }
+}
+
+:local .options{
+  border-radius: 4px;
+  width: 100%;
+  display: inline-block;
+  margin: 0px;
+  height: 90%;
+  text-align: center;
+
+
+  .buttons{
+    cursor: pointer;
+    padding-right: 1.5%;
+    color: $olive;
+    outline: none;
+
+    &.playing{
+      color: $brand-primary;
+    }
+    i.fa{
+      color: inherit;
+      font-size: 100%;
+    }
+  }
+  .checkbox{
+    display: none;
+  }
+  .repeat{
+    color: $brand-primary;
+  }
+}
+
+:local .disabled{
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+:local .verse{
+  position: absolute;
+  left: 20px;
+  color: $olive;
+  opacity: 0.5;
+}

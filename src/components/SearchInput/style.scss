@@ -1,0 +1,116 @@
+@import '../../theme/variables.scss';
+
+:local(.searchInput) {
+  position: relative;
+  margin: 0px auto;
+  margin-bottom: 50px;
+
+  input{
+    width: 100%;
+    padding: 20px 30px;
+    padding-right: 60px;
+    outline: none;
+    border: none;
+    background-color: #fff;
+    color: $brand-primary;
+
+    &::-webkit-input-placeholder {
+      color: $brand-primary;
+      font-weight: 300;
+    }
+
+    &:-moz-placeholder { /* Firefox 18- */
+      color: $brand-primary;
+      font-weight: 300;
+    }
+
+    &::-moz-placeholder {  /* Firefox 19+ */
+      color: $brand-primary;
+      font-weight: 300;
+    }
+
+    &:-ms-input-placeholder {
+      color: $brand-primary;
+      font-weight: 300;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    right: 0px;
+    padding: 15px 15px;
+    font-size: 150%;
+    background-color: $brand-primary;
+    color: #fff;
+    cursor: pointer;
+    height: 100%;
+    border: 3px solid #fff;
+
+    &:hover{
+      background-color: lighten($brand-primary, 10%);
+    }
+  }
+
+  &.isInNavbar{
+    padding: 0px;
+    height: 50px;
+    margin-bottom: 0px;
+    @media(min-width: $navbar-collapse-width) {
+      border-left: 1px solid $beige;
+    }
+
+    :global(input){
+      padding: 10px 15px;
+      height: 100%;
+      background: transparent;
+      color: $olive;
+      padding-right: 48px;
+    }
+
+    input::-webkit-input-placeholder { /* WebKit browsers */
+      color: $olive;
+      opacity: 0.5;
+    }
+    input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: $olive;
+      opacity: 0.5;
+    }
+    input::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: $olive;
+      opacity: 0.5;
+    }
+    input:-ms-input-placeholder { /* Internet Explorer 10+ */
+      color: $olive;
+      opacity: 0.5;
+    }
+
+    .icon{
+      font-size: 1em;
+      height: 80%;
+      top: 50%;
+      transform: translateY(-50%);
+      border: initial;
+      background: transparent;
+      color: $olive;
+      right: 8px;
+      width: 15%;
+      padding: 12px;
+
+      &:hover{
+        opacity: 0.5;
+      }
+    }
+  }
+}
+
+
+@media (max-width: $screen-xs-max) {
+  .right-inner-addon.search-input{
+    i{
+      display: none;
+    }
+    input{
+      box-shadow: inset 0 8px 12px -12px rgba(0, 0, 0, 0.75);
+    }
+  }
+}

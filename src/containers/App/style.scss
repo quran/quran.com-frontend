@@ -1,0 +1,107 @@
+@import '../../theme/variables.scss';
+
+.app {
+  .brand {
+    $size: 6em;
+    position: absolute;
+    top: -10px;
+    left: 0px;
+    display: inline-block;
+    width: $size;
+    height: $size + 0.5em;
+    background-size: 100%;
+    margin: 0 10px 0 0;
+    transition: top 0.5s;
+
+    @media (max-width: $screen-xs-max) {
+      width: 4em;
+      height: 4.5em;
+      left: 15px;
+    }
+
+    &:hover{
+      top: 0px;
+    }
+  }
+  nav :global(.fa) {
+    font-size: 1.75em;
+    line-height: 0.75em;
+  }
+  .regionDropdown{
+    &:hover{
+      .dropdown{
+        @extend .open;
+      }
+    }
+  }
+  .footer {
+    bottom: -20em;
+    width: 100%;
+    height: auto;
+    background-color: $peek_light_gray;
+    color: $text-color;
+    margin-top: 100px;
+
+    :global(a){
+      color: $text-color;
+    }
+
+    .mobile{
+      background-image: url(https://dxvgidz67iahm.cloudfront.net/assets/icons-sf65c98ad92-d23ddbafb5cbc5c885c78417ad1237b1.png);
+      background-position: -404px -57px;
+      background-repeat: no-repeat;
+      overflow: hidden;
+      height: 253px;
+      width: 118px;
+      display: block;
+      margin: auto;
+      position: absolute;
+      top: -75px;
+      right: -50px;
+    }
+    .appstore{
+      background-image: url(https://dxvgidz67iahm.cloudfront.net/assets/icons-sf65c98ad92-d23ddbafb5cbc5c885c78417ad1237b1.png);
+      background-repeat: no-repeat;
+      overflow: hidden;
+      display: block;
+      background-size: 263px 784px;
+      background-position: 0 -339px;
+      height: 57px;
+      width: 200px;
+      margin: auto;
+    }
+  }
+}
+
+footer{
+  background-color: #32312C;
+  padding: 3% 0%;
+  font-size: 14px;
+  margin-top: 50px;
+
+  a{
+    color: #fff;
+  }
+  ul{
+    padding-left: 0px;
+    li{
+      list-style: none;
+      padding: 3% 0%;
+    }
+  }
+  .about,
+  .links{
+    padding-top: 30px;
+  }
+  .about{
+    a{
+      color: #fff;
+    }
+  }
+  .links{
+    text-transform: uppercase;
+    a{
+      color: rgba(#fff, 0.5);
+    }
+  }
+}

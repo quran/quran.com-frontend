@@ -1,0 +1,13 @@
+:local .dropdown{
+  @media (max-width: 1150px) {
+    :global(i + span){
+      display: none;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    :global(i + span){
+      display: initial;
+    }
+  }
+}

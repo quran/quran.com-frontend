@@ -1,0 +1,129 @@
+// These will appear global. They are here cause this is after boostrap has compiled
+@import "./helpers.scss";
+@import "./fonts.scss";
+
+// Override your favorite components!
+.navbar-brand {
+  position: relative;
+  width: 6.5em;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  // Leaving this empty cause I will end up changing things here.
+}
+
+.dropdown{
+  a.dropdown-toggle{
+    color: $olive;
+
+    .caret{
+      border-right-width: $caret-size;
+      border-left-width: $caret-size;
+      border-top-width: $caret-size;
+      float: right;
+      margin-top: 8px;
+    }
+  }
+}
+
+.dropdown.open{
+  a.dropdown-toggle{
+    color: $beige;
+    background: $olive;
+
+    .caret{
+      border-top: initial;
+      border-bottom: $caret-size dashed;
+    }
+  }
+}
+
+.dropdown-menu{
+  a{
+    font-weight: 300;
+  }
+
+  .dropdown-header{
+    @extend .montserrat;
+    text-transform: uppercase;
+    color: $cream;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 0.75em;
+  }
+  .divider{
+    background-color: $olive;
+  }
+}
+
+.tooltip{
+  font-size: 16px;
+  font-weight: 300;
+  @extend .montserrat;
+
+  .tooltip-inner{
+    padding: 10px 15px;
+  }
+}
+
+// To make the ipad and small window view collapsed
+@media (max-width: $navbar-collapse-width) {
+  .navbar-header {
+    float: none;
+  }
+  .navbar-left,.navbar-right {
+    float: none !important;
+  }
+  .navbar-toggle {
+    display: block;
+  }
+  .navbar-collapse {
+    border-top: 1px solid transparent;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .navbar-fixed-top {
+    top: 0;
+    border-width: 0 0 1px;
+  }
+  .navbar-collapse.collapse {
+    display: none!important;
+    overflow: scroll !important;
+  }
+  .navbar-nav {
+    float: none!important;
+    margin-top: 7.5px;
+
+    & > li{
+      border-bottom: 1px solid $olive;
+      &.bordered{
+        border-right: none;
+      }
+    }
+
+    .navbar-inverse & > li{
+      border-bottom: initial;
+    }
+  }
+  .navbar-nav>li {
+    float: none;
+  }
+  .navbar-nav>li>a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .collapse.in{
+    display:block !important;
+  }
+  .navbar-nav .open .dropdown-menu {
+    position: static;
+    float: none;
+    width: auto;
+    margin-top: 0;
+    background-color: transparent;
+    border: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+  }
+}
