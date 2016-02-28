@@ -7,7 +7,7 @@
   "globals_path": "tests/functional/globals.js",
   "selenium" : {
     "start_process" : true,
-    "server_path" : "node_modules/selenium-server/lib/runner/selenium-server-standalone-2.48.2.jar",
+    "server_path" : "node_modules/selenium-server/lib/runner/selenium-server-standalone-2.52.0.jar",
     "log_path" : "",
     "host" : "127.0.0.1",
     "port" : 5555,
@@ -48,7 +48,7 @@
         "browserName" : "phantomjs",
         "javascriptEnabled" : true,
         "acceptSslCerts" : true,
-        "phantomjs.binary.path" : "/usr/local/phantomjs/bin/phantomjs",
+        "phantomjs.binary.path" : "node_modules/phantomjs/bin/phantomjs",
         "phantomjs.page.viewportSize": "{width:1280,height:680}"
       }
     },
