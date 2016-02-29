@@ -1,4 +1,5 @@
 /* eslint-disable consistent-return */
+
 import React from 'react';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
 import debug from 'utils/Debug';
@@ -11,7 +12,7 @@ class Line extends React.Component {
       return;
     }
 
-    let lineText = this.props.line.map(data => {
+    let text = this.props.line.map(data => {
       if (data.word.translation) {
         let tooltip = data.word.translation;
 
@@ -36,7 +37,7 @@ class Line extends React.Component {
 
     return (
       <span className="line text-center">
-        {lineText}
+        {text}
       </span>
     );
 

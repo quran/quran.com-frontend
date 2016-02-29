@@ -13,7 +13,7 @@ import debugLib from 'debug';
 const debug = debugLib('quran');
 
 import app from './app';
-import Settings from 'constants/Settings';
+import * as Settings from 'constants/Settings';
 import * as ExpressActions from 'actions/ExpressActions';
 import * as Fonts from 'utils/FontFace';
 

@@ -38,17 +38,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.css$/, loader: 'style!css' },
-      {
-        test: /\.(js|jsx)$/,
-        exclude: [/server/, /node_modules/, /tests/],
-        loader: 'babel',
-        query: {
-          stage: 0,
-          plugins: [
-            'babel-plugin-object-assign'
-          ]
-        }
-      },
+      { test: /\.js$/, exclude: /node_modules/, loader: require.resolve('babel-loader') },
       { test: /\.json$/, loader: 'json-loader'},
       { test: /\.(png|svg|jpg)$/, loader: 'url-loader?limit=8192' },
       { test: /\.(ttf|eot|svg|woff|woff(2))(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?name=/[name].[ext]"},

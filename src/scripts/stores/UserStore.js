@@ -1,6 +1,6 @@
 import BaseStore from 'fluxible/addons/BaseStore';
 import reactCookie from 'react-cookie';
-import Settings from 'constants/Settings';
+import * as Settings from 'constants/Settings';
 
 class UserStore extends BaseStore {
   constructor(dispatcher) {

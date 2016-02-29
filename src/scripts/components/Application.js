@@ -14,7 +14,7 @@ if (process.env.BROWSER) ga('require', 'linkid');
 
 class Application extends React.Component {
   render() {
-    const Handler = this.props.currentRoute.get('handler').get('default');
+    const Handler = this.props.currentRoute.get('handler');
 
     debug('component:APPLICATION', 'Render');
     return (
@@ -56,20 +56,20 @@ class Application extends React.Component {
     if (this.props.pageTitle !== nextProps.pageTitle) {
       document.title = nextProps.pageTitle;
       // ga('send', 'pageview', nextProps.url);
-      // nextProps.i13n.executeEvent('pageview', {
-      //   url: nextProps.url,
-      //   title: nextProps.pageTitle
-      // });
+      nextProps.i13n.executeEvent('pageview', {
+        url: nextProps.url,
+        title: nextProps.pageTitle
+      });
     }
 
     return this.props.currentRoute.get('handler') !== nextProps.currentRoute.get('handler');
   }
 
   componentDidMount() {
-    // this.props.i13n.executeEvent('pageview', {
-    //   url: this.props.currentNavigate.url,
-    //   title: this.props.pageTitle
-    // });
+    this.props.i13n.executeEvent('pageview', {
+      url: this.props.currentNavigate.url,
+      title: this.props.pageTitle
+    });
   }
 
   componentDidUpdate(prevProps, prevState) {

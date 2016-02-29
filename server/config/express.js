@@ -10,7 +10,6 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 
 import config from './environment';
-import routes from '../routes';
 
 export default function(server) {
   server.use(compression());
@@ -28,7 +27,7 @@ export default function(server) {
   server.set('state namespace', 'App');
   server.set('view cache', true);
 
-  routes(server);
+  require('../routes')(server);
 
   server.use(errorhandler()); // Must be last!
 }
