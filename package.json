@@ -51,6 +51,7 @@
     "fluxible-plugin-fetchr": "^0.3.7",
     "fluxible-router": "^0.3.0",
     "html-webpack-plugin": "^1.4.0",
+    "http-proxy": "^1.13.2",
     "immutable": "^3.7.4",
     "imports-loader": "^0.6.3",
     "jquery": "^2.1.4",
