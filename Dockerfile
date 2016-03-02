@@ -25,12 +25,12 @@ ADD . /quran/
 RUN npm run build
 
 # ssh keys
-WORKDIR /root
-RUN mv /quran/.ssh /root/
+#WORKDIR /root
+#RUN mv /quran/.ssh /root/
 
 # upload js and css
-WORKDIR /quran/build
-RUN rsync --update --progress -raz main* ahmedre@rsync.keycdn.com:zones/assets/
+#WORKDIR /quran/build
+#RUN rsync --update --progress -raz main* ahmedre@rsync.keycdn.com:zones/assets/
 
 # go back to /quran
 WORKDIR /quran
