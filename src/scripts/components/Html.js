@@ -21,6 +21,11 @@ class Html extends React.Component {
             <meta property="og:url" content="http://quran.com/" />
             <meta property="og:image" content="http://quran.com/images/thumbnail.png" />
 
+          <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:site" content="@nytimes" />
+          <meta name="twitter:title" content="The Noble Qur'an - القرآن الكري" />
+          <meta name="twitter:description" content="Quran.com provides the best reading, listening and learning experience for Muslims all around the world."/>
+          <meta name="twitter:image" content="http://quran.com/images/thumbnail.png"/>
 
             <title>{this.props.context.getStore('ApplicationStore').getPageTitle()}</title>
             <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
