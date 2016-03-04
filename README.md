@@ -1,3 +1,8 @@
+[![Stories Ready](https://badge.waffle.io/quran/quran.com-frontend.svg?label=ready&title=Ready)](http://waffle.io/quran/quran.com-frontend)
+[![Stories In Progress](https://badge.waffle.io/quran/quran.com-frontend.svg?label=in%20progress&title=In%20Progress)](http://waffle.io/quran/quran.com-frontend)
+[![Stories In Review](https://badge.waffle.io/quran/quran.com-frontend.svg?label=in%20review&title=In%20Review)](http://waffle.io/quran/quran.com-frontend)
+
+
 ## Quran.com
 This is the project soon to be the Quran.com facing site. This is built in
 Reactjs + Flux (Fluxible by Yahoo) + Expressjs + Webpack. It is isomorphic (javascript shared
@@ -38,3 +43,5 @@ env NODE_ENV=development webpack --json > bundle-stats.json
 subl bundle-stats.json #so that you can the output
 analyze-bundle-size bundle-stats.json
 ```
+
+###### [View project issues on waffle.io...](https://badge.waffle.io/quran/quran.com-frontend)
