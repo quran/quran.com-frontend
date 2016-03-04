@@ -38,3 +38,7 @@ env NODE_ENV=development webpack --json > bundle-stats.json
 subl bundle-stats.json #so that you can the output
 analyze-bundle-size bundle-stats.json
 ```
+
+####[view this project on waffle.io](https://waffle.io/quran/quran.com-frontend)
+[![Stories in Ready](https://badge.waffle.io/quran/quran.com-frontend.svg?label=ready&title=Ready)](http://waffle.io/quran/quran.com-frontend)
+[![Stories in Progress](https://badge.waffle.io/quran/quran.com-frontend.svg?label=in%20progress&title=In%20Progress)](http://waffle.io/quran/quran.com-frontend)
