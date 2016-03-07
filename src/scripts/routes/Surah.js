@@ -1,5 +1,6 @@
 import React from 'react';
 import { handleRoute, NavLink } from 'fluxible-router';
+import Helmet from 'react-helmet';
 import SurahsNav from 'components/surah/SurahsNav';
 import MasterHeader from 'components/header/MasterHeader';
 import * as AyahsActions from 'actions/AyahsActions';
@@ -200,11 +201,13 @@ class Surah extends React.Component {
   }
 
   render() {
+    const surah = this.context.getStore('SurahsStore').getSurah();
     debug('component:Surah', 'Render');
     this.onScroll();
 
     return (
       <div className="surah-body">
+        <Helmet title={surah.name.simple} />
         <div className="left-side shrink">
           <NavBrand />
           <SearchInput className="col-md-12 search-input" />

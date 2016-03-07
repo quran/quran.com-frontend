@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import SearchHeader from 'components/header/SearchHeader';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import AyahsStore from 'stores/AyahsStore';
@@ -71,6 +72,7 @@ class Search extends React.Component {
   render() {
     return (
       <div className="index-page">
+        <Helmet title={this.props.currentRoute.get('query').get('q')} />
         <SearchHeader />
         {this.renderStatsBar()}
         <div className="container surah-list">
