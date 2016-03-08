@@ -1,11 +1,13 @@
 import React from 'react';
 import IndexHeader from 'components/header/IndexHeader';
 import { NavLink } from 'fluxible-router';
+import Helmet from 'react-helmet';
 
 class About extends React.Component {
   render() {
     return (
       <div>
+        <Helmet title="About Quran.com" />
         <IndexHeader noSearch={true} />
         <div className="container-fluid about-text">
           <div className="row">

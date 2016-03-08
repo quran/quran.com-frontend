@@ -3,14 +3,15 @@ import ApplicationStore from 'stores/ApplicationStore';
 import provideContext from 'fluxible-addons-react/provideContext';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import { handleHistory } from 'fluxible-router';
-import debug from 'utils/Debug';
-
 import { ReactI13n, setupI13n } from 'react-i13n';
 import reactI13nGoogleAnalytics from 'react-i13n-ga';
+import Helmet from 'react-helmet';
+
+import debug from 'utils/Debug';
+import config from '../config';
 
 const gaPlugin = new reactI13nGoogleAnalytics('UA-8496014-1');
 if (process.env.BROWSER) ga('require', 'linkid');
-
 
 class Application extends React.Component {
   render() {
@@ -19,6 +20,7 @@ class Application extends React.Component {
     debug('component:APPLICATION', 'Render');
     return (
       <div>
+        <Helmet {...config.app.head}/>
         <Handler />
         <footer>
           <div className="container-fluid">
@@ -54,7 +56,6 @@ class Application extends React.Component {
 
   shouldComponentUpdate(nextProps, nextState) {
     if (this.props.pageTitle !== nextProps.pageTitle) {
-      document.title = nextProps.pageTitle;
       // ga('send', 'pageview', nextProps.url);
       nextProps.i13n.executeEvent('pageview', {
         url: nextProps.url,
@@ -78,7 +79,6 @@ class Application extends React.Component {
     if (newProps.pageTitle === prevProps.pageTitle) {
       return;
     }
-    document.title = newProps.pageTitle;
   }
 };
 

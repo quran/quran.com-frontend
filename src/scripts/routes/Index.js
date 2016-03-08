@@ -1,4 +1,5 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 import IndexHeader from 'components/header/IndexHeader';
 import {NavLink} from 'fluxible-router';
 import {connectToStores, provideContext} from 'fluxible-addons-react';
@@ -82,6 +83,7 @@ class Index extends React.Component {
     debug('component:Index', 'Render');
     return (
         <div className="index-page">
+          <Helmet title="The Noble Qur'an - القرآن الكريم" titleTemplate="%s" />
           <IndexHeader />
           <div className="container surah-list">
             <div className="row">
