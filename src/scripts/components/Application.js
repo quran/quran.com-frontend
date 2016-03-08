@@ -29,6 +29,9 @@ class Application extends React.Component {
                 <ul className="source-sans">
                   <li><a href="/about">About</a></li>
                   <li><a href="/contact">Contact</a></li>
+                  <li>
+                    <a href="https://github.com/quran/quran.com-frontend" target="_blank">Developers</a>
+                  </li>
                 </ul>
               </div>
               <div className="col-md-2 col-xs-5 links">
