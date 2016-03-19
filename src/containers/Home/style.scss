@@ -1,0 +1,43 @@
+@import '../../styles/_bootstrap-config.scss';
+
+.list{
+  .title{
+    padding: 50px 0px;
+    font-size: 14px;
+    margin: 0px;
+  }
+
+  .lastVisit{
+    padding-top: 50px;
+
+    .title{
+      padding: 25px 0px;
+    }
+  }
+}
+
+.link{
+  color: $brand-primary;
+
+  &:hover{
+    background: #f1f1f1;
+  }
+  .col-md-7{
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  a{
+    display: block;
+    height: 70px;
+    padding: 15px 10px;
+  }
+  .index{
+    opacity: 0.5;
+  }
+  .english{
+    font-size: 10px;
+  }
+  .arabic{
+    font-size: 14px;
+  }
+}

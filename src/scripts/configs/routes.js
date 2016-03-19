@@ -11,7 +11,7 @@ export default {
     method: 'get',
     page: 'index',
     title: `The Noble Qur'an - القرآن الكريم`,
-    handler: require('../routes/Index'),
+    handler: require('../../containers/Home'),
     action(actionContext, currentRoute, done) {
       actionContext.executeAction(
         SurahsActions.getSurahs,

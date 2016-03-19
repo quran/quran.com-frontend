@@ -49,12 +49,7 @@ var webpackConfig = {
         }
       },
       { test: /\.json$/, loader: 'json-loader'},
-      { test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader',
-        'css!sass?outputStyle=expanded&' +
-        "includePaths[]=" +
-        (path.resolve(__dirname, "./node_modules"))
-      )}
+      { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' }
     ]
   },
   node: {
