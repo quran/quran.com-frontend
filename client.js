@@ -1,11 +1,25 @@
 /*global document, window, $ */
 require('babel/polyfill');
 
+import React from 'react';
 import ReactDOM from 'react-dom';
 import app from './app';
 import reactCookie from 'react-cookie';
-import createElementWithContext from 'fluxible-addons-react/createElementWithContext';
+import FluxibleComponent from 'fluxible-addons-react/FluxibleComponent';
+import { Router, browserHistory } from 'react-router';
+import useScroll from 'scroll-behavior/lib/useStandardScroll';
+import { ReduxAsyncConnect } from 'redux-async-connect';
+
 import debug from 'utils/Debug';
+
+import ApiClient from './src/helpers/ApiClient';
+import createStore from './src/redux/create';
+import routes from './src/routes';
+
+const client = new ApiClient();
+const history = useScroll(() => browserHistory)();
+const store = createStore(history, client, window.__data);
+
 
 const dehydratedState = window.App; // Sent from the server
 
@@ -31,6 +45,14 @@ if (typeof window !== 'undefined') {
   });
 }
 
+const component = (
+  <Router render={(props) =>
+        <ReduxAsyncConnect {...props} helpers={{client}} />
+      } history={history}>
+    {routes()}
+  </Router>
+);
+
 debug('client', 'rehydrating app');
 // pass in the dehydrated server state from server.js
 app.rehydrate(dehydratedState, function (err, context) {
@@ -42,7 +64,11 @@ app.rehydrate(dehydratedState, function (err, context) {
   const mountNode = document.getElementById('app');
 
   debug('client', 'React Rendering');
-  ReactDOM.render(createElementWithContext(context), mountNode, function () {
+
+  ReactDOM.render(
+    <FluxibleComponent context={context.getComponentContext()}>
+      {component}
+    </FluxibleComponent>, mountNode, () => {
     debug('client', 'React Rendered');
   });
 });

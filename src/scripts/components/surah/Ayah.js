@@ -4,7 +4,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import * as AudioplayerActions from 'actions/AudioplayerActions';
 import CopyToClipboard from 'copy-to-clipboard';
-import {NavLink} from 'fluxible-router';
+import { Link } from 'react-router';
 import debug from 'utils/Debug';
 import { I13nAnchor } from 'react-i13n';
 
@@ -75,11 +75,11 @@ class Ayah extends React.Component {
 
         if (this.props.isSearch) {
           return (
-            <NavLink key={word.char.code}
+            <Link key={word.char.code}
                className={className}
                data-toggle="tooltip"
                data-placement="top" title={tooltip}
-               href={`/search?q=${word.word.arabic}&p=1`}
+               to={`/search?q=${word.word.arabic}&p=1`}
                dangerouslySetInnerHTML={{__html: word.char.code}}/>
           );
         }
@@ -148,11 +148,11 @@ class Ayah extends React.Component {
     if (this.props.isSearch) {
       return (
 
-        <NavLink href={`/${this.props.ayah.surah_id}/${this.props.ayah.ayah_num}`} style={{fontSize: 18}}>
+        <Link to={`/${this.props.ayah.surah_id}/${this.props.ayah.ayah_num}`} style={{fontSize: 18}}>
           <span className="label label-default">
             {this.props.ayah.surah_id}:{this.props.ayah.ayah_num}
           </span>
-        </NavLink>
+        </Link>
       )
     }
     else {

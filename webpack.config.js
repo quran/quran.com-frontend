@@ -69,7 +69,11 @@ var webpackConfig = {
         BROWSER: true,
         API_URL: JSON.stringify(process.env.API_URL),
         CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
-      }
+      },
+      __SERVER__: false,
+      __CLIENT__: true,
+      __DEVELOPMENT__: true,
+      __DEVTOOLS__: true
     }),
     webpack_isomorphic_tools_plugin
   ],

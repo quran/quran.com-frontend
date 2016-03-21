@@ -1,5 +1,5 @@
 import React from 'react';
-import { handleRoute, NavLink } from 'fluxible-router';
+import { Link } from 'react-router';
 import Helmet from 'react-helmet';
 import SurahsNav from 'components/surah/SurahsNav';
 import MasterHeader from 'components/header/MasterHeader';
@@ -33,9 +33,9 @@ class Surah extends React.Component {
         return (
           <ul className="pager">
             <li className="previous">
-              <NavLink href={`/${surahId * 1 - 1}`}>
+              <Link to={`/${surahId * 1 - 1}`}>
                 &larr; Previous Surah
-              </NavLink>
+              </Link>
             </li>
           </ul>
         );
@@ -44,9 +44,9 @@ class Surah extends React.Component {
         return (
           <ul className="pager">
             <li className="next">
-              <NavLink href={`/${surahId * 1 + 1}`}>
+              <Link to={`/${surahId * 1 + 1}`}>
                 Next Surah &rarr;
-              </NavLink>
+              </Link>
             </li>
           </ul>
         );
@@ -55,14 +55,14 @@ class Surah extends React.Component {
         return (
           <ul className="pager">
             <li className="previous">
-              <NavLink href={`/${surahId * 1 - 1}`}>
+              <Link to={`/${surahId * 1 - 1}`}>
                 &larr; Previous Surah
-              </NavLink>
+              </Link>
             </li>
             <li className="next">
-              <NavLink href={`/${surahId * 1 + 1}`}>
+              <Link to={`/${surahId * 1 + 1}`}>
                 Next Surah &rarr;
-              </NavLink>
+              </Link>
             </li>
           </ul>
         );
@@ -249,7 +249,5 @@ Surah = connectToStores(Surah, [AyahsStore], (context, props) => {
     ayahs: ayahsStore.getAyahs()
   };
 });
-
-Surah = handleRoute(Surah);
 
 export default Surah;

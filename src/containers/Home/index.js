@@ -1,26 +1,35 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import IndexHeader from 'components/header/IndexHeader';
-import {NavLink} from 'fluxible-router';
-import {connectToStores, provideContext} from 'fluxible-addons-react';
-import SurahsStore from 'stores/SurahsStore';
-import UserStore from 'stores/UserStore';
+import { Link } from 'react-router';
+import { asyncConnect } from 'redux-async-connect'
+import { connect } from 'react-redux';
 import debug from 'utils/Debug';
+
+import { isAllLoaded, loadAll } from '../../redux/modules/surahs';
 
 const styles = require('./style.scss');
 
-class Home extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+@asyncConnect([{
+  promise({ store: { getState, dispatch } }) {
+    if (!isAllLoaded(getState())) {
+      return dispatch(loadAll());
+    }
 
+    return true;
+  }
+}])
+@connect(
+  state => ({surahs: state.surahs.entities})
+)
+class Home extends React.Component {
   renderColumn(array) {
     debug('component:Index', 'renderColumn');
 
     return array.map((surah, i) => {
       return (
         <li className={`row ${styles.link}`} key={surah.id}>
-          <NavLink href={`/${surah.id}`}>
+          <Link to={`/${surah.id}`}>
             <div className="col-xs-2 text-muted">
               {surah.id}
             </div>
@@ -32,7 +41,7 @@ class Home extends React.Component {
             <div className={`col-xs-3 text-right ${styles.arabic}`}>
               {surah.name.arabic}
             </div>
-          </NavLink>
+          </Link>
         </li>
       );
     });
@@ -56,7 +65,7 @@ class Home extends React.Component {
             </div>
             <ul className="col-md-4 list-unstyled">
               <li className={`row ${styles.link}`}>
-                <NavLink href={`/${this.props.lastVisit.surah}/${lastVisitedAyah}-${lastVisitedAyah + 10}`}>
+                <Link to={`/${this.props.lastVisit.surah}/${lastVisitedAyah}-${lastVisitedAyah + 10}`}>
                   <div className="col-xs-2 text-muted">
                     {surah.id}:{this.props.lastVisit.ayah}
                   </div>
@@ -70,7 +79,7 @@ class Home extends React.Component {
                   <div className={`col-xs-3 text-right ${styles.arabic}`}>
                     {surah.name.arabic}
                   </div>
-                </NavLink>
+                </Link>
               </li>
             </ul>
           </div>
@@ -95,13 +104,13 @@ class Home extends React.Component {
                 <h4 className={`text-muted text-center ${styles.title}`}>SURAHS (CHAPTERS)</h4>
                 <div className="row">
                   <ul className="col-md-4 list-unstyled">
-                    {this.renderColumn(this.props.surahs.slice(0, 38))}
+                    {this.renderColumn(Object.values(this.props.surahs).slice(0, 38))}
                   </ul>
                   <ul className="col-md-4 list-unstyled">
-                    {this.renderColumn(this.props.surahs.slice(38, 76))}
+                    {this.renderColumn(Object.values(this.props.surahs).slice(38, 76))}
                   </ul>
                   <ul className="col-md-4 list-unstyled">
-                    {this.renderColumn(this.props.surahs.slice(76, 114))}
+                    {this.renderColumn(Object.values(this.props.surahs).slice(76, 114))}
                   </ul>
                 </div>
               </div>
@@ -111,15 +120,5 @@ class Home extends React.Component {
     );
   }
 }
-
-Home = connectToStores(Home, [SurahsStore, UserStore], (context, props) => {
-  const surahsStore = context.getStore(SurahsStore);
-  const userStore = context.getStore(UserStore);
-
-  return {
-    surahs: surahsStore.getSurahs(),
-    lastVisit: userStore.getLastVisit()
-  };
-});
 
 export default Home;

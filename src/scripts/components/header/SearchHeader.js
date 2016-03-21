@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchInput from 'components/header/SearchInput';
-import {NavLink} from 'fluxible-router';
+import { Link } from 'react-router';
 
 class SearchHeader extends React.Component {
   render() {
@@ -9,9 +9,9 @@ class SearchHeader extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
-              <NavLink href="/">
+              <Link to="/">
                 <img src="//quran-1f14.kxcdn.com/images/logo-lg-w.png" className="logo" />
-              </NavLink>
+              </Link>
               <h4 className="title">THE NOBLE QUR'AN</h4>
               <SearchInput />
             </div>

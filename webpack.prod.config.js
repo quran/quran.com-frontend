@@ -70,7 +70,11 @@ module.exports = {
         BROWSER: true,
         API_URL: JSON.stringify(process.env.API_URL),
         CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
-      }
+      },
+      __SERVER__: false,
+      __CLIENT__: true,
+      __DEVELOPMENT__: false,
+      __DEVTOOLS__: false
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),

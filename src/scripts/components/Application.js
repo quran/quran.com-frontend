@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import ApplicationStore from 'stores/ApplicationStore';
 import provideContext from 'fluxible-addons-react/provideContext';
 import connectToStores from 'fluxible-addons-react/connectToStores';
@@ -8,20 +8,23 @@ import reactI13nGoogleAnalytics from 'react-i13n-ga';
 import Helmet from 'react-helmet';
 
 import debug from 'utils/Debug';
-import config from '../config';
+import config from '../../config';
 
 const gaPlugin = new reactI13nGoogleAnalytics('UA-8496014-1');
 if (process.env.BROWSER) ga('require', 'linkid');
 
-class Application extends React.Component {
-  render() {
-    const Handler = this.props.currentRoute.get('handler');
+class Application extends Component {
+  static contextTypes = {
+    store: PropTypes.object.isRequired
+  };
 
+  render() {
     debug('component:APPLICATION', 'Render');
+
     return (
       <div>
         <Helmet {...config.app.head}/>
-        <Handler />
+        {this.props.children}
         <footer>
           <div className="container-fluid">
             <div className="row">
@@ -85,7 +88,7 @@ class Application extends React.Component {
   }
 };
 
-export default handleHistory(provideContext(connectToStores(
+export default provideContext(connectToStores(
   setupI13n(Application, {
     rootModelData: {site: 'application'},
     isViewportEnabled: true
@@ -100,4 +103,4 @@ export default handleHistory(provideContext(connectToStores(
       url: appStore.getUrl()
     };
   }
-)));
+));

@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'fluxible-router';
+import { Link } from 'react-router';
 import SurahsStore from 'stores/SurahsStore';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import debug from 'utils/Debug';
@@ -14,7 +14,7 @@ class SurahsNav extends React.Component{
     return this.props.surahs.map((surah, index) => {
       return (
         <li key={`surah-${index}`}>
-          <NavLink routeName="surah" navParams={{surahId: surah.id}} activeClass="active">
+          <Link to={`/${surah.id}`} activeClass="active">
             <div className="row">
               <div className="col-md-2 col-xs-2">
                 <span className="surah-num">
@@ -30,7 +30,7 @@ class SurahsNav extends React.Component{
                 {surah.name.arabic}
               </div>
             </div>
-          </NavLink>
+          </Link>
         </li>
       );
     });

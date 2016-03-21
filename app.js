@@ -1,5 +1,4 @@
 import Fluxible from 'fluxible';
-import { RouteStore } from 'fluxible-router';
 import Application from 'components/Application';
 import routes from 'configs/routes';
 import ApplicationStore from 'stores/ApplicationStore';
@@ -13,9 +12,6 @@ import React from 'react';
 const app = new Fluxible({
   component: React.createFactory(Application)
 });
-// register routes
-var MyRouteStore = RouteStore.withStaticRoutes(routes);
-app.registerStore(MyRouteStore);
 
 // register other stores
 app.registerStore(ApplicationStore);

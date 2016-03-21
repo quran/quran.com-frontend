@@ -6,55 +6,6 @@ import debug from 'debug';
 const debugRoutes = debug('quran');
 
 export default {
-  index: {
-    path: '/',
-    method: 'get',
-    page: 'index',
-    title: `The Noble Qur'an - القرآن الكريم`,
-    handler: require('../../containers/Home'),
-    action(actionContext, currentRoute, done) {
-      actionContext.executeAction(
-        SurahsActions.getSurahs,
-        null,
-        done
-      );
-    }
-  },
-  donations: {
-    path: '/donations',
-    method: 'get',
-    page: 'donations',
-    title: 'Contributing to Quran.com',
-    handler: require('../routes/Donations')
-  },
-  contributions: {
-    path: '/contributions',
-    method: 'get',
-    page: 'contributions',
-    title: 'Contributing to Quran.com',
-    handler: require('../routes/Donations')
-  },
-  about: {
-    path: '/about',
-    method: 'get',
-    page: 'about',
-    title: 'About Quran.com',
-    handler: require('../routes/About')
-  },
-  contact: {
-    path: '/contact',
-    method: 'get',
-    page: 'contact',
-    title: 'Contact Quran.com',
-    handler: require('../routes/Contact')
-  },
-  contactus: {
-    path: '/contactus',
-    method: 'get',
-    page: 'contact',
-    title: 'Contact Quran.com',
-    handler: require('../routes/Contact')
-  },
   search: {
     path: '/search',
     method: 'get',

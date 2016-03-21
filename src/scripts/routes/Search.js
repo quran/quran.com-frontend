@@ -5,7 +5,7 @@ import connectToStores from 'fluxible-addons-react/connectToStores';
 import AyahsStore from 'stores/AyahsStore';
 import AyahsList from 'components/surah/AyahsList';
 import ReactPaginate from 'react-paginate';
-import {handleRoute, NavLink, navigateAction} from 'fluxible-router';
+import { Link } from 'react-router';
 
 class Search extends React.Component {
   constructor(props, context) {
@@ -13,10 +13,10 @@ class Search extends React.Component {
   }
 
   handlePageClick(data) {
-    this.context.executeAction(navigateAction, {
-      url: `/search?q=${this.props.currentRoute.get('query').get('q')}&p=${data.selected + 1}`,
-      method: 'GET'
-    });
+    // this.context.executeAction(navigateAction, {
+    //   url: `/search?q=${this.props.currentRoute.get('query').get('q')}&p=${data.selected + 1}`,
+    //   method: 'GET'
+    // });
   }
 
   renderStatsBar() {
@@ -101,7 +101,5 @@ Search = connectToStores(Search, [AyahsStore], (context, props) => {
     stats: ayahsStore.getSearchStats()
   };
 });
-
-Search = handleRoute(Search);
 
 export default Search;

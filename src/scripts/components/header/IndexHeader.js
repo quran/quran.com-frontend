@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchInput from 'components/header/SearchInput';
 import IndexHeaderNav from 'components/header/IndexHeaderNav';
-import {NavLink} from 'fluxible-router';
+import { Link } from 'react-router';
 import debug from 'utils/Debug';
 
 class IndexHeader extends React.Component {
@@ -25,9 +25,9 @@ class IndexHeader extends React.Component {
     }
     else {
       return (
-        <NavLink href="/">
+        <Link to="/">
           <img src="//quran-1f14.kxcdn.com/images/logo-lg-w.png" className="logo" />
-        </NavLink>
+        </Link>
       );
     }
   }

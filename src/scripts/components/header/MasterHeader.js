@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink, handleRoute} from 'fluxible-router';
+import { Link } from 'react-router';
 import SurahsStore from 'stores/SurahsStore';
 import DesktopOptions from 'components/header/DesktopOptions';
 import MobileOptions from 'components/header/MobileOptions';
@@ -32,10 +32,10 @@ class MasterHeader extends React.Component{
     }
     else {
       return (
-        <NavLink className="navbar-text previous-chapter" href={prev}>
+        <Link className="navbar-text previous-chapter" href={prev}>
           <i className="ss-icon ss-navigateleft"></i>
           <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
-        </NavLink>
+        </Link>
       );
     }
   }
@@ -49,10 +49,10 @@ class MasterHeader extends React.Component{
     }
     else {
       return (
-        <NavLink className="navbar-text next-chapter" href={next}>
+        <Link className="navbar-text next-chapter" href={next}>
           <span className="hidden-xs hidden-sm">NEXT SURAH </span>
           <i className="ss-icon ss-navigateright"></i>
-        </NavLink>
+        </Link>
       );
     }
   }
@@ -174,7 +174,5 @@ MasterHeader.contextTypes = {
   getStore: React.PropTypes.func.isRequired,
   executeAction: React.PropTypes.func.isRequired
 };
-
-MasterHeader = handleRoute(MasterHeader);
 
 export default MasterHeader;
