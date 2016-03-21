@@ -3,7 +3,6 @@ import expressConfig from 'server/config/express';
 const server = express();
 expressConfig(server);
 
-import serialize from 'serialize-javascript';
 import {navigateAction} from 'fluxible-router';
 import FluxibleComponent from 'fluxible-addons-react/FluxibleComponent';
 import React from 'react';
@@ -55,7 +54,7 @@ server.use((req, res, next) => {
       res.status(500);
       hydrateOnClient();
     } else if (renderProps) {
-      loadOnServer({...renderProps, store, helpers: { client, context }}).then(() => {
+      // loadOnServer({...renderProps, store, helpers: { client, context }}).then(() => {
 
         const component = (
           <Provider store={store} key="provider">
@@ -63,19 +62,11 @@ server.use((req, res, next) => {
           </Provider>
         );
 
-        debug('Exposing context state');
-        const exposed = 'window.App=' + serialize(app.dehydrate(context)) + ';';
         debug('Rendering Application component into html');
         const html = ReactDOM.renderToStaticMarkup(htmlComponent({
-          context: context.getComponentContext(),
-          state: exposed,
+          store,
           assets: webpack_isomorphic_tools.assets(),
-          markup: ReactDOM.renderToString(
-            <FluxibleComponent context={context.getComponentContext()}>
-              {component}
-            </FluxibleComponent>
-          ),
-          fontFaces: Fonts.createFontFacesArray(context.getComponentContext().getStore('AyahsStore').getAyahs())
+          component: ReactDOM.renderToString(component)
         }));
 
         debug('Sending markup');
@@ -83,7 +74,7 @@ server.use((req, res, next) => {
         res.setHeader('Cache-Control', 'public, max-age=31557600');
         res.status(200).send('<!DOCTYPE html>' + html);
         res.end();
-      });
+      // });
     }
   });
 });

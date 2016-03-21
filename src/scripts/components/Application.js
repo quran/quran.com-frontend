@@ -1,19 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-import ApplicationStore from 'stores/ApplicationStore';
-import provideContext from 'fluxible-addons-react/provideContext';
-import connectToStores from 'fluxible-addons-react/connectToStores';
-import { handleHistory } from 'fluxible-router';
-import { ReactI13n, setupI13n } from 'react-i13n';
-import reactI13nGoogleAnalytics from 'react-i13n-ga';
 import Helmet from 'react-helmet';
 
 import debug from 'utils/Debug';
 import config from '../../config';
 
-const gaPlugin = new reactI13nGoogleAnalytics('UA-8496014-1');
-if (process.env.BROWSER) ga('require', 'linkid');
-
-class Application extends Component {
+export default class Application extends Component {
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
@@ -59,48 +50,4 @@ class Application extends Component {
       </div>
     );
   }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.pageTitle !== nextProps.pageTitle) {
-      // ga('send', 'pageview', nextProps.url);
-      nextProps.i13n.executeEvent('pageview', {
-        url: nextProps.url,
-        title: nextProps.pageTitle
-      });
-    }
-
-    return this.props.currentRoute.get('handler') !== nextProps.currentRoute.get('handler');
-  }
-
-  componentDidMount() {
-    this.props.i13n.executeEvent('pageview', {
-      url: this.props.currentNavigate.url,
-      title: this.props.pageTitle
-    });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    const newProps = this.props;
-
-    if (newProps.pageTitle === prevProps.pageTitle) {
-      return;
-    }
-  }
 };
-
-export default provideContext(connectToStores(
-  setupI13n(Application, {
-    rootModelData: {site: 'application'},
-    isViewportEnabled: true
-  }, [gaPlugin.getPlugin()]),
-  [ApplicationStore],
-  function (context, props) {
-    var appStore = context.getStore(ApplicationStore);
-    return {
-      currentPageName: appStore.getCurrentPageName(),
-      pageTitle: appStore.getPageTitle(),
-      pages: appStore.getPages(),
-      url: appStore.getUrl()
-    };
-  }
-));

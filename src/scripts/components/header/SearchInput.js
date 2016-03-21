@@ -1,14 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {navigateAction} from 'fluxible-router';
+import { push } from 'react-router-redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
+
 import debug from 'utils/Debug';
 
-class SearchInput extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-  }
-
+@connect(null, { push })
+export default class SearchInput extends React.Component {
   search(e) {
     if (e.key === 'Enter' || e.keyCode === 13 || e.type === 'click') {
       let inputEl = ReactDOM.findDOMNode(this).querySelector('input'),
@@ -35,13 +34,9 @@ class SearchInput extends React.Component {
           ayah = 1;
         }
 
-        this.context.executeAction(navigateAction, {
-          url: '/' + surah + '/' + ayah + '-' + (ayah + 10)
-        });
+        this.props.push(`/${surah}/${ayah}-${(ayah + 10)}`);
       } else {
-        this.context.executeAction(navigateAction, {
-          url: `/search?q=${searching}`
-        });
+        this.props.push(`/search?q=${searching}`);
       }
     }
 
@@ -75,11 +70,3 @@ class SearchInput extends React.Component {
     );
   }
 }
-
-SearchInput.contextTypes = {
-  executeAction: React.PropTypes.func.isRequired
-};
-
-SearchInput.displayName = 'SearchInput';
-
-export default SearchInput;

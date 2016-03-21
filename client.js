@@ -3,9 +3,8 @@ require('babel/polyfill');
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import app from './app';
 import reactCookie from 'react-cookie';
-import FluxibleComponent from 'fluxible-addons-react/FluxibleComponent';
+import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import { ReduxAsyncConnect } from 'redux-async-connect';
@@ -20,11 +19,6 @@ const client = new ApiClient();
 const history = useScroll(() => browserHistory)();
 const store = createStore(history, client, window.__data);
 
-
-const dehydratedState = window.App; // Sent from the server
-
-// expose debug object to browser, so that it can be enabled/disabled from browser:
-// https://github.com/visionmedia/debug#browser-support
 window.fluxibleDebug = debug;
 window.ReactDOM = ReactDOM; // For chrome dev tool support
 
@@ -54,21 +48,14 @@ const component = (
 );
 
 debug('client', 'rehydrating app');
-// pass in the dehydrated server state from server.js
-app.rehydrate(dehydratedState, function (err, context) {
-  if (err) {
-    throw err;
-  }
 
-  window.context = context;
-  const mountNode = document.getElementById('app');
+const mountNode = document.getElementById('app');
 
-  debug('client', 'React Rendering');
+debug('client', 'React Rendering');
 
-  ReactDOM.render(
-    <FluxibleComponent context={context.getComponentContext()}>
-      {component}
-    </FluxibleComponent>, mountNode, () => {
-    debug('client', 'React Rendered');
-  });
+ReactDOM.render(
+  <Provider store={store} key="provider">
+    {component}
+  </Provider>, mountNode, () => {
+  debug('client', 'React Rendered');
 });
