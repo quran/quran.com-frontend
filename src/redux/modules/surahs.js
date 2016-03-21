@@ -1,8 +1,6 @@
 import { surahsSchema } from '../schemas';
 import { arrayOf } from 'normalizr';
 
-import surahs from '../static/surahs';
-
 export const LOAD = '@@quran/surahs/LOAD';
 export const LOAD_SUCCESS = '@@quran/surahs/LOAD_SUCCESS';
 export const LOAD_FAIL = '@@quran/surahs/LOAD_FAIL';
@@ -15,7 +13,7 @@ const initialState = {
   errored: false,
   loaded: false,
   current: null,
-  entities: surahs
+  entities: {}
 };
 
 export default function reducer(state = initialState, action = {}) {
