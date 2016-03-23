@@ -4,6 +4,7 @@ import { reducer as reduxAsyncConnect } from 'redux-async-connect';
 
 import surahs from './surahs';
 import ayahs from './ayahs';
+import lines from './lines';
 import options from './options';
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   reduxAsyncConnect,
   surahs,
   ayahs,
+  lines,
   options
 });

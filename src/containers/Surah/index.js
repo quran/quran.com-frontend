@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-async-connect';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import $ from 'jquery';
@@ -17,6 +18,28 @@ import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/modules/a
 import { setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
 import { setOption } from '../../redux/modules/options';
 
+@asyncConnect([{
+  promise({ store: { dispatch, getState }, params }) {
+    const { range, surahId } = params;
+    const { options } = getState();
+    let from;
+    let to;
+
+    if (range) {
+      [from, to] = range.split('-');
+    } else {
+      [from, to] = [1, 10];
+    }
+
+    dispatch(setCurrentSurah(surahId));
+
+    if (!isLoaded(getState(), surahId, from, to)) {
+      dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
+
+      return dispatch(loadAyahs(surahId, from, to, options));
+    }
+  }
+}])
 @connect(
   (state, ownProps) => {
     const surah = state.surahs.entities[ownProps.params.surahId];
@@ -108,40 +131,40 @@ export default class Surah extends Component {
   }
 
   loadMoreFromButton(direction, e) {
-    let currentAyah = this.context.getStore('AyahsStore').getFirst(),
-      toAyah = (direction === 'after') ? currentAyah + 10 : currentAyah,
-      surahId = this.props.currentRoute.get('params').get('surahId');
-
-    if (direction === 'before') {
-      currentAyah = (currentAyah <= 10) ? 1 : currentAyah - 10;
-    }
-
-    e.preventDefault();
-
-    this.context.executeAction(AyahsActions.getAyahs, {
-      surahId: surahId,
-      from: currentAyah,
-      to: toAyah
-    });
+    // let currentAyah = this.context.getStore('AyahsStore').getFirst(),
+    //   toAyah = (direction === 'after') ? currentAyah + 10 : currentAyah,
+    //   surahId = this.props.currentRoute.get('params').get('surahId');
+    //
+    // if (direction === 'before') {
+    //   currentAyah = (currentAyah <= 10) ? 1 : currentAyah - 10;
+    // }
+    //
+    // e.preventDefault();
+    //
+    // this.context.executeAction(AyahsActions.getAyahs, {
+    //   surahId: surahId,
+    //   from: currentAyah,
+    //   to: toAyah
+    // });
   }
 
   renderLoadMore(direction) {
-    let currentAyah = this.context.getStore('AyahsStore').getFirst(),
-      lastAyahInSurah = this.context.getStore('SurahsStore').getSurah().ayat;
-
-    if (this.context.getStore('AyahsStore').isSingleAyah()) {
-
-      if(direction === 'before' && currentAyah === 1 || direction === 'after' && currentAyah === lastAyahInSurah) {
-        return;
-      }
-
-      return (
-        <div className="text-center padding" style={{margin: '5% 0%'}}>
-          <a href="#" onClick={this.loadMoreFromButton.bind(this, direction)}>
-          Load more</a>
-        </div>
-      )
-    }
+    // let currentAyah = this.context.getStore('AyahsStore').getFirst(),
+    //   lastAyahInSurah = this.context.getStore('SurahsStore').getSurah().ayat;
+    //
+    // if (this.context.getStore('AyahsStore').isSingleAyah()) {
+    //
+    //   if(direction === 'before' && currentAyah === 1 || direction === 'after' && currentAyah === lastAyahInSurah) {
+    //     return;
+    //   }
+    //
+    //   return (
+    //     <div className="text-center padding" style={{margin: '5% 0%'}}>
+    //       <a href="#" onClick={this.loadMoreFromButton.bind(this, direction)}>
+    //       Load more</a>
+    //     </div>
+    //   )
+    // }
   }
 
   onScroll() {
@@ -229,16 +252,15 @@ export default class Surah extends Component {
         <div className="left-side shrink">
           <NavBrand />
           <SearchInput className="col-md-12 search-input" />
-          <SurahsNav className="hidden-xs"/>
         </div>
         <div className="right-side">
-          <MasterHeader />
+          {/*<MasterHeader />*/}
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-10 col-md-offset-1">
                 {this.renderBismillah()}
                 {this.renderLoadMore('before')}
-                <AyahsList />
+                {/*<AyahsList />*/}
                 {this.renderLoadMore('after')}
               </div>
               <div className="col-md-10 col-md-offset-1">

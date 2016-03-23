@@ -24,7 +24,7 @@ export default () => {
 
       <Route path="/search" component={Search} />
 
-      <Route path="/:surahId/:range?" component={Surah} />
+      <Route path="/:surahId" component={Surah} />
     </Route>
   );
 }

@@ -28,7 +28,7 @@ export default {
     method: 'get',
     page: 'surah',
     title: 'Surah',
-    handler: require('../routes/Surah'),
+    handler: null,
     action(actionContext, currentRoute, done) {
       const rangeParam = currentRoute.get('params').get('range');
       const surahId = currentRoute.get('params').get('surahId');
