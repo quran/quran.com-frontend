@@ -1,22 +1,19 @@
 /* eslint-disable consistent-return */
-
-import React from 'react';
-import ReactDOM from 'react-dom';
-import * as AudioplayerActions from 'actions/AudioplayerActions';
+import React, { Component } from 'react';
+// import * as AudioplayerActions from 'actions/AudioplayerActions';
 import CopyToClipboard from 'copy-to-clipboard';
 import { Link } from 'react-router';
-import debug from 'utils/Debug';
 import { I13nAnchor } from 'react-i13n';
 
-class Ayah extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+import debug from 'utils/Debug';
 
-    this.state = {
-      fbShareLink: `https://www.facebook.com/sharer/sharer.php?u=http://www.quran.com/${props.ayah.surah_id}/${props.ayah.ayah_num}&t=${props.ayah.text}`,
-      twShareLink: `http://www.twitter.com/intent/tweet?url=http://www.quran.com/${props.ayah.surah_id}/${props.ayah.ayah_num}&text=Quran.com ${props.ayah.surah_id}:${props.ayah.ayah_num} ${props.ayah.text}`
-    };
+
+export default class Ayah extends Component {
+  static defaultProps = {
+    isSearch: false,
+    isReadingMode: false
   }
+
   translations() {
     if (!this.props.ayah.content && this.props.ayah.match) {
       return this.props.ayah.match.map((content, i) => {
@@ -114,10 +111,6 @@ class Ayah extends React.Component {
     this.setState({
       open: false
     });
-    this.context.executeAction(AudioplayerActions.changeAyah, {
-      ayah: ayah,
-      shouldPlay: true
-    });
   }
 
   onCopy(text) {
@@ -126,7 +119,7 @@ class Ayah extends React.Component {
 
   playLink() {
     if (!this.props.isSearch) {
-      <a onClick={this.goToAyah.bind(this, this.props.ayah.ayah_num)}
+      <a onClick={this.goToAyah.bind(this, this.props.ayah.ayahNum)}
          className="text-muted">
         <i className="ss-icon ss-play" /> Play
       </a>
@@ -148,9 +141,9 @@ class Ayah extends React.Component {
     if (this.props.isSearch) {
       return (
 
-        <Link to={`/${this.props.ayah.surah_id}/${this.props.ayah.ayah_num}`} style={{fontSize: 18}}>
+        <Link to={`/${this.props.ayah.surahId}/${this.props.ayah.ayahNum}`} style={{fontSize: 18}}>
           <span className="label label-default">
-            {this.props.ayah.surah_id}:{this.props.ayah.ayah_num}
+            {this.props.ayah.surahId}:{this.props.ayah.ayahNum}
           </span>
         </Link>
       )
@@ -159,7 +152,7 @@ class Ayah extends React.Component {
       return (
         <h4>
           <span className="label label-default">
-            {this.props.ayah.surah_id}:{this.props.ayah.ayah_num}
+            {this.props.ayah.surahId}:{this.props.ayah.ayahNum}
           </span>
         </h4>
       );
@@ -176,29 +169,14 @@ class Ayah extends React.Component {
         {this.ayahBadge()}
         {this.playLink()}
         {this.copyLink()}
-        <I13nAnchor href={this.state.fbShareLink}
-          i13nModel={{category: 'social', action: 'click'}}
-          onClick={this.shareDialog.bind(this, this.state.fbShareLink)}
-          target="_blank" title="Share on Facebook"
-          className="text-muted">
-          Facebook
-        </I13nAnchor>
-        <I13nAnchor href={this.state.twShareLink}
-          i13nModel={{category: 'social', action: 'click'}}
-          onClick={this.shareDialog.bind(this, this.state.twShareLink)}
-          target="_blank" title="Share on Twitter"
-          className="text-muted">
-          Twitter
-        </I13nAnchor>
-
       </div>
     );
   }
 
   render() {
-    debug(`component:Ayah`, `Render ${this.props.ayah.ayah_num}`);
+    debug(`component:Ayah`, `Render ${this.props.ayah.ayahNum}`);
 
-    if (this.props.readingMode) {
+    if (this.props.isReadingMode) {
       return this.text();
     }
 
@@ -213,15 +191,3 @@ class Ayah extends React.Component {
     );
   }
 }
-
-Ayah.displayName = 'Ayah';
-
-Ayah.contextTypes = {
-  executeAction: React.PropTypes.func.isRequired
-};
-
-Ayah.propTypes = {
-  ayah: React.PropTypes.object.isRequired
-};
-
-export default Ayah;

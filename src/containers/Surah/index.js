@@ -9,7 +9,7 @@ import $ from 'jquery';
 // components
 import SurahsNav from 'components/surah/SurahsNav';
 import MasterHeader from 'components/header/MasterHeader';
-import AyahsList from 'components/surah/AyahsList';
+import Ayah from 'components/surah/Ayah';
 import SearchInput from 'components/header/SearchInput';
 import NavBrand from 'components/header/NavBrand';
 import debug from 'utils/Debug';
@@ -243,24 +243,27 @@ export default class Surah extends Component {
   }
 
   render() {
-    const { surah } = this.props;
+    const { surah, ayahs } = this.props;
     debug('component:Surah', 'Render');
 
     return (
       <div className="surah-body">
         <Helmet title={surah.name.simple} />
-        <div className="left-side shrink">
-          <NavBrand />
-          <SearchInput className="col-md-12 search-input" />
-        </div>
-        <div className="right-side">
+        <div>
           {/*<MasterHeader />*/}
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-10 col-md-offset-1">
                 {this.renderBismillah()}
                 {this.renderLoadMore('before')}
-                {/*<AyahsList />*/}
+                {
+                  Object.values(ayahs).map(ayah => (
+                    <Ayah
+                      ayah={ayah}
+                      key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
+                    />
+                  ))
+                }
                 {this.renderLoadMore('after')}
               </div>
               <div className="col-md-10 col-md-offset-1">

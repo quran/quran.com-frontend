@@ -6,6 +6,7 @@ import surahs from './surahs';
 import ayahs from './ayahs';
 import lines from './lines';
 import options from './options';
+import searchResults from './searchResults';
 
 export default combineReducers({
   routing: routeReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
   surahs,
   ayahs,
   lines,
+  searchResults,
   options
 });

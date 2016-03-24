@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 
+import FontStyles from '../../components/FontStyles';
+
 import debug from 'utils/Debug';
 import config from '../../config';
 
@@ -10,12 +12,14 @@ export default class Application extends Component {
   };
 
   render() {
+    const { children } = this.props;
     debug('component:APPLICATION', 'Render');
 
     return (
       <div>
         <Helmet {...config.app.head}/>
-        {this.props.children}
+        <FontStyles />
+        {children}
         <footer>
           <div className="container-fluid">
             <div className="row">
