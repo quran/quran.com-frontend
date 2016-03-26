@@ -105,6 +105,12 @@
   overflow-wrap: break-word;
   line-height: 150%;
   word-break: break-all;
+  text-align: right;
+  float: left;
+
+  b{
+    float: right;
+  }
 
   b, a{
     font-weight: 100;

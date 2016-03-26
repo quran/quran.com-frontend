@@ -41,9 +41,6 @@ export default function(server) {
   server.use('/public', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
   server.use('/build', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
 
-  server.set('state namespace', 'App');
-  server.set('view cache', true);
-
   server.get(/^\/(images|fonts)\/.*/, function(req, res) {
     res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
   });

@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import SurahsStore from 'stores/SurahsStore';
 import DesktopOptions from 'components/header/DesktopOptions';
 import MobileOptions from 'components/header/MobileOptions';
 import NavBrand from 'components/header/NavBrand';
 import debug from 'utils/Debug';
 import $ from 'jquery';
+import Title from '../../../containers/Surah/Title';
 
-class MasterHeader extends React.Component{
-  constructor(props) {
-    super(props);
+class MasterHeader extends Component {
+  static propTypes = {
+    surah: PropTypes.object
+  }
 
-    this.state = {
-      showOptions: false,
-      showMobile: false,
-      showDesktop: true
-    };
+  state = {
+    showOptions: false,
+    showMobile: false,
+    showDesktop: true
   }
 
   showOptions(e) {
@@ -25,14 +25,13 @@ class MasterHeader extends React.Component{
 
   // Disable hyperlink for previous surah if surah is Al-Faatihah.
   previousChapter() {
-    var prev = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) - 1);
-    var currentPos = parseInt(this.props.currentRoute.get('params').get('surahId'));
-    if (currentPos <= 1){
+    const { surah } = this.props;
+
+    if (surah.id <= 1){
       return null;
-    }
-    else {
+    } else {
       return (
-        <Link className="navbar-text previous-chapter" href={prev}>
+        <Link className="navbar-text previous-chapter" to={`/${surah.id - 1}`}>
           <i className="ss-icon ss-navigateleft"></i>
           <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
         </Link>
@@ -42,14 +41,14 @@ class MasterHeader extends React.Component{
 
   // Disable hyperlink for next surah if surah is An-Nas.
   nextChapter() {
-    var next = '/' + (parseInt(this.props.currentRoute.get('params').get('surahId')) + 1);
-    var currentPos = parseInt(this.props.currentRoute.get('params').get('surahId'));
-    if (currentPos >= 114){
+    const { surah } = this.props;
+
+    if (surah.id >= 114){
       return null;
     }
     else {
       return (
-        <Link className="navbar-text next-chapter" href={next}>
+        <Link className="navbar-text next-chapter" to={`/${surah.id + 1}`}>
           <span className="hidden-xs hidden-sm">NEXT SURAH </span>
           <i className="ss-icon ss-navigateright"></i>
         </Link>
@@ -57,24 +56,28 @@ class MasterHeader extends React.Component{
     }
   }
 
-  surahTitle(currentSurah) {
+  surahTitle() {
+    const { surah } = this.props;
+
     function zeroPad(num, places) {
       var zero = places - num.toString().length + 1;
       return Array(+(zero > 0 && zero)).join('0') + num;
     }
 
-    if (currentSurah) {
+    if (surah) {
       return (
-        <img src={'//quran-1f14.kxcdn.com/images/titles/' + zeroPad(currentSurah.id, 3) + '.svg'} className="title"/>
+        <img src={'//quran-1f14.kxcdn.com/images/titles/' + zeroPad(surah.id, 3) + '.svg'} className="title"/>
       );
     }
   }
 
-  surahName(currentSurah) {
-    if (currentSurah) {
+  surahName() {
+    const { surah } = this.props;
+
+    if (surah) {
       return (
         <p className="navbar-text text-uppercase surah-name">
-          {currentSurah.name.simple} ({currentSurah.name.english})
+          {surah.name.simple} ({surah.name.english})
         </p>
       );
     }
@@ -123,8 +126,7 @@ class MasterHeader extends React.Component{
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.props.currentRoute.get('params').get('surahId') !==
-            nextProps.currentRoute.get('params').get('surahId')) {
+    if (this.props.surah.id !== nextProps.surah.id) {
       return true;
     }
     else if (this.state.showOptions !== nextState.showOptions) {
@@ -137,42 +139,23 @@ class MasterHeader extends React.Component{
   }
 
   render() {
-    var currentSurah = this.context.getStore('SurahsStore')
-      .getSurahs()[this.props.currentRoute.get('params').get('surahId') - 1];
+    const { surah } = this.props;
 
     debug('component:MasterHeader', 'Render');
+
     return (
       <nav className="navbar navbar-default navbar-fixed-top montserrat shrink" role="navigation">
         <div className="container-fluid">
           <div className="row">
-            {this.renderNavBrand()}
-            {this.renderMobileOptions()}
-            <div className="col-md-3 col-xs-3 surah-title">
-              <img src="//quran-1f14.kxcdn.com/images/ornament-left.png" className="ornament" />
-              {this.previousChapter()}
-            </div>
-            <div className="col-md-6 col-xs-6 surah-title text-center">
-              {this.surahTitle(currentSurah)}
-              <br />
-              {this.surahName(currentSurah)}
-            </div>
-            <div className="col-md-3 col-xs-3 surah-title text-right">
-              {this.nextChapter()}
-              <img src="//quran-1f14.kxcdn.com/images/ornament-right.png" className="ornament" />
-            </div>
+            {/*{this.renderNavBrand()}*/}
+            {/*{this.renderMobileOptions()}*/}
+            <Title surah={surah} />
           </div>
-          {this.renderDesktopOptions()}
+          {/*{this.renderDesktopOptions()}*/}
         </div>
       </nav>
     );
   }
 }
-
-MasterHeader.displayName = 'MasterHeader';
-
-MasterHeader.contextTypes = {
-  getStore: React.PropTypes.func.isRequired,
-  executeAction: React.PropTypes.func.isRequired
-};
 
 export default MasterHeader;

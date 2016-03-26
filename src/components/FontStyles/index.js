@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const bismillah = `@font-face {font-family: 'bismillah';
   src: url('http://quran-1f14.kxcdn.com/fonts/ttf/bismillah.ttf') format('truetype')}
-  .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding-top: 25px;}`;
+  .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}`;
 
 @connect(
   state => ({

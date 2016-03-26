@@ -54,7 +54,7 @@ server.use((req, res, next) => {
       res.status(500);
       hydrateOnClient();
     } else if (renderProps) {
-      // loadOnServer({...renderProps, store, helpers: { client, context }}).then(() => {
+      loadOnServer({...renderProps, store, helpers: { client, context }}).then(() => {
 
         const component = (
           <Provider store={store} key="provider">
@@ -73,8 +73,7 @@ server.use((req, res, next) => {
         res.type('html');
         res.setHeader('Cache-Control', 'public, max-age=31557600');
         res.status(200).send('<!DOCTYPE html>' + html);
-        res.end();
-      // });
+      });
     }
   });
 });

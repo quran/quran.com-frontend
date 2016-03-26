@@ -4,15 +4,25 @@ $content-padding: 10px 15px 5px 15px !important;
 $label-padding: 5px 20px;
 nav.navbar{
   background-color: $beige;
-  width: inherit;
+  width: 100%;
   right: 0px;
   left: inherit;
+  transition: top 0.5s;
+
   &.navbar-fixed-top{
     border: none;
   }
 
   a:hover{
     text-decoration: none;
+  }
+
+  & + div{
+    padding-top: 190px;
+  }
+
+  &.scroll-up{
+    top: -90px;
   }
 }
 
