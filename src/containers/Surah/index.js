@@ -18,6 +18,8 @@ import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/modules/a
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
 import { setOption } from '../../redux/modules/options';
 
+let lastScroll = 0;
+
 @asyncConnect([
   {
     promise({ store: { getState, dispatch } }) {
@@ -95,6 +97,7 @@ export default class Surah extends Component {
     if (__CLIENT__) {
       window.removeEventListener('scroll', this.onScroll, true);
       window.addEventListener('scroll', this.onScroll, true);
+      lastScroll = window.pageYOffset;
     }
   }
 
@@ -146,8 +149,21 @@ export default class Surah extends Component {
     return <p>Loading...</p>;
   }
 
+  handleNavbar() {
+    // TODO: This should be done with react!
+    if (window.pageYOffset > lastScroll) {
+      document.querySelector('nav').classList.add('scroll-up');
+    } else {
+      document.querySelector('nav').classList.remove('scroll-up');
+    }
+
+    lastScroll = window.pageYOffset;
+  }
+
   onScroll() {
     const { isLoading, isEndOfSurah } = this.props;
+
+    this.handleNavbar();
 
     if (isEndOfSurah) {
       return false;
