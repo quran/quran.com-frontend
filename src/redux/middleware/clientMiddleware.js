@@ -1,7 +1,6 @@
 import { camelizeKeys } from 'humps';
 import { normalize } from 'normalizr';
 
-
 export default function clientMiddleware(client) {
   return ({dispatch, getState}) => {
     return next => action => {

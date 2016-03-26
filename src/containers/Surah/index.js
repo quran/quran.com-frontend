@@ -15,31 +15,44 @@ import Bismillah from './Bismillah';
 import debug from 'utils/Debug';
 
 import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/modules/ayahs';
-import { setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
+import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
 import { setOption } from '../../redux/modules/options';
 
-@asyncConnect([{
-  promise({ store: { dispatch, getState }, params }) {
-    const { range, surahId } = params;
-    const { options } = getState();
-    let from;
-    let to;
+@asyncConnect([
+  {
+    promise({ store: { getState, dispatch } }) {
+      if (!isAllLoaded(getState())) {
+        return dispatch(loadAll());
+      }
 
-    if (range) {
-      [from, to] = range.split('-');
-    } else {
-      [from, to] = [1, 10];
+      return true;
     }
+  },
+  {
+    promise({ store: { dispatch, getState }, params }) {
+      const { range, surahId } = params;
+      const { options } = getState();
+      let from;
+      let to;
 
-    dispatch(setCurrentSurah(surahId));
+      if (range) {
+        [from, to] = range.split('-');
+      } else {
+        [from, to] = [1, 10];
+      }
 
-    if (!isLoaded(getState(), surahId, from, to)) {
-      dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
+      dispatch(setCurrentSurah(surahId));
 
-      return dispatch(loadAyahs(surahId, from, to, options));
+      if (!isLoaded(getState(), surahId, from, to)) {
+        dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
+
+        return dispatch(loadAyahs(surahId, from, to, options));
+      }
+
+      return true;
     }
   }
-}])
+])
 @connect(
   (state, ownProps) => {
     const surah = state.surahs.entities[ownProps.params.surahId];

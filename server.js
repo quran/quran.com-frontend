@@ -7,7 +7,7 @@ import {navigateAction} from 'fluxible-router';
 import FluxibleComponent from 'fluxible-addons-react/FluxibleComponent';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
+import { match } from 'react-router';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
 import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
@@ -15,7 +15,6 @@ import { Provider } from 'react-redux';
 import debugLib from 'debug';
 const debug = debugLib('quran');
 
-import app from './app';
 import routes from './src/routes';
 import ApiClient from './src/helpers/ApiClient';
 import createStore from './src/redux/create';
@@ -26,8 +25,8 @@ import * as Fonts from 'utils/FontFace';
 import NotFound from 'components/NotFound';
 import Errored from 'components/Error';
 import ErroredMessage from 'components/ErrorMessage';
-import HtmlComponent from 'components/Html';
-const htmlComponent = React.createFactory(HtmlComponent);
+import Html from 'components/Html';
+import About from './src/scripts/routes/About';
 
 // Use varnish for the static routes, which will cache too
 
@@ -40,11 +39,6 @@ server.use((req, res, next) => {
     webpack_isomorphic_tools.refresh()
   }
 
-  let context = app.createContext();
-
-  context.getActionContext().executeAction(ExpressActions.userAgent, req.useragent);
-  context.getActionContext().executeAction(ExpressActions.cookies, req.cookies);
-
   debug('Executing navigate action');
   match({ history, routes: routes(), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
     if (redirectLocation) {
@@ -54,25 +48,26 @@ server.use((req, res, next) => {
       res.status(500);
       hydrateOnClient();
     } else if (renderProps) {
-      loadOnServer({...renderProps, store, helpers: { client, context }}).then(() => {
-
-        const component = (
-          <Provider store={store} key="provider">
-            <RouterContext {...renderProps} createElement={(Component, props) => <Component {...props} context={context.getComponentContext()}/> } />
+      loadOnServer({...renderProps, store, helpers: { client }}).then(() => {
+        const component = ReactDOM.renderToString(
+          <Provider store={store}>
+            <ReduxAsyncConnect {...renderProps} />
           </Provider>
         );
 
-        debug('Rendering Application component into html');
-        const html = ReactDOM.renderToStaticMarkup(htmlComponent({
-          store,
-          assets: webpack_isomorphic_tools.assets(),
-          component: ReactDOM.renderToString(component)
-        }));
+        console.log(component);
 
+        debug('Rendering Application component into html');
         debug('Sending markup');
         res.type('html');
         res.setHeader('Cache-Control', 'public, max-age=31557600');
-        res.status(200).send('<!DOCTYPE html>' + html);
+        res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(
+          <Html
+            component={component}
+            store={store}
+            assets={webpack_isomorphic_tools.assets()}
+          />
+        ));
       });
     }
   });

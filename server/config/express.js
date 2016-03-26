@@ -30,7 +30,7 @@ proxyApi.on('error', (error, req, res) => {
 
 export default function(server) {
   server.use(compression());
-  server.use(bodyParser.json());
+  // server.use(bodyParser.json());
   server.use(logger('dev'));
   server.use(useragent.express());
   server.use(cookieParser());
@@ -49,5 +49,5 @@ export default function(server) {
     proxyApi.web(req, res);
   });
 
-  server.use(errorhandler()); // Must be last!
+  // server.use(errorhandler()); // Must be last!
 }
