@@ -10,6 +10,7 @@ import Helmet from 'react-helmet';
 // components
 import SurahsNav from 'components/surah/SurahsNav';
 import Audioplayer from '../../components/Audioplayer';
+import ContentDropdown from '../../components/ContentDropdown';
 import MasterHeader from 'components/header/MasterHeader';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import Ayah from 'components/surah/Ayah';
@@ -20,7 +21,7 @@ import debug from 'utils/Debug';
 
 import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/modules/ayahs';
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
-import { setOption } from '../../redux/modules/options';
+import { setOption, toggleReadingMode } from '../../redux/modules/options';
 
 let lastScroll = 0;
 
@@ -83,6 +84,7 @@ let lastScroll = 0;
   {
     loadAyahsDispatch: loadAyahs,
     setOptionDispatch: setOption,
+    toggleReadingModeDispatch: toggleReadingMode,
     push
   }
 )
@@ -153,6 +155,15 @@ export default class Surah extends Component {
     return <p>Loading...</p>;
   }
 
+  handleOptionChange(payload) {
+    const { setOptionDispatch, loadAyahsDispatch, surah, ayahIds, options } = this.props;
+    const from = ayahIds[0];
+    const to = ayahIds[ayahIds.length - 1];
+
+    setOptionDispatch(payload);
+    loadAyahsDispatch(surah.id, from, to, Object.assign({}, options, payload));
+  }
+
   handleNavbar() {
     // TODO: This should be done with react!
     if (window.pageYOffset > lastScroll) {
@@ -205,7 +216,7 @@ export default class Surah extends Component {
   }
 
   render() {
-    const { surah, ayahs } = this.props;
+    const { surah, ayahs, toggleReadingModeDispatch, options } = this.props;
     debug('component:Surah', 'Render');
 
     return (
@@ -222,7 +233,14 @@ export default class Surah extends Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-10 col-md-offset-1">
-                <ReadingModeToggle onReadingModeToggle={() => {}} />
+                <ReadingModeToggle onReadingModeToggle={toggleReadingModeDispatch} />
+                {
+                  !options.isReadingMode &&
+                  <ContentDropdown
+                    onOptionChange={this.handleOptionChange.bind(this)}
+                    options={options}
+                  />
+                }
                 <Bismillah surah={surah} />
                 {
                   Object.values(ayahs).map(ayah => (

@@ -30,7 +30,7 @@ class ReadingModeToggle extends Component {
         className={`pointer nav-link toggle-icon ${toggled && 'active'}`}
         onClick={this.toggleReadingMode.bind(this)}>
         {this.renderIcon()}
-        Toggle reading mode
+        Reading: {toggled ? 'on' : 'off'}
       </a>
     );
   }

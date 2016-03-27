@@ -1,7 +1,6 @@
 import React from 'react';
 import SearchInput from './SearchInput';
 import ReciterDropdown from './ReciterDropdown';
-import ContentDropdown from './ContentDropdown';
 import SurahsNav from 'components/surah/SurahsNav';
 import FontSizeInput from './FontSizeInput';
 import ReadingModeToggle from './ReadingModeToggle';
