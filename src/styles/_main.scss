@@ -10,15 +10,15 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import 'components/ReciterDropdown';
 @import 'components/Ayah';
 @import 'components/SurahInfo';
+@import 'components/SearchAutocomplete';
 @import 'fonts/fonts';
 
 @import 'partials/navbar-brand';
 @import 'partials/search-input';
 @import 'partials/surah-title';
 @import 'partials/dropdown';
-@import 'partials/index-surah-list';
+//@import 'partials/index-surah-list';
 @import 'partials/index-header';
-@import 'partials/search-pagination-header';
 @import 'partials/modal';
 @import 'partials/tooltip';
 @import 'partials/highlight';

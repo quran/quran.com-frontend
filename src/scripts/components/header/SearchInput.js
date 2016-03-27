@@ -3,10 +3,12 @@ import ReactDOM from 'react-dom';
 import {navigateAction} from 'fluxible-router';
 import classNames from 'classnames';
 import debug from 'utils/Debug';
+import SearchAutocomplete from 'components/header/SearchAutocomplete';
 
 class SearchInput extends React.Component {
   constructor(props, context) {
     super(props, context);
+    this.state = { value: '' };
   }
 
   search(e) {
@@ -54,6 +56,8 @@ class SearchInput extends React.Component {
     else {
       e.target.style.textAlign = 'left';
     }
+
+    this.setState({ value: e.target.value.trim() });
   }
 
   render() {
@@ -70,7 +74,8 @@ class SearchInput extends React.Component {
         <i className="ss-icon ss-search" onClick={this.search.bind(this)} />
         <input type="text"
                placeholder="Search"
-               onKeyUp={this.search.bind(this)} />
+               onKeyUp={this.search.bind(this)}/>
+        <SearchAutocomplete value={this.state.value}/>
       </div>
     );
   }
@@ -81,5 +86,6 @@ SearchInput.contextTypes = {
 };
 
 SearchInput.displayName = 'SearchInput';
+
 
 export default SearchInput;
