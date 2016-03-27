@@ -1,32 +1,30 @@
-/* eslint-disable indent */
-import $ from 'jquery';
+/* eslint-disable no-nested-ternary */
+const settings = {
+  maximum: 1680,
+  minimum: 400,
+  maxFont: 70,
+  minFont: 20,
+  fontRatio: 10
+};
 
-export default function(elem, options) {
-  elem = $(elem).find('.line');
+export function getFontSize() {
+  const propDiff = window.innerWidth / settings.maximum;
+  const fontBase = (propDiff * settings.maxFont);
+  const fontSize = fontBase > settings.maxFont ? settings.maxFont : fontBase < settings.minFont ? settings.minFont : fontBase;
 
-  const settings = $.extend({
-    maximum   : 1680,
-    minimum   : 400,
-    maxFont   : 70,
-    minFont   : 1,
-    fontRatio : 20
-  }, options),
+  return fontSize;
+}
 
-  changes = function(el) {
-    const $el = $(el);
-    const elw = $el.width();
-    const width = elw > settings.maximum ? settings.maximum : elw < settings.minimum ? settings.minimum : elw;
-    const fontBase = width / settings.fontRatio;
-    const fontSize = fontBase > settings.maxFont ? settings.maxFont : fontBase < settings.minFont ? settings.minFont : fontBase;
+export default function(componentDOM) {
+  const lineElem = componentDOM.querySelector('.line');
 
-    $el.css('font-size', fontSize + 'px');
+  const calculateChange = (elem) => {
+    if (!elem.getAttribute('fontSizeChanged')) {
+      elem.style.fontSize = `${getFontSize()}px`;
+    }
   };
 
-  // Context for resize callback
-  // Make changes upon resize
-  $(window).resize(function(){
-    changes(elem);
-  });
-  // Set changes on load
-  changes(elem);
-};
+  window.addEventListener('resize', () => calculateChange(lineElem), true);
+
+  calculateChange(lineElem);
+}

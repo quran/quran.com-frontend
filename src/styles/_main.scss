@@ -184,3 +184,27 @@ li em{
 .pointer{
   cursor: pointer;
 }
+.no-outline{
+  outline: none !important;
+
+  &:hover, &:focus{
+    outline: none !important;
+  }
+}
+
+.ss-icon.text-align{
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.dropdown{
+  .btn-link:hover, .btn-link:focus{
+    text-decoration: none;
+  }
+
+  &.open{
+    .btn-link{
+      color: $cream;
+    }
+  }
+}

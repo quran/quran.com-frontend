@@ -1,12 +1,11 @@
 /* eslint-disable consistent-return */
 import React, { Component } from 'react';
-// import * as AudioplayerActions from 'actions/AudioplayerActions';
 import CopyToClipboard from 'copy-to-clipboard';
 import { Link } from 'react-router';
 import { I13nAnchor } from 'react-i13n';
+import { Element } from 'react-scroll';
 
 import debug from 'utils/Debug';
-
 
 export default class Ayah extends Component {
   static defaultProps = {
@@ -14,7 +13,7 @@ export default class Ayah extends Component {
     isReadingMode: false
   }
 
-  translations() {
+  renderTranslations() {
     if (!this.props.ayah.content && this.props.ayah.match) {
       return this.props.ayah.match.map((content, i) => {
         var arabic = new RegExp(/[\u0600-\u06FF]/);
@@ -59,7 +58,7 @@ export default class Ayah extends Component {
     });
   }
 
-  text() {
+  renderText() {
     if (!this.props.ayah.quran[0].char) {
       return;
     }
@@ -163,7 +162,7 @@ export default class Ayah extends Component {
     window.open(href, '', 'menubar=no,toolbar=no,resizable=yes,scrollbars=yes,height=300,width=600')
   }
 
-  leftControls() {
+  renderControls() {
     return (
       <div className="col-md-1 left-controls">
         {this.ayahBadge()}
@@ -174,20 +173,21 @@ export default class Ayah extends Component {
   }
 
   render() {
+    const { ayah } = this.props;
     debug(`component:Ayah`, `Render ${this.props.ayah.ayahNum}`);
 
     if (this.props.isReadingMode) {
-      return this.text();
+      return this.renderText();
     }
 
     return (
-      <div className="row ayah">
-        {this.leftControls()}
+      <Element name={`ayah:${ayah.ayahNum}`} className={`row ayah`}>
+        {this.renderControls()}
         <div className="col-md-11">
-          {this.text()}
-          {this.translations()}
+          {this.renderText()}
+          {this.renderTranslations()}
         </div>
-      </div>
+      </Element>
     );
   }
 }

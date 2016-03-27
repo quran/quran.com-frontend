@@ -1,18 +1,18 @@
 /* eslint-disable consistent-return */
 
 import React from 'react';
-import * as AudioplayerActions from 'actions/AudioplayerActions';
 import debug from 'utils/Debug';
-import $ from 'jquery';
 import Flowtype from 'utils/Flowtype';
 
 class Line extends React.Component {
   text() {
-    if (!this.props.line[0].char) { // TODO shouldn't be possible, remove this clause
+    const { line } = this.props;
+
+    if (!line[0].char) { // TODO shouldn't be possible, remove this clause
       return;
     }
 
-    let text = this.props.line.map(data => {
+    let text = line.map(data => {
       if (data.word.translation) {
         let tooltip = data.word.translation;
 
@@ -53,7 +53,9 @@ class Line extends React.Component {
   }
 
   render() {
-    debug(`COMPONENT-LINE RENDERED page ${this.props.line[0].char.page}, line ${this.props.line[0].char.line}, ayah ${this.props.line[0].ayah_key}`);
+    const { line } = this.props;
+
+    debug(`COMPONENT-LINE RENDERED page ${line[0].char.page}, line ${line[0].char.line}, ayah ${line[0].ayah_key}`);
 
     return (
       <div className="row word-font text-right">
@@ -64,12 +66,6 @@ class Line extends React.Component {
     );
   }
 }
-
-Line.displayName = 'Line';
-
-Line.contextTypes = {
-  executeAction: React.PropTypes.func.isRequired
-};
 
 Line.propTypes = {
   line: React.PropTypes.array.isRequired

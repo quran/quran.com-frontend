@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { NavDropdown, MenuItem } from 'react-bootstrap';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { Link } from 'react-scroll';
 
 const style = require('./style.scss');
@@ -11,24 +12,29 @@ export default class VersesDropdown extends Component {
     onClick: PropTypes.func.isRequired
   };
 
+  static defaultProps = {
+    className: 'col-md-3'
+  };
+
   onNonScrollClick(index) {
     return this.props.onClick(index);
   }
 
   renderItem(ayah, index) {
     const { loaded } = this.props;
+    const ayahNum = index + 1;
 
-    if (loaded.includes(index)) {
+    if (loaded.includes(ayahNum)) {
       return (
         <li key={index}>
-          <Link to={`ayah:${index}`} smooth offset={50} duration={500} className="pointer">
-            {index + 1}
+          <Link to={`ayah:${ayahNum}`} smooth spy offset={-150} activeClass="active" duration={500} className="pointer">
+            {ayahNum}
           </Link>
         </li>
       );
     }
 
-    return <MenuItem key={index} onClick={this.onNonScrollClick.bind(this, index + 1)}>{index + 1}</MenuItem>;
+    return <MenuItem key={index} onClick={this.onNonScrollClick.bind(this, ayahNum)}>{ayahNum}</MenuItem>;
   }
 
   renderMenu() {
@@ -38,6 +44,8 @@ export default class VersesDropdown extends Component {
   }
 
   render() {
+    const { className } = this.props;
+
     const title = (
       <span>
         Verses
@@ -45,9 +53,21 @@ export default class VersesDropdown extends Component {
     );
 
     return (
-      <NavDropdown eventKey={3} title={title} id="verses-dropdown" className={`${style.dropdown} bordered `}>
-        {this.renderMenu()}
-      </NavDropdown>
+      <div className={`dropdown ${className} ${style.dropdown}`}>
+        <button
+          className={`btn btn-link no-outline`}
+          id="verses-dropdown"
+          type="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false">
+          {title}
+          <span className="caret"></span>
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="verses-dropdown">
+          {this.renderMenu()}
+        </ul>
+      </div>
     );
   }
 }

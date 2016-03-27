@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { NavDropdown, MenuItem } from 'react-bootstrap';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 const style = require('./style.scss');
 
@@ -148,6 +149,10 @@ export default class ReciterDropdown extends Component {
     options: PropTypes.object
   };
 
+  static defaultProps = {
+    className: 'col-md-3'
+  };
+
   handleOptionUpdate(id) {
     return this.props.handleOptionUpdate({audio: id});
   }
@@ -163,17 +168,31 @@ export default class ReciterDropdown extends Component {
   }
 
   render() {
+    const { className } = this.props;
+
     const title = (
       <span>
-        <i className="ss-icon ss-highvolume margin-md-right" />
+        <i className="ss-icon ss-highvolume margin-md-right text-align" />
         Reciters
       </span>
     );
 
     return (
-      <NavDropdown eventKey={3} title={title} id="reciters-dropdown" className={`${style.dropdown}`}>
-        {this.renderMenu()}
-      </NavDropdown>
+      <div className={`dropdown ${className} ${style.dropdown}`}>
+        <button
+          className={`btn btn-link no-outline`}
+          id="reciters-dropdown"
+          type="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false">
+          {title}
+          <span className="caret"></span>
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
+          {this.renderMenu()}
+        </ul>
+      </div>
     );
   }
 }

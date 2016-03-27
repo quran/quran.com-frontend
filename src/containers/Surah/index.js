@@ -12,9 +12,12 @@ import SurahsNav from 'components/surah/SurahsNav';
 import Audioplayer from '../../components/Audioplayer';
 import ContentDropdown from '../../components/ContentDropdown';
 import ReciterDropdown from '../../components/ReciterDropdown';
+import SurahsDropdown from '../../components/SurahsDropdown';
+import VersesDropdown from '../../components/VersesDropdown';
 import MasterHeader from 'components/header/MasterHeader';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import Ayah from 'components/surah/Ayah';
+import Line from 'components/surah/Line';
 import SearchInput from 'components/header/SearchInput';
 import Bismillah from './Bismillah';
 
@@ -176,6 +179,17 @@ export default class Surah extends Component {
     lastScroll = window.pageYOffset;
   }
 
+  handleVerseDropdownClick(ayahNum) {
+    const { ayahIds, push, surah } = this.props; // eslint-disable-line no-shadow
+
+    if (ayahNum > (ayahIds[ayahIds.length - 1] + 10)) {
+      // This is beyond lazy loading next page.
+      return push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
+    }
+
+    this.lazyLoadAyahs();
+  }
+
   onScroll() {
     const { isLoading, isEndOfSurah } = this.props;
 
@@ -216,53 +230,86 @@ export default class Surah extends Component {
     }
   }
 
+  renderAyahs() {
+    const { ayahs } = this.props;
+
+    return Object.values(ayahs).map(ayah => (
+      <Ayah
+        ayah={ayah}
+        key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
+      />
+    ));
+  }
+
+  renderLines() {
+    const { lines } = this.props;
+
+    return lines.map((line, index) => <Line line={line} key={index} />);
+  }
+
+  renderTopOptions() {
+    const { toggleReadingModeDispatch, options } = this.props;
+
+    return (
+      <ul className="list-inline">
+        <li>
+          <ReadingModeToggle
+            isToggled={options.isReadingMode}
+            onReadingModeToggle={toggleReadingModeDispatch} />
+        </li>
+        <li>
+          {
+            !options.isReadingMode &&
+            <ContentDropdown
+              onOptionChange={this.handleOptionChange.bind(this)}
+              options={options}
+            />
+          }
+        </li>
+      </ul>
+    );
+  }
+
   render() {
-    const { surah, ayahs, toggleReadingModeDispatch, options } = this.props;
+    const { surah, surahs, ayahIds, options } = this.props;
     debug('component:Surah', 'Render');
 
     return (
       <div className="surah-body">
         <Helmet title={surah.name.simple} />
-        <div>
-          <MasterHeader surah={surah}>
-            <Row>
-              <Col md={1}>
-                <ReciterDropdown
-                  onOptionChange={this.handleOptionChange.bind(this)}
-                  options={options}
-                />
-              </Col>
-              <Col md={3}>
-                <Audioplayer surah={surah} onLoadAyahs={this.lazyLoadAyahs.bind(this)} />
-              </Col>
-            </Row>
-          </MasterHeader>
-          <div className="container-fluid">
-            <div className="row">
-              <div className="col-md-10 col-md-offset-1">
-                <ReadingModeToggle onReadingModeToggle={toggleReadingModeDispatch} />
-                {
-                  !options.isReadingMode &&
-                  <ContentDropdown
-                    onOptionChange={this.handleOptionChange.bind(this)}
-                    options={options}
-                  />
-                }
-                <Bismillah surah={surah} />
-                {
-                  Object.values(ayahs).map(ayah => (
-                    <Ayah
-                      ayah={ayah}
-                      key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
-                    />
-                  ))
-                }
-              </div>
-              <div className="col-md-10 col-md-offset-1">
-                {this.renderPagination()}
-              </div>
-            </div>
-          </div>
+        <MasterHeader surah={surah}>
+          <Row>
+            <SurahsDropdown
+              surahs={Object.values(surahs)}
+              className="col-md-1"
+            />
+            <VersesDropdown
+              ayat={surah.ayat}
+              loaded={ayahIds}
+              onClick={this.handleVerseDropdownClick.bind(this)}
+              className="col-md-1"
+            />
+            <ReciterDropdown
+              onOptionChange={this.handleOptionChange.bind(this)}
+              options={options}
+              className="col-md-1"
+            />
+            <Col md={3}>
+              <Audioplayer surah={surah} onLoadAyahs={this.lazyLoadAyahs.bind(this)} />
+            </Col>
+          </Row>
+        </MasterHeader>
+        <div className="container-fluid">
+          <Row>
+            <Col md={10} mdOffset={1}>
+              {this.renderTopOptions()}
+              <Bismillah surah={surah} />
+              {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
+            </Col>
+            <Col md={10} mdOffset={1}>
+              {this.renderPagination()}
+            </Col>
+          </Row>
         </div>
       </div>
     );

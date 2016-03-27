@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { NavDropdown, MenuItem } from 'react-bootstrap';
+
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 const style = require('./style.scss');
 
@@ -499,19 +501,19 @@ export default class ContentDropdown extends Component {
   render() {
     const title = (
       <span>
-        <i className="ss-icon ss-globe margin-md-right" />
+        <i className="ss-icon ss-globe margin-md-right text-align" />
         Translations
       </span>
     );
 
     return (
-      <NavDropdown eventKey={3} title={title} id="content-dropdown" className={`${style.dropdown} bordered`}>
+      <DropdownButton bsStyle="link" title={title} id="content-dropdown" className={`${style.dropdown} bordered`}>
         <MenuItem header>English</MenuItem>
         {this.renderEnglishList()}
         <MenuItem divider/>
         <MenuItem header>Other Languages</MenuItem>
         {this.renderLanguagesList()}
-      </NavDropdown>
+      </DropdownButton>
     );
   }
 }

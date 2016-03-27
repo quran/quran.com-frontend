@@ -273,7 +273,7 @@ export default class Audioplayer extends Component {
     }
 
     return (
-      <li className={`${style.container}`}>
+      <div className={`${style.container} navbar-item`}>
         <div className={style.verse}>{currentFile.split(':')[1]}</div>
         {content}
         <div className={style.wrapper}>
@@ -289,7 +289,7 @@ export default class Audioplayer extends Component {
             null
             }
         </div>
-      </li>
+      </div>
     );
   }
 }

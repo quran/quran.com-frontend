@@ -9,7 +9,7 @@ import { Router, browserHistory } from 'react-router';
 import useScroll from 'scroll-behavior/lib/useStandardScroll';
 import { ReduxAsyncConnect } from 'redux-async-connect';
 
-import debug from 'utils/Debug';
+import debug from 'debug';
 
 import ApiClient from './src/helpers/ApiClient';
 import createStore from './src/redux/create';
@@ -19,7 +19,7 @@ const client = new ApiClient();
 const history = useScroll(() => browserHistory)();
 const store = createStore(history, client, window.__data);
 
-window.fluxibleDebug = debug;
+window.quranDebug = debug;
 window.ReactDOM = ReactDOM; // For chrome dev tool support
 
 window.clearCookies = function() {
