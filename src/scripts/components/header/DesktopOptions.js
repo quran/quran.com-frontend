@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import ReciterDropdown from 'components/header/ReciterDropdown';
 import FontSizeInput from 'components/header/FontSizeInput';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import InformationToggle from 'components/header/InformationToggle'; // TODO: re-include with a non-wiki source

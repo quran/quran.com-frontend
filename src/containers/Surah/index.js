@@ -11,6 +11,7 @@ import Helmet from 'react-helmet';
 import SurahsNav from 'components/surah/SurahsNav';
 import Audioplayer from '../../components/Audioplayer';
 import ContentDropdown from '../../components/ContentDropdown';
+import ReciterDropdown from '../../components/ReciterDropdown';
 import MasterHeader from 'components/header/MasterHeader';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import Ayah from 'components/surah/Ayah';
@@ -225,6 +226,12 @@ export default class Surah extends Component {
         <div>
           <MasterHeader surah={surah}>
             <Row>
+              <Col md={1}>
+                <ReciterDropdown
+                  onOptionChange={this.handleOptionChange.bind(this)}
+                  options={options}
+                />
+              </Col>
               <Col md={3}>
                 <Audioplayer surah={surah} onLoadAyahs={this.lazyLoadAyahs.bind(this)} />
               </Col>
