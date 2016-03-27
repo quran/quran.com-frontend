@@ -8,6 +8,7 @@ import Helmet from 'react-helmet';
 // components
 import SurahsNav from 'components/surah/SurahsNav';
 import MasterHeader from 'components/header/MasterHeader';
+import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import Ayah from 'components/surah/Ayah';
 import SearchInput from 'components/header/SearchInput';
 import Bismillah from './Bismillah';
@@ -212,6 +213,7 @@ export default class Surah extends Component {
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-10 col-md-offset-1">
+                <ReadingModeToggle onReadingModeToggle={() => {}} />
                 <Bismillah surah={surah} />
                 {
                   Object.values(ayahs).map(ayah => (

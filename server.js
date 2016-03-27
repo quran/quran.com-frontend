@@ -55,8 +55,6 @@ server.use((req, res, next) => {
           </Provider>
         );
 
-        console.log(component);
-
         debug('Rendering Application component into html');
         debug('Sending markup');
         res.type('html');
