@@ -18,7 +18,7 @@ class Line extends React.Component {
 
         return (
           <b key={data.char.code}
-            className={data.char.font}
+            className={`${data.char.font} pointer`}
             data-toggle="tooltip"
             data-placement="top" title={tooltip}
             dangerouslySetInnerHTML={{__html: data.char.code}}>
@@ -27,7 +27,8 @@ class Line extends React.Component {
       }
       else {
         return (
-          <b className={data.char.font}
+          <b
+            className={`${data.char.font} pointer`}
             key={data.char.code}
             dangerouslySetInnerHTML={{__html: data.char.code}}>
           </b>

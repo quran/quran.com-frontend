@@ -81,18 +81,22 @@ export default class Ayah extends Component {
         }
 
         return (
-          <b key={word.char.code}
-             className={className}
-             data-toggle="tooltip"
-             data-placement="top" title={tooltip}
-             dangerouslySetInnerHTML={{__html: word.char.code}} />
+          <b
+            key={word.char.code}
+            className={`${className} pointer`}
+            data-toggle="tooltip"
+            data-placement="top" title={tooltip}
+            dangerouslySetInnerHTML={{__html: word.char.code}}
+          />
         );
       }
       else {
         return (
-          <b className={className}
-             key={word.char.code}
-             dangerouslySetInnerHTML={{__html: word.char.code}} />
+          <b
+            className={`${className} pointer`}
+            key={word.char.code}
+            dangerouslySetInnerHTML={{__html: word.char.code}}
+          />
         );
       }
     });

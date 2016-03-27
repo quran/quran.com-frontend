@@ -14,12 +14,13 @@ import ContentDropdown from '../../components/ContentDropdown';
 import ReciterDropdown from '../../components/ReciterDropdown';
 import SurahsDropdown from '../../components/SurahsDropdown';
 import VersesDropdown from '../../components/VersesDropdown';
+import FontSizeDropdown from '../../components/FontSizeDropdown';
 import MasterHeader from 'components/header/MasterHeader';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import Ayah from 'components/surah/Ayah';
 import Line from 'components/surah/Line';
 import SearchInput from 'components/header/SearchInput';
-import Bismillah from './Bismillah';
+import Bismillah from '../../components/Bismillah';
 
 import debug from 'utils/Debug';
 
@@ -252,6 +253,9 @@ export default class Surah extends Component {
 
     return (
       <ul className="list-inline">
+        <li>
+          <FontSizeDropdown />
+        </li>
         <li>
           <ReadingModeToggle
             isToggled={options.isReadingMode}
