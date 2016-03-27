@@ -29,6 +29,7 @@ $navbar-height: 280px * $proportion-factor;
 $navbar-default-bg: $beige;
 $navbar-default-link-active-bg: transparent;
 $navbar-default-border: transparent;
+$navbar-collapse-width: 1000px;
 
 $dropdown-bg: darken($olive, 5%);
 $dropdown-link-color: #fff;
@@ -41,6 +42,12 @@ $label-default-bg: lighten($text-muted, 13%);
 $grid-columns: 12;
 $border-radius-base: 4px;
 
+$track-tracker-border-radius: 10px;
+$track-bg: $brand-primary;
+$tracker-width: 4px;
+$tracker-height: 4px;
+$tracker-height-hundred-boolean: false;
+@if $tracker-height-hundred-boolean {$tracker-height: 100%;}
 
 $font-family-sans-serif: 'Montserrat', sans-serif;
 

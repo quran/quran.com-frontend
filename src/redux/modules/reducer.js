@@ -14,7 +14,7 @@ export default combineReducers({
   reduxAsyncConnect,
   surahs,
   ayahs,
-  // audioplayer,
+  audioplayer,
   lines,
   searchResults,
   options

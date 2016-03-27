@@ -2,7 +2,6 @@ import React from 'react';
 import SearchInput from './SearchInput';
 import ReciterDropdown from './ReciterDropdown';
 import ContentDropdown from './ContentDropdown';
-import Audioplayer from '../audioplayer/Audioplayer';
 import SurahsNav from 'components/surah/SurahsNav';
 import FontSizeInput from './FontSizeInput';
 import ReadingModeToggle from './ReadingModeToggle';
@@ -66,7 +65,6 @@ class MobileOptions extends React.Component {
     if (this.state.audioSelection) {
       selection = (
         <div className="row text-center">
-          <Audioplayer />
           <ReciterDropdown className="open"/>
         </div>
       );

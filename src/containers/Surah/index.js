@@ -3,10 +3,13 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-async-connect';
 import { push } from 'react-router-redux';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 import Helmet from 'react-helmet';
 
 // components
 import SurahsNav from 'components/surah/SurahsNav';
+import Audioplayer from '../../components/Audioplayer';
 import MasterHeader from 'components/header/MasterHeader';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import Ayah from 'components/surah/Ayah';
@@ -209,7 +212,13 @@ export default class Surah extends Component {
       <div className="surah-body">
         <Helmet title={surah.name.simple} />
         <div>
-          <MasterHeader surah={surah} />
+          <MasterHeader surah={surah}>
+            <Row>
+              <Col md={3}>
+                <Audioplayer surah={surah} onLoadAyahs={this.lazyLoadAyahs.bind(this)} />
+              </Col>
+            </Row>
+          </MasterHeader>
           <div className="container-fluid">
             <div className="row">
               <div className="col-md-10 col-md-offset-1">

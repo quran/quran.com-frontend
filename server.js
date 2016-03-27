@@ -28,6 +28,8 @@ import ErroredMessage from 'components/ErrorMessage';
 import Html from 'components/Html';
 import About from './src/scripts/routes/About';
 
+import { setUserAgent } from './src/redux/modules/audioplayer';
+
 // Use varnish for the static routes, which will cache too
 
 server.use((req, res, next) => {
@@ -38,6 +40,8 @@ server.use((req, res, next) => {
   if (process.env.NODE_ENV === 'development') {
     webpack_isomorphic_tools.refresh()
   }
+
+  store.dispatch(setUserAgent(req.useragent));
 
   debug('Executing navigate action');
   match({ history, routes: routes(), location: req.originalUrl }, (error, redirectLocation, renderProps) => {

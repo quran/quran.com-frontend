@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
 import Tracker from './Tracker';
-import debug from 'helpers/debug';
+// import debug from '../../../../scripts/helpers/debug';
 
 const style = require('./style.scss');
 
@@ -16,14 +16,10 @@ export default class Track extends Component {
     onEnd: PropTypes.func.isRequired
   };
 
-  constructor() {
-    super(...arguments);
-
-    this.state = {
-      progress: 0,
-      currentTime: 0
-    };
-  }
+  state = {
+    progress: 0,
+    currentTime: 0
+  };
 
   componentDidMount() {
     this.onFileLoad(this.props.file);
@@ -52,7 +48,7 @@ export default class Track extends Component {
   }
 
   onFileLoad(file) {
-    debug('component:Track', `File loaded with src ${file.src}`);
+    // debug('component:Track', `File loaded with src ${file.src}`);
 
     file.addEventListener('loadeddata', () => {
       // Default current time to zero. This will change
@@ -117,7 +113,7 @@ export default class Track extends Component {
   }
 
   render() {
-    debug('component:Track', 'render');
+    // debug('component:Track', 'render');
 
     const { progress } = this.state;
     const { isPlaying, file } = this.props;

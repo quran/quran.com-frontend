@@ -23,66 +23,6 @@ class MasterHeader extends Component {
     this.setState({showOptions: !this.state.showOptions});
   }
 
-  // Disable hyperlink for previous surah if surah is Al-Faatihah.
-  previousChapter() {
-    const { surah } = this.props;
-
-    if (surah.id <= 1){
-      return null;
-    } else {
-      return (
-        <Link className="navbar-text previous-chapter" to={`/${surah.id - 1}`}>
-          <i className="ss-icon ss-navigateleft"></i>
-          <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
-        </Link>
-      );
-    }
-  }
-
-  // Disable hyperlink for next surah if surah is An-Nas.
-  nextChapter() {
-    const { surah } = this.props;
-
-    if (surah.id >= 114){
-      return null;
-    }
-    else {
-      return (
-        <Link className="navbar-text next-chapter" to={`/${surah.id + 1}`}>
-          <span className="hidden-xs hidden-sm">NEXT SURAH </span>
-          <i className="ss-icon ss-navigateright"></i>
-        </Link>
-      );
-    }
-  }
-
-  surahTitle() {
-    const { surah } = this.props;
-
-    function zeroPad(num, places) {
-      var zero = places - num.toString().length + 1;
-      return Array(+(zero > 0 && zero)).join('0') + num;
-    }
-
-    if (surah) {
-      return (
-        <img src={'//quran-1f14.kxcdn.com/images/titles/' + zeroPad(surah.id, 3) + '.svg'} className="title"/>
-      );
-    }
-  }
-
-  surahName() {
-    const { surah } = this.props;
-
-    if (surah) {
-      return (
-        <p className="navbar-text text-uppercase surah-name">
-          {surah.name.simple} ({surah.name.english})
-        </p>
-      );
-    }
-  }
-
   renderMobileOptions() {
     if (this.state.showOptions && this.state.showMobile) {
       return <MobileOptions />;
@@ -139,7 +79,7 @@ class MasterHeader extends Component {
   }
 
   render() {
-    const { surah } = this.props;
+    const { surah, children } = this.props;
 
     debug('component:MasterHeader', 'Render');
 
@@ -151,6 +91,7 @@ class MasterHeader extends Component {
             {/*{this.renderMobileOptions()}*/}
             <Title surah={surah} />
           </div>
+          {children}
           {/*{this.renderDesktopOptions()}*/}
         </div>
       </nav>

@@ -1,13 +1,17 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Col } from 'react-bootstrap';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 
-import { play, pause, repeat, setCurrentFile, buildOnClient } from 'redux/modules/audioplayer';
+// Redux
+import { play, pause, repeat, setCurrentFile, buildOnClient } from '../../redux/modules/audioplayer';
 
+// Components
 import Track from './Track';
 
-import debug from 'helpers/debug';
+// Helpers
+// import debug from '../../scripts/helpers/debug';
 
 const style = require('./style.scss');
 
@@ -47,11 +51,11 @@ const style = require('./style.scss');
 )
 export default class Audioplayer extends Component {
   static propTypes = {
-    surah: PropTypes.object,
+    surah: PropTypes.object.isRequired,
     files: PropTypes.object,
     currentFile: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
-    lazyLoadAyahs: PropTypes.func.isRequired,
+    onLoadAyahs: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     isLoadedOnClient: PropTypes.bool.isRequired,
     isSupported: PropTypes.bool.isRequired,
@@ -63,15 +67,11 @@ export default class Audioplayer extends Component {
     ayahIds: PropTypes.array
   };
 
-  constructor() {
-    super(...arguments);
-
-    this.state = {
-      isAudioLoaded: false,
-      currentAudio: null,
-      currentAyah: null
-    };
-  }
+  state = {
+    isAudioLoaded: false,
+    currentAudio: null,
+    currentAyah: null
+  };
 
   componentDidMount() {
     const { isLoadedOnClient, buildOnClient, surah } = this.props; // eslint-disable-line no-shadow
@@ -124,11 +124,11 @@ export default class Audioplayer extends Component {
   }
 
   getNext() {
-    const { currentFile, ayahIds, lazyLoadAyahs } = this.props;
+    const { currentFile, ayahIds, onLoadAyahs } = this.props;
     const index = ayahIds.findIndex(id => id === currentFile) + 1;
 
     if ((ayahIds.length - 3) <= index) {
-      lazyLoadAyahs();
+      onLoadAyahs();
     }
 
     return ayahIds[index];
@@ -227,7 +227,7 @@ export default class Audioplayer extends Component {
   }
 
   render() {
-    debug('component:Audioplayer', 'Render');
+    // debug('component:Audioplayer', 'Render');
 
     const {
       play, // eslint-disable-line no-shadow
@@ -249,13 +249,7 @@ export default class Audioplayer extends Component {
     }
 
     let content = (
-      <ul className={`list-inline ${style.options}`}>
-        {this.renderLoader()}
-      </ul>
-    );
-
-    content = (
-      <div className={`row ${style.options}`}>
+      <Row className={style.options}>
         <Col xs={3} className="text-center">
           {this.renderPreviousButton()}
         </Col>
@@ -267,13 +261,13 @@ export default class Audioplayer extends Component {
         </Col>
 
         {this.renderRepeatButton()}
-      </div>
+      </Row>
     );
 
     if (!currentFile) {
       return (
         <li className={`${style.container}`}>
-          Loading...
+          {this.renderLoader()}
         </li>
       );
     }
