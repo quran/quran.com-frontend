@@ -1,6 +1,5 @@
 import React from 'react';
 import classNames from 'classnames';
-import SearchDropdown from 'components/header/SearchDropdown';
 import SurahsStore from 'stores/SurahsStore';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import request from 'superagent';
@@ -72,6 +71,27 @@ class SearchAutocomplete extends React.Component {
     }
   };
 
+  renderList(key) {
+    return this.state[key].map((item) => {
+      return this.renderItem(item);
+    });
+  };
+
+  renderItem(item) {
+    return (
+      <li key={item.href} style={{textAlign: 'left', listStyleType: 'none'}}>
+        <div href={item.href} style={{display: 'block'}}>
+          <div style={{position:'absolute',right:'1px', paddingLeft:'70px', paddingRight: '10px', lineHeight: '28px', background: 'linear-gradient(to right,rgba(255, 255, 255, 0), white 40%, rgba(255,255,255,1))', zIndex: '2', textAlign: 'right'}}>
+            <a href={item.href}>{item.href}</a>
+          </div>
+          <div style={{overflow: 'hidden', wordWrap:'break-word', whiteSpace: 'nowrap', lineHeight: '28px', backgroundColor: 'white', paddingLeft: '10px' }}>
+            <a href={item.href} style={{display: 'block'}} dangerouslySetInnerHTML={{__html: item.text }} />
+          </div>
+        </div>
+      </li>
+    );
+  };
+
   render() {
     var className = classNames({
       'searchautocomplete': true,
@@ -80,7 +100,10 @@ class SearchAutocomplete extends React.Component {
 
     return (
       <div className={className} style={{width:'100%',backgroundColor:'#ccc',position:'absolute',zIndex:'99', paddingTop: '10px', paddingBottom: '10px'}}>
-        <SearchDropdown text={this.state.value} ayat={this.state.ayat} surahs={this.state.surahs}/>
+        <ul style={{margin:0, padding:0, border: '1px solid black'}}>
+          {this.renderList('surahs')}
+          {this.renderList('ayat')}
+        </ul>
       </div>
     );
   }
