@@ -65,6 +65,7 @@
     "phantomjs": "^1.9.18",
     "promise": "^7.0.4",
     "proxy-middleware": "^0.14.0",
+    "qs": "^6.1.0",
     "raw-loader": "^0.5.1",
     "react": "^0.14.2",
     "react-bootstrap": "^0.28.4",
