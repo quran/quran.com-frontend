@@ -12,7 +12,7 @@ class SearchAutocomplete extends React.Component {
     this.cached = {};
   }
   componentWillReceiveProps( nextProps ) {
-    console.log('searchautocomplete componentWillReceiveProps', nextProps);
+    //console.log('searchautocomplete componentWillReceiveProps', nextProps);
     this.setState({ value: nextProps.value });
     this.suggest( nextProps.value );
   };
@@ -44,10 +44,13 @@ class SearchAutocomplete extends React.Component {
       }
     } );
     matches = matches.sort(function( a, b ) {
-      return RegExp( '^'+ escaped, 'i' ).test( a[0] ) ? -1 : 1;
+      return a[1] < b[1] ? -1 : 1; // <-- order by surah id
+      return RegExp( '^'+ escaped, 'i' ).test( a[0] ) ? -1 : 1; // <-- order by whether it starts the same
     }).map( function( s ) {
-      return { text: s[0], href: '/'+ s[1] };
-    } );
+      // var text = s[0].replace(RegExp(escaped, "gi"), "<mark>$&</mark>"); // <-- this will highlight the matched part
+      var text = s[0];
+      return { text: '<b>'+ text +'</b>', href: '/'+ s[1] };
+    } ).slice(0,5);
     this.setState( { surahs: matches } );
   };
 
@@ -79,13 +82,13 @@ class SearchAutocomplete extends React.Component {
 
   renderItem(item) {
     return (
-      <li key={item.href} style={{textAlign: 'left', listStyleType: 'none'}}>
-        <div href={item.href} style={{display: 'block'}}>
-          <div style={{position:'absolute',right:'1px', paddingLeft:'70px', paddingRight: '10px', lineHeight: '28px', background: 'linear-gradient(to right,rgba(255, 255, 255, 0), white 40%, rgba(255,255,255,1))', zIndex: '2', textAlign: 'right'}}>
+      <li key={item.href}>
+        <div>
+          <div className="item-href">
             <a href={item.href}>{item.href}</a>
           </div>
-          <div style={{overflow: 'hidden', wordWrap:'break-word', whiteSpace: 'nowrap', lineHeight: '28px', backgroundColor: 'white', paddingLeft: '10px' }}>
-            <a href={item.href} style={{display: 'block'}} dangerouslySetInnerHTML={{__html: item.text }} />
+          <div className="item-text">
+            <a href={item.href} dangerouslySetInnerHTML={{__html: item.text }} />
           </div>
         </div>
       </li>
@@ -94,13 +97,14 @@ class SearchAutocomplete extends React.Component {
 
   render() {
     var className = classNames({
-      'searchautocomplete': true,
+      'search-autocomplete': true,
+      'awesomplete': true,
       'hidden': this.state.ayat.length || this.state.surahs.length ? false : true
     });
 
     return (
-      <div className={className} style={{width:'100%',backgroundColor:'#ccc',position:'absolute',zIndex:'99', paddingTop: '10px', paddingBottom: '10px'}}>
-        <ul style={{margin:0, padding:0, border: '1px solid black'}}>
+      <div className={className}>
+        <ul role="menu">
           {this.renderList('surahs')}
           {this.renderList('ayat')}
         </ul>
