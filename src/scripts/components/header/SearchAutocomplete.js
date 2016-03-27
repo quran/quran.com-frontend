@@ -98,7 +98,6 @@ class SearchAutocomplete extends React.Component {
   render() {
     var className = classNames({
       'search-autocomplete': true,
-      'awesomplete': true,
       'hidden': this.state.ayat.length || this.state.surahs.length ? false : true
     });
 
