@@ -3,15 +3,12 @@ import ReactDOM from 'react-dom';
 import {navigateAction} from 'fluxible-router';
 import classNames from 'classnames';
 import debug from 'utils/Debug';
-import request from 'superagent';
-import Settings from 'constants/Settings';
-import SearchDropdown from 'components/header/SearchDropdown';
+import SearchAutocomplete from 'components/header/SearchAutocomplete';
 
 class SearchInput extends React.Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { value: '', data: [] };
-    this.cached = {};
+    this.state = { value: '' };
   }
 
   search(e) {
@@ -60,44 +57,7 @@ class SearchInput extends React.Component {
       e.target.style.textAlign = 'left';
     }
 
-    this.suggest(e);
-  }
-
-  suggest(e) {
-    //console.log('onKeyUp suggest', e.target.value, 'key', e.key, '--');
-    this.setState({ value: e.target.value });
-    var value = e.target.value.trim();
-
-    //console.log('does cache exist? value',value,'e',e.target.value, 'cached data', this.cached[value]);
-    //console.log('value',value,'cached=',this.cached[value],'state=',this.state.data);
-
-    if (value.length >= 3) {
-      if ( this.cached[value] !== undefined ) {
-        this.setState({ data: this.cached[value] });
-      }
-      else {
-        var self = this;
-        //console.log('request',e.target.value);
-        request.get(Settings.url +'suggest')
-        .query({ q: value })
-        .end(function(err, res) {
-          //console.log('response',value);
-          if (err) {
-            return console.error( 'error getting autocomplete suggestions' );
-          }
-          self.cached[value] = res.body;
-          if (self.state.value.trim() === value) {
-            self.setState({ data: res.body });
-          }
-          else {
-            //console.log( 'STATE != VALUE NEW IS', self.state.value.trim(), 'OLD IS', value );
-          }
-        });
-      }
-    }
-    else {
-      this.setState({ data: [] });
-    }
+    this.setState({ value: e.target.value.trim() });
   }
 
   render() {
@@ -115,7 +75,7 @@ class SearchInput extends React.Component {
         <input type="text"
                placeholder="Search"
                onKeyUp={this.search.bind(this)}/>
-        <SearchDropdown text={this.state.value} list={this.state.data}/>
+        <SearchAutocomplete value={this.state.value}/>
       </div>
     );
   }
@@ -126,5 +86,6 @@ SearchInput.contextTypes = {
 };
 
 SearchInput.displayName = 'SearchInput';
+
 
 export default SearchInput;
