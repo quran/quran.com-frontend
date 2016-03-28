@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = function(config) {
   config.set({
 
@@ -71,8 +73,12 @@ module.exports = function(config) {
       },
 
       plugins:[
-        //only include moment.js 'en' locale
-        // new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/)
+        new webpack.DefinePlugin({
+          __CLIENT__: false,
+          __SERVER__: true,
+          __DEVELOPMENT__: true,
+          __DEVTOOLS__: false  // <-------- DISABLE redux-devtools HERE
+        })
       ],
 
       watch: true
