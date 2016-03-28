@@ -2,7 +2,6 @@
 
 import React from 'react';
 import debug from 'utils/Debug';
-import Flowtype from 'utils/Flowtype';
 
 class Line extends React.Component {
   text() {
@@ -47,10 +46,6 @@ class Line extends React.Component {
         {text}
       </h1>
     );
-  }
-
-  componentDidMount() {
-    Flowtype(ReactDOM.findDOMNode(this));
   }
 
   render() {

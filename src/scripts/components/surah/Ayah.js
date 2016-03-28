@@ -1,5 +1,5 @@
 /* eslint-disable consistent-return */
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import CopyToClipboard from 'copy-to-clipboard';
 import { Link } from 'react-router';
 import { I13nAnchor } from 'react-i13n';
@@ -8,10 +8,15 @@ import { Element } from 'react-scroll';
 import debug from 'utils/Debug';
 
 export default class Ayah extends Component {
+  static propTypes = {
+    isReadingMode: PropTypes.bool,
+    isSearched: PropTypes.bool
+  };
+
   static defaultProps = {
-    isSearch: false,
+    isSearched: false,
     isReadingMode: false
-  }
+  };
 
   renderTranslations() {
     if (!this.props.ayah.content && this.props.ayah.match) {
@@ -116,11 +121,11 @@ export default class Ayah extends Component {
     });
   }
 
-  onCopy(text) {
+  handleCopy(text) {
     CopyToClipboard(text);
   }
 
-  playLink() {
+  renderPlayLink() {
     if (!this.props.isSearch) {
       <a onClick={this.goToAyah.bind(this, this.props.ayah.ayahNum)}
          className="text-muted">
@@ -129,10 +134,10 @@ export default class Ayah extends Component {
     }
   }
 
-  copyLink() {
+  renderCopyLink() {
     if (!this.props.isSearch) {
       return (
-        <a onClick={this.onCopy.bind(this, this.props.ayah.text)}
+        <a onClick={this.handleCopy.bind(this, this.props.ayah.text)}
            className="text-muted">
           <i className="ss-icon ss-attach" /> Copy
         </a>
@@ -140,26 +145,25 @@ export default class Ayah extends Component {
     }
   }
 
-  ayahBadge() {
-    if (this.props.isSearch) {
-      return (
+  renderAyahBadge() {
+    const { isSearched } = this.props;
+    const content = (
+      <h4>
+        <span className="label label-default">
+          {this.props.ayah.surahId}:{this.props.ayah.ayahNum}
+        </span>
+      </h4>
+    );
 
-        <Link to={`/${this.props.ayah.surahId}/${this.props.ayah.ayahNum}`} style={{fontSize: 18}}>
-          <span className="label label-default">
-            {this.props.ayah.surahId}:{this.props.ayah.ayahNum}
-          </span>
-        </Link>
-      )
-    }
-    else {
+    if (isSearched) {
       return (
-        <h4>
-          <span className="label label-default">
-            {this.props.ayah.surahId}:{this.props.ayah.ayahNum}
-          </span>
-        </h4>
+        <Link to={`/${this.props.ayah.surahId}/${this.props.ayah.ayahNum}`}>
+          {content}
+        </Link>
       );
     }
+
+    return content;
   }
 
   shareDialog(href) {
@@ -169,9 +173,9 @@ export default class Ayah extends Component {
   renderControls() {
     return (
       <div className="col-md-1 left-controls">
-        {this.ayahBadge()}
-        {this.playLink()}
-        {this.copyLink()}
+        {this.renderAyahBadge()}
+        {this.renderPlayLink()}
+        {this.renderCopyLink()}
       </div>
     );
   }

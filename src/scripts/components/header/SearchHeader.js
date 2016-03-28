@@ -22,6 +22,4 @@ class SearchHeader extends React.Component {
   }
 }
 
-SearchHeader.displayName = 'SearchHeader';
-
 export default SearchHeader;
