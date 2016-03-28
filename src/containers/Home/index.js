@@ -29,7 +29,7 @@ class Home extends React.Component {
     return array.map((surah, i) => {
       return (
         <li className={`row ${styles.link}`} key={surah.id}>
-          <Link to={`/${surah.id}`}>
+          <Link to={`/${surah.id}/30`}>
             <div className="col-xs-2 text-muted">
               {surah.id}
             </div>

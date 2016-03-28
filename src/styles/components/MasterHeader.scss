@@ -27,7 +27,8 @@ nav.navbar{
 }
 
 .navbar-bottom{
-  height: $navbar-height * 0.3571; // 0.3571 the proportion in the design between navs
+  box-shadow: inset 0 7px 9px -10px rgba(0, 0, 0, 0.4);
+  background-color: $cream;
 
   @media(max-width: $screen-xs-max) {
     min-height: $navbar-height * 0.3571;
@@ -42,19 +43,8 @@ nav.navbar{
   .border-right{
     border-right: 1px solid rgba(lighten($cream, 20%), 0.5);
   }
-  .options{
-    background: $cream;
-    height: 100%;
-    box-shadow: inset 0 7px 9px -10px rgba(0,0,0,0.4);
-    color: darken($cream, 20%);
-
-    .row{
-      height: 100%;
-    }
-
-    .height-100{
-      height: 100%;
-    }
+  .btn-link{
+    height: 40px;
   }
   .nav-link {
     color: $olive;

@@ -48,9 +48,26 @@ let lastScroll = 0;
       let to;
 
       if (range) {
-        [from, to] = range.split('-');
+        if (range.includes('-')) {
+          [from, to] = range.split('-');
+        } else {
+          // Single ayah. For example /2/30
+          from = range;
+          to = parseInt(range, 10) + 10;
+        }
+
+        if (isNaN(from) || isNaN(to)) {
+          // Something wrong happened like /2/SOMETHING
+          // going to rescue by giving beginning of surah.
+          [from, to] = [1, 10];
+        }
       } else {
         [from, to] = [1, 10];
+      }
+
+      if (isNaN(surahId)) {
+        // Should have an alert or something to tell user there is an error.
+        return dispatch(push('/'));
       }
 
       dispatch(setCurrentSurah(surahId));
@@ -282,7 +299,7 @@ export default class Surah extends Component {
       <div className="surah-body">
         <Helmet title={surah.name.simple} />
         <MasterHeader surah={surah}>
-          <Row>
+          <Row className="navbar-bottom">
             <SurahsDropdown
               surahs={Object.values(surahs)}
               className="col-md-1"
@@ -301,6 +318,7 @@ export default class Surah extends Component {
             <Col md={3}>
               <Audioplayer surah={surah} onLoadAyahs={this.lazyLoadAyahs.bind(this)} />
             </Col>
+            <SearchInput className="col-md-6 search-input" />
           </Row>
         </MasterHeader>
         <div className="container-fluid">
