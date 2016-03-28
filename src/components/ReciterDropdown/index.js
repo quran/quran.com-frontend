@@ -153,6 +153,10 @@ export default class ReciterDropdown extends Component {
     className: 'col-md-3'
   };
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.options !== nextProps.options;
+  }
+
   handleOptionUpdate(id) {
     return this.props.handleOptionUpdate({audio: id});
   }

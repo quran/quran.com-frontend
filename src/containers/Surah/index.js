@@ -294,7 +294,7 @@ export default class Surah extends Component {
         <MasterHeader surah={surah}>
           <Row className="navbar-bottom">
             <SurahsDropdown
-              surahs={Object.values(surahs)}
+              surahs={surahs}
               className="col-md-1"
             />
             <VersesDropdown

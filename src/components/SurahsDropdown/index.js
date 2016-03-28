@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { LinkContainer } from 'react-router-bootstrap';
 
 import Row from 'react-bootstrap/lib/Row';
@@ -8,10 +8,24 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 const styles = require('./style.scss');
 
-const SurahsDropdown = ({ surahs, className }) => {
-  const list = surahs.map((surah, index) => {
+export default class SurahsDropdown extends Component {
+  static propTypes = {
+    surahs: PropTypes.object.isRequired,
+    className: PropTypes.string
+  };
 
-    return (
+  static defaultProps = {
+    className: 'col-md-3'
+  };
+
+  shouldComponentUpdate(nextProps) {
+    return this.props.surahs !== nextProps.surahs;
+  }
+
+  renderList() {
+    const { surahs } = this.props;
+
+    return Object.values(surahs).map((surah, index) => (
       <LinkContainer to={`/${surah.id}`} activeClass="active" key={`surah-${index}`}>
        <MenuItem>
           <Row>
@@ -31,40 +45,28 @@ const SurahsDropdown = ({ surahs, className }) => {
           </Row>
         </MenuItem>
       </LinkContainer>
+    ));
+  }
+
+  render() {
+    const { className } = this.props;
+
+    return (
+      <div className={`dropdown border-right ${className} ${styles.dropdown}`}>
+        <button
+          className={`btn btn-link no-outline`}
+          id="surahs-dropdown"
+          type="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false">
+          Surahs
+          <span className="caret"></span>
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="surahs-dropdown">
+          {this.renderList()}
+        </ul>
+      </div>
     );
-  });
-
-  const title = (
-    <span>
-      Surahs
-    </span>
-  );
-
-  return (
-    <div className={`dropdown border-right ${className} ${styles.dropdown}`}>
-      <button
-        className={`btn btn-link no-outline`}
-        id="surahs-dropdown"
-        type="button"
-        data-toggle="dropdown"
-        aria-haspopup="true"
-        aria-expanded="false">
-        {title}
-        <span className="caret"></span>
-      </button>
-      <ul className="dropdown-menu" aria-labelledby="surahs-dropdown">
-        {list}
-      </ul>
-    </div>
-  );
+  }
 };
-
-SurahsDropdown.propTypes = {
-  surahs: PropTypes.array.isRequired
-};
-
-SurahsDropdown.defaultProps = {
-  className: 'col-md-3'
-};
-
-export default SurahsDropdown;

@@ -440,6 +440,10 @@ export default class ContentDropdown extends Component {
     className: 'col-md-3'
   }
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.options !== nextProps.options;
+  }
+
   handleOptionSelected(id) {
     const { onOptionChange, options: { content } } = this.props;
 
