@@ -3,13 +3,7 @@ var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
-var webpackIsomorphicToolsPlugin =
-  // webpack-isomorphic-tools settings reside in a separate .js file
-  // (because they will be used in the web server code too).
-  new IsomorphicPlugin(require('./webpack-isomorphic-tools-configuration'))
-  // also enter development mode since it's a development webpack configuration
-  // (see below for explanation)
-  .development();
+var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./webpack-isomorphic-tools-configuration'));
 
 var webpackConfig = {
   context: path.join(process.env.PWD, './'),
@@ -81,7 +75,7 @@ var webpackConfig = {
       __DEVELOPMENT__: true,
       __DEVTOOLS__: true
     }),
-    webpackIsomorphicToolsPlugin
+    webpackIsomorphicToolsPlugin.development()
   ],
   stats: {
     colors: true,
