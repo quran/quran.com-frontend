@@ -15,7 +15,7 @@ function formatUrl(path) {
   return `/api${adjustedPath}`;
 }
 
-export default class ApiClient {
+export default class {
   constructor(req) {
     methods.forEach((method) =>
       this[method] = (path, { params, data, arrayFormat } = {}) => new Promise((resolve, reject) => {
