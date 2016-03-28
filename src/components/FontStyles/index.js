@@ -7,13 +7,17 @@ const bismillah = `@font-face {font-family: 'bismillah';
 
 @connect(
   state => ({
-    fontFaces: [...state.ayahs.fontFaces, ...state.searchResults.fontFaces, bismillah]
+    fontFaces: [bismillah, ...state.ayahs.fontFaces, ...state.searchResults.fontFaces]
   })
 )
 export default class FontStyles extends Component {
   static propTypes = {
     fontFaces: PropTypes.array
   };
+
+  shouldComponentUpdate(nextProps) {
+    return this.props.fontFaces.length !== nextProps.fontFaces.length;
+  }
 
   render() {
     return (

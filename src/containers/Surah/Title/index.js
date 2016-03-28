@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
+const styles = require('./style.scss');
+
 const zeroPad = (num, places) => {
   var zero = places - num.toString().length + 1;
   return Array(+(zero > 0 && zero)).join('0') + num;
@@ -8,9 +10,9 @@ const zeroPad = (num, places) => {
 
 const Title = ({ surah }) => {
   return (
-    <div className="row">
-      <div className="col-md-3 col-xs-3 surah-title">
-        <img src="//quran-1f14.kxcdn.com/images/ornament-left.png" className="ornament" />
+    <div className={`row ${styles.container}`}>
+      <div className="col-md-3 col-xs-1 surah-title">
+        <img src="//quran-1f14.kxcdn.com/images/ornament-left.png" className="ornament hidden-xs hidden-sm" />
         {
           surah.id >= 1 &&
           <Link className="navbar-text previous-chapter" to={`/${surah.id - 1}`}>
@@ -32,7 +34,7 @@ const Title = ({ surah }) => {
           </p>
         }
       </div>
-      <div className="col-md-3 col-xs-3 surah-title text-right">
+      <div className="col-md-3 col-xs-1 surah-title text-right">
         {
           surah.id <= 114 &&
           <Link className="navbar-text next-chapter" to={`/${surah.id + 1}`}>
@@ -40,7 +42,7 @@ const Title = ({ surah }) => {
             <i className="ss-icon ss-navigateright"></i>
           </Link>
         }
-        <img src="//quran-1f14.kxcdn.com/images/ornament-right.png" className="ornament" />
+        <img src="//quran-1f14.kxcdn.com/images/ornament-right.png" className="ornament hidden-xs hidden-sm" />
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ const SurahsDropdown = ({ surahs, className }) => {
   );
 
   return (
-    <div className={`dropdown ${className} ${styles.dropdown}`}>
+    <div className={`dropdown border-right ${className} ${styles.dropdown}`}>
       <button
         className={`btn btn-link no-outline`}
         id="surahs-dropdown"

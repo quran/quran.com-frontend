@@ -1,0 +1,9 @@
+@import '../../../styles/_bootstrap-config.scss';
+
+.container{
+  @media(max-width: $screen-sm-max) {
+    width: 80%;
+    margin-left: 15px;
+    display: inline-block;
+  }
+}

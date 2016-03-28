@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 
+import SwitchToggle from '../../../components/SwitchToggle';
+
 const ReadingModeToggle = ({ onReadingModeToggle, isToggled }) => (
-  <a
-    className={`pointer nav-link toggle-icon ${isToggled && 'active'}`}
-    onClick={onReadingModeToggle}>
-    <i className="ss-icon ss-openbook text-align" />
-    Reading: {isToggled ? 'on' : 'off'}
-  </a>
+  <div>
+    Reading:{' '}
+    <SwitchToggle checked={isToggled} onToggle={onReadingModeToggle} flat />
+  </div>
 );
 
 export default ReadingModeToggle;

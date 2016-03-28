@@ -51,6 +51,7 @@ const style = require('./style.scss');
 )
 export default class Audioplayer extends Component {
   static propTypes = {
+    className: PropTypes.string,
     surah: PropTypes.object.isRequired,
     files: PropTypes.object,
     currentFile: PropTypes.string,
@@ -65,6 +66,10 @@ export default class Audioplayer extends Component {
     pause: PropTypes.func.isRequired,
     repeat: PropTypes.func.isRequired,
     ayahIds: PropTypes.array
+  };
+
+  static defaultProps = {
+    className: 'col-md-3'
   };
 
   state = {
@@ -230,6 +235,7 @@ export default class Audioplayer extends Component {
     // debug('component:Audioplayer', 'Render');
 
     const {
+      className,
       play, // eslint-disable-line no-shadow
       pause, // eslint-disable-line no-shadow
       files,
@@ -273,7 +279,7 @@ export default class Audioplayer extends Component {
     }
 
     return (
-      <div className={`${style.container} navbar-item`}>
+      <div className={`${style.container} ${className} navbar-item border-right`}>
         <div className={style.verse}>{currentFile.split(':')[1]}</div>
         {content}
         <div className={style.wrapper}>

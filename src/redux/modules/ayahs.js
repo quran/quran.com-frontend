@@ -43,7 +43,7 @@ export default function reducer(state = initialState, action = {}) {
           [action.surahId]: Object.assign({}, state.entities[action.surahId], action.result.entities.ayahs)
         },
         result: Object.assign({}, state.result, action.result.result),
-        fontFaces: [...state.fontFaces, ...createFontFacesArray(action.result.result.map(key => action.result.entities.ayahs[key]))],
+        fontFaces: new Set([...state.fontFaces, ...createFontFacesArray(action.result.result.map(key => action.result.entities.ayahs[key]))]),
       };
     case LOAD_FAIL:
       console.log(action);

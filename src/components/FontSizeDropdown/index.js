@@ -6,7 +6,8 @@ import { getFontSize } from '../../helpers/flowType';
 const style = require('./style.scss');
 
 export default class FontSizeDropdown extends Component {
-  onSelect() {
+  onSelect(event) {
+    event.preventDefault();
     this.setState({
       fontSize: getFontSize()
     });
@@ -92,14 +93,9 @@ export default class FontSizeDropdown extends Component {
 
     return (
       <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
-        <NavItem eventKey={1} onSelect={this.onSelect.bind(this)}>
-          <small className="hidden-xs hidden-sm">A</small>
-          <span className="hidden-xs hidden-sm" style={{fontSize: '1.25em'}}>A</span>
-          {/*<span className="inline visible-sm visible-xs">*/}
-            {/*<small>A</small><span style={{fontSize: '1.25em'}} className="margin-sm-right">A</span>*/}
-            {helperText}
-          {/*</span>*/}
-        </NavItem>
+        <a href="#" onSelect={this.onSelect.bind(this)} className="text-color">
+          Font size
+        </a>
       </OverlayTrigger>
     );
   }

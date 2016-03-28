@@ -9,14 +9,17 @@ import debug from 'utils/Debug';
 
 export default class Ayah extends Component {
   static propTypes = {
-    isReadingMode: PropTypes.bool,
-    isSearched: PropTypes.bool
+    isSearched: PropTypes.bool,
+    ayah: PropTypes.object
   };
 
   static defaultProps = {
     isSearched: false,
-    isReadingMode: false
   };
+
+  shouldComponentUpdate(nextProps) {
+    return this.props.ayah !== nextProps.ayah;
+  }
 
   renderTranslations() {
     if (!this.props.ayah.content && this.props.ayah.match) {
@@ -183,10 +186,6 @@ export default class Ayah extends Component {
   render() {
     const { ayah } = this.props;
     debug(`component:Ayah`, `Render ${this.props.ayah.ayahNum}`);
-
-    if (this.props.isReadingMode) {
-      return this.renderText();
-    }
 
     return (
       <Element name={`ayah:${ayah.ayahNum}`} className={`row ayah`}>

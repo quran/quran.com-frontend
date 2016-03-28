@@ -170,15 +170,8 @@ export default class ReciterDropdown extends Component {
   render() {
     const { className } = this.props;
 
-    const title = (
-      <span>
-        <i className="ss-icon ss-highvolume margin-md-right text-align" />
-        Reciters
-      </span>
-    );
-
     return (
-      <div className={`dropdown ${className} ${style.dropdown}`}>
+      <div className={`dropdown border-right ${className} ${style.dropdown}`}>
         <button
           className={`btn btn-link no-outline`}
           id="reciters-dropdown"
@@ -186,7 +179,7 @@ export default class ReciterDropdown extends Component {
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false">
-          {title}
+          Reciters
           <span className="caret"></span>
         </button>
         <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">

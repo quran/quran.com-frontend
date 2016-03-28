@@ -8,7 +8,6 @@ import Col from 'react-bootstrap/lib/Col';
 import Helmet from 'react-helmet';
 
 // components
-import SurahsNav from 'components/surah/SurahsNav';
 import Audioplayer from '../../components/Audioplayer';
 import ContentDropdown from '../../components/ContentDropdown';
 import ReciterDropdown from '../../components/ReciterDropdown';
@@ -86,14 +85,15 @@ let lastScroll = 0;
   (state, ownProps) => {
     const surah = state.surahs.entities[ownProps.params.surahId];
     const ayahs = state.ayahs.entities[ownProps.params.surahId];
-    const ayahKeys = Object.keys(ayahs);
-    const ayahIds = ayahKeys.map(key => parseInt(key.split(':')[1], 10));
-    const isEndOfSurah = ayahIds.length === surah.ayat;
+    const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
+    ayahIds.first = function() {return [...this][0];};
+    ayahIds.last = function() {return [...this][[...this].length - 1];};
+
+    const isEndOfSurah = ayahIds.size === surah.ayat;
 
     return {
       surah,
       ayahs,
-      ayahKeys,
       isEndOfSurah,
       ayahIds,
       surahs: state.surahs.entities,
@@ -132,12 +132,12 @@ export default class Surah extends Component {
   shouldComponentUpdate(nextProps) {
     const sameSurahIdRouting = this.props.params.surahId === nextProps.params.surahId;
     const lazyLoadFinished = sameSurahIdRouting && (!this.props.isLoaded && nextProps.isLoaded);
-    const readingModeTriggered = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
+    const readingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
 
     return (
       !sameSurahIdRouting ||
       lazyLoadFinished ||
-      readingModeTriggered
+      readingModeChange
     );
   }
 
@@ -179,8 +179,8 @@ export default class Surah extends Component {
 
   handleOptionChange(payload) {
     const { setOptionDispatch, loadAyahsDispatch, surah, ayahIds, options } = this.props;
-    const from = ayahIds[0];
-    const to = ayahIds[ayahIds.length - 1];
+    const from = ayahIds.first();
+    const to = ayahIds.last();
 
     setOptionDispatch(payload);
     loadAyahsDispatch(surah.id, from, to, Object.assign({}, options, payload));
@@ -200,7 +200,7 @@ export default class Surah extends Component {
   handleVerseDropdownClick(ayahNum) {
     const { ayahIds, push, surah } = this.props; // eslint-disable-line no-shadow
 
-    if (ayahNum > (ayahIds[ayahIds.length - 1] + 10)) {
+    if (ayahNum > (ayahIds.last() + 10)) {
       // This is beyond lazy loading next page.
       return push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
     }
@@ -230,10 +230,7 @@ export default class Surah extends Component {
   lazyLoadAyahs() {
     const { loadAyahsDispatch, ayahIds, surah, options } = this.props;
 
-    const range = [
-      ayahIds[0],
-      ayahIds[ayahIds.length - 1]
-    ];
+    const range = [ayahIds.first(), ayahIds.last()];
     let size = 10;
 
     if ((range[1] - range[0] + 1) < 10) {
@@ -243,7 +240,7 @@ export default class Surah extends Component {
     const from = range[1];
     const to = (from + size);
 
-    if (!ayahIds.includes(to)) {
+    if (!ayahIds.has(to)) {
       loadAyahsDispatch(surah.id, from, to, options).then(() => this.setState({lazyLoading: false}));
     }
   }
@@ -269,25 +266,21 @@ export default class Surah extends Component {
     const { toggleReadingModeDispatch, options } = this.props;
 
     return (
-      <ul className="list-inline">
-        <li>
-          <FontSizeDropdown />
-        </li>
-        <li>
-          <ReadingModeToggle
-            isToggled={options.isReadingMode}
-            onReadingModeToggle={toggleReadingModeDispatch} />
-        </li>
-        <li>
-          {
-            !options.isReadingMode &&
-            <ContentDropdown
-              onOptionChange={this.handleOptionChange.bind(this)}
-              options={options}
-            />
-          }
-        </li>
-      </ul>
+      <Row>
+        <Col md={3} mdOffset={9} className="text-right">
+          <ul className="list-inline">
+            <li>
+              <FontSizeDropdown />
+            </li>
+            <li>|</li>
+            <li>
+              <ReadingModeToggle
+                isToggled={options.isReadingMode}
+                onReadingModeToggle={toggleReadingModeDispatch} />
+            </li>
+          </ul>
+        </Col>
+      </Row>
     );
   }
 
@@ -306,7 +299,7 @@ export default class Surah extends Component {
             />
             <VersesDropdown
               ayat={surah.ayat}
-              loaded={ayahIds}
+              loadedAyahs={ayahIds}
               onClick={this.handleVerseDropdownClick.bind(this)}
               className="col-md-1"
             />
@@ -315,10 +308,17 @@ export default class Surah extends Component {
               options={options}
               className="col-md-1"
             />
-            <Col md={3}>
-              <Audioplayer surah={surah} onLoadAyahs={this.lazyLoadAyahs.bind(this)} />
-            </Col>
-            <SearchInput className="col-md-6 search-input" />
+            <Audioplayer
+              surah={surah}
+              onLoadAyahs={this.lazyLoadAyahs.bind(this)}
+              className="col-md-3"
+            />
+            <ContentDropdown
+              onOptionChange={this.handleOptionChange.bind(this)}
+              options={options}
+              className="col-md-2"
+            />
+            <SearchInput className="col-md-4 search-input" />
           </Row>
         </MasterHeader>
         <div className="container-fluid">

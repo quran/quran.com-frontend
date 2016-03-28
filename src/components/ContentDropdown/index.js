@@ -431,42 +431,32 @@ export const slugs = [
 
 export default class ContentDropdown extends Component {
   static propTypes = {
-    onOptionChange: PropTypes.func.isRequired
+    onOptionChange: PropTypes.func.isRequired,
+    options: PropTypes.object.isRequired,
+    className: PropTypes.string
   };
 
-  state = {
-    options: [19]
-  };
+  static defaultProps = {
+    className: 'col-md-3'
+  }
 
-  onOptionChosen(id) {
-    const { options } = this.state;
-    const { onOptionChange } = this.props;
+  handleOptionSelected(id) {
+    const { onOptionChange, options: { content } } = this.props;
 
-    if (options.find(option => option === id)) {
-      options.splice(
-        options.findIndex(option => option === id),
-        1
-      );
+    if (content.find(option => option === id)) {
+      const index = content.findIndex(option => option === id) - 1;
 
-      this.setState({
-        options
-      });
-
-      onOptionChange({content: options});
+      onOptionChange({content: [...content].splice(index, 1)});
     } else {
-      this.setState({
-        options: [].concat(options, [id])
-      });
-
-      onOptionChange({content: [].concat(options, [id])});
+      onOptionChange({content: [...content, id]});
     }
   }
 
   renderItems(items) {
-    const { options } = this.state;
+    const { options: { content } } = this.props;
 
     return items.map(slug => {
-      const checked = options.find(option => option === slug.id);
+      const checked = content.find(option => option === slug.id);
 
       return (
         <li key={slug.name} className={style.item}>
@@ -474,7 +464,7 @@ export default class ContentDropdown extends Component {
             type="checkbox"
             className={style.checkbox}
             id={slug.id + slug.language}
-            onChange={this.onOptionChosen.bind(this, slug.id)}
+            onChange={this.handleOptionSelected.bind(this, slug.id)}
             checked={checked}
           />
 
@@ -499,21 +489,32 @@ export default class ContentDropdown extends Component {
   }
 
   render() {
-    const title = (
-      <span>
-        <i className="ss-icon ss-globe margin-md-right text-align" />
-        Translations
-      </span>
-    );
+    const { className, options: { content } } = this.props;
 
     return (
-      <DropdownButton bsStyle="link" title={title} id="content-dropdown" className={`${style.dropdown} bordered`}>
-        <MenuItem header>English</MenuItem>
-        {this.renderEnglishList()}
-        <MenuItem divider/>
-        <MenuItem header>Other Languages</MenuItem>
-        {this.renderLanguagesList()}
-      </DropdownButton>
+      <div className={`dropdown border-right ${className} ${style.dropdown}`}>
+        <button
+          className={`btn btn-link no-outline`}
+          id="content-dropdown"
+          type="button"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false">
+          Translations
+          <span className="caret"></span>
+        </button>
+        <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
+          {
+            content.length &&
+            <MenuItem>Remove all</MenuItem>
+          }
+          <MenuItem header>English</MenuItem>
+          {this.renderEnglishList()}
+          <MenuItem divider/>
+          <MenuItem header>Other Languages</MenuItem>
+          {this.renderLanguagesList()}
+        </ul>
+      </div>
     );
   }
 }

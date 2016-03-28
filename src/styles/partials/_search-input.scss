@@ -30,8 +30,6 @@
     border: initial;
     background: transparent;
     right: 0px;
-    width: 5%;
-    padding-left: 10px;
   }
 }
 .right-inner-addon {
@@ -91,9 +89,6 @@
   .right-inner-addon.search-input{
     i{
       display: none;
-    }
-    input{
-      box-shadow: inset 0 8px 12px -12px rgba(0, 0, 0, 0.75);
     }
   }
 }

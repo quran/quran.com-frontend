@@ -8,7 +8,7 @@ const style = require('./style.scss');
 export default class VersesDropdown extends Component {
   static propTypes = {
     ayat: PropTypes.number.isRequired,
-    loaded: PropTypes.array.isRequired,
+    loadedAyahs: PropTypes.object.isRequired, // Set
     onClick: PropTypes.func.isRequired
   };
 
@@ -21,10 +21,10 @@ export default class VersesDropdown extends Component {
   }
 
   renderItem(ayah, index) {
-    const { loaded } = this.props;
+    const { loadedAyahs } = this.props;
     const ayahNum = index + 1;
 
-    if (loaded.includes(ayahNum)) {
+    if (loadedAyahs.has(ayahNum)) {
       return (
         <li key={index}>
           <Link to={`ayah:${ayahNum}`} smooth spy offset={-150} activeClass="active" duration={500} className="pointer">
@@ -53,7 +53,7 @@ export default class VersesDropdown extends Component {
     );
 
     return (
-      <div className={`dropdown ${className} ${style.dropdown}`}>
+      <div className={`dropdown border-right ${className} ${style.dropdown}`}>
         <button
           className={`btn btn-link no-outline`}
           id="verses-dropdown"
