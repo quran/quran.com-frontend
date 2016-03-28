@@ -1,45 +1,35 @@
 .right-inner-addon.search-input{
   padding: 0px;
-  height: 50px;
-  border: 1px solid darken($brand-primary, 10%);
-  box-shadow: inset 0 7px 9px -10px rgba(0,0,0,0.4);
+  height: 40px;
   margin-bottom: 0px;
 
   input{
     padding: 10px 15px;
     height: 100%;
-    background: darken($brand-primary, 10%);
-    color: #fff;
     padding-right: 48px;
+    background: transparent;
   }
 
   input::-webkit-input-placeholder { /* WebKit browsers */
-    color: $brand-primary;
+    color: $olive;
   }
   input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-    color: $brand-primary;
+    color: $olive;
   }
   input::-moz-placeholder { /* Mozilla Firefox 19+ */
-    color: $brand-primary;
+    color: $olive;
   }
   input:-ms-input-placeholder { /* Internet Explorer 10+ */
-    color: $brand-primary;
+    color: $olive;
   }
   i.ss-icon{
-    font-size: 120%;
+    font-size: 90%;
     padding: 15px;
     height: 100%;
+    text-align: center;
     border: initial;
-    background-color: darken($brand-primary, 10%);
-    color: $brand-primary;
+    background: transparent;
     right: 0px;
-    width: 15%;
-    padding-left: 10px;
-
-    &:hover{
-      background-color: darken($brand-primary, 10%);
-      color: #fff;
-    }
   }
 }
 .right-inner-addon {
@@ -99,9 +89,6 @@
   .right-inner-addon.search-input{
     i{
       display: none;
-    }
-    input{
-      box-shadow: inset 0 8px 12px -12px rgba(0, 0, 0, 0.75);
     }
   }
 }

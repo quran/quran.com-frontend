@@ -1,51 +1,12 @@
-import React from 'react';
-import * as AyahsActions from 'actions/AyahsActions';
-import classNames from 'classnames';
+import React, { Component, PropTypes } from 'react';
 
-class ReadingModeToggle extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+import SwitchToggle from '../../../components/SwitchToggle';
 
-    this.state = {
-      toggled: false
-    };
-  }
-
-  toggleReadingMode(e) {
-    e.preventDefault();
-
-    this.setState({
-      toggled: !this.state.toggled
-    }, () => {
-      document.querySelector('.nav-toggle').click();
-      this.context.executeAction(AyahsActions.toggleReadingMode);
-    });
-  }
-
-  renderIcon() {
-    if (this.props.noPullRight) {
-      return <i className="ss-icon ss-openbook" />;
-    }
-    return <i className="ss-icon ss-openbook" />;
-  }
-
-  render() {
-    var classes = classNames({
-      active: this.state.toggled,
-      'nav-link': true,
-      'toggle-icon': true
-    });
-
-    return (
-      <a title="Toggle Reading Mode" className={classes} onClick={this.toggleReadingMode.bind(this)}>
-        {this.renderIcon()}
-      </a>
-    );
-  }
-}
-
-ReadingModeToggle.contextTypes = {
-  executeAction: React.PropTypes.func.isRequired
-};
+const ReadingModeToggle = ({ onReadingModeToggle, isToggled }) => (
+  <div>
+    Reading:{' '}
+    <SwitchToggle checked={isToggled} onToggle={onReadingModeToggle} flat />
+  </div>
+);
 
 export default ReadingModeToggle;

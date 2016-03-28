@@ -1,20 +1,3 @@
-nav{
-  a.dropdown-toggle{
-    @extend .nav-link;
-
-    &.selected{
-      i{
-        color: $brand-primary;
-      }
-    }
-    i{
-      margin-right: 15px;
-      &.pull-right{
-        line-height: $navbar-height * 0.3571;
-      }
-    }
-  }
-}
 
 // Dropdown icon
 .options .dropdown{

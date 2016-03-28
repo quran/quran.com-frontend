@@ -1,5 +1,5 @@
 import React from 'react';
-import {NavLink} from 'fluxible-router';
+import { Link } from 'react-router';
 
 class IndexHeaderNav extends React.Component {
   constructor() {
@@ -40,9 +40,9 @@ class IndexHeaderNav extends React.Component {
             <a href="http://legacy.quran.com">Legacy Quran.com</a>
           </li>
           <li>
-            <NavLink href="/donations">
+            <Link to="/donations">
               Contribute
-            </NavLink>
+            </Link>
           </li>
           <li>
             <a href="https://quran.zendesk.com/hc/en-us">

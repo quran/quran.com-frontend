@@ -5,20 +5,14 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import 'mixins/center';
 @import 'components/SurahNav';
 @import 'components/MasterHeader';
-@import 'components/Audioplayer';
-@import 'components/ContentDropdown';
-@import 'components/ReciterDropdown';
 @import 'components/Ayah';
-@import 'components/SurahInfo';
 @import 'fonts/fonts';
 
 @import 'partials/navbar-brand';
 @import 'partials/search-input';
 @import 'partials/surah-title';
 @import 'partials/dropdown';
-@import 'partials/index-surah-list';
 @import 'partials/index-header';
-@import 'partials/search-pagination-header';
 @import 'partials/modal';
 @import 'partials/tooltip';
 @import 'partials/highlight';
@@ -178,6 +172,37 @@ li em{
     h4{
       @extend .source-sans;
 
+    }
+  }
+}
+
+.pointer{
+  cursor: pointer;
+}
+.no-outline{
+  outline: none !important;
+
+  &:hover, &:focus{
+    outline: none !important;
+  }
+}
+.text-color{
+  color: $text-color;
+}
+
+.ss-icon.text-align{
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.dropdown{
+  .btn-link:hover, .btn-link:focus{
+    text-decoration: none;
+  }
+
+  &.open{
+    .btn-link{
+      color: $cream;
     }
   }
 }

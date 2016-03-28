@@ -1,8 +1,10 @@
 import React from 'react';
 import SearchInput from 'components/header/SearchInput';
 import IndexHeaderNav from 'components/header/IndexHeaderNav';
-import {NavLink} from 'fluxible-router';
+import { Link } from 'react-router';
 import debug from 'utils/Debug';
+
+const logo = require('../../../../static/images/logo-lg-w.png');
 
 class IndexHeader extends React.Component {
   renderSearch() {
@@ -19,15 +21,15 @@ class IndexHeader extends React.Component {
     if (this.props.navlink === false) {
       return (
         <a href="/">
-          <img src="//quran-1f14.kxcdn.com/images/logo-lg-w.png" className="logo" />
+          <img src={logo} className="logo" />
         </a>
       );
     }
     else {
       return (
-        <NavLink href="/">
-          <img src="//quran-1f14.kxcdn.com/images/logo-lg-w.png" className="logo" />
-        </NavLink>
+        <Link to="/">
+          <img src={logo} className="logo" />
+        </Link>
       );
     }
   }

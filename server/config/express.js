@@ -30,7 +30,7 @@ proxyApi.on('error', (error, req, res) => {
 
 export default function(server) {
   server.use(compression());
-  server.use(bodyParser.json());
+  // server.use(bodyParser.json());
   server.use(logger('dev'));
   server.use(useragent.express());
   server.use(cookieParser());
@@ -41,9 +41,6 @@ export default function(server) {
   server.use('/public', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
   server.use('/build', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
 
-  server.set('state namespace', 'App');
-  server.set('view cache', true);
-
   server.get(/^\/(images|fonts)\/.*/, function(req, res) {
     res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
   });
@@ -52,5 +49,5 @@ export default function(server) {
     proxyApi.web(req, res);
   });
 
-  server.use(errorhandler()); // Must be last!
+  // server.use(errorhandler()); // Must be last!
 }

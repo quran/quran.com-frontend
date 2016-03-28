@@ -1,5 +1,5 @@
 import React from 'react';
-import {handleRoute, NavLink} from 'fluxible-router';
+import { Link } from 'react-router';
 /**
  * Has to take in current page, hits per page, and total hits
  */
@@ -71,7 +71,7 @@ class Pagination extends React.Component {
       }
 
       list.push(
-        <li key={i}><NavLink href={link} className={className}>{i + 1}</NavLink></li>
+        <li key={i}><Link to={link} className={className}>{i + 1}</Link></li>
       );
     }
 
@@ -90,7 +90,5 @@ class Pagination extends React.Component {
     );
   }
 }
-
-Pagination = handleRoute(Pagination);
 
 export default Pagination;

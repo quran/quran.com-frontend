@@ -1,3 +1,5 @@
+var webpack = require('webpack');
+
 module.exports = function(config) {
   config.set({
 
@@ -5,6 +7,7 @@ module.exports = function(config) {
     basePath: '',
 
     plugins: [
+      'karma-sourcemap-loader',
       'karma-mocha',
       'karma-chai-sinon',
       'karma-sinon',
@@ -25,7 +28,7 @@ module.exports = function(config) {
       {pattern: "static/images/*", watched: false, included: false, served: true},
 
       // Actual tests here
-      {pattern: 'tests/unit/**/*.spec.js', watched: true, served: true, included: true}
+      'tests.webpack.js'
     ],
 
     // list of files to exclude
@@ -43,25 +46,16 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessors
 
     preprocessors: {
-      'tests/unit/**/*.spec.js': ['webpack']
+      'tests.webpack.js': [ 'webpack', 'sourcemap' ]
     },
 
     webpack: {
       resolve: {
-        root: [
-          __dirname + '/node_modules',
-          __dirname + '/test/client'
+        modulesDirectories: [
+          'src',
+          'node_modules'
         ],
-        alias: {
-          'components': __dirname + '/src/scripts/components',
-          'actions': __dirname + '/src/scripts/actions',
-          'stores': __dirname + '/src/scripts/stores',
-          'constants': __dirname + '/src/scripts/constants',
-          'mixins': __dirname + '/src/scripts/mixins',
-          'configs': __dirname + '/src/scripts/configs',
-          'utils': __dirname + '/src/scripts/utils'
-        },
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.json', '.js']
       },
 
       module: {
@@ -79,8 +73,12 @@ module.exports = function(config) {
       },
 
       plugins:[
-        //only include moment.js 'en' locale
-        // new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/)
+        new webpack.DefinePlugin({
+          __CLIENT__: false,
+          __SERVER__: true,
+          __DEVELOPMENT__: true,
+          __DEVTOOLS__: false  // <-------- DISABLE redux-devtools HERE
+        })
       ],
 
       watch: true

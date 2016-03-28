@@ -3,7 +3,7 @@ $transition-timing: 0.5s;
 
 .surah-title {
   padding: $content-padding;
-  height: $navbar-height;
+  height: $navbar-scroll-up-height;
   transition: height 0.5s;
 
   .navbar-text{
@@ -11,19 +11,17 @@ $transition-timing: 0.5s;
     margin-bottom: 0px;
     display: inline;
     float: none;
-    margin-left: -15px;
-    margin-right: -15px;
   }
+
   img {
     height: 100%;
 
     &.title{
       display: block;
       margin: auto;
-      height: 250px;
-      margin-top: -85px;
-      margin-bottom: -96px;
-      transition: height 0.5s, margin-top 0.5s, margin-bottom 0.5s;
+      height: 170px;
+      margin-top: -60px;
+      margin-bottom: -75px;
     }
     &.ornament{
       opacity: 0.15;
@@ -62,21 +60,7 @@ $transition-timing: 0.5s;
   color: $olive;
 }
 
-.shrink .surah-title{
-  @media (min-width: $screen-xs-max) {
-    height: 90px;
-    padding-top: 10px;
-    padding-bottom: 10px;
 
-    img.title{
-      display: block;
-      margin: auto;
-      height: 170px;
-      margin-top: -65px;
-      margin-bottom: -75px;
-    }
-  }
-}
 
 @media (max-width: $screen-sm-max) {
   .surah-title{
@@ -110,18 +94,6 @@ $transition-timing: 0.5s;
         position: relative;
         transform: translateY(-50%);
       }
-    }
-  }
-
-  .shrink .surah-title{
-    height: 30px;
-
-    img.title{
-      transform: scale(0.0001);
-      display: none;
-    }
-    br{
-      display: none;
     }
   }
 }
