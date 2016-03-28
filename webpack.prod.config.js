@@ -8,7 +8,7 @@ var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./webpack-isomo
 module.exports = {
   output: {
     path: './build',
-    publicPath: process.env.ASSETS_URL || '//assets-1f14.kxcdn.com/',
+    publicPath: process.env.USE_LOCAL_ASSETS ? '/public/' : '//assets-1f14.kxcdn.com/',
     filename: '[name]-[hash].js'
   },
   debug: false,
