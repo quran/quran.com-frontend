@@ -4,6 +4,8 @@ import IndexHeaderNav from 'components/header/IndexHeaderNav';
 import { Link } from 'react-router';
 import debug from 'utils/Debug';
 
+const logo = require('../../../../static/images/logo-lg-w.png');
+
 class IndexHeader extends React.Component {
   renderSearch() {
     if (this.props.noSearch) {
@@ -19,14 +21,14 @@ class IndexHeader extends React.Component {
     if (this.props.navlink === false) {
       return (
         <a href="/">
-          <img src="//quran-1f14.kxcdn.com/images/logo-lg-w.png" className="logo" />
+          <img src={logo} className="logo" />
         </a>
       );
     }
     else {
       return (
         <Link to="/">
-          <img src="//quran-1f14.kxcdn.com/images/logo-lg-w.png" className="logo" />
+          <img src={logo} className="logo" />
         </Link>
       );
     }

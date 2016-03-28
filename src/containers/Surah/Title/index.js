@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 
 const styles = require('./style.scss');
+const ornamentLeft = require('../../../../static/images/ornament-left.png');
+const ornamentRight = require('../../../../static/images/ornament-right.png');
 
 const zeroPad = (num, places) => {
   var zero = places - num.toString().length + 1;
@@ -9,10 +11,12 @@ const zeroPad = (num, places) => {
 };
 
 const Title = ({ surah }) => {
+  const title = require('../../../../static/images/titles/' + zeroPad(surah.id, 3) + '.svg');
+
   return (
     <div className={`row ${styles.container}`}>
       <div className="col-md-3 col-xs-1 surah-title">
-        <img src="//quran-1f14.kxcdn.com/images/ornament-left.png" className="ornament hidden-xs hidden-sm" />
+        <img src={ornamentLeft} className="ornament hidden-xs hidden-sm" />
         {
           surah.id >= 1 &&
           <Link className="navbar-text previous-chapter" to={`/${surah.id - 1}`}>
@@ -24,7 +28,7 @@ const Title = ({ surah }) => {
       <div className="col-md-6 col-xs-6 surah-title text-center">
         {
           surah &&
-          <img src={'//quran-1f14.kxcdn.com/images/titles/' + zeroPad(surah.id, 3) + '.svg'} className="title" />
+          <img src={title} className="title" />
         }
         <br />
         {
@@ -42,7 +46,7 @@ const Title = ({ surah }) => {
             <i className="ss-icon ss-navigateright"></i>
           </Link>
         }
-        <img src="//quran-1f14.kxcdn.com/images/ornament-right.png" className="ornament hidden-xs hidden-sm" />
+        <img src={ornamentRight} className="ornament hidden-xs hidden-sm" />
       </div>
     </div>
   );

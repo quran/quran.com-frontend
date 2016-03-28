@@ -49,20 +49,11 @@ module.exports = function(config) {
 
     webpack: {
       resolve: {
-        root: [
-          __dirname + '/node_modules',
-          __dirname + '/test/client'
+        modulesDirectories: [
+          'src',
+          'node_modules'
         ],
-        alias: {
-          'components': __dirname + '/src/scripts/components',
-          'actions': __dirname + '/src/scripts/actions',
-          'stores': __dirname + '/src/scripts/stores',
-          'constants': __dirname + '/src/scripts/constants',
-          'mixins': __dirname + '/src/scripts/mixins',
-          'configs': __dirname + '/src/scripts/configs',
-          'utils': __dirname + '/src/scripts/utils'
-        },
-        extensions: ['', '.js', '.jsx']
+        extensions: ['', '.json', '.js']
       },
 
       module: {

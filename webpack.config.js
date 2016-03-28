@@ -2,14 +2,14 @@ require('dotenv').config({path: (process.env.NODE_ENV || 'development') + '.env'
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var Webpack_isomorphic_tools_plugin = require('webpack-isomorphic-tools/plugin')
-var webpack_isomorphic_tools_plugin =
+var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
+var webpackIsomorphicToolsPlugin =
   // webpack-isomorphic-tools settings reside in a separate .js file
   // (because they will be used in the web server code too).
-  new Webpack_isomorphic_tools_plugin(require('./webpack-isomorphic-tools-configuration'))
+  new IsomorphicPlugin(require('./webpack-isomorphic-tools-configuration'))
   // also enter development mode since it's a development webpack configuration
   // (see below for explanation)
-  .development()
+  .development();
 
 var webpackConfig = {
   context: path.join(process.env.PWD, './'),
@@ -49,6 +49,12 @@ var webpackConfig = {
         }
       },
       { test: /\.json$/, loader: 'json-loader'},
+      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
+      { test: webpackIsomorphicToolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' },
       { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' }
     ]
   },
@@ -75,7 +81,7 @@ var webpackConfig = {
       __DEVELOPMENT__: true,
       __DEVTOOLS__: true
     }),
-    webpack_isomorphic_tools_plugin
+    webpackIsomorphicToolsPlugin
   ],
   stats: {
     colors: true,
