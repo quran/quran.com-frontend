@@ -5,6 +5,7 @@ module.exports = function(config) {
     basePath: '',
 
     plugins: [
+      'karma-sourcemap-loader',
       'karma-mocha',
       'karma-chai-sinon',
       'karma-sinon',
@@ -25,7 +26,7 @@ module.exports = function(config) {
       {pattern: "static/images/*", watched: false, included: false, served: true},
 
       // Actual tests here
-      {pattern: 'tests/unit/**/*.spec.js', watched: true, served: true, included: true}
+      'tests.webpack.js'
     ],
 
     // list of files to exclude
@@ -43,7 +44,7 @@ module.exports = function(config) {
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessors
 
     preprocessors: {
-      'tests/unit/**/*.spec.js': ['webpack']
+      'tests.webpack.js': [ 'webpack', 'sourcemap' ]
     },
 
     webpack: {
