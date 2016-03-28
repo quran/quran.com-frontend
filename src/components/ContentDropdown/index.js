@@ -448,9 +448,7 @@ export default class ContentDropdown extends Component {
     const { onOptionChange, options: { content } } = this.props;
 
     if (content.find(option => option === id)) {
-      const index = content.findIndex(option => option === id) - 1;
-
-      onOptionChange({content: [...content].splice(index, 1)});
+      onOptionChange({content: content.filter(option => option !== id)});
     } else {
       onOptionChange({content: [...content, id]});
     }

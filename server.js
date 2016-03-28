@@ -11,6 +11,7 @@ import { match } from 'react-router';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-async-connect';
 import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
+import cookie from 'react-cookie';
 
 import debugLib from 'debug';
 const debug = debugLib('quran');
@@ -19,20 +20,19 @@ import routes from './src/routes';
 import ApiClient from './src/helpers/ApiClient';
 import createStore from './src/redux/create';
 import * as Settings from 'constants/Settings';
-import * as ExpressActions from 'actions/ExpressActions';
-import * as Fonts from 'utils/FontFace';
 
 import NotFound from 'components/NotFound';
 import Errored from 'components/Error';
 import ErroredMessage from 'components/ErrorMessage';
 import Html from 'components/Html';
-import About from './src/scripts/routes/About';
 
 import { setUserAgent } from './src/redux/modules/audioplayer';
+import { setOption } from './src/redux/modules/options';
 
 // Use varnish for the static routes, which will cache too
 
 server.use((req, res, next) => {
+  cookie.plugToRequest(req, res);
   const client = new ApiClient(req);
   const history = createHistory(req.originalUrl);
   const store = createStore(history, client);
@@ -42,6 +42,7 @@ server.use((req, res, next) => {
   }
 
   store.dispatch(setUserAgent(req.useragent));
+  store.dispatch(setOption(cookie.load('options') || {}));
 
   debug('Executing navigate action');
   match({ history, routes: routes(), location: req.originalUrl }, (error, redirectLocation, renderProps) => {

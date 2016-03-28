@@ -1,3 +1,5 @@
+import cookie from 'react-cookie';
+
 const TOGGLE_READING_MODE = '@@quran/options/TOGGLE_READING_MODE';
 const SET_OPTION = '@@quran/options/SET_OPTION';
 
@@ -30,6 +32,10 @@ export function isReadingMode(globalState) {
 }
 
 export function setOption(payload) {
+  const options = cookie.load('options') || {}; // protect against first timers.
+  Object.keys(payload).forEach(option => options[option] = payload[option]);
+  cookie.save('options', JSON.stringify(options));
+
   return {
     type: SET_OPTION,
     payload
