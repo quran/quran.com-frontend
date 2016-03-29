@@ -11,27 +11,10 @@ class IndexHeader extends React.Component {
     if (this.props.noSearch) {
       return null;
     }
-    else {
-      return (
-        <SearchInput />
-      );
-    }
-  }
-  link() {
-    if (this.props.navlink === false) {
-      return (
-        <a href="/">
-          <img src={logo} className="logo" />
-        </a>
-      );
-    }
-    else {
-      return (
-        <Link to="/">
-          <img src={logo} className="logo" />
-        </Link>
-      );
-    }
+
+    return (
+      <SearchInput />
+    );
   }
 
   render() {
@@ -43,7 +26,9 @@ class IndexHeader extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
-              {this.link()}
+              <Link to="/" data-metrics-event-name="IndexHeader:Link:Index">
+                <img src={logo} className="logo" />
+              </Link>
               <h4 className="title">THE NOBLE QUR&#x27;AN</h4>
               {this.renderSearch()}
             </div>

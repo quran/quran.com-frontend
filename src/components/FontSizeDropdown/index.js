@@ -93,7 +93,11 @@ export default class FontSizeDropdown extends Component {
 
     return (
       <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
-        <a href="#" onSelect={this.onSelect.bind(this)} className="text-color">
+        <a
+          href="#"
+          onSelect={this.onSelect.bind(this)}
+          className="text-color"
+          data-metrics-event-name="FontSizeDropdown">
           Font size
         </a>
       </OverlayTrigger>

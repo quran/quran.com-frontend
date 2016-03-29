@@ -1,4 +1,5 @@
 import React from 'react';
+import { PropTypes } from "react-metrics";
 import ReactDOM from 'react-dom';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
@@ -8,6 +9,10 @@ import debug from 'utils/Debug';
 
 @connect(null, { push })
 export default class SearchInput extends React.Component {
+  static contextTypes = {
+    metrics: PropTypes.metrics
+  }
+
   search(e) {
     if (e.key === 'Enter' || e.keyCode === 13 || e.type === 'click') {
       let inputEl = ReactDOM.findDOMNode(this).querySelector('input'),
@@ -34,8 +39,10 @@ export default class SearchInput extends React.Component {
           ayah = 1;
         }
 
+        this.context.metrics.track('Search', {action: 'surah', label: `/${surah}/${ayah}-${(ayah + 10)}`});
         this.props.push(`/${surah}/${ayah}-${(ayah + 10)}`);
       } else {
+        this.context.metrics.track('Search', {action: 'query', label: searching});
         this.props.push(`/search?q=${searching}`);
       }
     }

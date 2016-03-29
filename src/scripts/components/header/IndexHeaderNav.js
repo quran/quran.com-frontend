@@ -23,10 +23,10 @@ class IndexHeaderNav extends React.Component {
       return (
         <ul className={classNames}>
           <li>
-            <a href="http://legacy.quran.com">Legacy Quran.com</a>
+            <a href="http://legacy.quran.com" data-metrics-event-name="IndexHeader:Link:Legacy">Legacy Quran.com</a>
           </li>
           <li>
-            <a href="https://quran.zendesk.com/hc/en-us">
+            <a href="https://quran.zendesk.com/hc/en-us" data-metrics-event-name="IndexHeader:Link:Contact">
               Contact us
             </a>
           </li>
@@ -37,15 +37,15 @@ class IndexHeaderNav extends React.Component {
       return (
         <ul className={classNames}>
           <li>
-            <a href="http://legacy.quran.com">Legacy Quran.com</a>
+            <a href="http://legacy.quran.com" data-metrics-event-name="IndexHeader:Link:Legacy">Legacy Quran.com</a>
           </li>
           <li>
-            <Link to="/donations">
+            <Link to="/donations" data-metrics-event-name="IndexHeader:Link:Contribute">
               Contribute
             </Link>
           </li>
           <li>
-            <a href="https://quran.zendesk.com/hc/en-us">
+            <a href="https://quran.zendesk.com/hc/en-us" data-metrics-event-name="IndexHeader:Link:Contact">
               Contact us
             </a>
           </li>
