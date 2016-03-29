@@ -3,11 +3,17 @@ import ReactDOM from 'react-dom';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import SearchAutocomplete from 'components/header/SearchAutocomplete';
 
 import debug from 'utils/Debug';
 
 @connect(null, { push })
 export default class SearchInput extends React.Component {
+  constructor() {
+    super(...arguments);
+    this.state = { value: '' };
+  }
+
   search(e) {
     if (e.key === 'Enter' || e.keyCode === 13 || e.type === 'click') {
       let inputEl = ReactDOM.findDOMNode(this).querySelector('input'),
@@ -49,6 +55,8 @@ export default class SearchInput extends React.Component {
     else {
       e.target.style.textAlign = 'left';
     }
+
+    this.setState({ value: e.target.value.trim() });
   }
 
   render() {
@@ -66,6 +74,7 @@ export default class SearchInput extends React.Component {
         <input type="text"
                placeholder="Search"
                onKeyUp={this.search.bind(this)} />
+        <SearchAutocomplete value={this.state.value} />
       </div>
     );
   }
