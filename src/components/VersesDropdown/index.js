@@ -9,7 +9,8 @@ export default class VersesDropdown extends Component {
   static propTypes = {
     ayat: PropTypes.number.isRequired,
     loadedAyahs: PropTypes.object.isRequired, // Set
-    onClick: PropTypes.func.isRequired
+    onClick: PropTypes.func.isRequired,
+    isReadingMode: PropTypes.bool
   };
 
   static defaultProps = {
@@ -21,10 +22,10 @@ export default class VersesDropdown extends Component {
   }
 
   renderItem(ayah, index) {
-    const { loadedAyahs } = this.props;
+    const { loadedAyahs, isReadingMode } = this.props;
     const ayahNum = index + 1;
 
-    if (loadedAyahs.has(ayahNum)) {
+    if (loadedAyahs.has(ayahNum) && !isReadingMode) {
       return (
         <li key={index}>
           <Link to={`ayah:${ayahNum}`} smooth spy offset={-150} activeClass="active" duration={500} className="pointer">

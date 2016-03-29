@@ -4,35 +4,49 @@ import React from 'react';
 import debug from 'utils/Debug';
 
 class Line extends React.Component {
-  text() {
+  static propTypes = {
+    line: React.PropTypes.array.isRequired
+  };
+
+  // shouldComponentUpdate(nextProps) {
+  //   return this.props.line.length !== nextProps.line.length;
+  // }
+
+  renderText() {
     const { line } = this.props;
 
     if (!line[0].char) { // TODO shouldn't be possible, remove this clause
       return;
     }
 
-    let text = line.map(data => {
+    let text = line.map((data, index) => {
       if (data.word.translation) {
         let tooltip = data.word.translation;
 
         return (
-          <b key={data.char.code}
+          <b
+            key={`${index}`}
             className={`${data.char.font} pointer`}
             data-toggle="tooltip"
+            data-ayah={data.ayahKey}
+            data-line={data.char.line}
+            data-page={data.char.page}
+            data-position={data.word.position}
             data-placement="top" title={tooltip}
             dangerouslySetInnerHTML={{__html: data.char.code}}>
           </b>
         );
       }
-      else {
-        return (
-          <b
-            className={`${data.char.font} pointer`}
-            key={data.char.code}
-            dangerouslySetInnerHTML={{__html: data.char.code}}>
-          </b>
-        );
-      }
+
+      return (
+        <b
+          className={`${data.char.font} pointer`}
+          key={`${data.char.page}${data.char.line}${data.word.position}`}
+          data-line={data.char.line}
+          data-page={data.char.page}
+          dangerouslySetInnerHTML={{__html: data.char.code}}>
+        </b>
+      );
     });
 
     return (
@@ -40,31 +54,21 @@ class Line extends React.Component {
         {text}
       </span>
     );
-
-    return (
-      <h1 className="word-font text-right">
-        {text}
-      </h1>
-    );
   }
 
   render() {
     const { line } = this.props;
 
-    debug(`COMPONENT-LINE RENDERED page ${line[0].char.page}, line ${line[0].char.line}, ayah ${line[0].ayah_key}`);
+    debug('component:Line', `Page: ${line[0].char.page} - Line: ${line[0].char.line} - Ayah: ${line[0].ayahKey}`);
 
     return (
-      <div className="row word-font text-right">
+      <div className="row word-font text-justify">
         <div className="col-md-12 line-container">
-          {this.text()}
+          {this.renderText()}
         </div>
       </div>
     );
   }
 }
-
-Line.propTypes = {
-  line: React.PropTypes.array.isRequired
-};
 
 export default Line;
