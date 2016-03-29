@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
+import SearchAutocomplete from 'components/header/SearchAutocomplete';
 
 import debug from 'utils/Debug';
 
@@ -11,6 +12,11 @@ import debug from 'utils/Debug';
 export default class SearchInput extends React.Component {
   static contextTypes = {
     metrics: PropTypes.metrics
+  };
+
+  constructor(props, context) {
+    super(props, context);
+    this.state = { value: '' };
   }
 
   search(e) {
@@ -56,6 +62,8 @@ export default class SearchInput extends React.Component {
     else {
       e.target.style.textAlign = 'left';
     }
+
+    this.setState({ value: e.target.value.trim() });
   }
 
   render() {
@@ -73,6 +81,7 @@ export default class SearchInput extends React.Component {
         <input type="text"
                placeholder="Search"
                onKeyUp={this.search.bind(this)} />
+        <SearchAutocomplete value={this.state.value} />
       </div>
     );
   }
