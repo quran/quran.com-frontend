@@ -14,8 +14,8 @@ export default class SearchInput extends React.Component {
     metrics: PropTypes.metrics
   };
 
-  constructor(props, context) {
-    super(props, context);
+  constructor() {
+    super(...arguments);
     this.state = { value: '' };
   }
 
