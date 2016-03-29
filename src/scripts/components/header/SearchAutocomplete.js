@@ -7,8 +7,8 @@ import ApiClient from '../../../helpers/ApiClient';
 )
 
 export default class SearchAutocomplete extends Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor() {
+    super(...arguments);
     this.state = { ayat: [], surahs: [] };
     this.cached = {};
   };
@@ -42,8 +42,7 @@ export default class SearchAutocomplete extends Component {
     matches = matches.sort(function( a, b ) {
       return a[1] < b[1] ? -1 : 1; // <-- order by surah id
     }).map(function(match) {
-      var text = match[0];
-      return { text: '<b>'+ text +'</b>', href: '/'+ match[1] };
+      return { text: '<b>'+ match[0] +'</b>', href: '/'+ match[1] };
     }).slice(0, 5);
     this.setState({ surahs: matches });
   };
