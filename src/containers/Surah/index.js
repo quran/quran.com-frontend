@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Helmet from 'react-helmet';
 
 // components
+import PageBreak from '../../components/PageBreak';
 import Audioplayer from '../../components/Audioplayer';
 import ContentDropdown from '../../components/ContentDropdown';
 import ReciterDropdown from '../../components/ReciterDropdown';
@@ -258,8 +259,22 @@ export default class Surah extends Component {
 
   renderLines() {
     const { lines } = this.props;
+    const keys = Object.keys(lines);
 
-    return lines.map((line, index) => <Line line={line} key={index} />);
+    return keys.map((lineNum, index) => {
+      const nextNum = keys[index + 1];
+      const pageNum = lineNum.split('-')[0];
+      const line = lines[lineNum];
+
+      if (index + 1 !== keys.length && pageNum !== nextNum.split('-')[0]) {
+        return [
+          <Line line={line} key={lineNum} />,
+          <PageBreak pageNum={pageNum} />
+        ];
+      }
+
+      return <Line line={line} key={lineNum} />;
+    });
   }
 
   renderTopOptions() {
@@ -300,6 +315,7 @@ export default class Surah extends Component {
             <VersesDropdown
               ayat={surah.ayat}
               loadedAyahs={ayahIds}
+              isReadingMode={options.isReadingMode}
               onClick={this.handleVerseDropdownClick.bind(this)}
               className="col-md-1"
             />
