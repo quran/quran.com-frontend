@@ -9,8 +9,8 @@ import debug from 'utils/Debug';
 
 @connect(null, { push })
 export default class SearchInput extends React.Component {
-  constructor(props, context) {
-    super(props, context);
+  constructor() {
+    super(...arguments);
     this.state = { value: '' };
   }
 
