@@ -57,7 +57,6 @@ export default class SearchAutocomplete extends Component {
       request.get(Settings.url +'suggest')
       .query({ q: value })
       .end((err, res) => {
-        console.log('value',value,'this',this);
         if (err) {
           return console.error( 'error getting autocomplete suggestions' );
         }
