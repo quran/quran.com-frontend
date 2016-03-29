@@ -9,13 +9,11 @@ import ApiClient from '../../../helpers/ApiClient';
 export default class SearchAutocomplete extends Component {
   constructor(props, context) {
     super(props, context);
-    this.state = { value: '', ayat: [], surahs: [] };
+    this.state = { ayat: [], surahs: [] };
     this.cached = {};
   };
 
   componentWillReceiveProps(nextProps) {
-    if (this.state.value !== nextProps.value)
-      this.setState({ value: nextProps.value });
     this.suggest(nextProps.value);
   };
 
@@ -57,7 +55,7 @@ export default class SearchAutocomplete extends Component {
     else {
       ( new ApiClient() ).get( '/suggest', { params: { q: value }}).then((res) => {
         this.cached[value] = res;
-        if (this.state.value.trim() === value) {
+        if (this.props.value.trim() === value) {
           this.setState({ ayat: res });
         }
       });
