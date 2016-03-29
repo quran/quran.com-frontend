@@ -28,10 +28,10 @@ export default class SearchAutocomplete extends Component {
   };
 
   handleSurahSuggestions(value) {
-    var escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
+    const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
     var matches = [];
-    for (var surah_id in this.props.surahs) {
-      var surah = this.props.surahs[surah_id];
+    for (var surahId in this.props.surahs) {
+      const surah = this.props.surahs[surahId];
       if (RegExp(escaped, "i").test(surah.name.simple.replace( /['-]/g, '' ))) {
         matches.push([ surah.name.simple, surah.id ]);
       } else
