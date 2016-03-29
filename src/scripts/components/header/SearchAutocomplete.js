@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import request from 'superagent';
-import Settings from 'constants/Settings';
 import { connect } from 'react-redux';
+import ApiClient from '../../../helpers/ApiClient';
 
 @connect(
   state => ({surahs: state.surahs.entities})
@@ -56,15 +55,10 @@ export default class SearchAutocomplete extends Component {
       this.setState({ ayat: this.cached[value] });
     }
     else {
-      request.get(Settings.url +'suggest')
-      .query({ q: value })
-      .end((err, res) => {
-        if (err) {
-          return console.error('error getting autocomplete suggestions');
-        }
-        this.cached[value] = res.body;
+      ( new ApiClient() ).get( '/suggest', { params: { q: value }}).then((res) => {
+        this.cached[value] = res;
         if (this.state.value.trim() === value) {
-          this.setState({ ayat: res.body });
+          this.setState({ ayat: res });
         }
       });
     }
