@@ -4,7 +4,8 @@ import ReactDOM from 'react-dom';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
-import SearchAutocomplete from 'components/header/SearchAutocomplete';
+
+import SearchAutocomplete from '../../../components/SearchAutocomplete';
 
 import debug from 'utils/Debug';
 

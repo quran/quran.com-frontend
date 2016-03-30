@@ -1,11 +1,10 @@
-.search-autocomplete {
+.autocomplete {
   width: 100%;
   background-color: #ccc;
   position: absolute;
   z-index: 99;
 
-  ul {
-    /*position: absolute;*/
+  .list{
     left: 0;
     z-index: 1;
     min-width: 100%;
@@ -14,15 +13,13 @@
     padding: 0;
     margin: .2em 0 0;
     background: white;
-    /*	background: hsla(0,0%,100%,.9); */
-    /* background: linear-gradient(to bottom right, white, hsla(0,0%,100%,.8)); */
     border: 1px solid rgba(0,0,0,.3);
     box-shadow: .05em .2em .6em rgba(0,0,0,.2);
     text-shadow: none;
   }
 
   /* Pointer */
-  > ul:before {
+  .list:before {
     content: "";
     position: absolute;
     top: -.23em;
@@ -36,14 +33,13 @@
     -webkit-transform: rotate(45deg);
     transform: rotate(45deg);
   }
-  ul > li {
+  .list > li {
     position: relative;
     cursor: pointer;
     text-align: left;
   }
 
-
-  .item-href {
+  .link {
     position: absolute;
     right: 0;
     padding-top: .2em;
@@ -55,7 +51,7 @@
     z-index: 2;
     text-align: right;
   }
-  .item-text {
+  .text {
     overflow: hidden;
     word-wrap: break-word;
     white-space: nowrap;
@@ -67,23 +63,23 @@
       display: block;
     }
   }
-  ul > li:hover .item-text {
+  .list > li:hover .text {
     background-color: rgba(44, 164, 171, 0.38);
   }
-  ul > li:hover .item-text a {
+  .list > li:hover .text a {
     color: #444;
   }
-  ul > li:hover .item-href a {
+  .list > li:hover .link a {
     color: #444;
   }
-  ul > li[aria-selected="true"] .item-text {
+  .list > li[aria-selected="true"] .text {
     background: hsl(205, 40%, 40%);
     color: white;
   }
   mark {
     background: hsl(65, 100%, 50%);
   }
-  ul li:hover mark {
+  .list li:hover mark {
     background: hsl(68, 100%, 41%);
   }
   li[aria-selected="true"] mark {
