@@ -80,7 +80,6 @@ export default class SearchInput extends React.Component {
           type="text"
           placeholder="Search"
           onFocus={() => this.setState({showAutocomplete: true})}
-          onBlur={() => this.setState({showAutocomplete: false})}
           onKeyUp={this.search.bind(this)}
         />
         {
