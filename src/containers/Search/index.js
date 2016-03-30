@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { PropTypes as MetricsPropTypes } from "react-metrics";
 import { asyncConnect } from 'redux-async-connect';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
@@ -55,13 +56,20 @@ class Search extends Component {
     push: PropTypes.func.isRequired
   };
 
+  static contextTypes = {
+    metrics: MetricsPropTypes.metrics
+  };
+
   handlePageChange(payload) {
     const { push, query, page } = this.props; // eslint-disable-line no-shadow
+    const selectedPage = payload.selected + 1;
 
-    if (page !== payload.selected + 1) {
+    if (page !== selectedPage) {
+      this.context.metrics.track('Search', {action: 'paginate', label: `${query} - ${selectedPage}`});
+
       return push({
         pathname: '/search',
-        query: {p: payload.selected + 1, q: query}
+        query: {p: selectedPage, q: query}
       });
     }
 

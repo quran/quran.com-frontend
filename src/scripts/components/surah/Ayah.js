@@ -140,8 +140,10 @@ export default class Ayah extends Component {
   renderCopyLink() {
     if (!this.props.isSearch) {
       return (
-        <a onClick={this.handleCopy.bind(this, this.props.ayah.text)}
-           className="text-muted">
+        <a
+          onClick={this.handleCopy.bind(this, this.props.ayah.text)}
+          className="text-muted"
+          data-metrics-event-name="Ayah:Copy">
           <i className="ss-icon ss-attach" /> Copy
         </a>
       );
@@ -160,7 +162,9 @@ export default class Ayah extends Component {
 
     if (isSearched) {
       return (
-        <Link to={`/${this.props.ayah.surahId}/${this.props.ayah.ayahNum}`}>
+        <Link
+          to={`/${this.props.ayah.surahId}/${this.props.ayah.ayahNum}`}
+          data-metrics-event-name="Ayah:Searched:Link">
           {content}
         </Link>
       );

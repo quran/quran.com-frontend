@@ -1,11 +1,14 @@
 import React, { Component, PropTypes } from 'react';
+import { metrics } from 'react-metrics';
 import Helmet from 'react-helmet';
 
 import FontStyles from '../../components/FontStyles';
 
 import debug from 'utils/Debug';
 import config from '../../config';
+import metricsConfig from '../../helpers/metrics';
 
+@metrics(metricsConfig)
 export default class Application extends Component {
   static contextTypes = {
     store: PropTypes.object.isRequired

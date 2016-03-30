@@ -19,8 +19,8 @@ const Title = ({ surah }) => {
         <img src={ornamentLeft} className="ornament hidden-xs hidden-sm" />
         {
           surah.id >= 1 &&
-          <Link className="navbar-text previous-chapter" to={`/${surah.id - 1}`}>
-            <i className="ss-icon ss-navigateleft"></i>
+          <Link data-metrics-event-name="Title:PreviousSurah" className="navbar-text previous-chapter" to={`/${surah.id - 1}`}>
+            <i data-metrics-event-name="Title:PreviousSurah" className="ss-icon ss-navigateleft"></i>
             <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
           </Link>
         }
@@ -41,9 +41,9 @@ const Title = ({ surah }) => {
       <div className="col-md-3 col-xs-1 surah-title text-right">
         {
           surah.id <= 114 &&
-          <Link className="navbar-text next-chapter" to={`/${surah.id + 1}`}>
+          <Link data-metrics-event-name="Title:NextSurah" className="navbar-text next-chapter" to={`/${surah.id + 1}`}>
             <span className="hidden-xs hidden-sm">NEXT SURAH </span>
-            <i className="ss-icon ss-navigateright"></i>
+            <i data-metrics-event-name="Title:NextSurah" className="ss-icon ss-navigateright"></i>
           </Link>
         }
         <img src={ornamentRight} className="ornament hidden-xs hidden-sm" />
