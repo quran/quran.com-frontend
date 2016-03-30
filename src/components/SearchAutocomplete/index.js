@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import ApiClient from '../../../helpers/ApiClient';
+import ApiClient from '../../helpers/ApiClient';
 
 const client = new ApiClient();
 
@@ -66,16 +66,14 @@ export default class SearchAutocomplete extends Component {
   renderList(key) {
     return this.state[key].map((item) => (
       <li key={item.href}>
-        <div>
-          <div className={styles.link}>
-            <a href={item.href}>{item.href}</a>
-          </div>
-          <div className={styles.text}>
-            <a href={item.href} dangerouslySetInnerHTML={{__html: item.text }} />
-          </div>
+        <div className={styles.link}>
+          <a href={item.href}>{item.href}</a>
+        </div>
+        <div className={styles.text}>
+          <a href={item.href} dangerouslySetInnerHTML={{__html: item.text }} />
         </div>
       </li>
-    );
+    ));
   };
 
   render() {

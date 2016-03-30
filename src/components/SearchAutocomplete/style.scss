@@ -1,3 +1,5 @@
+@import '../../styles/_bootstrap-config.scss';
+
 .autocomplete {
   width: 100%;
   background-color: #ccc;
@@ -64,7 +66,8 @@
     }
   }
   .list > li:hover .text {
-    background-color: rgba(44, 164, 171, 0.38);
+    background-color: rgba($brand-primary, 0.5);
+    color: $text-color;
   }
   .list > li:hover .text a {
     color: #444;
