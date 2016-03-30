@@ -5,13 +5,20 @@ import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import classNames from 'classnames';
 
+import SearchAutocomplete from '../../../components/SearchAutocomplete';
+
 import debug from 'utils/Debug';
 
 @connect(null, { push })
 export default class SearchInput extends React.Component {
   static contextTypes = {
     metrics: PropTypes.metrics
-  }
+  };
+
+  state = {
+    value: '',
+    showAutocomplete: false
+  };
 
   search(e) {
     if (e.key === 'Enter' || e.keyCode === 13 || e.type === 'click') {
@@ -56,23 +63,30 @@ export default class SearchInput extends React.Component {
     else {
       e.target.style.textAlign = 'left';
     }
+
+    this.setState({ value: e.target.value.trim() });
   }
 
   render() {
-    var className = classNames({
-      'right-inner-addon': true,
-      'searchinput': true,
-      [this.props.className]: true
-    });
+    const { showAutocomplete } = this.state;
+    const { className } = this.props;
 
     debug('component:SearchInput', 'Render');
 
     return (
-      <div className={className}>
+      <div className={`right-inner-addon searchinput ${className}`}>
         <i className="ss-icon ss-search" onClick={this.search.bind(this)} />
-        <input type="text"
-               placeholder="Search"
-               onKeyUp={this.search.bind(this)} />
+        <input
+          type="text"
+          placeholder="Search"
+          onFocus={() => this.setState({showAutocomplete: true})}
+          onBlur={() => this.setState({showAutocomplete: false})}
+          onKeyUp={this.search.bind(this)}
+        />
+        {
+          showAutocomplete &&
+          <SearchAutocomplete value={this.state.value} />
+        }
       </div>
     );
   }
