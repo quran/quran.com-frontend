@@ -36,6 +36,19 @@ class Html extends React.Component {
               }}
               charSet="UTF-8"
             />
+            {/* For SEO */}
+            <script type="application/ld+json" dangerouslySetInnerHTML={{
+              __html: `{
+                "@context": "http://schema.org",
+                "@type": "WebSite",
+                "url": "https://www.example.com/",
+                "potentialAction": {
+                  "@type": "SearchAction",
+                  "target": "https://query.example.com/search?q={search_term_string}",
+                  "query-input": "required name=search_term_string"
+                }
+              }`
+            }} />
             <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
             {Object.keys(this.props.assets.javascript).map((script, i) =>
               <script src={this.props.assets.javascript[script]} key={i}/>
