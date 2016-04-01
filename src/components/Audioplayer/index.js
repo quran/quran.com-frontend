@@ -248,7 +248,7 @@ export default class Audioplayer extends Component {
 
     if (!isSupported) {
       return (
-        <li className={style.container}>
+        <li className={`${style.container} ${className}`}>
           Your browser does not support this audio.
         </li>
       );
@@ -272,7 +272,7 @@ export default class Audioplayer extends Component {
 
     if (!currentFile) {
       return (
-        <li className={`${style.container}`}>
+        <li className={`${style.container} ${className}`}>
           {this.renderLoader()}
         </li>
       );
