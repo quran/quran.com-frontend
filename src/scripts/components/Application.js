@@ -44,12 +44,8 @@ export default class Application extends Component {
                 </ul>
               </div>
               <div className="col-md-2 text-right links">
-                <ul className="list-inline">
-                  <li><a><i className="fa fa-facebook"></i></a></li>
-                  <li><a><i className="fa fa-twitter"></i></a></li>
-                  <li><a><i className="fa fa-envelope"></i></a></li>
-                </ul>
-                <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2015</p>
+                <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>
+                <p className="monserrat">Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.</p>
               </div>
             </div>
           </div>

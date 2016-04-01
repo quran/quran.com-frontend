@@ -318,7 +318,9 @@ export default class Surah extends Component {
 
     return (
       <div className="surah-body">
-        <Helmet title={surah.name.simple} />
+        <Helmet title={surah.name.simple} link={[{
+          rel: 'canonical', href: `http://quran.com/${surah.id}`
+        }]} />
         <style dangerouslySetInnerHTML={{
           __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
           }}

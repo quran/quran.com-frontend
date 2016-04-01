@@ -10,6 +10,8 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import httpProxy from 'http-proxy';
 
+import sitemap from './sitemap';
+
 const proxyApi = httpProxy.createProxyServer({
   target: process.env.API_URL,
   secure: true
@@ -40,6 +42,8 @@ export default function(server) {
   server.use(favicon(path.join((process.env.PWD || process.env.pm_cwd) , '/static/images/favicon.ico')));
   server.use('/public', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
   server.use('/build', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
+
+  sitemap(server);
 
   server.get(/^\/(images|fonts)\/.*/, function(req, res) {
     res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
