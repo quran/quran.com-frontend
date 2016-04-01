@@ -64,7 +64,7 @@ export function buildAudioForAyah(audio, agent) {
   return scopedAudio;
 }
 
-export function buildAudioFromHash(ayahsObject, agent) {
+export function buildAudioFromHash(ayahsObject = {}, agent) {
   const filesObject = {};
 
   Object.keys(ayahsObject).forEach(ayahId => {

@@ -145,7 +145,7 @@ export const slugs = [
 
 export default class ReciterDropdown extends Component {
   static propTypes = {
-    handleOptionUpdate: PropTypes.func,
+    onOptionChange: PropTypes.func,
     options: PropTypes.object
   };
 
@@ -157,17 +157,16 @@ export default class ReciterDropdown extends Component {
     return this.props.options !== nextProps.options;
   }
 
-  handleOptionUpdate(id) {
-    return this.props.handleOptionUpdate({audio: id});
-  }
-
   renderMenu() {
-    const { options } = this.props;
+    const { options, onOptionChange } = this.props;
 
     return slugs.map(slug => (
-        <MenuItem key={slug.name.english} active={slug.id === options.audio} onClick={this.handleOptionUpdate.bind(this, slug.id)}>
-          {slug.name.english}
-        </MenuItem>
+      <MenuItem
+        key={slug.name.english}
+        active={slug.id === options.audio}
+        onClick={onOptionChange.bind(this, {audio: slug.id})}>
+        {slug.name.english}
+      </MenuItem>
     ));
   }
 
