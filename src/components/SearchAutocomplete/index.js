@@ -15,10 +15,16 @@ export default class SearchAutocomplete extends Component {
 
     this.state = {ayat: [], surahs: []};
     this.cached = {};
+    this.timer = null;
+    this.delay = 200;
   };
 
   componentWillReceiveProps(nextProps) {
-    this.suggest(nextProps.value);
+    if (this.timer)
+      clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      this.suggest(nextProps.value);
+    }, this.delay);
   };
 
   suggest(value) {
