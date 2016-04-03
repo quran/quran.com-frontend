@@ -37,7 +37,8 @@ const style = require('./style.scss');
     took: state.searchResults.took,
     query: state.searchResults.query,
     results: state.searchResults.results,
-    ayahs: state.searchResults.entities
+    ayahs: state.searchResults.entities,
+    options: state.options
   }),
   { push }
 )
@@ -53,7 +54,8 @@ class Search extends Component {
     query: PropTypes.string,
     results: PropTypes.array,
     ayahs: PropTypes.object,
-    push: PropTypes.func.isRequired
+    push: PropTypes.func.isRequired,
+    options: PropTypes.object
   };
 
   static contextTypes = {
@@ -138,19 +140,21 @@ class Search extends Component {
  }
 
   render() {
-    const { query } = this.props;
+    const { query, options } = this.props;
 
     return (
       <div className="index-page">
         <Helmet title={query} />
+        <style dangerouslySetInnerHTML={{
+          __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
+          }}
+        />
         <SearchHeader />
         {this.renderStatsBar()}
         <div className="container surah-list">
           <div className="row">
             <div className="col-md-12">
-              <div className="row">
-                {this.renderBody()}
-              </div>
+              {this.renderBody()}
             </div>
           </div>
         </div>

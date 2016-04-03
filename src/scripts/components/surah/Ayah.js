@@ -27,11 +27,12 @@ export default class Ayah extends Component {
         var arabic = new RegExp(/[\u0600-\u06FF]/);
         var character = content.text;
         var flag = arabic.test(character);
+
         if(flag){
           return (
             <div className="translation-arabic" key={i}>
               <h4>{content.name}</h4>
-              <h2 className="text-left-arabic">
+              <h2 className="text-left-arabic text-translation">
                 <small dangerouslySetInnerHTML={{__html: content.text}} />
               </h2>
            </div>
@@ -41,7 +42,7 @@ export default class Ayah extends Component {
           return (
             <div className="translation" key={i}>
               <h4>{content.name}</h4>
-              <h2 className="text-left">
+              <h2 className="text-left text-translation">
                 <small dangerouslySetInnerHTML={{__html: content.text}} />
               </h2>
             </div>
@@ -58,7 +59,7 @@ export default class Ayah extends Component {
       return (
         <div className="translation" key={i}>
           <h4>{content.name}</h4>
-          <h2 className="text-left">
+          <h2 className="text-left text-translation">
             <small>{content.text}</small>
           </h2>
         </div>
@@ -110,7 +111,7 @@ export default class Ayah extends Component {
     });
 
     return (
-      <h1 className="word-font text-right">
+      <h1 className="word-font text-right text-arabic">
         {text}
       </h1>
     );

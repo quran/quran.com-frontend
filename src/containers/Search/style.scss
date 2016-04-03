@@ -2,7 +2,7 @@
 
 :local .header{
   background-color: #E7E6E6;
-  height: 50px;
+  min-height: 50px;
   padding: 15px 0px;
   color: #414141;
   font-weight: 400;
@@ -56,6 +56,10 @@
 
     :global(.selected a){
       color: $brand-primary;
+    }
+
+    @media(max-width: $screen-sm-max){
+      padding-top: 5px;
     }
   }
 }

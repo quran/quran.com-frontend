@@ -21,7 +21,13 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 html,body{
   height: 100%;
   min-height: 100%;
+  font-size: 14px;
+
+  @media(max-width: $screen-sm-max) {
+    font-size: 10px;
+  }
 }
+
 a:hover{
   text-decoration: none;
 }

@@ -70,7 +70,9 @@ let lastScroll = 0;
         return dispatch(push('/'));
       }
 
-      dispatch(setCurrentSurah(surahId));
+      if (params.surahId !== getState().surahs.current) {
+        dispatch(setCurrentSurah(surahId));
+      }
 
       if (!isLoaded(getState(), surahId, from, to)) {
         dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
@@ -133,12 +135,14 @@ export default class Surah extends Component {
   shouldComponentUpdate(nextProps) {
     const sameSurahIdRouting = this.props.params.surahId === nextProps.params.surahId;
     const lazyLoadFinished = sameSurahIdRouting && (!this.props.isLoaded && nextProps.isLoaded);
-    const readingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
+    const hasReadingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
+    const hasFontSizeChange = this.props.options.fontSize !== nextProps.options.fontSize;
 
     return (
       !sameSurahIdRouting ||
       lazyLoadFinished ||
-      readingModeChange
+      hasReadingModeChange ||
+      hasFontSizeChange
     );
   }
 
@@ -185,6 +189,12 @@ export default class Surah extends Component {
 
     setOptionDispatch(payload);
     loadAyahsDispatch(surah.id, from, to, Object.assign({}, options, payload));
+  }
+
+  handleFontSizeChange = (payload) => {
+    const { setOptionDispatch } = this.props;
+
+    return setOptionDispatch(payload);
   }
 
   handleNavbar() {
@@ -285,7 +295,10 @@ export default class Surah extends Component {
         <Col md={3} mdOffset={9} className="text-right">
           <ul className="list-inline">
             <li>
-              <FontSizeDropdown />
+              <FontSizeDropdown
+                options={options}
+                onOptionChange={this.handleFontSizeChange}
+              />
             </li>
             <li>|</li>
             <li>
@@ -306,6 +319,10 @@ export default class Surah extends Component {
     return (
       <div className="surah-body">
         <Helmet title={surah.name.simple} />
+        <style dangerouslySetInnerHTML={{
+          __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
+          }}
+        />
         <MasterHeader surah={surah}>
           <Row className="navbar-bottom">
             <SurahsDropdown
