@@ -70,7 +70,9 @@ let lastScroll = 0;
         return dispatch(push('/'));
       }
 
-      dispatch(setCurrentSurah(surahId));
+      if (params.surahId !== getState().surahs.current) {
+        dispatch(setCurrentSurah(surahId));
+      }
 
       if (!isLoaded(getState(), surahId, from, to)) {
         dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
