@@ -72,11 +72,12 @@ module.exports = {
 			}
 		}),
     new webpack.DefinePlugin({
-      'process.env': {
+      'process.env': JSON.stringify({
         BROWSER: true,
-        API_URL: JSON.stringify(process.env.API_URL),
-        CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
-      },
+        API_URL: process.env.API_URL,
+        CURRENT_URL: process.env.CURRENT_URL,
+        NODE_ENV: process.env.NODE_ENV
+      }),
       __SERVER__: false,
       __CLIENT__: true,
       __DEVELOPMENT__: false,
