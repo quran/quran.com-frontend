@@ -299,10 +299,6 @@ export default class Surah extends Component {
                 options={options}
                 onOptionChange={this.handleFontSizeChange}
               />
-              <style dangerouslySetInnerHTML={{
-                __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
-                }}
-              />
             </li>
             <li>|</li>
             <li>
@@ -323,6 +319,10 @@ export default class Surah extends Component {
     return (
       <div className="surah-body">
         <Helmet title={surah.name.simple} />
+        <style dangerouslySetInnerHTML={{
+          __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
+          }}
+        />
         <MasterHeader surah={surah}>
           <Row className="navbar-bottom">
             <SurahsDropdown
