@@ -7,7 +7,11 @@ const initialState = {
   isReadingMode: false,
   audio: 8,
   quran: 1,
-  content: [19]
+  content: [19],
+  fontSize: {
+    arabic: 3.5,
+    translation: 2
+  }
 };
 
 export default function reducer(state = initialState, action = {}) {

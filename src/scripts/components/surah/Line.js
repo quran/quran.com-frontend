@@ -62,7 +62,7 @@ class Line extends React.Component {
     debug('component:Line', `Page: ${line[0].char.page} - Line: ${line[0].char.line} - Ayah: ${line[0].ayahKey}`);
 
     return (
-      <div className="row word-font text-justify">
+      <div className="row word-font text-justify text-arabic">
         <div className="col-md-12 line-container">
           {this.renderText()}
         </div>

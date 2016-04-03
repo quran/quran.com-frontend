@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { NavItem, OverlayTrigger, Popover, Tooltip, Row, Col } from 'react-bootstrap';
 
 import { getFontSize } from '../../helpers/flowType';
@@ -6,45 +6,24 @@ import { getFontSize } from '../../helpers/flowType';
 const style = require('./style.scss');
 
 export default class FontSizeDropdown extends Component {
-  onSelect(event) {
-    event.preventDefault();
-    this.setState({
-      fontSize: getFontSize()
-    });
+  static propTypes = {
+    onOptionChange: PropTypes.func,
+    options: PropTypes.object
   }
 
-  increment(nodes, incrementValue) {
-    nodes.forEach(node => {
-      let fontSize = 36;
+  handleOptionSelected = (type, direction) => {
+    const { onOptionChange, options: { fontSize }} = this.props;
+    const changeFactor = {
+      translation: 0.5,
+      arabic: 0.5
+    };
 
-      if (node.style.fontSize) {
-        fontSize = parseInt(node.style.fontSize.split('px')[0], 10);
-      } else {
-        fontSize = parseInt(
-          window.getComputedStyle(node, null).getPropertyValue('font-size').split('px')[0],
-          10
-        );
+    return onOptionChange({
+      fontSize: {
+        ...fontSize,
+        [type]: fontSize[type] + (changeFactor[type] * direction)
       }
-
-      node.style.fontSize = `${fontSize + incrementValue}px`; // eslint-disable-line no-param-reassign
-      node.setAttribute('fontSizeChanged', true);
     });
-  }
-
-  onClickArabic(incrementValue) {
-    return this.increment(
-      Array.from(document.querySelectorAll('.word-font')),
-      incrementValue,
-      'arabic'
-    );
-  }
-
-  onClickTranslation(incrementValue) {
-    return this.increment(
-      Array.from(document.querySelectorAll('.translation small')),
-      incrementValue,
-      'translation'
-    );
   }
 
   renderPopup() {
@@ -55,7 +34,7 @@ export default class FontSizeDropdown extends Component {
       <Popover id="FontSizeDropdown" title="Font Size" className={style.popover}>
         <Row>
           <Col xs={3}>
-            <a onClick={this.onClickArabic.bind(this, incrementValueArabic * -1)} className="pointer">
+            <a onClick={this.handleOptionSelected.bind(this, 'arabic', -1)} className="pointer">
               <i className="ss-icon ss-hyphen" />
             </a>
           </Col>
@@ -63,7 +42,7 @@ export default class FontSizeDropdown extends Component {
             Arabic
           </Col>
           <Col xs={3} className="text-right">
-            <a onClick={this.onClickArabic.bind(this, incrementValueArabic)} className="pointer">
+            <a onClick={this.handleOptionSelected.bind(this, 'arabic', 1)} className="pointer">
               <i className="ss-icon ss-plus"/>
             </a>
           </Col>
@@ -71,7 +50,7 @@ export default class FontSizeDropdown extends Component {
         <br/>
         <Row>
           <Col xs={3}>
-            <a onClick={this.onClickTranslation.bind(this, incrementValueTranslation * -1)} className="pointer">
+            <a onClick={this.handleOptionSelected.bind(this, 'translation', -1)} className="pointer">
               <i className="ss-icon ss-hyphen" />
             </a>
           </Col>
@@ -79,7 +58,7 @@ export default class FontSizeDropdown extends Component {
             Translations
           </Col>
           <Col xs={3} className="text-right">
-            <a onClick={this.onClickTranslation.bind(this, incrementValueTranslation)} className="pointer">
+            <a onClick={this.handleOptionSelected.bind(this, 'translation', 1)} className="pointer">
               <i className="ss-icon ss-plus"/>
             </a>
           </Col>
@@ -95,7 +74,6 @@ export default class FontSizeDropdown extends Component {
       <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
         <a
           href="#"
-          onSelect={this.onSelect.bind(this)}
           className="text-color"
           data-metrics-event-name="FontSizeDropdown">
           Font size
