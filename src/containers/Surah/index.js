@@ -92,7 +92,7 @@ let lastScroll = 0;
     ayahIds.first = function() {return [...this][0];};
     ayahIds.last = function() {return [...this][[...this].length - 1];};
 
-    const isEndOfSurah = ayahIds.size === surah.ayat;
+    const isEndOfSurah = ayahIds.last() === surah.ayat;
 
     return {
       surah,
@@ -160,15 +160,20 @@ export default class Surah extends Component {
       return (
         <ul className="pager">
           {
-            surah.id >= 114 &&
+            surah.id > 1 &&
             <li className="previous">
               <Link to={`/${surah.id * 1 - 1}`}>
                 &larr; Previous Surah
               </Link>
             </li>
           }
+          <li className="text-center">
+            <Link to={`/${surah.id}`}>
+              Beginning of Surah
+            </Link>
+          </li>
           {
-            surah.id <= 1 &&
+            surah.id < 114 &&
             <li className="next">
               <Link to={`/${surah.id * 1 + 1}`}>
                 Next Surah &rarr;
