@@ -26,6 +26,7 @@ module.exports = Object.assign({
         {name: 'Rating', content: 'General'},
         {name: 'viewport', content: 'width=device-width, user-scalable=no, initial-scale=1'},
         {name: 'google-site-verification', content: 'ehFz7FvmL7V9MzP40F8_kLABhCzqGzMDMrCnUP44Too'},
+        {name: 'theme-color', content: '#004f54'},
         {property: 'og:site_name', content: 'The Noble Qur\'an - القرآن الكريم'},
         {property: 'og:image', content: 'http://quran.com/images/thumbnail.png'},
         {property: 'og:locale', content: 'en_US'},
@@ -41,7 +42,7 @@ module.exports = Object.assign({
         {property: 'twitter:image:height', content: '200'}
       ],
       link: [
-        {rel: 'apple-touch-icon', href: '/images/apple-touch-icon.pn'},
+        {rel: 'apple-touch-icon', href: '/images/apple-touch-icon.png'},
         {rel: 'apple-touch-icon-precomposed', href: '/images/apple-touch-icon-precomposed.png'}
       ]
     }
