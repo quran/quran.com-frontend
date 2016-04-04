@@ -88,6 +88,7 @@
     "scroll-behavior": "^0.3.3",
     "serialize-javascript": "^1.0.0",
     "serve-favicon": "^2.2.1",
+    "sitemap": "^1.5.0",
     "style-loader": "~0.12.4",
     "superagent": "^1.2.0",
     "superagent-promise": "^1.0.3",
