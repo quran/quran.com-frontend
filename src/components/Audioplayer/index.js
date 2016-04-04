@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/lib/Col';
 import { scroller } from 'react-scroll';
 
 // Redux
-import { play, pause, repeat, scroll, setCurrentFile, buildOnClient } from '../../redux/modules/audioplayer';
+import { play, pause, repeat, toggleScroll, setCurrentFile, buildOnClient } from '../../redux/modules/audioplayer';
 
 // Components
 import Track from './Track';
@@ -31,7 +31,7 @@ const style = require('./style.scss');
     play: bindActionCreators(play, dispatch),
     pause: bindActionCreators(pause, dispatch),
     repeat: bindActionCreators(repeat, dispatch),
-    scroll: bindActionCreators(scroll, dispatch),
+    toggleScroll: bindActionCreators(toggleScroll, dispatch),
     setCurrentFile: bindActionCreators(setCurrentFile, dispatch),
     buildOnClient: bindActionCreators(buildOnClient, dispatch)
   }),
@@ -69,7 +69,7 @@ export default class Audioplayer extends Component {
     play: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
     repeat: PropTypes.func.isRequired,
-    scroll: PropTypes.func.isRequired,
+    toggleScroll: PropTypes.func.isRequired,
     ayahIds: PropTypes.array
   };
 
@@ -196,7 +196,7 @@ export default class Audioplayer extends Component {
     this.props.repeat();
   }
 
-  scroll(event) {
+  toggleScroll(event) {
     event.preventDefault();
 
     const { shouldScroll } = this.props;
@@ -204,14 +204,15 @@ export default class Audioplayer extends Component {
     const ayahNum = currentAyah.replace( /^\d:/, '' );
 
     if (!shouldScroll) { // we use the inverse (!) here because we're toggling, so false is true
-      if (scroller.get('ayah:'+ ayahNum).getBoundingClientRect().top < 0) // if the ayah is above our scroll offset
+      if (scroller.get('ayah:'+ ayahNum).getBoundingClientRect().top < 0) { // if the ayah is above our scroll offset
         scroller.scrollTo('ayah:'+ ayahNum, null, null, -120);
-      else
+      } else {
         scroller.scrollTo('ayah:'+ ayahNum);
+      }
     }
 
 
-    this.props.scroll();
+    this.props.toggleScroll();
   }
 
   renderLoader() {
@@ -289,9 +290,9 @@ export default class Audioplayer extends Component {
         <label
           htmlFor="scroll"
           className={`pointer ${style.buttons} ${shouldScroll ? style.scroll : ''}`}
-          onClick={this.scroll.bind(this)}
+          onClick={this.toggleScroll.bind(this)}
         >
-          <i className="ss-icon ss-openbook" />
+          <i className="ss-icon ss-list" />
         </label>
       </Col>
     );

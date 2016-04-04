@@ -9,7 +9,7 @@ const PLAY = '@@quran/audioplayer/PLAY';
 const PAUSE = '@@quran/audioplayer/PAUSE';
 const PLAY_PAUSE = '@@quran/audioplayer/PLAY_PAUSE';
 const REPEAT = '@@quran/audioplayer/REPEAT';
-const SCROLL = '@@quran/audioplayer/SCROLL';
+const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
 const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
 
 const initialState = {
@@ -99,7 +99,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         shouldRepeat: !state.shouldRepeat
       };
-    case SCROLL:
+    case TOGGLE_SCROLL:
       return {
         ...state,
         shouldScroll: !state.shouldScroll
@@ -152,9 +152,9 @@ export function repeat() {
   };
 }
 
-export function scroll() {
+export function toggleScroll() {
   return {
-    type: SCROLL
+    type: TOGGLE_SCROLL
   };
 }
 
