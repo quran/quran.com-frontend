@@ -1,25 +1,18 @@
-/*eslint-disable camelcase */
-var Promise = require('promise');
-var request = require('superagent-promise')(require('superagent'), Promise);
-
 import React from 'react';
 import ReactDOM from 'react-dom';
+import superagent from 'superagent';
+
 import IndexHeader from 'components/header/IndexHeader';
-import Settings from 'constants/Settings';
 
-class Contact extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      success: false
-    };
-  }
+export default class Contact extends React.Component {
+  state = {
+    success: false
+  };
 
   submitSupport(e) {
     e.preventDefault();
 
-    let toSubmit = {
+    const form = {
       subject: ReactDOM.findDOMNode(this.refs.purpose).value.trim(),
       description: ReactDOM.findDOMNode(this.refs.body).value.trim(),
       requester: {
@@ -29,9 +22,8 @@ class Contact extends React.Component {
       }
     };
 
-    request.post(Settings.url + 'support').send(toSubmit).end()
-    .then((res) => {
-      if (res.body.ticket) {
+    superagent.post('/support').send(form).end((err, { body }) => {
+      if (body.ticket) {
         this.setState({
           success: true
         });
@@ -123,5 +115,3 @@ class Contact extends React.Component {
     );
   }
 }
-
-export default Contact;

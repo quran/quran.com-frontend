@@ -18,7 +18,7 @@ function formatUrl(path) {
 export default class {
   constructor(req) {
     methods.forEach((method) =>
-      this[method] = (path, { auth, params, data, arrayFormat } = {}) => new Promise((resolve, reject) => {
+      this[method] = (path, { params, data, arrayFormat } = {}) => new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
 
         if (params) {
@@ -33,12 +33,7 @@ export default class {
           request.send(data);
         }
 
-        if (auth) {
-          request.auth(...auth);
-        }
-
-
-        request.end((err, { body } = {}) => {console.log(err, body)});
+        request.end((err, { body } = {}) => err ? reject(body || err) : resolve(body));
       })
     );
   }
