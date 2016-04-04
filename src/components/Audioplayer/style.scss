@@ -5,7 +5,7 @@
   display: block;
   user-select: none;
   height: 40px;
-  padding: 10px 40px 8px;
+  padding: 10px 20px 8px 40px;
 }
 
 :local .wrapper{
@@ -48,6 +48,9 @@
     display: none;
   }
   .repeat{
+    color: $brand-primary;
+  }
+  .scroll{
     color: $brand-primary;
   }
 }

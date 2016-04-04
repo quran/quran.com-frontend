@@ -3,9 +3,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import { scroller } from 'react-scroll';
 
 // Redux
-import { play, pause, repeat, setCurrentFile, buildOnClient } from '../../redux/modules/audioplayer';
+import { play, pause, repeat, toggleScroll, setCurrentFile, buildOnClient } from '../../redux/modules/audioplayer';
 
 // Components
 import Track from './Track';
@@ -23,12 +24,14 @@ const style = require('./style.scss');
     isSupported: state.audioplayer.isSupported,
     isPlaying: state.audioplayer.isPlaying,
     isLoadedOnClient: state.audioplayer.isLoadedOnClient,
-    shouldRepeat: state.audioplayer.shouldRepeat
+    shouldRepeat: state.audioplayer.shouldRepeat,
+    shouldScroll: state.audioplayer.shouldScroll
   }),
   (dispatch) => ({
     play: bindActionCreators(play, dispatch),
     pause: bindActionCreators(pause, dispatch),
     repeat: bindActionCreators(repeat, dispatch),
+    toggleScroll: bindActionCreators(toggleScroll, dispatch),
     setCurrentFile: bindActionCreators(setCurrentFile, dispatch),
     buildOnClient: bindActionCreators(buildOnClient, dispatch)
   }),
@@ -61,10 +64,12 @@ export default class Audioplayer extends Component {
     isLoadedOnClient: PropTypes.bool.isRequired,
     isSupported: PropTypes.bool.isRequired,
     shouldRepeat: PropTypes.bool.isRequired,
+    shouldScroll: PropTypes.bool.isRequired,
     setCurrentFile: PropTypes.func.isRequired,
     play: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
     repeat: PropTypes.func.isRequired,
+    toggleScroll: PropTypes.func.isRequired,
     ayahIds: PropTypes.array
   };
 
@@ -92,15 +97,20 @@ export default class Audioplayer extends Component {
   }
 
   onPreviousAyah() {
-    const { play, pause, setCurrentFile, isPlaying } = this.props; // eslint-disable-line no-shadow
-    const previous = this.getPrevious();
+    const { play, pause, setCurrentFile, isPlaying, shouldScroll } = this.props; // eslint-disable-line no-shadow
+    const prevAyah = this.getPrevious();
+    const ayahNum = prevAyah.replace( /^\d:/, '' );
 
-    if (previous) {
+    if (prevAyah) {
       const wasPlaying = isPlaying;
 
       pause();
 
-      setCurrentFile(previous);
+      setCurrentFile(prevAyah);
+
+      if (shouldScroll) {
+        scroller.scrollTo('ayah:'+ ayahNum, null, null, -120); // -120 to account for the header height
+      }
 
       if (wasPlaying) {
         play();
@@ -109,16 +119,29 @@ export default class Audioplayer extends Component {
   }
 
   onNextAyah() {
-    const { play, pause, setCurrentFile, isPlaying } = this.props; // eslint-disable-line no-shadow
+    const { play, pause, setCurrentFile, isPlaying, shouldScroll } = this.props; // eslint-disable-line no-shadow
     const wasPlaying = isPlaying;
+    const nextAyah = this.getNext();
+    const ayahNum = nextAyah.replace( /^\d:/, '' );
 
     pause();
 
-    setCurrentFile(this.getNext());
+    setCurrentFile(nextAyah);
+
+    if (shouldScroll) {
+      scroller.scrollTo('ayah:'+ ayahNum);
+    }
 
     if (wasPlaying) {
       play();
     }
+  }
+
+  getCurrent() {
+    const { currentFile, ayahIds } = this.props;
+    const index = ayahIds.findIndex(id => id === currentFile);
+
+    return ayahIds[index];
   }
 
   getPrevious() {
@@ -156,6 +179,14 @@ export default class Audioplayer extends Component {
   }
 
   play() {
+    const { shouldScroll } = this.props;
+    const currentAyah = this.getCurrent();
+    const ayahNum = currentAyah.replace( /^\d:/, '' );
+
+    if (shouldScroll) {
+      scroller.scrollTo('ayah:'+ ayahNum);
+    }
+
     this.props.play();
   }
 
@@ -163,6 +194,25 @@ export default class Audioplayer extends Component {
     event.preventDefault();
 
     this.props.repeat();
+  }
+
+  toggleScroll(event) {
+    event.preventDefault();
+
+    const { shouldScroll } = this.props;
+    const currentAyah = this.getCurrent();
+    const ayahNum = currentAyah.replace( /^\d:/, '' );
+
+    if (!shouldScroll) { // we use the inverse (!) here because we're toggling, so false is true
+      if (scroller.get('ayah:'+ ayahNum).getBoundingClientRect().top < 0) { // if the ayah is above our scroll offset
+        scroller.scrollTo('ayah:'+ ayahNum, null, null, -120);
+      } else {
+        scroller.scrollTo('ayah:'+ ayahNum);
+      }
+    }
+
+
+    this.props.toggleScroll();
   }
 
   renderLoader() {
@@ -218,7 +268,7 @@ export default class Audioplayer extends Component {
     const { shouldRepeat } = this.props;
 
     return (
-      <Col xs={3} className="text-center">
+      <Col xs={2} className="text-center pull-right">
         <input type="checkbox" id="repeat" className={style.checkbox} />
         <label
           htmlFor="repeat"
@@ -230,6 +280,24 @@ export default class Audioplayer extends Component {
       </Col>
     );
   }
+
+  renderScrollButton() {
+    const { shouldScroll } = this.props;
+
+    return (
+      <Col xs={2} className="text-center pull-right">
+        <input type="checkbox" id="scroll" className={style.checkbox} />
+        <label
+          htmlFor="scroll"
+          className={`pointer ${style.buttons} ${shouldScroll ? style.scroll : ''}`}
+          onClick={this.toggleScroll.bind(this)}
+        >
+          <i className="ss-icon ss-list" />
+        </label>
+      </Col>
+    );
+  }
+
 
   render() {
     // debug('component:Audioplayer', 'Render');
@@ -256,17 +324,19 @@ export default class Audioplayer extends Component {
 
     let content = (
       <Row className={style.options}>
-        <Col xs={3} className="text-center">
+        <Col xs={2} className="text-center">
           {this.renderPreviousButton()}
         </Col>
         <Col xs={3} className="text-center">
           {this.renderPlayStopButtons()}
         </Col>
-        <Col xs={3} className="text-center">
+        <Col xs={2} className="text-center">
           {this.renderNextButton()}
         </Col>
 
         {this.renderRepeatButton()}
+
+        {this.renderScrollButton()}
       </Row>
     );
 
