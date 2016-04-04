@@ -11,6 +11,7 @@ import cors from 'cors';
 import httpProxy from 'http-proxy';
 
 import sitemap from './sitemap';
+import support from './support';
 
 const proxyApi = httpProxy.createProxyServer({
   target: process.env.API_URL,
@@ -32,7 +33,7 @@ proxyApi.on('error', (error, req, res) => {
 
 export default function(server) {
   server.use(compression());
-  // server.use(bodyParser.json());
+  server.use(bodyParser.json());
   server.use(logger('dev'));
   server.use(useragent.express());
   server.use(cookieParser());
@@ -44,6 +45,7 @@ export default function(server) {
   server.use('/build', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
 
   sitemap(server);
+  support(server);
 
   server.get(/^\/(images|fonts)\/.*/, function(req, res) {
     res.redirect(301, '//quran-1f14.kxcdn.com' + req.path);
