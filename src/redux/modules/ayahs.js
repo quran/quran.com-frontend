@@ -7,8 +7,10 @@ export const LOAD = '@@quran/ayahs/LOAD';
 export const LOAD_SUCCESS = '@@quran/ayahs/LOAD_SUCCESS';
 export const LOAD_FAIL = '@@quran/ayahs/LOAD_FAIL';
 export const CLEAR_CURRENT = '@@quran/ayahs/CLEAR_CURRENT';
+export const SET_CURRENT_AYAH = '@@quran/ayahs/SET_CURRENT_AYAH';
 
 const initialState = {
+  current: null,
   errored: false,
   loaded: false,
   entities: {},
@@ -18,6 +20,11 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case SET_CURRENT_AYAH:
+      return {
+        ...state,
+        current: action.id
+      };
     case CLEAR_CURRENT:
       return {
         ...state,
@@ -33,8 +40,10 @@ export default function reducer(state = initialState, action = {}) {
         loading: true
       };
     case LOAD_SUCCESS:
+      let current = state.current === null ? action.result.result[0] : state.current;
       return {
         ...state,
+        current: current,
         loaded: true,
         loading: false,
         errored: false,
@@ -82,6 +91,13 @@ export function load(id, from, to, options = defaultOptions) {
 export function clearCurrent(id) {
   return {
     type: CLEAR_CURRENT,
+    id
+  };
+}
+
+export function setCurrentAyah(id) {
+  return {
+    type: SET_CURRENT_AYAH,
     id
   };
 }

@@ -6,7 +6,8 @@ import Col from 'react-bootstrap/lib/Col';
 import { scroller } from 'react-scroll';
 
 // Redux
-import { play, pause, repeat, toggleScroll, setCurrentFile, buildOnClient } from '../../redux/modules/audioplayer';
+import { play, pause, repeat, toggleScroll, buildOnClient } from '../../redux/modules/audioplayer';
+import { setCurrentAyah } from '../../redux/modules/ayahs';
 
 // Components
 import Track from './Track';
@@ -19,7 +20,7 @@ const style = require('./style.scss');
 @connect(
   state => ({
     files: state.audioplayer.files,
-    currentFile: state.audioplayer.currentFile,
+    currentAyah: state.ayahs.current,
     surahId: state.audioplayer.surahId,
     isSupported: state.audioplayer.isSupported,
     isPlaying: state.audioplayer.isPlaying,
@@ -32,7 +33,7 @@ const style = require('./style.scss');
     pause: bindActionCreators(pause, dispatch),
     repeat: bindActionCreators(repeat, dispatch),
     toggleScroll: bindActionCreators(toggleScroll, dispatch),
-    setCurrentFile: bindActionCreators(setCurrentFile, dispatch),
+    setCurrentAyah: bindActionCreators(setCurrentAyah, dispatch),
     buildOnClient: bindActionCreators(buildOnClient, dispatch)
   }),
   (stateProps, dispatchProps, ownProps) => {
@@ -57,7 +58,7 @@ export default class Audioplayer extends Component {
     className: PropTypes.string,
     surah: PropTypes.object.isRequired,
     files: PropTypes.object,
-    currentFile: PropTypes.string,
+    currentAyah: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
     onLoadAyahs: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool.isRequired,
@@ -65,7 +66,7 @@ export default class Audioplayer extends Component {
     isSupported: PropTypes.bool.isRequired,
     shouldRepeat: PropTypes.bool.isRequired,
     shouldScroll: PropTypes.bool.isRequired,
-    setCurrentFile: PropTypes.func.isRequired,
+    setCurrentAyah: PropTypes.func.isRequired,
     play: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
     repeat: PropTypes.func.isRequired,
@@ -97,7 +98,7 @@ export default class Audioplayer extends Component {
   }
 
   onPreviousAyah() {
-    const { play, pause, setCurrentFile, isPlaying, shouldScroll } = this.props; // eslint-disable-line no-shadow
+    const { play, pause, setCurrentAyah, isPlaying, shouldScroll } = this.props; // eslint-disable-line no-shadow
     const prevAyah = this.getPrevious();
     const ayahNum = prevAyah.replace( /^\d:/, '' );
 
@@ -106,7 +107,7 @@ export default class Audioplayer extends Component {
 
       pause();
 
-      setCurrentFile(prevAyah);
+      setCurrentAyah(prevAyah);
 
       if (shouldScroll) {
         scroller.scrollTo('ayah:'+ ayahNum, null, null, -120); // -120 to account for the header height
@@ -119,14 +120,14 @@ export default class Audioplayer extends Component {
   }
 
   onNextAyah() {
-    const { play, pause, setCurrentFile, isPlaying, shouldScroll } = this.props; // eslint-disable-line no-shadow
+    const { play, pause, setCurrentAyah, isPlaying, shouldScroll } = this.props; // eslint-disable-line no-shadow
     const wasPlaying = isPlaying;
     const nextAyah = this.getNext();
     const ayahNum = nextAyah.replace( /^\d:/, '' );
 
     pause();
 
-    setCurrentFile(nextAyah);
+    setCurrentAyah(nextAyah);
 
     if (shouldScroll) {
       scroller.scrollTo('ayah:'+ ayahNum);
@@ -138,22 +139,22 @@ export default class Audioplayer extends Component {
   }
 
   getCurrent() {
-    const { currentFile, ayahIds } = this.props;
-    const index = ayahIds.findIndex(id => id === currentFile);
+    const { currentAyah, ayahIds } = this.props;
+    const index = ayahIds.findIndex(id => id === currentAyah);
 
     return ayahIds[index];
   }
 
   getPrevious() {
-    const { currentFile, ayahIds } = this.props;
-    const index = ayahIds.findIndex(id => id === currentFile) - 1;
+    const { currentAyah, ayahIds } = this.props;
+    const index = ayahIds.findIndex(id => id === currentAyah) - 1;
 
     return ayahIds[index];
   }
 
   getNext() {
-    const { currentFile, ayahIds, onLoadAyahs } = this.props;
-    const index = ayahIds.findIndex(id => id === currentFile) + 1;
+    const { currentAyah, ayahIds, onLoadAyahs } = this.props;
+    const index = ayahIds.findIndex(id => id === currentAyah) + 1;
 
     if ((ayahIds.length - 3) <= index) {
       onLoadAyahs();
@@ -246,8 +247,8 @@ export default class Audioplayer extends Component {
   }
 
   renderPreviousButton() {
-    const { currentFile, ayahIds } = this.props;
-    const index = ayahIds.findIndex(id => id === currentFile);
+    const { currentAyah, ayahIds } = this.props;
+    const index = ayahIds.findIndex(id => id === currentAyah);
 
     return (
       <a className={`pointer ${style.buttons} ${!index ? style.disabled : ''}`} onClick={index ? this.onPreviousAyah.bind(this) : null}>
@@ -307,7 +308,7 @@ export default class Audioplayer extends Component {
       play, // eslint-disable-line no-shadow
       pause, // eslint-disable-line no-shadow
       files,
-      currentFile,
+      currentAyah,
       isPlaying,
       shouldRepeat,
       isSupported,
@@ -340,7 +341,7 @@ export default class Audioplayer extends Component {
       </Row>
     );
 
-    if (!currentFile) {
+    if (!currentAyah) {
       return (
         <li className={`${style.container} ${className}`}>
           {this.renderLoader()}
@@ -350,12 +351,12 @@ export default class Audioplayer extends Component {
 
     return (
       <div className={`${style.container} ${className} navbar-item border-right`}>
-        <div className={style.verse}>{currentFile.split(':')[1]}</div>
+        <div className={style.verse}>{currentAyah.split(':')[1]}</div>
         {content}
         <div className={style.wrapper}>
           {isLoadedOnClient ?
             <Track
-              file={files[currentFile]}
+              file={files[currentAyah]}
               isPlaying={isPlaying}
               shouldRepeat={shouldRepeat}
               onPlay={play}
