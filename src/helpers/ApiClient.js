@@ -37,9 +37,8 @@ export default class {
           request.auth(...auth);
         }
 
-        console.log(request);
 
-        request.end((err, { body } = {}) => err ? reject(body || err) : resolve(body));
+        request.end((err, { body } = {}) => {console.log(err, body)});
       })
     );
   }
