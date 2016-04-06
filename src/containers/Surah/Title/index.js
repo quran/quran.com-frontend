@@ -28,13 +28,13 @@ const Title = ({ surah }) => {
       <div className="col-md-6 col-xs-6 surah-title text-center">
         {
           surah &&
-          <img src={title} className="title" />
+          <img src={title} className="title" alt={`${surah.name.simple} (${surah.name.english}) - سورة ${surah.name.arabic}`} />
         }
         <br />
         {
           surah &&
           <p className="navbar-text text-uppercase surah-name">
-            {surah.name.simple} ({surah.name.english})
+            {surah.name.simple} ({surah.name.english}) - سورة {surah.name.arabic}
           </p>
         }
       </div>
