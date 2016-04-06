@@ -1,9 +1,8 @@
-FROM ubuntu
+FROM node:5.10.0
 
 ENV NODE_ENV production
 
-RUN apt-get -y update && apt-get -y install \
-supervisor ssh rsync
+RUN apt-get -y update && apt-get -y install supervisor ssh rsync
 
 # logrotate
 RUN apt-get -y install logrotate
