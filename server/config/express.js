@@ -41,8 +41,8 @@ export default function(server) {
 
   // Static content
   server.use(favicon(path.join((process.env.PWD || process.env.pm_cwd) , '/static/images/favicon.ico')));
-  server.use('/public', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
-  server.use('/build', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/build')));
+  server.use('/public', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/static/dist')));
+  server.use('/build', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/static/dist')));
 
   sitemap(server);
   support(server);
