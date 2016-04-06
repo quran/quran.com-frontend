@@ -4,6 +4,8 @@ import IndexHeader from 'components/header/IndexHeader';
 import { Link } from 'react-router';
 import { asyncConnect } from 'redux-async-connect'
 import { connect } from 'react-redux';
+import moment from 'moment';
+
 import debug from 'utils/Debug';
 
 import { isAllLoaded, loadAll } from '../../redux/modules/surahs';
@@ -90,6 +92,60 @@ class Home extends React.Component {
     return null;
   }
 
+  renderQuickLinks() {
+    return (
+      <span className="pull-right">
+        <ul className="list-inline">
+          <li>Quick links:</li>
+          {
+            moment().isSame(moment().day('Friday')) &&
+            <li>
+              <Link
+                to="/18"
+                data-metrics-event-name="QuickLinks:Click"
+                data-metrics-surah-id="18">
+                Surah Al-Kahf
+              </Link>
+              {' '}|
+            </li>
+          }
+          <li>
+            <Link
+              to="/36"
+              data-metrics-event-name="QuickLinks:Click"
+              data-metrics-surah-id="36">
+              Surah Yasin (Yaseen)
+            </Link>{' '}|
+          </li>
+          <li>
+            <Link
+              to="/55"
+              data-metrics-event-name="QuickLinks:Click"
+              data-metrics-surah-id="55">
+              Surah Ar-Rahman
+            </Link>{' '}|
+          </li>
+          <li>
+            <Link
+              to="/67"
+              data-metrics-event-name="QuickLinks:Click"
+              data-metrics-surah-id="67">
+              Surah Al-Mulk
+            </Link>{' '}|
+          </li>
+          <li>
+            <Link
+              to="/2/255"
+              data-metrics-event-name="QuickLinks:Click"
+              data-metrics-surah-id="2/255">
+              Ayat Al-Kursi
+            </Link>
+          </li>
+        </ul>
+      </span>
+    );
+  }
+
   render() {
     debug('component:Index', 'Render');
 
@@ -101,7 +157,10 @@ class Home extends React.Component {
             <div className="row">
               {this.renderLastVisit()}
               <div className="col-md-10 col-md-offset-1">
-                <h4 className={`text-muted text-center ${styles.title}`}>SURAHS (CHAPTERS)</h4>
+                <h4 className={`text-muted ${styles.title}`}>
+                  SURAHS (CHAPTERS)
+                  {this.renderQuickLinks()}
+                </h4>
                 <div className="row">
                   <ul className="col-md-4 list-unstyled">
                     {this.renderColumn(Object.values(this.props.surahs).slice(0, 38))}

@@ -1,13 +1,17 @@
 require('dotenv').config({path: (process.env.NODE_ENV || 'production') + '.env'});
+var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var webpack = require('webpack');
 var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin')
 var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./webpack-isomorphic-tools-configuration'));
 
+var relativeAssetsPath = './static/dist';
+var assetsPath = path.join(__dirname, relativeAssetsPath);
+
 module.exports = {
   output: {
-    path: './build',
+    path: assetsPath,
     publicPath: process.env.USE_LOCAL_ASSETS ? '/public/' : '//assets-1f14.kxcdn.com/',
     filename: '[name]-[hash].js'
   },
