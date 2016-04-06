@@ -5,7 +5,7 @@
 
 ## Quran.com
 This is the project soon to be the Quran.com facing site. This is built in
-Reactjs + Flux (Fluxible by Yahoo) + Expressjs + Webpack. It is isomorphic (javascript shared
+Reactjs + Redux + Expressjs + Webpack. It is isomorphic (javascript shared
 between both the server and the client) for SEO reasons.
 
 [![Dependency Status](https://david-dm.org/quran/quran.com-frontend.svg)](https://david-dm.org/quran/quran.com-frontend)

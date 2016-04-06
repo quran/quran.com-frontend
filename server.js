@@ -3,8 +3,6 @@ import expressConfig from 'server/config/express';
 const server = express();
 expressConfig(server);
 
-import {navigateAction} from 'fluxible-router';
-import FluxibleComponent from 'fluxible-addons-react/FluxibleComponent';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { match } from 'react-router';

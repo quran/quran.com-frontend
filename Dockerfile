@@ -3,7 +3,7 @@ FROM ubuntu
 ENV NODE_ENV production
 
 RUN apt-get -y update && apt-get -y install \
-nodejs npm supervisor nodejs-legacy ssh rsync
+supervisor ssh rsync
 
 # logrotate
 RUN apt-get -y install logrotate
