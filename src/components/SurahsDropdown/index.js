@@ -39,7 +39,7 @@ export default class SurahsDropdown extends Component {
               <br />
               <span className="surah-meaning">{surah.name.english}</span>
             </Col>
-            <Col xs={3} md={3} className="text-right">
+            <Col xs={3} md={3} className={`text-right ${styles.arabic}`}>
               {surah.name.arabic}
             </Col>
           </Row>
