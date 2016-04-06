@@ -41,6 +41,15 @@ server.use((req, res, next) => {
     webpack_isomorphic_tools.refresh()
   }
 
+  if (req.query.DISABLE_SSR) {
+    return res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(
+      <Html
+        store={store}
+        assets={webpack_isomorphic_tools.assets()}
+      />
+    ));
+  }
+
   store.dispatch(setUserAgent(req.useragent));
   store.dispatch(setOption(cookie.load('options') || {}));
 

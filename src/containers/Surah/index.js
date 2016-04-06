@@ -22,6 +22,9 @@ import Line from 'components/surah/Line';
 import SearchInput from 'components/header/SearchInput';
 import Bismillah from '../../components/Bismillah';
 
+// Helpers
+import makeHeadTags from '../../helpers/makeHeadTags';
+
 import debug from 'utils/Debug';
 
 import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/modules/ayahs';
@@ -86,8 +89,8 @@ let lastScroll = 0;
 ])
 @connect(
   (state, ownProps) => {
-    const surah = state.surahs.entities[ownProps.params.surahId];
-    const ayahs = state.ayahs.entities[ownProps.params.surahId];
+    const surah: Object = state.surahs.entities[ownProps.params.surahId];
+    const ayahs: Object = state.ayahs.entities[ownProps.params.surahId];
     const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
     ayahIds.first = function() {return [...this][0];};
     ayahIds.last = function() {return [...this][[...this].length - 1];};
@@ -150,6 +153,35 @@ export default class Surah extends Component {
     if (__CLIENT__) {
       window.removeEventListener('scroll', this.onScroll, true);
     }
+  }
+
+  title() {
+    const { params, surah } = this.props;
+
+    if (params.range) {
+      return `Surat ${surah.name.simple} [${surah.id}:${params.range}]`;
+    }
+
+    return `Surat ${surah.name.simple}`;
+  }
+
+  description() {
+    const { params, ayahs, surah } = this.props;
+
+    if (params.range) {
+      if (params.range.includes('-')) {
+        const [from, to] = params.range.split('-').map(num => parseInt(num, 10));
+        const array = Array(to - from).fill(from);
+        const translations = array.map((fromAyah, index) => ayahs[`${surah.id}:${fromAyah + index}`].content[0].text);
+        const content = translations.join(' - ').slice(0, 250);
+
+        return `Surat ${surah.name.simple} [verse ${params.range}] - ${content}`;
+      } else {
+        return `Surat ${surah.name.simple} [verse ${params.range}] - ${ayahs[`${surah.id}:${params.range}`].content[0].text}`;
+      }
+    }
+
+    return null;
   }
 
   renderPagination() {
@@ -323,9 +355,16 @@ export default class Surah extends Component {
 
     return (
       <div className="surah-body">
-        <Helmet title={surah.name.simple} link={[{
-          rel: 'canonical', href: `http://quran.com/${surah.id}`
-        }]} />
+        <Helmet
+          title={surah.name.simple}
+          {...makeHeadTags({
+            title: this.title(),
+            description: this.description()
+          })}
+          link={[{
+            rel: 'canonical', href: `http://quran.com/${surah.id}`
+          }]}
+        />
         <style dangerouslySetInnerHTML={{
           __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
           }}
