@@ -10,7 +10,6 @@ const style = require('./style.scss');
 
 @connect(
   state => ({
-    currentAyah: state.ayahs.current,
     surahId: state.surahs.current
   }),
   (dispatch) => ({
@@ -29,14 +28,14 @@ export default class VersesDropdown extends Component {
     className: 'col-md-3'
   };
 
-  onNonScrollClick(index) {
-    console.log('onNonScrollClick', index);
-    return this.props.onClick(index);
+  onNonScrollClick(ayahNum) {
+    const { surahId, setCurrentAyah } = this.props;
+    setCurrentAyah(surahId +':'+ ayahNum);
+    return this.props.onClick(ayahNum);
   }
 
   onScrollClick(ayahNum) {
     const { surahId, setCurrentAyah } = this.props;
-    console.log('onScrollClick', 'surahId', surahId, 'ayahNum', ayahNum);
     setCurrentAyah(surahId +':'+ ayahNum);
   }
 
@@ -47,7 +46,7 @@ export default class VersesDropdown extends Component {
     if (loadedAyahs.has(ayahNum) && !isReadingMode) {
       return (
         <li key={index}>
-          <Link onClick={this.onScrollClick.bind(this, ayahNum)} to={`ayah:${ayahNum}`} smooth spy offset={-150} activeClass="active" duration={500} className="pointer">
+          <Link onClick={this.onScrollClick.bind(this, ayahNum)} to={`ayah:${ayahNum}`} smooth spy offset={-120} activeClass="active" duration={500} className="pointer">
             {ayahNum}
           </Link>
         </li>

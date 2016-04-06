@@ -21,6 +21,7 @@ import Ayah from 'components/surah/Ayah';
 import Line from 'components/surah/Line';
 import SearchInput from 'components/header/SearchInput';
 import Bismillah from '../../components/Bismillah';
+import { scroller } from 'react-scroll';
 
 import debug from 'utils/Debug';
 
@@ -216,12 +217,14 @@ export default class Surah extends Component {
   handleVerseDropdownClick(ayahNum) {
     const { ayahIds, push, surah } = this.props; // eslint-disable-line no-shadow
 
-    if (ayahNum > (ayahIds.last() + 10)) {
+    if (ayahNum > (ayahIds.last() + 10) || ayahNum < ayahIds.first()) {
       // This is beyond lazy loading next page.
       return push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
     }
 
-    this.lazyLoadAyahs();
+    this.lazyLoadAyahs(() => setTimeout(() => {
+      scroller.scrollTo('ayah:'+ ayahNum);
+    }, 1000)); // then scroll to it
   }
 
   onScroll() {
@@ -243,7 +246,7 @@ export default class Surah extends Component {
     }
   }
 
-  lazyLoadAyahs() {
+  lazyLoadAyahs(callback) {
     const { loadAyahsDispatch, ayahIds, surah, options } = this.props;
 
     const range = [ayahIds.first(), ayahIds.last()];
@@ -257,7 +260,12 @@ export default class Surah extends Component {
     const to = (from + size);
 
     if (!ayahIds.has(to)) {
-      loadAyahsDispatch(surah.id, from, to, options).then(() => this.setState({lazyLoading: false}));
+      loadAyahsDispatch(surah.id, from, to, options).then(() => {
+        this.setState({lazyLoading: false});
+        if (callback) {
+          callback();
+        }
+      });
     }
   }
 

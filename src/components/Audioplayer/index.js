@@ -100,9 +100,9 @@ export default class Audioplayer extends Component {
   onPreviousAyah() {
     const { play, pause, setCurrentAyah, isPlaying, shouldScroll } = this.props; // eslint-disable-line no-shadow
     const prevAyah = this.getPrevious();
-    const ayahNum = prevAyah.replace( /^\d:/, '' );
 
     if (prevAyah) {
+      const ayahNum = prevAyah.replace( /^\d:/, '' );
       const wasPlaying = isPlaying;
 
       pause();
@@ -146,9 +146,11 @@ export default class Audioplayer extends Component {
   }
 
   getPrevious() {
+    // TODO BUGFIX, we should be able to go to the previous ayah even when we started from within a range
+    // i.e. lazyloading upwards; as this is defined, if you go to /2/100-110 then you can't go to 99 from
+    // the previous button
     const { currentAyah, ayahIds } = this.props;
     const index = ayahIds.findIndex(id => id === currentAyah) - 1;
-
     return ayahIds[index];
   }
 
@@ -293,7 +295,7 @@ export default class Audioplayer extends Component {
           className={`pointer ${style.buttons} ${shouldScroll ? style.scroll : ''}`}
           onClick={this.toggleScroll.bind(this)}
         >
-          <i className="ss-icon ss-list" />
+          <i className="ss-icon ss-attach" />
         </label>
       </Col>
     );
