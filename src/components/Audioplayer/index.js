@@ -135,6 +135,7 @@ export default class Audioplayer extends Component {
 
     if (wasPlaying) {
       play();
+      this.preloadNext();
     }
   }
 
@@ -182,7 +183,7 @@ export default class Audioplayer extends Component {
   }
 
   play() {
-    const { shouldScroll } = this.props;
+    const { shouldScroll, files } = this.props;
     const currentAyah = this.getCurrent();
     const ayahNum = currentAyah.replace( /^\d:/, '' );
 
@@ -191,6 +192,20 @@ export default class Audioplayer extends Component {
     }
 
     this.props.play();
+    this.preloadNext();
+  }
+
+  preloadNext() {
+    const { currentAyah, ayahIds, files } = this.props;
+    const index = ayahIds.findIndex(id => id === currentAyah) + 1;
+    for (var i = index; i <= index + 2; i++) {
+      if (ayahIds[i]) {
+        const ayahKey = ayahIds[i];
+        if (files[ayahKey]) {
+          files[ayahKey].setAttribute('preload', 'auto');
+        }
+      }
+    }
   }
 
   repeat(event) {

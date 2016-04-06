@@ -60,6 +60,9 @@ export default class Track extends Component {
   onFileLoad(file) {
     // debug('component:Track', `File loaded with src ${file.src}`);
 
+    // Preload file
+    file.setAttribute('preload', 'auto');
+
     const loadeddata = () => {
       // Default current time to zero. This will change
       file.currentTime = 0; // eslint-disable-line no-param-reassign
