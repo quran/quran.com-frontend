@@ -7,7 +7,28 @@ const client = new ApiClient();
 const styles = require('./style.scss');
 
 @connect(
-  state => ({surahs: state.surahs.entities})
+  (state, ownProps) => {
+    const surahs = state.surahs.entities;
+    const surahId = state.surahs.current;
+    let lang = 'en';
+    if (state.ayahs && state.ayahs.entities && state.ayahs.entities[surahId]) {
+      const ayahs = state.ayahs.entities[surahId];
+      const ayahKey = Object.keys(ayahs)[0];
+
+      if (ayahKey) {
+        const ayah = ayahs[ayahKey];
+        const content = ayah.content;
+        if (ayah.content && ayah.content[0] && ayah.content[0].lang) {
+          lang = ayah.content[0].lang;
+        }
+      }
+    }
+
+    return {
+      surahs,
+      lang
+    };
+  }
 )
 export default class SearchAutocomplete extends Component {
   constructor() {
@@ -56,11 +77,17 @@ export default class SearchAutocomplete extends Component {
   };
 
   handleAyahSuggestions(value) {
-    if (this.cached[value]) {
-      this.setState({ ayat: this.cached[value] });
+    const { lang } = this.props;
+
+    if (!this.cached[lang]) {
+      this.cached[lang] = {};
+    }
+
+    if (this.cached[lang][value]) {
+      this.setState({ ayat: this.cached[lang][value] });
     } else {
-      client.get('/suggest', {params: {q: value}}).then((res) => {
-        this.cached[value] = res;
+      client.get('/suggest', {params: {q: value, l:lang}}).then((res) => {
+        this.cached[lang][value] = res;
 
         if (this.props.value.trim() === value) {
           this.setState({ ayat: res });
