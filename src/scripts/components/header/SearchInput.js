@@ -84,7 +84,7 @@ export default class SearchInput extends React.Component {
         />
         {
           showAutocomplete &&
-          <SearchAutocomplete value={this.state.value} />
+          <SearchAutocomplete value={this.state.value} push={this.props.push} />
         }
       </div>
     );

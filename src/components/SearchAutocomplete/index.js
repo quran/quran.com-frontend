@@ -106,14 +106,38 @@ export default class SearchAutocomplete extends Component {
     }
   };
 
+  handleKeyDown(event) {
+    console.log('handleKeyDown', event.target, event.target.nextSibling);
+    console.log('rhef',this,this.item.href,this.context.props.push);
+    switch (event.keyCode) {
+      case 9: // tab
+      return;
+      case 13: // enter
+        // change url
+        this.context.props.push(this.item.href);
+      break;
+      case 27: // escape
+        // if open closeMenu()
+      break;
+      case 38: // up
+        event.target.previousSibling.focus();
+      break;
+      case 40: // down
+        event.target.nextSibling.focus();
+      break;
+      default: return;
+    }
+    event.preventDefault();
+  }
+
   renderList(key) {
     return this.state[key].map((item) => (
-      <li key={item.href}>
+      <li key={item.href} tabIndex="0" onKeyDown={this.handleKeyDown.bind({ item, context: this })}>
         <div className={styles.link}>
-          <a href={item.href}>{item.href}</a>
+          <a href={item.href} tabIndex="-1">{item.href}</a>
         </div>
         <div className={styles.text}>
-          <a href={item.href} dangerouslySetInnerHTML={{__html: item.text }} />
+          <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{__html: item.text }} />
         </div>
       </li>
     ));
@@ -124,7 +148,7 @@ export default class SearchAutocomplete extends Component {
 
     return (
       <div className={`${styles.autocomplete} ${ayat.length || surahs.length ? '' : 'hidden'}`}>
-        <ul role="menu" className={styles.list}>
+        <ul role="menu" className={styles.list} tabIndex="0">
           {this.renderList('surahs')}
           {this.renderList('ayat')}
         </ul>
