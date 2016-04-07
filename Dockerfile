@@ -28,8 +28,8 @@ RUN npm run build
 #RUN mv /quran/.ssh /root/
 
 # upload js and css
-#WORKDIR /quran/build
-#RUN rsync --update --progress -raz main* ahmedre@rsync.keycdn.com:zones/assets/
+#WORKDIR /quran/static/dist
+#RUN rsync --update --progress -raz . ahmedre@rsync.keycdn.com:zones/assets/
 
 # go back to /quran
 WORKDIR /quran
