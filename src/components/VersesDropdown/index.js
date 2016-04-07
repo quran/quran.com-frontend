@@ -17,25 +17,21 @@ export default class VersesDropdown extends Component {
     className: 'col-md-3'
   };
 
-  onNonScrollClick(index) {
-    return this.props.onClick(index);
-  }
-
   renderItem(ayah, index) {
-    const { loadedAyahs, isReadingMode } = this.props;
+    const { loadedAyahs, isReadingMode, onClick } = this.props;
     const ayahNum = index + 1;
 
     if (loadedAyahs.has(ayahNum) && !isReadingMode) {
       return (
         <li key={index}>
-          <Link to={`ayah:${ayahNum}`} smooth spy offset={-150} activeClass="active" duration={500} className="pointer">
+          <Link onClick={onClick.bind(this, ayahNum)} to={`ayah:${ayahNum}`} smooth spy offset={-120} activeClass="active" duration={500} className="pointer">
             {ayahNum}
           </Link>
         </li>
       );
     }
 
-    return <MenuItem key={index} onClick={this.onNonScrollClick.bind(this, ayahNum)}>{ayahNum}</MenuItem>;
+    return <MenuItem key={index} onClick={onClick.bind(this, ayahNum)}>{ayahNum}</MenuItem>;
   }
 
   renderMenu() {

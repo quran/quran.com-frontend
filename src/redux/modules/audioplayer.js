@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
 import { buildAudioFromHash, testIfSupported } from '../../helpers/buildAudio';
 
-import { LOAD_SUCCESS as AYAHS_LOAD_SUCCESS } from './ayahs';
+import { LOAD_SUCCESS as AYAHS_LOAD_SUCCESS, LOAD as AYAHS_LOAD, CLEAR_CURRENT as AYAHS_CLEAR_CURRENT, SET_CURRENT_AYAH } from './ayahs';
 
 const SET_USER_AGENT = '@@quran/audioplayer/SET_USER_AGENT';
 const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
@@ -19,7 +19,7 @@ const initialState = {
   isSupported: true,
   isPlaying: false,
   shouldRepeat: false,
-  shouldScroll: false,
+  shouldScroll: true,
   isLoadedOnClient: false
 };
 
@@ -39,6 +39,19 @@ export default function reducer(state = initialState, action = {}) {
           ...state.files,
           [action.surahId]: files
         }
+      };
+    case AYAHS_CLEAR_CURRENT:
+      return {
+        ...state,
+        files: {
+          ...state.files,
+          [action.id]: {}
+        }
+      };
+    case AYAHS_LOAD:
+      return {
+        ...state,
+        isLoadedOnClient: false
       };
     case AYAHS_LOAD_SUCCESS:
       const isSupported = testIfSupported(
@@ -108,6 +121,11 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         currentFile: action.file
+      };
+    case SET_CURRENT_AYAH:
+      return {
+        ...state,
+        currentFile: action.id
       };
     default:
       return state;

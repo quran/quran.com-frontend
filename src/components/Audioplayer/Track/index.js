@@ -18,11 +18,16 @@ export default class Track extends Component {
 
   state = {
     progress: 0,
-    currentTime: 0
+    currentTime: 0,
+    listeners: {}
   };
 
   componentDidMount() {
     this.onFileLoad(this.props.file);
+  }
+
+  componentWillUnmount() {
+    this.onFileUnload(this.props.file);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -38,7 +43,12 @@ export default class Track extends Component {
   componentWillUpdate(nextProps) {
     if (this.props.file.src !== nextProps.file.src) {
       this.props.file.pause();
+    }
+  }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.file.src !== nextProps.file.src) {
+      this.onFileUnload(this.props.file);
       this.setState({
         progress: 0
       });
@@ -50,14 +60,18 @@ export default class Track extends Component {
   onFileLoad(file) {
     // debug('component:Track', `File loaded with src ${file.src}`);
 
-    file.addEventListener('loadeddata', () => {
+    // Preload file
+    file.setAttribute('preload', 'auto');
+
+    const loadeddata = () => {
       // Default current time to zero. This will change
       file.currentTime = 0; // eslint-disable-line no-param-reassign
 
       // this.setState({isAudioLoaded: true});
-    });
+    };
+    file.addEventListener('loadeddata', loadeddata);
 
-    file.addEventListener('timeupdate', () => {
+    const timeupdate = () => {
       const progress = (
         file.currentTime /
         file.duration * 100
@@ -66,9 +80,10 @@ export default class Track extends Component {
       this.setState({
         progress
       });
-    }, false);
+    };
+    file.addEventListener('timeupdate', timeupdate, false);
 
-    file.addEventListener('ended', () => {
+    const ended = () => {
       const { shouldRepeat, onEnd } = this.props;
 
       if (shouldRepeat) {
@@ -79,9 +94,10 @@ export default class Track extends Component {
         file.pause();
         onEnd();
       }
-    }, false);
+    };
+    file.addEventListener('ended', ended, false);
 
-    file.addEventListener('play', () => {
+    const play = () => {
       const { progress } = this.state;
 
       const currentTime = (
@@ -91,7 +107,24 @@ export default class Track extends Component {
       this.setState({
         currentTime
       });
-    }, false);
+    };
+    file.addEventListener('play', play, false);
+
+    this.setState({
+      listeners: {
+        loadeddata,
+        timeupdate,
+        ended,
+        play
+      }
+    });
+  }
+
+  onFileUnload(file) {
+    this.props.file.pause();
+    [ 'loadeddata', 'timeupdate', 'ended', 'play' ].forEach((listener) => {
+      file.removeEventListener(listener, this.state.listeners[listener]);
+    });
   }
 
   onTrackerMove(event) {

@@ -45,18 +45,21 @@ export function buildAudioForAyah(audio, agent) {
     (opera.test(window.navigator.userAgent) || firefox.test(window.navigator.userAgent));
   const testChrome = __SERVER__ ? agent.isChrome : chrome.test(window.navigator.userAgent);
 
+  scopedAudio = new Audio();
+  scopedAudio.preload = 'none';
+
   if (testOperaOrFirefox) {
     if (audio.ogg.url) {
-      scopedAudio = new Audio(audio.ogg.url);
+      scopedAudio.src = audio.ogg.url;
     }
   }
   else {
     if (audio.mp3.url) {
-      scopedAudio = new Audio(audio.mp3.url);
+      scopedAudio.src = audio.mp3.url;
     }
     else if (audio.ogg.url) {
       if (testChrome) {
-        scopedAudio = new Audio(audio.ogg.url);
+        scopedAudio.src = audio.ogg.url;
       }
     }
   }
