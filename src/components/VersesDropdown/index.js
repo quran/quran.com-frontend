@@ -2,20 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { Link } from 'react-scroll';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { setCurrentAyah } from '../../redux/modules/ayahs';
 
 const style = require('./style.scss');
 
-@connect(
-  state => ({
-    surahId: state.surahs.current
-  }),
-  (dispatch) => ({
-    setCurrentAyah: bindActionCreators(setCurrentAyah, dispatch)
-  })
-)
 export default class VersesDropdown extends Component {
   static propTypes = {
     ayat: PropTypes.number.isRequired,
@@ -28,32 +17,21 @@ export default class VersesDropdown extends Component {
     className: 'col-md-3'
   };
 
-  onNonScrollClick(ayahNum) {
-    const { surahId, setCurrentAyah } = this.props;
-    setCurrentAyah(surahId +':'+ ayahNum);
-    return this.props.onClick(ayahNum);
-  }
-
-  onScrollClick(ayahNum) {
-    const { surahId, setCurrentAyah } = this.props;
-    setCurrentAyah(surahId +':'+ ayahNum);
-  }
-
   renderItem(ayah, index) {
-    const { loadedAyahs, isReadingMode } = this.props;
+    const { loadedAyahs, isReadingMode, onClick } = this.props;
     const ayahNum = index + 1;
 
     if (loadedAyahs.has(ayahNum) && !isReadingMode) {
       return (
         <li key={index}>
-          <Link onClick={this.onScrollClick.bind(this, ayahNum)} to={`ayah:${ayahNum}`} smooth spy offset={-120} activeClass="active" duration={500} className="pointer">
+          <Link onClick={onClick.bind(this, ayahNum)} to={`ayah:${ayahNum}`} smooth spy offset={-120} activeClass="active" duration={500} className="pointer">
             {ayahNum}
           </Link>
         </li>
       );
     }
 
-    return <MenuItem key={index} onClick={this.onNonScrollClick.bind(this, ayahNum)}>{ayahNum}</MenuItem>;
+    return <MenuItem key={index} onClick={onClick.bind(this, ayahNum)}>{ayahNum}</MenuItem>;
   }
 
   renderMenu() {

@@ -40,7 +40,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: true
       };
     case LOAD_SUCCESS:
-      let current = state.current === null ? action.result.result[0] : state.current;
+      let current = state.current ? state.current : action.result.result[0];
       return {
         ...state,
         current,

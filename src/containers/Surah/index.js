@@ -25,7 +25,7 @@ import { scroller } from 'react-scroll';
 
 import debug from 'utils/Debug';
 
-import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/modules/ayahs';
+import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah } from '../../redux/modules/ayahs';
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
 import { setOption, toggleReadingMode } from '../../redux/modules/options';
 
@@ -111,6 +111,7 @@ let lastScroll = 0;
     loadAyahsDispatch: loadAyahs,
     setOptionDispatch: setOption,
     toggleReadingModeDispatch: toggleReadingMode,
+    setCurrentAyah: setCurrentAyah,
     push
   }
 )
@@ -215,7 +216,13 @@ export default class Surah extends Component {
   }
 
   handleVerseDropdownClick(ayahNum) {
-    const { ayahIds, push, surah } = this.props; // eslint-disable-line no-shadow
+    const { ayahIds, push, surah, setCurrentAyah } = this.props; // eslint-disable-line no-shadow
+
+    setCurrentAyah(surah.id +':'+ ayahNum);
+
+    if (ayahIds.has(ayahNum)) {
+      return;
+    }
 
     if (ayahNum > (ayahIds.last() + 10) || ayahNum < ayahIds.first()) {
       // This is beyond lazy loading next page.
