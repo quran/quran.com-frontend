@@ -59,15 +59,25 @@ export default class SearchAutocomplete extends Component {
   };
 
   handleSurahSuggestions(value) {
-    const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
     const matches = [];
+    const ayahRgx = /^(\d+)(?::(\d+))?$/;
 
-    for (var surahId in this.props.surahs) {
+    if (ayahRgx.test(value)) {
+      const captures = value.match(ayahRgx);
+      const surahId = captures[1];
+      const ayahNum = captures[2];
       const surah = this.props.surahs[surahId];
-      if (RegExp(escaped, "i").test(surah.name.simple.replace( /['-]/g, '' ))) {
-        matches.push([ surah.name.simple, surah.id ]);
-      } else if (RegExp(escaped, "i").test(surah.name.arabic)) {
-        matches.push([ surah.name.arabic, surah.id ]);
+      matches.push([ surah.name.simple, surah.id + (ayahNum? '/'+ ayahNum : '') ]);
+    }
+    else {
+      const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
+      for (var surahId in this.props.surahs) {
+        const surah = this.props.surahs[surahId];
+        if (RegExp(escaped, "i").test(surah.name.simple.replace( /['-]/g, '' ))) {
+          matches.push([ surah.name.simple, surah.id ]);
+        } else if (RegExp(escaped, "i").test(surah.name.arabic)) {
+          matches.push([ surah.name.arabic, surah.id ]);
+        }
       }
     }
 
