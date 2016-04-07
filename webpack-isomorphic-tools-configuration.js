@@ -18,7 +18,8 @@ module.exports = {
         'jpeg',
         'jpg',
         'png',
-        'gif'
+        'gif',
+        'svg'
       ],
       parser: WebpackIsomorphicToolsPlugin.url_loader_parser
     },
@@ -29,10 +30,6 @@ module.exports = {
         'ttf',
         'eot'
       ],
-      parser: WebpackIsomorphicToolsPlugin.url_loader_parser
-    },
-    svg: {
-      extension: 'svg',
       parser: WebpackIsomorphicToolsPlugin.url_loader_parser
     },
     // this whole "bootstrap" asset type is only used once in development mode.
