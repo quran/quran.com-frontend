@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import IndexHeader from 'components/header/IndexHeader';
 import { Link } from 'react-router';
+import { LinkContainer } from 'react-router-bootstrap';
 import { asyncConnect } from 'redux-async-connect'
 import { connect } from 'react-redux';
 import moment from 'moment';
@@ -30,8 +31,8 @@ class Home extends React.Component {
 
     return array.map((surah, i) => {
       return (
-        <li className={`row ${styles.link}`} key={surah.id}>
-          <Link to={`/${surah.id}`}>
+        <li className={`${styles.item}`} key={surah.id}>
+          <Link to={`/${surah.id}`} className={`${styles.link} row`}>
             <div className="col-xs-2 text-muted">
               {surah.id}
             </div>
@@ -151,7 +152,7 @@ class Home extends React.Component {
 
     return (
         <div className="index-page">
-          <Helmet title="The Noble Qur'an - القرآن الكريم" titleTemplate="%s" />
+          <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
           <IndexHeader />
           <div className={`container ${styles.list}`}>
             <div className="row">

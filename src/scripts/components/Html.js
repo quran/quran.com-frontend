@@ -54,9 +54,17 @@ class Html extends React.Component {
               __html: `{
                 "@context" : "http://schema.org",
                 "@type" : "WebSite",
-                "name" : "Quran.com",
-                "alternateName" : "The Noble Quran",
+                "name" : "Quran",
+                "alternateName" : "Quran.com",
                 "url" : "http://quran.com"
+              }`
+            }} />
+            <script type="application/ld+json" dangerouslySetInnerHTML={{
+              __html: `{
+                "@context": "http://schema.org",
+                "@type": "Organization",
+                "url": "http://quran.com",
+                "logo": "http://quran.com/images/thumbnail.png"
               }`
             }} />
             <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
