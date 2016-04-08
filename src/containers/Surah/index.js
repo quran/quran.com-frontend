@@ -174,7 +174,12 @@ export default class Surah extends Component {
       if (params.range.includes('-')) {
         const [from, to] = params.range.split('-').map(num => parseInt(num, 10));
         const array = Array(to - from).fill(from);
-        const translations = array.map((fromAyah, index) => ayahs[`${surah.id}:${fromAyah + index}`].content[0].text);
+        const translations = array.map((fromAyah, index) => {
+          const ayah = ayahs[`${surah.id}:${fromAyah + index}`];
+          if (ayah && ayah.content && ayah.content[0]) {
+            ayah.content[0].text
+          }
+        });
         const content = translations.join(' - ').slice(0, 250);
 
         return `Surat ${surah.name.simple} [verse ${params.range}] - ${content}`;

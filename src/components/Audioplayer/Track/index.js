@@ -23,7 +23,9 @@ export default class Track extends Component {
   };
 
   componentDidMount() {
-    this.onFileLoad(this.props.file);
+    if (this.props.file) {
+      this.onFileLoad(this.props.file);
+    }
   }
 
   componentWillUnmount() {
