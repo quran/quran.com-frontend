@@ -161,10 +161,10 @@ export default class Surah extends Component {
     const { params, surah } = this.props;
 
     if (params.range) {
-      return `Surat ${surah.name.simple} [${surah.id}:${params.range}]`;
+      return `Surah ${surah.name.simple} [${surah.id}:${params.range}]`;
     }
 
-    return `Surat ${surah.name.simple}`;
+    return `${surah.id} Surah ${surah.name.simple}`;
   }
 
   description() {
