@@ -30,19 +30,9 @@ class Home extends React.Component {
 
     return array.map((surah, i) => {
       return (
-        <li className={`row ${styles.link}`} key={surah.id}>
-          <Link to={`/${surah.id}`}>
-            <div className="col-xs-2 text-muted">
-              {surah.id}
-            </div>
-            <div className="col-xs-7">
-              {surah.name.simple}
-              <br />
-              <span className={`text-uppercase ${styles.english}`}>{surah.name.english}</span>
-            </div>
-            <div className={`col-xs-3 text-right ${styles.arabic}`}>
-              {surah.name.arabic}
-            </div>
+        <li className={styles.item} key={surah.id}>
+          <Link to={`/${surah.id}`} className={styles.link}>
+            {`${surah.id} - Surah ${surah.name.simple} (${surah.name.arabic})`}
           </Link>
         </li>
       );

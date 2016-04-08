@@ -106,35 +106,7 @@ a:hover{
   width: auto;
   min-width: 100px;
 }
-footer{
-  background-color: #32312C;
-  padding: 3% 0%;
-  font-size: 14px;
-  margin-top: 50px;
 
-  ul{
-    padding-left: 0px;
-    li{
-      list-style: none;
-      padding: 3% 0%;
-    }
-  }
-  .about,
-  .links{
-    padding-top: 30px;
-  }
-  .about{
-    a{
-      color: #fff;
-    }
-  }
-  .links{
-    text-transform: uppercase;
-    a{
-      color: rgba(#fff, 0.5);
-    }
-  }
-}
 li em{
   word-break: break-all;
 }

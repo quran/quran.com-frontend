@@ -380,6 +380,27 @@ export default class Surah extends Component {
             rel: 'canonical', href: `http://quran.com/${surah.id}`
           }]}
         />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{
+          __html: `{
+            "@context": "http://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [{
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@id": "http://quran.com/",
+                "name": "Quran"
+              }
+            },{
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@id": "http://quran.com/${surah.id}",
+                "name": "${surah.name.simple}"
+              }
+            }]
+          }`
+        }} />
         <style dangerouslySetInnerHTML={{
           __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
           }}

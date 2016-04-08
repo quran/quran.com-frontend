@@ -4,7 +4,7 @@ import { IndexRoute, Route } from 'react-router';
 import Home from './containers/Home';
 import Surah from './containers/Surah';
 import Search from './containers/Search';
-import Application from './scripts/components/Application';
+import App from './containers/App';
 import Donations from './scripts/routes/Donations';
 import About from './scripts/routes/About';
 import Contact from './scripts/routes/Contact';
@@ -12,7 +12,7 @@ import Contact from './scripts/routes/Contact';
 
 export default () => {
   return (
-    <Route path="/" component={Application}>
+    <Route path="/" component={App}>
       <IndexRoute component={Home} />
 
       <Route path="/donations" component={Donations} />
