@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import { scroller } from 'react-scroll';
 
 // Redux
 import { play, pause, repeat, toggleScroll, buildOnClient } from '../../redux/modules/audioplayer';
@@ -14,6 +13,7 @@ import Track from './Track';
 
 // Helpers
 // import debug from '../../scripts/helpers/debug';
+import scroller from '../../scripts/utils/scroller';
 
 const style = require('./style.scss');
 
@@ -102,7 +102,7 @@ export default class Audioplayer extends Component {
     const prevAyah = this.getPrevious();
 
     if (prevAyah) {
-      const ayahNum = prevAyah.replace( /^\d:/, '' );
+      const ayahNum = prevAyah.replace( /^\d+:/, '' );
       const wasPlaying = isPlaying;
 
       pause();
@@ -110,7 +110,7 @@ export default class Audioplayer extends Component {
       setCurrentAyah(prevAyah);
 
       if (shouldScroll) {
-        scroller.scrollTo('ayah:'+ ayahNum, null, null, -120); // -120 to account for the header height
+        scroller.scrollTo('ayah:'+ ayahNum, -120); // -120 to account for the header height
       }
 
       if (wasPlaying) {
@@ -119,11 +119,26 @@ export default class Audioplayer extends Component {
     }
   }
 
+  scrollTo(name, offset = 0) {
+    const node = document.getElementsByName(name)[0];
+
+    if (!node) {
+      console.warn(`node [name=${name}] not found, could not scroll`);
+      return;
+    }
+
+    const nodeRect = node.getBoundingClientRect();
+    const bodyRect = document.body.getBoundingClientRect();
+    const scrollOffset = nodeRect.top - bodyRect.top;
+
+    window.scrollTo(0, scrollOffset + offset);
+  }
+
   onNextAyah() {
     const { play, pause, setCurrentAyah, isPlaying, shouldScroll } = this.props; // eslint-disable-line no-shadow
     const wasPlaying = isPlaying;
     const nextAyah = this.getNext();
-    const ayahNum = nextAyah.replace( /^\d:/, '' );
+    const ayahNum = nextAyah.replace( /^\d+:/, '' );
 
     pause();
 
@@ -185,7 +200,7 @@ export default class Audioplayer extends Component {
   play() {
     const { shouldScroll, files } = this.props;
     const currentAyah = this.getCurrent();
-    const ayahNum = currentAyah.replace( /^\d:/, '' );
+    const ayahNum = currentAyah.replace( /^\d+:/, '' );
 
     if (shouldScroll) {
       scroller.scrollTo('ayah:'+ ayahNum);
@@ -219,11 +234,12 @@ export default class Audioplayer extends Component {
 
     const { shouldScroll } = this.props;
     const currentAyah = this.getCurrent();
-    const ayahNum = currentAyah.replace( /^\d:/, '' );
+    const ayahNum = currentAyah.replace( /^\d+:/, '' );
 
     if (!shouldScroll) { // we use the inverse (!) here because we're toggling, so false is true
-      if (scroller.get('ayah:'+ ayahNum).getBoundingClientRect().top < 0) { // if the ayah is above our scroll offset
-        scroller.scrollTo('ayah:'+ ayahNum, null, null, -120);
+      const elem = document.getElementsByName('ayah:'+ ayahNum)[0];
+      if (elem && elem.getBoundingClientRect().top < 0) { // if the ayah is above our scroll offset
+        scroller.scrollTo('ayah:'+ ayahNum, -120);
       } else {
         scroller.scrollTo('ayah:'+ ayahNum);
       }
