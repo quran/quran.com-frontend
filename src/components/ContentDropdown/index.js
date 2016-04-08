@@ -480,7 +480,7 @@ export default class ContentDropdown extends Component {
 
   renderEnglishList() {
     return this.renderItems(
-      slugs.filter(slug => slug.language === 'en' && slug.type === 'translation')
+      slugs.filter(slug => slug.language === 'en')
     );
   }
 
