@@ -177,14 +177,19 @@ export default class Surah extends Component {
         const translations = array.map((fromAyah, index) => {
           const ayah = ayahs[`${surah.id}:${fromAyah + index}`];
           if (ayah && ayah.content && ayah.content[0]) {
-            ayah.content[0].text
+            return ayah.content[0].text;
           }
         });
         const content = translations.join(' - ').slice(0, 250);
 
         return `Surat ${surah.name.simple} [verse ${params.range}] - ${content}`;
       } else {
-        return `Surat ${surah.name.simple} [verse ${params.range}] - ${ayahs[`${surah.id}:${params.range}`].content[0].text}`;
+        const ayah = ayahs[`${surah.id}:${params.range}`];
+        if (ayah && ayah.content && ayah.content[0]) {
+          return `Surat ${surah.name.simple} [verse ${params.range}] - ${ayah.content[0].text}`;
+        } else {
+          return `Surat ${surah.name.simple} [verse ${params.range}]`;
+        }
       }
     }
 
