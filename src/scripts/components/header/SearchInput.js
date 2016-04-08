@@ -81,10 +81,11 @@ export default class SearchInput extends React.Component {
           placeholder="Search"
           onFocus={() => this.setState({showAutocomplete: true})}
           onKeyUp={this.search.bind(this)}
+          ref={(ref) => this.input = ref}
         />
         {
           showAutocomplete &&
-          <SearchAutocomplete value={this.state.value} push={this.props.push} />
+          <SearchAutocomplete value={this.state.value} input={this.input}/>
         }
       </div>
     );
