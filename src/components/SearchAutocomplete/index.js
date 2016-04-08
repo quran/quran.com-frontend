@@ -56,13 +56,16 @@ export default class SearchAutocomplete extends Component {
   };
 
   suggest(value) {
-    if (value.length >= 2) {
-      this.handleSurahSuggestions(value);
-    } else if (this.state.surahs.length > 0) this.setState({ surahs: [] });
+    this.handleSurahSuggestions(value);
+    if (value.length == 0 && this.state.surahs.length > 0) {
+      this.setState({ surahs: [] });
+    }
 
     if (value.length >= 3) {
       this.handleAyahSuggestions(value);
-    } else if (this.state.ayat.length > 0) this.setState({ ayat: [] });
+    } else if (this.state.ayat.length > 0) {
+      this.setState({ ayat: [] });
+    }
   };
 
   handleSurahSuggestions(value) {
@@ -76,7 +79,7 @@ export default class SearchAutocomplete extends Component {
       const surah = this.props.surahs[surahId];
       matches.push([ surah.name.simple, surah.id + (ayahNum? '/'+ ayahNum : '') ]);
     }
-    else {
+    else if (value.length >= 2) {
       const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
       for (var surahId in this.props.surahs) {
         const surah = this.props.surahs[surahId];

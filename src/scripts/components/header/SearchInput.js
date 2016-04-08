@@ -64,7 +64,7 @@ export default class SearchInput extends React.Component {
       e.target.style.textAlign = 'left';
     }
 
-    if (e.target && e.target.value) {
+    if (e.target) {
       this.setState({ value: e.target.value.trim() });
     }
   }
