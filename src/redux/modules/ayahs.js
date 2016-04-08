@@ -28,6 +28,7 @@ export default function reducer(state = initialState, action = {}) {
     case CLEAR_CURRENT:
       return {
         ...state,
+        current: null,
         entities: {
           ...state.entities,
           [action.id]: {}
