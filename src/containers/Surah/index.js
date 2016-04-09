@@ -341,7 +341,7 @@ export default class Surah extends Component {
       if (index + 1 !== keys.length && pageNum !== nextNum.split('-')[0]) {
         return [
           <Line line={line} key={lineNum} />,
-          <PageBreak pageNum={pageNum} />
+          <PageBreak pageNum={parseInt(pageNum, 10) + 1} />
         ];
       }
 
