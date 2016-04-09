@@ -21,7 +21,7 @@ import Ayah from 'components/surah/Ayah';
 import Line from 'components/surah/Line';
 import SearchInput from 'components/header/SearchInput';
 import Bismillah from '../../components/Bismillah';
-import { scroller } from 'react-scroll';
+import scroller from '../../scripts/utils/scroller';
 
 // Helpers
 import makeHeadTags from '../../helpers/makeHeadTags';
