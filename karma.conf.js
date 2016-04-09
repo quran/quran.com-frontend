@@ -50,6 +50,12 @@ module.exports = function(config) {
     },
 
     webpack: {
+      externals: {
+        'cheerio': 'window',
+        'react/addons': true,
+        'react/lib/ExecutionEnvironment': true,
+        'react/lib/ReactContext': true
+      },
       resolve: {
         modulesDirectories: [
           'src',
@@ -60,7 +66,17 @@ module.exports = function(config) {
 
       module: {
         loaders: [
-          { test: /\.js?$/, exclude: [/node_modules/], loader: 'babel-loader' }
+          {
+            test: /\.(js|jsx)$/,
+            exclude: [/server/, /node_modules/, /tests/],
+            loader: 'babel',
+            query: {
+              stage: 0,
+              plugins: []
+            }
+          },
+          { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' },
+          { test: /\.(jpe?g|png|gif|svg)$/, loader: 'url', query: {limit: 10240} }
         ]
       },
 

@@ -6,7 +6,7 @@ const PageBreak = ({ pageNum }) => (
   <Row>
     <Col md={12}>
       <hr style={{width: '100%'}} />
-      Page {parseInt(pageNum, 10) + 1}
+      Page {pageNum}
     </Col>
   </Row>
 );

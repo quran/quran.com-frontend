@@ -444,6 +444,12 @@ export default class ContentDropdown extends Component {
     return this.props.options !== nextProps.options;
   }
 
+  handleRemoveContent = () => {
+    const { onOptionChange } = this.props;
+
+    onOptionChange({content: []});
+  }
+
   handleOptionSelected(id) {
     const { onOptionChange, options: { content } } = this.props;
 
@@ -508,7 +514,7 @@ export default class ContentDropdown extends Component {
         <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
           {
             content.length &&
-            <MenuItem>Remove all</MenuItem>
+            <MenuItem eventKey={1} onClick={this.handleRemoveContent}>Remove all</MenuItem>
           }
           <MenuItem header>English</MenuItem>
           {this.renderEnglishList()}
