@@ -12,6 +12,7 @@ const styles = require('./style.scss');
     const surahs = state.surahs.entities;
     const surahId = state.surahs.current;
     let lang = 'en';
+
     if (state.ayahs && state.ayahs.entities && state.ayahs.entities[surahId]) {
       const ayahs = state.ayahs.entities[surahId];
       const ayahKey = Object.keys(ayahs)[0];
@@ -130,14 +131,15 @@ export default class SearchAutocomplete extends Component {
     switch (event.keyCode) {
       case 9: // tab
         items[0].focus();
-      break;
+        break;
       case 27: // escape
-        // if open closeMenu()
-      break;
+        // TODO if open closeMenu()
+        break;
       case 40: // down
         items[0].focus();
-      break;
-      default: return;
+        break;
+      default:
+        return;
     }
     event.preventDefault();
   }
@@ -154,25 +156,26 @@ export default class SearchAutocomplete extends Component {
       return;
       case 13: // enter
         this.props.push(item.href); // change url
-      break;
+        break;
       case 27: // escape
-        // if open closeMenu()
-      break;
+        // TODO if open closeMenu()
+        break;
       case 38: // up
         if (event.target === items[0]) { // we're on the first item, so focus the input
           this.props.input.focus();
         } else {
           event.target.previousSibling.focus();
         }
-      break;
+        break;
       case 40: // down
         if (event.target === items[items.length-1]) {
           items[0].focus();
         } else {
           event.target.nextSibling.focus();
         }
-      break;
-      default: return;
+        break;
+      default:
+        return;
     }
     event.preventDefault();
   }
