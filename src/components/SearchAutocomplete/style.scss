@@ -65,14 +65,14 @@
       display: block;
     }
   }
-  .list > li:hover .text {
+  .list > li:hover .text, .list > li:focus .text {
     background-color: rgba($brand-primary, 0.5);
     color: $text-color;
   }
-  .list > li:hover .text a {
+  .list > li:hover .text a, .list > li:focus .text a {
     color: #444;
   }
-  .list > li:hover .link a {
+  .list > li:hover .link a, .list > li:focus .link a {
     color: #444;
   }
   .list > li[aria-selected="true"] .text {
@@ -82,7 +82,7 @@
   mark {
     background: hsl(65, 100%, 50%);
   }
-  .list li:hover mark {
+  .list li:hover mark, .list li:focus mark {
     background: hsl(68, 100%, 41%);
   }
   li[aria-selected="true"] mark {

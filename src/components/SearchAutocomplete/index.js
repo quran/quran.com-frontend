@@ -1,13 +1,38 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import ApiClient from '../../helpers/ApiClient';
+import { connect } from 'react-redux';
+import { push } from 'react-router-redux';
 
 const client = new ApiClient();
 
 const styles = require('./style.scss');
 
 @connect(
-  state => ({surahs: state.surahs.entities})
+  (state, ownProps) => {
+    const surahs = state.surahs.entities;
+    const surahId = state.surahs.current;
+    let lang = 'en';
+
+    if (state.ayahs && state.ayahs.entities && state.ayahs.entities[surahId]) {
+      const ayahs = state.ayahs.entities[surahId];
+      const ayahKey = Object.keys(ayahs)[0];
+
+      if (ayahKey) {
+        const ayah = ayahs[ayahKey];
+        const content = ayah.content;
+        if (ayah.content && ayah.content[0] && ayah.content[0].lang) {
+          lang = ayah.content[0].lang;
+        }
+      }
+    }
+
+    return {
+      surahs,
+      lang
+    };
+  }, {
+    push
+  }
 )
 export default class SearchAutocomplete extends Component {
   constructor() {
@@ -19,6 +44,10 @@ export default class SearchAutocomplete extends Component {
     this.delay = 200;
   };
 
+  componentDidMount() {
+    this.props.input.addEventListener('keydown', this.handleInputKeyDown.bind(this));
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.timer)
       clearTimeout(this.timer);
@@ -28,25 +57,38 @@ export default class SearchAutocomplete extends Component {
   };
 
   suggest(value) {
-    if (value.length >= 2) {
-      this.handleSurahSuggestions(value);
-    } else if (this.state.surahs.length > 0) this.setState({ surahs: [] });
+    this.handleSurahSuggestions(value);
+    if (value.length == 0 && this.state.surahs.length > 0) {
+      this.setState({ surahs: [] });
+    }
 
     if (value.length >= 3) {
       this.handleAyahSuggestions(value);
-    } else if (this.state.ayat.length > 0) this.setState({ ayat: [] });
+    } else if (this.state.ayat.length > 0) {
+      this.setState({ ayat: [] });
+    }
   };
 
   handleSurahSuggestions(value) {
-    const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
     const matches = [];
+    const ayahRgx = /^(\d+)(?::(\d+))?$/;
 
-    for (var surahId in this.props.surahs) {
+    if (ayahRgx.test(value)) {
+      const captures = value.match(ayahRgx);
+      const surahId = captures[1];
+      const ayahNum = captures[2];
       const surah = this.props.surahs[surahId];
-      if (RegExp(escaped, "i").test(surah.name.simple.replace( /['-]/g, '' ))) {
-        matches.push([ surah.name.simple, surah.id ]);
-      } else if (RegExp(escaped, "i").test(surah.name.arabic)) {
-        matches.push([ surah.name.arabic, surah.id ]);
+      matches.push([ surah.name.simple, surah.id + (ayahNum? '/'+ ayahNum : '') ]);
+    }
+    else if (value.length >= 2) {
+      const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
+      for (var surahId in this.props.surahs) {
+        const surah = this.props.surahs[surahId];
+        if (RegExp(escaped, "i").test(surah.name.simple.replace( /['-]/g, '' ))) {
+          matches.push([ surah.name.simple, surah.id ]);
+        } else if (RegExp(escaped, "i").test(surah.name.arabic)) {
+          matches.push([ surah.name.arabic, surah.id ]);
+        }
       }
     }
 
@@ -56,11 +98,17 @@ export default class SearchAutocomplete extends Component {
   };
 
   handleAyahSuggestions(value) {
-    if (this.cached[value]) {
-      this.setState({ ayat: this.cached[value] });
+    const { lang } = this.props;
+
+    if (!this.cached[lang]) {
+      this.cached[lang] = {};
+    }
+
+    if (this.cached[lang][value]) {
+      this.setState({ ayat: this.cached[lang][value] });
     } else {
-      client.get('/suggest', {params: {q: value}}).then((res) => {
-        this.cached[value] = res;
+      client.get('/suggest', {params: {q: value, l:lang}}).then((res) => {
+        this.cached[lang][value] = res;
 
         if (this.props.value.trim() === value) {
           this.setState({ ayat: res });
@@ -69,14 +117,78 @@ export default class SearchAutocomplete extends Component {
     }
   };
 
+  handleInputKeyDown(event) {
+    if (!(event.keyCode == 9 || event.keyCode == 40 || event.keyCode == 27)) {
+      return;
+    }
+
+    const items = this.menu.getElementsByTagName('li');
+
+    if (!items.length) {
+      return;
+    }
+
+    switch (event.keyCode) {
+      case 9: // tab
+        items[0].focus();
+        break;
+      case 27: // escape
+        // TODO if open closeMenu()
+        break;
+      case 40: // down
+        items[0].focus();
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+  }
+
+  handleItemKeyDown(event, item) {
+    const items = this.menu.getElementsByTagName('li');
+
+    if (!items.length) {
+      return;
+    }
+
+    switch (event.keyCode) {
+      case 9: // tab
+      return;
+      case 13: // enter
+        this.props.push(item.href); // change url
+        break;
+      case 27: // escape
+        // TODO if open closeMenu()
+        break;
+      case 38: // up
+        if (event.target === items[0]) { // we're on the first item, so focus the input
+          this.props.input.focus();
+        } else {
+          event.target.previousSibling.focus();
+        }
+        break;
+      case 40: // down
+        if (event.target === items[items.length-1]) {
+          items[0].focus();
+        } else {
+          event.target.nextSibling.focus();
+        }
+        break;
+      default:
+        return;
+    }
+    event.preventDefault();
+  }
+
   renderList(key) {
+    //this.handleItemKeyDown.bind({ item, self: this })
     return this.state[key].map((item) => (
-      <li key={item.href}>
+      <li key={item.href} tabIndex="0" onKeyDown={((event) => { this.handleItemKeyDown.call(this, event, item); }).bind(this)}>
         <div className={styles.link}>
-          <a href={item.href}>{item.href}</a>
+          <a href={item.href} tabIndex="-1">{item.href}</a>
         </div>
         <div className={styles.text}>
-          <a href={item.href} dangerouslySetInnerHTML={{__html: item.text }} />
+          <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{__html: item.text }} />
         </div>
       </li>
     ));
@@ -87,7 +199,7 @@ export default class SearchAutocomplete extends Component {
 
     return (
       <div className={`${styles.autocomplete} ${ayat.length || surahs.length ? '' : 'hidden'}`}>
-        <ul role="menu" className={styles.list}>
+        <ul role="menu" className={styles.list} ref={(ref) => this.menu = ref}>
           {this.renderList('surahs')}
           {this.renderList('ayat')}
         </ul>
