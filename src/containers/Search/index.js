@@ -13,8 +13,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import SearchHeader from 'components/header/SearchHeader';
-// import SearchInput from 'components/SearchInput';
-import Ayah from '../../scripts/components/surah/Ayah';
+import Ayah from '../../components/Ayah';
 import CoreLoader from '../../scripts/components/Loader';
 
 import { search } from '../../redux/modules/searchResults';

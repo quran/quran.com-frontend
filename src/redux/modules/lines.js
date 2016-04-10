@@ -31,20 +31,20 @@ export default function reducer(state = initialState, action = {}) {
       action.result.result.forEach(ayahId => {
         const ayah = ayahs[ayahId];
 
-        ayah.quran.forEach(data => {
-          if (lines[`${data.char.page}-${data.char.line}`]) {
-            const isInArray = lines[`${data.char.page}-${data.char.line}`].find(item => {
-              const itemChecksum = `${item.char.line}${item.word.position}${item.ayahKey}`;
-              const dataChecksum = `${data.char.line}${data.word.position}${data.ayahKey}`;
+        ayah.words.forEach(word => {
+          if (lines[`${word.pageNum}-${word.lineNum}`]) {
+            const isInArray = lines[`${word.pageNum}-${word.lineNum}`].find(item => {
+              const itemChecksum = `${item.lineNum}${item.codeHex}${item.ayahKey}${item.position}`;
+              const dataChecksum = `${word.lineNum}${word.codeHex}${word.ayahKey}${item.position}`;
 
               return itemChecksum === dataChecksum;
             });
 
             if (!isInArray) {
-              lines[`${data.char.page}-${data.char.line}`].push(data);
+              lines[`${word.pageNum}-${word.lineNum}`].push(word);
             }
           } else {
-            lines[`${data.char.page}-${data.char.line}`] = [data];
+            lines[`${word.pageNum}-${word.lineNum}`] = [word];
           }
         });
       });

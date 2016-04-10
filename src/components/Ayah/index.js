@@ -1,9 +1,9 @@
 /* eslint-disable consistent-return */
 import React, { Component, PropTypes } from 'react';
-import CopyToClipboard from 'copy-to-clipboard';
 import { Link } from 'react-router';
-import { I13nAnchor } from 'react-i13n';
 import { Element } from 'react-scroll';
+
+import Copy from '../Copy';
 
 import debug from 'utils/Debug';
 
@@ -55,10 +55,10 @@ export default class Ayah extends Component {
       return [];
     }
 
-    return this.props.ayah.content.map((content, i) => {
+    return this.props.ayah.content.map((content, index) => {
       return (
-        <div className="translation" key={i}>
-          <h4>{content.name}</h4>
+        <div className="translation" key={index}>
+          <h4>{content.resource.name}</h4>
           <h2 className="text-left text-translation">
             <small>{content.text}</small>
           </h2>
@@ -68,34 +68,34 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    if (!this.props.ayah.quran[0].char) {
+    if (!this.props.ayah.words[0].codeHex) {
       return;
     }
 
-    let text = this.props.ayah.quran.map(word => {
-      let className = `${word.char.font} ${word.highlight ? word.highlight: null}`;
+    let text = this.props.ayah.words.map(word => {
+      let className = `${word.className} ${word.highlight ? word.highlight: null}`;
 
-      if (word.word.translation) {
-        let tooltip = word.word.translation;
+      if (word.translation) {
+        let tooltip = word.translation;
 
         if (this.props.isSearch) {
           return (
-            <Link key={word.char.code}
+            <Link key={word.codeHex}
                className={className}
                data-toggle="tooltip"
                data-placement="top" title={tooltip}
                to={`/search?q=${word.word.arabic}&p=1`}
-               dangerouslySetInnerHTML={{__html: word.char.code}}/>
+               dangerouslySetInnerHTML={{__html: word.codeHex}}/>
           );
         }
 
         return (
           <b
-            key={word.char.code}
+            key={word.codeHex}
             className={`${className} pointer`}
             data-toggle="tooltip"
             data-placement="top" title={tooltip}
-            dangerouslySetInnerHTML={{__html: word.char.code}}
+            dangerouslySetInnerHTML={{__html: word.codeHex}}
           />
         );
       }
@@ -103,8 +103,8 @@ export default class Ayah extends Component {
         return (
           <b
             className={`${className} pointer`}
-            key={word.char.code}
-            dangerouslySetInnerHTML={{__html: word.char.code}}
+            key={word.codeHex}
+            dangerouslySetInnerHTML={{__html: word.codeHex}}
           />
         );
       }
@@ -125,8 +125,10 @@ export default class Ayah extends Component {
     });
   }
 
-  handleCopy(text) {
-    CopyToClipboard(text);
+  handleCopy = () => {
+    const { ayah } = this.props;
+
+    CopyToClipboard(ayah.textTashkeel);
   }
 
   renderPlayLink() {
@@ -139,14 +141,11 @@ export default class Ayah extends Component {
   }
 
   renderCopyLink() {
-    if (!this.props.isSearch) {
+    const { isSearch, ayah: { textTashkeel } } = this.props;
+
+    if (!isSearch) {
       return (
-        <a
-          onClick={this.handleCopy.bind(this, this.props.ayah.text)}
-          className="text-muted"
-          data-metrics-event-name="Ayah:Copy">
-          <i className="ss-icon ss-attach" /> Copy
-        </a>
+        <Copy text={textTashkeel} />
       );
     }
   }

@@ -15,36 +15,36 @@ class Line extends React.Component {
   renderText() {
     const { line } = this.props;
 
-    if (!line[0].char) { // TODO shouldn't be possible, remove this clause
+    if (!line[0].codeHex) { // TODO shouldn't be possible, remove this clause
       return;
     }
 
-    let text = line.map((data, index) => {
-      if (data.word.translation) {
-        let tooltip = data.word.translation;
+    let text = line.map((word, index) => {
+      if (word.translation) {
+        let tooltip = word.translation;
 
         return (
           <b
             key={`${index}`}
-            className={`${data.char.font} pointer`}
+            className={`${word.className} pointer`}
             data-toggle="tooltip"
-            data-ayah={data.ayahKey}
-            data-line={data.char.line}
-            data-page={data.char.page}
-            data-position={data.word.position}
+            data-ayah={word.ayahKey}
+            data-line={word.lineNun}
+            data-page={word.pageNum}
+            data-position={word.position}
             data-placement="top" title={tooltip}
-            dangerouslySetInnerHTML={{__html: data.char.code}}>
+            dangerouslySetInnerHTML={{__html: word.codeHex}}>
           </b>
         );
       }
 
       return (
         <b
-          className={`${data.char.font} pointer`}
-          key={`${data.char.page}${data.char.line}${data.word.position}`}
-          data-line={data.char.line}
-          data-page={data.char.page}
-          dangerouslySetInnerHTML={{__html: data.char.code}}>
+          className={`${word.className} pointer`}
+          key={`${word.pageNum}${word.lineNum}${word.position}`}
+          data-line={word.lineNum}
+          data-page={word.pageNum}
+          dangerouslySetInnerHTML={{__html: word.codeHex}}>
         </b>
       );
     });
@@ -59,7 +59,7 @@ class Line extends React.Component {
   render() {
     const { line } = this.props;
 
-    debug('component:Line', `Page: ${line[0].char.page} - Line: ${line[0].char.line} - Ayah: ${line[0].ayahKey}`);
+    debug('component:Line', `Page: ${line[0].pageNum} - Line: ${line[0].lineNum} - Ayah: ${line[0].ayahKey}`);
 
     return (
       <div className="row word-font text-justify text-arabic">

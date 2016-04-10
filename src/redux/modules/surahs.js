@@ -43,7 +43,7 @@ export function loadAll() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: arrayOf(surahsSchema),
-    promise: (client) => client.get(`/surahs`)
+    promise: (client) => client.get(`/v2/surahs`)
   };
 }
 
@@ -51,7 +51,7 @@ export function load(id) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: arrayOf(surahsSchema),
-    promise: (client) => client.get(`/surahs/${id}`)
+    promise: (client) => client.get(`/v2/surahs/${id}`)
   };
 }
 
