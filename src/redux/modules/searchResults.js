@@ -40,7 +40,7 @@ export default function reducer(state = initialState, action = {}) {
         results: action.result.result.results,
         entities: Object.assign({}, state.entities, action.result.entities.ayahs),
         fontFaces: [].concat(state.fontFaces, createFontFacesArray(
-          action.result.result.results.map(key => action.result.entities.ayahs[key])
+          action.result.result.results.map(result => action.result.entities.ayahs[result.ayah])
         ))
       };
     case SEARCH_FAIL:
@@ -56,7 +56,7 @@ export default function reducer(state = initialState, action = {}) {
 export function search(params) {
   return {
     types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
-    schema: {results: arrayOf(ayahsSchema)},
+    schema: {results: arrayOf({ayah: ayahsSchema})},
     promise: (client) => client.get('/search', { params }),
     params
   };

@@ -135,7 +135,7 @@ class Search extends Component {
      return <div style={{padding: '15%'}}><CoreLoader /></div>;
    }
 
-   return results.map(key => <Ayah ayah={ayahs[key]} key={key} isSearched />);
+   return results.map(result => <Ayah ayah={ayahs[result.ayah]} match={result.match} key={result.ayah} isSearched />);
  }
 
   render() {

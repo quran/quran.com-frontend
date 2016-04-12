@@ -10,7 +10,8 @@ import debug from 'utils/Debug';
 export default class Ayah extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
-    ayah: PropTypes.object
+    ayah: PropTypes.object.isRequired,
+    match: PropTypes.array
   };
 
   static defaultProps = {
@@ -18,44 +19,34 @@ export default class Ayah extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    return this.props.ayah !== nextProps.ayah;
+    return this.props.ayah !== nextProps.ayah || this.props.match.length !== nextProps.match.length;
   }
 
   renderTranslations() {
-    if (!this.props.ayah.content && this.props.ayah.match) {
-      return this.props.ayah.match.map((content, i) => {
-        var arabic = new RegExp(/[\u0600-\u06FF]/);
-        var character = content.text;
-        var flag = arabic.test(character);
+    const { ayah, match } = this.props;
 
-        if(flag){
-          return (
-            <div className="translation-arabic" key={i}>
-              <h4>{content.name}</h4>
-              <h2 className="text-left-arabic text-translation">
-                <small dangerouslySetInnerHTML={{__html: content.text}} />
-              </h2>
-           </div>
-          );
-        }
-        else {
-          return (
-            <div className="translation" key={i}>
-              <h4>{content.name}</h4>
-              <h2 className="text-left text-translation">
-                <small dangerouslySetInnerHTML={{__html: content.text}} />
-              </h2>
-            </div>
-          );
-        }
+    if (match) {
+      return match.map((content, index) => {
+        const arabic = new RegExp(/[\u0600-\u06FF]/);
+        const character = content.text;
+        const isArabic = arabic.test(character);
+
+        return (
+          <div className={`${isArabic ? 'translation-arabic' : 'translation'}`} key={index}>
+            <h4>{content.name}</h4>
+            <h2 className={`${isArabic ? 'text-left-arabic' : 'text-left'} text-translation`}>
+              <small dangerouslySetInnerHTML={{__html: content.text}} />
+            </h2>
+          </div>
+        );
       });
     }
 
-    if (!this.props.ayah.content) {
+    if (!ayah.content) {
       return [];
     }
 
-    return this.props.ayah.content.map((content, index) => {
+    return ayah.content.map((content, index) => {
       return (
         <div className="translation" key={index}>
           <h4>{content.resource.name}</h4>
@@ -68,7 +59,7 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    if (!this.props.ayah.words[0].codeHex) {
+    if (!this.props.ayah.words[0].code) {
       return;
     }
 
@@ -80,22 +71,22 @@ export default class Ayah extends Component {
 
         if (this.props.isSearch) {
           return (
-            <Link key={word.codeHex}
+            <Link key={word.code}
                className={className}
                data-toggle="tooltip"
                data-placement="top" title={tooltip}
                to={`/search?q=${word.word.arabic}&p=1`}
-               dangerouslySetInnerHTML={{__html: word.codeHex}}/>
+               dangerouslySetInnerHTML={{__html: word.code}}/>
           );
         }
 
         return (
           <b
-            key={word.codeHex}
+            key={word.code}
             className={`${className} pointer`}
             data-toggle="tooltip"
             data-placement="top" title={tooltip}
-            dangerouslySetInnerHTML={{__html: word.codeHex}}
+            dangerouslySetInnerHTML={{__html: word.code}}
           />
         );
       }
@@ -103,8 +94,8 @@ export default class Ayah extends Component {
         return (
           <b
             className={`${className} pointer`}
-            key={word.codeHex}
-            dangerouslySetInnerHTML={{__html: word.codeHex}}
+            key={word.code}
+            dangerouslySetInnerHTML={{__html: word.code}}
           />
         );
       }

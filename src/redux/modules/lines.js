@@ -34,8 +34,8 @@ export default function reducer(state = initialState, action = {}) {
         ayah.words.forEach(word => {
           if (lines[`${word.pageNum}-${word.lineNum}`]) {
             const isInArray = lines[`${word.pageNum}-${word.lineNum}`].find(item => {
-              const itemChecksum = `${item.lineNum}${item.codeHex}${item.ayahKey}${item.position}`;
-              const dataChecksum = `${word.lineNum}${word.codeHex}${word.ayahKey}${item.position}`;
+              const itemChecksum = `${item.lineNum}${item.code}${item.ayahKey}${item.position}`;
+              const dataChecksum = `${word.lineNum}${word.code}${word.ayahKey}${item.position}`;
 
               return itemChecksum === dataChecksum;
             });

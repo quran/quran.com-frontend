@@ -15,7 +15,7 @@ class Line extends React.Component {
   renderText() {
     const { line } = this.props;
 
-    if (!line[0].codeHex) { // TODO shouldn't be possible, remove this clause
+    if (!line[0].code) { // TODO shouldn't be possible, remove this clause
       return;
     }
 
@@ -33,7 +33,7 @@ class Line extends React.Component {
             data-page={word.pageNum}
             data-position={word.position}
             data-placement="top" title={tooltip}
-            dangerouslySetInnerHTML={{__html: word.codeHex}}>
+            dangerouslySetInnerHTML={{__html: word.code}}>
           </b>
         );
       }
@@ -44,7 +44,7 @@ class Line extends React.Component {
           key={`${word.pageNum}${word.lineNum}${word.position}`}
           data-line={word.lineNum}
           data-page={word.pageNum}
-          dangerouslySetInnerHTML={{__html: word.codeHex}}>
+          dangerouslySetInnerHTML={{__html: word.code}}>
         </b>
       );
     });
