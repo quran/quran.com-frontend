@@ -15,6 +15,7 @@ import ReciterDropdown from '../../components/ReciterDropdown';
 import SurahsDropdown from '../../components/SurahsDropdown';
 import VersesDropdown from '../../components/VersesDropdown';
 import FontSizeDropdown from '../../components/FontSizeDropdown';
+import InformationToggle from '../../components/InformationToggle';
 import MasterHeader from 'components/header/MasterHeader';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import Ayah from 'components/surah/Ayah';
@@ -443,7 +444,8 @@ export default class Surah extends Component {
               options={options}
               className="col-md-2"
             />
-            <SearchInput className="col-md-4 search-input" />
+            <SearchInput className="col-md-3 search-input" />
+            <InformationToggle className="col-md-1" />
           </Row>
         </MasterHeader>
         <div className="container-fluid">
