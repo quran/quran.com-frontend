@@ -22,6 +22,32 @@ export default class InformationToggle extends Component {
     //this.context.executeAction(SurahsActions.showInfo);
   }
 
+  renderInformation() {
+    var extract = this.state.page ? this.state.page.extract : '';
+
+    return (
+      <div className="col-md-12 surah-info">
+      <div className="row">
+        <div className="col-md-3 col-xs-6 bg" style={{background: `url(/images/${this.props.currentSurah.revelation.place}.jpg) center center no-repeat`}}>
+        </div>
+        <div className="col-md-1 col-xs-6 list">
+          <dl>
+            <dt>CLASSIFICATION</dt>
+            <dd className="text-capitalize">{this.props.currentSurah.revelation.place}</dd>
+            <dt>ORDER</dt>
+            <dd className="text-uppercase">{this.props.currentSurah.revelation.order}</dd>
+            <dt>VERSES</dt>
+            <dd className="text-uppercase">{this.props.currentSurah.ayat}</dd>
+          </dl>
+        </div>
+        <div className="col-md-8 info" dangerouslySetInnerHTML={{__html: extract}}>
+        </div>
+      </div>
+      </div>
+    );
+  }
+
+
   static propTypes = {
     className: PropTypes.string
   };
