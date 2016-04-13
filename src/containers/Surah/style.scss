@@ -23,6 +23,7 @@
 
 :local .surah-container {
   padding-top: 190px;
+
   @media(max-width: $screen-xs-max) {
     padding-top: 100px;
   }
