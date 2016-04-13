@@ -15,6 +15,7 @@ nav.navbar{
     text-decoration: none;
   }
 
+  /*
   & + div{
     padding-top: 190px;
 
@@ -22,6 +23,7 @@ nav.navbar{
       padding-top: 100px;
     }
   }
+  */
 
   &.scroll-up{
     top: (-$navbar-scroll-up-height);

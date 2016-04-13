@@ -430,50 +430,52 @@ export default class Surah extends Component {
         <MasterHeader surah={surah}>
           <Row className="navbar-bottom">
             <Col md={8}>
-            <Row>
-            <SurahsDropdown
-              surahs={surahs}
-              className={`col-md-3 ${style.rightborder} ${style.dropdown}`}
-            />
-            <VersesDropdown
-              ayat={surah.ayat}
-              loadedAyahs={ayahIds}
-              isReadingMode={options.isReadingMode}
-              onClick={this.handleVerseDropdownClick.bind(this)}
-              className={`col-md-1 ${style.rightborder} ${style.dropdown}`}
-            />
-            <ReciterDropdown
-              onOptionChange={this.handleOptionChange.bind(this)}
-              options={options}
-              className={`col-md-2 ${style.rightborder} ${style.dropdown}`}
-            />
-            <Audioplayer
-              surah={surah}
-              onLoadAyahs={this.lazyLoadAyahs.bind(this)}
-              className={`col-md-4 ${style.rightborder}`}
-            />
-            <ContentDropdown
-              onOptionChange={this.handleOptionChange.bind(this)}
-              options={options}
-              className={`col-md-2 ${style.rightborder} ${style.dropdown}`}
-            />
-            </Row>
+              <Row>
+                <SurahsDropdown
+                  surahs={surahs}
+                  className={`col-md-3 ${style.rightborder} ${style.dropdown}`}
+                />
+                <VersesDropdown
+                  ayat={surah.ayat}
+                  loadedAyahs={ayahIds}
+                  isReadingMode={options.isReadingMode}
+                  onClick={this.handleVerseDropdownClick.bind(this)}
+                  className={`col-md-1 ${style.rightborder} ${style.dropdown}`}
+                />
+                <ReciterDropdown
+                  onOptionChange={this.handleOptionChange.bind(this)}
+                  options={options}
+                  className={`col-md-2 ${style.rightborder} ${style.dropdown}`}
+                />
+                <Audioplayer
+                  surah={surah}
+                  onLoadAyahs={this.lazyLoadAyahs.bind(this)}
+                  className={`col-md-4 ${style.rightborder}`}
+                />
+                <ContentDropdown
+                  onOptionChange={this.handleOptionChange.bind(this)}
+                  options={options}
+                  className={`col-md-2 ${style.rightborder} ${style.dropdown}`}
+                />
+              </Row>
             </Col>
             <Col md={4}>
-            <Row>
-            <InformationToggle
-              onClick={this.handleSurahInfoToggle.bind(this)}
-              className={`col-md-1 ${style.rightborder}`} />
+              <Row>
+                <InformationToggle
+                  onClick={this.handleSurahInfoToggle.bind(this)}
+                  className={`col-md-1 ${style.rightborder}`} />
 
-            <SearchInput
-              className={`col-md-11 search-input`}
-            />
-            </Row>
+                <SearchInput
+                  className={`col-md-11 search-input`}
+                />
+              </Row>
             </Col>
           </Row>
+          <Row>
+            <SurahInfo />
+          </Row>
         </MasterHeader>
-        <SurahInfo />
-        <div className="container-fluid">
+        <div className={`container-fluid ${style['surah-container']}`}>
           <Row>
             <Col md={10} mdOffset={1}>
               {this.renderTopOptions()}

@@ -77,20 +77,16 @@ export default class SurahInfo extends Component {
 
     return (
       <div className={`col-md-12 ${style['surah-info']}`}>
-      <div className="row">
-        <div className="col-md-3 col-xs-6 bg" style={{background: `url(/images/${this.props.currentSurah.revelation.place}.jpg) center center no-repeat`}}>
+      <div className={`${style.row}`}>
+        <div className={`col-md-3 col-xs-6 ${style.bg}`} style={{background: `url(/images/${this.props.currentSurah.revelation.place}.jpg) center center no-repeat`}}>
         </div>
-        <div className="col-md-1 col-xs-6 list">
+        <div className={`col-md-1 col-xs-6 ${style.list}`}>
           <dl>
-            <dt>CLASSIFICATION</dt>
-            <dd className="text-capitalize">{this.props.currentSurah.revelation.place}</dd>
-            <dt>ORDER</dt>
-            <dd className="text-uppercase">{this.props.currentSurah.revelation.order}</dd>
             <dt>VERSES</dt>
             <dd className="text-uppercase">{this.props.currentSurah.ayat}</dd>
           </dl>
         </div>
-        <div className="col-md-8 info" dangerouslySetInnerHTML={{__html: html}}>
+        <div className={`col-md-8 ${style.info}`} dangerouslySetInnerHTML={{__html: html}}>
         </div>
       </div>
       </div>

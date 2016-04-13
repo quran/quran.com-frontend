@@ -1,12 +1,24 @@
 @import '../../styles/_bootstrap-config.scss';
 
-.surah-info{
-  //height: 50vh;
-  height: 0;
+:local .surah-info{
+  //padding-top: 131px;
+  //padding-left: 0;
+  padding-right: 0;
+  //height: 85vh;
+  margin-bottom: 30px;
 
-  :global(.row){
+  height: 60vh;
+  width: 100vw;
+  left: 0;
+  position: absolute;
+  margin-left: -20px;
+  padding-left: 20px;
+
+
+
+
+  .row{
     height: 100%;
-    background: red;
   }
 
   .bg{
@@ -30,19 +42,22 @@
     background: lighten($text-muted, 15%);
 
     h2{
-      font-size: 18px;
+      font-size: 22px;
       @extend .time-new;
       font-family: 'Times New Roman', sans-serif;
+      font-weight: bold;
     }
 
     p{
       @extend .time-new;
       font-family: 'Times New Roman', sans-serif;
+      font-size: 17px;
     }
   }
 
   dl{
-    padding-top: 15px;
+    padding-top: 8px;
+    text-align: right;
 
     dt{
       font-size: 10px;
