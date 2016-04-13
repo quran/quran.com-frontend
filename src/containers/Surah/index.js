@@ -283,8 +283,7 @@ export default class Surah extends Component {
   }
 
   handleSurahInfoToggle() {
-    const { toggleSurahInfoDispatch, isShowingInfo } = this.props;
-    console.log('toggleSurahInfoDispatch', isShowingInfo);
+    const { toggleSurahInfoDispatch } = this.props;
     toggleSurahInfoDispatch();
   }
 

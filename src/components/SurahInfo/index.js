@@ -9,8 +9,6 @@ const style = require('./style.scss');
       isShowingInfo: state.surahs.isShowingInfo,
       currentSurah: state.surahs.entities[state.surahs.current]
     };
-  },
-  {
   }
 )
 export default class SurahInfo extends Component {
@@ -23,40 +21,20 @@ export default class SurahInfo extends Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    console.log('nextProps', nextProps);
     const { currentSurah } = this.props;
+
     if (!nextProps.isShowingInfo) {
       return;
     }
 
-    /*
-    var self = this;
-    let link = this.props.wikiLinks[nextProps.currentSurah.id];
-
-    $.ajax( {
-      url: `http://en.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&titles=${link}&redirects=true`,
-      dataType: 'jsonp',
-      type: 'get',
-      headers: {'Api-User-Agent': 'Example/1.0', 'Identify-Me': 'quran.com, mmahalwy@gmail.com'}
-    }).then(function(r) {
-      var page = Object.keys(r.query.pages)[0];
-
-      self.setState({
-        page: r.query.pages[page]
-      });
-
-      return;
-    });
-    */
     const surahInfo = require(`./htmls/${currentSurah.id}.html.js`);
+
     this.setState({
       page: surahInfo
     });
-    console.log('this used to fetch wikipedia', { surahInfo });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    console.log('should component update', nextProps);
     if (nextProps.currentSurah.id !== this.props.currentSurah.id) {
       return true;
     }
@@ -77,20 +55,20 @@ export default class SurahInfo extends Component {
 
     return (
       <div className={`col-md-12 ${style['surah-info']}`}>
-      <div className={`${style.row}`}>
-        <div className={`col-md-3 col-xs-6 ${style.bg}`} style={{background: `url(/images/${this.props.currentSurah.revelation.place}.jpg) center center no-repeat`}}>
+        <div className={`${style.row}`}>
+          <div className={`col-md-3 col-xs-6 ${style.bg}`} style={{background: `url(/images/${this.props.currentSurah.revelation.place}.jpg) center center no-repeat`}}>
+          </div>
+          <div className={`col-md-1 col-xs-6 ${style.list}`}>
+            <dl>
+              <dt>VERSES</dt>
+              <dd className="text-uppercase">{this.props.currentSurah.ayat}</dd>
+            </dl>
+          </div>
+          <div className={`col-md-8 ${style.info}`}>
+            <div dangerouslySetInnerHTML={{__html: html}}></div>
+            <div><p><em>Source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Qur'an</em></p></div>
+          </div>
         </div>
-        <div className={`col-md-1 col-xs-6 ${style.list}`}>
-          <dl>
-            <dt>VERSES</dt>
-            <dd className="text-uppercase">{this.props.currentSurah.ayat}</dd>
-          </dl>
-        </div>
-        <div className={`col-md-8 ${style.info}`}>
-          <div dangerouslySetInnerHTML={{__html: html}}></div>
-          <div><em>Source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Qur'an</em></div>
-        </div>
-      </div>
       </div>
     );
   }

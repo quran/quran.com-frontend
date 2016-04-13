@@ -37,7 +37,6 @@ export default function reducer(state = initialState, action = {}) {
       console.log(action);
       return state;
     case TOGGLE_SURAH_INFO:
-      console.log('TOGGLE_SURAH_INFO', state.isShowingInfo);
       return {
         ...state,
         isShowingInfo: !state.isShowingInfo
@@ -86,7 +85,6 @@ export function isAllLoaded(globalState) {
 }
 
 export function toggleSurahInfo() {
-  console.log('TOGGLE_SURAH_INFO');
   return {
     type: TOGGLE_SURAH_INFO
   };

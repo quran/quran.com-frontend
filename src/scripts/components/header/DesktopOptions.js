@@ -10,11 +10,9 @@ import debug from 'utils/Debug';
 class DesktopOptions extends React.Component {
   constructor(props) {
     super(props);
-    console.log('desktop options');
   }
 
   render() {
-    console.log('does this still render');
     debug('component:DESKTOP OPTIONS', 'Render');
     return (
       <div className="row navbar-bottom hidden-xs hidden-sm">

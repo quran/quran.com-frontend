@@ -1,21 +1,14 @@
 @import '../../styles/_bootstrap-config.scss';
 
 :local .surah-info{
-  //padding-top: 131px;
-  //padding-left: 0;
-  padding-right: 0;
-  //height: 85vh;
-  margin-bottom: 30px;
-
+  position: absolute;
+  left: 0;
   height: 60vh;
   width: 100vw;
-  left: 0;
-  position: absolute;
   margin-left: -20px;
   padding-left: 20px;
-
-
-
+  padding-right: 0;
+  margin-bottom: 30px;
 
   .row{
     height: 100%;
