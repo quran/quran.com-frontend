@@ -52,7 +52,7 @@ export default class SurahsDropdown extends Component {
     const { className } = this.props;
 
     return (
-      <div className={`dropdown border-right ${className} ${styles.dropdown}`}>
+      <div className={`dropdown ${className} ${styles.dropdown}`}>
         <button
           className={`btn btn-link no-outline`}
           id="surahs-dropdown"

@@ -1,44 +1,29 @@
-import React from 'react';
-import classNames from 'classnames';
-import * as SurahsActions from 'actions/SurahsActions';
+import React, { Component } from 'react';
 
-class InformationToggle extends React.Component {
-  constructor(props) {
-    super();
-
-    this.state = {
-      toggled: false
-    };
+export default class InformationToggle extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    if (nextProps.isShowingInfo !== this.props.isShowingInfo) {
+      return true;
+    }
+    console.log('this.props', this.props);
+    return false;
   }
+
 
   toggleInformationMode(e) {
     e.preventDefault();
-
-    this.setState({
-      toggled: !this.state.toggled
-    });
-
-    this.context.executeAction(SurahsActions.showInfo);
+    console.log('toggleInformationMode', this.props.isShowingInfo);
+    this.props.onClick();
   }
 
   render() {
-    var classes = classNames({
-      active: this.state.toggled,
-      'nav-link': true,
-      'toggle-icon': true
-    });
-
     return (
       <a title="See information for this surah"
-      className={classes} onClick={this.toggleInformationMode.bind(this)}>
+        className={`nav-link toggle-icon${this.props.isShowingInfo? ' active' : ''}`}
+        onClick={this.toggleInformationMode.bind(this)}>
         <i className="ss-icon ss-info" />
       </a>
     );
   }
 }
 
-InformationToggle.contextTypes = {
-  executeAction: React.PropTypes.func.isRequired
-};
-
-export default InformationToggle;

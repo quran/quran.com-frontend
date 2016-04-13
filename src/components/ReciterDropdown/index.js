@@ -174,7 +174,7 @@ export default class ReciterDropdown extends Component {
     const { className } = this.props;
 
     return (
-      <div className={`dropdown border-right ${className} ${style.dropdown}`}>
+      <div className={`dropdown ${className} ${style.dropdown}`}>
         <button
           className={`btn btn-link no-outline`}
           id="reciters-dropdown"

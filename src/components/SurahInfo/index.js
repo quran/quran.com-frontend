@@ -1,10 +1,19 @@
-import React from 'react';
-import SurahsStore from 'stores/SurahsStore';
-import connectToStores from 'fluxible-addons-react/connectToStores';
-import $ from 'jquery';
-import debug from 'utils/Debug';
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
-class SurahInfo extends React.Component {
+const style = require('./style.scss');
+
+@connect(
+  (state, ownProps) => {
+    return {
+      isShowingInfo: state.surahs.isShowingInfo,
+      currentSurah: state.surahs.entities[state.surahs.current]
+    };
+  },
+  {
+  }
+)
+export default class SurahInfo extends Component {
   constructor() {
     super();
 
@@ -14,10 +23,13 @@ class SurahInfo extends React.Component {
   }
 
   componentWillUpdate(nextProps, nextState) {
-    if (!nextProps.isExpanded) {
+    console.log('nextProps', nextProps);
+    const { currentSurah } = this.props;
+    if (!nextProps.isShowingInfo) {
       return;
     }
 
+    /*
     var self = this;
     let link = this.props.wikiLinks[nextProps.currentSurah.id];
 
@@ -35,22 +47,25 @@ class SurahInfo extends React.Component {
 
       return;
     });
+    */
+    const surahInfo = require(`./htmls/${currentSurah.id}.html.js`);
+    this.setState({
+      page: surahInfo
+    });
+    console.log('this used to fetch wikipedia', { surahInfo });
   }
 
   shouldComponentUpdate(nextProps, nextState) {
+    console.log('should component update', nextProps);
     if (nextProps.currentSurah.id !== this.props.currentSurah.id) {
       return true;
     }
 
-    if (nextProps.isExpanded !== this.props.isExpanded) {
+    if (nextProps.isShowingInfo !== this.props.isShowingInfo) {
       return true;
     }
 
-    if (nextState.page && nextState.page.extract) {
-      if (this.state.page && this.state.page.pageid === nextState.page.pageid) {
-        return false;
-      }
-
+    if (this.state.page !== nextState.page) {
       return true;
     }
 
@@ -58,10 +73,10 @@ class SurahInfo extends React.Component {
   }
 
   renderInformation() {
-    var extract = this.state.page ? this.state.page.extract : '';
+    var html = this.state.page;
 
     return (
-      <div className="col-md-12 surah-info">
+      <div className={`col-md-12 ${style['surah-info']}`}>
       <div className="row">
         <div className="col-md-3 col-xs-6 bg" style={{background: `url(/images/${this.props.currentSurah.revelation.place}.jpg) center center no-repeat`}}>
         </div>
@@ -75,7 +90,7 @@ class SurahInfo extends React.Component {
             <dd className="text-uppercase">{this.props.currentSurah.ayat}</dd>
           </dl>
         </div>
-        <div className="col-md-8 info" dangerouslySetInnerHTML={{__html: extract}}>
+        <div className="col-md-8 info" dangerouslySetInnerHTML={{__html: html}}>
         </div>
       </div>
       </div>
@@ -83,9 +98,7 @@ class SurahInfo extends React.Component {
   }
 
   render() {
-    debug('component:SurahInfo', 'Render');
-
-    if (this.props.isExpanded) {
+    if (this.props.isShowingInfo) {
       return this.renderInformation();
     }
     else {
@@ -93,15 +106,3 @@ class SurahInfo extends React.Component {
     }
   }
 }
-
-SurahInfo = connectToStores(SurahInfo, [SurahsStore], (context, props) => {
-  const surahsStore = context.getStore(SurahsStore);
-
-  return {
-    isExpanded: surahsStore.getIsShowingInfo(),
-    currentSurah: surahsStore.getSurah(),
-    wikiLinks: surahsStore.getWikiLinks()
-  };
-});
-
-export default SurahInfo;

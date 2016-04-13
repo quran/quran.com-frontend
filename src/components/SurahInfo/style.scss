@@ -1,8 +1,12 @@
-.surah-info{
-  height: 50vh;
+@import '../../styles/_bootstrap-config.scss';
 
-  .row{
+.surah-info{
+  //height: 50vh;
+  height: 0;
+
+  :global(.row){
     height: 100%;
+    background: red;
   }
 
   .bg{
