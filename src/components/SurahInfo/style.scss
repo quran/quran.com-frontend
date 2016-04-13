@@ -37,14 +37,14 @@
     h2{
       font-size: 22px;
       @extend .time-new;
-      font-family: 'Times New Roman', sans-serif;
+      font-family: Montserrat, Arial, sans-serif;
       font-weight: bold;
     }
 
     p{
       @extend .time-new;
-      font-family: 'Times New Roman', sans-serif;
-      font-size: 17px;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
     }
   }
 
