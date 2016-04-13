@@ -78,5 +78,5 @@ Islam so firmly that they were ready to sacrifice every personal interest for it
 <p>Sanctity of treaties has been enjoined and the Muslims commanded to observe them as long as the other party does not break them. <strong>55 - 59</strong></p>
 <p>The Muslims should always be prepared for war on every front, but should be ready to make peace if the other party is inclined towards it. <strong>60 - 66</strong></p>
 <p>In these verses, instructions about prisoners of war have been given. <strong>67 - 71</strong></p>
-<p>In order to keep the Muslims joined together against their enemies, they have been taught to have cordial relations with one another. <strong>72 - 75</strong></p>;
+<p>In order to keep the Muslims joined together against their enemies, they have been taught to have cordial relations with one another. <strong>72 - 75</strong></p>
 `

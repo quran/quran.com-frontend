@@ -84,5 +84,5 @@ childhood to youth. So, there could be no question of his falling in love with h
     <p>In verse 59 the third step for social reform was taken. All the Muslim women were commanded that they should come out well covered with the outer garments and covering their faces whenever they came out of their houses for a genuine need.</p>
   </li>
 </ol>
-<p>After this till the end of the Surah the hypocrites and other foolish and mean people have been rebuked for the propaganda that they were carrying on at that time against Islam and the Muslims.</p>;
+<p>After this till the end of the Surah the hypocrites and other foolish and mean people have been rebuked for the propaganda that they were carrying on at that time against Islam and the Muslims.</p>
 `

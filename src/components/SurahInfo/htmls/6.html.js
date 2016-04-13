@@ -54,5 +54,5 @@ obvious that with the help of such evidence as this, we cannot say with precisio
 <p>Another proof of his Prophethood is the Book, which has been sent down to him by Allah, for its teachings show the right guidance in regard to creed and practice. <strong>91 - 108</strong></p>
 <p>Divine restrictions have been contrasted with the superstitious restrictions of the pagan Arabs in order to show the striking differences between the two and thus prove the Quran to be a Revealed Book. <strong>109 - 154</strong></p>
 <p>The Jews, who were criticized in vv. 144 - 147 along with the pagan Arabs, have been urged to compare the teachings of the Quran with those of the Torah so that they might recognize their similarity and give up their lame excuses against it, and adopt its Guidance to escape the retribution on the Day of Resurrection. <strong>155 - 160</strong></p>
-<p>This is the conclusion of the discourse: the Holy Prophet has been instructed in a beautiful and forceful manner to proclaim fearlessly the articles of the Islamic Creed and their implications. <strong>161 - 165</strong></p>;
+<p>This is the conclusion of the discourse: the Holy Prophet has been instructed in a beautiful and forceful manner to proclaim fearlessly the articles of the Islamic Creed and their implications. <strong>161 - 165</strong></p>
 `

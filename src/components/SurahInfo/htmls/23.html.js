@@ -27,5 +27,5 @@ export default `
 <p>In this passage different arguments have been used to convince them that Muhammad (Allah's peace be upon him) was a true Prophet of Allah. Then they have been told that the Famine (vv. 75 - 76) was merely a warning and therefore "it is better for you to mend your ways; otherwise you will be visited by a terrible scourge." <strong>68 - 77</strong></p>
 <p>Again they have been invited to observe the Signs in the universe and in their own selves because these are clear proofs of the truth of the Message of the Holy Prophet. <strong>78 - 95</strong></p>
 <p>The Holy Prophet has been told not to adopt any wrong way in retaliation to counteract the evil ways of the enemies, and to guard against the incitement of Satan. <strong>96 - 97</strong></p>
-<p>In this concluding passage, the enemies of the truth have been warned that they shall have to render an account in the Hereafter and bear the consequences of their persecution of the Believers; therefore they should mend their ways. <strong>98 - 118</strong></p>;
+<p>In this concluding passage, the enemies of the truth have been warned that they shall have to render an account in the Hereafter and bear the consequences of their persecution of the Believers; therefore they should mend their ways. <strong>98 - 118</strong></p>
 `

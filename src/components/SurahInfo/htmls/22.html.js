@@ -18,5 +18,5 @@ specifically mentioned. It has been made plain that Hajj(pilgrimage) had been en
     <p>In order to counteract the tyranny of the Quraish, the Muslims were allowed to fight with them. They were also given instructions to adopt the right and just attitude as and when they acquired power to rule in the land. Moreover, the Believers have been officially given the name of "Muslims", saying, "You are the real heirs to Abraham and you have been chosen to become witnesses of the Truth before mankind. Therefore you should establish salat and pay the zakat dues in order to become the best models of righteous life and perform Jihad for propagating the Word of Allah." (vv. 41,77, 78.)</p>
   </li>
 </ol>
-<p>It will be worth while to keep in view the introductions to Chapters II (Al-Baqarah) and VIII (Al Anfal).</p>;
+<p>It will be worth while to keep in view the introductions to Chapters II (Al-Baqarah) and VIII (Al Anfal).</p>
 `

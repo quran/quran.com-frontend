@@ -116,5 +116,5 @@ there was a general turmoil in the mosque, which would have developed into a rio
   </li>
 </ol>
 <p>Above all, the most conspicuous thing about this discourse is that it is free from the bitterness which inevitably follows such shameful and absurd attacks. Instead of showing any wrath at this provocation, the discourse prescribes some laws and regulations and enjoins reformative commandments and issues wise instructions that were required at the time for the education and training of the Community. Incidentally, this teaches us how to deal with such provocative mischiefs coolly, wisely and generously. At the same time, it is a clear proof that this is not the word of Prophet Muhammad (Allah's peace and blessings be upon him) but of a Being Who is observing all human conditions and affairs from the highest level, and guiding mankind without any personal prejudices, feelings and leanings. Had this been the word of the Holy Prophet; there would have been at least some tinge of natural bitterness in spite of his great generosity and forbearance, for it is but human that a noble
-man naturally become enraged when his own honor is attacked in this mean manner.</p>;
+man naturally become enraged when his own honor is attacked in this mean manner.</p>
 `

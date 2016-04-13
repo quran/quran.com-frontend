@@ -35,5 +35,5 @@ export default `
   </li>
 </ol>
 <p>In vv. 92-106, it has been declared that only those who follow the Right Way, will come out successful in the final judgment of God and those who discard it shall meet with the worst consequences.</p>
-<p>In vv. 107-112, the people have been told that it is a great favor of Allah that He has sent His Messenger to inform them beforehand of this Reality and that those, who consider his coming to be an affliction instead of a blessing, are foolish people.</p>;
+<p>In vv. 107-112, the people have been told that it is a great favor of Allah that He has sent His Messenger to inform them beforehand of this Reality and that those, who consider his coming to be an affliction instead of a blessing, are foolish people.</p>
 `

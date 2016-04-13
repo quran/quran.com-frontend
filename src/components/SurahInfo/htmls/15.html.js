@@ -13,5 +13,5 @@ export default `
     <p>comfort and encouragement to the Holy Prophet,</p>
   </li>
 </ol>
-<p>It does not mean that this Surah does not contain admonition and instructions. As a matter of fact, the Quran never confines itself to mere warning; rebuke and censure, but resorts to precept in every suitable place. Accordingly, this Surah contains brief arguments for <em>Tauhid</em> on the one hand, and admonition in the story of Adam and Satan on the other.</p>;
+<p>It does not mean that this Surah does not contain admonition and instructions. As a matter of fact, the Quran never confines itself to mere warning; rebuke and censure, but resorts to precept in every suitable place. Accordingly, this Surah contains brief arguments for <em>Tauhid</em> on the one hand, and admonition in the story of Adam and Satan on the other.</p>
 `

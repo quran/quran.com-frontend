@@ -86,7 +86,9 @@ export default class SurahInfo extends Component {
             <dd className="text-uppercase">{this.props.currentSurah.ayat}</dd>
           </dl>
         </div>
-        <div className={`col-md-8 ${style.info}`} dangerouslySetInnerHTML={{__html: html}}>
+        <div className={`col-md-8 ${style.info}`}>
+          <div dangerouslySetInnerHTML={{__html: html}}></div>
+          <div><em>Source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Qur'an</em></div>
         </div>
       </div>
       </div>
