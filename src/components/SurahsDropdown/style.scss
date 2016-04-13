@@ -5,3 +5,8 @@
     overflow-x: hidden;
   }
 }
+
+:local .arabic_name {
+  direction: rtl;
+  padding-right: 5px;
+}

@@ -1,0 +1,74 @@
+@import '../../styles/_bootstrap-config.scss';
+
+:local .surah-info{
+  position: absolute;
+  left: 0;
+  height: 60vh;
+  width: 100vw;
+  margin-left: -20px;
+  padding-left: 20px;
+  padding-right: 0;
+  margin-bottom: 30px;
+
+  .row{
+    height: 100%;
+  }
+
+  .bg{
+    height: 100%;
+    background-size: cover !important;
+  }
+
+  .list{
+    background: lighten($text-muted, 10%);
+    height: 100%;
+  }
+
+  .info{
+    height: 100%;
+    overflow-y:auto;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    @extend .time-new;
+    font-family: 'Times New Roman', sans-serif;
+    font-size: 16px;
+    background: lighten($text-muted, 15%);
+
+    h2{
+      font-size: 22px;
+      @extend .time-new;
+      font-family: Montserrat, Arial, sans-serif;
+      font-weight: bold;
+    }
+
+    h3{
+      font-size: 20px;
+      @extend .time-new;
+      font-family: Montserrat, Arial, sans-serif;
+      font-weight: bold;
+  }
+ 
+    p{
+      @extend .time-new;
+      font-family: Arial, sans-serif;
+      font-size: 16px;
+    }
+  }
+
+  dl{
+    padding-top: 8px;
+    text-align: right;
+
+    dt{
+      font-size: 10px;
+      font-weight: 500;
+      padding-top: 25px;
+      padding-bottom: 5px;
+    }
+
+    dd{
+      color: $brand-primary;
+      font-weight: 300;
+    }
+  }
+}

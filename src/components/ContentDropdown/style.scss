@@ -1,8 +1,6 @@
 @import '../../styles/_bootstrap-config.scss';
 
 :local .dropdown{
-  min-width: 200px;
-
   @media (max-width: 1150px) {
     min-width: initial;
 
@@ -18,9 +16,14 @@
   }
 
   :global(ul){
-    height: 400px;
-    overflow: auto;
-    width: 100%;
+    height: 315px;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    li {
+      padding-right: 20px;
+      white-space: nowrap;
+    }
   }
 }
 

@@ -15,14 +15,6 @@ nav.navbar{
     text-decoration: none;
   }
 
-  & + div{
-    padding-top: 190px;
-
-    @media(max-width: $screen-xs-max) {
-      padding-top: 100px;
-    }
-  }
-
   &.scroll-up{
     top: (-$navbar-scroll-up-height);
   }
@@ -72,7 +64,7 @@ nav.navbar{
     &.toggle-icon{
       font-size: 20px;
       line-height: 100%;
-      margin-top: 16px;
+      margin-top: 14px;
 
       .ss-info{
         font-size: 24px;

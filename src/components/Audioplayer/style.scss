@@ -1,5 +1,9 @@
 @import '../../styles/_bootstrap-config.scss';
 
+:local .padding_left {
+  padding-left: 40px
+}
+
 :local .container{
   position:relative;
   display: block;

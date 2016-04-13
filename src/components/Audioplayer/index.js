@@ -383,7 +383,7 @@ export default class Audioplayer extends Component {
     }
 
     return (
-      <div className={`${style.container} ${className} navbar-item border-right`}>
+      <div className={`${style.padding_left} ${style.container} ${className}`}>
         <div className={style.verse}>{currentAyah.split(':')[1]}</div>
         {content}
         <div className={style.wrapper}>

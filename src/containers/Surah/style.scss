@@ -1,0 +1,30 @@
+@import '../../styles/_bootstrap-config.scss';
+
+:local .dropdown {
+  padding-left: 0;
+  padding-right: 0;
+
+  &> button {
+    width: 100%;
+    text-align: left;
+  }
+
+  :global(.caret) {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    margin-top: -1px;
+  }
+}
+
+.rightborder {
+  border-right: 1px solid rgba(173, 170, 156, 0.5);
+}
+
+:local .surah-container {
+  padding-top: 190px;
+
+  @media(max-width: $screen-xs-max) {
+    padding-top: 100px;
+  }
+}
