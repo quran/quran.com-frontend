@@ -15,6 +15,8 @@ import ReciterDropdown from '../../components/ReciterDropdown';
 import SurahsDropdown from '../../components/SurahsDropdown';
 import VersesDropdown from '../../components/VersesDropdown';
 import FontSizeDropdown from '../../components/FontSizeDropdown';
+import InformationToggle from '../../components/InformationToggle';
+import SurahInfo from '../../components/SurahInfo';
 import MasterHeader from 'components/header/MasterHeader';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import Ayah from 'components/surah/Ayah';
@@ -25,6 +27,8 @@ import scroller from '../../scripts/utils/scroller';
 
 // Helpers
 import makeHeadTags from '../../helpers/makeHeadTags';
+
+const style = require('./style.scss');
 
 import debug from 'utils/Debug';
 
@@ -142,12 +146,14 @@ export default class Surah extends Component {
     const lazyLoadFinished = sameSurahIdRouting && (!this.props.isLoaded && nextProps.isLoaded);
     const hasReadingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
     const hasFontSizeChange = this.props.options.fontSize !== nextProps.options.fontSize;
+    const hasSurahInfoChange = this.props.options.isShowingSurahInfo !== nextProps.options.isShowingSurahInfo;
 
     return (
       !sameSurahIdRouting ||
       lazyLoadFinished ||
       hasReadingModeChange ||
-      hasFontSizeChange
+      hasFontSizeChange ||
+      hasSurahInfoChange
     );
   }
 
@@ -196,41 +202,6 @@ export default class Surah extends Component {
     return null;
   }
 
-  renderPagination() {
-    const { isEndOfSurah, surah } = this.props;
-    const { lazyLoading } = this.state;
-
-    if (isEndOfSurah && !lazyLoading) {
-      return (
-        <ul className="pager">
-          {
-            surah.id > 1 &&
-            <li className="previous">
-              <Link to={`/${surah.id * 1 - 1}`}>
-                &larr; Previous Surah
-              </Link>
-            </li>
-          }
-          <li className="text-center">
-            <Link to={`/${surah.id}`}>
-              Beginning of Surah
-            </Link>
-          </li>
-          {
-            surah.id < 114 &&
-            <li className="next">
-              <Link to={`/${surah.id * 1 + 1}`}>
-                Next Surah &rarr;
-              </Link>
-            </li>
-          }
-        </ul>
-      );
-    }
-
-    return <p>Loading...</p>;
-  }
-
   handleOptionChange(payload) {
     const { setOptionDispatch, loadAyahsDispatch, surah, ayahIds, options } = this.props;
     const from = ayahIds.first();
@@ -241,6 +212,12 @@ export default class Surah extends Component {
   }
 
   handleFontSizeChange = (payload) => {
+    const { setOptionDispatch } = this.props;
+
+    return setOptionDispatch(payload);
+  }
+
+  handleSurahInfoToggle = (payload) => {
     const { setOptionDispatch } = this.props;
 
     return setOptionDispatch(payload);
@@ -318,6 +295,41 @@ export default class Surah extends Component {
     }
   }
 
+  renderPagination() {
+    const { isEndOfSurah, surah } = this.props;
+    const { lazyLoading } = this.state;
+
+    if (isEndOfSurah && !lazyLoading) {
+      return (
+        <ul className="pager">
+          {
+            surah.id > 1 &&
+            <li className="previous">
+              <Link to={`/${surah.id * 1 - 1}`}>
+                &larr; Previous Surah
+              </Link>
+            </li>
+          }
+          <li className="text-center">
+            <Link to={`/${surah.id}`}>
+              Beginning of Surah
+            </Link>
+          </li>
+          {
+            surah.id < 114 &&
+            <li className="next">
+              <Link to={`/${surah.id * 1 + 1}`}>
+                Next Surah &rarr;
+              </Link>
+            </li>
+          }
+        </ul>
+      );
+    }
+
+    return <p>Loading...</p>;
+  }
+
   renderAyahs() {
     const { ayahs } = this.props;
 
@@ -354,8 +366,15 @@ export default class Surah extends Component {
 
     return (
       <Row>
-        <Col md={3} mdOffset={9} className="text-right">
+        <Col md={6} mdOffset={6} className="text-right">
           <ul className="list-inline">
+            <li>
+              <InformationToggle
+                onToggle={this.handleSurahInfoToggle}
+                isShowingSurahInfo={options.isShowingSurahInfo}
+              />
+            </li>
+            <li>|</li>
             <li>
               <FontSizeDropdown
                 options={options}
@@ -417,37 +436,52 @@ export default class Surah extends Component {
         />
         <MasterHeader surah={surah}>
           <Row className="navbar-bottom">
-            <SurahsDropdown
-              surahs={surahs}
-              className="col-md-1"
-            />
-            <VersesDropdown
-              ayat={surah.ayat}
-              loadedAyahs={ayahIds}
-              isReadingMode={options.isReadingMode}
-              onClick={this.handleVerseDropdownClick.bind(this)}
-              className="col-md-1"
-            />
-            <ReciterDropdown
-              onOptionChange={this.handleOptionChange.bind(this)}
-              options={options}
-              className="col-md-1"
-            />
-            <Audioplayer
-              surah={surah}
-              onLoadAyahs={this.lazyLoadAyahs.bind(this)}
-              className="col-md-3"
-            />
-            <ContentDropdown
-              onOptionChange={this.handleOptionChange.bind(this)}
-              options={options}
-              className="col-md-2"
-            />
-            <SearchInput className="col-md-4 search-input" />
+            <Col md={8}>
+              <Row>
+                <SurahsDropdown
+                  surahs={surahs}
+                  className={`col-md-3 ${style.rightborder} ${style.dropdown}`}
+                />
+                <VersesDropdown
+                  ayat={surah.ayat}
+                  loadedAyahs={ayahIds}
+                  isReadingMode={options.isReadingMode}
+                  onClick={this.handleVerseDropdownClick.bind(this)}
+                  className={`col-md-1 ${style.rightborder} ${style.dropdown}`}
+                />
+                <ReciterDropdown
+                  onOptionChange={this.handleOptionChange.bind(this)}
+                  options={options}
+                  className={`col-md-2 ${style.rightborder} ${style.dropdown}`}
+                />
+                <Audioplayer
+                  surah={surah}
+                  onLoadAyahs={this.lazyLoadAyahs.bind(this)}
+                  className={`col-md-4 ${style.rightborder}`}
+                />
+                <ContentDropdown
+                  onOptionChange={this.handleOptionChange.bind(this)}
+                  options={options}
+                  className={`col-md-2 ${style.rightborder} ${style.dropdown}`}
+                />
+              </Row>
+            </Col>
+            <Col md={4}>
+              <Row>
+                <SearchInput
+                  className={`col-md-12 search-input`}
+                />
+              </Row>
+            </Col>
           </Row>
         </MasterHeader>
-        <div className="container-fluid">
+        <div className={`container-fluid ${style['surah-container']}`}>
           <Row>
+            <SurahInfo
+              surah={surah}
+              isShowingSurahInfo={options.isShowingSurahInfo}
+              onClose={this.handleSurahInfoToggle}
+            />
             <Col md={10} mdOffset={1}>
               {this.renderTopOptions()}
               <Bismillah surah={surah} />

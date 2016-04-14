@@ -500,7 +500,7 @@ export default class ContentDropdown extends Component {
     const { className, options: { content } } = this.props;
 
     return (
-      <div className={`dropdown border-right ${className} ${style.dropdown}`}>
+      <div className={`dropdown ${className} ${style.dropdown}`}>
         <button
           className={`btn btn-link no-outline`}
           id="content-dropdown"

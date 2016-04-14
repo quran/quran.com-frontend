@@ -50,7 +50,7 @@ export default class VersesDropdown extends Component {
     );
 
     return (
-      <div className={`dropdown border-right ${className} ${style.dropdown}`}>
+      <div className={`dropdown ${className} ${style.dropdown}`}>
         <button
           className={`btn btn-link no-outline`}
           id="verses-dropdown"

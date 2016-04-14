@@ -5,6 +5,7 @@ const SET_OPTION = '@@quran/options/SET_OPTION';
 
 const initialState = {
   isReadingMode: false,
+  isShowingSurahInfo: false,
   audio: 8,
   quran: 1,
   content: [19],
