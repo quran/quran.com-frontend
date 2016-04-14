@@ -83,9 +83,3 @@ export function isSingleLoaded(globalState, id) {
 export function isAllLoaded(globalState) {
   return Object.keys(globalState.surahs.entities).length === 114;
 }
-
-export function toggleSurahInfo() {
-  return {
-    type: TOGGLE_SURAH_INFO
-  };
-}

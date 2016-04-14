@@ -33,7 +33,7 @@ const style = require('./style.scss');
 import debug from 'utils/Debug';
 
 import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah } from '../../redux/modules/ayahs';
-import { isAllLoaded, loadAll, toggleSurahInfo, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
+import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
 import { setOption, toggleReadingMode } from '../../redux/modules/options';
 
 let lastScroll = 0;
@@ -119,7 +119,6 @@ let lastScroll = 0;
     loadAyahsDispatch: loadAyahs,
     setOptionDispatch: setOption,
     toggleReadingModeDispatch: toggleReadingMode,
-    toggleSurahInfoDispatch: toggleSurahInfo,
     setCurrentAyah: setCurrentAyah,
     push
   }
@@ -148,12 +147,14 @@ export default class Surah extends Component {
     const lazyLoadFinished = sameSurahIdRouting && (!this.props.isLoaded && nextProps.isLoaded);
     const hasReadingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
     const hasFontSizeChange = this.props.options.fontSize !== nextProps.options.fontSize;
+    const hasSurahInfoChange = this.props.options.isShowingSurahInfo !== nextProps.options.isShowingSurahInfo;
 
     return (
       !sameSurahIdRouting ||
       lazyLoadFinished ||
       hasReadingModeChange ||
-      hasFontSizeChange
+      hasFontSizeChange ||
+      hasSurahInfoChange
     );
   }
 
@@ -202,41 +203,6 @@ export default class Surah extends Component {
     return null;
   }
 
-  renderPagination() {
-    const { isEndOfSurah, surah } = this.props;
-    const { lazyLoading } = this.state;
-
-    if (isEndOfSurah && !lazyLoading) {
-      return (
-        <ul className="pager">
-          {
-            surah.id > 1 &&
-            <li className="previous">
-              <Link to={`/${surah.id * 1 - 1}`}>
-                &larr; Previous Surah
-              </Link>
-            </li>
-          }
-          <li className="text-center">
-            <Link to={`/${surah.id}`}>
-              Beginning of Surah
-            </Link>
-          </li>
-          {
-            surah.id < 114 &&
-            <li className="next">
-              <Link to={`/${surah.id * 1 + 1}`}>
-                Next Surah &rarr;
-              </Link>
-            </li>
-          }
-        </ul>
-      );
-    }
-
-    return <p>Loading...</p>;
-  }
-
   handleOptionChange(payload) {
     const { setOptionDispatch, loadAyahsDispatch, surah, ayahIds, options } = this.props;
     const from = ayahIds.first();
@@ -247,6 +213,12 @@ export default class Surah extends Component {
   }
 
   handleFontSizeChange = (payload) => {
+    const { setOptionDispatch } = this.props;
+
+    return setOptionDispatch(payload);
+  }
+
+  handleSurahInfoToggle = (payload) => {
     const { setOptionDispatch } = this.props;
 
     return setOptionDispatch(payload);
@@ -280,11 +252,6 @@ export default class Surah extends Component {
     this.lazyLoadAyahs(() => setTimeout(() => {
       scroller.scrollTo('ayah:'+ ayahNum);
     }, 1000)); // then scroll to it
-  }
-
-  handleSurahInfoToggle() {
-    const { toggleSurahInfoDispatch } = this.props;
-    toggleSurahInfoDispatch();
   }
 
   onScroll() {
@@ -329,6 +296,41 @@ export default class Surah extends Component {
     }
   }
 
+  renderPagination() {
+    const { isEndOfSurah, surah } = this.props;
+    const { lazyLoading } = this.state;
+
+    if (isEndOfSurah && !lazyLoading) {
+      return (
+        <ul className="pager">
+          {
+            surah.id > 1 &&
+            <li className="previous">
+              <Link to={`/${surah.id * 1 - 1}`}>
+                &larr; Previous Surah
+              </Link>
+            </li>
+          }
+          <li className="text-center">
+            <Link to={`/${surah.id}`}>
+              Beginning of Surah
+            </Link>
+          </li>
+          {
+            surah.id < 114 &&
+            <li className="next">
+              <Link to={`/${surah.id * 1 + 1}`}>
+                Next Surah &rarr;
+              </Link>
+            </li>
+          }
+        </ul>
+      );
+    }
+
+    return <p>Loading...</p>;
+  }
+
   renderAyahs() {
     const { ayahs } = this.props;
 
@@ -365,8 +367,15 @@ export default class Surah extends Component {
 
     return (
       <Row>
-        <Col md={3} mdOffset={9} className="text-right">
+        <Col md={6} mdOffset={6} className="text-right">
           <ul className="list-inline">
+            <li>
+              <InformationToggle
+                onToggle={this.handleSurahInfoToggle}
+                isShowingSurahInfo={options.isShowingSurahInfo}
+              />
+            </li>
+            <li>|</li>
             <li>
               <FontSizeDropdown
                 options={options}
@@ -460,22 +469,20 @@ export default class Surah extends Component {
             </Col>
             <Col md={4}>
               <Row>
-                <InformationToggle
-                  onClick={this.handleSurahInfoToggle.bind(this)}
-                  className={`col-md-1 ${style.rightborder}`} />
-
                 <SearchInput
-                  className={`col-md-11 search-input`}
+                  className={`col-md-12 search-input`}
                 />
               </Row>
             </Col>
           </Row>
-          <Row>
-            <SurahInfo />
-          </Row>
         </MasterHeader>
         <div className={`container-fluid ${style['surah-container']}`}>
           <Row>
+            <SurahInfo
+              surah={surah}
+              isShowingSurahInfo={options.isShowingSurahInfo}
+              onClose={this.handleSurahInfoToggle}
+            />
             <Col md={10} mdOffset={1}>
               {this.renderTopOptions()}
               <Bismillah surah={surah} />

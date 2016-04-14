@@ -1,84 +1,47 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
+
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 
 const style = require('./style.scss');
 
-@connect(
-  (state, ownProps) => {
-    return {
-      isShowingInfo: state.surahs.isShowingInfo,
-      currentSurah: state.surahs.entities[state.surahs.current]
-    };
-  }
-)
 export default class SurahInfo extends Component {
-  constructor() {
-    super();
-
-    this.state = {
-      page: null
-    };
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    const { currentSurah } = this.props;
-
-    if (!nextProps.isShowingInfo) {
-      return;
-    }
-
-    const surahInfo = require(`./htmls/${currentSurah.id}.html.js`);
-
-    this.setState({
-      page: surahInfo
-    });
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (nextProps.currentSurah.id !== this.props.currentSurah.id) {
-      return true;
-    }
-
-    if (nextProps.isShowingInfo !== this.props.isShowingInfo) {
-      return true;
-    }
-
-    if (this.state.page !== nextState.page) {
-      return true;
-    }
-
-    return false;
-  }
-
-  renderInformation() {
-    var html = this.state.page;
+  render() {
+    const { surah, isShowingSurahInfo, onClose } = this.props;
+    const html = require(`./htmls/${surah.id}.html.js`);
 
     return (
-      <div className={`col-md-12 ${style['surah-info']}`}>
-        <div className={`${style.row}`}>
-          <div className={`col-md-3 col-xs-6 ${style.bg}`} style={{background: `url(/images/${this.props.currentSurah.revelation.place}.jpg) center center no-repeat`}}>
-          </div>
-          <div className={`col-md-1 col-xs-6 ${style.list}`}>
+      <Col xs={12} className={`${style.container} ${isShowingSurahInfo ? style.show : ''}`}>
+        <div className={`${style.close} ss-delete`} onClick={onClose.bind(null, {isShowingSurahInfo: !isShowingSurahInfo})} />
+        <Row className={style.row}>
+          <Col
+            md={3}
+            xs={6}
+            className={style.bg}
+            style={{background: `url(/images/${surah.revelation.place}.jpg) center center no-repeat`}}
+          />
+          <Col md={1} xs={6} className={style.list}>
             <dl>
               <dt>VERSES</dt>
-              <dd className="text-uppercase">{this.props.currentSurah.ayat}</dd>
+              <dd className="text-uppercase">{surah.ayat}</dd>
+              <dt>REVELATION</dt>
+              <dd className="text-uppercase">{surah.revelation.place}</dd>
+              <dt>ORDER</dt>
+              <dd className="text-uppercase">{surah.revelation.order}</dd>
+              <dt>PAGES</dt>
+              <dd className="text-uppercase">{surah.page.join('-')}</dd>
             </dl>
-          </div>
-          <div className={`col-md-8 ${style.info}`}>
-            <div dangerouslySetInnerHTML={{__html: html}}></div>
-            <div><p><em>Source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Qur'an</em></p></div>
-          </div>
-        </div>
-      </div>
+          </Col>
+          <Col md={8} className={style.info}>
+            <div dangerouslySetInnerHTML={{__html: html}} />
+            <div>
+              <p>
+                <em>Source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Quran</em>
+              </p>
+            </div>
+          </Col>
+        </Row>
+      </Col>
     );
-  }
-
-  render() {
-    if (this.props.isShowingInfo) {
-      return this.renderInformation();
-    }
-    else {
-      return <div />;
-    }
   }
 }
