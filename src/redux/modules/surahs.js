@@ -36,11 +36,6 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD_FAIL:
       console.log(action);
       return state;
-    case TOGGLE_SURAH_INFO:
-      return {
-        ...state,
-        isShowingInfo: !state.isShowingInfo
-      };
     default:
       return state;
   }
