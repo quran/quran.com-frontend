@@ -110,7 +110,6 @@ let lastScroll = 0;
       surahs: state.surahs.entities,
       isLoading: state.ayahs.loading,
       isLoaded: state.ayahs.loaded,
-      isShowingInfo: state.surahs.isShowingInfo,
       lines: state.lines.lines,
       options: state.options,
     };
