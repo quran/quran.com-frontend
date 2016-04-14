@@ -24,10 +24,6 @@ export default class SurahInfo extends Component {
             <dl>
               <dt>VERSES</dt>
               <dd className="text-uppercase">{surah.ayat}</dd>
-              <dt>REVELATION</dt>
-              <dd className="text-uppercase">{surah.revelation.place}</dd>
-              <dt>ORDER</dt>
-              <dd className="text-uppercase">{surah.revelation.order}</dd>
               <dt>PAGES</dt>
               <dd className="text-uppercase">{surah.page.join('-')}</dd>
             </dl>
