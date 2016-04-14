@@ -72,8 +72,16 @@ export default class Ayah extends Component {
       return;
     }
 
+    let token = 0;
     let text = this.props.ayah.quran.map(word => {
       let className = `${word.char.font} ${word.highlight ? word.highlight: null}`;
+
+      let id = null;
+      if (word.char.type == 'word') {
+        id = `token-${word.ayahKey.replace(/:/, '-')}-${token++}`;
+      } else {
+        id = `glyph-${word.char.font}-${word.char.codeDec}`;
+      }
 
       if (word.word.translation) {
         let tooltip = word.word.translation;
@@ -91,6 +99,7 @@ export default class Ayah extends Component {
 
         return (
           <b
+            id={id}
             key={word.char.code}
             className={`${className} pointer`}
             data-toggle="tooltip"
@@ -102,6 +111,7 @@ export default class Ayah extends Component {
       else {
         return (
           <b
+            id={id}
             className={`${className} pointer`}
             key={word.char.code}
             dangerouslySetInnerHTML={{__html: word.char.code}}

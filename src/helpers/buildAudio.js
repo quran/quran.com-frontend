@@ -48,6 +48,12 @@ export function buildAudioForAyah(audio, agent) {
   scopedAudio = new Audio();
   scopedAudio.preload = 'none';
 
+
+  if (audio.mp3.url && /AbdulBaset\/Murattal/.test(audio.mp3.url)) {
+    const filename = audio.mp3.url.replace(/^.*\/mp3\//, '');
+    audio.mp3.url = `http://mirrors.quranicaudio.com/everyayah/Abdul_Basit_Murattal_64kbps/${filename}`;
+  }
+
   if (testOperaOrFirefox) {
     if (audio.ogg.url) {
       scopedAudio.src = audio.ogg.url;

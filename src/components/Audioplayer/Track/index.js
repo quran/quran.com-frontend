@@ -153,10 +153,23 @@ export default class Track extends Component {
     const { progress } = this.state;
     const { isPlaying, file } = this.props;
 
-    if (isPlaying) {
+    const consoleLog = (name) => {
+      console.log(name, { file, currentTime: file.currentTime, duration: file.duration });
+    };
+    const filePlay = () => {
+      consoleLog('filePlay');
       file.play();
-    } else {
+    };
+
+    const filePause = () => {
+      consoleLog('filePause');
       file.pause();
+    };
+
+    if (isPlaying) {
+      filePlay();
+    } else {
+      filePause();
     }
 
     return (
