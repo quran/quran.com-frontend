@@ -18,7 +18,7 @@ export default class Ayah extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    return this.props.ayah !== nextProps.ayah;
+    return this.props.ayah !== nextProps.ayah || this.props.currentWord !== nextProps.currentWord;
   }
 
   renderTranslations() {
@@ -67,17 +67,28 @@ export default class Ayah extends Component {
     });
   }
 
+  onWordClick(event) {
+    if (event.target && /^token-/.test(event.target.id)) {
+      // call onWordClick in Surah
+      this.props.onWordClick(event.target.id.match(/\d+/g).join(':'));
+    }
+  }
+
   renderText() {
+    const { currentWord } = this.props;
     if (!this.props.ayah.quran[0].char) {
       return;
     }
 
     let token = 0;
     let text = this.props.ayah.quran.map(word => {
-      let className = `${word.char.font} ${word.highlight ? word.highlight: null}`;
-
       let id = null;
+      let active = word.char.type == 'word' && currentWord === token ? true : false; // TODO change currentWord to a different name
+      let className = `${word.char.font}${word.highlight? ' '+word.highlight : ''}${active? ' active' : ''}`; // TODO change active variable
+
+      let tokenId = null;
       if (word.char.type == 'word') {
+        tokenId = token;
         id = `token-${word.ayahKey.replace(/:/, '-')}-${token++}`;
       } else {
         id = `glyph-${word.char.font}-${word.char.codeDec}`;
@@ -100,6 +111,8 @@ export default class Ayah extends Component {
         return (
           <b
             id={id}
+            onClick={this.onWordClick.bind(this)}
+            data-token-id={tokenId}
             key={word.char.code}
             className={`${className} pointer`}
             data-toggle="tooltip"
@@ -112,6 +125,8 @@ export default class Ayah extends Component {
         return (
           <b
             id={id}
+            onClick={this.onWordClick.bind(this)}
+            data-token-id={tokenId}
             className={`${className} pointer`}
             key={word.char.code}
             dangerouslySetInnerHTML={{__html: word.char.code}}

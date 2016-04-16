@@ -32,7 +32,7 @@ const style = require('./style.scss');
 
 import debug from 'utils/Debug';
 
-import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah } from '../../redux/modules/ayahs';
+import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
 import { setOption, toggleReadingMode } from '../../redux/modules/options';
 
@@ -101,8 +101,12 @@ let lastScroll = 0;
     ayahIds.last = function() {return [...this][[...this].length - 1];};
 
     const isEndOfSurah = ayahIds.last() === surah.ayat;
+    const currentWord = state.ayahs.currentWord;
+    const isPlaying = state.audioplayer.isPlaying;
 
     return {
+      isPlaying,
+      currentWord,
       surah,
       ayahs,
       isEndOfSurah,
@@ -119,6 +123,8 @@ let lastScroll = 0;
     setOptionDispatch: setOption,
     toggleReadingModeDispatch: toggleReadingMode,
     setCurrentAyah: setCurrentAyah,
+    setCurrentWord: setCurrentWord,
+    clearCurrentWord: clearCurrentWord,
     push
   }
 )
@@ -138,6 +144,7 @@ export default class Surah extends Component {
       window.removeEventListener('scroll', this.onScroll, true);
       window.addEventListener('scroll', this.onScroll, true);
       lastScroll = window.pageYOffset;
+      window.push = this.props.push;
     }
   }
 
@@ -147,13 +154,15 @@ export default class Surah extends Component {
     const hasReadingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
     const hasFontSizeChange = this.props.options.fontSize !== nextProps.options.fontSize;
     const hasSurahInfoChange = this.props.options.isShowingSurahInfo !== nextProps.options.isShowingSurahInfo;
+    const hasCurrentWordChange = this.props.currentWord !== nextProps.currentWord;
 
     return (
       !sameSurahIdRouting ||
       lazyLoadFinished ||
       hasReadingModeChange ||
       hasFontSizeChange ||
-      hasSurahInfoChange
+      hasSurahInfoChange ||
+      hasCurrentWordChange
     );
   }
 
@@ -330,12 +339,24 @@ export default class Surah extends Component {
     return <p>Loading...</p>;
   }
 
+  onWordClick(id) {
+    const { setCurrentWord, clearCurrentWord, currentWord, isPlaying } = this.props;
+    if (id == currentWord && !isPlaying) {
+      clearCurrentWord();
+    } else {
+      setCurrentWord(id);
+    }
+  }
+
   renderAyahs() {
-    const { ayahs } = this.props;
+    const { ayahs, currentWord } = this.props;
 
     return Object.values(ayahs).map(ayah => (
+      // TODO: rename currentWord
       <Ayah
         ayah={ayah}
+        currentWord={currentWord && (new RegExp('^'+ ayah.ayahKey +':')).test(currentWord)? parseInt(currentWord.match(/\d+$/)[0], 10) : null}
+        onWordClick={this.onWordClick.bind(this)}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
       />
     ));

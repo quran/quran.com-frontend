@@ -140,6 +140,7 @@ export default class Audioplayer extends Component {
     const nextAyah = this.getNext();
     const ayahNum = nextAyah.replace( /^\d+:/, '' );
 
+    console.log('onNextAyah');
     pause();
 
     setCurrentAyah(nextAyah);
@@ -149,6 +150,7 @@ export default class Audioplayer extends Component {
     }
 
     if (wasPlaying) {
+      console.log('wasPlaying', nextAyah);
       play();
       this.preloadNext();
     }
