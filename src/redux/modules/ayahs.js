@@ -129,6 +129,7 @@ export function clearCurrentWord() {
 }
 
 export function setCurrentAyah(id) {
+  console.log('setCurrentAyah');
   return {
     type: SET_CURRENT_AYAH,
     id

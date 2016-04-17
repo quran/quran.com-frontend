@@ -10,6 +10,7 @@ import { setCurrentAyah } from '../../redux/modules/ayahs';
 
 // Components
 import Track from './Track';
+import TokenSegments from './TokenSegments';
 
 // Helpers
 // import debug from '../../scripts/helpers/debug';
@@ -140,7 +141,6 @@ export default class Audioplayer extends Component {
     const nextAyah = this.getNext();
     const ayahNum = nextAyah.replace( /^\d+:/, '' );
 
-    console.log('onNextAyah');
     pause();
 
     setCurrentAyah(nextAyah);
@@ -150,7 +150,6 @@ export default class Audioplayer extends Component {
     }
 
     if (wasPlaying) {
-      console.log('wasPlaying', nextAyah);
       play();
       this.preloadNext();
     }
@@ -398,7 +397,7 @@ export default class Audioplayer extends Component {
               onPause={pause}
               onEnd={this.onNextAyah.bind(this)}
             /> : null}
-          {false ?
+          {isLoadedOnClient && true ?
             <TokenSegments
               file={files[currentAyah]}
               isPlaying={isPlaying}

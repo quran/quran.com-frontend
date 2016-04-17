@@ -1,28 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { connect } from 'react-redux';
 
 import Tracker from './Tracker';
 // import debug from '../../../../scripts/helpers/debug';
 
-import { clearCurrentWord, setCurrentWord } from '../../../redux/modules/ayahs';
-
 const style = require('./style.scss');
 
-@connect(
-  (state, ownProps) => {
-    const ayahKey = state.ayahs.current;
-    const surahId = parseInt(ayahKey.match(/^\d+/)[0], 10);
-    const ayahNum = parseInt(ayahKey.match(/\d+$/)[0], 10);
-    const currentWord = state.ayahs.currentWord;
-
-    return { currentWord, ayahNum, surahId, ayahKey };
-  },
-  { // dispatch functions, also lands in this.props
-    setCurrentWord,
-    clearCurrentWord
-  }
-)
 export default class Track extends Component {
   static propTypes = {
     file: PropTypes.object.isRequired,
@@ -106,14 +89,11 @@ export default class Track extends Component {
     const ended = () => {
       const { shouldRepeat, onEnd } = this.props;
 
-      //console.log('file.addEventListener(ended)', { shouldRepeat, file, state: this.state });
-
       if (shouldRepeat) {
         file.pause();
         file.currentTime = 0; // eslint-disable-line no-param-reassign
         file.play();
       } else {
-        //console.log('onEnd was called');
         file.pause();
         onEnd();
       }
@@ -128,13 +108,9 @@ export default class Track extends Component {
         progress / 100 * file.duration
       );
 
-      //console.log('file.addEventListener(play)', { file, currentTime, progress });
-
       this.setState({
         currentTime
       });
-
-      onPlay();
     };
     file.addEventListener('play', play, false);
 

@@ -35,26 +35,6 @@ export default class TokenSegments extends Component {
   constructor() {
     super(...arguments);
 
-    const segments = require('./segments.js');
-
-    this.cues = [];
-    this.seek = {}
-    segments.forEach((row, id) => {
-      const cols = row.split(/\t/);
-      const surahId = cols[0];
-      const ayahNum = cols[1];
-      const start = parseInt(cols[2], 10);
-      const duration = parseInt(cols[3], 10);
-      const tokenId = parseInt(cols[4], 10);
-      if (typeof this.cues[surahId] == 'undefined')
-        this.cues[surahId] = [];
-      if (typeof this.cues[surahId][ayahNum] == 'undefined')
-        this.cues[surahId][ayahNum] = [];
-      const data = { start, duration, tokenId };
-      this.cues[surahId][ayahNum].push(data);
-      const key = surahId +':'+ ayahNum +':'+ tokenId;
-      this.seek[key] = this.seek[key]? this.seek[key] : { ...data, cueSequence: this.cues[surahId][ayahNum].length - 1 };
-    });
     //console.log('constructor', this.cues);
   }
 
@@ -70,6 +50,8 @@ export default class TokenSegments extends Component {
 
   componentDidMount() {
     if (this.props.file) {
+      const props = this.props;
+
       this.onFileLoad(this.props.file);
       this.resetHighlightProps();
     }
@@ -146,10 +128,38 @@ export default class TokenSegments extends Component {
     }
   }
 
+  getSegments() {
+    console.log('getSegments');
+
+    const segments = require('./segments.js');
+    this.cues = [];
+    this.seek = {}
+    segments.forEach((row, id) => {
+      const cols = row.split(/\t/);
+      const surahId = cols[0];
+      const ayahNum = cols[1];
+      const start = parseInt(cols[2], 10);
+      const duration = parseInt(cols[3], 10);
+      const tokenId = parseInt(cols[4], 10);
+      if (typeof this.cues[surahId] == 'undefined')
+        this.cues[surahId] = [];
+      if (typeof this.cues[surahId][ayahNum] == 'undefined')
+        this.cues[surahId][ayahNum] = [];
+      const data = { start, duration, tokenId };
+      this.cues[surahId][ayahNum].push(data);
+      const key = surahId +':'+ ayahNum +':'+ tokenId;
+      this.seek[key] = this.seek[key]? this.seek[key] : { ...data, cueSequence: this.cues[surahId][ayahNum].length - 1 };
+    });
+  }
+
   onFileLoad(file) {
+
+    this.getSegments();
+
     const play = () => {
       const { progress } = this.state;
       const { surahId, ayahNum, currentWord } = this.props;
+
       let cueSequence = 0;
       if (this.seek[currentWord]) {
         this.totalHighlightedDuration = this.seek[currentWord].start;
