@@ -397,9 +397,12 @@ export default class Audioplayer extends Component {
               onPlay={play}
               onPause={pause}
               onEnd={this.onNextAyah.bind(this)}
-            /> :
-            null
-            }
+            /> : null}
+          {false ?
+            <TokenSegments
+              file={files[currentAyah]}
+              isPlaying={isPlaying}
+            /> : null}
         </div>
       </div>
     );
