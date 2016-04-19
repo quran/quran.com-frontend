@@ -61,12 +61,14 @@ export default function reducer(state = initialState, action = {}) {
         }
       };
     case LOAD:
+      console.log('LOAD', { action, state });
       return {
         ...state,
         loaded: false,
         loading: true
       };
     case LOAD_SUCCESS:
+      console.log('LOAD_SUCCESS', { action, state });
       let current = state.current ? state.current : action.result.result[0];
       return {
         ...state,
@@ -82,6 +84,7 @@ export default function reducer(state = initialState, action = {}) {
         fontFaces: new Set([...state.fontFaces, ...createFontFacesArray(action.result.result.map(key => action.result.entities.ayahs[key]))]),
       };
     case LOAD_FAIL:
+      console.log('LOAD_FAIL', { action, state });
       console.log(action);
       return state;
     default:
@@ -110,6 +113,21 @@ export function load(id, from, to, options = defaultOptions) {
         quran,
         content
       }
+    }).then((res) => { // TODO combine this in the previous request's code (in api)
+      res.forEach((ayah) => {
+        if (ayah.audio.mp3 && ayah.audio.mp3.segments) {
+          ayah.audio.segments = ayah.audio.mp3.segments; // hack
+        } else
+        if (ayah.audio.ogg && ayah.audio.ogg.segments) {
+          ayah.audio.segments = ayah.audio.ogg.segments; // hack
+        } else {
+          ayah.audio.segments = null;
+        }
+      });
+
+      //if (audio == 2 || res && res[0] && res[0].audio && res[0].audio.has_segments) { // TODO implement a has_segments property on the result
+      //}
+      return res;
     }),
     surahId: id
   };

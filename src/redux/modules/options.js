@@ -41,6 +41,7 @@ export function setOption(payload) {
   Object.keys(payload).forEach(option => options[option] = payload[option]);
   cookie.save('options', JSON.stringify(options));
 
+  console.log('SET_OPTION', { payload });
   return {
     type: SET_OPTION,
     payload

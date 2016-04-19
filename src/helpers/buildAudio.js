@@ -48,7 +48,6 @@ export function buildAudioForAyah(audio, agent) {
   scopedAudio = new Audio();
   scopedAudio.preload = 'none';
 
-
   if (audio.mp3.url && /AbdulBaset\/Murattal/.test(audio.mp3.url)) {
     const filename = audio.mp3.url.replace(/^.*\/mp3\//, '');
     audio.mp3.url = `http://mirrors.quranicaudio.com/everyayah/Abdul_Basit_Murattal_64kbps/${filename}`;
@@ -74,14 +73,18 @@ export function buildAudioForAyah(audio, agent) {
 }
 
 export function buildAudioFromHash(ayahsObject = {}, agent) {
-  const filesObject = {};
+  const filesObject = {files: {}, segments: {}};
 
   Object.keys(ayahsObject).forEach(ayahId => {
     const ayah = ayahsObject[ayahId];
 
-    filesObject[ayahId] = buildAudioForAyah(ayah.audio, agent);
+    filesObject.files[ayahId] = buildAudioForAyah(ayah.audio, agent);
+    if (ayah.audio.segments) {
+      filesObject.segments[ayahId] = ayah.audio.segments;
+    }
   });
 
+  console.log('buildAudioFromHash', { ayahsObject, filesObject });
   return filesObject;
 }
 

@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 // Redux
-import { play, pause, repeat, toggleScroll, buildOnClient } from '../../redux/modules/audioplayer';
+import { play, pause, repeat, toggleScroll, buildOnClient, segload } from '../../redux/modules/audioplayer';
 import { setCurrentAyah } from '../../redux/modules/ayahs';
 
 // Components
@@ -21,6 +21,7 @@ const style = require('./style.scss');
 @connect(
   state => ({
     files: state.audioplayer.files,
+    segments: state.audioplayer.segments,
     currentAyah: state.ayahs.current,
     surahId: state.audioplayer.surahId,
     isSupported: state.audioplayer.isSupported,
@@ -35,7 +36,8 @@ const style = require('./style.scss');
     repeat: bindActionCreators(repeat, dispatch),
     toggleScroll: bindActionCreators(toggleScroll, dispatch),
     setCurrentAyah: bindActionCreators(setCurrentAyah, dispatch),
-    buildOnClient: bindActionCreators(buildOnClient, dispatch)
+    buildOnClient: bindActionCreators(buildOnClient, dispatch),
+    segload: bindActionCreators(segload, dispatch),
   }),
   (stateProps, dispatchProps, ownProps) => {
     if (!stateProps.isSupported) {
@@ -46,10 +48,12 @@ const style = require('./style.scss');
 
     const files = stateProps.files[stateProps.surahId];
     const ayahIds = files ? Object.keys(files) : [];
+    const segments = stateProps.segments[stateProps.surahId];
 
     return {
       ...stateProps, ...dispatchProps, ...ownProps,
       files,
+      segments,
       ayahIds
     };
   }
@@ -86,16 +90,22 @@ export default class Audioplayer extends Component {
   };
 
   componentDidMount() {
-    const { isLoadedOnClient, buildOnClient, surah } = this.props; // eslint-disable-line no-shadow
+    const { isLoadedOnClient, buildOnClient, segload, surah } = this.props; // eslint-disable-line no-shadow
 
     if (!isLoadedOnClient && __CLIENT__) {
-      return buildOnClient(surah.id);
+      return buildOnClient(surah.id); // && segload(surah.id)
+
     }
   }
 
   componentWillUnmount() {
     this.props.pause();
     // this.props.currentAudio.src = null;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { segments } = this.props;
+    console.log('componentWillReceiveProps', { segments, nextProps });
   }
 
   onPreviousAyah() {
@@ -342,6 +352,7 @@ export default class Audioplayer extends Component {
       play, // eslint-disable-line no-shadow
       pause, // eslint-disable-line no-shadow
       files,
+      segments,
       currentAyah,
       isPlaying,
       shouldRepeat,
@@ -400,7 +411,10 @@ export default class Audioplayer extends Component {
           {isLoadedOnClient && true ?
             <TokenSegments
               file={files[currentAyah]}
+              segments={segments[currentAyah]}
               isPlaying={isPlaying}
+              onPlay={play}
+              onPause={pause}
             /> : null}
         </div>
       </div>

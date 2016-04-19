@@ -81,6 +81,21 @@ export const slugs = [
     },
     id: 5
   },
+{
+  reciter: {
+    slug: null,
+    id: 5
+  },
+  name: {
+    english: 'Mahmoud Khalil Al-Husary',
+    arabic: null // TODO
+  },
+  style: {
+    slug: null,
+    id: null
+  },
+  id: 7
+},
   {
     reciter: {
       slug: 'alafasy',
@@ -140,7 +155,37 @@ export const slugs = [
       id: null
     },
     id: 11
-  }
+  },
+{
+  reciter: {
+    slug: null,
+    id: 9
+  },
+  name: {
+    english: 'Mohamed al-Tablawi',
+    arabic: null // TODO
+  },
+  style: {
+    slug: null,
+    id: null
+  },
+  id: 12
+},
+{
+  reciter: {
+    slug: null,
+    id: 5
+  },
+  name: {
+    english: 'Mahmoud Khalil Al-Husary (Muallim)',
+    arabic: null // TODO
+  },
+  style: {
+    slug: 'muallim',
+    id: 3
+  },
+  id: 13
+}
 ];
 
 export default class ReciterDropdown extends Component {
