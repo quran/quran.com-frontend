@@ -144,7 +144,6 @@ export default class Surah extends Component {
       window.removeEventListener('scroll', this.onScroll, true);
       window.addEventListener('scroll', this.onScroll, true);
       lastScroll = window.pageYOffset;
-      window.push = this.props.push;
     }
   }
 
@@ -415,7 +414,7 @@ export default class Surah extends Component {
   }
 
   render() {
-    const { surah, surahs, ayahIds, options } = this.props;
+    const { surah, surahs, currentWord, ayahIds, options } = this.props;
     debug('component:Surah', 'Render');
 
     return (

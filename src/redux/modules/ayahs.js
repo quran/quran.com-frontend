@@ -25,27 +25,30 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case SET_CURRENT_AYAH:
-      console.log('SET_CURRENT_AYAH', action);
+      if (!(window && window._mute && window._mute.ayahs_redux))
+      console.log('SET_CURRENT_AYAH', { ayah: action.id });
       return {
         ...state,
         current: action.id,
         currentWord: state.current == action.id ? state.currentWord : null
       };
     case SET_CURRENT_WORD:
-      console.log('SET_CURRENT_WORD', action);
       let currentAyah = state.current;
       if (action.id && currentAyah) {
         if (!(new RegExp('^'+ currentAyah +':')).test(action.id)) {
           currentAyah = action.id.match(/^\d+:\d+/g)[0];
         }
       }
+      if (!(window && window._mute && window._mute.ayahs_redux))
+      console.log('SET_CURRENT_WORD', { word: action.id, ayah: currentAyah });
       return {
         ...state,
         current: currentAyah,
         currentWord: action.id
       };
     case CLEAR_CURRENT_WORD:
-      console.log('CLEAR_CURRENT_WORD', action);
+      if (!(window && window._mute && window._mute.ayahs_redux))
+      console.log('CLEAR_CURRENT_WORD');
       return {
         ...state,
         currentWord: null
@@ -61,14 +64,12 @@ export default function reducer(state = initialState, action = {}) {
         }
       };
     case LOAD:
-      console.log('LOAD', { action, state });
       return {
         ...state,
         loaded: false,
         loading: true
       };
     case LOAD_SUCCESS:
-      console.log('LOAD_SUCCESS', { action, state });
       let current = state.current ? state.current : action.result.result[0];
       return {
         ...state,
@@ -84,7 +85,6 @@ export default function reducer(state = initialState, action = {}) {
         fontFaces: new Set([...state.fontFaces, ...createFontFacesArray(action.result.result.map(key => action.result.entities.ayahs[key]))]),
       };
     case LOAD_FAIL:
-      console.log('LOAD_FAIL', { action, state });
       console.log(action);
       return state;
     default:
@@ -113,21 +113,6 @@ export function load(id, from, to, options = defaultOptions) {
         quran,
         content
       }
-    }).then((res) => { // TODO combine this in the previous request's code (in api)
-      res.forEach((ayah) => {
-        if (ayah.audio.mp3 && ayah.audio.mp3.segments) {
-          ayah.audio.segments = ayah.audio.mp3.segments; // hack
-        } else
-        if (ayah.audio.ogg && ayah.audio.ogg.segments) {
-          ayah.audio.segments = ayah.audio.ogg.segments; // hack
-        } else {
-          ayah.audio.segments = null;
-        }
-      });
-
-      //if (audio == 2 || res && res[0] && res[0].audio && res[0].audio.has_segments) { // TODO implement a has_segments property on the result
-      //}
-      return res;
     }),
     surahId: id
   };
@@ -147,7 +132,6 @@ export function clearCurrentWord() {
 }
 
 export function setCurrentAyah(id) {
-  console.log('setCurrentAyah');
   return {
     type: SET_CURRENT_AYAH,
     id

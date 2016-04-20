@@ -38,54 +38,49 @@ export function testIfSupported(ayah, agent) {
 }
 
 export function buildAudioForAyah(audio, agent) {
-  let scopedAudio;
+  let scopedAudio = new Audio(), segments = [];
+
+  scopedAudio.preload = 'none';
 
   const testOperaOrFirefox = __SERVER__ ?
     (agent.isOpera || agent.isFirefox) :
     (opera.test(window.navigator.userAgent) || firefox.test(window.navigator.userAgent));
   const testChrome = __SERVER__ ? agent.isChrome : chrome.test(window.navigator.userAgent);
 
-  scopedAudio = new Audio();
-  scopedAudio.preload = 'none';
-
-  if (audio.mp3.url && /AbdulBaset\/Murattal/.test(audio.mp3.url)) {
-    const filename = audio.mp3.url.replace(/^.*\/mp3\//, '');
-    audio.mp3.url = `http://mirrors.quranicaudio.com/everyayah/Abdul_Basit_Murattal_64kbps/${filename}`;
-  }
-
   if (testOperaOrFirefox) {
     if (audio.ogg.url) {
       scopedAudio.src = audio.ogg.url;
+      segments = audio.ogg.segments? audio.ogg.segments : segments;
     }
   }
   else {
     if (audio.mp3.url) {
       scopedAudio.src = audio.mp3.url;
+      segments = audio.mp3.segments? audio.mp3.segments : segments;
     }
     else if (audio.ogg.url) {
       if (testChrome) {
         scopedAudio.src = audio.ogg.url;
+        segments = audio.ogg.segments? audio.ogg.segments : segments;
       }
     }
   }
 
-  return scopedAudio;
+  return { audio: scopedAudio, segments };
 }
 
 export function buildAudioFromHash(ayahsObject = {}, agent) {
-  const filesObject = {files: {}, segments: {}};
+  const audioFromHash = {files: {}, segments: {}};
 
   Object.keys(ayahsObject).forEach(ayahId => {
     const ayah = ayahsObject[ayahId];
+    const audioForAyah = buildAudioForAyah(ayah.audio, agent);
 
-    filesObject.files[ayahId] = buildAudioForAyah(ayah.audio, agent);
-    if (ayah.audio.segments) {
-      filesObject.segments[ayahId] = ayah.audio.segments;
-    }
+    audioFromHash.files[ayahId] = audioForAyah.audio;
+    audioFromHash.segments[ayahId] = audioForAyah.segments;
   });
 
-  console.log('buildAudioFromHash', { ayahsObject, filesObject });
-  return filesObject;
+  return audioFromHash;
 }
 
 

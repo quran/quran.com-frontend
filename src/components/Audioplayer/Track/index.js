@@ -49,7 +49,6 @@ export default class Track extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.file) return;
     if (this.props.file.src !== nextProps.file.src) {
       this.onFileUnload(this.props.file);
       this.setState({
@@ -101,8 +100,9 @@ export default class Track extends Component {
     file.addEventListener('ended', ended, false);
 
     const play = () => {
+      if (!(window && window._mute && window._mute.audioplayer_track))
+      console.log('play', { currentTime: file.currentTime, src: file.src });
       const { progress } = this.state;
-      const { onPlay } = this.props;
 
       const currentTime = (
         progress / 100 * file.duration
@@ -111,22 +111,33 @@ export default class Track extends Component {
       this.setState({
         currentTime
       });
+
+      //this.props.onPlay();
     };
     file.addEventListener('play', play, false);
+
+    const pause = () => {
+      if (!(window && window._mute && window._mute.audioplayer_track))
+      console.log('pause', { currentTime: file.currentTime, src: file.src });
+      //console.log('file.pause event', { isPlaying: this.props.isPlaying });
+      //this.props.onPause();
+    };
+    file.addEventListener('pause', pause, false);
 
     this.setState({
       listeners: {
         loadeddata,
         timeupdate,
         ended,
-        play
+        play,
+        pause
       }
     });
   }
 
   onFileUnload(file) {
     this.props.file.pause();
-    [ 'loadeddata', 'timeupdate', 'ended', 'play' ].forEach((listener) => {
+    [ 'loadeddata', 'timeupdate', 'ended', 'play', 'pause' ].forEach((listener) => {
       file.removeEventListener(listener, this.state.listeners[listener]);
     });
   }
@@ -150,12 +161,15 @@ export default class Track extends Component {
   }
 
   render() {
+    // debug('component:Track', 'render');
+
     const { progress } = this.state;
     const { isPlaying, file } = this.props;
 
     if (isPlaying) {
       file.play();
     } else {
+      //console.log('Track.file.pause()');
       file.pause();
     }
 

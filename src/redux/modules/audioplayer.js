@@ -11,9 +11,6 @@ const PLAY_PAUSE = '@@quran/audioplayer/PLAY_PAUSE';
 const REPEAT = '@@quran/audioplayer/REPEAT';
 const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
 const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
-const SEGLOAD = '@@quran/audioplayer/SEGLOAD';
-const SEGLOAD_SUCCESS = '@@quran/audioplayer/SEGLOAD_SUCCESS';
-const SEGLOAD_FAIL = '@@quran/audioplayer/SEGLOAD_FAIL';
 
 const initialState = {
   files: {},
@@ -27,32 +24,16 @@ const initialState = {
   isLoadedOnClient: false
 };
 
-let newFiles;
+let audioFromHash;
 let files;
 let segments;
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case SEGLOAD:
-      console.log('SEGLOAD', { action, state });
-      return {
-        ...state
-      };
-    case SEGLOAD_SUCCESS:
-      console.log('SEGLOAD_SUCCESS', { action, state });
-      return {
-        ...state
-      };
-    case SEGLOAD_FAIL:
-      console.log('SEGLOAD_FAIL', { action, state });
-      return {
-        ...state
-      };
     case BUILD_ON_CLIENT:
-      newFiles = buildAudioFromHash(state.files[action.surahId], state.userAgent);
-      files = Object.assign({}, state.files[action.surahId], newFiles.files);
-      segments = Object.assign({}, state.segments[action.surahId], newFiles.segments);
-      console.log('BUILD_ON_CLIENT', { newFiles, files, segments });
+      audioFromHash = buildAudioFromHash(state.files[action.surahId], state.userAgent);
+      files = Object.assign({}, state.files[action.surahId], audioFromHash.files);
+      segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
 
       return {
         ...state,
@@ -79,16 +60,11 @@ export default function reducer(state = initialState, action = {}) {
         },
       };
     case AYAHS_LOAD:
-      console.log('AYAHS_LOAD', { action, state });
       return {
         ...state,
         isLoadedOnClient: false
       };
     case AYAHS_LOAD_SUCCESS:
-      console.log('AYAHS_LOAD_SUCCESS', { action, state });
-      const ayahKey = action.result.result[0];
-      console.log('do i have segments?', action.result.entities.ayahs[ayahKey].audio.segments);
-//nextState.segments[surahId][ayahKey] = action.result.entities.ayahs[ayahKey].audio.segments
       const isSupported = testIfSupported(
         action.result.entities.ayahs[action.result.result[0]],
         state.userAgent
@@ -108,12 +84,9 @@ export default function reducer(state = initialState, action = {}) {
       }
 
       const incoming = action.result.entities.ayahs;
-      console.log('incoming', incoming);
-      console.log('__CLIENT__', { __CLIENT__ });
-      newFiles = __CLIENT__ ? buildAudioFromHash(incoming, state.userAgent) : incoming;
-      files = Object.assign({}, state.files[action.surahId], __CLIENT__ ? newFiles.files : newFiles);
-      segments = Object.assign({}, state.segments[action.surahId], newFiles.segments);
-      console.log('newFiles, files, segments', { newFiles, files, segments });
+      audioFromHash = __CLIENT__ ? buildAudioFromHash(incoming, state.userAgent) : incoming;
+      files = Object.assign({}, state.files[action.surahId], __CLIENT__ ? audioFromHash.files : audioFromHash);
+      segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
 
       return {
         ...state,
@@ -136,18 +109,22 @@ export default function reducer(state = initialState, action = {}) {
         userAgent: action.userAgent
       };
     case PLAY:
-      console.log('PLAY');
+      if (!(window && window._mute && window._mute.audioplayer_redux))
+      console.log('PLAY', { isPlaying: true });
       return {
         ...state,
         isPlaying: true
       };
     case PAUSE:
-      console.log('PAUSE');
+      if (!(window && window._mute && window._mute.audioplayer_redux))
+      console.log('PAUSE', { isPlaying: false });
       return {
         ...state,
         isPlaying: false
       };
     case PLAY_PAUSE:
+      if (!(window && window._mute && window._mute.audioplayer_redux))
+      console.log('PLAY_PAUSE', { isPlaying: !state.isPlaying });
       return {
         ...state,
         isPlaying: !state.isPlaying
@@ -227,19 +204,3 @@ export function buildOnClient(surahId) {
     surahId
   };
 }
-
-export function segload(id, from, to) {
-  return {
-    types: [SEGLOAD, SEGLOAD_SUCCESS, SEGLOAD_FAIL],
-    //schema: arrayOf(ayahsSchema),
-    promise: (client) => client.get(`/v2/segments/2/2:255`, {
-      params: {
-        from,
-        to
-      }
-    }),
-    surahId: id
-  };
-}
-
-

@@ -5,12 +5,12 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 // Redux
-import { play, pause, repeat, toggleScroll, buildOnClient, segload } from '../../redux/modules/audioplayer';
-import { setCurrentAyah } from '../../redux/modules/ayahs';
+import { play, pause, repeat, toggleScroll, buildOnClient } from '../../redux/modules/audioplayer';
+import { setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
 
 // Components
 import Track from './Track';
-import TokenSegments from './TokenSegments';
+import Segments from './Segments';
 
 // Helpers
 // import debug from '../../scripts/helpers/debug';
@@ -23,6 +23,7 @@ const style = require('./style.scss');
     files: state.audioplayer.files,
     segments: state.audioplayer.segments,
     currentAyah: state.ayahs.current,
+    currentWord: state.ayahs.currentWord,
     surahId: state.audioplayer.surahId,
     isSupported: state.audioplayer.isSupported,
     isPlaying: state.audioplayer.isPlaying,
@@ -36,8 +37,9 @@ const style = require('./style.scss');
     repeat: bindActionCreators(repeat, dispatch),
     toggleScroll: bindActionCreators(toggleScroll, dispatch),
     setCurrentAyah: bindActionCreators(setCurrentAyah, dispatch),
-    buildOnClient: bindActionCreators(buildOnClient, dispatch),
-    segload: bindActionCreators(segload, dispatch),
+    setCurrentWord: bindActionCreators(setCurrentWord, dispatch),
+    clearCurrentWord: bindActionCreators(clearCurrentWord, dispatch),
+    buildOnClient: bindActionCreators(buildOnClient, dispatch)
   }),
   (stateProps, dispatchProps, ownProps) => {
     if (!stateProps.isSupported) {
@@ -64,6 +66,7 @@ export default class Audioplayer extends Component {
     surah: PropTypes.object.isRequired,
     files: PropTypes.object,
     currentAyah: PropTypes.string,
+    currentWord: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
     onLoadAyahs: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool.isRequired,
@@ -72,6 +75,8 @@ export default class Audioplayer extends Component {
     shouldRepeat: PropTypes.bool.isRequired,
     shouldScroll: PropTypes.bool.isRequired,
     setCurrentAyah: PropTypes.func.isRequired,
+    setCurrentWord: PropTypes.func.isRequired,
+    clearCurrentWord: PropTypes.func.isRequired,
     play: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
     repeat: PropTypes.func.isRequired,
@@ -90,22 +95,16 @@ export default class Audioplayer extends Component {
   };
 
   componentDidMount() {
-    const { isLoadedOnClient, buildOnClient, segload, surah } = this.props; // eslint-disable-line no-shadow
+    const { isLoadedOnClient, buildOnClient, surah } = this.props; // eslint-disable-line no-shadow
 
     if (!isLoadedOnClient && __CLIENT__) {
-      return buildOnClient(surah.id); // && segload(surah.id)
-
+      return buildOnClient(surah.id);
     }
   }
 
   componentWillUnmount() {
     this.props.pause();
     // this.props.currentAudio.src = null;
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { segments } = this.props;
-    console.log('componentWillReceiveProps', { segments, nextProps });
   }
 
   onPreviousAyah() {
@@ -354,11 +353,21 @@ export default class Audioplayer extends Component {
       files,
       segments,
       currentAyah,
+      currentWord,
+      setCurrentWord,
+      clearCurrentWord,
       isPlaying,
       shouldRepeat,
       isSupported,
       isLoadedOnClient
     } = this.props; // eslint-disable-line no-shadow
+
+    /*
+    const setToken = (token) => {
+      setCurrentWord(`${currentAyah}:${token}`);
+      currentWord.replace(/^(.*):\d+$/, `$1:${token}`)
+    };
+    */
 
     if (!isSupported) {
       return (
@@ -409,12 +418,16 @@ export default class Audioplayer extends Component {
               onEnd={this.onNextAyah.bind(this)}
             /> : null}
           {isLoadedOnClient && true ?
-            <TokenSegments
-              file={files[currentAyah]}
+            <Segments
+              audio={files[currentAyah]}
               segments={segments[currentAyah]}
+              currentAyah={currentAyah}
+              currentWord={currentWord}
+              setCurrentWord={setCurrentWord}
+              clearCurrentWord={clearCurrentWord}
               isPlaying={isPlaying}
-              onPlay={play}
-              onPause={pause}
+              dispatchPlay={play}
+              dispatchPause={pause}
             /> : null}
         </div>
       </div>
