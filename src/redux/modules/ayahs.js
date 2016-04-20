@@ -25,8 +25,6 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case SET_CURRENT_AYAH:
-      if (!(window && window._mute && window._mute.ayahs_redux))
-      console.log('SET_CURRENT_AYAH', { ayah: action.id });
       return {
         ...state,
         current: action.id,
@@ -39,16 +37,12 @@ export default function reducer(state = initialState, action = {}) {
           currentAyah = action.id.match(/^\d+:\d+/g)[0];
         }
       }
-      if (!(window && window._mute && window._mute.ayahs_redux))
-      console.log('SET_CURRENT_WORD', { word: action.id, ayah: currentAyah });
       return {
         ...state,
         current: currentAyah,
         currentWord: action.id
       };
     case CLEAR_CURRENT_WORD:
-      if (!(window && window._mute && window._mute.ayahs_redux))
-      console.log('CLEAR_CURRENT_WORD');
       return {
         ...state,
         currentWord: null

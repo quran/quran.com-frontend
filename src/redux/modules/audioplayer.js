@@ -109,22 +109,16 @@ export default function reducer(state = initialState, action = {}) {
         userAgent: action.userAgent
       };
     case PLAY:
-      if (!(window && window._mute && window._mute.audioplayer_redux))
-      console.log('PLAY', { isPlaying: true });
       return {
         ...state,
         isPlaying: true
       };
     case PAUSE:
-      if (!(window && window._mute && window._mute.audioplayer_redux))
-      console.log('PAUSE', { isPlaying: false });
       return {
         ...state,
         isPlaying: false
       };
     case PLAY_PAUSE:
-      if (!(window && window._mute && window._mute.audioplayer_redux))
-      console.log('PLAY_PAUSE', { isPlaying: !state.isPlaying });
       return {
         ...state,
         isPlaying: !state.isPlaying

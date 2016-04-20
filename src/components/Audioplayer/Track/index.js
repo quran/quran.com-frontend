@@ -100,8 +100,6 @@ export default class Track extends Component {
     file.addEventListener('ended', ended, false);
 
     const play = () => {
-      if (!(window && window._mute && window._mute.audioplayer_track))
-      console.log('play', { currentTime: file.currentTime, src: file.src });
       const { progress } = this.state;
 
       const currentTime = (
@@ -111,33 +109,22 @@ export default class Track extends Component {
       this.setState({
         currentTime
       });
-
-      //this.props.onPlay();
     };
     file.addEventListener('play', play, false);
-
-    const pause = () => {
-      if (!(window && window._mute && window._mute.audioplayer_track))
-      console.log('pause', { currentTime: file.currentTime, src: file.src });
-      //console.log('file.pause event', { isPlaying: this.props.isPlaying });
-      //this.props.onPause();
-    };
-    file.addEventListener('pause', pause, false);
 
     this.setState({
       listeners: {
         loadeddata,
         timeupdate,
         ended,
-        play,
-        pause
+        play
       }
     });
   }
 
   onFileUnload(file) {
     this.props.file.pause();
-    [ 'loadeddata', 'timeupdate', 'ended', 'play', 'pause' ].forEach((listener) => {
+    [ 'loadeddata', 'timeupdate', 'ended', 'play' ].forEach((listener) => {
       file.removeEventListener(listener, this.state.listeners[listener]);
     });
   }
@@ -169,7 +156,6 @@ export default class Track extends Component {
     if (isPlaying) {
       file.play();
     } else {
-      //console.log('Track.file.pause()');
       file.pause();
     }
 

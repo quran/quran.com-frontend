@@ -14,21 +14,19 @@ export default class Segments extends Component {
     dispatchPause: PropTypes.func.isRequired
   };
 
-  state = {
-    // initial state
+  state = { // initial state
     listeners: {},
     seekLookup: {},
-    token: null,
-    dispatchedPlay: false,
     timer1: null,
     timer2: null,
-    currentWord: null, // TODO remove this
+    token: null,
+    currentWord: null,
+    dispatchedPlay: false
   };
 
   constructor() {
     super(...arguments);
-    // init
-  }
+  } // init
 
   componentWillMount() {
     this.buildSeekLookup(this.props);
@@ -184,9 +182,20 @@ export default class Segments extends Component {
 
     if (this.props.isPlaying && !this.state.dispatchedPlay) { // continue highlighting to next position
       this.highlight(index + 1, delta);
-    } else if (this.state.dispatchedPlay) { // we dispatched a play, so now we need to dispatch a pause
+    } else if (this.state.dispatchedPlay) { // we dispatched a play, so now we need to dispatch a pause in order to play only a single word
+      const current = this.props.audio.currentTime * 1000;
+      const ending = segment[0] + segment[1];
+      const difference = parseInt(ending - current, 10);
+
       this.setState({ dispatchedPlay: false });
-      this.props.dispatchPause();
+
+      if (difference <= 0) {
+        this.props.dispatchPause();
+      } else {
+        setTimeout(() => {
+          this.props.dispatchPause();
+        }, difference);
+      }
     }
   }
 

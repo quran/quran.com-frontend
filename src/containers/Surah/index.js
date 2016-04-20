@@ -347,15 +347,24 @@ export default class Surah extends Component {
     }
   }
 
+  /*
+  onWordFocus(id) {
+    const { setCurrentWord, clearCurrentWord, currentWord, isPlaying } = this.props;
+    if (id == currentWord && isPlaying) {
+      setCurrentWord(id);
+    }
+  }
+  */
+
   renderAyahs() {
     const { ayahs, currentWord } = this.props;
 
     return Object.values(ayahs).map(ayah => (
-      // TODO: rename currentWord
       <Ayah
         ayah={ayah}
         currentWord={currentWord && (new RegExp('^'+ ayah.ayahKey +':')).test(currentWord)? parseInt(currentWord.match(/\d+$/)[0], 10) : null}
         onWordClick={this.onWordClick.bind(this)}
+        //onWordFocus={this.onWordFocus.bind(this)}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
       />
     ));
@@ -414,7 +423,7 @@ export default class Surah extends Component {
   }
 
   render() {
-    const { surah, surahs, currentWord, ayahIds, options } = this.props;
+    const { surah, surahs, ayahIds, options } = this.props;
     debug('component:Surah', 'Render');
 
     return (

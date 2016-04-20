@@ -4,6 +4,7 @@ import CopyToClipboard from 'copy-to-clipboard';
 import { Link } from 'react-router';
 import { I13nAnchor } from 'react-i13n';
 import { Element } from 'react-scroll';
+import ReactDOM from 'react-dom'
 
 import debug from 'utils/Debug';
 
@@ -19,6 +20,14 @@ export default class Ayah extends Component {
 
   shouldComponentUpdate(nextProps) {
     return this.props.ayah !== nextProps.ayah || this.props.currentWord !== nextProps.currentWord;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.currentWord != null) {// || prevProps.currentWord != null) {
+      const elem = ReactDOM.findDOMNode(this);
+      const active = elem.getElementsByClassName('active')[0];
+      if (active) active.focus();
+    }
   }
 
   renderTranslations() {
@@ -74,6 +83,15 @@ export default class Ayah extends Component {
     }
   }
 
+  /*
+  onWordFocus(event) {
+    if (event.target && /^token-/.test(event.target.id)) {
+      // call onWordFocus in Surah
+      this.props.onWordFocus(event.target.id.match(/\d+/g).join(':'));
+    }
+  }
+  */
+
   renderText() {
     const { currentWord } = this.props;
     if (!this.props.ayah.quran[0].char) {
@@ -112,10 +130,13 @@ export default class Ayah extends Component {
           <b
             id={id}
             onClick={this.onWordClick.bind(this)}
+            //onFocus={this.onWordFocus.bind(this)}
             data-token-id={tokenId}
             key={word.char.code}
             className={`${className} pointer`}
             data-toggle="tooltip"
+            data-trigger="hover,focus"
+            tabIndex="1"
             data-placement="top" title={tooltip}
             dangerouslySetInnerHTML={{__html: word.char.code}}
           />

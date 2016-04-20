@@ -120,7 +120,7 @@ export default class Audioplayer extends Component {
       setCurrentAyah(prevAyah);
 
       if (shouldScroll) {
-        scroller.scrollTo('ayah:'+ ayahNum, -120); // -120 to account for the header height
+        scroller.scrollTo('ayah:'+ ayahNum, -150);
       }
 
       if (wasPlaying) {
@@ -155,7 +155,7 @@ export default class Audioplayer extends Component {
     setCurrentAyah(nextAyah);
 
     if (shouldScroll) {
-      scroller.scrollTo('ayah:'+ ayahNum);
+      scroller.scrollTo('ayah:'+ ayahNum, -80);
     }
 
     if (wasPlaying) {
@@ -213,7 +213,7 @@ export default class Audioplayer extends Component {
     const ayahNum = currentAyah.replace( /^\d+:/, '' );
 
     if (shouldScroll) {
-      scroller.scrollTo('ayah:'+ ayahNum);
+      scroller.scrollTo('ayah:'+ ayahNum, -150);
     }
 
     this.props.play();
@@ -249,9 +249,9 @@ export default class Audioplayer extends Component {
     if (!shouldScroll) { // we use the inverse (!) here because we're toggling, so false is true
       const elem = document.getElementsByName('ayah:'+ ayahNum)[0];
       if (elem && elem.getBoundingClientRect().top < 0) { // if the ayah is above our scroll offset
-        scroller.scrollTo('ayah:'+ ayahNum, -120);
+        scroller.scrollTo('ayah:'+ ayahNum, -150);
       } else {
-        scroller.scrollTo('ayah:'+ ayahNum);
+        scroller.scrollTo('ayah:'+ ayahNum, -80);
       }
     }
 
@@ -361,13 +361,6 @@ export default class Audioplayer extends Component {
       isSupported,
       isLoadedOnClient
     } = this.props; // eslint-disable-line no-shadow
-
-    /*
-    const setToken = (token) => {
-      setCurrentWord(`${currentAyah}:${token}`);
-      currentWord.replace(/^(.*):\d+$/, `$1:${token}`)
-    };
-    */
 
     if (!isSupported) {
       return (

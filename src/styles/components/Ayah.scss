@@ -117,7 +117,8 @@
   }
 
   b.active{
-    color: red;
+    color: #155F63;
+    outline: none;
   }
 
   .line{
@@ -134,6 +135,10 @@
     &:hover{
       color: $brand-primary;
       cursor: pointer;
+    }
+    &:focus{
+      color: $brand-primary;
+      outline: none;
     }
   }
 
