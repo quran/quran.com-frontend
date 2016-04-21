@@ -11,19 +11,25 @@ export default (server) => {
     client.get('/surahs').then(surahs => {
       surahs.forEach(surah => {
         Array.apply(null, {length: surah.ayat}).forEach((_, index) => {
-          const ayahId = index;
+          const ayahId = index + 1;
 
           urls.push({
             url: `/${surah.id}/${ayahId}`,
             changefreq: 'weekly',
-            priority: 0.8
+            priority: 1
+          });
+
+          urls.push({
+            url: `/${surah.id}/${ayahId}-${ayahId + 9}`,
+            changefreq: 'weekly',
+            priority: 1
           });
         });
 
         urls.push({
           url: `/${surah.id}`,
           changefreq: 'weekly',
-          priority: 0.9
+          priority: 1
         });
       });
 
@@ -39,7 +45,7 @@ export default (server) => {
           { url: '/donations',  changefreq: 'monthly', priority: 0.3 },
           { url: '/contributions',  changefreq: 'monthly', priority: 0.3 },
 
-          { url: '/search',  changefreq: 'weekly',  priority: 0.7 }
+          { url: '/search',  changefreq: 'weekly',  priority: 0.8 }
         ]
       });
 
