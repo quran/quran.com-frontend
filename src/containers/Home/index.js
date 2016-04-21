@@ -131,7 +131,7 @@ class Home extends React.Component {
               to="/67"
               data-metrics-event-name="QuickLinks:Click"
               data-metrics-surah-id="67">
-              Surah Al-Mulk
+              Surah Al Mulk
             </Link>{' '}|
           </li>
           <li>

@@ -37,6 +37,7 @@ import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux
 import { setOption, toggleReadingMode } from '../../redux/modules/options';
 
 let lastScroll = 0;
+const ayahRangeSize = 30;
 
 @asyncConnect([
   {
@@ -61,16 +62,16 @@ let lastScroll = 0;
         } else {
           // Single ayah. For example /2/30
           from = range;
-          to = parseInt(range, 10) + 10;
+          to = parseInt(range, 10) + ayahRangeSize;
         }
 
         if (isNaN(from) || isNaN(to)) {
           // Something wrong happened like /2/SOMETHING
           // going to rescue by giving beginning of surah.
-          [from, to] = [1, 10];
+          [from, to] = [1, ayahRangeSize];
         }
       } else {
-        [from, to] = [1, 10];
+        [from, to] = [1, ayahRangeSize];
       }
 
       if (isNaN(surahId)) {
@@ -405,9 +406,6 @@ export default class Surah extends Component {
             title: this.title(),
             description: this.description()
           })}
-          link={[{
-            rel: 'canonical', href: `http://quran.com/${surah.id}`
-          }]}
         />
         <script type="application/ld+json" dangerouslySetInnerHTML={{
           __html: `{
