@@ -12,7 +12,7 @@ import { setCurrentAyah } from '../../redux/modules/ayahs';
 import Track from './Track';
 
 // Helpers
-// import debug from '../../scripts/helpers/debug';
+import debug from '../../helpers/debug';
 import scroller from '../../scripts/utils/scroller';
 
 const style = require('./style.scss');
@@ -86,13 +86,16 @@ export default class Audioplayer extends Component {
 
   componentDidMount() {
     const { isLoadedOnClient, buildOnClient, surah } = this.props; // eslint-disable-line no-shadow
+    debug('component:Audioplayer', 'componentDidMount');
 
     if (!isLoadedOnClient && __CLIENT__) {
+      debug('component:Audioplayer', 'componentDidMount on client');
       return buildOnClient(surah.id);
     }
   }
 
   componentWillUnmount() {
+    debug('component:Audioplayer', 'componentWillUnmount');
     this.props.pause();
     // this.props.currentAudio.src = null;
   }
@@ -194,6 +197,7 @@ export default class Audioplayer extends Component {
   }
 
   pause() {
+    debug('component:Audioplayer', 'pause');
     this.props.pause();
   }
 
@@ -201,6 +205,8 @@ export default class Audioplayer extends Component {
     const { shouldScroll, files } = this.props;
     const currentAyah = this.getCurrent();
     const ayahNum = currentAyah.replace( /^\d+:/, '' );
+
+    debug('component:Audioplayer', 'play');
 
     if (shouldScroll) {
       scroller.scrollTo('ayah:'+ ayahNum);
@@ -334,7 +340,7 @@ export default class Audioplayer extends Component {
 
 
   render() {
-    // debug('component:Audioplayer', 'Render');
+    debug('component:Audioplayer', 'render');
 
     const {
       className,

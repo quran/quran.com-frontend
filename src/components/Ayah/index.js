@@ -19,7 +19,13 @@ export default class Ayah extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    return this.props.ayah !== nextProps.ayah || this.props.match.length !== nextProps.match.length;
+    const conditions = [this.props.ayah !== nextProps.ayah];
+
+    if (this.props.match) {
+      conditions.push(this.props.match.length !== nextProps.match.length);
+    }
+
+    return  conditions.some(condition => condition);
   }
 
   renderTranslations() {
