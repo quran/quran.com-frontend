@@ -5,7 +5,7 @@ import { Element } from 'react-scroll';
 
 import Copy from '../Copy';
 
-import debug from 'utils/Debug';
+import debug from '../../helpers/debug';
 
 export default class Ayah extends Component {
   static propTypes = {
