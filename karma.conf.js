@@ -22,7 +22,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'node_modules/babel-core/browser-polyfill.js',
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
       './tests/polyfill/Event.js',
       {pattern: "static/images/*", watched: false, included: false, served: true},
@@ -69,7 +68,11 @@ module.exports = function(config) {
           {
             test: /\.(js|jsx)$/,
             exclude: [/server/, /node_modules/, /tests/],
-            loader: 'babel'
+            loader: 'babel',
+            query: {
+              stage: 0,
+              plugins: []
+            }
           },
           { test: /\.json$/, loader: 'json-loader'},
           { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' },
