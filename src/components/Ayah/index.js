@@ -41,7 +41,7 @@ export default class Ayah extends Component {
       const isArabic = arabic.test(character);
 
       return (
-        <div className={`${styles.translation} ${isArabic ? 'arabic' : ''}`} key={index}>
+        <div className={`${styles.translation} ${isArabic ? 'arabic' : ''} translation`} key={index}>
           <h4 className="montserrat">{content.name || content.resource.name}</h4>
           <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
             <small dangerouslySetInnerHTML={{__html: content.text}} className="times-new" />

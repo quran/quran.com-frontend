@@ -21,6 +21,6 @@ describe('<Ayah />', () => {
   });
 
   it('should contain translations', () => {
-    expect(wrapper.find('.translation').text()).to.eql(ayah.content[0].resource.name + ayah.content[0].text);
+    expect(wrapper.find('.translation').text()).to.eql(ayah.content[0].resource.name);
   });
 });
