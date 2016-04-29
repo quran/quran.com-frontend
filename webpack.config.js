@@ -1,11 +1,62 @@
 require('dotenv').config({path: (process.env.NODE_ENV || 'development') + '.env'});
+var fs = require('fs');
+var path = require('path');
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./webpack-isomorphic-tools-configuration'));
 
-var webpackConfig = {
+var babelrc = fs.readFileSync('./.babelrc');
+var babelrcObject = {};
+
+try {
+  babelrcObject = JSON.parse(babelrc);
+} catch (err) {
+  console.error('==>     ERROR: Error parsing your .babelrc.');
+  console.error(err);
+}
+
+var babelrcObjectDevelopment = babelrcObject.env && babelrcObject.env.development || {};
+
+// merge global and dev-only plugins
+var combinedPlugins = babelrcObject.plugins || [];
+combinedPlugins = combinedPlugins.concat(babelrcObjectDevelopment.plugins);
+
+var babelLoaderQuery = Object.assign({}, babelrcObjectDevelopment, babelrcObject, {plugins: combinedPlugins});
+delete babelLoaderQuery.env;
+
+// Since we use .babelrc for client and server, and we don't want HMR enabled on the server, we have to add
+// the babel plugin react-transform-hmr manually here.
+
+// make sure react-transform is enabled
+babelLoaderQuery.plugins = babelLoaderQuery.plugins || [];
+var reactTransform = null;
+for (var i = 0; i < babelLoaderQuery.plugins.length; ++i) {
+  var plugin = babelLoaderQuery.plugins[i];
+  if (Array.isArray(plugin) && plugin[0] === 'react-transform') {
+    reactTransform = plugin;
+  }
+}
+
+if (!reactTransform) {
+  reactTransform = ['react-transform', {transforms: []}];
+  babelLoaderQuery.plugins.push(reactTransform);
+}
+
+if (!reactTransform[1] || !reactTransform[1].transforms) {
+  reactTransform[1] = Object.assign({}, reactTransform[1], {transforms: []});
+}
+
+// make sure react-transform-hmr is enabled
+reactTransform[1].transforms.push({
+  transform: 'react-transform-hmr',
+  imports: ['react'],
+  locals: ['module']
+});
+babelLoaderQuery.cacheDirectory = true;
+
+module.exports = {
   context: path.join(process.env.PWD, './'),
   resolve: {
     extensions: ['', '.js'],
@@ -36,11 +87,7 @@ var webpackConfig = {
       {
         test: /\.(js|jsx)$/,
         exclude: [/server/, /node_modules/, /tests/],
-        loader: 'babel',
-        query: {
-          stage: 0,
-          plugins: []
-        }
+        loader: 'babel?' + JSON.stringify(babelLoaderQuery)
       },
       { test: /\.json$/, loader: 'json-loader'},
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
@@ -92,21 +139,3 @@ var webpackConfig = {
     tls: 'empty'
   }
 };
-// The reason this is here and NOT in .babelrc like it should is because our
-// nodejs server picks up babel too and isn't happy with this!
-webpackConfig.module.loaders[0].query.plugins.push('react-transform');
-webpackConfig.module.loaders[0].query.extra = {
-  'react-transform': {
-    transforms: [{
-      transform: 'react-transform-hmr',
-      imports: ['react'],
-      locals: ['module']
-    },
-    {
-      "transform": "react-transform-catch-errors",
-      "imports": ["react", "redbox-react"]
-    }]
-  }
-};
-
-module.exports = webpackConfig;
