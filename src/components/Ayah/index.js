@@ -7,6 +7,8 @@ import Copy from '../Copy';
 
 import debug from '../../helpers/debug';
 
+const styles = require('./style.scss');
+
 export default class Ayah extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
@@ -31,33 +33,18 @@ export default class Ayah extends Component {
   renderTranslations() {
     const { ayah, match } = this.props;
 
-    if (match) {
-      return match.map((content, index) => {
-        const arabic = new RegExp(/[\u0600-\u06FF]/);
-        const character = content.text;
-        const isArabic = arabic.test(character);
+    const array = match ? match : ayah.content || [];
 
-        return (
-          <div className={`${isArabic ? 'translation-arabic' : 'translation'}`} key={index}>
-            <h4>{content.name}</h4>
-            <h2 className={`${isArabic ? 'text-left-arabic' : 'text-left'} text-translation`}>
-              <small dangerouslySetInnerHTML={{__html: content.text}} />
-            </h2>
-          </div>
-        );
-      });
-    }
+    return array.map((content, index) => {
+      const arabic = new RegExp(/[\u0600-\u06FF]/);
+      const character = content.text;
+      const isArabic = arabic.test(character);
 
-    if (!ayah.content) {
-      return [];
-    }
-
-    return ayah.content.map((content, index) => {
       return (
-        <div className="translation" key={index}>
-          <h4>{content.resource.name}</h4>
-          <h2 className="text-left text-translation">
-            <small>{content.text}</small>
+        <div className={`${styles.translation} ${isArabic ? 'arabic' : ''}`} key={index}>
+          <h4 className="montserrat">{content.name || content.resource.name}</h4>
+          <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
+            <small dangerouslySetInnerHTML={{__html: content.text}} className="times-new" />
           </h2>
         </div>
       );
@@ -108,7 +95,7 @@ export default class Ayah extends Component {
     });
 
     return (
-      <h1 className="word-font text-right text-arabic">
+      <h1 className={`${styles.font} text-right text-arabic`}>
         {text}
       </h1>
     );
@@ -151,7 +138,7 @@ export default class Ayah extends Component {
     const { isSearched } = this.props;
     const content = (
       <h4>
-        <span className="label label-default">
+        <span className={`label label-default ${styles.label}`}>
           {this.props.ayah.surahId}:{this.props.ayah.ayahNum}
         </span>
       </h4>
@@ -176,7 +163,7 @@ export default class Ayah extends Component {
 
   renderControls() {
     return (
-      <div className="col-md-1 left-controls">
+      <div className={`col-md-1 ${styles.controls}`}>
         {this.renderAyahBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
@@ -189,7 +176,7 @@ export default class Ayah extends Component {
     debug(`component:Ayah`, `Render ${this.props.ayah.ayahNum}`);
 
     return (
-      <Element name={`ayah:${ayah.ayahNum}`} className={`row ayah`}>
+      <Element name={`ayah:${ayah.ayahNum}`} className={`row ${styles.container}`}>
         {this.renderControls()}
         <div className="col-md-11">
           {this.renderText()}

@@ -1,9 +1,9 @@
-/* eslint-disable consistent-return */
-
 import React from 'react';
 import debug from 'utils/Debug';
 
-class Line extends React.Component {
+const styles = require('../Ayah/style.scss');
+
+export default class Line extends React.Component {
   static propTypes = {
     line: React.PropTypes.array.isRequired
   };
@@ -50,7 +50,7 @@ class Line extends React.Component {
     });
 
     return (
-      <span className="line text-center">
+      <span className={`${styles.line} text-center`}>
         {text}
       </span>
     );
@@ -62,7 +62,7 @@ class Line extends React.Component {
     debug('component:Line', `Page: ${line[0].pageNum} - Line: ${line[0].lineNum} - Ayah: ${line[0].ayahKey}`);
 
     return (
-      <div className="row word-font text-justify text-arabic">
+      <div className={`row ${styles.font} text-justify text-arabic`}>
         <div className="col-md-12 line-container">
           {this.renderText()}
         </div>
@@ -70,5 +70,3 @@ class Line extends React.Component {
     );
   }
 }
-
-export default Line;

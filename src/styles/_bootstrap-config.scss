@@ -50,6 +50,7 @@ $tracker-height-hundred-boolean: false;
 @if $tracker-height-hundred-boolean {$tracker-height: 100%;}
 
 $font-family-sans-serif: 'Montserrat', sans-serif;
+$font-montserrat: $font-family-sans-serif;
 
 $icon-font-path: "bootstrap-sass/assets/fonts";
 
