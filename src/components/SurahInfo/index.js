@@ -28,7 +28,7 @@ export default class SurahInfo extends Component {
               <dd className="text-uppercase">{surah.page.join('-')}</dd>
             </dl>
           </Col>
-          <Col md={8} className={style.info}>
+          <Col md={8} className={`${style.info} times-new`}>
             <div dangerouslySetInnerHTML={{__html: html}} />
             <div>
               <p>

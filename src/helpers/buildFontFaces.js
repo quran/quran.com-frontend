@@ -7,7 +7,7 @@ export default function createFontFaces(ayahs) {
   const fontFaces = [];
 
   return ayahs.map((ayah) => {
-    const font = ayah.quran[0].char.font;
+    const font = ayah.words[0].className;
 
     if (fontFaces.indexOf(font) === -1) {
       fontFaces.push(font);
@@ -39,7 +39,7 @@ export function createFontFacesArray(ayahs) {
   const fontFacesArray = [];
 
   ayahs.map((ayah) => {
-    const font = ayah.quran[0].char.font;
+    const font = ayah.words[0].className;
 
     if (!fontFaces.includes(font)) {
       fontFaces.push(font);

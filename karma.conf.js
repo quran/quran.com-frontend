@@ -75,6 +75,7 @@ module.exports = function(config) {
               plugins: []
             }
           },
+          { test: /\.json$/, loader: 'json-loader'},
           { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' },
           { test: /\.(jpe?g|png|gif|svg)$/, loader: 'url', query: {limit: 10240} }
         ]

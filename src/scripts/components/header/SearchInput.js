@@ -64,9 +64,7 @@ export default class SearchInput extends React.Component {
       e.target.style.textAlign = 'left';
     }
 
-    if (e.target) {
-      this.setState({ value: e.target.value.trim() });
-    }
+    this.setState({ value: this.refs.search.value.trim() });
   }
 
   render() {
@@ -79,8 +77,9 @@ export default class SearchInput extends React.Component {
       <div className={`right-inner-addon searchinput ${className}`}>
         <i className="ss-icon ss-search" onClick={this.search.bind(this)} />
         <input
-          type="text"
+          type="search"
           placeholder="Search"
+          ref="search"
           onFocus={() => this.setState({showAutocomplete: true})}
           onKeyUp={this.search.bind(this)}
           ref={(ref) => this.input = ref}

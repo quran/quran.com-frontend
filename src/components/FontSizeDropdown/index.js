@@ -1,5 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import { NavItem, OverlayTrigger, Popover, Tooltip, Row, Col } from 'react-bootstrap';
+
+import NavItem from 'react-bootstrap/lib/NavItem';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger'
+import Popover from 'react-bootstrap/lib/Popover'
+import Tooltip from 'react-bootstrap/lib/Tooltip'
+import Row from 'react-bootstrap/lib/Row'
+import Col from 'react-bootstrap/lib/Col';
 
 import { getFontSize } from '../../helpers/flowType';
 

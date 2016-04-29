@@ -2,7 +2,7 @@
 
 :local .popover{
   :global(.popover-title){
-    @extend .montserrat;
+    font-family: $font-montserrat;
     text-transform: uppercase;
     color: $cream;
     padding-top: 15px;

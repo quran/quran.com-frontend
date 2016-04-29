@@ -1,0 +1,80 @@
+{
+  "ayahKey": "2:1",
+  "ayahIndex": 8,
+  "surahId": 2,
+  "ayahNum": 1,
+  "pageNum": 2,
+  "juzNum": 1,
+  "hizbNum": 1,
+  "rubNum": 1,
+  "text": "الم",
+  "sajdah": null,
+  "words": [
+    {
+      "ayahKey": "2:1",
+      "resourceId": 1,
+      "position": 1,
+      "wordId": 30,
+      "pageNum": 2,
+      "lineNum": 3,
+      "codeDec": 64337,
+      "codeHex": "fb51",
+      "charTypeId": 1,
+      "className": "p2",
+      "code": "&#xfb51",
+      "tokenId": 16542,
+      "translation": "Alif Laam Meem",
+      "transliteration": "alif-lam-meem"
+    },
+    {
+      "ayahKey": "2:1",
+      "resourceId": 1,
+      "position": 2,
+      "wordId": null,
+      "pageNum": 2,
+      "lineNum": 3,
+      "codeDec": 64338,
+      "codeHex": "fb52",
+      "charTypeId": 2,
+      "className": "p2",
+      "code": "&#xfb52"
+    }
+  ],
+  "textTashkeel": "الم",
+  "content": [
+    {
+      "text": "Alif, Lam, Meem.",
+      "resource": {
+        "subType": "translation",
+        "cardinalityType": "1_ayah",
+        "name": "Sahih International"
+      }
+    }
+  ],
+  "audio": {
+    "mp3": {
+      "format": "mp3",
+      "duration": 7.65,
+      "reciter": {
+        "reciterId": 6,
+        "path": "Alafasy",
+        "slug": "alafasy",
+        "english": "Mishari Rashid al-`Afasy",
+        "arabic": "مشاري راشد العفاسي"
+      },
+      "url": "http://verses.quran.com/Alafasy/mp3/002001.mp3"
+    },
+    "ogg": {
+      "format": "ogg",
+      "duration": 7.604,
+      "reciter": {
+        "reciterId": 6,
+        "path": "Alafasy",
+        "slug": "alafasy",
+        "english": "Mishari Rashid al-`Afasy",
+        "arabic": "مشاري راشد العفاسي"
+      },
+      "url": "http://verses.quran.com/Alafasy/ogg/002001.ogg"
+    }
+  }
+}

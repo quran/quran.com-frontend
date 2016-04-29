@@ -13,8 +13,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import SearchHeader from 'components/header/SearchHeader';
-// import SearchInput from 'components/SearchInput';
-import Ayah from '../../scripts/components/surah/Ayah';
+import Ayah from '../../components/Ayah';
 import CoreLoader from '../../scripts/components/Loader';
 
 import { search } from '../../redux/modules/searchResults';
@@ -136,7 +135,7 @@ class Search extends Component {
      return <div style={{padding: '15%'}}><CoreLoader /></div>;
    }
 
-   return results.map(key => <Ayah ayah={ayahs[key]} key={key} isSearched />);
+   return results.map(result => <Ayah ayah={ayahs[result.ayah]} match={result.match} key={result.ayah} isSearched />);
  }
 
   render() {

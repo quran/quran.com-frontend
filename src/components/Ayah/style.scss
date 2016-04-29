@@ -1,4 +1,6 @@
-.ayah{
+@import '../../styles/_bootstrap-config.scss';
+
+.container{
   padding: 2.5% 0%;
   border-bottom: 1px solid rgba($text-muted, 0.5);
 
@@ -20,17 +22,14 @@
     visibility: hidden;
   }
 
-  span{
-    @extend .montserrat;
-  }
-
   .translation{
-    @extend .times-new;
+    &.arabic{
+      text-align: right;
+    }
 
     h4{
       color: $light-green;
       margin-bottom: 5px;
-      @extend .montserrat;
       text-transform: uppercase;
       font-size: 14px;
       font-weight: 400;
@@ -39,37 +38,14 @@
         font-size: 12px;
       }
     }
-    small{
-      @extend .times-new;
-    }
+
     h2{
       margin-top: 5px;
       margin-bottom: 25px;
     }
   }
- .translation-arabic{
-    text-align: right;
-    @extend .times-new;
-    h4{
-      color: $light-green;
-      margin-bottom: 5px;
-      @extend .montserrat;
-      text-transform: uppercase;
-      font-size: 14px;
-      font-weight: 400;
-    }
-    small{
-      @extend .times-new;
-    }
-    h2{
-      margin-top: 5px;
-      margin-bottom: 25px;
-    }
-  }
-  .text-left-arabic{
-    text-align: right;
-  }
-  .left-controls{
+
+  .controls{
     a{
       margin-bottom: 15px;
       display: block;
@@ -102,7 +78,8 @@
     }
   }
 }
-.word-font{
+
+.font{
   white-space: pre-line;
   color: #000;
   width: 100%;
@@ -139,13 +116,9 @@
   }
 }
 .translation{
-  @extend .montserrat;
   h4{
     color: $light-green;
     margin-bottom: 5px;
-  }
-  small{
-    @extend .montserrat;
   }
   h2{
     margin-top: 5px;
