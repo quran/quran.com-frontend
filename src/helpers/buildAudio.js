@@ -38,45 +38,49 @@ export function testIfSupported(ayah, agent) {
 }
 
 export function buildAudioForAyah(audio, agent) {
-  let scopedAudio;
+  let scopedAudio = new Audio(), segments = [];
+
+  scopedAudio.preload = 'none';
 
   const testOperaOrFirefox = __SERVER__ ?
     (agent.isOpera || agent.isFirefox) :
     (opera.test(window.navigator.userAgent) || firefox.test(window.navigator.userAgent));
   const testChrome = __SERVER__ ? agent.isChrome : chrome.test(window.navigator.userAgent);
 
-  scopedAudio = new Audio();
-  scopedAudio.preload = 'none';
-
   if (testOperaOrFirefox) {
     if (audio.ogg.url) {
       scopedAudio.src = audio.ogg.url;
+      segments = audio.ogg.segments? audio.ogg.segments : segments;
     }
   }
   else {
     if (audio.mp3.url) {
       scopedAudio.src = audio.mp3.url;
+      segments = audio.mp3.segments? audio.mp3.segments : segments;
     }
     else if (audio.ogg.url) {
       if (testChrome) {
         scopedAudio.src = audio.ogg.url;
+        segments = audio.ogg.segments? audio.ogg.segments : segments;
       }
     }
   }
 
-  return scopedAudio;
+  return { audio: scopedAudio, segments };
 }
 
 export function buildAudioFromHash(ayahsObject = {}, agent) {
-  const filesObject = {};
+  const audioFromHash = {files: {}, segments: {}};
 
   Object.keys(ayahsObject).forEach(ayahId => {
     const ayah = ayahsObject[ayahId];
+    const audioForAyah = buildAudioForAyah(ayah.audio, agent);
 
-    filesObject[ayahId] = buildAudioForAyah(ayah.audio, agent);
+    audioFromHash.files[ayahId] = audioForAyah.audio;
+    audioFromHash.segments[ayahId] = audioForAyah.segments;
   });
 
-  return filesObject;
+  return audioFromHash;
 }
 
 

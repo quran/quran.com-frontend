@@ -1,4 +1,5 @@
 import { ayahsSchema } from '../schemas';
+
 import { arrayOf } from 'normalizr';
 
 import { createFontFacesArray } from '../../helpers/buildFontFaces';
@@ -8,9 +9,12 @@ export const LOAD_SUCCESS = '@@quran/ayahs/LOAD_SUCCESS';
 export const LOAD_FAIL = '@@quran/ayahs/LOAD_FAIL';
 export const CLEAR_CURRENT = '@@quran/ayahs/CLEAR_CURRENT';
 export const SET_CURRENT_AYAH = '@@quran/ayahs/SET_CURRENT_AYAH';
+export const SET_CURRENT_WORD = '@@quran/ayahs/SET_CURRENT_WORD';
+export const CLEAR_CURRENT_WORD = '@@quran/ayahs/CLEAR_CURRENT_WORD';
 
 const initialState = {
   current: null,
+  currentWord: null,
   errored: false,
   loaded: false,
   entities: {},
@@ -23,12 +27,31 @@ export default function reducer(state = initialState, action = {}) {
     case SET_CURRENT_AYAH:
       return {
         ...state,
-        current: action.id
+        current: action.id,
+        currentWord: state.current == action.id ? state.currentWord : null
+      };
+    case SET_CURRENT_WORD:
+      let currentAyah = state.current;
+      if (action.id && currentAyah) {
+        if (!(new RegExp('^'+ currentAyah +':')).test(action.id)) {
+          currentAyah = action.id.match(/^\d+:\d+/g)[0];
+        }
+      }
+      return {
+        ...state,
+        current: currentAyah,
+        currentWord: action.id
+      };
+    case CLEAR_CURRENT_WORD:
+      return {
+        ...state,
+        currentWord: null
       };
     case CLEAR_CURRENT:
       return {
         ...state,
         current: null,
+        currentWord: null,
         entities: {
           ...state.entities,
           [action.id]: {}
@@ -96,9 +119,22 @@ export function clearCurrent(id) {
   };
 }
 
+export function clearCurrentWord() {
+  return {
+    type: CLEAR_CURRENT_WORD
+  };
+}
+
 export function setCurrentAyah(id) {
   return {
     type: SET_CURRENT_AYAH,
+    id
+  };
+}
+
+export function setCurrentWord(id) {
+  return {
+    type: SET_CURRENT_WORD,
     id
   };
 }

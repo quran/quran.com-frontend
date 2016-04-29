@@ -4,6 +4,7 @@ import CopyToClipboard from 'copy-to-clipboard';
 import { Link } from 'react-router';
 import { I13nAnchor } from 'react-i13n';
 import { Element } from 'react-scroll';
+import ReactDOM from 'react-dom'
 
 import debug from 'utils/Debug';
 
@@ -18,7 +19,15 @@ export default class Ayah extends Component {
   };
 
   shouldComponentUpdate(nextProps) {
-    return this.props.ayah !== nextProps.ayah;
+    return this.props.ayah !== nextProps.ayah || this.props.currentWord !== nextProps.currentWord;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.props.currentWord != null) {// || prevProps.currentWord != null) {
+      const elem = ReactDOM.findDOMNode(this);
+      const active = elem.getElementsByClassName('active')[0];
+      if (active) active.focus();
+    }
   }
 
   renderTranslations() {
@@ -67,13 +76,41 @@ export default class Ayah extends Component {
     });
   }
 
+  onWordClick(event) {
+    if (event.target && /^token-/.test(event.target.id)) {
+      // call onWordClick in Surah
+      this.props.onWordClick(event.target.id.match(/\d+/g).join(':'));
+    }
+  }
+
+  /*
+  onWordFocus(event) {
+    if (event.target && /^token-/.test(event.target.id)) {
+      // call onWordFocus in Surah
+      this.props.onWordFocus(event.target.id.match(/\d+/g).join(':'));
+    }
+  }
+  */
+
   renderText() {
+    const { currentWord } = this.props;
     if (!this.props.ayah.quran[0].char) {
       return;
     }
 
+    let token = 0;
     let text = this.props.ayah.quran.map(word => {
-      let className = `${word.char.font} ${word.highlight ? word.highlight: null}`;
+      let id = null;
+      let active = word.char.type == 'word' && currentWord === token ? true : false; // TODO change currentWord to a different name
+      let className = `${word.char.font}${word.highlight? ' '+word.highlight : ''}${active? ' active' : ''}`; // TODO change active variable
+
+      let tokenId = null;
+      if (word.char.type == 'word') {
+        tokenId = token;
+        id = `token-${word.ayahKey.replace(/:/, '-')}-${token++}`;
+      } else {
+        id = `glyph-${word.char.font}-${word.char.codeDec}`;
+      }
 
       if (word.word.translation) {
         let tooltip = word.word.translation;
@@ -91,9 +128,15 @@ export default class Ayah extends Component {
 
         return (
           <b
+            id={id}
+            onClick={this.onWordClick.bind(this)}
+            //onFocus={this.onWordFocus.bind(this)}
+            data-token-id={tokenId}
             key={word.char.code}
             className={`${className} pointer`}
             data-toggle="tooltip"
+            data-trigger="hover,focus"
+            tabIndex="1"
             data-placement="top" title={tooltip}
             dangerouslySetInnerHTML={{__html: word.char.code}}
           />
@@ -102,6 +145,9 @@ export default class Ayah extends Component {
       else {
         return (
           <b
+            id={id}
+            onClick={this.onWordClick.bind(this)}
+            data-token-id={tokenId}
             className={`${className} pointer`}
             key={word.char.code}
             dangerouslySetInnerHTML={{__html: word.char.code}}

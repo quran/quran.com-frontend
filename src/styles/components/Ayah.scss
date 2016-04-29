@@ -116,6 +116,11 @@
     float: right;
   }
 
+  b.active{
+    color: #155F63;
+    outline: none;
+  }
+
   .line{
     b{
       float: none;
@@ -130,6 +135,10 @@
     &:hover{
       color: $brand-primary;
       cursor: pointer;
+    }
+    &:focus{
+      color: $brand-primary;
+      outline: none;
     }
   }
 

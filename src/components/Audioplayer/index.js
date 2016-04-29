@@ -6,10 +6,11 @@ import Col from 'react-bootstrap/lib/Col';
 
 // Redux
 import { play, pause, repeat, toggleScroll, buildOnClient } from '../../redux/modules/audioplayer';
-import { setCurrentAyah } from '../../redux/modules/ayahs';
+import { setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
 
 // Components
 import Track from './Track';
+import Segments from './Segments';
 
 // Helpers
 // import debug from '../../scripts/helpers/debug';
@@ -20,7 +21,9 @@ const style = require('./style.scss');
 @connect(
   state => ({
     files: state.audioplayer.files,
+    segments: state.audioplayer.segments,
     currentAyah: state.ayahs.current,
+    currentWord: state.ayahs.currentWord,
     surahId: state.audioplayer.surahId,
     isSupported: state.audioplayer.isSupported,
     isPlaying: state.audioplayer.isPlaying,
@@ -34,6 +37,8 @@ const style = require('./style.scss');
     repeat: bindActionCreators(repeat, dispatch),
     toggleScroll: bindActionCreators(toggleScroll, dispatch),
     setCurrentAyah: bindActionCreators(setCurrentAyah, dispatch),
+    setCurrentWord: bindActionCreators(setCurrentWord, dispatch),
+    clearCurrentWord: bindActionCreators(clearCurrentWord, dispatch),
     buildOnClient: bindActionCreators(buildOnClient, dispatch)
   }),
   (stateProps, dispatchProps, ownProps) => {
@@ -45,10 +50,12 @@ const style = require('./style.scss');
 
     const files = stateProps.files[stateProps.surahId];
     const ayahIds = files ? Object.keys(files) : [];
+    const segments = stateProps.segments[stateProps.surahId];
 
     return {
       ...stateProps, ...dispatchProps, ...ownProps,
       files,
+      segments,
       ayahIds
     };
   }
@@ -59,6 +66,7 @@ export default class Audioplayer extends Component {
     surah: PropTypes.object.isRequired,
     files: PropTypes.object,
     currentAyah: PropTypes.string,
+    currentWord: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
     onLoadAyahs: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool.isRequired,
@@ -67,6 +75,8 @@ export default class Audioplayer extends Component {
     shouldRepeat: PropTypes.bool.isRequired,
     shouldScroll: PropTypes.bool.isRequired,
     setCurrentAyah: PropTypes.func.isRequired,
+    setCurrentWord: PropTypes.func.isRequired,
+    clearCurrentWord: PropTypes.func.isRequired,
     play: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
     repeat: PropTypes.func.isRequired,
@@ -110,7 +120,7 @@ export default class Audioplayer extends Component {
       setCurrentAyah(prevAyah);
 
       if (shouldScroll) {
-        scroller.scrollTo('ayah:'+ ayahNum, -120); // -120 to account for the header height
+        scroller.scrollTo('ayah:'+ ayahNum, -150);
       }
 
       if (wasPlaying) {
@@ -145,7 +155,7 @@ export default class Audioplayer extends Component {
     setCurrentAyah(nextAyah);
 
     if (shouldScroll) {
-      scroller.scrollTo('ayah:'+ ayahNum);
+      scroller.scrollTo('ayah:'+ ayahNum, -80);
     }
 
     if (wasPlaying) {
@@ -203,7 +213,7 @@ export default class Audioplayer extends Component {
     const ayahNum = currentAyah.replace( /^\d+:/, '' );
 
     if (shouldScroll) {
-      scroller.scrollTo('ayah:'+ ayahNum);
+      scroller.scrollTo('ayah:'+ ayahNum, -150);
     }
 
     this.props.play();
@@ -239,9 +249,9 @@ export default class Audioplayer extends Component {
     if (!shouldScroll) { // we use the inverse (!) here because we're toggling, so false is true
       const elem = document.getElementsByName('ayah:'+ ayahNum)[0];
       if (elem && elem.getBoundingClientRect().top < 0) { // if the ayah is above our scroll offset
-        scroller.scrollTo('ayah:'+ ayahNum, -120);
+        scroller.scrollTo('ayah:'+ ayahNum, -150);
       } else {
-        scroller.scrollTo('ayah:'+ ayahNum);
+        scroller.scrollTo('ayah:'+ ayahNum, -80);
       }
     }
 
@@ -341,7 +351,11 @@ export default class Audioplayer extends Component {
       play, // eslint-disable-line no-shadow
       pause, // eslint-disable-line no-shadow
       files,
+      segments,
       currentAyah,
+      currentWord,
+      setCurrentWord,
+      clearCurrentWord,
       isPlaying,
       shouldRepeat,
       isSupported,
@@ -395,9 +409,19 @@ export default class Audioplayer extends Component {
               onPlay={play}
               onPause={pause}
               onEnd={this.onNextAyah.bind(this)}
-            /> :
-            null
-            }
+            /> : null}
+          {isLoadedOnClient && true ?
+            <Segments
+              audio={files[currentAyah]}
+              segments={segments[currentAyah]}
+              currentAyah={currentAyah}
+              currentWord={currentWord}
+              setCurrentWord={setCurrentWord}
+              clearCurrentWord={clearCurrentWord}
+              isPlaying={isPlaying}
+              dispatchPlay={play}
+              dispatchPause={pause}
+            /> : null}
         </div>
       </div>
     );

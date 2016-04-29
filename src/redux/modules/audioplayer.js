@@ -14,6 +14,7 @@ const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
 
 const initialState = {
   files: {},
+  segments: {},
   userAgent: null,
   currentFile: null,
   isSupported: true,
@@ -23,14 +24,16 @@ const initialState = {
   isLoadedOnClient: false
 };
 
-let newFiles;
+let audioFromHash;
 let files;
+let segments;
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case BUILD_ON_CLIENT:
-      newFiles = buildAudioFromHash(state.files[action.surahId], state.userAgent);
-      files = Object.assign({}, state.files[action.surahId], newFiles);
+      audioFromHash = buildAudioFromHash(state.files[action.surahId], state.userAgent);
+      files = Object.assign({}, state.files[action.surahId], audioFromHash.files);
+      segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
 
       return {
         ...state,
@@ -38,6 +41,10 @@ export default function reducer(state = initialState, action = {}) {
         files: {
           ...state.files,
           [action.surahId]: files
+        },
+        segments: {
+          ...state.segments,
+          [action.surahId]: segments
         }
       };
     case AYAHS_CLEAR_CURRENT:
@@ -46,7 +53,11 @@ export default function reducer(state = initialState, action = {}) {
         files: {
           ...state.files,
           [action.id]: {}
-        }
+        },
+        segments: {
+          ...state.segments,
+          [action.id]: {}
+        },
       };
     case AYAHS_LOAD:
       return {
@@ -73,8 +84,9 @@ export default function reducer(state = initialState, action = {}) {
       }
 
       const incoming = action.result.entities.ayahs;
-      newFiles = __CLIENT__ ? buildAudioFromHash(incoming, state.userAgent) : incoming;
-      files = Object.assign({}, state.files[action.surahId], newFiles);
+      audioFromHash = __CLIENT__ ? buildAudioFromHash(incoming, state.userAgent) : incoming;
+      files = Object.assign({}, state.files[action.surahId], __CLIENT__ ? audioFromHash.files : audioFromHash);
+      segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
 
       return {
         ...state,
@@ -85,6 +97,10 @@ export default function reducer(state = initialState, action = {}) {
         files: {
           ...state.files,
           [action.surahId]: files
+        },
+        segments: {
+          ...state.segments,
+          [action.surahId]: segments
         }
       };
     case SET_USER_AGENT:
