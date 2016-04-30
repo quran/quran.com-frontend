@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Helmet from 'react-helmet';
 
 // components
+import LazyLoad from '../../components/LazyLoad';
 import PageBreak from '../../components/PageBreak';
 import Audioplayer from '../../components/Audioplayer';
 import ContentDropdown from '../../components/ContentDropdown';
@@ -300,35 +301,37 @@ export default class Surah extends Component {
     const { isEndOfSurah, surah } = this.props;
     const { lazyLoading } = this.state;
 
-    if (isEndOfSurah && !lazyLoading) {
-      return (
-        <ul className="pager">
-          {
-            surah.id > 1 &&
-            <li className="previous">
-              <Link to={`/${surah.id * 1 - 1}`}>
-                &larr; Previous Surah
+    return (
+      <LazyLoad
+        isEnd={isEndOfSurah && !lazyLoading}
+        endComponent={
+          <ul className="pager">
+            {
+              surah.id > 1 &&
+              <li className="previous">
+                <Link to={`/${surah.id * 1 - 1}`}>
+                  &larr; Previous Surah
+                </Link>
+              </li>
+            }
+            <li className="text-center">
+              <Link to={`/${surah.id}`}>
+                Beginning of Surah
               </Link>
             </li>
-          }
-          <li className="text-center">
-            <Link to={`/${surah.id}`}>
-              Beginning of Surah
-            </Link>
-          </li>
-          {
-            surah.id < 114 &&
-            <li className="next">
-              <Link to={`/${surah.id * 1 + 1}`}>
-                Next Surah &rarr;
-              </Link>
-            </li>
-          }
-        </ul>
-      );
-    }
-
-    return <p>Loading...</p>;
+            {
+              surah.id < 114 &&
+              <li className="next">
+                <Link to={`/${surah.id * 1 + 1}`}>
+                  Next Surah &rarr;
+                </Link>
+              </li>
+            }
+          </ul>
+        }
+        loadingComponent={<p>Loading...</p>}
+      />
+    );
   }
 
   renderAyahs() {
