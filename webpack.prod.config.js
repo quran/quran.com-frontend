@@ -47,11 +47,7 @@ module.exports = {
       {
         test: /\.(js|jsx)$/,
         exclude: [/server/, /node_modules/, /tests/],
-        loader: 'babel',
-        query: {
-          stage: 0,
-          plugins: []
-        }
+        loader: 'babel'
       },
       { test: /\.json$/, loader: 'json-loader'},
       { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true') },
