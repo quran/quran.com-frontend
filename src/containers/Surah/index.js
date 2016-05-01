@@ -127,8 +127,6 @@ const ayahRangeSize = 30;
 export default class Surah extends Component {
   constructor() {
     super(...arguments);
-
-    this.onScroll = this.onScroll.bind(this);
   }
 
   state = {
@@ -137,31 +135,15 @@ export default class Surah extends Component {
 
   componentDidMount() {
     if (__CLIENT__) {
-      window.removeEventListener('scroll', this.onScroll, true);
-      window.addEventListener('scroll', this.onScroll, true);
+      window.removeEventListener('scroll', this.handleNavbar, true);
+      window.addEventListener('scroll', this.handleNavbar, true);
       lastScroll = window.pageYOffset;
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    const sameSurahIdRouting = this.props.params.surahId === nextProps.params.surahId;
-    const lazyLoadFinished = sameSurahIdRouting && (!this.props.isLoaded && nextProps.isLoaded);
-    const hasReadingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
-    const hasFontSizeChange = this.props.options.fontSize !== nextProps.options.fontSize;
-    const hasSurahInfoChange = this.props.options.isShowingSurahInfo !== nextProps.options.isShowingSurahInfo;
-
-    return (
-      !sameSurahIdRouting ||
-      lazyLoadFinished ||
-      hasReadingModeChange ||
-      hasFontSizeChange ||
-      hasSurahInfoChange
-    );
-  }
-
   componentWillUnmount() {
     if (__CLIENT__) {
-      window.removeEventListener('scroll', this.onScroll, true);
+      window.removeEventListener('scroll', this.handleNavbar, true);
     }
   }
 
@@ -225,7 +207,7 @@ export default class Surah extends Component {
     return setOptionDispatch(payload);
   }
 
-  handleNavbar() {
+  handleNavbar = () => {
     // TODO: This should be done with react!
     if (window.pageYOffset > lastScroll) {
       document.querySelector('nav').classList.add('scroll-up');
@@ -255,24 +237,6 @@ export default class Surah extends Component {
     }, 1000)); // then scroll to it
   }
 
-  onScroll() {
-    const { isLoading, isEndOfSurah } = this.props;
-
-    this.handleNavbar();
-
-    if (isEndOfSurah) {
-      return false;
-    }
-
-    if (!isLoading && !this.state.lazyLoading && window.pageYOffset > (document.body.scrollHeight - window.innerHeight - 1000)) {
-      // Reached the end.
-      this.setState({
-        lazyLoading: true
-      });
-
-      this.lazyLoadAyahs();
-    }
-  }
 
   lazyLoadAyahs(callback) {
     const { loadAyahsDispatch, ayahIds, surah, options } = this.props;
@@ -298,12 +262,13 @@ export default class Surah extends Component {
   }
 
   renderPagination() {
-    const { isEndOfSurah, surah } = this.props;
-    const { lazyLoading } = this.state;
+    const { isLoading, isEndOfSurah, surah } = this.props;
 
     return (
       <LazyLoad
-        isEnd={isEndOfSurah && !lazyLoading}
+        onLazyLoad={this.lazyLoadAyahs.bind(this)}
+        isEnd={isEndOfSurah && !isLoading}
+        isLoading={isLoading}
         endComponent={
           <ul className="pager">
             {
