@@ -86,8 +86,8 @@ module.exports = function(config) {
 
       plugins:[
         new webpack.DefinePlugin({
-          __CLIENT__: false,
-          __SERVER__: true,
+          __CLIENT__: true,
+          __SERVER__: false,
           __DEVELOPMENT__: true,
           __DEVTOOLS__: false  // <-------- DISABLE redux-devtools HERE
         })

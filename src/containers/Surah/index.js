@@ -8,6 +8,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Helmet from 'react-helmet';
 
 // components
+import LazyLoad from '../../components/LazyLoad';
 import PageBreak from '../../components/PageBreak';
 import Audioplayer from '../../components/Audioplayer';
 import ContentDropdown from '../../components/ContentDropdown';
@@ -126,8 +127,6 @@ const ayahRangeSize = 30;
 export default class Surah extends Component {
   constructor() {
     super(...arguments);
-
-    this.onScroll = this.onScroll.bind(this);
   }
 
   state = {
@@ -136,31 +135,15 @@ export default class Surah extends Component {
 
   componentDidMount() {
     if (__CLIENT__) {
-      window.removeEventListener('scroll', this.onScroll, true);
-      window.addEventListener('scroll', this.onScroll, true);
+      window.removeEventListener('scroll', this.handleNavbar, true);
+      window.addEventListener('scroll', this.handleNavbar, true);
       lastScroll = window.pageYOffset;
     }
   }
 
-  shouldComponentUpdate(nextProps) {
-    const sameSurahIdRouting = this.props.params.surahId === nextProps.params.surahId;
-    const lazyLoadFinished = sameSurahIdRouting && (!this.props.isLoaded && nextProps.isLoaded);
-    const hasReadingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
-    const hasFontSizeChange = this.props.options.fontSize !== nextProps.options.fontSize;
-    const hasSurahInfoChange = this.props.options.isShowingSurahInfo !== nextProps.options.isShowingSurahInfo;
-
-    return (
-      !sameSurahIdRouting ||
-      lazyLoadFinished ||
-      hasReadingModeChange ||
-      hasFontSizeChange ||
-      hasSurahInfoChange
-    );
-  }
-
   componentWillUnmount() {
     if (__CLIENT__) {
-      window.removeEventListener('scroll', this.onScroll, true);
+      window.removeEventListener('scroll', this.handleNavbar, true);
     }
   }
 
@@ -224,7 +207,7 @@ export default class Surah extends Component {
     return setOptionDispatch(payload);
   }
 
-  handleNavbar() {
+  handleNavbar = () => {
     // TODO: This should be done with react!
     if (window.pageYOffset > lastScroll) {
       document.querySelector('nav').classList.add('scroll-up');
@@ -254,24 +237,6 @@ export default class Surah extends Component {
     }, 1000)); // then scroll to it
   }
 
-  onScroll() {
-    const { isLoading, isEndOfSurah } = this.props;
-
-    this.handleNavbar();
-
-    if (isEndOfSurah) {
-      return false;
-    }
-
-    if (!isLoading && !this.state.lazyLoading && window.pageYOffset > (document.body.scrollHeight - window.innerHeight - 1000)) {
-      // Reached the end.
-      this.setState({
-        lazyLoading: true
-      });
-
-      this.lazyLoadAyahs();
-    }
-  }
 
   lazyLoadAyahs(callback) {
     const { loadAyahsDispatch, ayahIds, surah, options } = this.props;
@@ -297,38 +262,41 @@ export default class Surah extends Component {
   }
 
   renderPagination() {
-    const { isEndOfSurah, surah } = this.props;
-    const { lazyLoading } = this.state;
+    const { isLoading, isEndOfSurah, surah } = this.props;
 
-    if (isEndOfSurah && !lazyLoading) {
-      return (
-        <ul className="pager">
-          {
-            surah.id > 1 &&
-            <li className="previous">
-              <Link to={`/${surah.id * 1 - 1}`}>
-                &larr; Previous Surah
+    return (
+      <LazyLoad
+        onLazyLoad={this.lazyLoadAyahs.bind(this)}
+        isEnd={isEndOfSurah && !isLoading}
+        isLoading={isLoading}
+        endComponent={
+          <ul className="pager">
+            {
+              surah.id > 1 &&
+              <li className="previous">
+                <Link to={`/${surah.id * 1 - 1}`}>
+                  &larr; Previous Surah
+                </Link>
+              </li>
+            }
+            <li className="text-center">
+              <Link to={`/${surah.id}`}>
+                Beginning of Surah
               </Link>
             </li>
-          }
-          <li className="text-center">
-            <Link to={`/${surah.id}`}>
-              Beginning of Surah
-            </Link>
-          </li>
-          {
-            surah.id < 114 &&
-            <li className="next">
-              <Link to={`/${surah.id * 1 + 1}`}>
-                Next Surah &rarr;
-              </Link>
-            </li>
-          }
-        </ul>
-      );
-    }
-
-    return <p>Loading...</p>;
+            {
+              surah.id < 114 &&
+              <li className="next">
+                <Link to={`/${surah.id * 1 + 1}`}>
+                  Next Surah &rarr;
+                </Link>
+              </li>
+            }
+          </ul>
+        }
+        loadingComponent={<p>Loading...</p>}
+      />
+    );
   }
 
   renderAyahs() {

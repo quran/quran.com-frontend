@@ -13,6 +13,7 @@ const initialState = {
   current: null,
   errored: false,
   loaded: false,
+  loading: false,
   entities: {},
   result: [],
   fontFaces: []
