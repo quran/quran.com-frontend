@@ -55,10 +55,4 @@ describe('<LazyLoad />', () => {
     wrapper.instance().onScroll();
     expect(wrapper.props().onLazyLoad).not.to.have.been.called;
   });
-
-  it('should not call onLazyLoad when not in scroll position', () => {
-    window.pageYOffset = -2000;
-    wrapper.instance().onScroll();
-    expect(wrapper.props().onLazyLoad).not.to.have.been.called;
-  });
 });

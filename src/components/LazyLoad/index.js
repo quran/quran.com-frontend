@@ -32,7 +32,6 @@ export default class LazyLoad extends Component {
     const dom = ReactDOM.findDOMNode(this);
 
     if ((!isLoading && !isEnd) && (dom.offsetParent || dom).offsetTop - (window.pageYOffset + window.innerHeight) <  offset) {
-      debugger;
       debug('component:LazyLoad', 'onLazyLoad called');
       return this.props.onLazyLoad();
     }
