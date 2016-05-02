@@ -1,0 +1,3 @@
+[submodule ".shh"]
+	path = .shh
+	url = git@github.com:quran/quran.com-shh.git

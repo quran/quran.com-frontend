@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
+import { decrypt } from 'sjcl';
 
 export default class Segments extends Component {
   static propTypes = {
     audio: PropTypes.object.isRequired,
-    segments: PropTypes.array.isRequired,
+    segments: PropTypes.string.isRequired,
     isPlaying: PropTypes.bool.isRequired,
     currentAyah: PropTypes.string.isRequired,
     currentWord: PropTypes.string,
@@ -15,6 +16,7 @@ export default class Segments extends Component {
   };
 
   state = { // initial state
+    segments: [],
     listeners: {},
     seekLookup: {},
     timer1: null,
@@ -26,10 +28,11 @@ export default class Segments extends Component {
 
   constructor() {
     super(...arguments);
+    this.secret = require('./secret.js');
   } // init
 
   componentWillMount() {
-    this.buildSeekLookup(this.props);
+    this.buildSegments(this.props);
   } // Invoked once, both on the client and server, immediately before the initial rendering occurs. If you call setState within this method, render() will see the updated state and will be executed only once despite the state change.
 
   componentDidMount() {
@@ -43,7 +46,7 @@ export default class Segments extends Component {
     }
 
     if (this.props.segments !== nextProps.segments) {
-      this.buildSeekLookup(nextProps);
+      this.buildSegments(nextProps);
     }
   } // Invoked when a component is receiving new props. This method is not called for the initial render. Use this as an opportunity to react to a prop transition before render() is called by updating the state using this.setState(). The old props can be accessed via this.props. Calling this.setState() within this function will not trigger an additional render.
 
@@ -107,10 +110,21 @@ export default class Segments extends Component {
     this.onAudioUnload(this.props.audio);
   }
 
-  buildSeekLookup(props) {
+  buildSegments(props) {
     this.setState({ token: null });
     this.state.seekLookup = {};
-    props.segments.forEach((segment, index) => {
+
+    let segments = null;
+
+    try {
+      segments = JSON.parse(decrypt(this.secret, new Buffer(props.segments, 'base64').toString()));
+    } catch (e) {
+      segments = [];
+    }
+
+    this.setState({ segments });
+
+    segments.forEach((segment, index) => {
       const start = segment[0], duration = segment[1], token = segment[2];
       if (token >= 0) {
         this.state.seekLookup[token] = this.state.seekLookup[token]? this.state.seekLookup[token]
@@ -144,7 +158,7 @@ export default class Segments extends Component {
   }
 
   highlight(index = 0, delta = 0) {
-    const segment = this.props.segments[index];
+    const segment = this.state.segments[index];
 
     if (!segment) {
       return;
@@ -173,7 +187,7 @@ export default class Segments extends Component {
   }
 
   unhighlight(index, delta = 0) {
-    const segment = this.props.segments[index];
+    const segment = this.state.segments[index];
     const token = segment[2];
 
     if (token >= 0) {

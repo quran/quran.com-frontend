@@ -38,7 +38,7 @@ export function testIfSupported(ayah, agent) {
 }
 
 export function buildAudioForAyah(audio, agent) {
-  let scopedAudio = new Audio(), segments = [];
+  let scopedAudio = new Audio(), segments = null;
 
   scopedAudio.preload = 'none';
 
@@ -50,18 +50,18 @@ export function buildAudioForAyah(audio, agent) {
   if (testOperaOrFirefox) {
     if (audio.ogg.url) {
       scopedAudio.src = audio.ogg.url;
-      segments = audio.ogg.segments? audio.ogg.segments : segments;
+      segments = audio.ogg.segments;
     }
   }
   else {
     if (audio.mp3.url) {
       scopedAudio.src = audio.mp3.url;
-      segments = audio.mp3.segments? audio.mp3.segments : segments;
+      segments = audio.mp3.segments;
     }
     else if (audio.ogg.url) {
       if (testChrome) {
         scopedAudio.src = audio.ogg.url;
-        segments = audio.ogg.segments? audio.ogg.segments : segments;
+        segments = audio.ogg.segments;
       }
     }
   }
