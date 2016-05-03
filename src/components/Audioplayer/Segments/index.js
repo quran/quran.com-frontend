@@ -28,7 +28,7 @@ export default class Segments extends Component {
 
   constructor() {
     super(...arguments);
-    this.secret = require('./secret.js');
+    this.secret = process.env.SEGMENTS_KEY;
   } // init
 
   componentWillMount() {
@@ -115,7 +115,6 @@ export default class Segments extends Component {
     this.state.seekLookup = {};
 
     let segments = null;
-
     try {
       segments = JSON.parse(decrypt(this.secret, new Buffer(props.segments, 'base64').toString()));
     } catch (e) {

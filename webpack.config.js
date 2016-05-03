@@ -68,6 +68,7 @@ var webpackConfig = {
       'process.env': {
         BROWSER: true,
         API_URL: JSON.stringify(process.env.API_URL),
+        SEGMENTS_KEY: JSON.stringify(process.env.SEGMENTS_KEY || '¯\_(ツ)_/¯'),
         CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
       },
       __SERVER__: false,
