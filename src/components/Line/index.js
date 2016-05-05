@@ -8,10 +8,6 @@ export default class Line extends React.Component {
     line: React.PropTypes.array.isRequired
   };
 
-  // shouldComponentUpdate(nextProps) {
-  //   return this.props.line.length !== nextProps.line.length;
-  // }
-
   renderText() {
     const { line } = this.props;
 
@@ -25,7 +21,7 @@ export default class Line extends React.Component {
 
         return (
           <b
-            key={`${index}`}
+            key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
             className={`${word.className} pointer`}
             data-toggle="tooltip"
             data-ayah={word.ayahKey}
@@ -41,7 +37,7 @@ export default class Line extends React.Component {
       return (
         <b
           className={`${word.className} pointer`}
-          key={`${word.pageNum}${word.lineNum}${word.position}`}
+          key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
           data-line={word.lineNum}
           data-page={word.pageNum}
           dangerouslySetInnerHTML={{__html: word.code}}>
