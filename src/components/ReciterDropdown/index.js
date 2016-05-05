@@ -102,7 +102,7 @@ export const slugs = [
       id: 7
     },
     name: {
-      english: 'Muhammad Siddiq al-Minshawi (Mujawwad)',
+      english: 'Mohamed Siddiq al-Minshawi (Mujawwad)',
       arabic: 'محمد صديق المنشاوي (مجود)'
     },
     style: {
@@ -117,7 +117,7 @@ export const slugs = [
       id: 7
     },
     name: {
-      english: 'Muhammad Siddiq al-Minshawi (Murattal)',
+      english: 'Mohamed Siddiq al-Minshawi (Murattal)',
       arabic: 'محمد صديق المنشاوي (مرتل)'
     },
     style: {
@@ -125,6 +125,51 @@ export const slugs = [
       id: 2
     },
     id: 10
+  },
+  {
+    reciter: {
+      slug: 'altablawi',
+      id: 9
+    },
+    name: {
+      english: 'Mohamed al-Tablawi',
+      arabic: 'محمد الطبلاوي'
+    },
+    style: {
+      slug: null,
+      id: null
+    },
+    id: 12
+  },
+  {
+    reciter: {
+      slug: 'alhusary',
+      id: 5
+    },
+    name: {
+      english: 'Mahmoud Khalil Al-Husary',
+      arabic: 'محمود خليل الحصري'
+    },
+    style: {
+      slug: null,
+      id: null
+    },
+    id: 7
+  },
+  {
+    reciter: {
+      slug: 'muallim', // i'm just making up values for slug, i dont think we need this at all
+      id: 5
+    },
+    name: {
+      english: 'Mahmoud Khalil Al-Husary (Muallim)',
+      arabic: 'محمود خليل الحصري'
+    },
+    style: {
+      slug: 'muallim',
+      id: 3
+    },
+    id: 13
   },
   {
     reciter: {

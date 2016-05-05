@@ -33,7 +33,7 @@ const style = require('./style.scss');
 
 import debug from 'utils/Debug';
 
-import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah } from '../../redux/modules/ayahs';
+import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
 import { setOption, toggleReadingMode } from '../../redux/modules/options';
 
@@ -103,8 +103,12 @@ const ayahRangeSize = 30;
     ayahIds.last = function() {return [...this][[...this].length - 1];};
 
     const isEndOfSurah = ayahIds.last() === surah.ayat;
+    const currentWord = state.ayahs.currentWord;
+    const isPlaying = state.audioplayer.isPlaying;
 
     return {
+      isPlaying,
+      currentWord,
       surah,
       ayahs,
       isEndOfSurah,
@@ -121,6 +125,8 @@ const ayahRangeSize = 30;
     setOptionDispatch: setOption,
     toggleReadingModeDispatch: toggleReadingMode,
     setCurrentAyah: setCurrentAyah,
+    setCurrentWord: setCurrentWord,
+    clearCurrentWord: clearCurrentWord,
     push
   }
 )
@@ -141,6 +147,30 @@ export default class Surah extends Component {
     }
   }
 
+//<<<<<<< HEAD
+//=======
+  // TODO lets try this with and without this function, but shouldComponentUpdate is the additional function from audio-segments in the merge conflict
+  /*
+  shouldComponentUpdate(nextProps) {
+    const sameSurahIdRouting = this.props.params.surahId === nextProps.params.surahId;
+    const lazyLoadFinished = sameSurahIdRouting && (!this.props.isLoaded && nextProps.isLoaded);
+    const hasReadingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
+    const hasFontSizeChange = this.props.options.fontSize !== nextProps.options.fontSize;
+    const hasSurahInfoChange = this.props.options.isShowingSurahInfo !== nextProps.options.isShowingSurahInfo;
+    const hasCurrentWordChange = this.props.currentWord !== nextProps.currentWord;
+
+    return (
+      !sameSurahIdRouting ||
+      lazyLoadFinished ||
+      hasReadingModeChange ||
+      hasFontSizeChange ||
+      hasSurahInfoChange ||
+      hasCurrentWordChange
+    );
+  }
+  */
+
+//>>>>>>> audio-segments
   componentWillUnmount() {
     if (__CLIENT__) {
       window.removeEventListener('scroll', this.handleNavbar, true);
@@ -299,12 +329,48 @@ export default class Surah extends Component {
     );
   }
 
+  onWordClick(id) {
+    const { setCurrentWord, clearCurrentWord, currentWord, isPlaying } = this.props;
+    if (id == currentWord && !isPlaying) {
+      clearCurrentWord();
+    } else {
+      setCurrentWord(id);
+    }
+  }
+
+  onWordFocus(id, elem) {
+    try {
+      const { setCurrentWord, clearCurrentWord, currentWord, isPlaying } = this.props;
+      if (id != currentWord && isPlaying) {
+        setCurrentWord(id); // let tabbing around while playing trigger seek to word action
+      }
+      if (elem && elem.nextSibling && elem.nextSibling.classList.contains('tooltip')) { // forcefully removing tooltips
+        elem.nextSibling.remove();                                                      // because our version of bootstrap does not respect the data-trigger option
+      } else {
+        const saved = elem.dataset.toggle;
+        elem.dataset.toggle = '';
+        setTimeout(function() {
+          try {
+            elem.dataset.toggle = saved;
+          } catch(e) {
+            console.info('caught in timeout',e);
+          }
+        }, 100);
+      }
+    } catch(e) {
+      console.info('caught in onWordFocus',e);
+    }
+  }
+
   renderAyahs() {
-    const { ayahs } = this.props;
+    const { ayahs, currentWord } = this.props;
 
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
+        currentWord={currentWord && (new RegExp('^'+ ayah.ayahKey +':')).test(currentWord)? parseInt(currentWord.match(/\d+$/)[0], 10) : null}
+        onWordClick={this.onWordClick.bind(this)}
+        onWordFocus={this.onWordFocus.bind(this)}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
       />
     ));
