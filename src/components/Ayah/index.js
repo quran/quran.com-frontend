@@ -10,6 +10,12 @@ import debug from '../../helpers/debug';
 
 const styles = require('./style.scss');
 
+const CHAR_TYPE_WORD   = 1;
+const CHAR_TYPE_END    = 2;
+const CHAR_TYPE_PAUSE  = 3;
+const CHAR_TYPE_RUB    = 4;
+const CHAR_TYPE_SAJDAH = 5;
+
 export default class Ayah extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
@@ -102,11 +108,11 @@ export default class Ayah extends Component {
     let token = 0;
     let text = this.props.ayah.words.map(word => {
       let id = null;
-      let active = word.charType == 'word' && currentWord === token ? true : false;
+      let active = word.charTypeId == CHAR_TYPE_WORD && currentWord === token ? true : false;
       let className = `${word.className}${word.highlight? ' '+word.highlight : ''}${active? ' '+ styles.active : ''}`;
 
       let tokenId = null;
-      if (word.charType == 'word') {
+      if (word.charTypeId == CHAR_TYPE_WORD) {
         tokenId = token;
         id = `token-${word.ayahKey.replace(/:/, '-')}-${token++}`;
       } else {

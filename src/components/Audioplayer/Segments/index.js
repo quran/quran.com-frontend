@@ -81,7 +81,7 @@ export default class Segments extends Component {
     }
 
     // highlight action
-    if (this.props.isPlaying && (!prevProps.isPlaying || prevProps.audio.src != this.props.audio.src)) { // if we just started playing or we are transitioning ayahs
+    if (this.props.isPlaying && (!prevProps.isPlaying || this.state.currentAyah != this.props.currentAyah || prevProps.audio.src != this.props.audio.src)) { // if we just started playing or we are transitioning ayahs
       this.highlight(this.findIndexByTime(), 0);
     }
 
@@ -157,6 +157,7 @@ export default class Segments extends Component {
   }
 
   highlight(index = 0, delta = 0) {
+    this.setState({ currentAyah: this.props.currentAyah });
     const segment = this.state.segments[index];
 
     if (!segment) {

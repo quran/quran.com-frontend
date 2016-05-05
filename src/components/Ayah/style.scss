@@ -94,6 +94,10 @@
     border-color:: transparent;
     border-width: 0px 0px 1px 0px;
     border-style: solid;
+    &.active {
+      color: $brand-primary-darker-5;
+      border-color: $brand-primary-darker-15;
+    }
   }
 
   .line{
@@ -112,10 +116,7 @@
       cursor: pointer;
     }
     &:focus{
-      color: $brand-primary-darker-5;
-      border-color:: $brand-primary-darker-15;
-      border-width: 0px 0px 1px 0px;
-      border-style: solid;
+      color: $brand-primary-darker-10;
       outline: none;
     }
   }
@@ -124,13 +125,6 @@
     font-size: 300%;
     line-height: 130%;
   }
-}
-
-.active{
-  color: $brand-primary-darker-15;
-  border-color: $brand-primary-darker-35;
-  border-width: 0px 0px 1px 0px;
-  border-style: solid;
 }
 
 .translation{
