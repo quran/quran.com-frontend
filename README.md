@@ -10,7 +10,7 @@ between both the server and the client) for SEO reasons.
 [![Stories In Review](https://badge.waffle.io/quran/quran.com-frontend.svg?label=in%20review&title=In%20Review)](http://waffle.io/quran/quran.com-frontend)
 
 
-[![Dependency Status](https://david-dm.org/quran/quran.com-frontend.svg)](https://david-dm.org/quran/quran.com-frontend)
+[![Dependency Status](https://david-dm.org/quran/quran.com-frontend.svg)](https://david-dm.org/quran/quran.com-frontend) [![devDependency Status](https://david-dm.org/quran/quran.com-frontend/dev-status.svg)](https://david-dm.org/quran/quran.com-frontend#info=devDependencies)
 [![Code Climate](https://codeclimate.com/github/quran/quran.com-frontend.png)](https://codeclimate.com/github/quran/quran.com-frontend)
 
 #### Getting started
