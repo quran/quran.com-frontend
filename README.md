@@ -1,12 +1,14 @@
+
+# Quran.com
+
+This is the project soon to be the Quran.com facing site. This is built in
+Reactjs + Redux + Expressjs + Webpack. It is isomorphic (javascript shared
+between both the server and the client) for SEO reasons.
+
 [![Stories Ready](https://badge.waffle.io/quran/quran.com-frontend.svg?label=ready&title=Ready)](http://waffle.io/quran/quran.com-frontend)
 [![Stories In Progress](https://badge.waffle.io/quran/quran.com-frontend.svg?label=in%20progress&title=In%20Progress)](http://waffle.io/quran/quran.com-frontend)
 [![Stories In Review](https://badge.waffle.io/quran/quran.com-frontend.svg?label=in%20review&title=In%20Review)](http://waffle.io/quran/quran.com-frontend)
 
-
-## Quran.com
-This is the project soon to be the Quran.com facing site. This is built in
-Reactjs + Redux + Expressjs + Webpack. It is isomorphic (javascript shared
-between both the server and the client) for SEO reasons.
 
 [![Dependency Status](https://david-dm.org/quran/quran.com-frontend.svg)](https://david-dm.org/quran/quran.com-frontend)
 [![Code Climate](https://codeclimate.com/github/quran/quran.com-frontend.png)](https://codeclimate.com/github/quran/quran.com-frontend)
@@ -17,7 +19,7 @@ From there, you are ready to go!
 
 #### Developing
 To start the app, run `npm run dev` which will
-run both the server and the client (webpack) to compile upon edits. Go to localhost:8001 in your browser, not 8000 (that is just the express server).
+run both the server and the client (webpack) to compile upon edits. Go to http://localhost:8001 in your browser, not 8000 (that is just the express server).
 
 #### Tests
 Run `npm run test:watch` to run the tests locally and watching. Otherwise use `npm run test` for CI level tests.
