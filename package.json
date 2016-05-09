@@ -99,7 +99,9 @@
     "url-loader": "~0.5.5",
     "webpack": "^1.10.3",
     "webpack-isomorphic-tools": "^2.2.41",
-    "winston": "^1.1.2"
+    "winston": "^1.1.2",
+    "sjcl": "~1.0.3",
+    "js-yaml": "~3.6.0"
   },
   "devDependencies": {
     "babel-core": "^6.7.7",

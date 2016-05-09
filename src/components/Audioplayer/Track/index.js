@@ -44,7 +44,9 @@ export default class Track extends Component {
 
   componentWillUpdate(nextProps) {
     if (this.props.file.src !== nextProps.file.src) {
-      this.props.file.pause();
+      if (!this.props.file.paused)
+        this.props.file.pause();
+      this.props.file.currentTime = 0;
     }
   }
 
@@ -93,7 +95,9 @@ export default class Track extends Component {
         file.currentTime = 0; // eslint-disable-line no-param-reassign
         file.play();
       } else {
-        file.pause();
+        if (file.readyState >= 3 && file.paused) {
+          file.pause();
+        }
         onEnd();
       }
     };
@@ -123,7 +127,8 @@ export default class Track extends Component {
   }
 
   onFileUnload(file) {
-    this.props.file.pause();
+    if (!this.props.file.paused)
+      this.props.file.pause();
     [ 'loadeddata', 'timeupdate', 'ended', 'play' ].forEach((listener) => {
       file.removeEventListener(listener, this.state.listeners[listener]);
     });
@@ -154,9 +159,13 @@ export default class Track extends Component {
     const { isPlaying, file } = this.props;
 
     if (isPlaying) {
-      file.play();
+      if (file.paused && file.readyState >= 3) {
+        file.play(); // returns a promise, can do .then(() => {});
+      }
     } else {
-      file.pause();
+      if (!file.paused && file.readyState >= 3) {
+        file.pause();
+      }
     }
 
     return (
