@@ -1,5 +1,5 @@
 export default `
- <h2>Name</h2>
+<h2>Name</h2>
 <p>The Surah takes its title from the sentence, <em>Wa anzalna' l-hadida</em>, of verse 25.</p>
 <h2>Period of Revelation</h2>
 <p>This is unanimously a Madani Surah, and a study of its subject matter shows that it was probably sent down some time during the interval between the Battle of Uhud and the Truce of Hudaibiyah. This was the time when the tiny Islamic State of Madinah had been hemmed in by the disbelievers and the handful of the ill equipped Muslims were entrenched against the combined power of entire Arabia. In this state Islam not only stood in need of the sacrifice of Life from its followers, but it also needed monetary help and assistance. In this Surah a forceful appeal has been made for the same. This view is further strengthened by verse 10 in which Allah has addressed the believers to the effect "Those of you who would spend and fight after the victory can never be equal to those who have spent and fought before the victory." And the same is supported by the traditions that Ibn Marduyah has related on the authority of Hadrat Anas. In respect of the verse: <em>Alam ya'n-i lilladhina aamanu
@@ -38,5 +38,5 @@ an takhsha'a qulubu- hum li-dhikrillah-i</em>, he says that 17 years after the c
   <li>
     <p>Prophets came from Allah in the past, and by their preaching some people adopted the Right Path, but most of them persisted in wickedness. Then the Prophet Jesus came, whose teachings brought about many moral improvements in the lives of the people, but his community invented monasticism. Now Allah has sent the Prophet Muhammad (upon whom be His peace and blessings). Those who affirm faith in him and pass their life fearing Allah's accountability, will be given by Allah a double share of His mercy and He will bless them with the Light by which they will see and walk the straight path among the crooked paths met with at every step in the life of this world. Although the followers of the earlier revelation regard themselves as the monopolists of Allah's bounties, the fact remains that Allah Himself controls His bounties He may bless with these whomever He pleases.</p>
   </li>
-</ol>;
+</ol>
 `

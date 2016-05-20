@@ -19,6 +19,9 @@ From there, you are ready to go!
 To start the app, run `npm run dev` which will
 run both the server and the client (webpack) to compile upon edits. Go to localhost:8001 in your browser, not 8000 (that is just the express server).
 
+#### Debugging
+Use the `DEBUG` env var when runnning the server to see debug messages, e.g. `DEBUG='*,-babel,-express:*' npm run dev`.
+
 #### Tests
 Run `npm run test:watch` to run the tests locally and watching. Otherwise use `npm run test` for CI level tests.
 

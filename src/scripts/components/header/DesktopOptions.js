@@ -5,7 +5,7 @@ import FontSizeInput from 'components/header/FontSizeInput';
 import ReadingModeToggle from 'components/header/ReadingModeToggle';
 import InformationToggle from 'components/header/InformationToggle'; // TODO: re-include with a non-wiki source
 import NavCollapseToggle from 'components/header/NavCollapseToggle';
-import debug from 'utils/Debug';
+import debug from '../../helpers/debug';
 
 class DesktopOptions extends React.Component {
   constructor(props) {

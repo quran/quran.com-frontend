@@ -1,5 +1,5 @@
 export default `
- <h2>Name</h2>
+<h2>Name</h2>
 <p>The Surah takes its name from V. 98, in which there is a reference to Prophet Yunus (Jonah). The name, as usual, is symbolical and does not indicate that the Surah deals with the story of Prophet Jonah.</p>
 <h2>Period of Revelation</h2>
 <p>We learn from traditions, and this is supported by the contents of the Surah itself, that the whole of this Surah was revealed at Makkah. But there are some people who are of the opinion, that some of its verses were revealed at Al-Madinah. This is, however, a superficial view. The continuity of the theme clearly shows that this does not comprise isolated verses or discourses that were revealed at different times and on different occasions. On the contrary, it is, from the beginning to the end, a closely connected discourse which must have been revealed at one sitting. Besides this, the nature of its theme is itself a clear proof that the Surah belongs to the Makkan period.</p>
@@ -38,5 +38,5 @@ will have a very blessed end; otherwise join shall meet with evil consequences."
   <li>
     <p>At the end of the Surah, the Holy Prophet has been commanded to make a declaration to this effect: "This is the Creed and this is the rule of conduct that has been prescribed for me by Allah: no change can be made at all in this: whoso will accept this will do so for his own good and whoso will reject this will do so at his own peril."</p>
   </li>
-</ol>;
+</ol>
 `

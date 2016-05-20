@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 import Navbar from 'react-bootstrap/lib/Navbar';
 
 import NavBrand from 'components/header/NavBrand';
-import debug from 'utils/Debug';
+import debug from '../../../helpers/debug';
 import Title from '../../../containers/Surah/Title';
 
 const MasterHeader = ({ surah, children }) => {

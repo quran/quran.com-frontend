@@ -1,5 +1,5 @@
 export default `
- <h2>Name</h2>
+<h2>Name</h2>
 <p>The Surah derives its name from the mention of the word <em>al-hashr</em> in verse thereby implying that it is the Surah in which the word <em>al-hashr</em> has occurred.</p>
 <h2>Period of Revelation</h2>
 <p><em>Bukhari</em> and <em>Muslim</em> contain a tradition from Hadrat Sa'id bin Jubair to the effect "When I asked Hadrat Abdullah bin Abbas about Surah Al-Hashr, he replied that it was sent down concerning the battle against the Bani an-Nadir just as Surah Al-Anfal was sent down concerning the Battle of Badr. In another tradition from Hadrat Sa'id bin Jubair, the words cited from Ibn Abbas (may Allah be pleased with him) are: <em>Qul: Surah an-Nadir</em> : Say, it is Surah an-Nadir." The same thing has been related also from Mujahid, Qatadah, Zuhri, Ibn Zaid, Yazid bin Ruman, Muhammad bin Ishaq and others. They are unanimous that the followers of the Book whose banishment has been mentioned in it, imply the Bani an-Nadir. Yazid bin Ruman, Mujahid and Muhammad bin Ishaq have stated that this whole Surah, from beginning to end, came down concerning this very battle.</p>
@@ -67,5 +67,5 @@ they could retain all their property which they could carry on thee camels, exce
   <li>
     <p>The whole of the last section (vv. 18-24) is an admonition for all those people who had professed to have affirmed the faith and joined the Muslim community, but were devoid of the true spirit of the faith. In it they have been told what is the real demand of the Faith, what is the real difference between piety and wickedness, what is the place and importance of the Quran which they professed to believe in, and what are the attributes of God in Whom they claimed to have believed.</p>
   </li>
-</ol>;
+</ol>
 `

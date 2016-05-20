@@ -31,7 +31,7 @@ import makeHeadTags from '../../helpers/makeHeadTags';
 
 const style = require('./style.scss');
 
-import debug from 'utils/Debug';
+import debug, { error } from '../../helpers/debug';
 
 import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
@@ -42,16 +42,89 @@ const ayahRangeSize = 30;
 
 @asyncConnect([
   {
-    promise({ store: { getState, dispatch } }) {
+    promise({ store: { getState, dispatch }, params }) {
+      console.log('first promise', params);
       if (!isAllLoaded(getState())) {
-        return dispatch(loadAll());
+        console.log('dispatching all');
+        return dispatch(loadAll()).then(()=>{
+          // do ayah promise
+          console.log('then do ayahs');
+
+          console.log('second promise', params);
+          console.log('getState', getState());
+          const { range, surahId } = params;
+          const { options } = getState();
+          let from;
+          let to;
+
+          if (range) {
+            if (range.includes('-')) {
+              [from, to] = range.split('-');
+            } else {
+              // Single ayah. For example /2/30
+              from = range;
+              to = parseInt(range, 10) + ayahRangeSize;
+            }
+
+            if (isNaN(from) || isNaN(to)) {
+              // Something wrong happened like /2/SOMETHING
+              // going to rescue by giving beginning of surah.
+              [from, to] = [1, ayahRangeSize];
+            }
+          } else {
+            [from, to] = [1, ayahRangeSize];
+          }
+
+          from = Math.min(from, getState().surahs.entities[surahId].ayat);
+            to = Math.min(to,   getState().surahs.entities[surahId].ayat);
+
+          let _debug = debug('container:Surah:promise');
+          _debug.log = console.log.bind(console);
+          _debug.log('state is', {state:getState() } );
+
+          if (isNaN(surahId)) {
+            // Should have an alert or something to tell user there is an error.
+            _debug('isNaN surahId');
+            return dispatch(push('/'));
+          }
+          else {
+            _debug({ surahId, from, to, currentSurahId: getState().surahs.current });
+          }
+
+          if (params.surahId !== getState().surahs.current) {
+            dispatch(setCurrentSurah(surahId));
+          }
+
+          if (!isLoaded(getState(), surahId, from, to)) {
+            _debug('loading initial ayahs');
+            dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
+
+            return dispatch(loadAyahs(surahId, from, to, options)).then((a,b,c) => {
+              _debug.log('THEN THEN THEN', { a,b,c });
+            });
+          }
+          else {
+            _debug('isLoaded apparently, so not dispatching loadAyahs');
+          }
+
+          return true;
+
+
+
+
+
+
+        });
       }
 
+      console.log('returning true');
       return true;
     }
   },
   {
     promise({ store: { dispatch, getState }, params }) {
+      console.log('second promise', params);
+      console.log('getState', getState());
       const { range, surahId } = params;
       const { options } = getState();
       let from;
@@ -75,9 +148,20 @@ const ayahRangeSize = 30;
         [from, to] = [1, ayahRangeSize];
       }
 
+      //from = Math.min(from, getState().surahs.entities[surahId].ayat); // can't get to this from here because the surahs.entities object is empty when this runs on account of parallel async promises running
+      //  to = Math.min(to,   getState().surahs.entities[surahId].ayat);
+
+      let _debug = debug('container:Surah:promise');
+      _debug.log = console.log.bind(console);
+      _debug.log('state is', {state:getState() } );
+
       if (isNaN(surahId)) {
         // Should have an alert or something to tell user there is an error.
+        _debug('isNaN surahId');
         return dispatch(push('/'));
+      }
+      else {
+        _debug({ surahId, from, to, currentSurahId: getState().surahs.current });
       }
 
       if (params.surahId !== getState().surahs.current) {
@@ -85,9 +169,15 @@ const ayahRangeSize = 30;
       }
 
       if (!isLoaded(getState(), surahId, from, to)) {
+        _debug('loading initial ayahs');
         dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
 
-        return dispatch(loadAyahs(surahId, from, to, options));
+        return dispatch(loadAyahs(surahId, from, to, options)).then((a,b,c) => {
+          _debug.log('THEN THEN THEN', { a,b,c });
+        });
+      }
+      else {
+        _debug('isLoaded apparently, so not dispatching loadAyahs');
       }
 
       return true;
@@ -133,6 +223,9 @@ const ayahRangeSize = 30;
 export default class Surah extends Component {
   constructor() {
     super(...arguments);
+    this.debug = debug('container:Surah');
+    this.error = error('container:Surah');
+    this.debug.log('constructor');
   }
 
   state = {
@@ -141,6 +234,7 @@ export default class Surah extends Component {
 
   componentDidMount() {
     if (__CLIENT__) {
+      window.__debug_surah = this;
       window.removeEventListener('scroll', this.handleNavbar, true);
       window.addEventListener('scroll', this.handleNavbar, true);
       lastScroll = window.pageYOffset;
@@ -430,7 +524,8 @@ export default class Surah extends Component {
 
   render() {
     const { surah, surahs, ayahIds, options } = this.props;
-    debug('component:Surah', 'Render');
+    this.debug('render');
+    this.debug.log('surah render');
 
     return (
       <div className="surah-body">

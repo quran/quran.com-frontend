@@ -11,7 +11,7 @@ const zeroPad = (num, places) => {
 };
 
 const Title = ({ surah }) => {
-  const title = require('../../../../static/images/titles/' + zeroPad(surah.id, 3) + '.svg');
+  const title = '/images/titles/'+ zeroPad(surah.id, 3) +'.svg';
 
   return (
     <div className={`row ${styles.container}`}>

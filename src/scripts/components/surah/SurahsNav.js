@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import debug from 'utils/Debug';
+import debug from '../../../helpers/debug';
+
 import classNames from 'classnames';
 
 const SurahsNav = ({ surahs, className }) => {
