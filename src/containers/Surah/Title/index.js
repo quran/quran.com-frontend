@@ -28,7 +28,7 @@ const Title = ({ surah }) => {
       <div className="col-md-6 col-xs-6 surah-title text-center">
         {
           surah &&
-          <img src={title} className="title hidden-xs" alt={`${surah.name.simple} (${surah.name.english}) - سورة ${surah.name.arabic}`} />
+          <a href="/"><img src={title} className="title hidden-xs" alt={`${surah.name.simple} (${surah.name.english}) - سورة ${surah.name.arabic}`} /></a>
         }
         <br />
         {

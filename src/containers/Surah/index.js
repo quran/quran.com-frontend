@@ -33,27 +33,138 @@ const style = require('./style.scss');
 
 import debug, { error } from '../../helpers/debug';
 
+
 import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
 import { setOption, toggleReadingMode } from '../../redux/modules/options';
 
 let lastScroll = 0;
 const ayahRangeSize = 30;
+function sleepFor( sleepDuration ){
+  var now = new Date().getTime();
+  while(new Date().getTime() < now + sleepDuration){ /* do nothing */ } 
+}
+let _debug = debug('container:Surah:promise');
+_debug.log = console.debug? console.debug.bind(console) : console.info? console.info.bind(console) : console.log.bind(console);
+_debug.error = console.error.bind(console);
 
 @asyncConnect([
   {
-    promise({ store: { getState, dispatch }, params }) {
-      console.log('first promise', params);
-      if (!isAllLoaded(getState())) {
-        console.log('dispatching all');
-        return dispatch(loadAll()).then(()=>{
-          // do ayah promise
-          console.log('then do ayahs');
+    promise: ({ store: { getState, dispatch }, params }) => { // this is much less confusing then the old line 'promise({ store: { getState, dispatch }, params }) {'-- it looks like a method call even though it's a method definition, misleading trickery
+      const { range, surahId } = params;
+      const { options } = getState();
+      _debug.log('first promise start');
+      /*sleepFor(2000);
+      return dispatch(loadAyahs(surahId, 1, 2, options)).then((a,b,c) => {
+        _debug.log('first promise end');
+      }, (err) => {
+        _debug.error('first promise end');
+      });*/
 
-          console.log('second promise', params);
-          console.log('getState', getState());
-          const { range, surahId } = params;
-          const { options } = getState();
+      const p = () => {
+
+        let from;
+        let to;
+        const loader = () => {
+          if (!isLoaded(getState(), surahId, from, to)) {
+            _debug('loading initial ayahs');
+            dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
+
+            return dispatch(loadAyahs(surahId, from, to, options));
+          }
+          else {
+            _debug('isLoaded apparently, so not dispatching loadAyahs');
+          }
+        };
+
+        return Promise.resolve('chain')
+        .then(function() {
+          if (isNaN(surahId)) {
+            // Should have an alert or something to tell user there is an error.
+            _debug('isNaN surahId');
+            return dispatch(push('/'))
+          }
+        })
+        .then((args) => {
+          _debug('then', { args, surahId, from, to, currentSurahId: getState().surahs.current });
+
+          if (params.surahId !== getState().surahs.current) {
+            return dispatch(setCurrentSurah(surahId));
+          }
+        })
+        .then((args) => {
+          _debug('then #2', { args, surahId, from, to, currentSurahId: getState().surahs.current });
+
+          if (!isAllLoaded(getState())) {
+            _debug.log('dispatching all');
+            return dispatch(loadAll());
+          }
+        })
+        .then(() => {
+          // do ayah promise
+          _debug.log('dispatch loadAll success', { success: isAllLoaded(getState()) });
+
+          //console.log('second promise', { params, state: getState() });
+          if (range) {
+            if (range.includes('-')) {
+              [from, to] = range.split('-');
+            } else {
+              // Single ayah. For example /2/30
+              from = range;
+              to = parseInt(range, 10) + ayahRangeSize;
+            }
+
+            if (isNaN(from) || isNaN(to)) {
+              // Something wrong happened like /2/SOMETHING
+              // going to rescue by giving beginning of surah.
+              [from, to] = [1, ayahRangeSize];
+            }
+          } else {
+            [from, to] = [1, ayahRangeSize];
+          }
+
+          //_debug.log('state is', {state:getState() } );
+
+          _debug.log('from / to before min call', { from, to });
+          try {
+          const state = getState();
+          from = Math.min(from, state && state.surahs && state.surahs.entities && state.surahs.entities[surahId] && state.surahs.entities[surahId].ayat ? state.surahs.entities[surahId].ayat : 5);
+            to = Math.min(to,   getState().surahs.entities[surahId].ayat);
+          } catch(e) {
+            console.error('console.error', e);
+            _debug.error('_debug.error', e);
+          }
+          _debug.log('from / to after min call', { from, to });
+        })
+        .then(loader)
+        .catch((err) => {
+          _debug.error('oops', err);
+          return loader();
+        })
+        .then(loader)
+        .then(loader)
+        .then(loader)
+      };
+
+      return p()
+      .then(function(args) {
+        _debug.log('first promise end', args);
+      }).catch(function(err) {
+        _debug.error('first promise end', err);
+      });
+
+      /*
+
+      _debug.log('first promise', params);
+      if (!isAllLoaded(getState())) {
+        _debug.log('dispatching all');
+        return dispatch(loadAll())
+        .then(() => {
+          let _promise;
+          // do ayah promise
+          _debug.log('dispatch loadAll success', { success: isAllLoaded(getState()) });
+
+          //console.log('second promise', { params, state: getState() });
           let from;
           let to;
 
@@ -75,33 +186,24 @@ const ayahRangeSize = 30;
             [from, to] = [1, ayahRangeSize];
           }
 
-          from = Math.min(from, getState().surahs.entities[surahId].ayat);
+          //_debug.log('state is', {state:getState() } );
+
+          _debug.log('from / to before min call', { from, to });
+          try {
+          const state = getState();
+          from = Math.min(from, state && state.surahs && state.surahs.entities && state.surahs.entities[surahId] && state.surahs.entities[surahId].ayat ? state.surahs.entities[surahId].ayat : 5);
             to = Math.min(to,   getState().surahs.entities[surahId].ayat);
-
-          let _debug = debug('container:Surah:promise');
-          _debug.log = console.log.bind(console);
-          _debug.log('state is', {state:getState() } );
-
-          if (isNaN(surahId)) {
-            // Should have an alert or something to tell user there is an error.
-            _debug('isNaN surahId');
-            return dispatch(push('/'));
+          } catch(e) {
+            console.error('console.error', e);
+            _debug.error('_debug.error', e);
           }
-          else {
-            _debug({ surahId, from, to, currentSurahId: getState().surahs.current });
-          }
-
-          if (params.surahId !== getState().surahs.current) {
-            dispatch(setCurrentSurah(surahId));
-          }
+          _debug.log('from / to after min call', { from, to });
 
           if (!isLoaded(getState(), surahId, from, to)) {
             _debug('loading initial ayahs');
             dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
 
-            return dispatch(loadAyahs(surahId, from, to, options)).then((a,b,c) => {
-              _debug.log('THEN THEN THEN', { a,b,c });
-            });
+            _promise = dispatch(loadAyahs(surahId, from, to, options));
           }
           else {
             _debug('isLoaded apparently, so not dispatching loadAyahs');
@@ -114,19 +216,33 @@ const ayahRangeSize = 30;
 
 
 
+        }, (args) => {
+          _debug.log('going to try debug.eror');
+          _debug.error(...(typeof(args) === 'string'? [args] : typeof(args) === 'undefined'? [] : args));
         });
       }
 
       console.log('returning true');
       return true;
     }
-  },
+    */
+  }/*,
   {
     promise({ store: { dispatch, getState }, params }) {
-      console.log('second promise', params);
-      console.log('getState', getState());
       const { range, surahId } = params;
       const { options } = getState();
+
+      _debug.log('second promise start');
+      sleepFor(1000);
+      return dispatch(loadAyahs(surahId, 1, 2, options)).then((a,b,c) => {
+        _debug.log('second promise end');
+        _debug.log('second promise THEN THEN THEN', { a,b,c });
+      }, (err) => {
+        _debug.log('second promise end');
+        _debug.log('second promise ERROR ERROR ERROR', { err });
+      });
+
+
       let from;
       let to;
 
@@ -150,10 +266,6 @@ const ayahRangeSize = 30;
 
       //from = Math.min(from, getState().surahs.entities[surahId].ayat); // can't get to this from here because the surahs.entities object is empty when this runs on account of parallel async promises running
       //  to = Math.min(to,   getState().surahs.entities[surahId].ayat);
-
-      let _debug = debug('container:Surah:promise');
-      _debug.log = console.log.bind(console);
-      _debug.log('state is', {state:getState() } );
 
       if (isNaN(surahId)) {
         // Should have an alert or something to tell user there is an error.
@@ -181,7 +293,7 @@ const ayahRangeSize = 30;
       }
 
       return true;
-    }
+    }*/
   }
 ])
 @connect(
