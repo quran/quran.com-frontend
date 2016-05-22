@@ -1,4 +1,4 @@
-require('dotenv').config({path: (process.env.NODE_ENV || 'production') + '.env'});
+require('dotenv').load();
 
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -77,7 +77,6 @@ module.exports = {
       'process.env': JSON.stringify({
         BROWSER: true,
         API_URL: process.env.API_URL,
-        CURRENT_URL: process.env.CURRENT_URL,
         NODE_ENV: process.env.NODE_ENV
       }),
       __SERVER__: false,

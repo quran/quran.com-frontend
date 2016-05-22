@@ -1,4 +1,4 @@
-require('dotenv').config({path: (process.env.NODE_ENV || 'development') + '.env'});
+require('dotenv').load();
 var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
@@ -115,8 +115,7 @@ module.exports = {
       'process.env': {
         BROWSER: true,
         API_URL: JSON.stringify(process.env.API_URL),
-        SEGMENTS_KEY: JSON.stringify(process.env.SEGMENTS_KEY || '¯\_(ツ)_/¯'),
-        CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
+        SEGMENTS_KEY: JSON.stringify(process.env.SEGMENTS_KEY || '¯\_(ツ)_/¯')
       },
       __SERVER__: false,
       __CLIENT__: true,
