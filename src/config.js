@@ -13,7 +13,6 @@ const description = 'The Noble Quran in many languages in an easy-to-use interfa
 module.exports = Object.assign({
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
-  url: process.env.CURRENT_URL,
   api: process.env.API_URL,
   app: {
     head: {

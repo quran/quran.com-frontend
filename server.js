@@ -17,7 +17,6 @@ const debug = debugLib('quran');
 import routes from './src/routes';
 import ApiClient from './src/helpers/ApiClient';
 import createStore from './src/redux/create';
-import * as Settings from 'constants/Settings';
 
 import NotFound from 'components/NotFound';
 import Errored from 'components/Error';
@@ -90,7 +89,7 @@ export default function serve(cb) {
     console.info(`
       ==> 🌎  ENV=${process.env.NODE_ENV}
       ==> ✅  Server is listening at http://localhost:${port}
-      ==> 🎯  API at ${Settings.api}
+      ==> 🎯  API at ${process.env.API_URL}
     `);
 
     cb && cb(this);
