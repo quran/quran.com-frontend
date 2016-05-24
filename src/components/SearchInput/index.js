@@ -1,16 +1,15 @@
-import React from 'react';
-import { PropTypes } from "react-metrics";
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import { PropTypes } from 'react-metrics';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
-import classNames from 'classnames';
 
-import SearchAutocomplete from '../../../components/SearchAutocomplete';
+import SearchAutocomplete from '../SearchAutocomplete';
 
-import debug from 'utils/Debug';
+import debug from '../../helpers/debug';
 
 @connect(null, { push })
-export default class SearchInput extends React.Component {
+export default class SearchInput extends Component {
   static contextTypes = {
     metrics: PropTypes.metrics
   };

@@ -3,9 +3,9 @@ import React from 'react';
 const loading = require('../../../static/images/loading.gif');
 
 const Loader = () => (
-  <div className="loading" ng-hide="currentSurah.ayahs">
+  <div className="loading" nghide="currentSurah.ayahs">
     <div className="row">
-      <div className="col-md-6 col-md-offset-3 text-center">
+      <div className="colmd6 colmdoffset3 textcenter">
         <img src={loading} />
         <h3>Loading...</h3>
       </div>

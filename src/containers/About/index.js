@@ -1,9 +1,9 @@
-import React from 'react';
-import IndexHeader from 'components/header/IndexHeader';
-import { Link } from 'react-router';
+import React, { Component } from 'react';
+import IndexHeader from '../../components/IndexHeader';
+import Link from 'react-router/lib/Link';
 import Helmet from 'react-helmet';
 
-class About extends React.Component {
+export default class About extends Component {
   render() {
     return (
       <div>
@@ -82,5 +82,3 @@ class About extends React.Component {
     );
   }
 }
-
-export default About;

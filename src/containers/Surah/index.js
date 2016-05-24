@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-async-connect';
+import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -18,20 +18,20 @@ import VersesDropdown from '../../components/VersesDropdown';
 import FontSizeDropdown from '../../components/FontSizeDropdown';
 import InformationToggle from '../../components/InformationToggle';
 import SurahInfo from '../../components/SurahInfo';
-import MasterHeader from 'components/header/MasterHeader';
-import ReadingModeToggle from 'components/header/ReadingModeToggle';
+import Header from './Header';
+import ReadingModeToggle from '../../components/ReadingModeToggle';
 import Ayah from '../../components/Ayah';
 import Line from '../../components/Line';
-import SearchInput from 'components/header/SearchInput';
+import SearchInput from '../../components/SearchInput';
 import Bismillah from '../../components/Bismillah';
-import scroller from '../../scripts/utils/scroller';
+import scroller from '../../utils/scroller';
 
 // Helpers
 import makeHeadTags from '../../helpers/makeHeadTags';
 
 const style = require('./style.scss');
 
-import debug from 'utils/Debug';
+import debug from '../../helpers/debug';
 
 import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
@@ -466,7 +466,7 @@ export default class Surah extends Component {
           __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
           }}
         />
-        <MasterHeader surah={surah}>
+        <Header surah={surah}>
           <Row className="navbar-bottom">
             <Col md={8}>
               <Row>
@@ -506,7 +506,7 @@ export default class Surah extends Component {
               </Row>
             </Col>
           </Row>
-        </MasterHeader>
+        </Header>
         <div className={`container-fluid ${style['surah-container']}`}>
           <Row>
             <SurahInfo

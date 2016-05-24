@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { PropTypes as MetricsPropTypes } from "react-metrics";
-import { asyncConnect } from 'redux-async-connect';
+import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
@@ -12,9 +12,9 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-import SearchHeader from 'components/header/SearchHeader';
+import Header from './Header';
 import Ayah from '../../components/Ayah';
-import CoreLoader from '../../scripts/components/Loader';
+import CoreLoader from '../../components/Loader';
 
 import { search } from '../../redux/modules/searchResults';
 
@@ -148,7 +148,7 @@ class Search extends Component {
           __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
           }}
         />
-        <SearchHeader />
+        <Header />
         {this.renderStatsBar()}
         <div className="container surah-list">
           <div className="row">

@@ -1,13 +1,16 @@
 /*global document, window, $ */
-require('babel-polyfill');
+import 'babel-polyfill';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reactCookie from 'react-cookie';
-import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
-import useScroll from 'scroll-behavior/lib/useStandardScroll';
-import { ReduxAsyncConnect } from 'redux-async-connect';
+import Provider from 'react-redux/lib/components/Provider';
+import Router from 'react-router/lib/Router';
+import browserHistory from 'react-router/lib/browserHistory';
+import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
+import useScroll from 'react-router-scroll';
+import { ReduxAsyncConnect } from 'redux-connect';
+import { syncHistoryWithStore } from 'react-router-redux';
 
 import debug from 'debug';
 
@@ -16,8 +19,8 @@ import createStore from './src/redux/create';
 import routes from './src/routes';
 
 const client = new ApiClient();
-const history = useScroll(() => browserHistory)();
-const store = createStore(history, client, window.__data);
+const store = createStore(browserHistory, client, window.__data);
+const history = syncHistoryWithStore(browserHistory, store);
 
 window.quranDebug = debug;
 window.ReactDOM = ReactDOM; // For chrome dev tool support
@@ -40,9 +43,17 @@ if (typeof window !== 'undefined') {
 }
 
 const component = (
-  <Router render={(props) =>
-        <ReduxAsyncConnect {...props} helpers={{client}} />
-      } history={history}>
+  <Router
+    history={history}
+    render={(props) => (
+      <ReduxAsyncConnect
+        {...props}
+        helpers={{client}}
+        filter={item => !item.deferred}
+        render={applyRouterMiddleware(useScroll())}
+      />
+    )}
+  >
     {routes()}
   </Router>
 );

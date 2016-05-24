@@ -1,10 +1,10 @@
-import React from 'react';
-import SearchInput from 'components/header/SearchInput';
-import { Link } from 'react-router';
+import React, { Component } from 'react';
+import SearchInput from '../../../components/SearchInput';
+import Link from 'react-router/lib/Link';
 
 const logo = require('../../../../static/images/logo-lg-w.png');
 
-class SearchHeader extends React.Component {
+class Header extends Component {
   render() {
     return (
       <div className="index-header">
@@ -24,4 +24,4 @@ class SearchHeader extends React.Component {
   }
 }
 
-export default SearchHeader;
+export default Header;
