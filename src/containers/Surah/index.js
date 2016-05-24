@@ -31,7 +31,7 @@ import makeHeadTags from '../../helpers/makeHeadTags';
 
 const style = require('./style.scss');
 
-import debug from 'utils/Debug';
+import debug from '../../helpers/debug';
 
 import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
@@ -40,57 +40,112 @@ import { setOption, toggleReadingMode } from '../../redux/modules/options';
 let lastScroll = 0;
 const ayahRangeSize = 30;
 
+var how_many_times = 0;
+// TODO
+// spinner start, then
+// Promise.all([...]) // do a bunch of mini async tasks needed to do one bigger task
+// then(spinner stop)
+// catch(spinner stop then visual feedback about error)
 @asyncConnect([
   {
-    promise({ store: { getState, dispatch } }) {
-      if (!isAllLoaded(getState())) {
-        return dispatch(loadAll());
-      }
+    promise: function({ store: { getState, dispatch }, params }) { // this is much less confusing then the old line 'promise({ store: { getState, dispatch }, params }) {'-- it looks like a method call even though it's a method definition, misleading trickery
+      this.debug = debug(`container:Surah:asyncConnect ${how_many_times}`);
+      how_many_times += 1;
 
-      return true;
-    }
-  },
-  {
-    promise({ store: { dispatch, getState }, params }) {
       const { range, surahId } = params;
       const { options } = getState();
-      let from;
-      let to;
+      const p = () => {
+        let from;
+        let to;
+        let promise = new Promise((resolve, reject) => {
+          if (isNaN(surahId))
+            reject(`surahId ${surahId} is not a number`);
+          else resolve();
+        });
+        return promise.then(() => {
+          if (params.surahId !== getState().surahs.current)
+            return dispatch(setCurrentSurah(surahId));
+        }, (err) => {
+          throw `isNaN surahId ${surahId}, Should have an alert or something to tell user there is an error.`;
+        })
+        .then(() => {
+          if (!isAllLoaded(getState()))
+            return dispatch(loadAll()).
+            catch((err) => {
+              //this.debug('load surahs failed, trying again');
+              return dispatch(loadAll()).
+              catch((err) => {
+                //this.debug('throwing an err, what happens?');
+                throw `couldnt load surahs ${err}`
+              });
+            })/*.then(() => {this.debug('surahs loaded');})*/;
+        })
+        .then(() => {
+          if (range) {
+            if (range.includes('-')) {
+              [from, to] = range.split('-');
+            } else { // Single ayah. For example /2/30
+              from = range;
+              to = parseInt(range, 10) + ayahRangeSize;
+            }
 
-      if (range) {
-        if (range.includes('-')) {
-          [from, to] = range.split('-');
-        } else {
-          // Single ayah. For example /2/30
-          from = range;
-          to = parseInt(range, 10) + ayahRangeSize;
-        }
+            if (isNaN(from) || isNaN(to)) {
+              // Something wrong happened like /2/SOMETHING
+              // going to rescue by giving beginning of surah.
+              [from, to] = [1, ayahRangeSize];
+            }
+          } else {
+            [from, to] = [1, ayahRangeSize];
+          }
 
-        if (isNaN(from) || isNaN(to)) {
-          // Something wrong happened like /2/SOMETHING
-          // going to rescue by giving beginning of surah.
-          [from, to] = [1, ayahRangeSize];
-        }
-      } else {
-        [from, to] = [1, ayahRangeSize];
-      }
+          try {
+            const state = getState();
+            from = Math.min(from, state.surahs.entities[surahId].ayat);
+              to = Math.min(to,   state.surahs.entities[surahId].ayat);
+          } catch(err) {
+            this.debug.err(`debug error ${err}`);
+          }
+        }, (err) => {
+          throw `could not load surahs`;
+        })
+        .then(() => {
+          if (!isLoaded(getState(), surahId, from, to)) { // In the case where you go to same surah but later ayahs.
+            return (new Promise((resolve, reject) => {
+              //this.debug('clearing surah ayahs and a brief 50ms pause before...');
+              dispatch(clearCurrent(surahId));
+              return setTimeout(() => {resolve()}, 50);
+            })).then(() => {
+              //this.debug('...loading ayahs');
+              return dispatch(loadAyahs(surahId, from, to, options)).
+              catch((err) => {
+                //this.debug('load ayahs failed, trying again');
+                return dispatch(loadAyahs(surahId, from, to, options)).
+                catch((err) => {
+                  throw `couldnt load ayahs ${err}`
+                });
+              }).then((args) => {
+                //this.debug(`ayahs loaded ${args}`);
+              });
+            }).catch((err) => {
+              throw `puking it up ${err}`;
+            });
+          }
+        })
+        .catch((err) => {
+          this.debug.err(`error was ${err}, going back home`);
+          return dispatch(push('/'))
+        });
+      };
 
-      if (isNaN(surahId)) {
-        // Should have an alert or something to tell user there is an error.
-        return dispatch(push('/'));
-      }
+      this.debug('first promise start');
+      return p()
+        .then((args) => {
+          this.debug(`first promise end ${args}`);
+        })
+        .catch((err) => {
+          this.debug(`first promise err ${err}`);
+        });
 
-      if (params.surahId !== getState().surahs.current) {
-        dispatch(setCurrentSurah(surahId));
-      }
-
-      if (!isLoaded(getState(), surahId, from, to)) {
-        dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
-
-        return dispatch(loadAyahs(surahId, from, to, options));
-      }
-
-      return true;
     }
   }
 ])
@@ -133,6 +188,8 @@ const ayahRangeSize = 30;
 export default class Surah extends Component {
   constructor() {
     super(...arguments);
+    this.debug = debug('container:Surah');
+    this.debug('constructor');
   }
 
   state = {
@@ -430,7 +487,7 @@ export default class Surah extends Component {
 
   render() {
     const { surah, surahs, ayahIds, options } = this.props;
-    debug('component:Surah', 'Render');
+    this.debug('render surah');
 
     return (
       <div className="surah-body">

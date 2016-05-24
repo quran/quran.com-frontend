@@ -7,7 +7,7 @@ import { asyncConnect } from 'redux-async-connect'
 import { connect } from 'react-redux';
 import moment from 'moment';
 
-import debug from 'utils/Debug';
+import debug from '../../helpers/debug';
 
 import { isAllLoaded, loadAll } from '../../redux/modules/surahs';
 

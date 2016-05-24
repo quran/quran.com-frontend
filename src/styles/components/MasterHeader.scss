@@ -1,6 +1,7 @@
 $content-padding: 10px 15px 5px 15px !important;
 $label-padding: 5px 20px;
 nav.navbar{
+  zoom: 0.9;
   background-color: $beige;
   width: 100%;
   right: 0px;
@@ -22,6 +23,10 @@ nav.navbar{
 
 .navbar-header{
   float: none;
+}
+
+.navbar-header+div{
+  zoom: 0.9;
 }
 
 .navbar-bottom{

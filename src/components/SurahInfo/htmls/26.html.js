@@ -1,5 +1,5 @@
 export default `
- <h2>Name</h2>
+<h2>Name</h2>
 <p>The Surah takes its name from verse 224 in which the word <em>Ash-Shu\`araa'</em> occurs.</p>
 <h2>Period of Revelation</h2>
 <p>The subject matter and the style show, and the traditions confirm, that it was revealed during the middle Makkan period. According to Ibn Abbas, Surah Ta Ha was revealed first, then Surah Al Waqiah, and then Surah Ash-Shu'araa.(<em>Ruh-ul-Ma'ani</em>, Vol. xx, p. 64). About Surah Ta Ha it is well known that it had been revealed before Hadrat Umar embraced Islam.</p>
@@ -21,5 +21,5 @@ Prophet.</p>
   <li>
     <p>Lastly, the discussion has been summed up, saying "O disbelievers, if at all you want to see the Signs, why should you insist on seeing those horrible Signs that visited the doomed communities of the past? Why don't you see the Qur'an which is being presented in your own language? Why don't you see Muhammad (upon whom be Allah's peace and mercy) and his Companions? Can the revelations of the Qur'an be the work of a satan or a jinn? Does the recipient of the Qur'an appear to be a sorcerer? Are Muhammad and his Companions no different from a poet and his admirers? Why don't you give up disbelief and search your hearts for their judgment? When in the heart of your hearts you yourselves believe that the Revelations of the Qur'an have nothing in common with sorcery and poetry, then you should know that you are being cruel and unjust, and will certainly meet the doom meant for the cruel and unjust."</p>
   </li>
-</ol>;
+</ol>
 `

@@ -1,5 +1,5 @@
 import React from 'react';
-import debug from 'utils/Debug';
+import debug from '../../helpers/debug';
 
 const styles = require('../Ayah/style.scss');
 

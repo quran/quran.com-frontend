@@ -39,5 +39,5 @@ export default `
   <li>
     <p>The Holy Prophet and his companions have been comforted and told about the attitude they should adopt in the face of antagonism and persecution by the disbelievers.</p>
   </li>
-</ol>;
+</ol>
 `
