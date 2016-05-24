@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import Helmet from 'react-helmet';
 
 import Grid from 'react-bootstrap/lib/Grid';

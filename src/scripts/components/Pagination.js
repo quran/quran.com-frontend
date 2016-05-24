@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 /**
  * Has to take in current page, hits per page, and total hits
  */

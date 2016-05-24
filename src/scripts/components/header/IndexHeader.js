@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchInput from 'components/header/SearchInput';
 import IndexHeaderNav from 'components/header/IndexHeaderNav';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import debug from 'utils/Debug';
 
 const logo = require('../../../../static/images/logo-lg-w.png');

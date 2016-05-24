@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { PropTypes as MetricsPropTypes } from "react-metrics";
-import { asyncConnect } from 'redux-async-connect';
+import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';

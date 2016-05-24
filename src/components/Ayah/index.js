@@ -1,6 +1,6 @@
 /* eslint-disable consistent-return */
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 import ReactDOM from 'react-dom'
 

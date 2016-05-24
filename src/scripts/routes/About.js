@@ -1,6 +1,6 @@
 import React from 'react';
 import IndexHeader from 'components/header/IndexHeader';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import Helmet from 'react-helmet';
 
 class About extends React.Component {

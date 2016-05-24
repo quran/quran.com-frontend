@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchInput from 'components/header/SearchInput';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 
 const logo = require('../../../../static/images/logo-lg-w.png');
 

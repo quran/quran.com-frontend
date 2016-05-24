@@ -1,9 +1,9 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import IndexHeader from 'components/header/IndexHeader';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import { LinkContainer } from 'react-router-bootstrap';
-import { asyncConnect } from 'redux-async-connect'
+import { asyncConnect } from 'redux-connect'
 import { connect } from 'react-redux';
 import moment from 'moment';
 

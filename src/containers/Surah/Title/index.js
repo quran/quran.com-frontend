@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 
 const styles = require('./style.scss');
 const ornamentLeft = require('../../../../static/images/ornament-left.png');
