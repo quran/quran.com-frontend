@@ -12,7 +12,7 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-import SearchHeader from 'components/header/SearchHeader';
+import Header from './Header';
 import Ayah from '../../components/Ayah';
 import CoreLoader from '../../scripts/components/Loader';
 
@@ -148,7 +148,7 @@ class Search extends Component {
           __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
           }}
         />
-        <SearchHeader />
+        <Header />
         {this.renderStatsBar()}
         <div className="container surah-list">
           <div className="row">

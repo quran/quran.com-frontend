@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
-import SwitchToggle from '../../../components/SwitchToggle';
+import SwitchToggle from '../SwitchToggle';
 
 const ReadingModeToggle = ({ onReadingModeToggle, isToggled }) => (
   <div>
@@ -8,5 +8,10 @@ const ReadingModeToggle = ({ onReadingModeToggle, isToggled }) => (
     <SwitchToggle checked={isToggled} onToggle={onReadingModeToggle} flat />
   </div>
 );
+
+ReadingModeToggle.propTypes = {
+  onReadingModeToggle: PropTypes.func.isRequired,
+  isToggled: PropTypes.bool.isRequired
+}
 
 export default ReadingModeToggle;

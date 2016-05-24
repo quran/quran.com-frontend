@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import superagent from 'superagent';
 
 import IndexHeader from 'components/header/IndexHeader';
 
-export default class Contact extends React.Component {
+export default class Contact extends Component {
   state = {
     success: false
   };

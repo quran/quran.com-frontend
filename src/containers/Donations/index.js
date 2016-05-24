@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { Component } from 'react';
 import IndexHeader from 'components/header/IndexHeader';
 
-class Donations extends React.Component {
+export default class Donations extends Component {
   render() {
     return (
       <div className="top-section">
@@ -52,5 +52,3 @@ class Donations extends React.Component {
     );
   }
 }
-
-export default Donations;

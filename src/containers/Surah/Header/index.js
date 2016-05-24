@@ -3,12 +3,11 @@ import Link from 'react-router/lib/Link';
 
 import Navbar from 'react-bootstrap/lib/Navbar';
 
-import NavBrand from 'components/header/NavBrand';
-import debug from 'utils/Debug';
+import debug from '../../../helpers/debug';
 import Title from '../../../containers/Surah/Title';
 
-const MasterHeader = ({ surah, children }) => {
-  debug('component:MasterHeader', 'Render');
+const Header = ({ surah, children }) => {
+  debug('component:Header', 'Render');
 
   return (
     <Navbar className="montserrat" fixedTop fluid>
@@ -27,8 +26,8 @@ const MasterHeader = ({ surah, children }) => {
   );
 };
 
-MasterHeader.propTypes = {
+Header.propTypes = {
   surah: PropTypes.object.isRequired
 };
 
-export default MasterHeader;
+export default Header;

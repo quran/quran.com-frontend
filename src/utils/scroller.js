@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   scrollTo(name, offset = 0) {
     const node = document.getElementsByName(name)[0];
 

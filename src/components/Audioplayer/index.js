@@ -14,7 +14,7 @@ import Segments from './Segments';
 
 // Helpers
 import debug from '../../helpers/debug';
-import scroller from '../../scripts/utils/scroller';
+import scroller from '../../utils/scroller';
 
 const style = require('./style.scss');
 
