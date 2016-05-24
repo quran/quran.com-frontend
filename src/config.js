@@ -8,7 +8,7 @@ const environment = {
 }[process.env.NODE_ENV || 'development'];
 
 const title = 'Al-Qur\'an Al-Kareem - القرآن الكريم'
-const description = 'The Noble Quran in many languages in an easy-to-use interface.'
+const description = 'The Quran translated into many languages in a simple and easy interface.'
 
 module.exports = Object.assign({
   host: process.env.HOST || 'localhost',
@@ -23,11 +23,11 @@ module.exports = Object.assign({
         {'http-equiv': 'Content-Type', content: 'text/html; charset=utf-8'},
         {'http-equiv': 'Content-Language', content: 'EN; AR'},
         {name: 'description', content: description},
-        {name: 'keywords', content: 'quran, koran, quran, قران, القرآن, قران كريم, القران الكريم, al quran, al kareem, surah yasin, surah yaseen, yasin, surah, holy, arabic, iman, islam, Allah, book, muslim'}, // eslint-disable-line max-len
+        {name: 'keywords', content: 'quran, koran, qur\'an, kareem, قران, القرآن, قران كريم, القران الكريم, surah, yasin, yaseen, kahf, mulk, rahman, muslim, islam, iman, arabic, Allah'}, // eslint-disable-line max-len
         {name: 'Charset', content: 'UTF-8'},
         {name: 'Distribution', content: 'Global'},
         {name: 'Rating', content: 'General'},
-        {name: 'viewport', content: 'width=device-width, user-scalable=no, initial-scale=1'},
+        {name: 'viewport', content: 'width=device-width, user-scalable=yes, initial-scale=1'},
         {name: 'google-site-verification', content: 'ehFz7FvmL7V9MzP40F8_kLABhCzqGzMDMrCnUP44Too'},
         {name: 'theme-color', content: '#004f54'},
         {property: 'og:site_name', content: title},
