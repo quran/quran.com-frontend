@@ -20,19 +20,6 @@ export default class LazyLoad extends Component {
     offset: 1000
   }
 
-  state = {
-    lazyLoadCalls: 0
-  };
-
-  constructor(){
-    super(...arguments);
-    this.debug = debug('component:LazyLoad');
-  }
-
-  componentWillMount() {
-    this.debug('componentWillMount', 'lazyLoadCalls', this.state.lazyLoadCalls, '__CLIENT__', __CLIENT__);
-  }
-
   componentDidMount() {
     if (__CLIENT__) {
       window.removeEventListener('scroll', this.onScroll, true);
@@ -44,20 +31,15 @@ export default class LazyLoad extends Component {
     const { isLoading, isEnd, offset } = this.props;
     const dom = ReactDOM.findDOMNode(this);
 
-    if (this.state.lazyLoadCalls == 0 || (!isLoading && !isEnd) && (dom.offsetParent || dom).offsetTop - (window.pageYOffset + window.innerHeight) <  offset) {
-      return this.onLazyLoad();
+    if ((!isLoading && !isEnd) && (dom.offsetParent || dom).offsetTop - (window.pageYOffset + window.innerHeight) <  offset) {
+      debug('component:LazyLoad', 'onLazyLoad called');
+      return this.props.onLazyLoad();
     }
 
     return false;
   }
 
-  onLazyLoad = () => {
-    this.setState({ lazyLoadCalls: this.state.lazyLoadCalls + 1 });
-    return this.props.onLazyLoad();
-  }
-
   render() {
-    this.debug('render');
     const { isEnd, loadingComponent, endComponent } = this.props;
 
     if (isEnd) {
