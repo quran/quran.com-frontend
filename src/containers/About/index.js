@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IndexHeader from 'components/header/IndexHeader';
+import IndexHeader from '../../components/IndexHeader';
 import Link from 'react-router/lib/Link';
 import Helmet from 'react-helmet';
 

@@ -18,10 +18,7 @@ import routes from './src/routes';
 import ApiClient from './src/helpers/ApiClient';
 import createStore from './src/redux/create';
 
-import NotFound from 'components/NotFound';
-import Errored from 'components/Error';
-import ErroredMessage from 'components/ErrorMessage';
-import Html from 'components/Html';
+import Html from './src/helpers/Html';
 
 import { setUserAgent } from './src/redux/modules/audioplayer';
 import { setOption } from './src/redux/modules/options';

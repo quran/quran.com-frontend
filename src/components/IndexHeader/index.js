@@ -1,12 +1,18 @@
-import React from 'react';
-import SearchInput from '../../../components/SearchInput';
-import IndexHeaderNav from 'components/header/IndexHeaderNav';
+import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
-import debug from '../../../helpers/debug';
 
-const logo = require('../../../../static/images/logo-lg-w.png');
+import SearchInput from '../SearchInput';
+import IndexHeaderNav from './Nav';
 
-class IndexHeader extends React.Component {
+import debug from '../../helpers/debug';
+
+const logo = require('../../../static/images/logo-lg-w.png');
+
+export default class IndexHeader extends Component {
+  static propTypes = {
+    noSearch: PropTypes.bool
+  };
+
   renderSearch() {
     if (this.props.noSearch) {
       return null;
@@ -38,7 +44,3 @@ class IndexHeader extends React.Component {
     );
   }
 }
-
-IndexHeader.displayName = 'IndexHeader';
-
-export default IndexHeader;

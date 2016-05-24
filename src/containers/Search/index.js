@@ -14,7 +14,7 @@ import Col from 'react-bootstrap/lib/Col';
 
 import Header from './Header';
 import Ayah from '../../components/Ayah';
-import CoreLoader from '../../scripts/components/Loader';
+import CoreLoader from '../../components/Loader';
 
 import { search } from '../../redux/modules/searchResults';
 

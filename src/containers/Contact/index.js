@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import superagent from 'superagent';
 
-import IndexHeader from 'components/header/IndexHeader';
+import IndexHeader from '../../components/IndexHeader';
 
 export default class Contact extends Component {
   state = {

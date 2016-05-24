@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import IndexHeader from 'components/header/IndexHeader';
+import IndexHeader from '../../components/IndexHeader';
 
 export default class Donations extends Component {
   render() {

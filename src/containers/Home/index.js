@@ -1,6 +1,6 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-import IndexHeader from 'components/header/IndexHeader';
+import IndexHeader from '../../components/IndexHeader';
 import Link from 'react-router/lib/Link';
 import { LinkContainer } from 'react-router-bootstrap';
 import { asyncConnect } from 'redux-connect'
