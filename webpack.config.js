@@ -10,6 +10,8 @@ var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./webpack-isomo
 var babelrc = fs.readFileSync('./.babelrc');
 var babelrcObject = {};
 
+Object.assign = require('object-assign');
+
 try {
   babelrcObject = JSON.parse(babelrc);
 } catch (err) {

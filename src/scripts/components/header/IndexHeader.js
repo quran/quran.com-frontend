@@ -2,7 +2,7 @@ import React from 'react';
 import SearchInput from 'components/header/SearchInput';
 import IndexHeaderNav from 'components/header/IndexHeaderNav';
 import { Link } from 'react-router';
-import debug from 'utils/Debug';
+import debug from '../../../helpers/debug';
 
 const logo = require('../../../../static/images/logo-lg-w.png');
 
