@@ -27,7 +27,6 @@ export default class LazyLoad extends Component {
   constructor(){
     super(...arguments);
     this.debug = debug('component:LazyLoad');
-    this.debug('constructor');
   }
 
   componentWillMount() {
@@ -39,11 +38,9 @@ export default class LazyLoad extends Component {
       window.removeEventListener('scroll', this.onScroll, true);
       window.addEventListener('scroll', this.onScroll, true);
     }
-    this.debug.log('componentDidMount');
   }
 
   onScroll = () => {
-    this.debug.log('onScroll');
     const { isLoading, isEnd, offset } = this.props;
     const dom = ReactDOM.findDOMNode(this);
 
@@ -55,7 +52,6 @@ export default class LazyLoad extends Component {
   }
 
   onLazyLoad = () => {
-    this.debug.log('onLazyLoad');
     this.setState({ lazyLoadCalls: this.state.lazyLoadCalls + 1 });
     return this.props.onLazyLoad();
   }
