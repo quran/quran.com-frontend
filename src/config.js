@@ -7,8 +7,8 @@ const environment = {
   }
 }[process.env.NODE_ENV || 'development'];
 
-const title = 'The Noble Quran - القرآن الكريم'
-const description = 'The Noble Quran in many languages in an easy-to-use interface.'
+const title = 'Al-Qur\'an al-Kareem - القرآن الكريم'
+const description = 'The Quran translated into many languages in a simple and easy interface.'
 
 module.exports = Object.assign({
   host: process.env.HOST || 'localhost',
@@ -22,7 +22,7 @@ module.exports = Object.assign({
         {'http-equiv': 'Content-Type', content: 'text/html; charset=utf-8'},
         {'http-equiv': 'Content-Language', content: 'EN; AR'},
         {name: 'description', content: description},
-        {name: 'keywords', content: 'quran, koran, quran, al quran, al kareem, surah yasin, surah yaseen, yasin, surah, holy, arabic, iman, islam, Allah, book, muslim'}, // eslint-disable-line max-len
+        {name: 'keywords', content: 'quran, koran, qur\'an, kareem, قران, القرآن, قران كريم, القران الكريم, surah, yasin, yaseen, kahf, mulk, rahman, muslim, islam, Allah'}, // eslint-disable-line max-len
         {name: 'Charset', content: 'UTF-8'},
         {name: 'Distribution', content: 'Global'},
         {name: 'Rating', content: 'General'},
