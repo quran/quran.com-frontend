@@ -1,8 +1,5 @@
 import express from 'express';
-import expressConfig from 'server/config/express';
-const server = express();
-expressConfig(server);
-
+import PrettyError from 'pretty-error';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { match } from 'react-router';
@@ -11,12 +8,17 @@ import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 import cookie from 'react-cookie';
 
-import debugLib from 'debug';
-const debug = debugLib('quran');
+
+import expressConfig from 'server/config/express';
+
+const pretty = new PrettyError();
+const server = express();
+expressConfig(server);
 
 import routes from './src/routes';
 import ApiClient from './src/helpers/ApiClient';
 import createStore from './src/redux/create';
+import debug from './src/helpers/debug';
 
 import Html from './src/helpers/Html';
 
@@ -46,15 +48,15 @@ server.use((req, res, next) => {
 
   store.dispatch(setUserAgent(req.useragent));
   store.dispatch(setOption(cookie.load('options') || {}));
-
-  debug('Executing navigate action');
+  debug('Server', 'Executing navigate action');
   match({ history, routes: routes(), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+    debug('Server', 'Route match callback');
+
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
       console.error('ROUTER ERROR:', pretty.render(error));
-      res.status(500);
-      hydrateOnClient();
+      res.status(500).send(error);
     } else if (renderProps) {
       loadOnServer({...renderProps, store, helpers: { client }}).then(() => {
         const component = ReactDOM.renderToString(
@@ -63,8 +65,8 @@ server.use((req, res, next) => {
           </Provider>
         );
 
-        debug('Rendering Application component into html');
-        debug('Sending markup');
+        debug('Server', 'Rendering Application component into html');
+        debug('Server', 'Sending markup');
         res.type('html');
         res.setHeader('Cache-Control', 'public, max-age=31557600');
         res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(

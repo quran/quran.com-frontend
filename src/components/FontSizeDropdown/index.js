@@ -1,13 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
-import NavItem from 'react-bootstrap/lib/NavItem';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger'
 import Popover from 'react-bootstrap/lib/Popover'
-import Tooltip from 'react-bootstrap/lib/Tooltip'
 import Row from 'react-bootstrap/lib/Row'
 import Col from 'react-bootstrap/lib/Col';
-
-import { getFontSize } from '../../helpers/flowType';
 
 const style = require('./style.scss');
 
@@ -74,8 +70,6 @@ export default class FontSizeDropdown extends Component {
   }
 
   render() {
-    const helperText = 'Font size';
-
     return (
       <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
         <a

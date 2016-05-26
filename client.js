@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom';
 import reactCookie from 'react-cookie';
 import Provider from 'react-redux/lib/components/Provider';
 import Router from 'react-router/lib/Router';
+import match from 'react-router/lib/match';
 import browserHistory from 'react-router/lib/browserHistory';
 import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
 import useScroll from 'react-router-scroll';
@@ -42,31 +43,29 @@ if (typeof window !== 'undefined') {
   });
 }
 
-const component = (
-  <Router
-    history={history}
-    render={(props) => (
-      <ReduxAsyncConnect
-        {...props}
-        helpers={{client}}
-        filter={item => !item.deferred}
-        render={applyRouterMiddleware(useScroll())}
-      />
-    )}
-  >
-    {routes()}
-  </Router>
-);
+match({ history, routes: routes() }, (error, redirectLocation, renderProps) => {
+  const component = (
+    <Router
+      {...renderProps}
+      render={(props) => (
+        <ReduxAsyncConnect
+          {...props}
+          helpers={{client}}
+          filter={item => !item.deferred}
+          render={applyRouterMiddleware(useScroll())}
+        />
+      )}
+    />
+  );
 
-debug('client', 'rehydrating app');
+  const mountNode = document.getElementById('app');
 
-const mountNode = document.getElementById('app');
+  debug('client', 'React Rendering');
 
-debug('client', 'React Rendering');
-
-ReactDOM.render(
-  <Provider store={store} key="provider">
-    {component}
-  </Provider>, mountNode, () => {
-  debug('client', 'React Rendered');
+  ReactDOM.render(
+    <Provider store={store} key="provider">
+      {component}
+    </Provider>, mountNode, () => {
+    debug('client', 'React Rendered');
+  });
 });

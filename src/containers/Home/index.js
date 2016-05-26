@@ -2,10 +2,9 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import IndexHeader from '../../components/IndexHeader';
 import Link from 'react-router/lib/Link';
-import { LinkContainer } from 'react-router-bootstrap';
+import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import { asyncConnect } from 'redux-connect'
 import { connect } from 'react-redux';
-import moment from 'moment';
 
 import debug from '../../helpers/debug';
 
@@ -99,7 +98,7 @@ class Home extends React.Component {
         <ul className="list-inline">
           <li>Quick links:</li>
           {
-            moment().isSame(moment().day('Friday')) &&
+            new Date().getDay() === 5 &&
             <li>
               <Link
                 to="/18"

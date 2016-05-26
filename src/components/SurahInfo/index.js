@@ -6,9 +6,9 @@ import Col from 'react-bootstrap/lib/Col';
 const style = require('./style.scss');
 
 export default class SurahInfo extends Component {
+
   render() {
     const { surah, isShowingSurahInfo, onClose } = this.props;
-    const html = require(`./htmls/${surah.id}.html.js`);
 
     return (
       <Col xs={12} className={`${style.container} ${isShowingSurahInfo ? style.show : ''}`}>
@@ -29,7 +29,7 @@ export default class SurahInfo extends Component {
             </dl>
           </Col>
           <Col md={8} className={`${style.info} times-new`}>
-            <div dangerouslySetInnerHTML={{__html: html}} />
+            <div dangerouslySetInnerHTML={{__html: require(`./htmls/${surah.id}.html.js`)}} />
             <div>
               <p>
                 <em>Source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Quran</em>
