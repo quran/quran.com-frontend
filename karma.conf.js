@@ -24,7 +24,7 @@ module.exports = function(config) {
     files: [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
       './tests/polyfill/Event.js',
-      {pattern: "static/images/*", watched: false, included: false, served: true},
+      {pattern: 'static/images/*', watched: false, included: false, served: true},
 
       // Actual tests here
       'tests.webpack.js'
@@ -81,7 +81,7 @@ module.exports = function(config) {
       node: {
         // karma watches test/unit/index.js
         // webpack watches dependencies of test/unit/index.js
-        fs: "empty"
+        fs: 'empty'
       },
 
       plugins:[
