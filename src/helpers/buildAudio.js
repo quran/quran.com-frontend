@@ -56,12 +56,12 @@ export function buildAudioForAyah(audio, agent) {
   else {
     if (audio.mp3.url) {
       scopedAudio.src = audio.mp3.url;
-      segments = audio.mp3.segments;
+      segments = audio.mp3.encryptedSegments;
     }
     else if (audio.ogg.url) {
       if (testChrome) {
         scopedAudio.src = audio.ogg.url;
-        segments = audio.ogg.segments;
+        segments = audio.ogg.encryptedSegments;
       }
     }
   }
