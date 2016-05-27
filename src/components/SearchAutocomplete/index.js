@@ -8,7 +8,7 @@ const client = new ApiClient();
 const styles = require('./style.scss');
 
 @connect(
-  (state, ownProps) => {
+  state => {
     const surahs = state.surahs.entities;
     const surahId = state.surahs.current;
     let lang = 'en';
@@ -30,9 +30,8 @@ const styles = require('./style.scss');
       surahs,
       lang
     };
-  }, {
-    push
-  }
+  },
+  { push }
 )
 export default class SearchAutocomplete extends Component {
   constructor() {
@@ -107,7 +106,7 @@ export default class SearchAutocomplete extends Component {
     if (this.cached[lang][value]) {
       this.setState({ ayat: this.cached[lang][value] });
     } else {
-      client.get('/suggest', {params: {q: value, l:lang}}).then((res) => {
+      client.get('/v2/suggest', {params: {q: value, l: lang}}).then((res) => {
         this.cached[lang][value] = res;
 
         if (this.props.value.trim() === value) {
@@ -181,7 +180,6 @@ export default class SearchAutocomplete extends Component {
   }
 
   renderList(key) {
-    //this.handleItemKeyDown.bind({ item, self: this })
     return this.state[key].map((item) => (
       <li key={item.href} tabIndex="0" onKeyDown={((event) => { this.handleItemKeyDown.call(this, event, item); }).bind(this)}>
         <div className={styles.link}>
