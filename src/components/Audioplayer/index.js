@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
@@ -31,16 +30,16 @@ const style = require('./style.scss');
     shouldRepeat: state.audioplayer.shouldRepeat,
     shouldScroll: state.audioplayer.shouldScroll
   }),
-  (dispatch) => ({
-    play: bindActionCreators(play, dispatch),
-    pause: bindActionCreators(pause, dispatch),
-    repeat: bindActionCreators(repeat, dispatch),
-    toggleScroll: bindActionCreators(toggleScroll, dispatch),
-    setCurrentAyah: bindActionCreators(setCurrentAyah, dispatch),
-    setCurrentWord: bindActionCreators(setCurrentWord, dispatch),
-    clearCurrentWord: bindActionCreators(clearCurrentWord, dispatch),
-    buildOnClient: bindActionCreators(buildOnClient, dispatch)
-  }),
+  {
+    play,
+    pause,
+    repeat,
+    toggleScroll,
+    setCurrentAyah,
+    setCurrentWord,
+    clearCurrentWord,
+    buildOnClient
+  },
   (stateProps, dispatchProps, ownProps) => {
     if (!stateProps.isSupported) {
       return {
@@ -416,7 +415,7 @@ export default class Audioplayer extends Component {
               onPause={pause}
               onEnd={this.onNextAyah.bind(this)}
             /> : null}
-          {isLoadedOnClient && true ?
+          {isLoadedOnClient ?
             <Segments
               audio={files[currentAyah]}
               segments={segments[currentAyah]}

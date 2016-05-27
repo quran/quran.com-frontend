@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { LinkContainer } from 'react-router-bootstrap';
+import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';

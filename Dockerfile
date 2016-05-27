@@ -1,6 +1,8 @@
 FROM node:5.10.0
 
 ENV NODE_ENV production
+ENV API_URL http://api.quran.com:3000
+ENV PORT 8000
 
 RUN apt-get -y update && apt-get -y install supervisor ssh rsync
 

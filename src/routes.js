@@ -1,31 +1,25 @@
 import React from 'react';
-import { IndexRoute, Route } from 'react-router';
+import IndexRoute from 'react-router/lib/IndexRoute';
+import Route from 'react-router/lib/Route';
 
-import Home from './containers/Home';
-import Surah from './containers/Surah';
-import Search from './containers/Search';
 import App from './containers/App';
-import Donations from './containers/Donations';
-import About from './containers/About';
-import Contact from './containers/Contact';
-
 
 export default () => {
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={Home} />
+      <IndexRoute getComponent={(nextState, cb) => System.import('./containers/Home').then(module => cb(null, module))} />
 
-      <Route path="/donations" component={Donations} />
-      <Route path="/contributions" component={Donations} />
+      <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
+      <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
 
-      <Route path="/about" component={About} />
+      <Route path="/about" getComponent={(nextState, cb) => System.import('./containers/About').then(module => cb(null, module))} />
 
-      <Route path="/contact" component={Contact} />
-      <Route path="/contactus" component={Contact} />
+      <Route path="/contact" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
+      <Route path="/contactus" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
 
-      <Route path="/search" component={Search} />
+      <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
 
-      <Route path="/:surahId(/:range)" component={Surah} />
+      <Route path="/:surahId(/:range)" getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))} />
     </Route>
   );
 }

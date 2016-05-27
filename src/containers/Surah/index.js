@@ -8,30 +8,31 @@ import Col from 'react-bootstrap/lib/Col';
 import Helmet from 'react-helmet';
 
 // components
-import LazyLoad from '../../components/LazyLoad';
-import PageBreak from '../../components/PageBreak';
-import Audioplayer from '../../components/Audioplayer';
-import ContentDropdown from '../../components/ContentDropdown';
-import ReciterDropdown from '../../components/ReciterDropdown';
-import SurahsDropdown from '../../components/SurahsDropdown';
-import VersesDropdown from '../../components/VersesDropdown';
-import FontSizeDropdown from '../../components/FontSizeDropdown';
-import InformationToggle from '../../components/InformationToggle';
-import SurahInfo from '../../components/SurahInfo';
+import LazyLoad from 'components/LazyLoad';
+import PageBreak from 'components/PageBreak';
+import Audioplayer from 'components/Audioplayer';
+import ContentDropdown from 'components/ContentDropdown';
+import ReciterDropdown from 'components/ReciterDropdown';
+import SurahsDropdown from 'components/SurahsDropdown';
+import VersesDropdown from 'components/VersesDropdown';
+import FontSizeDropdown from 'components/FontSizeDropdown';
+import InformationToggle from 'components/InformationToggle';
+import SurahInfo from 'components/SurahInfo';
 import Header from './Header';
-import ReadingModeToggle from '../../components/ReadingModeToggle';
-import Ayah from '../../components/Ayah';
-import Line from '../../components/Line';
-import SearchInput from '../../components/SearchInput';
-import Bismillah from '../../components/Bismillah';
-import scroller from '../../utils/scroller';
+import ReadingModeToggle from 'components/ReadingModeToggle';
+import Ayah from 'components/Ayah';
+import Line from 'components/Line';
+import SearchInput from 'components/SearchInput';
+import Bismillah from 'components/Bismillah';
+
+// utils
+import scroller from 'utils/scroller';
 
 // Helpers
-import makeHeadTags from '../../helpers/makeHeadTags';
+import makeHeadTags from 'helpers/makeHeadTags';
+import debug from 'helpers/debug';
 
 const style = require('./style.scss');
-
-import debug from '../../helpers/debug';
 
 import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
@@ -43,7 +44,9 @@ const ayahRangeSize = 30;
 @asyncConnect([
   {
     promise({ store: { getState, dispatch } }) {
+      debug('component:Surah', 'All Surahs Promise');
       if (!isAllLoaded(getState())) {
+        debug('component:Surah', 'All Surahs Promise, Surahs not loaded');
         return dispatch(loadAll());
       }
 
@@ -52,6 +55,7 @@ const ayahRangeSize = 30;
   },
   {
     promise({ store: { dispatch, getState }, params }) {
+      debug('component:Surah', 'Ayahs Promise');
       const { range, surahId } = params;
       const { options } = getState();
       let from;
@@ -85,6 +89,7 @@ const ayahRangeSize = 30;
       }
 
       if (!isLoaded(getState(), surahId, from, to)) {
+        debug('component:Surah', 'Ayahs Promise, Ayahs not loaded');
         dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
 
         return dispatch(loadAyahs(surahId, from, to, options));
@@ -147,30 +152,6 @@ export default class Surah extends Component {
     }
   }
 
-//<<<<<<< HEAD
-//=======
-  // TODO lets try this with and without this function, but shouldComponentUpdate is the additional function from audio-segments in the merge conflict
-  /*
-  shouldComponentUpdate(nextProps) {
-    const sameSurahIdRouting = this.props.params.surahId === nextProps.params.surahId;
-    const lazyLoadFinished = sameSurahIdRouting && (!this.props.isLoaded && nextProps.isLoaded);
-    const hasReadingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
-    const hasFontSizeChange = this.props.options.fontSize !== nextProps.options.fontSize;
-    const hasSurahInfoChange = this.props.options.isShowingSurahInfo !== nextProps.options.isShowingSurahInfo;
-    const hasCurrentWordChange = this.props.currentWord !== nextProps.currentWord;
-
-    return (
-      !sameSurahIdRouting ||
-      lazyLoadFinished ||
-      hasReadingModeChange ||
-      hasFontSizeChange ||
-      hasSurahInfoChange ||
-      hasCurrentWordChange
-    );
-  }
-  */
-
-//>>>>>>> audio-segments
   componentWillUnmount() {
     if (__CLIENT__) {
       window.removeEventListener('scroll', this.handleNavbar, true);

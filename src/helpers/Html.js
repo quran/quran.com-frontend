@@ -4,8 +4,9 @@ import serialize from 'serialize-javascript';
 
 class Html extends React.Component {
   render() {
-    const { store, component } = this.props;
+    const { store, component, assets } = this.props;
     const head = Helmet.rewind();
+    console.log(assets.styles);
 
     return (
       <html>
@@ -16,9 +17,19 @@ class Html extends React.Component {
           {head.link.toComponent()}
           {head.script.toComponent()}
 
-          {Object.keys(this.props.assets.styles).map((style, i) =>
-            <link href={this.props.assets.styles[style]} key={i} media="screen, projection"
-                  rel="stylesheet" type="text/css"/>)}
+          {Object.keys(assets.styles).map((style, i) => (
+            <link
+              href={assets.styles[style]}
+              key={i} media="screen, projection"
+              rel="stylesheet"
+              type="text/css"
+            />
+          ))}
+          {
+            Object.keys(assets.styles).length === 0 ?
+            <style dangerouslySetInnerHTML={{__html: (require('../../bootstrap.config'))}} /> :
+            null
+          }
           <style id="fonts" />
         </head>
         <body>
@@ -68,8 +79,8 @@ class Html extends React.Component {
               }`
             }} />
             <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
-            {Object.keys(this.props.assets.javascript).map((script, i) =>
-              <script src={this.props.assets.javascript[script]} key={i}/>
+            {Object.keys(assets.javascript).map((script, i) =>
+              <script src={assets.javascript[script]} key={i}/>
             )}
         </body>
 

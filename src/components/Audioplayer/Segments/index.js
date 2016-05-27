@@ -29,7 +29,7 @@ export default class Segments extends Component {
   constructor() {
     super(...arguments);
     this.secret = process.env.SEGMENTS_KEY;
-  } // init
+  }
 
   componentWillMount() {
     this.buildSegments(this.props);
