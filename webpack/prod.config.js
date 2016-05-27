@@ -9,7 +9,7 @@ var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin')
 var strip = require('strip-loader');
 
 var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration'));
-var relativeAssetsPath = './static/dist';
+var relativeAssetsPath = '../static/dist';
 var assetsPath = path.join(__dirname, relativeAssetsPath);
 
 module.exports = {
