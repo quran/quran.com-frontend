@@ -56,7 +56,7 @@ module.exports = function(config) {
         'react/lib/ReactContext': true
       },
       resolve: {
-        modulesDirectories: [
+        modules: [
           'src',
           'node_modules'
         ],

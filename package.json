@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "test": "npm build && npm start && npm run test:lint && npm run test:unit && npm run test:functional",
+    "test": "./node_modules/karma/bin/karma start",
     "test:ci:unit": "./node_modules/karma/bin/karma start --browsers PhantomJS --single-run",
     "test:ci:functional": "node ./nightwatch.js -c ./nightwatch.json -e production",
     "test:ci:lint": "eslint ./src/scripts/**/*.js",
