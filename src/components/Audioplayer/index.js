@@ -9,6 +9,7 @@ import { setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/mo
 
 // Components
 import Track from './Track';
+import Segments from './Segments';
 
 // Helpers
 import debug from '../../helpers/debug';
@@ -413,6 +414,18 @@ export default class Audioplayer extends Component {
               onPlay={play}
               onPause={pause}
               onEnd={this.onNextAyah.bind(this)}
+            /> : null}
+          {isLoadedOnClient ?
+            <Segments
+              audio={files[currentAyah]}
+              segments={segments[currentAyah]}
+              currentAyah={currentAyah}
+              currentWord={currentWord}
+              setCurrentWord={setCurrentWord}
+              clearCurrentWord={clearCurrentWord}
+              isPlaying={isPlaying}
+              dispatchPlay={play}
+              dispatchPause={pause}
             /> : null}
         </div>
       </div>
