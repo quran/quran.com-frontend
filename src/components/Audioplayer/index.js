@@ -415,7 +415,7 @@ export default class Audioplayer extends Component {
               onPause={pause}
               onEnd={this.onNextAyah.bind(this)}
             /> : null}
-          {isLoadedOnClient ?
+          {isLoadedOnClient && segments[currentAyah] ?
             <Segments
               audio={files[currentAyah]}
               segments={segments[currentAyah]}
