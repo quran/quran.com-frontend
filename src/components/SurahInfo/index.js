@@ -3,9 +3,20 @@ import React, { Component, PropTypes } from 'react';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-const style = require('./style.scss');
+import html from './htmls';
 
+const style = require('./style.scss');
 export default class SurahInfo extends Component {
+
+  state = {
+    html: ''
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.isShowingSurahInfo && nextProps.surah && nextProps.surah.id) {
+      html[`html${nextProps.surah.id}`]((module) => this.setState({html: module}));
+    }
+  }
 
   render() {
     const { surah, isShowingSurahInfo, onClose } = this.props;
@@ -29,7 +40,7 @@ export default class SurahInfo extends Component {
             </dl>
           </Col>
           <Col md={8} className={`${style.info} times-new`}>
-            <div dangerouslySetInnerHTML={{__html: require(`./htmls/${surah.id}.html.js`)}} />
+            <div dangerouslySetInnerHTML={{__html: this.state.html}} />
             <div>
               <p>
                 <em>Source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Quran</em>
