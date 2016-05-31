@@ -7,12 +7,15 @@ import { ReduxAsyncConnect, loadOnServer } from 'redux-connect';
 import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 import cookie from 'react-cookie';
+import raven from 'raven';
+import errorhandler from 'errorhandler';
 
-
+import config from 'config';
 import expressConfig from 'server/config/express';
 
 const pretty = new PrettyError();
 const server = express();
+
 expressConfig(server);
 
 import routes from './src/routes';
@@ -26,6 +29,7 @@ import { setUserAgent } from './src/redux/modules/audioplayer';
 import { setOption } from './src/redux/modules/options';
 
 // Use varnish for the static routes, which will cache too
+server.use(raven.middleware.express.requestHandler(config.sentryServer));
 
 server.use((req, res, next) => {
   cookie.plugToRequest(req, res);
@@ -59,27 +63,39 @@ server.use((req, res, next) => {
       res.status(500).send(error);
     } else if (renderProps) {
       loadOnServer({...renderProps, store, helpers: { client }}).then(() => {
-        const component = ReactDOM.renderToString(
+        const component = (
           <Provider store={store}>
             <ReduxAsyncConnect {...renderProps} />
           </Provider>
         );
 
-        debug('Server', 'Rendering Application component into html');
-        debug('Server', 'Sending markup');
         res.type('html');
         res.setHeader('Cache-Control', 'public, max-age=31557600');
-        res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(
+        res.status(200);
+        debug('Server', 'Sending markup');
+        res.send('<!doctype html>\n' + ReactDOM.renderToString(
           <Html
             component={component}
             store={store}
             assets={webpack_isomorphic_tools.assets()}
           />
         ));
-      });
+      }).catch(next);
     }
   });
 });
+
+server.use(raven.middleware.express.errorHandler(config.sentryServer));
+
+if (process.env.NODE_ENV === 'development') {
+  // only use in development
+  server.use(errorhandler());
+} else {
+  server.use((req, res) => {
+    res.status(500);
+    res.send('OOPS');
+  });
+}
 
 const port = process.env.PORT || 8000;
 
@@ -90,6 +106,7 @@ export default function serve(cb) {
       ==> ✅  Server is listening at http://localhost:${port}
       ==> 🎯  API at ${process.env.API_URL}
     `);
+    Object.keys(config).forEach(key => config[key].constructor.name !== 'Object' && console.info(`==> ${key}`, config[key]));
 
     cb && cb(this);
   });

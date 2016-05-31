@@ -15,6 +15,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import debug from 'debug';
 
+import config from 'config';
 import ApiClient from './src/helpers/ApiClient';
 import createStore from './src/redux/create';
 import routes from './src/routes';
@@ -22,6 +23,8 @@ import routes from './src/routes';
 const client = new ApiClient();
 const store = createStore(browserHistory, client, window.__data);
 const history = syncHistoryWithStore(browserHistory, store);
+
+Raven.config(config.sentryClient).install()
 
 window.quranDebug = debug;
 window.ReactDOM = ReactDOM; // For chrome dev tool support

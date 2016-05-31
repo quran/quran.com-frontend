@@ -4,7 +4,6 @@ import compression from 'compression';
 import bodyParser from 'body-parser';
 import logger from 'morgan';
 import favicon from 'serve-favicon';
-import errorhandler from 'errorhandler';
 import useragent from 'express-useragent';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -55,6 +54,4 @@ export default function(server) {
   server.use('/api', (req, res) => {
     proxyApi.web(req, res);
   });
-
-  // server.use(errorhandler()); // Must be last!
 }
