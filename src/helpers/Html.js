@@ -1,12 +1,13 @@
 import React from 'react';
+import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
 
 class Html extends React.Component {
   render() {
     const { store, component, assets } = this.props;
+    const content = component ? ReactDOM.renderToString(component) : '';
     const head = Helmet.rewind();
-    console.log(assets.styles);
 
     return (
       <html>
@@ -33,7 +34,7 @@ class Html extends React.Component {
           <style id="fonts" />
         </head>
         <body>
-            <div id="app" dangerouslySetInnerHTML={{__html: component}} />
+            <div id="app" dangerouslySetInnerHTML={{__html: content}} />
 
             <script
               dangerouslySetInnerHTML={{
@@ -79,6 +80,7 @@ class Html extends React.Component {
               }`
             }} />
             <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
+            <script src="https://cdn.ravenjs.com/3.0.4/raven.min.js" />
             {Object.keys(assets.javascript).map((script, i) =>
               <script src={assets.javascript[script]} key={i}/>
             )}

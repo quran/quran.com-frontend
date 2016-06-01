@@ -14,6 +14,8 @@ module.exports = Object.assign({
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
   api: process.env.API_URL,
+  sentryClient: process.env.SENTRY_KEY_CLIENT,
+  sentryServer: process.env.SENTRY_KEY_SERVER,
   app: {
     head: {
       titleTemplate: `%s - ${title}`,
