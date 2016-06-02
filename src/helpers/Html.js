@@ -49,26 +49,19 @@ class Html extends React.Component {
               charSet="UTF-8"
             />
             {/* SEO: https://developers.google.com/structured-data/slsb-overview#markup_examples */}
+            {/* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */}
             <script type="application/ld+json" dangerouslySetInnerHTML={{
               __html: `{
                 "@context": "http://schema.org",
                 "@type": "WebSite",
+                "name": "Quran",
+                "alternateName": "Quran.com",
                 "url": "http://quran.com",
                 "potentialAction": {
                   "@type": "SearchAction",
                   "target": "http://quran.com/search?q={search_term_string}",
                   "query-input": "required name=search_term_string"
                 }
-              }`
-            }} />
-            {/* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */}
-            <script type="application/ld+json" dangerouslySetInnerHTML={{
-              __html: `{
-                "@context" : "http://schema.org",
-                "@type" : "WebSite",
-                "name" : "Quran",
-                "alternateName" : "Quran.com",
-                "url" : "http://quran.com"
               }`
             }} />
             <script type="application/ld+json" dangerouslySetInnerHTML={{
