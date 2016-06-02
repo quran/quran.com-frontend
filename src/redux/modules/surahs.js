@@ -28,8 +28,10 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loaded: true,
         errored: false,
-        entities: Object.assign({}, state.entities, action.result.entities.surahs),
-        result: Object.assign({}, state.result, action.result.result)
+        entities: {
+          ...state.entities,
+          ...action.result.entities.surahs
+        },
       };
     case LOAD_FAIL:
       console.log(action);
