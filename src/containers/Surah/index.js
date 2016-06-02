@@ -32,6 +32,8 @@ import scroller from 'utils/scroller';
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
+import descriptions from './descriptions';
+
 const style = require('./style.scss');
 
 import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
@@ -194,7 +196,7 @@ export default class Surah extends Component {
       }
     }
 
-    return null;
+    return `${descriptions[surah.id]} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`;
   }
 
   handleOptionChange(payload) {
