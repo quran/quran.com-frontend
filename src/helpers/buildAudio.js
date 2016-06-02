@@ -1,15 +1,8 @@
-/* eslint-disable */
-const firefox = /firefox/i;
-const opera = /opera/i;
-const chrome = /chrome/i;
-
 export function testIfSupported(ayah, agent) {
   const { audio } = ayah;
 
-  const testOperaOrFirefox = __SERVER__ ?
-    (agent.isOpera || agent.isFirefox) :
-    (opera.test(window.navigator.userAgent) || firefox.test(window.navigator.userAgent));
-  const testChrome = __SERVER__ ? agent.isChrome : chrome.test(window.navigator.userAgent);
+  const testOperaOrFirefox = (agent.isOpera || agent.isFirefox);
+  const testChrome = agent.isChrome;
 
   if(!audio) {
     return false;
@@ -42,10 +35,9 @@ export function buildAudioForAyah(audio, agent) {
 
   scopedAudio.preload = 'none';
 
-  const testOperaOrFirefox = __SERVER__ ?
-    (agent.isOpera || agent.isFirefox) :
-    (opera.test(window.navigator.userAgent) || firefox.test(window.navigator.userAgent));
-  const testChrome = __SERVER__ ? agent.isChrome : chrome.test(window.navigator.userAgent);
+  const testOperaOrFirefox = (agent.isOpera || agent.isFirefox);
+  const testChrome = agent.isChrome;
+
 
   if (testOperaOrFirefox) {
     if (audio.ogg.url) {
@@ -88,10 +80,6 @@ export default function buildAudio(ayahs) {
   if (!~~ayahs.length) {
     return;
   }
-
-  // const errorMessage = 'The current reciter does not have audio that suits' +
-  //                   ' your browser. Either select another reciter or try' +
-  //                   ' on another browser.';
 
   return ayahs.map(ayah => {
     return buildAudioForAyah(ayah);
