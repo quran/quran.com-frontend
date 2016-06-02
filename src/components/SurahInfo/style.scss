@@ -22,6 +22,16 @@ $transition-speed: 0.75s;
   .bg{
     height: 100%;
     background-size: cover !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    &.madinah{
+      background-image: url('../../../static/images/madinah.jpg');
+    }
+
+    &.makkah{
+      background-image: url('../../../static/images/makkah.jpg');
+    }
   }
 
   .list{

@@ -28,8 +28,7 @@ export default class SurahInfo extends Component {
           <Col
             md={3}
             xs={6}
-            className={style.bg}
-            style={{background: `url(/images/${surah.revelation.place}.jpg) center center no-repeat`}}
+            className={`${style.bg} ${style[surah.revelation.place]}`}
           />
           <Col md={1} xs={6} className={style.list}>
             <dl>
