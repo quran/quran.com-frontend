@@ -167,7 +167,7 @@ export default class Surah extends Component {
       return `Surah ${surah.name.simple} [${surah.id}:${params.range}]`;
     }
 
-    return `${surah.id} Surah ${surah.name.simple}`;
+    return `Surah ${surah.name.simple} [${surah.id}]`;
   }
 
   description() {
