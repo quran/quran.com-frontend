@@ -38,16 +38,44 @@ module.exports = Object.assign({
         {property: 'og:description', content: description},
         {property: 'og:url', content: 'http://quran.com'},
         {property: 'og:type', content: 'website'},
-        {property: 'twitter:card', content: 'summary'},
-        {property: 'twitter:title', content: title},
-        {property: 'twitter:description', content: description},
-        {property: 'twitter:image', content: 'http://quran.com/images/thumbnail.png'},
-        {property: 'twitter:image:width', content: '200'},
-        {property: 'twitter:image:height', content: '200'}
+        {name: 'twitter:card', content: 'summary'},
+        {name: 'twitter:title', content: title},
+        {name: 'twitter:description', content: description},
+        {name: 'twitter:image', content: 'http://quran.com/images/thumbnail.png'},
+        {name: 'twitter:image:width', content: '200'},
+        {name: 'twitter:image:height', content: '200'}
       ],
       link: [
         {rel: 'apple-touch-icon', href: '/images/apple-touch-icon.png'},
         {rel: 'apple-touch-icon-precomposed', href: '/images/apple-touch-icon-precomposed.png'}
+      ],
+      /* SEO: https://developers.google.com/structured-data/slsb-overview#markup_examples */
+      /* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */
+      script: [
+        {
+          "type": "application/ld+json",
+          "innerHTML": `{
+            "@context": "http://schema.org",
+            "@type": "WebSite",
+            "name": "Quran",
+            "alternateName": "Quran.com",
+            "url": "http://quran.com",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "http://quran.com/search?q={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          }`
+        },
+        {
+          "type": "application/ld+json",
+          "innerHTML": `{
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "url": "http://quran.com",
+            "logo": "http://quran.com/images/thumbnail.png"
+          }`
+        }
       ]
     }
   }

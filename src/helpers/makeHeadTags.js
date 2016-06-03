@@ -6,7 +6,7 @@ export default function makeHeadTags({ title, description, url, image }) {
   if (title) {
     tags.title = title;
     tags.meta.push(
-      {name: 'title', content: title},
+      {property: 'og:site_name', content: title},
       {property: 'og:title', content: title},
       {name: 'twitter:title', content: title}
     );

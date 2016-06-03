@@ -167,7 +167,7 @@ export default class Surah extends Component {
       return `Surah ${surah.name.simple} [${surah.id}:${params.range}]`;
     }
 
-    return `${surah.id} Surah ${surah.name.simple}`;
+    return `Surah ${surah.name.simple} [${surah.id}]`;
   }
 
   description() {
@@ -418,36 +418,35 @@ export default class Surah extends Component {
     return (
       <div className="surah-body">
         <Helmet
-          title={surah.name.simple}
           {...makeHeadTags({
             title: this.title(),
             description: this.description()
           })}
-        />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{
-          __html: `{
-            "@context": "http://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-              "@type": "ListItem",
-              "position": 1,
-              "item": {
-                "@id": "http://quran.com/",
-                "name": "Quran"
-              }
-            },{
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@id": "http://quran.com/${surah.id}",
-                "name": "${surah.name.simple}"
-              }
-            }]
-          }`
-        }} />
-        <style dangerouslySetInnerHTML={{
-          __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
-          }}
+          script={[{
+            "type": "application/ld+json",
+            "innerHTML": `{
+              "@context": "http://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@id": "http://quran.com/",
+                  "name": "Quran"
+                }
+              },{
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "http://quran.com/${surah.id}",
+                  "name": "${surah.name.simple}"
+                }
+              }]
+            }`
+          }]}
+          style={[{
+            "cssText": `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
+          }]}
         />
         <Header surah={surah}>
           <Row className="navbar-bottom">

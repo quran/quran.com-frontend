@@ -41,7 +41,7 @@ export function createFontFacesArray(ayahs) {
   ayahs.map((ayah) => {
     const font = ayah.words[0].className;
 
-    if (!fontFaces.includes(font)) {
+    if (fontFaces.indexOf(font) === -1) {
       fontFaces.push(font);
       fontFacesArray.push(
         `@font-face {font-family: '${font}';

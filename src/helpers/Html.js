@@ -48,30 +48,6 @@ class Html extends React.Component {
               }}
               charSet="UTF-8"
             />
-            {/* SEO: https://developers.google.com/structured-data/slsb-overview#markup_examples */}
-            {/* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */}
-            <script type="application/ld+json" dangerouslySetInnerHTML={{
-              __html: `{
-                "@context": "http://schema.org",
-                "@type": "WebSite",
-                "name": "Quran",
-                "alternateName": "Quran.com",
-                "url": "http://quran.com",
-                "potentialAction": {
-                  "@type": "SearchAction",
-                  "target": "http://quran.com/search?q={search_term_string}",
-                  "query-input": "required name=search_term_string"
-                }
-              }`
-            }} />
-            <script type="application/ld+json" dangerouslySetInnerHTML={{
-              __html: `{
-                "@context": "http://schema.org",
-                "@type": "Organization",
-                "url": "http://quran.com",
-                "logo": "http://quran.com/images/thumbnail.png"
-              }`
-            }} />
             <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
             <script src="https://cdn.ravenjs.com/3.0.4/raven.min.js" />
             {Object.keys(assets.javascript).map((script, i) =>
