@@ -9,15 +9,15 @@ export function testIfSupported(ayah, agent) {
   }
 
   if (testOperaOrFirefox) {
-    if (!audio.ogg.url) {
+    if (!(audio.ogg && audio.ogg.url)) {
       return false;
     }
   }
   else {
-    if (audio.mp3.url) {
+    if (audio.mp3 && audio.mp3.url) {
       return true;
     }
-    else if (audio.ogg.url) {
+    else if (audio.ogg && audio.ogg.url) {
       if (!testChrome) {
         return false;
       }
@@ -40,17 +40,17 @@ export function buildAudioForAyah(audio, agent) {
 
 
   if (testOperaOrFirefox) {
-    if (audio.ogg.url) {
+    if (audio.ogg && audio.ogg.url) {
       scopedAudio.src = audio.ogg.url;
-      segments = audio.ogg.segments;
+      segments = audio.ogg.encryptedSegments;
     }
   }
   else {
-    if (audio.mp3.url) {
+    if (audio.mp3 && audio.mp3.url) {
       scopedAudio.src = audio.mp3.url;
       segments = audio.mp3.encryptedSegments;
     }
-    else if (audio.ogg.url) {
+    else if (audio.ogg && audio.ogg.url) {
       if (testChrome) {
         scopedAudio.src = audio.ogg.url;
         segments = audio.ogg.encryptedSegments;

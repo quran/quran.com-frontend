@@ -109,13 +109,17 @@ const ayahRangeSize = 30;
     ayahIds.first = function() {return [...this][0];};
     ayahIds.last = function() {return [...this][[...this].length - 1];};
 
-    const isEndOfSurah = ayahIds.last() === surah.ayat;
     const currentWord = state.ayahs.currentWord;
+    const currentAyah = state.ayahs.currentAyah;
     const isPlaying = state.audioplayer.isPlaying;
+    const isStarted = state.audioplayer.isStarted;
+    const isEndOfSurah = ayahIds.last() === surah.ayat;
 
     return {
+      isStarted,
       isPlaying,
       currentWord,
+      currentAyah,
       surah,
       ayahs,
       isEndOfSurah,
@@ -138,6 +142,24 @@ const ayahRangeSize = 30;
   }
 )
 export default class Surah extends Component {
+  shouldComponentUpdate(nextProps, nextState) {
+    const conditions = [
+      this.state.lazyLoading != nextState.lazyLoading,
+      this.props.surah != nextProps.surah,
+      this.props.currentAyah != nextProps.currentAyah,
+      this.props.isEndOfSurah != nextProps.isEndOfSurah,
+      this.props.ayahIds != nextProps.ayahIds,
+      this.props.surahs != nextProps.surahs,
+      this.props.isLoading != nextProps.isLoading,
+      this.props.isLoaded != nextProps.isLoaded,
+      this.props.options != nextProps.options
+    ];
+
+    return  conditions.some(condition => condition);
+  }
+  // If shouldComponentUpdate returns false, then __render() will be completely skipped__ until the next state change.
+  // In addition, __componentWillUpdate and componentDidUpdate will not be called__.
+
   constructor() {
     super(...arguments);
   }
@@ -252,7 +274,7 @@ export default class Surah extends Component {
 
 
   lazyLoadAyahs(callback) {
-    const { loadAyahsDispatch, ayahIds, surah, options } = this.props;
+    const { loadAyahsDispatch, ayahIds, surah, isEndOfSurah, options } = this.props;
 
     const range = [ayahIds.first(), ayahIds.last()];
     let size = 10;
@@ -264,7 +286,7 @@ export default class Surah extends Component {
     const from = range[1];
     const to = (from + size);
 
-    if (!ayahIds.has(to)) {
+    if (!isEndOfSurah && !ayahIds.has(to)) {
       loadAyahsDispatch(surah.id, from, to, options).then(() => {
         this.setState({lazyLoading: false});
         if (callback) {
@@ -313,8 +335,8 @@ export default class Surah extends Component {
   }
 
   onWordClick(id) {
-    const { setCurrentWord, clearCurrentWord, currentWord, isPlaying } = this.props;
-    if (id == currentWord && !isPlaying) {
+    const { setCurrentWord, clearCurrentWord, currentWord, isStarted } = this.props;
+    if (id == currentWord && !isStarted) {
       clearCurrentWord();
     } else {
       setCurrentWord(id);
@@ -322,26 +344,9 @@ export default class Surah extends Component {
   }
 
   onWordFocus(id, elem) {
-    try {
-      const { setCurrentWord, clearCurrentWord, currentWord, isPlaying } = this.props;
-      if (id != currentWord && isPlaying) {
-        setCurrentWord(id); // let tabbing around while playing trigger seek to word action
-      }
-      if (elem && elem.nextSibling && elem.nextSibling.classList.contains('tooltip')) { // forcefully removing tooltips
-        elem.nextSibling.remove();                                                      // because our version of bootstrap does not respect the data-trigger option
-      } else {
-        const saved = elem.dataset.toggle;
-        elem.dataset.toggle = '';
-        setTimeout(function() {
-          try {
-            elem.dataset.toggle = saved;
-          } catch(e) {
-            console.info('caught in timeout',e);
-          }
-        }, 100);
-      }
-    } catch(e) {
-      console.info('caught in onWordFocus',e);
+    const { setCurrentWord, clearCurrentWord, currentWord, isStarted } = this.props;
+    if (id != currentWord && isStarted) {
+      setCurrentWord(id); // let tabbing around while playing trigger seek to word action
     }
   }
 
