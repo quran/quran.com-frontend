@@ -5,10 +5,12 @@ import { LOAD_SUCCESS as AYAHS_LOAD_SUCCESS, LOAD as AYAHS_LOAD, CLEAR_CURRENT a
 
 const SET_USER_AGENT = '@@quran/audioplayer/SET_USER_AGENT';
 const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
+const START = '@@quran/audioplayer/START';
+const STOP = '@@quran/audioplayer/STOP';
 const PLAY = '@@quran/audioplayer/PLAY';
 const PAUSE = '@@quran/audioplayer/PAUSE';
 const PLAY_PAUSE = '@@quran/audioplayer/PLAY_PAUSE';
-const REPEAT = '@@quran/audioplayer/REPEAT';
+const TOGGLE_REPEAT = '@@quran/audioplayer/TOGGLE_REPEAT';
 const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
 const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
 
@@ -19,8 +21,9 @@ const initialState = {
   currentFile: null,
   isSupported: true,
   isPlaying: false,
+  isStarted: false, // like isPlaying, but doesn't toggle off everytime we have a brief pause between ayah transition
   shouldRepeat: false,
-  shouldScroll: true,
+  shouldScroll: false,
   isLoadedOnClient: false
 };
 
@@ -108,22 +111,39 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         userAgent: action.userAgent
       };
+    case START:
+      console.debug('START');
+      return {
+        ...state,
+        isStarted: true,
+        isPlaying: true
+      };
+    case STOP:
+      console.debug('STOP');
+      return {
+        ...state,
+        isStarted: false,
+        isPlaying: false
+      };
     case PLAY:
+      console.debug('DISPATCH PLAY');
       return {
         ...state,
         isPlaying: true
       };
     case PAUSE:
+      console.debug('DISPATCH PAUSE');
       return {
         ...state,
         isPlaying: false
       };
     case PLAY_PAUSE:
+      console.debug('PLAY_PAUSE');
       return {
         ...state,
         isPlaying: !state.isPlaying
       };
-    case REPEAT:
+    case TOGGLE_REPEAT:
       return {
         ...state,
         shouldRepeat: !state.shouldRepeat
@@ -162,6 +182,18 @@ export function setCurrentFile(file) {
   };
 }
 
+export function start() {
+  return {
+    type: START
+  };
+}
+
+export function stop() {
+  return {
+    type: STOP
+  };
+}
+
 export function play() {
   return {
     type: PLAY
@@ -180,9 +212,9 @@ export function playPause() {
   };
 }
 
-export function repeat() {
+export function toggleRepeat() {
   return {
-    type: REPEAT
+    type: TOGGLE_REPEAT
   };
 }
 
