@@ -9,11 +9,11 @@ export default class Track extends Component {
   static propTypes = {
     file: PropTypes.object.isRequired,
     isStarted: PropTypes.bool.isRequired,
-    isPlaying: PropTypes.bool.isRequired,
+    doStop: PropTypes.func,
     onEnd: PropTypes.func.isRequired,
     shouldRepeat: PropTypes.bool.isRequired,
-    doStop: PropTypes.func,
-    surah: PropTypes.object
+    surah: PropTypes.object.isRequired,
+    currentAyah: PropTypes.string.isRequired
   };
 
   state = {
@@ -25,15 +25,15 @@ export default class Track extends Component {
   componentDidMount() {
     this.setState({ mounted: true });
     if (this.props.file && __CLIENT__) {
-      console.debug('Track componentDidMount', this.props.file, { file: this.props.file });
+      //console.debug('Track componentDidMount', this.props.file, { file: this.props.file });
       this.onFileLoad(this.props.file);
     }
   }
 
   componentWillUnmount() {
-    console.log('Track componentWillUnmount', this.props.file);
-    this.setState({ mounted: false });
-    this.state.mounted = false;
+    //console.log('Track componentWillUnmount', this.props.file);
+    this.setState({ mounted: false }); // TODO, yeah, this is bad but we unmount and mount when
+    this.state.mounted = false;        // we lazy load, and it causes problems...
     // trace memory profile count
     this.onFileUnload(this.props.file);
   }
@@ -42,7 +42,6 @@ export default class Track extends Component {
     return [
       this.props.file.src !== nextProps.file.src,
       this.props.isStarted !== nextProps.isStarted,
-      this.props.isPlaying !== nextProps.isPlaying,
       this.props.shouldRepeat !== nextProps.shouldRepeat,
       this.state.progress !== nextState.progress,       // do we need this??
       this.state.currentTime !== nextState.currentTime  // do we need this??
@@ -67,14 +66,20 @@ export default class Track extends Component {
     // Preload file
     file.setAttribute('preload', 'auto');
 
+    /*
+    if (!this.didAlreadyLoad) this.didAlreadyLoad = {};
+    if (this.didAlreadyLoad[file.src]) return;
+    else this.didAlreadyLoad[file.src] = true;
+    */
+
     const loadeddata = () => {
       // Default current time to zero. This will change
       file.currentTime = 0; // eslint-disable-line no-param-reassign
     };
-    file.addEventListener('loadeddata', loadeddata);
+    file.onloadeddata = loadeddata;
 
     const timeupdate = () => {
-      console.assert(this.state.mounted, 'timeupdate without being mounted', file, { file, mounted: this.state.mounted });
+      //console.assert(this.state.mounted, 'timeupdate without being mounted', file, { file, mounted: this.state.mounted });
       if (!this.state.mounted) return; // TODO needed?
 
       const progress = (
@@ -84,7 +89,7 @@ export default class Track extends Component {
 
       this.setState({ progress });
     };
-    file.addEventListener('timeupdate', timeupdate, false);
+    file.ontimeupdate = timeupdate;
 
     const ended = () => {
       const { shouldRepeat, onEnd, isStarted, doStop, currentAyah, surah } = this.props;
@@ -101,7 +106,7 @@ export default class Track extends Component {
         onEnd();
       }
     };
-    file.addEventListener('ended', ended, false);
+    file.onended = ended;
 
     const play = () => {
       if (!this.state.mounted) return;
@@ -111,28 +116,14 @@ export default class Track extends Component {
 
       this.setState({ currentTime });
     };
-    file.addEventListener('play', play, false);
-
-    this.setState({
-      listeners: {
-        loadeddata,
-        timeupdate,
-        ended,
-        play
-      }
-    });
+    file.onplay = play;
   }
 
   onFileUnload(file) {
+    //console.warn('onFileUnload');
     if (!file.paused) {
       file.pause();
     }
-
-    setTimeout(() => {
-      [ 'loadeddata', 'timeupdate', 'ended', 'play' ].forEach((listener) => {
-        file.removeEventListener(listener, this.state.listeners[listener]);
-      });
-    }, 50);
   }
 
   onTrackerMove(event) {
@@ -155,14 +146,14 @@ export default class Track extends Component {
 
   render() {
     const { progress, mounted } = this.state;
-    const { isPlaying, file } = this.props;
+    const { isStarted, file } = this.props;
 
     if (file.readyState >= 3) {
       // the Math.round bit prevents us from trying to play again when we're effectively at the end of the audio file; this should allow shouldRepeat to work without getting overridden:
       // ...but at the time I monkey-patched it, so we might be able to get rid of it since we cleaned up? Let's not for now...
-      if (isPlaying && file.paused && file.readyState >= 3 && Math.round(file.currentTime) != Math.round(file.duration)) {
+      if (isStarted && file.paused && file.readyState >= 3 && Math.round(file.currentTime) != Math.round(file.duration)) {
         file.play();
-      } else if (!isPlaying && !file.paused) {
+      } else if (!isStarted && !file.paused) {
         file.pause();
       }
     }

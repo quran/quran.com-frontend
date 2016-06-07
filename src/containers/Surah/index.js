@@ -109,13 +109,11 @@ const ayahRangeSize = 30;
 
     const currentWord = state.ayahs.currentWord;
     const currentAyah = state.ayahs.currentAyah;
-    const isPlaying = state.audioplayer.isPlaying;
     const isStarted = state.audioplayer.isStarted;
     const isEndOfSurah = ayahIds.last() === surah.ayat;
 
     return {
       isStarted,
-      isPlaying,
       currentWord,
       currentAyah,
       surah,

@@ -27,7 +27,6 @@ const style = require('./style.scss');
     surahId: state.audioplayer.surahId,
     isSupported: state.audioplayer.isSupported,
     isStarted: state.audioplayer.isStarted,
-    isPlaying: state.audioplayer.isPlaying,
     isLoadedOnClient: state.audioplayer.isLoadedOnClient,
     shouldRepeat: state.audioplayer.shouldRepeat,
     shouldScroll: state.audioplayer.shouldScroll
@@ -70,7 +69,6 @@ export default class Audioplayer extends Component {
     currentAyah: PropTypes.string,
     currentWord: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
-    isPlaying: PropTypes.bool.isRequired,
     isLoadedOnClient: PropTypes.bool.isRequired,
     isSupported: PropTypes.bool.isRequired,
     shouldRepeat: PropTypes.bool.isRequired,
@@ -99,15 +97,15 @@ export default class Audioplayer extends Component {
     debug('component:Audioplayer', 'componentDidMount');
 
     if (!isLoadedOnClient && __CLIENT__) {
-      console.debug('Audioplayer componentDidMount');
+      //console.debug('Audioplayer componentDidMount');
       debug('component:Audioplayer', 'componentDidMount on client');
       return buildOnClient(surah.id);
-    } else console.debug('Audioplayer componentDidMount', { notLoadedOnClient: !isLoadedOnClient, client: __CLIENT__ });
+    }// else console.debug('Audioplayer componentDidMount', { notLoadedOnClient: !isLoadedOnClient, client: __CLIENT__ });
   }
 
   componentWillUnmount() {
     debug('component:Audioplayer', 'componentWillUnmount');
-    console.log('Audioplayer componentWillUnmount');
+    //console.log('Audioplayer componentWillUnmount');
     this.stop();
   }
 
@@ -145,6 +143,9 @@ export default class Audioplayer extends Component {
 
   onNextAyah() {
     const { setCurrentAyah, isStarted, shouldScroll } = this.props; // eslint-disable-line no-shadow
+
+    const file = this.props.files[this.props.currentAyah];
+
     const nextAyah = this.getNext();
     if (!nextAyah) return this.stop();
     const ayahNum = nextAyah.replace( /^\d+:/, '' );
@@ -172,7 +173,7 @@ export default class Audioplayer extends Component {
     // the previous button
     const { currentAyah, ayahIds } = this.props;
     const index = ayahIds.findIndex(id => id === currentAyah) - 1;
-    console.debug('getPrevious', { props: this.props, index, prevAyah: ayahIds[index], currentAyah })
+    //console.debug('getPrevious', { props: this.props, index, prevAyah: ayahIds[index], currentAyah })
     return ayahIds[index];
   }
 
@@ -184,7 +185,7 @@ export default class Audioplayer extends Component {
       onLoadAyahs(); // this doesnt look right, should probably be returned or promise.then?
     }
 
-    console.debug('getNext', { props: this.props, index, nextAyah: ayahIds[index], currentAyah })
+    //console.debug('getNext', { props: this.props, index, nextAyah: ayahIds[index], currentAyah })
     return ayahIds[index];
   }
 
@@ -358,7 +359,6 @@ export default class Audioplayer extends Component {
       currentAyah,
       currentWord,
       setCurrentWord,
-      isPlaying,
       isStarted,
       shouldRepeat,
       isSupported,
@@ -407,15 +407,13 @@ export default class Audioplayer extends Component {
         <div className={style.wrapper}>
           {isLoadedOnClient ?
             <Track
-              // TODO verify what is used and isnt
               file={files[currentAyah]}
               isStarted={isStarted}
-              isPlaying={isPlaying}
-              currentAyah={currentAyah}
-              surah={surah}
-              shouldRepeat={shouldRepeat}
-              onEnd={this.onNextAyah.bind(this)}
               doStop={this.stop.bind(this)}
+              onEnd={this.onNextAyah.bind(this)}
+              shouldRepeat={shouldRepeat}
+              surah={surah}
+              currentAyah={currentAyah}
             /> : null}
           {isLoadedOnClient && segments[currentAyah] ?
             <Segments

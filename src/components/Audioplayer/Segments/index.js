@@ -5,7 +5,10 @@ import { decrypt } from 'sjcl';
 export default class Segments extends Component {
   static propTypes = {
     audio: PropTypes.object.isRequired,
-    segments: PropTypes.string.isRequired
+    segments: PropTypes.string.isRequired,
+    currentAyah: PropTypes.string,
+    currentWord: PropTypes.string,
+    onSetCurrentWord: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -26,12 +29,12 @@ export default class Segments extends Component {
 
   componentDidMount() {
     const builtIntervals = this.buildIntervals();
-    console.debug('Segments componentDidMount', this.props.audio, builtIntervals);
+    //console.debug('Segments componentDidMount', this.props.audio, builtIntervals);
     this.bindListeners();
   }
 
   componentWillUnmount() {
-    console.log('Segments componentWillUnmount', this.props.audio, { props: this.props, state: this.state });
+    //console.log('Segments componentWillUnmount', this.props.audio, { props: this.props, state: this.state });
     this.unbindListeners();
   }
 
@@ -128,7 +131,7 @@ export default class Segments extends Component {
       let repeaterId = null;
 
       new Promise((done, fail) => {
-        console.debug('Play listener for '+ props.currentAyah +' started...');
+        //console.debug('Play listener for '+ props.currentAyah +' started...');
 
         const intervalFn = () => {
           if (audio.seeking) return console.warn('we are seeking right now?');
@@ -165,7 +168,7 @@ export default class Segments extends Component {
           audio.removeEventListener(evName, listeners[evName]);
         });
 
-        console.debug('Play listener for '+ props.currentAyah +(ev && ev.type ? ' resolved by '+ ev.type : 'stopped') +' event');
+        //console.debug('Play listener for '+ props.currentAyah +(ev && ev.type ? ' resolved by '+ ev.type : 'stopped') +' event');
       });
     };
     audio.addEventListener('play', play, false);
@@ -180,7 +183,7 @@ export default class Segments extends Component {
   setCurrentWord(currentWord = null, debug = null) {
     this.currentWord = currentWord; // this is more immediately available but should eventually agree with props
     this.props.onSetCurrentWord(currentWord); // calls the redux dispatch function passed down from the Audioplayer
-    console.log('setCurrentWord', currentWord, debug ? debug : '');
+    //console.log('setCurrentWord', currentWord, debug ? debug : '');
   }
 
   compareFn(time, interval) {
