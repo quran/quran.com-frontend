@@ -100,11 +100,11 @@ export default class Ayah extends Component {
             key={word.code}
             id={id}
             onClick={this.onWordClick.bind(this)}
-            onFocus={this.onWordFocus.bind(this)}
+            //onFocus={this.onWordFocus.bind(this)}
             className={`${className} pointer`}
             data-toggle="tooltip"
             data-trigger="hover" // NOTE #1: if we want to use the focus event to do something like show a translation in
-            tabIndex="1"
+            //tabIndex="1" <-- disable word focus
             data-placement="top" title={tooltip}
             dangerouslySetInnerHTML={{__html: word.code}}
           />
