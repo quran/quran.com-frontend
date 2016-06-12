@@ -22,13 +22,11 @@ export default class Ayah extends Component {
     ayah: PropTypes.object.isRequired,
     match: PropTypes.array,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
-    showTooltipOnFocus: PropTypes.bool
   };
 
   static defaultProps = {
     currentWord: null,
     isSearched: false,
-    showTooltipOnFocus: true
   };
 
   shouldComponentUpdate(nextProps) {
@@ -39,28 +37,6 @@ export default class Ayah extends Component {
     }
 
     return  conditions.some(condition => condition);
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    // This block gives focus to the active word, which is kind of useful
-    // for tabbing around. originally, the purpose was to show the translation
-    // on the focus event but we're disabling that by default, so we'll need
-    // to hook in a property from audioplayer which specifies if we've toggled
-    // the "show tooltips" option. See NOTE #1.
-    if (this.props.currentWord != null && this.props.showTooltipOnFocus) {// || prevProps.currentWord != null) {
-      try {
-        const elem = ReactDOM.findDOMNode(this);
-        const active = elem.getElementsByClassName(styles.active)[0];
-        if (active) {
-          const saved = active.dataset.toggle;
-          active.dataset.toggle = ''; // unfortunately our version of bootstrap does not respect data-trigger setting, so
-          active.focus();             // we're preventing tooltips from showing by doing this
-          active.dataset.toggle = saved;
-        }
-      } catch(e) {
-        console.info('caught in ayah',e);
-      }
-    }
   }
 
   renderTranslations() {
@@ -85,14 +61,14 @@ export default class Ayah extends Component {
   }
 
   onWordClick(event) {
-    if (event.target && /^token-/.test(event.target.id)) {
+    if (event.target && /^word-/.test(event.target.id)) {
       // call onWordClick in Surah
       this.props.onWordClick(event.target.id.match(/\d+/g).join(':'));
     }
   }
 
   onWordFocus(event) {
-    if (event.target && /^token-/.test(event.target.id)) {
+    if (event.target && /^word-/.test(event.target.id)) {
       // call onWordFocus in Surah
       this.props.onWordFocus(event.target.id.match(/\d+/g).join(':'), event.target);
     }
@@ -102,21 +78,18 @@ export default class Ayah extends Component {
     if (!this.props.ayah.words[0].code) {
       return;
     }
-
     const { currentWord } = this.props;
 
-    let token = 0;
+    let position = 0;
     let text = this.props.ayah.words.map(word => {
       let id = null;
-      let active = word.charTypeId == CHAR_TYPE_WORD && currentWord === token ? true : false;
+      let active = word.charTypeId == CHAR_TYPE_WORD && currentWord === position ? true : false;
       let className = `${word.className}${word.highlight? ' '+word.highlight : ''}${active? ' '+ styles.active : ''}`;
 
-      let tokenId = null;
       if (word.charTypeId == CHAR_TYPE_WORD) {
-        tokenId = token;
-        id = `token-${word.ayahKey.replace(/:/, '-')}-${token++}`;
+        id = `word-${word.ayahKey.replace(/:/, '-')}-${position++}`;
       } else {
-        id = `${word.className}-${word.codeDec}`;
+        id = `${word.className}-${word.codeDec}`; // just don't include id
       }
 
       if (word.translation) {
@@ -127,12 +100,11 @@ export default class Ayah extends Component {
             key={word.code}
             id={id}
             onClick={this.onWordClick.bind(this)}
-            onFocus={this.onWordFocus.bind(this)}
-            data-token-id={tokenId}
+            //onFocus={this.onWordFocus.bind(this)}
             className={`${className} pointer`}
             data-toggle="tooltip"
-            data-trigger="hover" // NOTE #1: if we want to use the focus event to do something like show a translation in the future, then change this to 'hover,focus'
-            tabIndex="1"
+            data-trigger="hover" // NOTE #1: if we want to use the focus event to do something like show a translation in
+            //tabIndex="1" <-- disable word focus
             data-placement="top" title={tooltip}
             dangerouslySetInnerHTML={{__html: word.code}}
           />
@@ -143,7 +115,6 @@ export default class Ayah extends Component {
           <b
             id={id}
             onClick={this.onWordClick.bind(this)}
-            data-token-id={tokenId}
             className={`${className} pointer`}
             key={word.code}
             dangerouslySetInnerHTML={{__html: word.code}}
@@ -244,3 +215,4 @@ export default class Ayah extends Component {
     );
   }
 }
+

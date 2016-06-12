@@ -5,10 +5,9 @@ import { LOAD_SUCCESS as AYAHS_LOAD_SUCCESS, LOAD as AYAHS_LOAD, CLEAR_CURRENT a
 
 const SET_USER_AGENT = '@@quran/audioplayer/SET_USER_AGENT';
 const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
-const PLAY = '@@quran/audioplayer/PLAY';
-const PAUSE = '@@quran/audioplayer/PAUSE';
-const PLAY_PAUSE = '@@quran/audioplayer/PLAY_PAUSE';
-const REPEAT = '@@quran/audioplayer/REPEAT';
+const START = '@@quran/audioplayer/START';
+const STOP = '@@quran/audioplayer/STOP';
+const TOGGLE_REPEAT = '@@quran/audioplayer/TOGGLE_REPEAT';
 const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
 const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
 
@@ -18,9 +17,9 @@ const initialState = {
   userAgent: null,
   currentFile: null,
   isSupported: true,
-  isPlaying: false,
+  isStarted: false,
   shouldRepeat: false,
-  shouldScroll: true,
+  shouldScroll: false,
   isLoadedOnClient: false
 };
 
@@ -108,22 +107,19 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         userAgent: action.userAgent
       };
-    case PLAY:
+    case START:
+      console.debug('START');
       return {
         ...state,
-        isPlaying: true
+        isStarted: true
       };
-    case PAUSE:
+    case STOP:
+      console.debug('STOP');
       return {
         ...state,
-        isPlaying: false
+        isStarted: false
       };
-    case PLAY_PAUSE:
-      return {
-        ...state,
-        isPlaying: !state.isPlaying
-      };
-    case REPEAT:
+    case TOGGLE_REPEAT:
       return {
         ...state,
         shouldRepeat: !state.shouldRepeat
@@ -162,27 +158,21 @@ export function setCurrentFile(file) {
   };
 }
 
-export function play() {
+export function start() {
   return {
-    type: PLAY
+    type: START
   };
 }
 
-export function pause() {
+export function stop() {
   return {
-    type: PAUSE
+    type: STOP
   };
 }
 
-export function playPause() {
+export function toggleRepeat() {
   return {
-    type: PLAY_PAUSE
-  };
-}
-
-export function repeat() {
-  return {
-    type: REPEAT
+    type: TOGGLE_REPEAT
   };
 }
 
