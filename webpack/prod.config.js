@@ -19,6 +19,7 @@ module.exports = {
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[chunkhash].js'
   },
+  devtool: 'cheap-source-map',
   debug: false,
   target: 'web',
   cache: false,
