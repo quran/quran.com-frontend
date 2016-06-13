@@ -58,7 +58,8 @@ const ayahRangeSize = 30;
   {
     promise({ store: { dispatch, getState }, params }) {
       debug('component:Surah', 'Ayahs Promise');
-      const { range, surahId } = params;
+      const range = params.range;
+      const surahId = parseInt(params.surahId, 10);
       const { options } = getState();
       let from;
       let to;
@@ -86,7 +87,10 @@ const ayahRangeSize = 30;
         return dispatch(push('/'));
       }
 
-      if (params.surahId !== getState().surahs.current) {
+      from = parseInt(from, 10);
+      to = parseInt(to, 10);
+
+      if (surahId !== getState().surahs.current) {
         dispatch(setCurrentSurah(surahId));
       }
 
@@ -103,8 +107,9 @@ const ayahRangeSize = 30;
 ])
 @connect(
   (state, ownProps) => {
-    const surah: Object = state.surahs.entities[ownProps.params.surahId];
-    const ayahs: Object = state.ayahs.entities[ownProps.params.surahId];
+    const surahId = parseInt(ownProps.params.surahId, 10);
+    const surah: Object = state.surahs.entities[surahId];
+    const ayahs: Object = state.ayahs.entities[surahId];
     const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
     ayahIds.first = function() {return [...this][0];};
     ayahIds.last = function() {return [...this][[...this].length - 1];};
