@@ -13,7 +13,7 @@ export default ({params}) => {
           <div className="row">
               <div className="col-md-8 col-md-offset-2">
                   <h4 className="source-sans">
-                    {params.errorTitle} is an inValid Surah. Please go to the <a href="/">home page </a>and select a surah
+                    {params.errorTitle} is an invalid Surah/Ayah. Please go to the <a href="/">home page </a>and select a surah
                   </h4>
               </div>
           </div>
