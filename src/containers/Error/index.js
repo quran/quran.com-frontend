@@ -7,8 +7,8 @@ export default ({params}) => {
   const error = {
     'invalid-surah': 'Surah is out of range',
     'invalid-ayah-range': 'Ayah(s) selected are out of range'
-  }
-    return (
+    };
+  return (
       <div>
         <Helmet title={`Error ${params.errorTitle}`} />
         <IndexHeader noSearch={true} />
@@ -16,7 +16,7 @@ export default ({params}) => {
           <div className="row">
               <div className="col-md-8 col-md-offset-2">
                   <h4 className="source-sans">
-                    {error[params.errorKey]}. Please go to the <a href="/">home page </a>and select a surah/Ayah
+                    {error[params.errorKey]}. Please go to the <a href="/">home page </a>and select a Surah/Ayah
                   </h4>
               </div>
           </div>
