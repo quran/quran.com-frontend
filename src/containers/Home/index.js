@@ -141,6 +141,14 @@ class Home extends React.Component {
               Ayat Al-Kursi
             </Link>
           </li>
+          <li>
+            <Link
+              to="/884843948389"
+              data-metrics-event-name="QuickLinks:Click"
+              data-metrics-surah-id="2/255">
+              Ayat Al-Kursi
+            </Link>
+          </li>
         </ul>
       </span>
     );

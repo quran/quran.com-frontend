@@ -4,6 +4,14 @@ import Route from 'react-router/lib/Route';
 
 import App from './containers/App';
 
+
+function isValidSurah(nextState, replaceState) {
+  let surahId = parseInt(nextState.params.surahId, 10)
+  if(isNaN(surahId) || surahId > 114 || surahId < 1){
+    replaceState({ nextPathname: '/' });
+  }
+}
+
 export default () => {
   return (
     <Route path="/" component={App}>
@@ -19,7 +27,8 @@ export default () => {
 
       <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
 
-      <Route path="/:surahId(/:range)" getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))} />
+      <Route path="/:surahId(/:range)" getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))}
+      onEnter={isValidSurah} />
     </Route>
   );
 }
