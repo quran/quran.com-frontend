@@ -169,7 +169,7 @@ export default class Surah extends Component {
     const {params, surah, push } = this.props;
       let start = parseInt(params.range.split('-')[0], 10);
       if(start > surah.ayat || isNaN(start)){
-         return push(`/error/${params.range}`);
+         return push('/error/invalid-ayah-range');
       }
   }
   componentDidMount() {

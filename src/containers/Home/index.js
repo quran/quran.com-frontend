@@ -143,11 +143,11 @@ class Home extends React.Component {
           </li>
           <li>
             <Link
-              to="/884843948389"
+              to="/948484888585/255"
               data-metrics-event-name="QuickLinks:Click"
               data-metrics-surah-id="2/255">
-              Ayat Al-Kursi
-            </Link>
+              Random Links
+              </Link>
           </li>
         </ul>
       </span>
