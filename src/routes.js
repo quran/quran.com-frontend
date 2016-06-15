@@ -1,16 +1,10 @@
 import React from 'react';
 import IndexRoute from 'react-router/lib/IndexRoute';
 import Route from 'react-router/lib/Route';
-
+import checkValidSurah from './utils/checkValidSurah';
 import App from './containers/App';
 
 
-function isValidSurah(nextState, replaceState) {
-  let surahId = parseInt(nextState.params.surahId, 10)
-  if(isNaN(surahId) || surahId > 114 || surahId < 1){
-    replaceState({ nextPathname: '/' });
-  }
-}
 
 export default () => {
   return (
@@ -24,11 +18,12 @@ export default () => {
 
       <Route path="/contact" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
       <Route path="/contactus" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
+      <Route path="/error/:errorTitle" getComponent={(nextState, cb) => System.import('./containers/Error').then(module => cb(null, module))} />
 
       <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
 
       <Route path="/:surahId(/:range)" getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))}
-      onEnter={isValidSurah} />
+      onEnter={checkValidSurah} />
     </Route>
   );
 }
