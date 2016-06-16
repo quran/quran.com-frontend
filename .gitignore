@@ -2,9 +2,11 @@
 build
 node_modules
 /node_modules
+static/dist
 test-results.xml
 npm-debug.log
 webpack-stats.json
+webpack-assets.json
 bundle-stats.json
 selenium-debug.log
 tests/functional/output/*

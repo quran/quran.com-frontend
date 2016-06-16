@@ -1,13 +1,24 @@
 import React from 'react';
+import { PropTypes } from "react-metrics";
 import ReactDOM from 'react-dom';
-import {navigateAction} from 'fluxible-router';
+import { push } from 'react-router-redux';
+import { connect } from 'react-redux';
 import classNames from 'classnames';
+
+import SearchAutocomplete from '../../../components/SearchAutocomplete';
+
 import debug from 'utils/Debug';
 
-class SearchInput extends React.Component {
-  constructor(props, context) {
-    super(props, context);
-  }
+@connect(null, { push })
+export default class SearchInput extends React.Component {
+  static contextTypes = {
+    metrics: PropTypes.metrics
+  };
+
+  state = {
+    value: '',
+    showAutocomplete: false
+  };
 
   search(e) {
     if (e.key === 'Enter' || e.keyCode === 13 || e.type === 'click') {
@@ -35,13 +46,11 @@ class SearchInput extends React.Component {
           ayah = 1;
         }
 
-        this.context.executeAction(navigateAction, {
-          url: '/' + surah + '/' + ayah + '-' + (ayah + 10)
-        });
+        this.context.metrics.track('Search', {action: 'surah', label: `/${surah}/${ayah}-${(ayah + 10)}`});
+        this.props.push(`/${surah}/${ayah}-${(ayah + 10)}`);
       } else {
-        this.context.executeAction(navigateAction, {
-          url: `/search?q=${searching}`
-        });
+        this.context.metrics.track('Search', {action: 'query', label: searching});
+        this.props.push(`/search?q=${searching}`);
       }
     }
 
@@ -54,32 +63,34 @@ class SearchInput extends React.Component {
     else {
       e.target.style.textAlign = 'left';
     }
+
+    if (this.input) {
+      this.setState({ value: this.input.value.trim() });
+    }
   }
 
   render() {
-    var className = classNames({
-      'right-inner-addon': true,
-      'searchinput': true,
-      [this.props.className]: true
-    });
+    const { showAutocomplete } = this.state;
+    const { className } = this.props;
 
     debug('component:SearchInput', 'Render');
 
     return (
-      <div className={className}>
+      <div className={`right-inner-addon searchinput ${className}`}>
         <i className="ss-icon ss-search" onClick={this.search.bind(this)} />
-        <input type="text"
-               placeholder="Search"
-               onKeyUp={this.search.bind(this)} />
+        <input
+          type="search"
+          placeholder="Search"
+          ref="search"
+          onFocus={() => this.setState({showAutocomplete: true})}
+          onKeyUp={this.search.bind(this)}
+          ref={(ref) => this.input = ref}
+        />
+        {
+          showAutocomplete &&
+          <SearchAutocomplete value={this.state.value} input={this.input}/>
+        }
       </div>
     );
   }
 }
-
-SearchInput.contextTypes = {
-  executeAction: React.PropTypes.func.isRequired
-};
-
-SearchInput.displayName = 'SearchInput';
-
-export default SearchInput;

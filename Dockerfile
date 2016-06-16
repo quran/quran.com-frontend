@@ -1,9 +1,8 @@
-FROM ubuntu
+FROM node:5.10.0
 
 ENV NODE_ENV production
 
-RUN apt-get -y update && apt-get -y install \
-nodejs npm supervisor nodejs-legacy ssh rsync
+RUN apt-get -y update && apt-get -y install supervisor ssh rsync
 
 # logrotate
 RUN apt-get -y install logrotate
@@ -25,12 +24,12 @@ ADD . /quran/
 RUN npm run build
 
 # ssh keys
-#WORKDIR /root
-#RUN mv /quran/.ssh /root/
+WORKDIR /root
+RUN mv /quran/.ssh /root/
 
 # upload js and css
-#WORKDIR /quran/build
-#RUN rsync --update --progress -raz main* ahmedre@rsync.keycdn.com:zones/assets/
+WORKDIR /quran/static/dist
+RUN rsync --update --progress -raz . ahmedre@rsync.keycdn.com:zones/assets/
 
 # go back to /quran
 WORKDIR /quran

@@ -1,20 +1,16 @@
 import React from 'react';
 
-class Loader extends React.Component {
-  render() {
-    return (
-      <div className="loading" ng-hide="currentSurah.ayahs">
-        <div className="row">
-          <div className="col-md-6 col-md-offset-3 text-center">
-            <img src="//quran-1f14.kxcdn.com/images/loading.gif" />
-            <h3>Loading...</h3>
-          </div>
-        </div>
-      </div>
-    );
-  }
-}
+const loading = require('../../../static/images/loading.gif');
 
-Loader.displayName = 'Loader';
+const Loader = () => (
+  <div className="loading" ng-hide="currentSurah.ayahs">
+    <div className="row">
+      <div className="col-md-6 col-md-offset-3 text-center">
+        <img src={loading} />
+        <h3>Loading...</h3>
+      </div>
+    </div>
+  </div>
+);
 
 export default Loader;

@@ -1,17 +1,62 @@
 require('dotenv').config({path: (process.env.NODE_ENV || 'development') + '.env'});
+var fs = require('fs');
+var path = require('path');
 var webpack = require('webpack');
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var Webpack_isomorphic_tools_plugin = require('webpack-isomorphic-tools/plugin')
-var webpack_isomorphic_tools_plugin =
-  // webpack-isomorphic-tools settings reside in a separate .js file
-  // (because they will be used in the web server code too).
-  new Webpack_isomorphic_tools_plugin(require('./webpack-isomorphic-tools-configuration'))
-  // also enter development mode since it's a development webpack configuration
-  // (see below for explanation)
-  .development()
+var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
+var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./webpack-isomorphic-tools-configuration'));
 
-var webpackConfig = {
+var babelrc = fs.readFileSync('./.babelrc');
+var babelrcObject = {};
+
+try {
+  babelrcObject = JSON.parse(babelrc);
+} catch (err) {
+  console.error('==>     ERROR: Error parsing your .babelrc.');
+  console.error(err);
+}
+
+var babelrcObjectDevelopment = babelrcObject.env && babelrcObject.env.development || {};
+
+// merge global and dev-only plugins
+var combinedPlugins = babelrcObject.plugins || [];
+combinedPlugins = combinedPlugins.concat(babelrcObjectDevelopment.plugins);
+
+var babelLoaderQuery = Object.assign({}, babelrcObjectDevelopment, babelrcObject, {plugins: combinedPlugins});
+delete babelLoaderQuery.env;
+
+// Since we use .babelrc for client and server, and we don't want HMR enabled on the server, we have to add
+// the babel plugin react-transform-hmr manually here.
+
+// make sure react-transform is enabled
+babelLoaderQuery.plugins = babelLoaderQuery.plugins || [];
+var reactTransform = null;
+for (var i = 0; i < babelLoaderQuery.plugins.length; ++i) {
+  var plugin = babelLoaderQuery.plugins[i];
+  if (Array.isArray(plugin) && plugin[0] === 'react-transform') {
+    reactTransform = plugin;
+  }
+}
+
+if (!reactTransform) {
+  reactTransform = ['react-transform', {transforms: []}];
+  babelLoaderQuery.plugins.push(reactTransform);
+}
+
+if (!reactTransform[1] || !reactTransform[1].transforms) {
+  reactTransform[1] = Object.assign({}, reactTransform[1], {transforms: []});
+}
+
+// make sure react-transform-hmr is enabled
+reactTransform[1].transforms.push({
+  transform: 'react-transform-hmr',
+  imports: ['react'],
+  locals: ['module']
+});
+babelLoaderQuery.cacheDirectory = true;
+
+module.exports = {
   context: path.join(process.env.PWD, './'),
   resolve: {
     extensions: ['', '.js'],
@@ -42,13 +87,15 @@ var webpackConfig = {
       {
         test: /\.(js|jsx)$/,
         exclude: [/server/, /node_modules/, /tests/],
-        loader: 'babel',
-        query: {
-          stage: 0,
-          plugins: []
-        }
+        loader: 'babel?' + JSON.stringify(babelLoaderQuery)
       },
       { test: /\.json$/, loader: 'json-loader'},
+      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
+      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
+      { test: webpackIsomorphicToolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' },
       { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' }
     ]
   },
@@ -68,10 +115,15 @@ var webpackConfig = {
       'process.env': {
         BROWSER: true,
         API_URL: JSON.stringify(process.env.API_URL),
+        SEGMENTS_KEY: JSON.stringify(process.env.SEGMENTS_KEY || '¯\_(ツ)_/¯'),
         CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
-      }
+      },
+      __SERVER__: false,
+      __CLIENT__: true,
+      __DEVELOPMENT__: true,
+      __DEVTOOLS__: true
     }),
-    webpack_isomorphic_tools_plugin
+    webpackIsomorphicToolsPlugin.development()
   ],
   stats: {
     colors: true,
@@ -88,21 +140,3 @@ var webpackConfig = {
     tls: 'empty'
   }
 };
-// The reason this is here and NOT in .babelrc like it should is because our
-// nodejs server picks up babel too and isn't happy with this!
-webpackConfig.module.loaders[0].query.plugins.push('react-transform');
-webpackConfig.module.loaders[0].query.extra = {
-  'react-transform': {
-    transforms: [{
-      transform: 'react-transform-hmr',
-      imports: ['react'],
-      locals: ['module']
-    },
-    {
-      "transform": "react-transform-catch-errors",
-      "imports": ["react", "redbox-react"]
-    }]
-  }
-};
-
-module.exports = webpackConfig;

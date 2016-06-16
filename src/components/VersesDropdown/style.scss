@@ -1,0 +1,6 @@
+.dropdown{
+  :global(ul) {
+    max-height: 400px;
+    overflow-y: scroll;
+  }
+}

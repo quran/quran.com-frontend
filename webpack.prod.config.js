@@ -1,14 +1,20 @@
 require('dotenv').config({path: (process.env.NODE_ENV || 'production') + '.env'});
+
+var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var path = require('path');
 var webpack = require('webpack');
-var Webpack_isomorphic_tools_plugin = require('webpack-isomorphic-tools/plugin')
-var webpack_isomorphic_tools_plugin = new Webpack_isomorphic_tools_plugin(require('./webpack-isomorphic-tools-configuration'));
+var CleanPlugin = require('clean-webpack-plugin');
+var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin')
+var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./webpack-isomorphic-tools-configuration'));
+
+var relativeAssetsPath = './static/dist';
+var assetsPath = path.join(__dirname, relativeAssetsPath);
 
 module.exports = {
   output: {
-    path: './build',
-    publicPath: '//assets-1f14.kxcdn.com/',
+    path: assetsPath,
+    publicPath: process.env.USE_LOCAL_ASSETS ? '/public/' : '//assets-1f14.kxcdn.com/',
     filename: '[name]-[hash].js'
   },
   debug: false,
@@ -38,20 +44,22 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.css$/, loader: 'style!css' },
-      { test: /\.js$/, exclude: /node_modules/, loader: require.resolve('babel-loader') },
+      {
+        test: /\.(js|jsx)$/,
+        exclude: [/server/, /node_modules/, /tests/],
+        loader: 'babel'
+      },
       { test: /\.json$/, loader: 'json-loader'},
-      { test: /\.(png|svg|jpg)$/, loader: 'url-loader?limit=8192' },
-      { test: /\.(ttf|eot|svg|woff|woff(2))(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url?name=/[name].[ext]"},
-      { test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('style-loader',
-          'css!autoprefixer!sass?outputStyle=expanded&' +
-          "includePaths[]=" +
-          (path.resolve(__dirname, "./node_modules"))
-          )
-      }
+      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true') },
+      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
+      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
+      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
+      { test: webpackIsomorphicToolsPlugin.regular_expression('images'), loader: 'url-loader?name=images/[name].[ext]&limit=10240' }
     ]
   },
   plugins: [
+    new CleanPlugin([relativeAssetsPath]),
     new webpack.NoErrorsPlugin(),
     new webpack.ProvidePlugin({
       $: "jquery",
@@ -66,14 +74,19 @@ module.exports = {
 			}
 		}),
     new webpack.DefinePlugin({
-      'process.env': {
+      'process.env': JSON.stringify({
         BROWSER: true,
-        API_URL: JSON.stringify(process.env.API_URL),
-        CURRENT_URL: JSON.stringify(process.env.CURRENT_URL)
-      }
+        API_URL: process.env.API_URL,
+        CURRENT_URL: process.env.CURRENT_URL,
+        NODE_ENV: process.env.NODE_ENV
+      }),
+      __SERVER__: false,
+      __CLIENT__: true,
+      __DEVELOPMENT__: false,
+      __DEVTOOLS__: false
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
-    webpack_isomorphic_tools_plugin
+    webpackIsomorphicToolsPlugin
   ]
 };
