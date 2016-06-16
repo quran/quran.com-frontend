@@ -52,4 +52,4 @@ subl bundle-stats.json #so that you can the output
 analyze-bundle-size bundle-stats.json
 ```
 
-## [View project issues on waffle.io...](https://badge.waffle.io/quran/quran.com-frontend)
+## [View project issues on waffle.io...](https://waffle.io/quran/quran.com-frontend)
