@@ -32,6 +32,8 @@ import makeHeadTags from '../../helpers/makeHeadTags';
 const style = require('./style.scss');
 
 import debug from 'utils/Debug';
+import surahUrl from 'utils/SurahUrl';
+
 
 import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
@@ -52,7 +54,8 @@ const ayahRangeSize = 30;
   },
   {
     promise({ store: { dispatch, getState }, params }) {
-      const { range, surahId } = params;
+      const { range, surahId, surahName} = params;
+
       const { options } = getState();
       let from;
       let to;

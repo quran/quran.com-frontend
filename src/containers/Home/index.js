@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 
 import debug from 'utils/Debug';
+import surahUrl from 'utils/SurahUrl';
 
 import { isAllLoaded, loadAll } from '../../redux/modules/surahs';
 
@@ -32,7 +33,8 @@ class Home extends React.Component {
     return array.map((surah, i) => {
       return (
         <li className={`${styles.item}`} key={surah.id}>
-          <Link to={`/${surah.id}`} className={`${styles.link} row`}>
+
+          <Link to={`${surahUrl(surah.id, surah.nameSimple)}`} className={`${styles.link} row`}>
             <div className="col-xs-2 text-muted">
               {surah.id}
             </div>
