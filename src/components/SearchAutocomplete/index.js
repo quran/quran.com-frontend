@@ -3,6 +3,8 @@ import ApiClient from '../../helpers/ApiClient';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
+import surahUrl from 'utils/SurahUrl';
+
 const client = new ApiClient();
 
 const styles = require('./style.scss');
@@ -93,7 +95,7 @@ export default class SearchAutocomplete extends Component {
     }
 
     this.setState({
-      surahs: matches.sort((a, b) => a[1] < b[1] ? -1 : 1).map((match) => ({text: `<b>${match[0]}</b>`, href: `/${match[1]}`})).slice(0, 5)
+      surahs: matches.sort((a, b) => a[1] < b[1] ? -1 : 1).map((match) => ({text: `<b>${match[0]}</b>`, href: `/${match[1]}`, name: match[0], id: match[1]})).slice(0, 5)
     });
   };
 
@@ -182,13 +184,13 @@ export default class SearchAutocomplete extends Component {
 
   renderList(key) {
     //this.handleItemKeyDown.bind({ item, self: this })
-    return this.state[key].map((item) => (
+    return this.state[key].map((item) =>(
       <li key={item.href} tabIndex="0" onKeyDown={((event) => { this.handleItemKeyDown.call(this, event, item); }).bind(this)}>
         <div className={styles.link}>
-          <a href={item.href} tabIndex="-1">{item.href}</a>
+          <a href={surahUrl(item.id, item.name)} tabIndex="-1">{item.href}</a>
         </div>
         <div className={styles.text}>
-          <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{__html: item.text }} />
+          <a href={surahUrl(item.id, item.name)} tabIndex="-1" dangerouslySetInnerHTML={{__html: item.text }} />
         </div>
       </li>
     ));

@@ -6,6 +6,8 @@ import Col from 'react-bootstrap/lib/Col';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
+import surahUrl from 'utils/SurahUrl';
+
 const styles = require('./style.scss');
 
 export default class SurahsDropdown extends Component {
@@ -26,7 +28,7 @@ export default class SurahsDropdown extends Component {
     const { surahs } = this.props;
 
     return Object.values(surahs).map((surah, index) => (
-      <LinkContainer to={`/${surah.id}`} activeClass="active" key={`surah-${index}`}>
+      <LinkContainer to={surahUrl(surah.id, surah.nameSimple)} activeClass="active" key={`surah-${index}`}>
        <MenuItem>
           <Row>
             <Col xs={2} md={2}>
