@@ -82,12 +82,10 @@ export default function reducer(state = initialState, action = {}) {
           )
         },
         result: Object.assign({}, state.result, action.result.result),
-        fontFaces: new Set([
+        fontFaces: {
           ...state.fontFaces,
-          ...createFontFacesArray(
-            action.result.result.map(key => action.result.entities.ayahs[key])
-          )
-        ]),
+          ...action.result.entities.ayahs
+        }
       };
     case LOAD_FAIL:
       console.log(action);

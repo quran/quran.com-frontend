@@ -39,9 +39,10 @@ export default function reducer(state = initialState, action = {}) {
         query: action.result.result.query,
         results: action.result.result.results,
         entities: Object.assign({}, state.entities, action.result.entities.ayahs),
-        fontFaces: [].concat(state.fontFaces, createFontFacesArray(
-          action.result.result.results.map(result => action.result.entities.ayahs[result.ayah])
-        ))
+        fontFaces: {
+          ...state.fontFaces,
+          ...action.result.entities.ayahs
+        }
       };
     case SEARCH_FAIL:
       return {
