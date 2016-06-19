@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
+<<<<<<< c650ed7eec6a12cde34833a9f51932caccbe837a
 <<<<<<< e5e90d6d4affdf061a6807d3101cb4cf8eb110af
 import { fontFaceStyle } from '../../helpers/buildFontFaces';
 
@@ -32,11 +33,11 @@ class FontStyle extends Component {
     return <style dangerouslySetInnerHTML={{__html: fontFaceStyle(fontClassName)}} />;
   }
 }
-=======
-import Helmet from 'react-helmet';
+
 import { fontFaceStyle, fontFaceStyleLoaded } from '../../helpers/buildFontFaces';
 import { load } from 'redux/modules/fontFaces';
->>>>>>> wip
+
+import debug from 'helpers/debug';
 
 @connect(
   state => ({
@@ -49,8 +50,14 @@ export default class FontStyles extends Component {
     fontFaces: PropTypes.object.isRequired
   };
 
+  shouldComponentUpdate(nextProps) {
+    return this.props.fontFaces !== nextProps.fontFaces;
+  }
+
   render() {
     const { fontFaces, load } = this.props; // eslint-disable-line no-shadow
+    console.log(fontFaces);
+    debug('component:FontStyles', 'render');
 
     if (__CLIENT__) {
       const FontFaceObserver = require('fontfaceobserver');
@@ -63,11 +70,18 @@ export default class FontStyles extends Component {
     }
 
     return (
-      <Helmet
-        style={Object.keys(fontFaces).map(className => ({
-          cssText: fontFaces[className] ? fontFaceStyleLoaded(className) : fontFaceStyle(className)
-        }))}
-      />
+      <div>
+        {
+          Object.keys(fontFaces).map(className => (
+            <style
+              key={className}
+              dangerouslySetInnerHTML={{
+                __html: fontFaces[className] ? `${fontFaceStyle(className)} ${fontFaceStyleLoaded(className)}` : fontFaceStyle(className)
+              }}
+            />
+          ))
+        }
+      </div>
     );
   }
 }

@@ -8,14 +8,15 @@ const Html = ({ store, component, assets }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
   const head = Helmet.rewind();
 
-  return (
-    <html>
-      <head>
-        {head.base.toComponent()}
-        {head.title.toComponent()}
-        {head.meta.toComponent()}
-        {head.link.toComponent()}
-        {head.script.toComponent()}
+    return (
+      <html>
+        <head>
+          {head.base.toComponent()}
+          {head.title.toComponent()}
+          {head.meta.toComponent()}
+          {head.link.toComponent()}
+          {head.script.toComponent()}
+          {head.style.toComponent()}
 
         {Object.keys(assets.styles).map((style, i) => (
           <link

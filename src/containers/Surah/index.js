@@ -137,8 +137,6 @@ export default class Surah extends Component {
       this.props.options != nextProps.options
     ];
 
-    console.log(conditions);
-
     return  conditions.some(condition => condition);
   }
 
