@@ -19,8 +19,7 @@ const initialState = {
   loaded: false,
   loading: false,
   entities: {},
-  result: [],
-  fontFaces: []
+  result: []
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -81,11 +80,7 @@ export default function reducer(state = initialState, action = {}) {
             action.result.entities.ayahs
           )
         },
-        result: Object.assign({}, state.result, action.result.result),
-        fontFaces: {
-          ...state.fontFaces,
-          ...action.result.entities.ayahs
-        }
+        result: Object.assign({}, state.result, action.result.result)
       };
     case LOAD_FAIL:
       console.log(action);

@@ -64,6 +64,7 @@ let lastScroll = 0;
     const surah: Object = state.surahs.entities[surahId];
     const ayahs: Object = state.ayahs.entities[surahId];
     const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
+<<<<<<< e5e90d6d4affdf061a6807d3101cb4cf8eb110af
     ayahIds.first = function first() { return [...this][0]; };
     ayahIds.last = function last() { return [...this][[...this].length - 1]; };
 
@@ -71,15 +72,17 @@ let lastScroll = 0;
     const currentAyah = state.ayahs.currentAyah;
     const isStarted = state.audioplayer.isStarted;
     const isEndOfSurah = ayahIds.last() === surah.ayat;
+=======
+>>>>>>> wip
 
     return {
-      isStarted,
-      currentWord,
-      currentAyah,
       surah,
       ayahs,
-      isEndOfSurah,
       ayahIds,
+      isStarted: state.audioplayer.isStarted,
+      currentWord: state.ayahs.currentWord,
+      currentAyah: state.ayahs.currentAyah,
+      isEndOfSurah: ayahIds.length === surah.ayat,
       surahs: state.surahs.entities,
       isLoading: state.ayahs.loading,
       isLoaded: state.ayahs.loaded,
@@ -120,6 +123,24 @@ export default class Surah extends Component {
     clearCurrentWord: PropTypes.func.isRequired,
     isStarted: PropTypes.bool
   };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    const conditions = [
+      this.state.lazyLoading != nextState.lazyLoading,
+      this.props.surah != nextProps.surah,
+      this.props.currentAyah != nextProps.currentAyah,
+      this.props.isEndOfSurah != nextProps.isEndOfSurah,
+      this.props.ayahIds.size != nextProps.ayahIds.size,
+      this.props.surahs != nextProps.surahs,
+      this.props.isLoading != nextProps.isLoading,
+      this.props.isLoaded != nextProps.isLoaded,
+      this.props.options != nextProps.options
+    ];
+
+    console.log(conditions);
+
+    return  conditions.some(condition => condition);
+  }
 
   state = {
     lazyLoading: false
@@ -289,7 +310,7 @@ export default class Surah extends Component {
       return false;
     }
 
-    if (ayahNum > (ayahIds.last() + 10) || ayahNum < ayahIds.first()) {
+    if (ayahNum > (this.getLast() + 10) || ayahNum < this.getFirst()) {
       // This is beyond lazy loading next page.
       return push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
     }
@@ -302,6 +323,7 @@ export default class Surah extends Component {
   handleLazyLoadAyahs = (callback) => {
     const { loadAyahs, ayahIds, surah, isEndOfSurah, options } = this.props; // eslint-disable-line no-shadow
     const range = [ayahIds.first(), ayahIds.last()];
+
     let size = 10;
 
     if ((range[1] - range[0] + 1) < 10) {
@@ -321,6 +343,18 @@ export default class Surah extends Component {
     }
 
     return false;
+  }
+
+  getLast() {
+    const { ayahIds } = this.props;
+
+    return [...ayahIds][[...ayahIds].length - 1];
+  }
+
+  getFirst() {
+    const { ayahIds } = this.props;
+
+    return [...ayahIds][0];
   }
 
   renderPagination() {

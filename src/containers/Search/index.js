@@ -157,12 +157,11 @@ export default class Search extends Component {
 
     return (
       <div className="index-page">
-        <Helmet title={query} />
-        <style
-          dangerouslySetInnerHTML={{
-            __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;}
-            .text-translation{font-size: ${options.fontSize.translation}rem;}`
-          }}
+        <Helmet
+          title={query}
+          style={[{
+            cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
+          }]}
         />
         <Header />
         {this.renderStatsBar()}

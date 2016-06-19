@@ -11,8 +11,7 @@ const initialState = {
   errored: false,
   loaded: false,
   entities: {},
-  results: [],
-  fontFaces: []
+  results: []
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -38,11 +37,7 @@ export default function reducer(state = initialState, action = {}) {
         took: action.result.result.took,
         query: action.result.result.query,
         results: action.result.result.results,
-        entities: Object.assign({}, state.entities, action.result.entities.ayahs),
-        fontFaces: {
-          ...state.fontFaces,
-          ...action.result.entities.ayahs
-        }
+        entities: Object.assign({}, state.entities, action.result.entities.ayahs)
       };
     case SEARCH_FAIL:
       return {
