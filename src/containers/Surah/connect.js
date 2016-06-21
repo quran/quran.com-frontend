@@ -1,6 +1,8 @@
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
 import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/modules/ayahs';
 
+import debug from 'helpers/debug';
+
 export const surahsConnect = ({ store: { getState, dispatch } }) => {
   debug('component:Surah:surahsConnect', 'Init');
 
