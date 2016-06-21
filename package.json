@@ -93,6 +93,7 @@
     "react-scroll": "^1.0.4",
     "redux": "^3.3.1",
     "redux-connect": "^2.4.0",
+    "reselect": "^2.5.1",
     "resolve-url": "^0.2.1",
     "sass-loader": "2.0.1",
     "scroll-behavior": "^0.3.3",
