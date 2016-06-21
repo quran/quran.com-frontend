@@ -4,9 +4,9 @@
   "private": true,
   "scripts": {
     "test": "./node_modules/karma/bin/karma start",
-    "test:ci:unit": "./node_modules/karma/bin/karma start --browsers PhantomJS --single-run",
+    "test:ci:unit": "./node_modules/karma/bin/karma start --browsers PhantomJS --single-run; npm run test:ci:lint",
     "test:ci:functional": "node ./nightwatch.js -c ./nightwatch.json -e production",
-    "test:ci:lint": "eslint ./src/scripts/**/*.js",
+    "test:ci:lint": "eslint ./src/**/*.js",
     "test:dev:unit": "./node_modules/karma/bin/karma start",
     "test:dev:functional": "node ./nightwatch.js -c ./nightwatch.json",
     "test:dev:lint": "eslint ./src/scripts/**/*.js",
