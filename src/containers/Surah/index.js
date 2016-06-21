@@ -118,8 +118,8 @@ const ayahRangeSize = 30;
     const surah: Object = state.surahs.entities[surahId];
     const ayahs: Object = state.ayahs.entities[surahId];
     const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
-    ayahIds.first = () => [...this][0];
-    ayahIds.last = () => [...this][[...this].length - 1];
+    ayahIds.first = function first() { return [...this][0]; };
+    ayahIds.last = function last() { return [...this][[...this].length - 1]; };
 
     const currentWord = state.ayahs.currentWord;
     const currentAyah = state.ayahs.currentAyah;
@@ -181,14 +181,20 @@ export default class Surah extends Component {
 
   componentWillMount() {
     const { params, surah, push } = this.props; // eslint-disable-line no-shadow
-    const start = parseInt(params.range.split('-')[0], 10);
 
-    if (start > surah.ayat || isNaN(start)) {
-      return push('/error/invalid-ayah-range');
+    if (params.range && params.range.includes('-')) {
+      const start = parseInt(params.range.split('-')[0], 10);
+
+      if (start > surah.ayat || isNaN(start)) {
+        return push('/error/invalid-ayah-range');
+      }
+
+      return false;
     }
 
     return false;
   }
+
   componentDidMount() {
     if (__CLIENT__) {
       window.removeEventListener('scroll', this.handleNavbar, true);
