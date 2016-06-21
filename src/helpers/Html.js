@@ -48,7 +48,7 @@ class Html extends React.Component {
               }}
               charSet="UTF-8"
             />
-            <script dangerouslySetInnerHTML={{__html: `window.__data=${serialize(store.getState())};`}} charSet="UTF-8"/>
+            <script dangerouslySetInnerHTML={{__html: `window.reduxData=${serialize(store.getState())};`}} charSet="UTF-8"/>
             <script src="https://cdn.ravenjs.com/3.0.4/raven.min.js" />
             {Object.keys(assets.javascript).map((script, i) =>
               <script src={assets.javascript[script]} key={i}/>

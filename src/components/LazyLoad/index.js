@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
 import debug from '../../helpers/debug';
@@ -28,12 +28,13 @@ export default class LazyLoad extends Component {
   }
 
   onScroll = () => {
-    const { isLoading, isEnd, offset } = this.props;
+    const { isLoading, isEnd, offset, onLazyLoad } = this.props;
     const dom = ReactDOM.findDOMNode(this);
+    const componentOffset = (dom.offsetParent || dom).offsetTop - (window.pageYOffset + window.innerHeight); // eslint-disable-line max-len
 
-    if ((!isLoading && !isEnd) && (dom.offsetParent || dom).offsetTop - (window.pageYOffset + window.innerHeight) <  offset) {
+    if ((!isLoading && !isEnd) && componentOffset < offset) {
       debug('component:LazyLoad', 'onLazyLoad called');
-      return this.props.onLazyLoad();
+      return onLazyLoad();
     }
 
     return false;

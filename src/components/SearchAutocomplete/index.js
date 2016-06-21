@@ -19,7 +19,7 @@ const styles = require('./style.scss');
 
       if (ayahKey) {
         const ayah = ayahs[ayahKey];
-        const content = ayah.content;
+
         if (ayah.content && ayah.content[0] && ayah.content[0].lang) {
           lang = ayah.content[0].lang;
         }
@@ -34,13 +34,25 @@ const styles = require('./style.scss');
   { push }
 )
 export default class SearchAutocomplete extends Component {
-  constructor() {
-    super(...arguments);
+  static propTypes = {
+    surahs: PropTypes.object.isRequired,
+    value: PropTypes.string,
+    input: PropTypes.any,
+    push: PropTypes.func.isRequired,
+    lang: PropTypes.string
+  };
 
-    this.state = {ayat: [], surahs: []};
+  constructor(...args) {
+    super(...args);
+
     this.cached = {};
     this.timer = null;
     this.delay = 200;
+  }
+
+  state = {
+    ayah: [],
+    surahs: []
   };
 
   componentDidMount() {
@@ -48,25 +60,30 @@ export default class SearchAutocomplete extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.timer)
+    if (this.timer) {
       clearTimeout(this.timer);
+    }
+
     this.timer = setTimeout(() => {
       this.suggest(nextProps.value);
     }, this.delay);
-  };
+
+    return false;
+  }
 
   suggest(value) {
     this.handleSurahSuggestions(value);
-    if (value.length == 0 && this.state.surahs.length > 0) {
-      this.setState({ surahs: [] });
+
+    if (value.length === 0 && this.state.surahs.length > 0) {
+      this.setState({surahs: []});
     }
 
     if (value.length >= 3) {
       this.handleAyahSuggestions(value);
     } else if (this.state.ayat.length > 0) {
-      this.setState({ ayat: [] });
+      this.setState({ayat: []});
     }
-  };
+  }
 
   handleSurahSuggestions(value) {
     const matches = [];
@@ -77,24 +94,27 @@ export default class SearchAutocomplete extends Component {
       const surahId = captures[1];
       const ayahNum = captures[2];
       const surah = this.props.surahs[surahId];
-      matches.push([ surah.name.simple, surah.id + (ayahNum? '/'+ ayahNum : '') ]);
-    }
-    else if (value.length >= 2) {
-      const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&");
-      for (var surahId in this.props.surahs) {
+      matches.push([surah.name.simple, surah.id + (ayahNum ? `/${ayahNum}` : '')]);
+    } else if (value.length >= 2) {
+      const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
+
+      Object.keys(this.props.surahs).forEach(surahId => {
         const surah = this.props.surahs[surahId];
-        if (RegExp(escaped, "i").test(surah.name.simple.replace( /['-]/g, '' ))) {
-          matches.push([ surah.name.simple, surah.id ]);
-        } else if (RegExp(escaped, "i").test(surah.name.arabic)) {
-          matches.push([ surah.name.arabic, surah.id ]);
+        if (RegExp(escaped, 'i').test(surah.name.simple.replace(/['-]/g, ''))) {
+          matches.push([surah.name.simple, surah.id]);
+        } else if (RegExp(escaped, 'i').test(surah.name.arabic)) {
+          matches.push([surah.name.arabic, surah.id]);
         }
-      }
+      });
     }
 
-    this.setState({
-      surahs: matches.sort((a, b) => a[1] < b[1] ? -1 : 1).map((match) => ({text: `<b>${match[0]}</b>`, href: `/${match[1]}`})).slice(0, 5)
+    return this.setState({
+      surahs: matches.map((match) => ({
+        text: `<b>${match[0]}</b>`,
+        href: `/${match[1]}`
+      })).slice(0, 5)
     });
-  };
+  }
 
   handleAyahSuggestions(value) {
     const { lang } = this.props;
@@ -114,10 +134,10 @@ export default class SearchAutocomplete extends Component {
         }
       });
     }
-  };
+  }
 
   handleInputKeyDown(event) {
-    if (!(event.keyCode == 9 || event.keyCode == 40 || event.keyCode == 27)) {
+    if (!(event.keyCode === 9 || event.keyCode === 40 || event.keyCode === 27)) {
       return;
     }
 
@@ -152,7 +172,7 @@ export default class SearchAutocomplete extends Component {
 
     switch (event.keyCode) {
       case 9: // tab
-      return;
+        return;
       case 13: // enter
         this.props.push(item.href); // change url
         break;
@@ -167,7 +187,7 @@ export default class SearchAutocomplete extends Component {
         }
         break;
       case 40: // down
-        if (event.target === items[items.length-1]) {
+        if (event.target === items[items.length - 1]) {
           items[0].focus();
         } else {
           event.target.nextSibling.focus();
@@ -181,27 +201,27 @@ export default class SearchAutocomplete extends Component {
 
   renderList(key) {
     return this.state[key].map((item) => (
-      <li key={item.href} tabIndex="0" onKeyDown={((event) => { this.handleItemKeyDown.call(this, event, item); }).bind(this)}>
+      <li key={item.href} tabIndex="0" onKeyDown={(event) => this.handleItemKeyDown(event, item)}>
         <div className={styles.link}>
           <a href={item.href} tabIndex="-1">{item.href}</a>
         </div>
         <div className={styles.text}>
-          <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{__html: item.text }} />
+          <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{__html: item.text}} />
         </div>
       </li>
     ));
-  };
+  }
 
   render() {
     const { surahs, ayat } = this.state;
 
     return (
       <div className={`${styles.autocomplete} ${ayat.length || surahs.length ? '' : 'hidden'}`}>
-        <ul role="menu" className={styles.list} ref={(ref) => this.menu = ref}>
+        <ul role="menu" className={styles.list} ref={(ref) => { this.menu = ref; }}>
           {this.renderList('surahs')}
           {this.renderList('ayat')}
         </ul>
       </div>
     );
   }
-};
+}

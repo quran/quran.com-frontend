@@ -3,7 +3,6 @@ import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 const styles = require('./style.scss');
@@ -27,7 +26,7 @@ export default class SurahsDropdown extends Component {
 
     return Object.values(surahs).map((surah, index) => (
       <LinkContainer to={`/${surah.id}`} activeClass="active" key={`surah-${index}`}>
-       <MenuItem>
+        <MenuItem>
           <Row>
             <Col xs={2} md={2}>
               <span className="surah-num">
@@ -54,12 +53,13 @@ export default class SurahsDropdown extends Component {
     return (
       <div className={`dropdown ${className} ${styles.dropdown}`}>
         <button
-          className={`btn btn-link no-outline`}
+          className="btn btn-link no-outline"
           id="surahs-dropdown"
           type="button"
           data-toggle="dropdown"
           aria-haspopup="true"
-          aria-expanded="false">
+          aria-expanded="false"
+        >
           Surahs
           <span className="caret"></span>
         </button>
@@ -69,4 +69,4 @@ export default class SurahsDropdown extends Component {
       </div>
     );
   }
-};
+}

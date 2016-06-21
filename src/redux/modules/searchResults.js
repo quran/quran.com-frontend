@@ -63,6 +63,5 @@ export function search(params) {
 }
 
 export function isQueried() {
-  // return globalState.searchResults.query === (query.q || query.query) && globalState.searchResults.page === (query.p || query.page);
   return false;
 }

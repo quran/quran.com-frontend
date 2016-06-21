@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { PropTypes as MetricsPropTypes } from "react-metrics";
+import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
-import Link from 'react-router/lib/Link';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
@@ -41,7 +40,7 @@ const style = require('./style.scss');
   }),
   { push }
 )
-class Search extends Component {
+export default class Search extends Component {
   static propTypes = {
     isErrored: PropTypes.bool,
     isLoading: PropTypes.bool,
@@ -61,12 +60,15 @@ class Search extends Component {
     metrics: MetricsPropTypes.metrics
   };
 
-  handlePageChange(payload) {
+  handlePageChange = (payload) => {
     const { push, query, page } = this.props; // eslint-disable-line no-shadow
     const selectedPage = payload.selected + 1;
 
     if (page !== selectedPage) {
-      this.context.metrics.track('Search', {action: 'paginate', label: `${query} - ${selectedPage}`});
+      this.context.metrics.track(
+        'Search',
+        {action: 'paginate', label: `${query} - ${selectedPage}`}
+      );
 
       return push({
         pathname: '/search',
@@ -78,65 +80,77 @@ class Search extends Component {
   }
 
   renderStatsBar() {
-   const { total, size, page, from, query } = this.props;
+    const { total, size, page, from, query } = this.props;
 
-   if (total) {
-     const pageNum = Math.ceil(total / size);
+    if (total) {
+      const pageNum = Math.ceil(total / size);
 
-     return (
-       <div className={style.header}>
-         <Grid>
-           <Row>
-             <Col md={6} className="text-uppercase">
-               {from}-{from + size - 1} OF
-               <span className={style.colored}> {total} </span>
-               SEARCH RESULTS FOR:
-               <span className={style.colored}> {query}</span>
-             </Col>
-             <Col className="text-right">
-               <ReactPaginate
-                 previousLabel={<span aria-hidden="true"><i className="ss-icon ss-directleft"/></span>}
-                 nextLabel={<span aria-hidden="true"><i className="ss-icon ss-directright"/></span>}
-                 breakLabel={<li className="break"><a href="">...</a></li>}
-                 pageNum={pageNum}
-                 marginPagesDisplayed={2}
-                 pageRangeDisplayed={5}
-                 initialSelected={page - 1}
-                 forceSelected={page - 1}
-                 clickCallback={this.handlePageChange.bind(this)}
-                 containerClassName={"pagination"}
-                 subContainerClassName={"pages pagination"}
-                 activeClass={style.active}
-               />
-             </Col>
-           </Row>
-         </Grid>
-       </div>
-     );
-   }
+      return (
+        <div className={style.header}>
+          <Grid>
+            <Row>
+              <Col md={6} className="text-uppercase">
+                {from}-{from + size - 1} OF
+                <span className={style.colored}> {total} </span>
+                SEARCH RESULTS FOR:
+                <span className={style.colored}> {query}</span>
+              </Col>
+              <Col className="text-right">
+                <ReactPaginate
+                  previousLabel={
+                    <span aria-hidden="true">
+                      <i className="ss-icon ss-directleft" />
+                    </span>
+                  }
+                  nextLabel={
+                    <span aria-hidden="true">
+                      <i className="ss-icon ss-directright" />
+                    </span>
+                  }
+                  breakLabel={<li className="break"><a href="">...</a></li>}
+                  pageNum={pageNum}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  initialSelected={page - 1}
+                  forceSelected={page - 1}
+                  clickCallback={this.handlePageChange}
+                  containerClassName={"pagination"}
+                  subContainerClassName={"pages pagination"}
+                  activeClass={style.active}
+                />
+              </Col>
+            </Row>
+          </Grid>
+        </div>
+      );
+    }
 
-   return false;
- }
+    return false;
+  }
 
+  renderBody() {
+    const { isErrored, isLoading, total, results, ayahs } = this.props;
 
+    if (isErrored) {
+      return (
+        <h3 className="text-center" style={{padding: '15%'}}>
+          Sorry, there was an error with your search.
+        </h3>
+      );
+    }
 
- renderBody() {
-   const { isErrored, isLoading, total, results, ayahs } = this.props;
+    if (!total) {
+      return <h3 className="text-center" style={{padding: '15%'}}>No results found.</h3>;
+    }
 
-   if (isErrored) {
-     return <h3 className="text-center" style={{padding: '15%'}}>Sorry, there was an error with your search.</h3>;
-   }
+    if (isLoading) {
+      return <div style={{padding: '15%'}}><CoreLoader /></div>;
+    }
 
-   if (!total) {
-     return <h3 className="text-center" style={{padding: '15%'}}>No results found.</h3>;
-   }
-
-   if (isLoading) {
-     return <div style={{padding: '15%'}}><CoreLoader /></div>;
-   }
-
-   return results.map(result => <Ayah ayah={ayahs[result.ayah]} match={result.match} key={result.ayah} isSearched />);
- }
+    return results.map(result => (
+      <Ayah ayah={ayahs[result.ayah]} match={result.match} key={result.ayah} isSearched />
+    ));
+  }
 
   render() {
     const { query, options } = this.props;
@@ -144,22 +158,22 @@ class Search extends Component {
     return (
       <div className="index-page">
         <Helmet title={query} />
-        <style dangerouslySetInnerHTML={{
-          __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;}
+            .text-translation{font-size: ${options.fontSize.translation}rem;}`
           }}
         />
         <Header />
         {this.renderStatsBar()}
         <div className="container surah-list">
-          <div className="row">
-            <div className="col-md-12">
+          <Row>
+            <Col md={12}>
               {this.renderBody()}
-            </div>
-          </div>
+            </Col>
+          </Row>
         </div>
       </div>
     );
   }
 }
-
-export default Search;

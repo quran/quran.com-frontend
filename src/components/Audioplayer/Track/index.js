@@ -23,19 +23,10 @@ export default class Track extends Component {
   };
 
   componentDidMount() {
-    this.setState({ mounted: true });
+    this.setState({ mounted: true }); // eslint-disable-line react/no-did-mount-set-state
     if (this.props.file && __CLIENT__) {
-      //console.debug('Track componentDidMount', this.props.file, { file: this.props.file });
       this.onFileLoad(this.props.file);
     }
-  }
-
-  componentWillUnmount() {
-    //console.log('Track componentWillUnmount', this.props.file);
-    this.setState({ mounted: false }); // TODO, yeah, this is bad but we unmount and mount when
-    this.state.mounted = false;        // we lazy load, and it causes problems...
-    // trace memory profile count
-    this.onFileUnload(this.props.file);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -48,38 +39,38 @@ export default class Track extends Component {
     ].some(test => test);
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     if (this.props.file.src !== prevProps.file.src) {
       if (!prevProps.file.paused) {
         prevProps.file.pause();
       }
-      prevProps.file.currentTime = 0;
+      prevProps.file.currentTime = 0; // eslint-disable-line no-param-reassign
 
       this.onFileUnload(prevProps.file);
-      this.setState({ progress: 0 });
+      this.setState({ progress: 0 }); // eslint-disable-line react/no-did-update-set-state
       this.onFileLoad(this.props.file);
 
     }
+  }
+
+  componentWillUnmount() {
+    this.setState({ mounted: false }); // TODO, yeah, this is bad but we unmount and mount when
+    this.state.mounted = false;        // we lazy load, and it causes problems...
+    // trace memory profile count
+    this.onFileUnload(this.props.file);
   }
 
   onFileLoad(file) {
     // Preload file
     file.setAttribute('preload', 'auto');
 
-    /*
-    if (!this.didAlreadyLoad) this.didAlreadyLoad = {};
-    if (this.didAlreadyLoad[file.src]) return;
-    else this.didAlreadyLoad[file.src] = true;
-    */
-
     const loadeddata = () => {
       // Default current time to zero. This will change
       file.currentTime = 0; // eslint-disable-line no-param-reassign
     };
-    file.onloadeddata = loadeddata;
+    file.onloadeddata = loadeddata; // eslint-disable-line no-param-reassign
 
     const timeupdate = () => {
-      //console.assert(this.state.mounted, 'timeupdate without being mounted', file, { file, mounted: this.state.mounted });
       if (!this.state.mounted) return; // TODO needed?
 
       const progress = (
@@ -89,14 +80,14 @@ export default class Track extends Component {
 
       this.setState({ progress });
     };
-    file.ontimeupdate = timeupdate;
+
+    file.ontimeupdate = timeupdate; // eslint-disable-line no-param-reassign
 
     const ended = () => {
       const { shouldRepeat, onEnd, isStarted, doStop, currentAyah, surah } = this.props;
 
       // if we're on the last ayah, do a full stop at the playback end
-      if (currentAyah == surah.id +':'+ surah.ayat)
-        return doStop();
+      if (`${currentAyah === surah.id}:${surah.ayat}`) return doStop();
 
       if (isStarted && shouldRepeat) {
         file.pause();
@@ -105,8 +96,11 @@ export default class Track extends Component {
       } else {
         onEnd();
       }
+
+      return false;
     };
-    file.onended = ended;
+
+    file.onended = ended; // eslint-disable-line no-param-reassign
 
     const play = () => {
       if (!this.state.mounted) return;
@@ -116,17 +110,19 @@ export default class Track extends Component {
 
       this.setState({ currentTime });
     };
-    file.onplay = play;
+
+    file.onplay = play; // eslint-disable-line no-param-reassign
+
+    return false;
   }
 
   onFileUnload(file) {
-    //console.warn('onFileUnload');
     if (!file.paused) {
       file.pause();
     }
   }
 
-  onTrackerMove(event) {
+  onTrackerMove = (event) => {
     const { file } = this.props;
 
     const fraction = (
@@ -145,13 +141,20 @@ export default class Track extends Component {
   }
 
   render() {
-    const { progress, mounted } = this.state;
+    const { progress } = this.state;
     const { isStarted, file } = this.props;
 
     if (file.readyState >= 3) {
-      // the Math.round bit prevents us from trying to play again when we're effectively at the end of the audio file; this should allow shouldRepeat to work without getting overridden:
-      // ...but at the time I monkey-patched it, so we might be able to get rid of it since we cleaned up? Let's not for now...
-      if (isStarted && file.paused && file.readyState >= 3 && Math.round(file.currentTime) != Math.round(file.duration)) {
+      // the Math.round bit prevents us from trying to play again when we're
+      // effectively at the end of the audio file; this should allow
+      // shouldRepeat to work without getting overridden:
+      // ...but at the time I monkey-patched it, so we might be able to get
+      // rid of it since we cleaned up? Let's not for now...
+      if (
+        isStarted &&
+        file.paused &&
+        file.readyState >= 3 &&
+        Math.round(file.currentTime) !== Math.round(file.duration)) {
         file.play();
       } else if (!isStarted && !file.paused) {
         file.pause();
@@ -159,8 +162,8 @@ export default class Track extends Component {
     }
 
     return (
-      <div className={style.track} onClick={this.onTrackerMove.bind(this)}>
-        <Tracker progress={progress}/>
+      <div className={style.track} onClick={this.onTrackerMove}>
+        <Tracker progress={progress} />
       </div>
     );
   }

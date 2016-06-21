@@ -1,9 +1,9 @@
 import debug from 'debug';
 
-export default function(namespace, message) {
-  if (arguments.length === 2) {
-    return debug(`quran:${namespace}`)(message);
+export default (...args) => {
+  if (args.length === 2) {
+    return debug(`quran:${args[0]}`)(args[1]);
   }
 
-  return debug('quran')(arguments[0]);
-}
+  return debug('quran')(args[0]);
+};

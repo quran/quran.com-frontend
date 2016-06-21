@@ -1,6 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import Link from 'react-router/lib/Link';
+import React, { PropTypes } from 'react';
 
+import Grid from 'react-bootstrap/lib/Grid';
 import Navbar from 'react-bootstrap/lib/Navbar';
 
 import debug from '../../../helpers/debug';
@@ -18,16 +18,17 @@ const Header = ({ surah, children }) => {
         <Navbar.Toggle />
       </Navbar.Header>
       <Navbar.Collapse>
-      <div className="container-fluid">
-        {children}
-      </div>
+        <Grid fluid>
+          {children}
+        </Grid>
       </Navbar.Collapse>
     </Navbar>
   );
 };
 
 Header.propTypes = {
-  surah: PropTypes.object.isRequired
+  surah: PropTypes.object.isRequired,
+  children: PropTypes.any
 };
 
 export default Header;

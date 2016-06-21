@@ -4,11 +4,7 @@ export default {
     {
       api: {
         name: 'Segment',
-        pageView(eventName) {
-          if (eventName !== 'pageLoad') {
-            return analytics.page(...arguments);
-          }
-
+        pageView() {
           return ga('send', 'pageview');
         },
         track(eventName, params) {
@@ -29,4 +25,4 @@ export default {
       }
     }
   ]
-}
+};

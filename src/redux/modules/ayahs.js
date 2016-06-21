@@ -29,12 +29,12 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         current: action.id,
-        currentWord: state.current == action.id ? state.currentWord : null
+        currentWord: state.current === action.id ? state.currentWord : null
       };
     case SET_CURRENT_WORD:
       let currentAyah = state.current;
       if (action.id && currentAyah) {
-        if (!(new RegExp('^'+ currentAyah +':')).test(action.id)) {
+        if (!(new RegExp(`^${currentAyah}:`)).test(action.id)) {
           currentAyah = action.id.match(/^\d+:\d+/g)[0];
         }
       }
@@ -65,7 +65,8 @@ export default function reducer(state = initialState, action = {}) {
         loading: true
       };
     case LOAD_SUCCESS:
-      let current = state.current ? state.current : action.result.result[0];
+      const current = state.current ? state.current : action.result.result[0];
+
       return {
         ...state,
         current,
@@ -74,10 +75,19 @@ export default function reducer(state = initialState, action = {}) {
         errored: false,
         entities: {
           ...state.entities,
-          [action.surahId]: Object.assign({}, state.entities[action.surahId], action.result.entities.ayahs)
+          [action.surahId]: Object.assign(
+            {},
+            state.entities[action.surahId],
+            action.result.entities.ayahs
+          )
         },
         result: Object.assign({}, state.result, action.result.result),
-        fontFaces: new Set([...state.fontFaces, ...createFontFacesArray(action.result.result.map(key => action.result.entities.ayahs[key]))]),
+        fontFaces: new Set([
+          ...state.fontFaces,
+          ...createFontFacesArray(
+            action.result.result.map(key => action.result.entities.ayahs[key])
+          )
+        ]),
       };
     case LOAD_FAIL:
       console.log(action);
