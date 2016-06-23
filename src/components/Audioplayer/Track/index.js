@@ -87,7 +87,7 @@ export default class Track extends Component {
       const { shouldRepeat, onEnd, isStarted, doStop, currentAyah, surah } = this.props;
 
       // if we're on the last ayah, do a full stop at the playback end
-      if (`${currentAyah === surah.id}:${surah.ayat}`) return doStop();
+      if (currentAyah === `${surah.id}:${surah.ayat}`) return doStop();
 
       if (isStarted && shouldRepeat) {
         file.pause();
