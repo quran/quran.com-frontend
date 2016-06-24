@@ -49,15 +49,17 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 	nightwatch --test tests/functional/specs/Index_spec.js
 	```
 
-4. Push your branch up to your fork:
+4. To create a PR you need to push your branch to the origin(forked) remote and then press some buttons on GitHub:
 	```bash
 	# Push a feature branch
-	git push origin feature/thing
+	git push -u origin feature/thing
 	```
 	```bash
 	# Push a fix branch
-	git push origin fix/something
+	git push -u origin fix/something
 	```
+
+	This will create the branch on your GitHub project. The ```-u``` flag links this branch with the remote one, so that in the future, you can simply type ```git push origin```.
 
 5. Now [open a pull request] with a clear title and description.
 
