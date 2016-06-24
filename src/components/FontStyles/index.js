@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 
 const bismillah = `@font-face {font-family: 'bismillah';
   src: url('http://quran-1f14.kxcdn.com/fonts/ttf/bismillah.ttf') format('truetype')}
-  .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}`;
+  .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}`; // eslint-disable-line
 
 class FontStyle extends Component {
   static propTypes = {
@@ -40,7 +40,9 @@ export default class FontStyles extends Component {
   render() {
     return (
       <div>
-        {this.props.fontFaces.map((fontFace, index) => <FontStyle key={index} fontFace={fontFace} />)}
+        {this.props.fontFaces.map((fontFace, index) => (
+          <FontStyle key={index} fontFace={fontFace} />
+        ))}
       </div>
     );
   }

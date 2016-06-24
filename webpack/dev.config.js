@@ -42,7 +42,8 @@ module.exports = {
             presets: ['react', 'es2015-webpack', 'stage-0', 'react-hmre'],
             cacheDirectory: true
           }
-        }
+        },
+        'eslint-loader'
       ]},
       { test: /\.json$/, loader: 'json-loader'},
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff" },

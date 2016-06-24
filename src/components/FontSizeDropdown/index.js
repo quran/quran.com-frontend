@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger'
-import Popover from 'react-bootstrap/lib/Popover'
-import Row from 'react-bootstrap/lib/Row'
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import Popover from 'react-bootstrap/lib/Popover';
+import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 const style = require('./style.scss');
@@ -29,14 +29,11 @@ export default class FontSizeDropdown extends Component {
   }
 
   renderPopup() {
-    const incrementValueArabic = 5;
-    const incrementValueTranslation = 2;
-
     return (
       <Popover id="FontSizeDropdown" title="Font Size" className={style.popover}>
         <Row>
           <Col xs={3}>
-            <a onClick={this.handleOptionSelected.bind(this, 'arabic', -1)} className="pointer">
+            <a onClick={() => this.handleOptionSelected('arabic', -1)} className="pointer">
               <i className="ss-icon ss-hyphen" />
             </a>
           </Col>
@@ -44,15 +41,15 @@ export default class FontSizeDropdown extends Component {
             Arabic
           </Col>
           <Col xs={3} className="text-right">
-            <a onClick={this.handleOptionSelected.bind(this, 'arabic', 1)} className="pointer">
-              <i className="ss-icon ss-plus"/>
+            <a onClick={() => this.handleOptionSelected('arabic', 1)} className="pointer">
+              <i className="ss-icon ss-plus" />
             </a>
           </Col>
         </Row>
-        <br/>
+        <br />
         <Row>
           <Col xs={3}>
-            <a onClick={this.handleOptionSelected.bind(this, 'translation', -1)} className="pointer">
+            <a onClick={() => this.handleOptionSelected('translation', -1)} className="pointer">
               <i className="ss-icon ss-hyphen" />
             </a>
           </Col>
@@ -60,8 +57,8 @@ export default class FontSizeDropdown extends Component {
             Translations
           </Col>
           <Col xs={3} className="text-right">
-            <a onClick={this.handleOptionSelected.bind(this, 'translation', 1)} className="pointer">
-              <i className="ss-icon ss-plus"/>
+            <a onClick={() => this.handleOptionSelected('translation', 1)} className="pointer">
+              <i className="ss-icon ss-plus" />
             </a>
           </Col>
         </Row>
@@ -75,7 +72,8 @@ export default class FontSizeDropdown extends Component {
         <a
           href="#"
           className="text-color"
-          data-metrics-event-name="FontSizeDropdown">
+          data-metrics-event-name="FontSizeDropdown"
+        >
           Font size
         </a>
       </OverlayTrigger>

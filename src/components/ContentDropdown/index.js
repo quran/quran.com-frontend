@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 const style = require('./style.scss');
@@ -472,7 +471,7 @@ export default class ContentDropdown extends Component {
             type="checkbox"
             className={style.checkbox}
             id={slug.id + slug.language}
-            onChange={this.handleOptionSelected.bind(this, slug.id)}
+            onChange={() => this.handleOptionSelected(slug.id)}
             checked={checked}
           />
 
@@ -502,23 +501,24 @@ export default class ContentDropdown extends Component {
     return (
       <div className={`dropdown ${className} ${style.dropdown}`}>
         <button
-          className={`btn btn-link no-outline`}
+          className="btn btn-link no-outline"
           id="content-dropdown"
           type="button"
           data-toggle="dropdown"
           aria-haspopup="true"
-          aria-expanded="false">
+          aria-expanded="false"
+        >
           Translations
-          <span className="caret"></span>
+          <span className="caret" />
         </button>
         <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
           {
             content.length &&
-            <MenuItem eventKey={1} onClick={this.handleRemoveContent}>Remove all</MenuItem>
+              <MenuItem eventKey={1} onClick={this.handleRemoveContent}>Remove all</MenuItem>
           }
           <MenuItem header>English</MenuItem>
           {this.renderEnglishList()}
-          <MenuItem divider/>
+          <MenuItem divider />
           <MenuItem header>Other Languages</MenuItem>
           {this.renderLanguagesList()}
         </ul>
