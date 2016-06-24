@@ -51,7 +51,7 @@ export default class SearchAutocomplete extends Component {
   }
 
   state = {
-    ayah: [],
+    ayat: [],
     surahs: []
   };
 
