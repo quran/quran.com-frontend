@@ -36,80 +36,26 @@ import descriptions from './descriptions';
 
 const style = require('./style.scss');
 
+
+import { surahsConnect, ayahsConnect } from './connect';
+
 import {
-  clearCurrent,
-  isLoaded,
   load as loadAyahs,
   setCurrentAyah,
   setCurrentWord,
   clearCurrentWord
 } from '../../redux/modules/ayahs';
-import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
+
 import { setOption, toggleReadingMode } from '../../redux/modules/options';
 
 let lastScroll = 0;
-const ayahRangeSize = 30;
 
 @asyncConnect([
   {
-    promise({ store: { getState, dispatch } }) {
-      debug('component:Surah', 'All Surahs Promise');
-      if (!isAllLoaded(getState())) {
-        debug('component:Surah', 'All Surahs Promise, Surahs not loaded');
-        return dispatch(loadAll());
-      }
-
-      return true;
-    }
+    promise: surahsConnect,
   },
   {
-    promise({ store: { dispatch, getState }, params }) {
-      debug('component:Surah', 'Ayahs Promise');
-      const range = params.range;
-      const surahId = parseInt(params.surahId, 10);
-      const { options } = getState();
-      let from;
-      let to;
-
-      if (range) {
-        if (range.includes('-')) {
-          [from, to] = range.split('-');
-        } else {
-          // Single ayah. For example /2/30
-          from = range;
-          to = parseInt(range, 10) + ayahRangeSize;
-        }
-
-        if (isNaN(from) || isNaN(to)) {
-          // Something wrong happened like /2/SOMETHING
-          // going to rescue by giving beginning of surah.
-          [from, to] = [1, ayahRangeSize];
-        }
-      } else {
-        [from, to] = [1, ayahRangeSize];
-      }
-
-      if (isNaN(surahId)) {
-        // Should have an alert or something to tell user there is an error.
-        return dispatch(push('/'));
-      }
-
-      from = parseInt(from, 10);
-      to = parseInt(to, 10);
-
-      if (surahId !== getState().surahs.current) {
-        dispatch(setCurrentSurah(surahId));
-      }
-
-      if (!isLoaded(getState(), surahId, from, to)) {
-        debug('component:Surah', 'Ayahs Promise, Ayahs not loaded');
-        dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
-
-        return dispatch(loadAyahs(surahId, from, to, options));
-      }
-
-      return true;
-    }
+    promise: ayahsConnect
   }
 ])
 @connect(
@@ -142,9 +88,9 @@ const ayahRangeSize = 30;
     };
   },
   {
-    loadAyahsDispatch: loadAyahs,
-    setOptionDispatch: setOption,
-    toggleReadingModeDispatch: toggleReadingMode,
+    loadAyahs,
+    setOption,
+    toggleReadingMode,
     setCurrentAyah,
     setCurrentWord,
     clearCurrentWord,
@@ -166,9 +112,9 @@ export default class Surah extends Component {
     push: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     ayahs: PropTypes.object.isRequired,
-    loadAyahsDispatch: PropTypes.func.isRequired,
-    setOptionDispatch: PropTypes.func.isRequired,
-    toggleReadingModeDispatch: PropTypes.func.isRequired,
+    loadAyahs: PropTypes.func.isRequired,
+    setOption: PropTypes.func.isRequired,
+    toggleReadingMode: PropTypes.func.isRequired,
     setCurrentAyah: PropTypes.func.isRequired,
     setCurrentWord: PropTypes.func.isRequired,
     clearCurrentWord: PropTypes.func.isRequired,
@@ -300,7 +246,7 @@ export default class Surah extends Component {
   }
 
   handleOptionChange = (payload) => {
-    const { setOptionDispatch, loadAyahsDispatch, surah, ayahIds, options } = this.props;
+    const { setOption, loadAyahs, surah, ayahIds, options } = this.props; // eslint-disable-line no-shadow
     const from = ayahIds.first();
     const to = ayahIds.last();
 
@@ -310,15 +256,15 @@ export default class Surah extends Component {
   }
 
   handleFontSizeChange = (payload) => {
-    const { setOptionDispatch } = this.props;
+    const { setOption } = this.props; // eslint-disable-line no-shadow
 
-    return setOptionDispatch(payload);
+    return setOption(payload);
   }
 
   handleSurahInfoToggle = (payload) => {
-    const { setOptionDispatch } = this.props;
+    const { setOption } = this.props; // eslint-disable-line no-shadow
 
-    return setOptionDispatch(payload);
+    return setOption(payload);
   }
 
   handleNavbar = () => {
@@ -353,10 +299,8 @@ export default class Surah extends Component {
     1000)); // then scroll to it
   }
 
-
   handleLazyLoadAyahs = (callback) => {
-    const { loadAyahsDispatch, ayahIds, surah, isEndOfSurah, options } = this.props;
-
+    const { loadAyahs, ayahIds, surah, isEndOfSurah, options } = this.props; // eslint-disable-line no-shadow
     const range = [ayahIds.first(), ayahIds.last()];
     let size = 10;
 
@@ -368,7 +312,7 @@ export default class Surah extends Component {
     const to = (from + size);
 
     if (!isEndOfSurah && !ayahIds.has(to)) {
-      loadAyahsDispatch(surah.id, from, to, options).then(() => {
+      loadAyahs(surah.id, from, to, options).then(() => {
         this.setState({lazyLoading: false});
         if (callback) {
           callback();
@@ -457,7 +401,7 @@ export default class Surah extends Component {
   }
 
   renderTopOptions() {
-    const { toggleReadingModeDispatch, options } = this.props;
+    const { toggleReadingMode, options } = this.props; // eslint-disable-line no-shadow
 
     return (
       <Row>
@@ -480,7 +424,7 @@ export default class Surah extends Component {
             <li>
               <ReadingModeToggle
                 isToggled={options.isReadingMode}
-                onReadingModeToggle={toggleReadingModeDispatch}
+                onReadingModeToggle={toggleReadingMode}
               />
             </li>
           </ul>
