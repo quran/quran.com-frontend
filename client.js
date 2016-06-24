@@ -1,4 +1,4 @@
-/*global document, window, $ */
+/* global document, window, $ */
 import 'babel-polyfill';
 
 import React from 'react';
@@ -21,15 +21,15 @@ import createStore from './src/redux/create';
 import routes from './src/routes';
 
 const client = new ApiClient();
-const store = createStore(browserHistory, client, window.__data);
+const store = createStore(browserHistory, client, window.reduxData);
 const history = syncHistoryWithStore(browserHistory, store);
 
-Raven.config(config.sentryClient).install()
+Raven.config(config.sentryClient).install();
 
 window.quranDebug = debug;
 window.ReactDOM = ReactDOM; // For chrome dev tool support
 
-window.clearCookies = function() {
+window.clearCookies = () => {
   reactCookie.remove('quran');
   reactCookie.remove('content');
   reactCookie.remove('audio');
@@ -38,7 +38,7 @@ window.clearCookies = function() {
 
 // Init tooltip
 if (typeof window !== 'undefined') {
-  $(function () {
+  $(() => {
     $(document.body).tooltip({
       selector: '[data-toggle="tooltip"]',
       animation: false
@@ -69,6 +69,7 @@ match({ history, routes: routes() }, (error, redirectLocation, renderProps) => {
     <Provider store={store} key="provider">
       {component}
     </Provider>, mountNode, () => {
-    debug('client', 'React Rendered');
-  });
+      debug('client', 'React Rendered');
+    }
+  );
 });

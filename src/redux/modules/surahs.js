@@ -45,7 +45,7 @@ export function loadAll() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: arrayOf(surahsSchema),
-    promise: (client) => client.get(`/v2/surahs`)
+    promise: (client) => client.get('/v2/surahs')
   };
 }
 

@@ -11,4 +11,8 @@ const PageBreak = ({ pageNum }) => (
   </Row>
 );
 
+PageBreak.propTypes = {
+  pageNum: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
+};
+
 export default PageBreak;

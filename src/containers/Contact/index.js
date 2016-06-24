@@ -9,8 +9,8 @@ export default class Contact extends Component {
     success: false
   };
 
-  submitSupport(e) {
-    e.preventDefault();
+  submitSupport = (event) => {
+    event.preventDefault();
 
     const form = {
       subject: ReactDOM.findDOMNode(this.refs.purpose).value.trim(),
@@ -33,7 +33,7 @@ export default class Contact extends Component {
 
   renderForm() {
     return (
-      <form className="form-horizontal" onSubmit={this.submitSupport.bind(this)}>
+      <form className="form-horizontal" onSubmit={this.submitSupport}>
         <div className="form-group">
           <label htmlFor="name" className="col-sm-2 control-label">Name</label>
           <div className="col-sm-8">
@@ -86,28 +86,29 @@ export default class Contact extends Component {
 
   render() {
     let body;
+
     if (this.state.success) {
       body = this.renderSubmitSuccess();
-    }
-    else {
+    } else {
       body = this.renderForm();
     }
 
     return (
       <div>
-        <IndexHeader noSearch={true} />
+        <IndexHeader noSearch />
         <div className="container-fluid about-text">
           <div className="row">
             <div className="col-md-6 col-md-offset-3">
               <h4>
-                Contacting us - thank you for taking time to speak to us. Please be as concise as possible
+                Contacting us - thank you for taking time to speak to us.
+                Please be as concise as possible
                 and include screenshots where applicable to help us help you as quickly as we can.
-                <br/>
-                <br/>
+                <br />
+                <br />
               </h4>
             </div>
             <div className="col-md-8 col-md-offset-2">
-            {body}
+              {body}
             </div>
           </div>
         </div>

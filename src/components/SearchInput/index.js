@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import { PropTypes } from 'react-metrics';
+import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
@@ -10,8 +10,13 @@ import debug from '../../helpers/debug';
 
 @connect(null, { push })
 export default class SearchInput extends Component {
+  static propTypes = {
+    push: PropTypes.func.isRequired,
+    className: PropTypes.string
+  };
+
   static contextTypes = {
-    metrics: PropTypes.metrics
+    metrics: MetricsPropTypes.metrics
   };
 
   state = {
@@ -19,53 +24,69 @@ export default class SearchInput extends Component {
     showAutocomplete: false
   };
 
-  search(e) {
-    if (e.key === 'Enter' || e.keyCode === 13 || e.type === 'click') {
-      let inputEl = ReactDOM.findDOMNode(this).querySelector('input'),
-        searching = inputEl.value.trim(),
-        ayah, pattern, surah;
+  search = (event) => {
+    const arabic = new RegExp(/[\u0600-\u06FF]/);
+    const shortcutSearch = /\d[\.,\:,\,,\\,//]/g; // eslint-disable-line no-useless-escape
+    const splitSearch = /[\.,\:,\,,\\,//]/g; // eslint-disable-line no-useless-escape
+
+    if (event.key === 'Enter' || event.keyCode === 13 || event.type === 'click') {
+      const inputEl = ReactDOM.findDOMNode(this).querySelector('input');
+      const searching = inputEl.value.trim();
+      let ayah;
+      let surah;
 
       // prevent search function while search input field is empty
       if (searching === '') {
         // reset input to display "Search" placeholder text
         inputEl.value = '';
-        return;
+        return false;
       }
 
-      const shortcutSearch = /\d[\.,\:,\,,\\,//]/g;
-      const splitSearch = /[\.,\:,\,,\\,//]/g;
-
-      pattern = new RegExp(shortcutSearch);
+      const pattern = new RegExp(shortcutSearch);
 
       if (pattern.test(searching)) {
-        surah = parseInt(searching.split(splitSearch)[0]);
-        ayah = parseInt(searching.split(splitSearch)[1]);
+        surah = parseInt(
+          searching.split(splitSearch)[0],
+          10
+        );
+        ayah = parseInt(
+          searching.split(splitSearch)[1],
+          10
+        );
 
         if (isNaN(ayah)) {
           ayah = 1;
         }
 
-        this.context.metrics.track('Search', {action: 'surah', label: `/${surah}/${ayah}-${(ayah + 10)}`});
-        this.props.push(`/${surah}/${ayah}-${(ayah + 10)}`);
-      } else {
-        this.context.metrics.track('Search', {action: 'query', label: searching});
-        this.props.push(`/search?q=${searching}`);
+        this.context.metrics.track('Search', {
+          action: 'surah',
+          label: `/${surah}/${ayah}-${(ayah + 10)}`
+        });
+
+        return this.props.push(`/${surah}/${ayah}-${(ayah + 10)}`);
       }
+
+      this.context.metrics.track('Search', {
+        action: 'query',
+        label: searching
+      });
+
+      return this.props.push(`/search?q=${searching}`);
     }
 
     // This checks to see if the user is typing Arabic
     // and adjusts the text-align.
-    var arabic = new RegExp(/[\u0600-\u06FF]/);
-    if (arabic.test(e.target.value)) {
-      e.target.style.textAlign = 'right';
-    }
-    else {
-      e.target.style.textAlign = 'left';
+    if (arabic.test(event.target.value)) {
+      event.target.style.textAlign = 'right'; // eslint-disable-line no-param-reassign
+    } else {
+      event.target.style.textAlign = 'left'; // eslint-disable-line no-param-reassign
     }
 
     if (this.input) {
       this.setState({ value: this.input.value.trim() });
     }
+
+    return false;
   }
 
   render() {
@@ -76,18 +97,20 @@ export default class SearchInput extends Component {
 
     return (
       <div className={`right-inner-addon searchinput ${className}`}>
-        <i className="ss-icon ss-search" onClick={this.search.bind(this)} />
+        <i className="ss-icon ss-search" onClick={this.search} />
         <input
           type="search"
           placeholder="Search"
           ref="search"
           onFocus={() => this.setState({showAutocomplete: true})}
-          onKeyUp={this.search.bind(this)}
-          ref={(ref) => this.input = ref}
+          onKeyUp={this.search}
+          ref={(ref) => {
+            this.input = ref;
+          }}
         />
         {
           showAutocomplete &&
-          <SearchAutocomplete value={this.state.value} input={this.input}/>
+            <SearchAutocomplete value={this.state.value} input={this.input} />
         }
       </div>
     );

@@ -6,7 +6,7 @@ import config from '../config';
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 function formatUrl(path) {
-  const adjustedPath = path[0] !== '/' ? '/' + path : path;
+  const adjustedPath = path[0] !== '/' ? `/${path}` : path;
 
   if (__SERVER__) {
     return `${config.api}${adjustedPath}`;
@@ -17,8 +17,9 @@ function formatUrl(path) {
 
 export default class {
   constructor(req) {
-    methods.forEach((method) =>
-      this[method] = (path, { params, data, arrayFormat } = {}) => new Promise((resolve, reject) => {
+    methods.forEach(method => {
+      this[method] = (path, { params, data, arrayFormat } = {}) =>
+      new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
 
         if (params) {
@@ -33,8 +34,14 @@ export default class {
           request.send(data);
         }
 
-        request.end((err, { body } = {}) => err ? reject(body || err) : resolve(body));
-      })
-    );
+        request.end((err, { body } = {}) => {
+          if (err) {
+            return reject(body || err);
+          }
+
+          return resolve(body);
+        });
+      });
+    });
   }
 }

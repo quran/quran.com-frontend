@@ -12,10 +12,10 @@ export default class Line extends React.Component {
     const { line } = this.props;
 
     if (!line[0].code) { // TODO shouldn't be possible, remove this clause
-      return;
+      return false;
     }
 
-    let text = line.map((word, index) => {
+    let text = line.map(word => {
       if (word.translation) {
         let tooltip = word.translation;
 
@@ -29,8 +29,8 @@ export default class Line extends React.Component {
             data-page={word.pageNum}
             data-position={word.position}
             data-placement="top" title={tooltip}
-            dangerouslySetInnerHTML={{__html: word.code}}>
-          </b>
+            dangerouslySetInnerHTML={{__html: word.code}}
+          />
         );
       }
 
@@ -40,8 +40,8 @@ export default class Line extends React.Component {
           key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
           data-line={word.lineNum}
           data-page={word.pageNum}
-          dangerouslySetInnerHTML={{__html: word.code}}>
-        </b>
+          dangerouslySetInnerHTML={{__html: word.code}}
+        />
       );
     });
 
@@ -55,7 +55,10 @@ export default class Line extends React.Component {
   render() {
     const { line } = this.props;
 
-    debug('component:Line', `Page: ${line[0].pageNum} - Line: ${line[0].lineNum} - Ayah: ${line[0].ayahKey}`);
+    debug(
+      'component:Line',
+      `Page: ${line[0].pageNum} - Line: ${line[0].lineNum} - Ayah: ${line[0].ayahKey}`
+    );
 
     return (
       <div className={`row ${styles.font} text-justify text-arabic`}>

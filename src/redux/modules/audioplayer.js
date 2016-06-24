@@ -1,7 +1,12 @@
 /* eslint-disable no-case-declarations */
 import { buildAudioFromHash, testIfSupported } from '../../helpers/buildAudio';
 
-import { LOAD_SUCCESS as AYAHS_LOAD_SUCCESS, LOAD as AYAHS_LOAD, CLEAR_CURRENT as AYAHS_CLEAR_CURRENT, SET_CURRENT_AYAH } from './ayahs';
+import {
+  LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
+  LOAD as AYAHS_LOAD,
+  CLEAR_CURRENT as AYAHS_CLEAR_CURRENT,
+  SET_CURRENT_AYAH
+} from './ayahs';
 
 const SET_USER_AGENT = '@@quran/audioplayer/SET_USER_AGENT';
 const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
@@ -84,7 +89,11 @@ export default function reducer(state = initialState, action = {}) {
 
       const incoming = action.result.entities.ayahs;
       audioFromHash = __CLIENT__ ? buildAudioFromHash(incoming, state.userAgent) : incoming;
-      files = Object.assign({}, state.files[action.surahId], __CLIENT__ ? audioFromHash.files : audioFromHash);
+      files = Object.assign(
+        {},
+        state.files[action.surahId],
+        __CLIENT__ ? audioFromHash.files : audioFromHash
+      );
       segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
 
       return {
