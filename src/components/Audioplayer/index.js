@@ -26,9 +26,10 @@ import scroller from '../../utils/scroller';
 const style = require('./style.scss');
 
 @connect(
-  state => ({
-    files: state.audioplayer.files,
-    segments: state.audioplayer.segments,
+  (state, ownProps) => ({
+    files: state.audioplayer.files[ownProps.surah.id],
+    segments: state.audioplayer.segments[ownProps.surah.id],
+    ayahIds: Object.keys(state.audioplayer.files[ownProps.surah.id]),
     currentAyah: state.ayahs.current,
     currentWord: state.ayahs.currentWord,
     surahId: state.audioplayer.surahId,
@@ -48,25 +49,8 @@ const style = require('./style.scss');
     toggleScroll,
     setCurrentAyah,
     setCurrentWord,
-    buildOnClient
-  },
-  (stateProps, dispatchProps, ownProps) => {
-    if (!stateProps.isSupported) {
-      return {
-        ...stateProps, ...dispatchProps, ...ownProps
-      };
-    }
-
-    const files = stateProps.files[stateProps.surahId];
-    const ayahIds = files ? Object.keys(files) : [];
-    const segments = stateProps.segments[stateProps.surahId];
-
-    return {
-      ...stateProps, ...dispatchProps, ...ownProps,
-      files,
-      segments,
-      ayahIds
-    };
+    buildOnClient,
+    update
   }
 )
 export default class Audioplayer extends Component {
@@ -87,13 +71,15 @@ export default class Audioplayer extends Component {
     setCurrentWord: PropTypes.func.isRequired,
     start: PropTypes.func.isRequired,
     stop: PropTypes.func.isRequired,
+    update: PropTypes.func.isRequired,
     toggleRepeat: PropTypes.func.isRequired,
     toggleScroll: PropTypes.func.isRequired,
     ayahIds: PropTypes.array,
     isStarted: PropTypes.bool,
     progress: PropTypes.number,
     currentTime: PropTypes.number,
-    duration: PropTypes.number
+    duration: PropTypes.number,
+    currentFile: PropTypes.string
   };
 
   static defaultProps = {
@@ -101,23 +87,34 @@ export default class Audioplayer extends Component {
   };
 
   componentDidMount() {
-    const { isLoadedOnClient, buildOnClient, surah } = this.props; // eslint-disable-line no-shadow
+    const { isLoadedOnClient, buildOnClient, surah, files, currentFile } = this.props; // eslint-disable-line no-shadow, max-len
 
     debug('component:Audioplayer', 'componentDidMount');
 
     if (!isLoadedOnClient && __CLIENT__) {
       debug('component:Audioplayer', 'componentDidMount on client');
 
-      return buildOnClient(surah.id);
+      buildOnClient(surah.id);
+
+      if (files[currentFile]) {
+        return this.handleAddFileListeners(files[currentFile]);
+      }
+
+      return false;
     }
 
     return false;
   }
 
   componentWillUnmount() {
+    const { files, currentFile } = this.props;
     debug('component:Audioplayer', 'componentWillUnmount');
 
-    return stop();
+    if (files[currentFile]) {
+      return this.handleRemoveFileListeneres(files[currentFile]);
+    }
+
+    return false;
   }
 
   getCurrentAyah() {
@@ -240,6 +237,69 @@ export default class Audioplayer extends Component {
     }
 
     this.props.toggleScroll();
+  }
+
+  handleAddFileListeners(file) {
+    const { update } = this.props; // eslint-disable-line no-shadow
+
+    // Preload file
+    file.setAttribute('preload', 'auto');
+
+    const onLoadeddata = () => {
+      // Default current time to zero. This will change
+      file.currentTime = 0; // eslint-disable-line no-param-reassign
+
+      return update({
+        duration: file.duration
+      });
+    };
+
+    const onTimeupdate = () => {
+      const progress = (
+        file.currentTime /
+        file.duration * 100
+      );
+
+      return update({
+        progress,
+        currentTime: file.currentTime
+      });
+    };
+
+    const onEnded = () => {
+      const { shouldRepeat } = this.props;
+
+      if (shouldRepeat) {
+        file.pause();
+        file.currentTime = 0; // eslint-disable-line no-param-reassign
+        return file.play();
+      }
+
+      if (file.readyState >= 3 && file.paused) {
+        file.pause();
+      }
+
+      return update({
+        isPlaying: false
+      });
+    };
+
+    const onPlay = () => {};
+
+    file.onloadeddata = onLoadeddata;  // eslint-disable-line no-param-reassign
+    file.ontimeupdate = onTimeupdate; // eslint-disable-line no-param-reassign
+    file.onplay = onPlay; // eslint-disable-line no-param-reassign
+    file.onended = onEnded; // eslint-disable-line no-param-reassign
+
+    return file;
+  }
+
+  handleRemoveFileListeneres(file) {
+    file.pause();
+    file.onloadeddata = null; // eslint-disable-line no-param-reassign
+    file.ontimeupdate = null; // eslint-disable-line no-param-reassign
+    file.onplay = null; // eslint-disable-line no-param-reassign
+    file.onended = null; // eslint-disable-line no-param-reassign
   }
 
   renderPlayStopButtons() {

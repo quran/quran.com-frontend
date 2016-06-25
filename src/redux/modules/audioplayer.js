@@ -39,19 +39,23 @@ export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case BUILD_ON_CLIENT:
       audioFromHash = buildAudioFromHash(state.files[action.surahId], state.userAgent);
-      files = Object.assign({}, state.files[action.surahId], audioFromHash.files);
-      segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
 
       return {
         ...state,
         isLoadedOnClient: true,
         files: {
           ...state.files,
-          [action.surahId]: files
+          [action.surahId]: {
+            ...state.files[action.surahId],
+            ...audioFromHash.files
+          }
         },
         segments: {
           ...state.segments,
-          [action.surahId]: segments
+          [action.surahId]: {
+            ...state.segments[action.surahId],
+            ...audioFromHash.segments
+          }
         }
       };
     case AYAHS_CLEAR_CURRENT:
