@@ -3,6 +3,8 @@
   "scripts": {
   },
   "env": {
+    "API_URL": "http://api.quran.com:3000",
+    "USE_LOCAL_ASSETS": "true"
   },
   "formation": {
   },
