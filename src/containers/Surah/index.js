@@ -64,22 +64,15 @@ let lastScroll = 0;
     const surah: Object = state.surahs.entities[surahId];
     const ayahs: Object = state.ayahs.entities[surahId];
     const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
-    ayahIds.first = function first() { return [...this][0]; };
-    ayahIds.last = function last() { return [...this][[...this].length - 1]; };
-
-    const currentWord = state.ayahs.currentWord;
-    const currentAyah = state.ayahs.currentAyah;
-    const isStarted = state.audioplayer.isStarted;
-    const isEndOfSurah = ayahIds.last() === surah.ayat;
 
     return {
-      isStarted,
-      currentWord,
-      currentAyah,
       surah,
       ayahs,
-      isEndOfSurah,
       ayahIds,
+      isStarted: state.audioplayer.isStarted,
+      currentWord: state.ayahs.currentWord,
+      currentAyah: state.ayahs.currentAyah,
+      isEndOfSurah: ayahIds.length === surah.ayat,
       surahs: state.surahs.entities,
       isLoading: state.ayahs.loading,
       isLoaded: state.ayahs.loaded,
@@ -201,6 +194,97 @@ export default class Surah extends Component {
     }
   }
 
+  handleOptionChange = (payload) => {
+    const { setOption, loadAyahs, surah, ayahIds, options } = this.props; // eslint-disable-line no-shadow max-len
+    const from = ayahIds.first();
+    const to = ayahIds.last();
+
+    setOption(payload);
+
+    return loadAyahs(surah.id, from, to, Object.assign({}, options, payload));
+  }
+
+  handleFontSizeChange = (payload) => {
+    const { setOption } = this.props; // eslint-disable-line no-shadow
+
+    return setOption(payload);
+  }
+
+  handleSurahInfoToggle = (payload) => {
+    const { setOption } = this.props; // eslint-disable-line no-shadow
+
+    return setOption(payload);
+  }
+
+  handleNavbar = () => {
+    // TODO: This should be done with react!
+    if (window.pageYOffset > lastScroll) {
+      document.querySelector('nav').classList.add('scroll-up');
+    } else {
+      document.querySelector('nav').classList.remove('scroll-up');
+    }
+
+    lastScroll = window.pageYOffset;
+
+    return false;
+  }
+
+  handleVerseDropdownClick = (ayahNum) => {
+    const { ayahIds, push, surah, setCurrentAyah } = this.props; // eslint-disable-line no-shadow
+
+    setCurrentAyah(`${surah.id}:${ayahNum}`);
+
+    if (ayahIds.has(ayahNum)) {
+      return false;
+    }
+
+    if (ayahNum > (this.getLast() + 10) || ayahNum < this.getFirst()) {
+      // This is beyond lazy loading next page.
+      return push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
+    }
+
+    return this.handleLazyLoadAyahs(() => setTimeout(() =>
+      scroller.scrollTo(`ayah:${ayahNum}`),
+    1000)); // then scroll to it
+  }
+
+  handleLazyLoadAyahs = (callback) => {
+    const { loadAyahs, ayahIds, surah, isEndOfSurah, options } = this.props; // eslint-disable-line no-shadow max-len
+    const range = [ayahIds.first(), ayahIds.last()];
+
+    let size = 10;
+
+    if ((range[1] - range[0] + 1) < 10) {
+      size = range[1] - range[0] + 1;
+    }
+
+    const from = range[1];
+    const to = (from + size);
+
+    if (!isEndOfSurah && !ayahIds.has(to)) {
+      loadAyahs(surah.id, from, to, options).then(() => {
+        this.setState({lazyLoading: false});
+        if (callback) {
+          callback();
+        }
+      });
+    }
+
+    return false;
+  }
+
+  getLast() {
+    const { ayahIds } = this.props;
+
+    return [...ayahIds][[...ayahIds].length - 1];
+  }
+
+  getFirst() {
+    const { ayahIds } = this.props;
+
+    return [...ayahIds][0];
+  }
+
   title() {
     const { params, surah } = this.props;
 
@@ -243,84 +327,6 @@ export default class Surah extends Component {
     }
 
     return `${descriptions[surah.id]} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
-  }
-
-  handleOptionChange = (payload) => {
-    const { setOption, loadAyahs, surah, ayahIds, options } = this.props; // eslint-disable-line no-shadow
-    const from = ayahIds.first();
-    const to = ayahIds.last();
-
-    setOptionDispatch(payload);
-
-    return loadAyahsDispatch(surah.id, from, to, Object.assign({}, options, payload));
-  }
-
-  handleFontSizeChange = (payload) => {
-    const { setOption } = this.props; // eslint-disable-line no-shadow
-
-    return setOption(payload);
-  }
-
-  handleSurahInfoToggle = (payload) => {
-    const { setOption } = this.props; // eslint-disable-line no-shadow
-
-    return setOption(payload);
-  }
-
-  handleNavbar = () => {
-    // TODO: This should be done with react!
-    if (window.pageYOffset > lastScroll) {
-      document.querySelector('nav').classList.add('scroll-up');
-    } else {
-      document.querySelector('nav').classList.remove('scroll-up');
-    }
-
-    lastScroll = window.pageYOffset;
-
-    return false;
-  }
-
-  handleVerseDropdownClick = (ayahNum) => {
-    const { ayahIds, push, surah, setCurrentAyah } = this.props; // eslint-disable-line no-shadow
-
-    setCurrentAyah(`${surah.id}:${ayahNum}`);
-
-    if (ayahIds.has(ayahNum)) {
-      return false;
-    }
-
-    if (ayahNum > (ayahIds.last() + 10) || ayahNum < ayahIds.first()) {
-      // This is beyond lazy loading next page.
-      return push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
-    }
-
-    return this.handleLazyLoadAyahs(() => setTimeout(() =>
-      scroller.scrollTo(`ayah:${ayahNum}`),
-    1000)); // then scroll to it
-  }
-
-  handleLazyLoadAyahs = (callback) => {
-    const { loadAyahs, ayahIds, surah, isEndOfSurah, options } = this.props; // eslint-disable-line no-shadow
-    const range = [ayahIds.first(), ayahIds.last()];
-    let size = 10;
-
-    if ((range[1] - range[0] + 1) < 10) {
-      size = range[1] - range[0] + 1;
-    }
-
-    const from = range[1];
-    const to = (from + size);
-
-    if (!isEndOfSurah && !ayahIds.has(to)) {
-      loadAyahs(surah.id, from, to, options).then(() => {
-        this.setState({lazyLoading: false});
-        if (callback) {
-          callback();
-        }
-      });
-    }
-
-    return false;
   }
 
   renderPagination() {

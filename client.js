@@ -24,7 +24,11 @@ const client = new ApiClient();
 const store = createStore(browserHistory, client, window.reduxData);
 const history = syncHistoryWithStore(browserHistory, store);
 
-Raven.config(config.sentryClient).install();
+try {
+  Raven.config(config.sentryClient).install();
+} catch (error) {
+  console.log(error);
+}
 
 window.quranDebug = debug;
 window.ReactDOM = ReactDOM; // For chrome dev tool support

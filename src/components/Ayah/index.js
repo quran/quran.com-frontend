@@ -88,13 +88,14 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    if (!this.props.ayah.words[0].code) {
+    const { ayah, currentWord } = this.props;
+
+    if (!ayah.words[0].code) {
       return false;
     }
-    const { currentWord } = this.props;
 
     let position = 0;
-    let text = this.props.ayah.words.map(word => {
+    let text = ayah.words.map(word => {
       let id = null;
       const active = word.charTypeId === CHAR_TYPE_WORD && currentWord === position;
       const className = `${word.className} ${word.highlight && word.highlight} ${active && styles.active}`; // eslint-disable-line max-len
@@ -138,6 +139,12 @@ export default class Ayah extends Component {
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
         {text}
+        <p
+          dir="rtl"
+          lang="ar"
+          className={`text-tashkeel text-p${ayah.pageNum}`}
+          dangerouslySetInnerHTML={{__html: ayah.textTashkeel}}
+        />
       </h1>
     );
   }

@@ -1,48 +1,55 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { fontFaceStyle, fontFaceStyleLoaded } from '../../helpers/buildFontFaces';
+import { load } from 'redux/modules/fontFaces';
 
-const bismillah = `@font-face {font-family: 'bismillah';
-  src: url('http://quran-1f14.kxcdn.com/fonts/ttf/bismillah.ttf') format('truetype')}
-  .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}`; // eslint-disable-line
-
-class FontStyle extends Component {
-  static propTypes = {
-    fontFace: PropTypes.string.isRequired
-  }
-
-  static defaultProps = {
-    fontFace: ''
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.fontFace !== nextProps.fontFace;
-  }
-
-  render() {
-    return <style dangerouslySetInnerHTML={{__html: this.props.fontFace}} />;
-  }
-}
+import debug from 'helpers/debug';
+import selector from './selector';
 
 @connect(
   state => ({
-    fontFaces: [bismillah, ...state.ayahs.fontFaces, ...state.searchResults.fontFaces]
-  })
+    fontFaces: selector(state)
+  }),
+  { load }
 )
 export default class FontStyles extends Component {
   static propTypes = {
-    fontFaces: PropTypes.array
+    fontFaces: PropTypes.object.isRequired,
+    load: PropTypes.func.isRequired
   };
 
   shouldComponentUpdate(nextProps) {
-    return this.props.fontFaces.length !== nextProps.fontFaces.length;
+    return JSON.stringify(this.props.fontFaces) !== JSON.stringify(nextProps.fontFaces);
   }
 
   render() {
+    const { fontFaces, load } = this.props; // eslint-disable-line no-shadow
+    debug('component:FontStyles', 'render');
+
+    if (__CLIENT__) {
+      const FontFaceObserver = require('fontfaceobserver'); // eslint-disable-line global-require
+
+      Object.keys(fontFaces).filter(className => !fontFaces[className]).map(className => {
+        const font = new FontFaceObserver(className);
+
+        return font.load().then(() => load(className), () => load(className));
+      });
+    }
+
     return (
       <div>
-        {this.props.fontFaces.map((fontFace, index) => (
-          <FontStyle key={index} fontFace={fontFace} />
-        ))}
+        {
+          Object.keys(fontFaces).map(className => (
+            <style
+              key={className}
+              dangerouslySetInnerHTML={{
+                __html: fontFaces[className] ?
+                `${fontFaceStyle(className)} ${fontFaceStyleLoaded(className)}` :
+                fontFaceStyle(className)
+              }}
+            />
+          ))
+        }
       </div>
     );
   }

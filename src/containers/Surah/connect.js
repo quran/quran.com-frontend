@@ -15,7 +15,7 @@ export const surahsConnect = ({ store: { getState, dispatch } }) => {
   }
 
   return true;
-}
+;}
 
 export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {
   debug('component:Surah:ayahsConnect', 'Init');
@@ -60,4 +60,4 @@ export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {
   }
 
   return true;
-}
+};

@@ -8,6 +8,7 @@ import audioplayer from './audioplayer';
 import lines from './lines';
 import options from './options';
 import searchResults from './searchResults';
+import fontFaces from './fontFaces';
 
 export default combineReducers({
   routing: routerReducer,
@@ -15,6 +16,7 @@ export default combineReducers({
   surahs,
   ayahs,
   audioplayer,
+  fontFaces,
   lines,
   searchResults,
   options

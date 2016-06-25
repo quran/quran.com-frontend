@@ -2,8 +2,6 @@ import { ayahsSchema } from '../schemas';
 
 import { arrayOf } from 'normalizr';
 
-import { createFontFacesArray } from '../../helpers/buildFontFaces';
-
 export const LOAD = '@@quran/ayahs/LOAD';
 export const LOAD_SUCCESS = '@@quran/ayahs/LOAD_SUCCESS';
 export const LOAD_FAIL = '@@quran/ayahs/LOAD_FAIL';
@@ -19,8 +17,7 @@ const initialState = {
   loaded: false,
   loading: false,
   entities: {},
-  result: [],
-  fontFaces: []
+  result: []
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -81,13 +78,7 @@ export default function reducer(state = initialState, action = {}) {
             action.result.entities.ayahs
           )
         },
-        result: Object.assign({}, state.result, action.result.result),
-        fontFaces: new Set([
-          ...state.fontFaces,
-          ...createFontFacesArray(
-            action.result.result.map(key => action.result.entities.ayahs[key])
-          )
-        ]),
+        result: Object.assign({}, state.result, action.result.result)
       };
     case LOAD_FAIL:
       console.log(action);
