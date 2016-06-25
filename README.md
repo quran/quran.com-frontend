@@ -14,10 +14,7 @@ between both the server and the client) for SEO reasons.
 [![Code Climate](https://codeclimate.com/github/quran/quran.com-frontend.png)](https://codeclimate.com/github/quran/quran.com-frontend)
 
 ## How to contribute
-We trust that
-you will not steal this, this is at the end of the day for the sake of Allah and we
-all have good intentions while working with this project. But I must stress, stealing
-this is unacceptable.
+We trust that you will not copy this idea/project, this is at the end for the sake of Allah and we all have good intentions while working with this project. But We must stress that copying the code/project is unacceptable.
 
 Read the [contributing] section before creating an issue.
 
