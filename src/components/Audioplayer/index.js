@@ -1,8 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import { Tooltip, OverlayTrigger } from 'react-bootstrap';
 
 // Redux
 import {
@@ -10,13 +7,16 @@ import {
   stop,
   toggleRepeat,
   toggleScroll,
-  buildOnClient
+  buildOnClient,
+  update
 } from '../../redux/modules/audioplayer';
 import { setCurrentAyah, setCurrentWord } from '../../redux/modules/ayahs';
 
 // Components
 import Track from './Track';
 import Segments from './Segments';
+import ScrollButton from './ScrollButton';
+import RepeatButton from './RepeatButton';
 
 // Helpers
 import debug from '../../helpers/debug';
@@ -35,7 +35,10 @@ const style = require('./style.scss');
     isStarted: state.audioplayer.isStarted,
     isLoadedOnClient: state.audioplayer.isLoadedOnClient,
     shouldRepeat: state.audioplayer.shouldRepeat,
-    shouldScroll: state.audioplayer.shouldScroll
+    shouldScroll: state.audioplayer.shouldScroll,
+    progress: state.audioplayer.progress,
+    duration: state.audioplayer.duration,
+    currentTime: state.audioplayer.currentTime,
   }),
   {
     start,
@@ -86,17 +89,14 @@ export default class Audioplayer extends Component {
     toggleRepeat: PropTypes.func.isRequired,
     toggleScroll: PropTypes.func.isRequired,
     ayahIds: PropTypes.array,
-    isStarted: PropTypes.bool
+    isStarted: PropTypes.bool,
+    progress: PropTypes.number,
+    currentTime: PropTypes.number,
+    duration: PropTypes.number
   };
 
   static defaultProps = {
     className: 'col-md-3'
-  };
-
-  state = {
-    isAudioLoaded: false,
-    currentAudio: null,
-    currentAyah: null
   };
 
   componentDidMount() {
@@ -119,7 +119,7 @@ export default class Audioplayer extends Component {
     return this.stop();
   }
 
-  getCurrent() {
+  getCurrentAyah() {
     const { currentAyah, ayahIds } = this.props;
     const index = ayahIds.findIndex(id => id === currentAyah);
 
@@ -127,13 +127,9 @@ export default class Audioplayer extends Component {
   }
 
   getPrevious() {
-    // TODO BUGFIX, we should be able to go to the previous ayah even when
-    // we started from within a range
-    // i.e. lazyloading upwards; as this is defined, if you go to /2/100-110
-    // then you can't go to 99 from
-    // the previous button
     const { currentAyah, ayahIds } = this.props;
     const index = ayahIds.findIndex(id => id === currentAyah) - 1;
+
     return ayahIds[index];
   }
 
@@ -149,7 +145,7 @@ export default class Audioplayer extends Component {
   }
 
   handlePreviousAyah = () => {
-    const { setCurrentAyah, isStarted, shouldScroll } = this.props; // eslint-disable-line no-shadow
+    const { setCurrentAyah, isStarted } = this.props; // eslint-disable-line no-shadow
     const prevAyah = this.getPrevious();
 
     if (prevAyah) {
@@ -157,9 +153,7 @@ export default class Audioplayer extends Component {
 
       setCurrentAyah(prevAyah);
 
-      if (shouldScroll) {
-        scroller.scrollTo(`ayah:${ayahNum}`, -150);
-      }
+      this.handleScrollTo(ayahNum);
 
       if (isStarted) return this.props.files[prevAyah].play();
 
@@ -170,7 +164,7 @@ export default class Audioplayer extends Component {
   }
 
   handleNextAyah = () => {
-    const { setCurrentAyah, isStarted, shouldScroll } = this.props; // eslint-disable-line no-shadow
+    const { setCurrentAyah, isStarted } = this.props; // eslint-disable-line no-shadow
 
     const nextAyah = this.getNext();
     if (!nextAyah) return this.stop();
@@ -178,27 +172,13 @@ export default class Audioplayer extends Component {
 
     setCurrentAyah(nextAyah);
 
-    if (shouldScroll) {
-      scroller.scrollTo(`ayah:${ayahNum}`, -80);
-    }
+    this.handleScrollTo(ayahNum);
 
     this.preloadNext();
 
     if (isStarted) return this.props.files[nextAyah].play();
 
     return false;
-  }
-
-  scrollTo(name, offset = 0) {
-    const node = document.getElementsByName(name)[0];
-
-    if (!node) return;
-
-    const nodeRect = node.getBoundingClientRect();
-    const bodyRect = document.body.getBoundingClientRect();
-    const scrollOffset = nodeRect.top - bodyRect.top;
-
-    window.scrollTo(0, scrollOffset + offset);
   }
 
   handleStartStopPlayer = (event) => {
@@ -212,14 +192,16 @@ export default class Audioplayer extends Component {
     return this.start();
   }
 
-  start() {
+  handleScrollTo(ayahNum = this.getCurrentAyah().replace(/^\d+:/, '')) {
     const { shouldScroll } = this.props;
-    const currentAyah = this.getCurrent();
-    const ayahNum = currentAyah.replace(/^\d+:/, '');
 
     if (shouldScroll) {
       scroller.scrollTo(`ayah:${ayahNum}`, -150);
     }
+  }
+
+  start() {
+    this.handleScrollTo();
 
     this.props.start();
     this.preloadNext();
@@ -232,9 +214,11 @@ export default class Audioplayer extends Component {
   preloadNext() {
     const { currentAyah, ayahIds, files } = this.props;
     const index = ayahIds.findIndex(id => id === currentAyah) + 1;
-    for (let i = index; i <= index + 2; i++) {
-      if (ayahIds[i]) {
-        const ayahKey = ayahIds[i];
+
+    for (let id = index; id <= index + 2; id++) {
+      if (ayahIds[id]) {
+        const ayahKey = ayahIds[id];
+
         if (files[ayahKey]) {
           files[ayahKey].setAttribute('preload', 'auto');
         }
@@ -242,11 +226,11 @@ export default class Audioplayer extends Component {
     }
   }
 
-  handleToggleScroll = (event) => {
+  handleScrollToggle = (event) => {
     event.preventDefault();
 
     const { shouldScroll } = this.props;
-    const currentAyah = this.getCurrent();
+    const currentAyah = this.getCurrentAyah();
     const ayahNum = currentAyah.replace(/^\d+:/, '');
 
     if (!shouldScroll) { // we use the inverse (!) here because we're toggling, so false is true
@@ -313,63 +297,6 @@ export default class Audioplayer extends Component {
     );
   }
 
-  renderRepeatButton() {
-    const { shouldRepeat, toggleRepeat } = this.props; // eslint-disable-line no-shadow
-    const tooltip = (
-      <Tooltip id="repeat-button-tooltip">
-        Repeats the current ayah on end...
-      </Tooltip>
-    );
-
-    return (
-      <Col xs={2} className="text-center pull-right">
-        <input type="checkbox" id="repeat" className={style.checkbox} />
-        <OverlayTrigger
-          overlay={tooltip}
-          placement="right"
-          trigger={['hover', 'focus']}
-        >
-          <label
-            htmlFor="repeat"
-            className={`pointer ${style.buttons} ${shouldRepeat ? style.repeat : ''}`}
-            onClick={toggleRepeat}
-          >
-            <i className="ss-icon ss-repeat" />
-          </label>
-        </OverlayTrigger>
-      </Col>
-    );
-  }
-
-  renderScrollButton() {
-    const { shouldScroll } = this.props;
-    const tooltip = (
-      <Tooltip id="scroll-button-tooltip">
-        Automatically scrolls to the currently playing ayah on transitions...
-      </Tooltip>
-    );
-
-    return (
-      <Col xs={2} className="text-center pull-right">
-        <input type="checkbox" id="scroll" className={style.checkbox} />
-        <OverlayTrigger
-          overlay={tooltip}
-          placement="right"
-          trigger={['hover', 'focus']}
-        >
-          <label
-            htmlFor="scroll"
-            className={`pointer ${style.buttons} ${shouldScroll ? style.scroll : ''}`}
-            onClick={this.handleToggleScroll}
-          >
-            <i className="ss-icon ss-link" />
-          </label>
-        </OverlayTrigger>
-      </Col>
-    );
-  }
-
-
   render() {
     debug('component:Audioplayer', 'render');
 
@@ -381,10 +308,12 @@ export default class Audioplayer extends Component {
       currentWord,
       setCurrentWord, // eslint-disable-line no-shadow
       isStarted,
-      shouldRepeat,
       isSupported,
       isLoadedOnClient,
-      surah
+      surah,
+      shouldRepeat, // eslint-disable-line no-shadow
+      shouldScroll, // eslint-disable-line no-shadow
+      toggleRepeat // eslint-disable-line no-shadow
     } = this.props;
 
     if (!isSupported) {
@@ -396,21 +325,26 @@ export default class Audioplayer extends Component {
     }
 
     let content = (
-      <Row className={style.options}>
-        <Col xs={2} className="text-center">
+      <ul className={style.list}>
+        <li className={style.verse}>
+          Playing: {currentAyah.split(':')[1]}
+        </li>
+        <li>
           {this.renderPreviousButton()}
-        </Col>
-        <Col xs={3} className="text-center">
+        </li>
+        <li>
           {this.renderPlayStopButtons()}
-        </Col>
-        <Col xs={2} className="text-center">
+        </li>
+        <li>
           {this.renderNextButton()}
-        </Col>
-
-        {this.renderRepeatButton()}
-
-        {this.renderScrollButton()}
-      </Row>
+        </li>
+        <li>
+          <RepeatButton shouldRepeat={shouldRepeat} onRepeatToggle={toggleRepeat} />
+        </li>
+        <li>
+          <ScrollButton shouldScroll={shouldScroll} onScrollToggle={this.handleScrollToggle} />
+        </li>
+      </ul>
     );
 
     if (!currentAyah) {
@@ -423,7 +357,6 @@ export default class Audioplayer extends Component {
 
     return (
       <div className={`${style.padding_left} ${style.container} ${className}`}>
-        <div className={style.verse}>{currentAyah.split(':')[1]}</div>
         {content}
         <div className={style.wrapper}>
           {isLoadedOnClient ?

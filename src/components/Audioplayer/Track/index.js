@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
-import Tracker from './Tracker';
-
 const style = require('./style.scss');
 
 export default class Track extends Component {
@@ -163,7 +161,7 @@ export default class Track extends Component {
 
     return (
       <div className={style.track} onClick={this.onTrackerMove}>
-        <Tracker progress={progress} />
+        <div className={style.progress} style={{width: `${progress}%`}} />
       </div>
     );
   }

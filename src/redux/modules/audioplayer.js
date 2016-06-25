@@ -15,6 +15,7 @@ const STOP = '@@quran/audioplayer/STOP';
 const TOGGLE_REPEAT = '@@quran/audioplayer/TOGGLE_REPEAT';
 const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
 const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
+const UPDATE = '@@quran/audioplayer/UPDATE';
 
 const initialState = {
   files: {},
@@ -25,7 +26,9 @@ const initialState = {
   isStarted: false,
   shouldRepeat: false,
   shouldScroll: false,
-  isLoadedOnClient: false
+  isLoadedOnClient: false,
+  progress: 0,
+  currentTime: 0
 };
 
 let audioFromHash;
@@ -111,6 +114,11 @@ export default function reducer(state = initialState, action = {}) {
           [action.surahId]: segments
         }
       };
+    case UPDATE:
+      return {
+        ...state,
+        ...action.payload
+      };
     case SET_USER_AGENT:
       return {
         ...state,
@@ -195,5 +203,12 @@ export function buildOnClient(surahId) {
   return {
     type: BUILD_ON_CLIENT,
     surahId
+  };
+}
+
+export function update(payload) {
+  return {
+    type: UPDATE,
+    payload
   };
 }

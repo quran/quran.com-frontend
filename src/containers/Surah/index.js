@@ -194,8 +194,20 @@ export default class Surah extends Component {
     }
   }
 
+  getLast() {
+    const { ayahIds } = this.props;
+
+    return [...ayahIds][[...ayahIds].length - 1];
+  }
+
+  getFirst() {
+    const { ayahIds } = this.props;
+
+    return [...ayahIds][0];
+  }
+
   handleOptionChange = (payload) => {
-    const { setOption, loadAyahs, surah, ayahIds, options } = this.props; // eslint-disable-line no-shadow max-len
+    const { setOption, loadAyahs, surah, ayahIds, options } = this.props; // eslint-disable-line no-shadow, max-len
     const from = ayahIds.first();
     const to = ayahIds.last();
 
@@ -249,7 +261,7 @@ export default class Surah extends Component {
   }
 
   handleLazyLoadAyahs = (callback) => {
-    const { loadAyahs, ayahIds, surah, isEndOfSurah, options } = this.props; // eslint-disable-line no-shadow max-len
+    const { loadAyahs, ayahIds, surah, isEndOfSurah, options } = this.props; // eslint-disable-line no-shadow, max-len
     const range = [ayahIds.first(), ayahIds.last()];
 
     let size = 10;
@@ -271,18 +283,6 @@ export default class Surah extends Component {
     }
 
     return false;
-  }
-
-  getLast() {
-    const { ayahIds } = this.props;
-
-    return [...ayahIds][[...ayahIds].length - 1];
-  }
-
-  getFirst() {
-    const { ayahIds } = this.props;
-
-    return [...ayahIds][0];
   }
 
   title() {
@@ -478,7 +478,7 @@ export default class Surah extends Component {
         />
         <Header surah={surah}>
           <Row className="navbar-bottom">
-            <Col md={8}>
+            <Col md={9}>
               <Row>
                 <SurahsDropdown
                   surahs={surahs}
@@ -508,7 +508,7 @@ export default class Surah extends Component {
                 />
               </Row>
             </Col>
-            <Col md={4}>
+            <Col md={3}>
               <Row>
                 <SearchInput
                   className="col-md-12 search-input"
