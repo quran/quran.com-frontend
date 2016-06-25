@@ -24,6 +24,7 @@ import Ayah from 'components/Ayah';
 import Line from 'components/Line';
 import SearchInput from 'components/SearchInput';
 import Bismillah from 'components/Bismillah';
+import Share from 'components/Share';
 
 // utils
 import scroller from 'utils/scroller';
@@ -407,7 +408,7 @@ export default class Surah extends Component {
   }
 
   renderTopOptions() {
-    const { toggleReadingMode, options } = this.props; // eslint-disable-line no-shadow
+    const { toggleReadingMode, options, surah } = this.props; // eslint-disable-line no-shadow
 
     return (
       <Row>
@@ -433,6 +434,9 @@ export default class Surah extends Component {
                 onReadingModeToggle={toggleReadingMode}
               />
             </li>
+            <li>|</li>
+            <li><Share surah={surah}/></li>
+
           </ul>
         </Col>
       </Row>
