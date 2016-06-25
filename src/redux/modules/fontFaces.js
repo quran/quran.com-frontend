@@ -10,7 +10,7 @@ export default function reducer(state = {}, action = {}) {
       const ayahs = action.result.entities.ayahs;
       const classNames = {};
 
-      Object.keys(ayahs).map(ayahId => {
+      Object.keys(ayahs).forEach(ayahId => {
         const ayah = ayahs[ayahId];
 
         classNames[`p${ayah.pageNum}`] = false;
@@ -36,4 +36,4 @@ export function load(className) {
     type: LOAD,
     className
   };
-};
+}

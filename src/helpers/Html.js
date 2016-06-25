@@ -8,15 +8,15 @@ const Html = ({ store, component, assets }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
   const head = Helmet.rewind();
 
-    return (
-      <html>
-        <head>
-          {head.base.toComponent()}
-          {head.title.toComponent()}
-          {head.meta.toComponent()}
-          {head.link.toComponent()}
-          {head.script.toComponent()}
-          {head.style.toComponent()}
+  return (
+    <html>
+      <head>
+        {head.base.toComponent()}
+        {head.title.toComponent()}
+        {head.meta.toComponent()}
+        {head.link.toComponent()}
+        {head.script.toComponent()}
+        {head.style.toComponent()}
 
         {Object.keys(assets.styles).map((style, i) => (
           <link
@@ -31,7 +31,6 @@ const Html = ({ store, component, assets }) => {
             <style dangerouslySetInnerHTML={{__html: (require('../../bootstrap.config'))}} /> :
           null
         }
-        <style id="fonts" />
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{__html: content}} />

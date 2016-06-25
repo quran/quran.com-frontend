@@ -139,7 +139,12 @@ export default class Ayah extends Component {
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
         {text}
-        <p dir="rtl" lang="ar" className={`text-tashkeel text-p${ayah.pageNum}`} dangerouslySetInnerHTML={{__html: ayah.textTashkeel}} />
+        <p
+          dir="rtl"
+          lang="ar"
+          className={`text-tashkeel text-p${ayah.pageNum}`}
+          dangerouslySetInnerHTML={{__html: ayah.textTashkeel}}
+        />
       </h1>
     );
   }

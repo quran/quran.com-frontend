@@ -160,7 +160,8 @@ export default class Search extends Component {
         <Helmet
           title={query}
           style={[{
-            cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
+            cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;}
+            .text-translation{font-size: ${options.fontSize.translation}rem;}`
           }]}
         />
         <Header />

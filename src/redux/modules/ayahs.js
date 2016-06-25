@@ -2,8 +2,6 @@ import { ayahsSchema } from '../schemas';
 
 import { arrayOf } from 'normalizr';
 
-import { createFontFacesArray } from '../../helpers/buildFontFaces';
-
 export const LOAD = '@@quran/ayahs/LOAD';
 export const LOAD_SUCCESS = '@@quran/ayahs/LOAD_SUCCESS';
 export const LOAD_FAIL = '@@quran/ayahs/LOAD_FAIL';

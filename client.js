@@ -25,7 +25,7 @@ const store = createStore(browserHistory, client, window.reduxData);
 const history = syncHistoryWithStore(browserHistory, store);
 
 try {
-  Raven.config(config.sentryClient).install()
+  Raven.config(config.sentryClient).install();
 } catch (error) {
   console.log(error);
 }
