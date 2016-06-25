@@ -1,7 +1,7 @@
 {
   "name": "quran",
   "version": "1.0.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "test": "./node_modules/karma/bin/karma start",
     "test:ci:unit": "./node_modules/karma/bin/karma start --browsers PhantomJS --single-run; npm run test:ci:lint",
