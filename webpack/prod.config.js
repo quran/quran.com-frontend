@@ -17,7 +17,9 @@ module.exports = {
     path: assetsPath,
     publicPath: process.env.USE_LOCAL_ASSETS ? '/public/' : '//assets-1f14.kxcdn.com/',
     filename: '[name]-[hash].js',
-    chunkFilename: '[name]-[chunkhash].js'
+    chunkFilename: '[name]-[chunkhash].js',
+    sourceMapFilename: '[name]-[chunkhash].map.js'
+
   },
   devtool: 'cheap-source-map',
   debug: false,
