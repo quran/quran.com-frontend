@@ -1,0 +1,17 @@
+{
+  "name": "quran.com-frontend",
+  "scripts": {
+  },
+  "env": {
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-container-tools"
+    }
+  ]
+}
