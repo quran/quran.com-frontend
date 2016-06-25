@@ -17,6 +17,7 @@ import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
 import RepeatButton from './RepeatButton';
+import Loader from './Loader';
 
 // Helpers
 import debug from '../../helpers/debug';
@@ -116,7 +117,7 @@ export default class Audioplayer extends Component {
   componentWillUnmount() {
     debug('component:Audioplayer', 'componentWillUnmount');
 
-    return this.stop();
+    return stop();
   }
 
   getCurrentAyah() {
@@ -164,10 +165,10 @@ export default class Audioplayer extends Component {
   }
 
   handleNextAyah = () => {
-    const { setCurrentAyah, isStarted } = this.props; // eslint-disable-line no-shadow
+    const { setCurrentAyah, isStarted, stop } = this.props; // eslint-disable-line no-shadow
 
     const nextAyah = this.getNext();
-    if (!nextAyah) return this.stop();
+    if (!nextAyah) return stop();
     const ayahNum = nextAyah.replace(/^\d+:/, '');
 
     setCurrentAyah(nextAyah);
@@ -183,10 +184,10 @@ export default class Audioplayer extends Component {
 
   handleStartStopPlayer = (event) => {
     event.preventDefault();
-    const { isStarted } = this.props;
+    const { isStarted, stop } = this.props; // eslint-disable-line no-shadow
 
     if (isStarted) {
-      return this.stop();
+      return stop();
     }
 
     return this.start();
@@ -205,10 +206,6 @@ export default class Audioplayer extends Component {
 
     this.props.start();
     this.preloadNext();
-  }
-
-  stop() {
-    this.props.stop();
   }
 
   preloadNext() {
@@ -245,22 +242,8 @@ export default class Audioplayer extends Component {
     this.props.toggleScroll();
   }
 
-  renderLoader() {
-    return (
-      <div className="sequence">
-        <div className="seq-preloader">
-          <svg height="16" width="42" className="seq-preload-indicator" xmlns="http://www.w3.org/2000/svg">
-            <circle className="seq-preload-circle seq-preload-circle-1" cx="6" cy="8" r="5" />
-            <circle className="seq-preload-circle seq-preload-circle-2" cx="20" cy="8" r="5" />
-            <circle className="seq-preload-circle seq-preload-circle-3" cx="34" cy="8" r="5" />
-          </svg>
-        </div>
-      </div>
-    );
-  }
-
   renderPlayStopButtons() {
-    const { isStarted } = this.props;
+    const { isStarted, stop } = this.props; // eslint-disable-line no-shadow
 
     let icon = <i className="ss-icon ss-play" />;
 
@@ -269,7 +252,7 @@ export default class Audioplayer extends Component {
     }
 
     return (
-      <a className={`pointer ${style.buttons}`} onClick={this.handleStartStopPlayer}>
+      <a className={`pointer ${style.buttons}`} onClick={isStarted ? stop : this.start}>
         {icon}
       </a>
     );
@@ -302,6 +285,7 @@ export default class Audioplayer extends Component {
 
     const {
       className,
+      stop, // eslint-disable-line no-shadow
       files,
       segments,
       currentAyah,
@@ -350,7 +334,7 @@ export default class Audioplayer extends Component {
     if (!currentAyah) {
       return (
         <li className={`${style.container} ${className}`}>
-          {this.renderLoader()}
+          <Loader />
         </li>
       );
     }
@@ -363,7 +347,7 @@ export default class Audioplayer extends Component {
             <Track
               file={files[currentAyah]}
               isStarted={isStarted}
-              doStop={this.stop.bind(this)} // eslint-disable-line react/jsx-no-bind
+              doStop={stop} // eslint-disable-line react/jsx-no-bind
               onEnd={this.handleNextAyah}
               shouldRepeat={shouldRepeat}
               surah={surah}
