@@ -10,8 +10,5 @@
 
   ],
   "buildpacks": [
-    {
-      "url": "https://github.com/heroku/heroku-container-tools"
-    }
   ]
 }
