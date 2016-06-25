@@ -1,3 +1,4 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
@@ -8,11 +9,11 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-import FontStyles from '../../components/FontStyles';
-
 import debug from '../../helpers/debug';
 import config from '../../config';
 import metricsConfig from '../../helpers/metrics';
+
+import FontStyles from 'components/FontStyles';
 
 const styles = require('./style.scss');
 
@@ -24,7 +25,8 @@ const styles = require('./style.scss');
 )
 export default class App extends Component {
   static propTypes = {
-    surahs: PropTypes.object
+    surahs: PropTypes.object,
+    children: PropTypes.any
   };
 
   static contextTypes = {
@@ -37,7 +39,7 @@ export default class App extends Component {
 
     return (
       <div>
-        <Helmet {...config.app.head}/>
+        <Helmet {...config.app.head} />
         <FontStyles />
         {children}
         <footer className={styles.footer}>
@@ -48,7 +50,9 @@ export default class App extends Component {
                   <li><a href="/about">About</a></li>
                   <li><a href="/contact">Contact</a></li>
                   <li>
-                    <a href="https://github.com/quran/quran.com-frontend" target="_blank">Developers</a>
+                    <a href="https://github.com/quran/quran.com-frontend" target="_blank">
+                      Developers
+                    </a>
                   </li>
                 </ul>
               </Col>
@@ -57,33 +61,45 @@ export default class App extends Component {
                   <li><a target="_blank" href="http://sunnah.com/">Sunnah.com</a></li>
                   <li><a target="_blank" href="http://salah.com/">Salah.com</a></li>
                   <li><a target="_blank" href="http://quranicaudio.com/">QuranicAudio.com</a></li>
-                  <li><a target="_blank" href="http://corpus.quran.com/wordbyword.jsp">Corpus: Word by Word</a></li>
+                  <li>
+                    <a target="_blank" href="http://corpus.quran.com/wordbyword.jsp">
+                      Corpus: Word by Word
+                    </a>
+                  </li>
                 </ul>
               </Col>
               <Col md={2} className={`text-right ${styles.links}`}>
                 <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>
-                <p className="monserrat">Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.</p>
+                <p className="monserrat">
+                  Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran){' '}
+                  is a pro bono project.
+                </p>
               </Col>
             </Row>
             <Row>
               <Col md={10} mdOffset={1} className="text-center">
                 <ul className={`list-inline ${styles.seo}`}>
                   <li><a href="/sitemap.xml">Sitemap</a></li>
-                  {Object.values(surahs).filter(surah => [2, 3, 18, 19, 55, 56, 67, 112].indexOf(surah.id)).map(surah => (
-                    <li key={surah.id}>
-                      <Link
-                        to={`/${surah.id}`}
-                        data-metrics-event-name="FooterLinks:Click"
-                        data-metrics-surah-id={surah.id}>
-                        {`Surah ${surah.name.simple} (سورة ${surah.name.arabic})`}
-                      </Link>
-                    </li>
-                  ))}
+                  {Object.values(surahs)
+                    .filter(surah => [2, 3, 18, 19, 55, 56, 67, 112].indexOf(surah.id))
+                    .map(surah => (
+                      <li key={surah.id}>
+                        <Link
+                          to={`/${surah.id}`}
+                          data-metrics-event-name="FooterLinks:Click"
+                          data-metrics-surah-id={surah.id}
+                        >
+                          {`Surah ${surah.name.simple} (سورة ${surah.name.arabic})`}
+                        </Link>
+                      </li>
+                    ))
+                  }
                   <li>
                     <Link
                       to="/36"
                       data-metrics-event-name="FooterLinks:Click"
-                      data-metrics-surah-id="36">
+                      data-metrics-surah-id="36"
+                    >
                       Surah Yasin, Yaseen (يس)
                     </Link>
                   </li>
@@ -91,7 +107,8 @@ export default class App extends Component {
                     <Link
                       to="/2/255"
                       data-metrics-event-name="FooterLinks:Click"
-                      data-metrics-surah-id="2/255">
+                      data-metrics-surah-id="2/255"
+                    >
                       Ayat Al-Kursi (آية الكرسي)
                     </Link>
                   </li>
@@ -103,4 +120,4 @@ export default class App extends Component {
       </div>
     );
   }
-};
+}

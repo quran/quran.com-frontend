@@ -4,7 +4,7 @@ export function testIfSupported(ayah, agent) {
   const testOperaOrFirefox = (agent.isOpera || agent.isFirefox);
   const testChrome = agent.isChrome;
 
-  if(!audio) {
+  if (!audio) {
     return false;
   }
 
@@ -12,17 +12,14 @@ export function testIfSupported(ayah, agent) {
     if (!(audio.ogg && audio.ogg.url)) {
       return false;
     }
-  }
-  else {
+  } else {
     if (audio.mp3 && audio.mp3.url) {
       return true;
-    }
-    else if (audio.ogg && audio.ogg.url) {
+    } else if (audio.ogg && audio.ogg.url) {
       if (!testChrome) {
         return false;
       }
-    }
-    else {
+    } else {
       return false;
     }
   }
@@ -31,7 +28,8 @@ export function testIfSupported(ayah, agent) {
 }
 
 export function buildAudioForAyah(audio, agent) {
-  let scopedAudio = new Audio(), segments = null;
+  const scopedAudio = new Audio();
+  let segments = null;
 
   scopedAudio.preload = 'none';
 
@@ -44,13 +42,11 @@ export function buildAudioForAyah(audio, agent) {
       scopedAudio.src = audio.ogg.url;
       segments = audio.ogg.encryptedSegments;
     }
-  }
-  else {
+  } else {
     if (audio.mp3 && audio.mp3.url) {
       scopedAudio.src = audio.mp3.url;
       segments = audio.mp3.encryptedSegments;
-    }
-    else if (audio.ogg && audio.ogg.url) {
+    } else if (audio.ogg && audio.ogg.url) {
       if (testChrome) {
         scopedAudio.src = audio.ogg.url;
         segments = audio.ogg.encryptedSegments;
@@ -78,10 +74,8 @@ export function buildAudioFromHash(ayahsObject = {}, agent) {
 
 export default function buildAudio(ayahs) {
   if (!~~ayahs.length) {
-    return;
+    return false;
   }
 
-  return ayahs.map(ayah => {
-    return buildAudioForAyah(ayah);
-  });
+  return ayahs.map(ayah => buildAudioForAyah(ayah));
 }

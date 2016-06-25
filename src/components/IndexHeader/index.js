@@ -10,7 +10,8 @@ const logo = require('../../../static/images/logo-lg-w.png');
 
 export default class IndexHeader extends Component {
   static propTypes = {
-    noSearch: PropTypes.bool
+    noSearch: PropTypes.bool,
+    navlink: PropTypes.any
   };
 
   renderSearch() {
@@ -33,7 +34,7 @@ export default class IndexHeader extends Component {
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
               <Link to="/" data-metrics-event-name="IndexHeader:Link:Index">
-                <img src={logo} className="logo" />
+                <img src={logo} className="logo" alt="logo" />
               </Link>
               <h4 className="title">THE NOBLE QUR&#x27;AN</h4>
               {this.renderSearch()}

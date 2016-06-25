@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 const style = require('./style.scss');
@@ -191,7 +190,8 @@ export const slugs = [
 export default class ReciterDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func,
-    options: PropTypes.object
+    options: PropTypes.object,
+    className: PropTypes.string
   };
 
   static defaultProps = {
@@ -209,7 +209,8 @@ export default class ReciterDropdown extends Component {
       <MenuItem
         key={slug.name.english}
         active={slug.id === options.audio}
-        onClick={onOptionChange.bind(this, {audio: slug.id})}>
+        onClick={() => onOptionChange({audio: slug.id})}
+      >
         {slug.name.english}
       </MenuItem>
     ));
@@ -221,14 +222,15 @@ export default class ReciterDropdown extends Component {
     return (
       <div className={`dropdown ${className} ${style.dropdown}`}>
         <button
-          className={`btn btn-link no-outline`}
+          className="btn btn-link no-outline"
           id="reciters-dropdown"
           type="button"
           data-toggle="dropdown"
           aria-haspopup="true"
-          aria-expanded="false">
+          aria-expanded="false"
+        >
           Reciters
-          <span className="caret"></span>
+          <span className="caret" />
         </button>
         <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
           {this.renderMenu()}

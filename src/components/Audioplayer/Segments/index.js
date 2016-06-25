@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import { decrypt } from 'sjcl';
 
 export default class Segments extends Component {
@@ -15,33 +14,26 @@ export default class Segments extends Component {
     currentWord: null
   };
 
-  state = {
-    intervals: [],
-  };
-
   constructor() {
-    super(...arguments);
+    super(...arguments); // eslint-disable-line prefer-rest-params
     this.secret = process.env.SEGMENTS_KEY;
     this.currentWord = null;
   }
 
+  state = {
+    intervals: [],
+  };
+
   // LIFECYCLE METHODS
 
   componentDidMount() {
-    const builtIntervals = this.buildIntervals();
-    //console.debug('Segments componentDidMount', this.props.audio, builtIntervals);
     this.bindListeners();
-  }
-
-  componentWillUnmount() {
-    //console.log('Segments componentWillUnmount', this.props.audio, { props: this.props, state: this.state });
-    this.unbindListeners();
   }
 
   componentWillReceiveProps(nextProps) {
     const prevProps = this.props;
 
-    if (prevProps.audio != nextProps.audio) {
+    if (prevProps.audio !== nextProps.audio) {
       this.unbindListeners(prevProps);
 
       this.buildIntervals(nextProps);
@@ -52,26 +44,30 @@ export default class Segments extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const prevProps = this.props;
     const prevState = this.state;
+
     return [
-      prevProps.audio != nextProps.audio,
-      prevProps.segments != nextProps.segments,
-      prevState.intervals != nextState.intervals,
-      prevProps.currentWord != nextProps.currentWord,
-      nextProps.currentWord != this.currentWord
+      prevProps.audio !== nextProps.audio,
+      prevProps.segments !== nextProps.segments,
+      prevState.intervals !== nextState.intervals,
+      prevProps.currentWord !== nextProps.currentWord,
+      nextProps.currentWord !== this.currentWord
     ].some(b => b);
-    //return false;
     // TODO: I think we can just 'return false' here since there is nothing to actually render...
     // oh wait, maybe i need it so that componentDidUpdate will run..., despite render() not
     // actually being needed... dunno right now
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (this.currentWord != this.props.currentWord) { // currentWord was changed by the user
-      if (this.props.currentWord != null) {
+  componentDidUpdate() {
+    if (this.currentWord !== this.props.currentWord) { // currentWord was changed by the user
+      if (this.props.currentWord !== null) {
         const wordInterval = this.state.words[this.props.currentWord.split(/:/).pop()];
-        const timeToSeek = wordInterval.startTime + 0.001; // seek to the currentWord starting time and return
+        // seek to the currentWord starting time and return
+        const timeToSeek = wordInterval.startTime + 0.001;
         const isSeekable = this.props.audio.seekable && this.props.audio.seekable.length > 0;
-        const withinRange = !isSeekable? null : timeToSeek >= this.props.audio.seekable.start(0) && timeToSeek <= this.props.audio.seekable.end(0);
+        const withinRange = !isSeekable ?
+        null :
+        (timeToSeek >= this.props.audio.seekable.start(0) &&
+        timeToSeek <= this.props.audio.seekable.end(0));
 
         if (isSeekable && withinRange) { // seek to it
           this.props.audio.currentTime = timeToSeek;
@@ -83,15 +79,24 @@ export default class Segments extends Component {
           this.props.audio.addEventListener('canplay', seekToTime);
         }
       }
-      return this.setCurrentWord(this.props.currentWord, 'componentDidUpdate'); // but don't forget to set the change internally for next time
+
+      // but don't forget to set the change internally for next time
+      return this.setCurrentWord(this.props.currentWord, 'componentDidUpdate');
     }
+
+    return false;
   }
 
-  render() {
-    return (<input type="hidden"/>);
+  componentWillUnmount() {
+    this.unbindListeners();
   }
 
-  // END LIFECYCLE METHODS
+  setCurrentWord(currentWord = null) {
+    // this is more immediately available but should eventually agree with props
+    this.currentWord = currentWord;
+    // calls the redux dispatch function passed down from the Audioplayer
+    this.props.onSetCurrentWord(currentWord);
+  }
 
   buildIntervals(props = this.props) {
     let segments = null;
@@ -102,28 +107,32 @@ export default class Segments extends Component {
     }
 
     const words = {};
-    const intervals = segments.map((segment, segmentIndex) => {
-      const startTime = segment[0],
-              endTime = segment[0] + segment[1],
-             duration = segment[1],
-            wordIndex = segment[2],
-            mappedVal = { startTime: startTime/1000, endTime: endTime/1000, duration: duration/1000 };
+    const intervals = segments.map(segment => {
+      const startTime = segment[0];
+      const endTime = segment[0] + segment[1];
+      const duration = segment[1];
+      const wordIndex = segment[2];
+      const mappedVal = {
+        startTime: startTime / 1000,
+        endTime: endTime / 1000,
+        duration: duration / 1000
+      };
 
-      if (wordIndex >= 0 && !words[wordIndex])
+      if (wordIndex >= 0 && !words[wordIndex]) {
         words[wordIndex] = mappedVal;
+      }
 
-      return [startTime/1000, endTime/1000, wordIndex];
+      return [startTime / 1000, endTime / 1000, wordIndex];
     });
 
-    this.state.intervals = intervals;
-    this.state.words = words;
+    this.setState({ intervals, words });
+
     return { intervals, words }; // for console debugging
   }
 
-  bindListeners(props = this.props, state = this.state) {
-    const audio = props.audio;
-    const intervals = state.intervals;
-    const words = state.words;
+  bindListeners() {
+    const { audio, currentAyah, currentWord } = this.props;
+    const { intervals } = this.state;
 
     // Play listener
     const play = () => {
@@ -131,8 +140,6 @@ export default class Segments extends Component {
       let repeaterId = null;
 
       new Promise((done, fail) => {
-        //console.debug('Play listener for '+ props.currentAyah +' started...');
-
         const intervalFn = () => {
           if (audio.seeking) return console.warn('we are seeking right now?');
           if (audio.paused || audio.ended) return console.warn('stopped by running?');
@@ -141,13 +148,15 @@ export default class Segments extends Component {
           // the number of times we need to resort to a search, just in case logarithmic
           // time isn't good enough
           const index = this.binarySearch(intervals, audio.currentTime, this.compareFn);
-          const currentWord = index >= 0 && intervals[index][2] >= 0 ?
-            this.props.currentAyah +':'+ intervals[index][2] : null;
+          const word = index >= 0 && intervals[index][2] >= 0 ?
+            `${currentAyah}:${intervals[index][2]}` :
+            null;
 
-          if (currentWord == this.props.currentWord) return; // no work to be done
-          else if (currentWord == this.currentWord) return; // still no work to be done
-          else return this.setCurrentWord(currentWord, 'Play listener Do Stuff block'); // something changed, so we deal with it
-        }
+          if (word === currentWord) return false; // no work to be done
+          else if (word === this.currentWord) return false; // still no work to be done
+           // something changed, so we deal with it
+          return this.setCurrentWord(word, 'Play listener Do Stuff block');
+        };
 
         intervalFn();
         repeaterId = setInterval(intervalFn, 30);
@@ -161,14 +170,12 @@ export default class Segments extends Component {
           listeners[evName] = fail;
           audio.addEventListener(evName, listeners[evName], false);
         });
-      }).then((ev) => {
+      }).then(() => {
         clearInterval(repeaterId);
 
         ['pause', 'ended', 'error', 'emptied', 'abort'].forEach((evName) => {
           audio.removeEventListener(evName, listeners[evName]);
         });
-
-        //console.debug('Play listener for '+ props.currentAyah +(ev && ev.type ? ' resolved by '+ ev.type : 'stopped') +' event');
       });
     };
     audio.addEventListener('play', play, false);
@@ -176,34 +183,37 @@ export default class Segments extends Component {
     this.setState({ listeners: { play }});
   }
 
-  unbindListeners(props = this.props) {
-    props.audio.removeEventListener('play', this.state.listeners.play);
-  }
+  unbindListeners() {
+    const { audio } = this.props;
 
-  setCurrentWord(currentWord = null, debug = null) {
-    this.currentWord = currentWord; // this is more immediately available but should eventually agree with props
-    this.props.onSetCurrentWord(currentWord); // calls the redux dispatch function passed down from the Audioplayer
-    //console.log('setCurrentWord', currentWord, debug ? debug : '');
+    audio.removeEventListener('play', this.state.listeners.play);
   }
 
   compareFn(time, interval) {
     if (time < interval[0]) return -1;
     else if (time > interval[1]) return 1;
-    else if (time == interval[0]) return 0; // floor inclusive
-    else if (time == interval[1]) return 1;
-    else return 0;
+    else if (time === interval[0]) return 0; // floor inclusive
+    else if (time === interval[1]) return 1;
+
+    return 0;
   }
 
   binarySearch(ar, el, compareFn = (a, b) => (a - b)) {
-    var m = 0;
-    var n = ar.length - 1;
+    let m = 0;
+    let n = ar.length - 1;
     while (m <= n) {
-      var k = (n + m) >> 1;
-      var cmp = compareFn(el, ar[k]);
-      if      (cmp > 0) m = k + 1;
+      const k = (n + m) >> 1;
+      const cmp = compareFn(el, ar[k]);
+      if (cmp > 0) m = k + 1;
       else if (cmp < 0) n = k - 1;
       else return k;
     }
     return -m - 1;
+  }
+
+  render() {
+    return (
+      <input type="hidden" />
+    );
   }
 }

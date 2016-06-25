@@ -7,8 +7,8 @@ const environment = {
   }
 }[process.env.NODE_ENV || 'development'];
 
-const title = 'Al-Qur\'an al-Kareem - القرآن الكريم'
-const description = 'The Quran translated into many languages in a simple and easy interface.'
+const title = 'Al-Qur\'an al-Kareem - القرآن الكريم';
+const description = 'The Quran translated into many languages in a simple and easy interface.';
 
 module.exports = Object.assign({
   host: process.env.HOST || 'localhost',
@@ -53,28 +53,34 @@ module.exports = Object.assign({
       /* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */
       script: [
         {
-          "type": "application/ld+json",
-          "innerHTML": `{
-            "@context": "http://schema.org",
-            "@type": "WebSite",
-            "name": "Quran",
-            "alternateName": "Quran.com",
-            "url": "http://quran.com",
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": "http://quran.com/search?q={search_term_string}",
-              "query-input": "required name=search_term_string"
+          type: 'application/ld+json',
+          innerHTML: `{
+            '@context': 'http://schema.org',
+            '@type': 'WebSite',
+            'name': 'Quran',
+            'alternateName': 'Quran.com',
+            'url': 'http://quran.com',
+            'potentialAction': {
+              '@type': 'SearchAction',
+              'target': 'http://quran.com/search?q={search_term_string}',
+              'query-input': 'required name=search_term_string'
             }
           }`
         },
         {
-          "type": "application/ld+json",
-          "innerHTML": `{
-            "@context": "http://schema.org",
-            "@type": "Organization",
-            "url": "http://quran.com",
-            "logo": "http://quran.com/images/thumbnail.png"
+          type: 'application/ld+json',
+          innerHTML: `{
+            '@context': 'http://schema.org',
+            '@type': 'Organization',
+            'url': 'http://quran.com',
+            'logo': 'http://quran.com/images/thumbnail.png'
           }`
+        }
+      ],
+      style: [
+        {cssText: `@font-face {font-family: 'bismillah';
+          src: url('http://quran-1f14.kxcdn.com/fonts/ttf/bismillah.ttf') format('truetype')}
+          .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}` // eslint-disable-line max-len
         }
       ]
     }

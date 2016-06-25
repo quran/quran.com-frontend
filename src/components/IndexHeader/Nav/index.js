@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 
-class IndexHeaderNav extends React.Component {
-  constructor() {
-    super();
+class IndexHeaderNav extends Component {
+  static propTypes = {
+    navlink: PropTypes.bool
+  };
 
-    this.state = {
-      open: false
-    };
-  }
+  state = {
+    open: false
+  };
 
   openNav(e) {
     e.preventDefault();
@@ -33,25 +33,24 @@ class IndexHeaderNav extends React.Component {
         </ul>
       );
     }
-    else {
-      return (
-        <ul className={classNames}>
-          <li>
-            <a href="http://legacy.quran.com" data-metrics-event-name="IndexHeader:Link:Legacy">Legacy Quran.com</a>
-          </li>
-          <li>
-            <Link to="/donations" data-metrics-event-name="IndexHeader:Link:Contribute">
-              Contribute
-            </Link>
-          </li>
-          <li>
-            <a href="https://quran.zendesk.com/hc/en-us" data-metrics-event-name="IndexHeader:Link:Contact">
-              Contact us
-            </a>
-          </li>
-        </ul>
-      );
-    }
+
+    return (
+      <ul className={classNames}>
+        <li>
+          <a href="http://legacy.quran.com" data-metrics-event-name="IndexHeader:Link:Legacy">Legacy Quran.com</a>
+        </li>
+        <li>
+          <Link to="/donations" data-metrics-event-name="IndexHeader:Link:Contribute">
+            Contribute
+          </Link>
+        </li>
+        <li>
+          <a href="https://quran.zendesk.com/hc/en-us" data-metrics-event-name="IndexHeader:Link:Contact">
+            Contact us
+          </a>
+        </li>
+      </ul>
+    );
   }
 
   render() {
