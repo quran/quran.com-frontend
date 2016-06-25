@@ -207,7 +207,7 @@ export default class Surah extends Component {
   }
 
   handleOptionChange = (payload) => {
-    const { setOption, loadAyahs, surah, ayahIds, options } = this.props; // eslint-disable-line no-shadow, max-len
+    const { setOption, loadAyahs, surah, options } = this.props; // eslint-disable-line no-shadow, max-len
     const from = this.getFirst();
     const to = this.getLast();
 
