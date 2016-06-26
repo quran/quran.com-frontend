@@ -1,14 +1,14 @@
 FROM node:5.10.0
 
+# environment variables
 ENV NODE_ENV production
 ENV API_URL http://api.quran.com:3000
-ENV SENTRY_KEY_CLIENT https://44c105328ae544ae9928f9eb74b40061@app.getsentry.com/80639
-ENV SENTRY_KEY_SERVER https://44c105328ae544ae9928f9eb74b40061:41ca814d33124e04ab450104c3938cb1@app.getsentry.com/80639
 ENV PORT 8000
 
+# install ssh and rsync
 RUN apt-get -y update && apt-get -y install supervisor ssh rsync
 
-# logrotate
+# logrotate config
 RUN apt-get -y install logrotate
 COPY docker/supervisord.conf /etc/supervisor/supervisord.conf
 COPY docker/pm2.logrotate.conf /etc/logrotate.d/pm2
@@ -20,9 +20,11 @@ ADD package.json package.json
 RUN npm install
 RUN npm install -g pm2
 
+# copy the node modules
 RUN mkdir /quran
 RUN cp -a /tmp/node_modules /quran
 
+# build npm
 WORKDIR /quran
 ADD . /quran/
 RUN npm run build
