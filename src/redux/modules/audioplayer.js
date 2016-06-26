@@ -10,6 +10,7 @@ import {
 
 const SET_USER_AGENT = '@@quran/audioplayer/SET_USER_AGENT';
 const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
+const SET_CURRENT_WORD = '@@quran/audioplayer/SET_CURRENT_WORD';
 const START = '@@quran/audioplayer/START';
 const STOP = '@@quran/audioplayer/STOP';
 const NEXT = '@@quran/audioplayer/NEXT';
@@ -25,13 +26,14 @@ const initialState = {
   userAgent: null,
   currentFile: null,
   currentAyah: null,
+  currentWord: null,
+  currentTime: 0,
   isSupported: true,
   isPlaying: false,
   shouldRepeat: false,
   shouldScroll: false,
   isLoadedOnClient: false,
-  progress: 0,
-  currentTime: 0
+  progress: 0
 };
 
 let audioFromHash;
@@ -180,6 +182,11 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         currentFile: action.file
       };
+    case SET_CURRENT_WORD:
+      return {
+        ...state,
+        currentWord: action.word
+      };
     case SET_CURRENT_AYAH:
       return {
         ...state,
@@ -201,6 +208,13 @@ export function setCurrentFile(file) {
   return {
     type: SET_CURRENT_FILE,
     file
+  };
+}
+
+export function setCurrentWord(word) {
+  return {
+    type: SET_CURRENT_WORD,
+    word
   };
 }
 

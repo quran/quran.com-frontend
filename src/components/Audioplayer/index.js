@@ -12,9 +12,9 @@ import {
   toggleScroll,
   buildOnClient,
   update,
-  setCurrentFile
+  setCurrentFile,
+  setCurrentWord
 } from '../../redux/modules/audioplayer';
-import { setCurrentAyah, setCurrentWord } from '../../redux/modules/ayahs';
 
 // Components
 import Track from './Track';
@@ -35,7 +35,7 @@ const style = require('./style.scss');
     segments: state.audioplayer.segments[ownProps.surah.id],
     currentFile: state.audioplayer.currentFile,
     currentAyah: state.audioplayer.currentAyah,
-    currentWord: state.ayahs.currentWord,
+    currentWord: state.audioplayer.currentWord,
     surahId: state.audioplayer.surahId,
     isSupported: state.audioplayer.isSupported,
     isPlaying: state.audioplayer.isPlaying,
@@ -53,7 +53,6 @@ const style = require('./style.scss');
     previous,
     toggleRepeat,
     toggleScroll,
-    setCurrentAyah,
     setCurrentWord,
     buildOnClient,
     update,
@@ -74,7 +73,6 @@ export default class Audioplayer extends Component {
     isSupported: PropTypes.bool.isRequired,
     shouldRepeat: PropTypes.bool.isRequired,
     shouldScroll: PropTypes.bool.isRequired,
-    setCurrentAyah: PropTypes.func.isRequired,
     setCurrentWord: PropTypes.func.isRequired,
     setCurrentFile: PropTypes.func.isRequired,
     start: PropTypes.func.isRequired,
@@ -348,10 +346,11 @@ export default class Audioplayer extends Component {
 
     const {
       className,
-      files,
+      currentFile,
       segments,
       currentAyah,
       currentWord,
+      currentTime,
       setCurrentWord, // eslint-disable-line no-shadow
       isSupported,
       isLoadedOnClient,
@@ -407,11 +406,12 @@ export default class Audioplayer extends Component {
             /> : null}
           {isLoadedOnClient && segments[currentAyah] ?
             <Segments
-              audio={files[currentAyah]}
+              audio={currentFile}
               segments={segments[currentAyah]}
               currentAyah={currentAyah}
               currentWord={currentWord}
               onSetCurrentWord={setCurrentWord}
+              currentTime={currentTime}
             /> : null}
         </div>
       </div>

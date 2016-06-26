@@ -88,7 +88,7 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, currentWord } = this.props;
+    const { ayah } = this.props;
 
     if (!ayah.words[0].code) {
       return false;
@@ -97,8 +97,7 @@ export default class Ayah extends Component {
     let position = 0;
     let text = ayah.words.map(word => {
       let id = null;
-      const active = word.charTypeId === CHAR_TYPE_WORD && currentWord === position;
-      const className = `${word.className} ${word.highlight && word.highlight} ${active && styles.active}`; // eslint-disable-line max-len
+      const className = `${word.className} ${word.highlight && word.highlight}`;
 
       if (word.charTypeId === CHAR_TYPE_WORD) {
         id = `word-${word.ayahKey.replace(/:/, '-')}-${position++}`;

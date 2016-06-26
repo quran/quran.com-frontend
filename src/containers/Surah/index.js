@@ -71,7 +71,6 @@ let lastScroll = 0;
       ayahIds,
       isStarted: state.audioplayer.isStarted,
       currentWord: state.ayahs.currentWord,
-      currentAyah: state.ayahs.currentAyah,
       isEndOfSurah: ayahIds.size === surah.ayat,
       surahs: state.surahs.entities,
       isLoading: state.ayahs.loading,
@@ -94,10 +93,9 @@ export default class Surah extends Component {
   static propTypes = {
     surah: PropTypes.object.isRequired,
     lines: PropTypes.object.isRequired,
-    currentAyah: PropTypes.any,
     isEndOfSurah: PropTypes.bool.isRequired,
     ayahIds: PropTypes.any,
-    currentWord: PropTypes.any,
+    currentWord: PropTypes.string,
     surahs: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isLoaded: PropTypes.bool.isRequired,
@@ -146,7 +144,6 @@ export default class Surah extends Component {
     const conditions = [
       this.state.lazyLoading !== nextState.lazyLoading,
       this.props.surah !== nextProps.surah,
-      this.props.currentAyah !== nextProps.currentAyah,
       this.props.isEndOfSurah !== nextProps.isEndOfSurah,
       this.props.ayahIds.length !== nextProps.ayahIds.length,
       this.props.surahs !== nextProps.surahs,
@@ -368,17 +365,11 @@ export default class Surah extends Component {
   }
 
   renderAyahs() {
-    const { ayahs, currentWord } = this.props;
+    const { ayahs } = this.props;
 
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
-        currentWord={
-          currentWord &&
-          (new RegExp(`^${ayah.ayahKey}:`)).test(currentWord) ?
-          parseInt(currentWord.match(/\d+$/)[0], 10) :
-          null
-        }
         onWordClick={this.onWordClick}
         onWordFocus={this.onWordFocus}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
