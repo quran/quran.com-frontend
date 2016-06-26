@@ -38,5 +38,6 @@ RUN rsync --update --progress -raz . ahmedre@rsync.keycdn.com:zones/assets/
 # go back to /quran
 WORKDIR /quran
 
+# port and docker command
 EXPOSE 8000
 CMD ["supervisord", "--nodaemon", "-c", "/etc/supervisor/supervisord.conf"]
