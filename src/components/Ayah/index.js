@@ -217,7 +217,7 @@ export default class Ayah extends Component {
     debug('component:Ayah', `Render ${this.props.ayah.ayahNum}`);
 
     return (
-      <Element name={`ayah:${ayah.ayahNum}`} className={`row ${styles.container}`}>
+      <Element name={`ayah:${ayah.ayahKey}`} className={`row ${styles.container}`}>
         {this.renderControls()}
         <div className="col-md-11">
           {this.renderText()}

@@ -72,7 +72,7 @@ let lastScroll = 0;
       isStarted: state.audioplayer.isStarted,
       currentWord: state.ayahs.currentWord,
       currentAyah: state.ayahs.currentAyah,
-      isEndOfSurah: ayahIds.length === surah.ayat,
+      isEndOfSurah: ayahIds.size === surah.ayat,
       surahs: state.surahs.entities,
       isLoading: state.ayahs.loading,
       isLoaded: state.ayahs.loaded,
@@ -148,7 +148,7 @@ export default class Surah extends Component {
       this.props.surah !== nextProps.surah,
       this.props.currentAyah !== nextProps.currentAyah,
       this.props.isEndOfSurah !== nextProps.isEndOfSurah,
-      this.props.ayahIds !== nextProps.ayahIds,
+      this.props.ayahIds.length !== nextProps.ayahIds.length,
       this.props.surahs !== nextProps.surahs,
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
@@ -256,7 +256,7 @@ export default class Surah extends Component {
     }
 
     return this.handleLazyLoadAyahs(() => setTimeout(() =>
-      scroller.scrollTo(`ayah:${ayahNum}`),
+      scroller.scrollTo(`ayah:${surah.id}:${ayahNum}`),
     1000)); // then scroll to it
   }
 
@@ -489,6 +489,7 @@ export default class Surah extends Component {
                   loadedAyahs={ayahIds}
                   isReadingMode={options.isReadingMode}
                   onClick={this.handleVerseDropdownClick}
+                  surah={surah}
                   className={`col-md-1 ${style.rightborder} ${style.dropdown}`}
                 />
                 <ReciterDropdown

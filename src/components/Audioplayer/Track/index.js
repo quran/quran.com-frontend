@@ -23,7 +23,7 @@ export default class Track extends Component {
     const { progress } = this.props;
 
     return (
-      <div className={style.track} onClick={this.onTrackerMove}>
+      <div ref="container" className={style.track} onClick={this.handleClick}>
         <div className={style.progress} style={{width: `${progress}%`}} />
       </div>
     );

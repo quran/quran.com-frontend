@@ -12,6 +12,8 @@ const SET_USER_AGENT = '@@quran/audioplayer/SET_USER_AGENT';
 const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
 const START = '@@quran/audioplayer/START';
 const STOP = '@@quran/audioplayer/STOP';
+const NEXT = '@@quran/audioplayer/NEXT';
+const PREVIOUS = '@@quran/audioplayer/PREVIOUS';
 const TOGGLE_REPEAT = '@@quran/audioplayer/TOGGLE_REPEAT';
 const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
 const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
@@ -22,8 +24,9 @@ const initialState = {
   segments: {},
   userAgent: null,
   currentFile: null,
+  currentAyah: null,
   isSupported: true,
-  isStarted: false,
+  isPlaying: false,
   shouldRepeat: false,
   shouldScroll: false,
   isLoadedOnClient: false,
@@ -56,7 +59,9 @@ export default function reducer(state = initialState, action = {}) {
             ...state.segments[action.surahId],
             ...audioFromHash.segments
           }
-        }
+        },
+        currentFile: Object.values(audioFromHash.files)[0],
+        currentAyah: Object.keys(audioFromHash.files)[0]
       };
     case AYAHS_CLEAR_CURRENT:
       return {
@@ -81,12 +86,6 @@ export default function reducer(state = initialState, action = {}) {
         state.userAgent
       );
 
-      let currentFile = state.currentFile ? state.currentFile : action.result.result[0];
-
-      if (parseInt(state.surahId, 10) !== action.surahId) {
-        currentFile = action.result.result[0];
-      }
-
       if (!isSupported) {
         return {
           ...state,
@@ -105,7 +104,6 @@ export default function reducer(state = initialState, action = {}) {
 
       return {
         ...state,
-        currentFile,
         isSupported,
         surahId: action.surahId,
         isLoadedOnClient: __CLIENT__,
@@ -129,17 +127,44 @@ export default function reducer(state = initialState, action = {}) {
         userAgent: action.userAgent
       };
     case START:
-      console.debug('START');
+      state.currentFile.play();
+
       return {
         ...state,
-        isStarted: true
+        isPlaying: true
       };
     case STOP:
-      console.debug('STOP');
+      state.currentFile.pause();
+
       return {
         ...state,
-        isStarted: false
+        isPlaying: false
       };
+
+    case NEXT: {
+      const surahId = state.currentAyah.split(':')[0];
+      const ayahNum = state.currentAyah.split(':')[1];
+      const nextId = `${surahId}:${parseInt(ayahNum, 10) + 1}`;
+
+      return {
+        ...state,
+        currentAyah: nextId,
+        currentFile: state.files[surahId][nextId],
+        progress: 0
+      };
+    }
+    case PREVIOUS: {
+      const surahId = state.currentAyah.split(':')[0];
+      const ayahNum = state.currentAyah.split(':')[1];
+      const nextId = `${surahId}:${parseInt(ayahNum, 10) - 1}`;
+
+      return {
+        ...state,
+        currentAyah: nextId,
+        currentFile: state.files[surahId][nextId],
+        progress: 0
+      };
+    }
     case TOGGLE_REPEAT:
       return {
         ...state,
@@ -158,7 +183,7 @@ export default function reducer(state = initialState, action = {}) {
     case SET_CURRENT_AYAH:
       return {
         ...state,
-        currentFile: action.id
+        currentAyah: action.id
       };
     default:
       return state;
@@ -188,6 +213,18 @@ export function start() {
 export function stop() {
   return {
     type: STOP
+  };
+}
+
+export function next() {
+  return {
+    type: NEXT
+  };
+}
+
+export function previous() {
+  return {
+    type: PREVIOUS
   };
 }
 
