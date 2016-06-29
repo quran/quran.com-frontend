@@ -21,7 +21,6 @@ import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
 import RepeatButton from './RepeatButton';
-import Loader from './Loader';
 
 // Helpers
 import debug from '../../helpers/debug';
@@ -40,6 +39,7 @@ const style = require('./style.scss');
     isSupported: state.audioplayer.isSupported,
     isPlaying: state.audioplayer.isPlaying,
     isLoadedOnClient: state.audioplayer.isLoadedOnClient,
+    isLoading: state.audioplayer.isLoading,
     shouldRepeat: state.audioplayer.shouldRepeat,
     shouldScroll: state.audioplayer.shouldScroll,
     progress: state.audioplayer.progress,
@@ -73,6 +73,7 @@ export default class Audioplayer extends Component {
     isSupported: PropTypes.bool.isRequired,
     shouldRepeat: PropTypes.bool.isRequired,
     shouldScroll: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool.isRequired,
     setCurrentWord: PropTypes.func.isRequired,
     setCurrentFile: PropTypes.func.isRequired,
     start: PropTypes.func.isRequired,
@@ -242,7 +243,8 @@ export default class Audioplayer extends Component {
       file.currentTime = 0; // eslint-disable-line no-param-reassign
 
       return update({
-        duration: file.duration
+        duration: file.duration,
+        isLoading: false
       });
     };
 
@@ -355,6 +357,7 @@ export default class Audioplayer extends Component {
       className,
       currentFile,
       segments,
+      isLoading,
       currentAyah,
       currentWord,
       currentTime,
@@ -375,10 +378,10 @@ export default class Audioplayer extends Component {
       );
     }
 
-    if (!currentAyah) {
+    if (isLoading) {
       return (
         <li className={`${style.container} ${className}`}>
-          <Loader />
+          <div>Loading...</div>
         </li>
       );
     }

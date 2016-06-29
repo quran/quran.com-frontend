@@ -13,7 +13,9 @@ export default function reducer(state = {}, action = {}) {
       Object.keys(ayahs).forEach(ayahId => {
         const ayah = ayahs[ayahId];
 
-        classNames[`p${ayah.pageNum}`] = false;
+        if (!state[`p${ayah.pageNum}`]) {
+          classNames[`p${ayah.pageNum}`] = false;
+        }
       });
 
       return {

@@ -33,7 +33,8 @@ const initialState = {
   shouldRepeat: false,
   shouldScroll: false,
   isLoadedOnClient: false,
-  progress: 0
+  progress: 0,
+  isLoading: true
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -80,6 +81,7 @@ export default function reducer(state = initialState, action = {}) {
         isLoadedOnClient: false
       };
     case AYAHS_LOAD_SUCCESS: {
+      let currentFile;
       const isSupported = testIfSupported(
         action.result.entities.ayahs[action.result.result[0]],
         state.userAgent
@@ -94,13 +96,31 @@ export default function reducer(state = initialState, action = {}) {
 
       const ayahs = action.result.entities.ayahs;
       const audioFromHash = __CLIENT__ ? buildAudioFromHash(ayahs, state.userAgent) : ayahs;
+      const segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
       const files = Object.assign(
         {},
         state.files[action.surahId],
         __CLIENT__ ? audioFromHash.files : audioFromHash
       );
-      const segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
-      const currentFile = state.currentFile ? state.currentFile : Object.values(files)[0];
+
+      if (state.currentFile && state.currentFile === Object.values(files)[0]) {
+        // If the same file is being used, for example in lazy loading, then keep same file
+        currentFile = state.currentFile;
+      } else {
+        if (state.currentAyah) {
+          // If the user changes the reciter, we want to maintain the file where
+          // the user last left off
+          currentFile = files[state.currentAyah];
+        } else {
+          // Otherwise, just choose the first file
+          currentFile = Object.values(files)[0];
+        }
+      }
+
+      // const currentAyah = (state.currentAyah &&
+      //   state.currentAyah === Object.keys(files)[0]) ?
+      //   state.currentAyah :
+      //   Object.keys(files)[0];
       const currentAyah = state.currentAyah ? state.currentAyah : Object.keys(files)[0];
 
       return {
