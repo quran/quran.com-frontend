@@ -94,26 +94,33 @@ export default class Audioplayer extends Component {
   };
 
   componentDidMount() {
-    const { isLoadedOnClient, buildOnClient, surah } = this.props; // eslint-disable-line no-shadow, max-len
+    const { isLoadedOnClient, buildOnClient, surah, currentFile } = this.props; // eslint-disable-line no-shadow, max-len
 
     debug('component:Audioplayer', 'componentDidMount');
 
     if (!isLoadedOnClient && __CLIENT__) {
       debug('component:Audioplayer', 'componentDidMount on client');
 
-      buildOnClient(surah.id);
+      return buildOnClient(surah.id);
     }
 
-    return false;
+    return this.handleAddFileListeners(currentFile);
   }
 
   componentWillReceiveProps(nextProps) {
+    // When you go directly to the surah page, /2, the files are not loaded yet
+    if (this.props.isLoadedOnClient !== nextProps.isLoadedOnClient) {
+      return this.handleAddFileListeners(nextProps.currentFile);
+    }
+
     if (this.props.currentAyah !== nextProps.currentAyah) {
       this.handleAddFileListeners(nextProps.currentFile);
 
       if (this.props.currentFile) {
         this.handleRemoveFileListeneres(this.props.currentFile);
       }
+
+      return false;
     }
 
     return false;
@@ -226,7 +233,7 @@ export default class Audioplayer extends Component {
 
   handleAddFileListeners(file) {
     const { update } = this.props; // eslint-disable-line no-shadow
-
+    debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
     // Preload file
     file.setAttribute('preload', 'auto');
 

@@ -36,14 +36,10 @@ const initialState = {
   progress: 0
 };
 
-let audioFromHash;
-let files;
-let segments;
-
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case BUILD_ON_CLIENT:
-      audioFromHash = buildAudioFromHash(state.files[action.surahId], state.userAgent);
+    case BUILD_ON_CLIENT: {
+      const audioFromHash = buildAudioFromHash(state.files[action.surahId], state.userAgent);
 
       return {
         ...state,
@@ -65,6 +61,7 @@ export default function reducer(state = initialState, action = {}) {
         currentFile: Object.values(audioFromHash.files)[0],
         currentAyah: Object.keys(audioFromHash.files)[0]
       };
+    }
     case AYAHS_CLEAR_CURRENT:
       return {
         ...state,
@@ -82,7 +79,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         isLoadedOnClient: false
       };
-    case AYAHS_LOAD_SUCCESS:
+    case AYAHS_LOAD_SUCCESS: {
       const isSupported = testIfSupported(
         action.result.entities.ayahs[action.result.result[0]],
         state.userAgent
@@ -95,18 +92,22 @@ export default function reducer(state = initialState, action = {}) {
         };
       }
 
-      const incoming = action.result.entities.ayahs;
-      audioFromHash = __CLIENT__ ? buildAudioFromHash(incoming, state.userAgent) : incoming;
-      files = Object.assign(
+      const ayahs = action.result.entities.ayahs;
+      const audioFromHash = __CLIENT__ ? buildAudioFromHash(ayahs, state.userAgent) : ayahs;
+      const files = Object.assign(
         {},
         state.files[action.surahId],
         __CLIENT__ ? audioFromHash.files : audioFromHash
       );
-      segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
+      const segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
+      const currentFile = state.currentFile ? state.currentFile : Object.values(files)[0];
+      const currentAyah = state.currentAyah ? state.currentAyah : Object.keys(files)[0];
 
       return {
         ...state,
         isSupported,
+        currentAyah,
+        currentFile,
         surahId: action.surahId,
         isLoadedOnClient: __CLIENT__,
         files: {
@@ -118,6 +119,7 @@ export default function reducer(state = initialState, action = {}) {
           [action.surahId]: segments
         }
       };
+    }
     case UPDATE:
       return {
         ...state,
