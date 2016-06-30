@@ -21,8 +21,7 @@ export default class Ayah extends Component {
     match: PropTypes.array,
     isSearch: PropTypes.bool,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
-    onWordFocus: PropTypes.func,
-    onWordClick: PropTypes.func
+    onWordClick: PropTypes.func.isRequired
   };
 
   static defaultProps = {
@@ -41,20 +40,6 @@ export default class Ayah extends Component {
     }
 
     return conditions.some(condition => condition);
-  }
-
-  handleWordClick = (event) => {
-    if (event.target && /^word-/.test(event.target.id)) {
-      // call onWordClick in Surah
-      this.props.onWordClick(event.target.id.match(/\d+/g).join(':'));
-    }
-  }
-
-  handleWordFocus = (event) => {
-    if (event.target && /^word-/.test(event.target.id)) {
-      // call onWordFocus in Surah
-      this.props.onWordFocus(event.target.id.match(/\d+/g).join(':'), event.target);
-    }
   }
 
   handlePlay() {
@@ -88,19 +73,21 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah } = this.props;
+    const { ayah, onWordClick } = this.props;
 
     if (!ayah.words[0].code) {
       return false;
     }
 
-    let position = 0;
+    // position is important as it will differentiate between words and symbols, see 2:25:13
+    let position = -1;
     let text = ayah.words.map(word => {
       let id = null;
       const className = `${word.className} ${word.highlight && word.highlight}`;
 
       if (word.charTypeId === CHAR_TYPE_WORD) {
-        id = `word-${word.ayahKey.replace(/:/, '-')}-${position++}`;
+        position = position + 1;
+        id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
       } else {
         id = `${word.className}-${word.codeDec}`; // just don't include id
       }
@@ -112,12 +99,11 @@ export default class Ayah extends Component {
           <b
             key={word.code}
             id={id}
-            onClick={this.handleWordClick}
-            // onFocus={this.handleWordFocus}
+            onClick={(event) => onWordClick(event.target.dataset.key)}
+            data-key={`${word.ayahKey}:${position}`}
             className={`${className} pointer`}
             data-toggle="tooltip"
             data-trigger="hover"
-            // tabIndex="1" <-- disable word focus
             data-placement="top" title={tooltip}
             dangerouslySetInnerHTML={{__html: word.code}}
           />
@@ -127,7 +113,8 @@ export default class Ayah extends Component {
       return (
         <b
           id={id}
-          onClick={this.handleWordClick}
+          onClick={(event) => onWordClick(event.target.dataset.key)}
+          data-key={`${word.ayahKey}:${position}`}
           className={`${className} pointer`}
           key={word.code}
           dangerouslySetInnerHTML={{__html: word.code}}

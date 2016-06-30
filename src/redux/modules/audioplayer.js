@@ -33,7 +33,6 @@ const initialState = {
   shouldRepeat: false,
   shouldScroll: false,
   isLoadedOnClient: false,
-  progress: 0,
   isLoading: true
 };
 
@@ -117,10 +116,6 @@ export default function reducer(state = initialState, action = {}) {
         }
       }
 
-      // const currentAyah = (state.currentAyah &&
-      //   state.currentAyah === Object.keys(files)[0]) ?
-      //   state.currentAyah :
-      //   Object.keys(files)[0];
       const currentAyah = state.currentAyah ? state.currentAyah : Object.keys(files)[0];
 
       return {
@@ -174,19 +169,18 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         currentAyah: nextId,
         currentFile: state.files[surahId][nextId],
-        progress: 0
+        currentTime: 0
       };
     }
     case PREVIOUS: {
-      const surahId = state.currentAyah.split(':')[0];
-      const ayahNum = state.currentAyah.split(':')[1];
+      const [surahId, ayahNum] = state.currentAyah.split(':');
       const nextId = `${surahId}:${parseInt(ayahNum, 10) - 1}`;
 
       return {
         ...state,
         currentAyah: nextId,
         currentFile: state.files[surahId][nextId],
-        progress: 0
+        currentTime: 0
       };
     }
     case TOGGLE_REPEAT:
@@ -204,11 +198,37 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         currentFile: action.file
       };
-    case SET_CURRENT_WORD:
+    case SET_CURRENT_WORD: {
+      if (!action.word) return state;
+
+      const [surahId, ayahNum, word] = action.word.split(':');
+      let currentTime = null;
+
+      if (state.files[surahId][`${surahId}:${ayahNum}`] === state.currentFile) {
+        // When the files are the same, set the current time to that word
+        currentTime = state.segments[surahId][`${surahId}:${ayahNum}`].words[word].startTime;
+        state.currentFile.currentTime = currentTime; // eslint-disable-line no-param-reassign
+
+        return {
+          ...state,
+          currentWord: action.word,
+          currentTime
+        };
+      }
+
+      // When the files are not the same.
+      const currentFile = state.files[surahId][`${surahId}:${ayahNum}`];
+      currentTime = state.segments[surahId][`${surahId}:${ayahNum}`].words[word].startTime;
+      currentFile.currentTime = currentTime;
+
       return {
         ...state,
-        currentWord: action.word
+        currentWord: action.word,
+        currentAyah: `${surahId}:${ayahNum}`,
+        currentTime,
+        currentFile
       };
+    }
     case SET_CURRENT_AYAH:
       return {
         ...state,

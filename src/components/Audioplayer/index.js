@@ -42,7 +42,6 @@ const style = require('./style.scss');
     isLoading: state.audioplayer.isLoading,
     shouldRepeat: state.audioplayer.shouldRepeat,
     shouldScroll: state.audioplayer.shouldScroll,
-    progress: state.audioplayer.progress,
     duration: state.audioplayer.duration,
     currentTime: state.audioplayer.currentTime,
   }),
@@ -84,7 +83,6 @@ export default class Audioplayer extends Component {
     toggleRepeat: PropTypes.func.isRequired,
     toggleScroll: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool,
-    progress: PropTypes.number,
     currentTime: PropTypes.number,
     duration: PropTypes.number,
     currentFile: PropTypes.object
@@ -233,14 +231,18 @@ export default class Audioplayer extends Component {
   }
 
   handleAddFileListeners(file) {
-    const { update } = this.props; // eslint-disable-line no-shadow
+    const { update, currentTime } = this.props; // eslint-disable-line no-shadow
     debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
     // Preload file
     file.setAttribute('preload', 'auto');
 
     const onLoadeddata = () => {
       // Default current time to zero. This will change
-      file.currentTime = 0; // eslint-disable-line no-param-reassign
+      file.currentTime = ( // eslint-disable-line no-param-reassign
+        file.currentTime ||
+        currentTime ||
+        0
+      );
 
       return update({
         duration: file.duration,
@@ -248,17 +250,9 @@ export default class Audioplayer extends Component {
       });
     };
 
-    const onTimeupdate = () => {
-      const progress = (
-        file.currentTime /
-        file.duration * 100
-      );
-
-      return update({
-        progress,
-        currentTime: file.currentTime
-      });
-    };
+    const onTimeupdate = () => update({
+      currentTime: file.currentTime
+    });
 
     const onEnded = () => {
       const { shouldRepeat } = this.props;
@@ -276,10 +270,16 @@ export default class Audioplayer extends Component {
       return this.handleAyahChange();
     };
 
-    const onPlay = () => {};
+    const onPlay = () => {
+      file.ontimeupdate = onTimeupdate; // eslint-disable-line no-param-reassign
+    };
+
+    const onPause = () => {
+      file.ontimeupdate = null; // eslint-disable-line no-param-reassign
+    };
 
     file.onloadeddata = onLoadeddata;  // eslint-disable-line no-param-reassign
-    file.ontimeupdate = onTimeupdate; // eslint-disable-line no-param-reassign
+    file.onpause = onPause; // eslint-disable-line no-param-reassign
     file.onplay = onPlay; // eslint-disable-line no-param-reassign
     file.onended = onEnded; // eslint-disable-line no-param-reassign
 
@@ -292,6 +292,7 @@ export default class Audioplayer extends Component {
     file.onloadeddata = null; // eslint-disable-line no-param-reassign
     file.ontimeupdate = null; // eslint-disable-line no-param-reassign
     file.onplay = null; // eslint-disable-line no-param-reassign
+    file.onPause = null; // eslint-disable-line no-param-reassign
     file.onended = null; // eslint-disable-line no-param-reassign
   }
 
@@ -299,7 +300,6 @@ export default class Audioplayer extends Component {
     const { currentFile, update } = this.props; // eslint-disable-line no-shadow
 
     update({
-      progress: fraction * 100,
       currentTime: fraction * currentFile.duration
     });
 
@@ -361,10 +361,10 @@ export default class Audioplayer extends Component {
       currentAyah,
       currentWord,
       currentTime,
+      duration,
       setCurrentWord, // eslint-disable-line no-shadow
       isSupported,
       isLoadedOnClient,
-      progress,
       shouldRepeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
       toggleRepeat // eslint-disable-line no-shadow
@@ -411,7 +411,7 @@ export default class Audioplayer extends Component {
         <div className={style.wrapper}>
           {isLoadedOnClient ?
             <Track
-              progress={progress}
+              progress={currentTime / duration * 100}
               onTrackChange={this.handleTrackChange}
             /> : null}
           {isLoadedOnClient && segments[currentAyah] ?

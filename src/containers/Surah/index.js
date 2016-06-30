@@ -42,9 +42,9 @@ import { surahsConnect, ayahsConnect } from './connect';
 import {
   load as loadAyahs,
   setCurrentAyah,
-  setCurrentWord,
   clearCurrentWord
 } from '../../redux/modules/ayahs';
+import { setCurrentWord } from '../../redux/modules/audioplayer';
 
 import { setOption, toggleReadingMode } from '../../redux/modules/options';
 
@@ -161,34 +161,6 @@ export default class Surah extends Component {
     }
 
     return false;
-  }
-
-  onWordClick = (id) => {
-    const {
-      setCurrentWord, // eslint-disable-line no-shadow
-      clearCurrentWord, // eslint-disable-line no-shadow
-      currentWord,
-      isStarted
-    } = this.props;
-
-    if (id === currentWord && !isStarted) {
-      clearCurrentWord();
-    } else {
-      setCurrentWord(id);
-    }
-  }
-
-  onWordFocus = (id) => {
-    const {
-      setCurrentWord, // eslint-disable-line no-shadow
-      currentWord,
-      isStarted
-    } = this.props;
-
-    if (id !== currentWord && isStarted) {
-      // let tabbing around while playing trigger seek to word action
-      setCurrentWord(id);
-    }
   }
 
   getLast() {
@@ -365,13 +337,12 @@ export default class Surah extends Component {
   }
 
   renderAyahs() {
-    const { ayahs } = this.props;
+    const { ayahs, setCurrentWord } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
-        onWordClick={this.onWordClick}
-        onWordFocus={this.onWordFocus}
+        onWordClick={setCurrentWord}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
       />
     ));
