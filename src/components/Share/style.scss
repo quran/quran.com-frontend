@@ -1,30 +1,34 @@
-.share {
+.shareContainer {
   position: relative;
   bottom: 2px;
   left: 5px;
-}
 
-.facebook {
-  background-image: url(../../../static/images/FB-grn.png);
-  background-repeat: no-repeat;
-  padding-right: 30px;
-  background-size: 12px;
-  padding-bottom: 10px;
-  padding-top: 1px;
-
-  &:hover {
-    background-image: url(../../../static/images/FB-beige.png);
+  .iconContainer {
+    padding: 0 30px 10px 0;
   }
-}
 
-.twitter {
-  background-image: url(../../../static/images/Twitter-grn.png);
-  background-repeat: no-repeat;
-  padding-right: 30px;
-  background-size: 21px;
-  padding-bottom: 10px;
+  .facebook {
+    background-image: url(../../../static/images/FB-grn.png);
+    background-repeat: no-repeat;
 
-  &:hover {
-    background-image: url(../../../static/images/Twitter-beige.png);
+    background-size: 12px;
+    padding-top: 1px;
+
+    &:hover {
+      background-image: url(../../../static/images/FB-beige.png);
+    }
   }
+
+  .twitter {
+    background-image: url(../../../static/images/Twitter-grn.png);
+    background-repeat: no-repeat;
+    background-size: 21px;
+
+    &:hover {
+      background-image: url(../../../static/images/Twitter-beige.png);
+    }
+  }
+
 }
+
+

@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 const Style = require('./style.scss');
-
 export default class Share extends Component {
 
 
@@ -16,15 +15,14 @@ export default class Share extends Component {
   render() {
 
     const {surahId, name} = this.props.surah;
-
     const surahUrl = encodeURIComponent(`http://quran.com/${surahId}`);
 
     return (
-      <div className={Style.share}>
+      <div className={Style.shareContainer}>
 
         <i
           onClick={() => this.onClickPopup(`https://www.facebook.com/sharer/sharer.php?u=${surahUrl}`, 'Facebook')}
-          className={Style.facebook}
+          className={`${Style.iconContainer} ${Style.facebook}`}
           data-metrics-event-name="Share:Facebook"
           title="Share on Facebook"
         >
@@ -32,7 +30,7 @@ export default class Share extends Component {
 
         <i
           onClick={() => this.onClickPopup(`https://twitter.com/intent/tweet?url=${surahUrl}&text=Surat ${name.simple}`, 'Twitter')}
-          className={Style.twitter}
+          className={`${Style.iconContainer}  ${Style.twitter}`}
           data-metrics-event-name="Share:Twitter"
           title="Share on Twitter"
         >
