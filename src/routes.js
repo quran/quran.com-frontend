@@ -23,7 +23,7 @@ export default () => (
     <Route path="/contactus" getComponent={getComponentByName('Contact')} />
     <Route path="/error/:errorKey" getComponent={getComponentByName('Error')} />
 
-    <Route path="/search" getComponent={{getComponentByName('Search')}} />
+    <Route path="/search" getComponent={getComponentByName('Search')} />
 
     <Route
       path="/:surahId:(:range)"
