@@ -13,7 +13,6 @@
     "dev": "node webpack/dev-server.js & PORT=8000 node start.js",
     "start": "NODE_PATH=\"./src\" node ./start",
     "build": "node ./node_modules/webpack/bin/webpack.js --config webpack/prod.config.js",
-    "postinstall": "npm run build",
     "validate": "npm ls",
     "analyze:build": "env NODE_ENV=production ./node_modules/webpack/bin/webpack.js --json --config webpack/prod.config.js  > bundle-stats.json",
     "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json"

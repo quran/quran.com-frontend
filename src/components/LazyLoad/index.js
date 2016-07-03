@@ -27,6 +27,12 @@ export default class LazyLoad extends Component {
     }
   }
 
+  componentWillUnmount() {
+    if (__CLIENT__) {
+      window.removeEventListener('scroll', this.onScroll, true);
+    }
+  }
+
   onScroll = () => {
     const { isLoading, isEnd, offset, onLazyLoad } = this.props;
     const dom = ReactDOM.findDOMNode(this);
