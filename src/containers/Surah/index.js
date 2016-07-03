@@ -43,9 +43,9 @@ import { surahsConnect, ayahsConnect } from './connect';
 import {
   load as loadAyahs,
   setCurrentAyah,
-  setCurrentWord,
   clearCurrentWord
 } from '../../redux/modules/ayahs';
+import { setCurrentWord } from '../../redux/modules/audioplayer';
 
 import { setOption, toggleReadingMode } from '../../redux/modules/options';
 
@@ -72,8 +72,7 @@ let lastScroll = 0;
       ayahIds,
       isStarted: state.audioplayer.isStarted,
       currentWord: state.ayahs.currentWord,
-      currentAyah: state.ayahs.currentAyah,
-      isEndOfSurah: ayahIds.length === surah.ayat,
+      isEndOfSurah: ayahIds.size === surah.ayat,
       surahs: state.surahs.entities,
       isLoading: state.ayahs.loading,
       isLoaded: state.ayahs.loaded,
@@ -95,10 +94,9 @@ export default class Surah extends Component {
   static propTypes = {
     surah: PropTypes.object.isRequired,
     lines: PropTypes.object.isRequired,
-    currentAyah: PropTypes.any,
     isEndOfSurah: PropTypes.bool.isRequired,
     ayahIds: PropTypes.any,
-    currentWord: PropTypes.any,
+    currentWord: PropTypes.string,
     surahs: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isLoaded: PropTypes.bool.isRequired,
@@ -147,9 +145,8 @@ export default class Surah extends Component {
     const conditions = [
       this.state.lazyLoading !== nextState.lazyLoading,
       this.props.surah !== nextProps.surah,
-      this.props.currentAyah !== nextProps.currentAyah,
       this.props.isEndOfSurah !== nextProps.isEndOfSurah,
-      this.props.ayahIds !== nextProps.ayahIds,
+      this.props.ayahIds.length !== nextProps.ayahIds.length,
       this.props.surahs !== nextProps.surahs,
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
@@ -167,38 +164,22 @@ export default class Surah extends Component {
     return false;
   }
 
-  onWordClick = (id) => {
-    const {
-      setCurrentWord, // eslint-disable-line no-shadow
-      clearCurrentWord, // eslint-disable-line no-shadow
-      currentWord,
-      isStarted
-    } = this.props;
+  getLast() {
+    const { ayahIds } = this.props;
 
-    if (id === currentWord && !isStarted) {
-      clearCurrentWord();
-    } else {
-      setCurrentWord(id);
-    }
+    return [...ayahIds][[...ayahIds].length - 1];
   }
 
-  onWordFocus = (id) => {
-    const {
-      setCurrentWord, // eslint-disable-line no-shadow
-      currentWord,
-      isStarted
-    } = this.props;
+  getFirst() {
+    const { ayahIds } = this.props;
 
-    if (id !== currentWord && isStarted) {
-      // let tabbing around while playing trigger seek to word action
-      setCurrentWord(id);
-    }
+    return [...ayahIds][0];
   }
 
   handleOptionChange = (payload) => {
-    const { setOption, loadAyahs, surah, ayahIds, options } = this.props; // eslint-disable-line no-shadow max-len
-    const from = ayahIds.first();
-    const to = ayahIds.last();
+    const { setOption, loadAyahs, surah, options } = this.props; // eslint-disable-line no-shadow, max-len
+    const from = this.getFirst();
+    const to = this.getLast();
 
     setOption(payload);
 
@@ -245,13 +226,13 @@ export default class Surah extends Component {
     }
 
     return this.handleLazyLoadAyahs(() => setTimeout(() =>
-      scroller.scrollTo(`ayah:${ayahNum}`),
+      scroller.scrollTo(`ayah:${surah.id}:${ayahNum}`),
     1000)); // then scroll to it
   }
 
   handleLazyLoadAyahs = (callback) => {
-    const { loadAyahs, ayahIds, surah, isEndOfSurah, options } = this.props; // eslint-disable-line no-shadow max-len
-    const range = [ayahIds.first(), ayahIds.last()];
+    const { loadAyahs, ayahIds, surah, isEndOfSurah, options } = this.props; // eslint-disable-line no-shadow, max-len
+    const range = [this.getFirst(), this.getLast()];
 
     let size = 10;
 
@@ -272,18 +253,6 @@ export default class Surah extends Component {
     }
 
     return false;
-  }
-
-  getLast() {
-    const { ayahIds } = this.props;
-
-    return [...ayahIds][[...ayahIds].length - 1];
-  }
-
-  getFirst() {
-    const { ayahIds } = this.props;
-
-    return [...ayahIds][0];
   }
 
   title() {
@@ -369,19 +338,12 @@ export default class Surah extends Component {
   }
 
   renderAyahs() {
-    const { ayahs, currentWord } = this.props;
+    const { ayahs, setCurrentWord } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
-        currentWord={
-          currentWord &&
-          (new RegExp(`^${ayah.ayahKey}:`)).test(currentWord) ?
-          parseInt(currentWord.match(/\d+$/)[0], 10) :
-          null
-        }
-        onWordClick={this.onWordClick}
-        onWordFocus={this.onWordFocus}
+        onWordClick={setCurrentWord}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
       />
     ));
@@ -482,7 +444,7 @@ export default class Surah extends Component {
         />
         <Header surah={surah}>
           <Row className="navbar-bottom">
-            <Col md={8}>
+            <Col md={9}>
               <Row>
                 <SurahsDropdown
                   surahs={surahs}
@@ -493,6 +455,7 @@ export default class Surah extends Component {
                   loadedAyahs={ayahIds}
                   isReadingMode={options.isReadingMode}
                   onClick={this.handleVerseDropdownClick}
+                  surah={surah}
                   className={`col-md-1 ${style.rightborder} ${style.dropdown}`}
                 />
                 <ReciterDropdown
@@ -512,7 +475,7 @@ export default class Surah extends Component {
                 />
               </Row>
             </Col>
-            <Col md={4}>
+            <Col md={3}>
               <Row>
                 <SearchInput
                   className="col-md-12 search-input"

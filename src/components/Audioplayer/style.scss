@@ -1,15 +1,11 @@
 @import '../../styles/variables.scss';
 
-:local .padding_left {
-  padding-left: 40px
-}
-
 :local .container{
   position:relative;
   display: block;
   user-select: none;
   height: 40px;
-  padding: 10px 20px 8px 40px;
+  padding: 10px 20px;
 }
 
 :local .wrapper{
@@ -18,11 +14,6 @@
   top: 90%;
   left: 0px;
   height: 10%;
-  transition: all 0.5s;
-  &:hover{
-    height: 20%;
-    top: 80%;
-  }
 }
 
 :local .options{
@@ -32,33 +23,47 @@
   margin: 0px;
   height: 90%;
   text-align: center;
+}
 
+.list{
+  margin-bottom: 0px;
+  display: table;
+  width: 100%;
+  padding-left: 0px;
+  text-align: center;
 
-  .buttons{
-    width: 100%;
-    display: inline-block;
-    cursor: pointer;
-    padding-right: 1.5%;
-    color: $olive;
-    outline: none;
-
-    &.playing{
-      color: $brand-primary;
-    }
-    i.fa{
-      color: inherit;
-      font-size: 100%;
-    }
+  :global(li){
+    padding-left: 15px;
+    padding-right: 15px;
+    display: table-cell;
   }
-  .checkbox{
-    display: none;
-  }
-  .repeat{
+}
+
+.buttons{
+  width: 100%;
+  display: inline-block;
+  cursor: pointer;
+  padding-right: 1.5%;
+  color: $olive;
+  outline: none;
+
+  &.playing{
     color: $brand-primary;
   }
-  .scroll{
-    color: $brand-primary;
+  i.fa{
+    color: inherit;
+    font-size: 100%;
   }
+}
+
+.checkbox{
+  display: none;
+}
+.repeat{
+  color: $brand-primary;
+}
+.scroll{
+  color: $brand-primary;
 }
 
 :local .disabled{
@@ -66,9 +71,7 @@
   cursor: not-allowed !important;
 }
 
-:local .verse{
-  position: absolute;
-  left: 20px;
+.verse{
+  padding: 0px;
   color: $olive;
-  opacity: 0.5;
 }

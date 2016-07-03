@@ -54,6 +54,7 @@ export function buildAudioForAyah(audio, agent) {
     }
   }
 
+
   return { audio: scopedAudio, segments };
 }
 

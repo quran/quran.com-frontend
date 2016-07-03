@@ -8,6 +8,7 @@ export default class VersesDropdown extends Component {
   static propTypes = {
     ayat: PropTypes.number.isRequired,
     loadedAyahs: PropTypes.object.isRequired, // Set
+    surah: PropTypes.object.isRequired, // Set
     onClick: PropTypes.func.isRequired,
     isReadingMode: PropTypes.bool,
     className: PropTypes.string
@@ -18,7 +19,7 @@ export default class VersesDropdown extends Component {
   };
 
   renderItem = (ayah, index) => {
-    const { loadedAyahs, isReadingMode, onClick } = this.props;
+    const { surah, loadedAyahs, isReadingMode, onClick } = this.props;
     const ayahNum = index + 1;
 
     if (loadedAyahs.has(ayahNum) && !isReadingMode) {
@@ -26,7 +27,7 @@ export default class VersesDropdown extends Component {
         <li key={index}>
           <Link
             onClick={() => onClick(ayahNum)}
-            to={`ayah:${ayahNum}`}
+            to={`ayah:${surah.id}:${ayahNum}`}
             smooth
             spy
             offset={-120}

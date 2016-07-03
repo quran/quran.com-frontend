@@ -30,8 +30,6 @@
 :global(.in) {
   .item{
     .label{
-      color: $olive;
-
       &:after, &:before{
         color: $olive !important;
         border-color: $olive !important;
