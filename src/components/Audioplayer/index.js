@@ -11,9 +11,7 @@ import {
   toggleRepeat,
   toggleScroll,
   buildOnClient,
-  update,
-  setCurrentFile,
-  setCurrentWord
+  update
 } from '../../redux/modules/audioplayer';
 
 // Components
@@ -34,7 +32,6 @@ const style = require('./style.scss');
     segments: state.audioplayer.segments[ownProps.surah.id],
     currentFile: state.audioplayer.currentFile,
     currentAyah: state.audioplayer.currentAyah,
-    currentWord: state.audioplayer.currentWord,
     surahId: state.audioplayer.surahId,
     isSupported: state.audioplayer.isSupported,
     isPlaying: state.audioplayer.isPlaying,
@@ -52,10 +49,8 @@ const style = require('./style.scss');
     previous,
     toggleRepeat,
     toggleScroll,
-    setCurrentWord,
     buildOnClient,
-    update,
-    setCurrentFile
+    update
   }
 )
 export default class Audioplayer extends Component {
@@ -66,20 +61,17 @@ export default class Audioplayer extends Component {
     segments: PropTypes.object,
     files: PropTypes.object,
     currentAyah: PropTypes.string,
-    currentWord: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
     isLoadedOnClient: PropTypes.bool.isRequired,
     isSupported: PropTypes.bool.isRequired,
-    shouldRepeat: PropTypes.bool.isRequired,
-    shouldScroll: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    setCurrentWord: PropTypes.func.isRequired,
-    setCurrentFile: PropTypes.func.isRequired,
     start: PropTypes.func.isRequired,
     stop: PropTypes.func.isRequired,
     next: PropTypes.func.isRequired,
     previous: PropTypes.func.isRequired,
     update: PropTypes.func.isRequired,
+    shouldRepeat: PropTypes.bool.isRequired,
+    shouldScroll: PropTypes.bool.isRequired,
     toggleRepeat: PropTypes.func.isRequired,
     toggleScroll: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool,
@@ -366,9 +358,7 @@ export default class Audioplayer extends Component {
       segments,
       isLoading,
       currentAyah,
-      currentWord,
       currentTime,
-      setCurrentWord, // eslint-disable-line no-shadow
       isSupported,
       duration,
       isLoadedOnClient,
@@ -426,8 +416,6 @@ export default class Audioplayer extends Component {
               audio={currentFile}
               segments={segments[currentAyah]}
               currentAyah={currentAyah}
-              currentWord={currentWord}
-              onSetCurrentWord={setCurrentWord}
               currentTime={currentTime}
             /> : null}
         </div>

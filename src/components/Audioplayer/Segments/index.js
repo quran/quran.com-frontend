@@ -8,13 +8,7 @@ export default class Segments extends Component {
     audio: PropTypes.object,
     segments: PropTypes.object.isRequired,
     currentAyah: PropTypes.string,
-    currentWord: PropTypes.string,
-    currentTime: PropTypes.number,
-    onSetCurrentWord: PropTypes.func.isRequired
-  };
-
-  static defaultProps = {
-    currentWord: null
+    currentTime: PropTypes.number
   };
 
   shouldComponentUpdate(nextProps) {
@@ -29,6 +23,8 @@ export default class Segments extends Component {
     const { segments, currentAyah, currentTime } = this.props;
     const style = [];
     let currentWord = null;
+
+    if (!Object.keys(segments).length) return <noscript />;
 
     Object.keys(segments.words).forEach(wordIndex => {
       const word = segments.words[wordIndex];

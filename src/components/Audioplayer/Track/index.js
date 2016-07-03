@@ -9,6 +9,7 @@ export default class Track extends Component {
   };
 
   handleClick = (event) => {
+    console.log(this.refs.container.getBoundingClientRect());
     const { onTrackChange } = this.props;
 
     const fraction = (
