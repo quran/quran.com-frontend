@@ -397,8 +397,7 @@ export default class Surah extends Component {
               />
             </li>
             <li>|</li>
-            <li><Share surah={surah}/></li>
-
+            <li><Share surah={surah} /></li>
           </ul>
         </Col>
       </Row>
