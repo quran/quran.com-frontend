@@ -1,5 +1,3 @@
-import { decrypt } from 'sjcl';
-
 export function testIfSupported(ayah, agent) {
   const { audio } = ayah;
 
@@ -27,42 +25,6 @@ export function testIfSupported(ayah, agent) {
   }
 
   return true;
-}
-
-export function buildSegments(segments) {
-  let parsedSegments = null;
-
-  try {
-    parsedSegments = JSON.parse(
-      decrypt(
-        process.env.SEGMENTS_KEY,
-        new Buffer(segments, 'base64').toString()
-      )
-    );
-  } catch (e) {
-    parsedSegments = [];
-  }
-
-  const words = {};
-  const intervals = parsedSegments.map(segment => {
-    const startTime = segment[0];
-    const endTime = segment[0] + segment[1];
-    const duration = segment[1];
-    const wordIndex = segment[2];
-    const mappedVal = {
-      startTime: startTime / 1000,
-      endTime: endTime / 1000,
-      duration: duration / 1000
-    };
-
-    if (wordIndex >= 0 && !words[wordIndex]) {
-      words[wordIndex] = mappedVal;
-    }
-
-    return [startTime / 1000, endTime / 1000, wordIndex];
-  });
-
-  return { words, intervals };
 }
 
 export function buildAudioForAyah(audio, agent) {
@@ -93,7 +55,7 @@ export function buildAudioForAyah(audio, agent) {
   }
 
 
-  return { audio: scopedAudio, segments: buildSegments(segments) };
+  return { audio: scopedAudio, segments };
 }
 
 export function buildAudioFromHash(ayahsObject = {}, agent) {

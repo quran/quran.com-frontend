@@ -5,7 +5,7 @@ import debug from 'helpers/debug';
 
 export default class Segments extends Component {
   static propTypes = {
-    audio: PropTypes.object.isRequired,
+    audio: PropTypes.object,
     segments: PropTypes.object.isRequired,
     currentAyah: PropTypes.string,
     currentWord: PropTypes.string,

@@ -29,10 +29,10 @@ export default class FontStyles extends Component {
     if (__CLIENT__) {
       const FontFaceObserver = require('fontfaceobserver'); // eslint-disable-line global-require
 
-      Object.keys(fontFaces).filter(className => !fontFaces[className]).map(className => {
+      Object.keys(fontFaces).filter(className => !fontFaces[className]).forEach(className => {
         const font = new FontFaceObserver(className);
 
-        return font.load().then(() => load(className), () => load(className));
+        font.load().then(() => load(className), () => load(className));
       });
     }
 

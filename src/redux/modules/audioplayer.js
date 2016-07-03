@@ -1,5 +1,7 @@
 /* eslint-disable no-case-declarations */
 import { buildAudioFromHash, testIfSupported } from '../../helpers/buildAudio';
+import { buildSegments, extractSegments } from '../../helpers/buildSegments';
+import debug from 'helpers/debug';
 
 import {
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
@@ -13,7 +15,7 @@ const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
 const SET_CURRENT_WORD = '@@quran/audioplayer/SET_CURRENT_WORD';
 const START = '@@quran/audioplayer/START';
 const STOP = '@@quran/audioplayer/STOP';
-const NEXT = '@@quran/audioplayer/NEXT';
+export const NEXT = '@@quran/audioplayer/NEXT';
 const PREVIOUS = '@@quran/audioplayer/PREVIOUS';
 const TOGGLE_REPEAT = '@@quran/audioplayer/TOGGLE_REPEAT';
 const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
@@ -22,7 +24,6 @@ const UPDATE = '@@quran/audioplayer/UPDATE';
 
 const initialState = {
   files: {},
-  segments: {},
   userAgent: null,
   currentFile: null,
   currentAyah: null,
@@ -39,8 +40,10 @@ const initialState = {
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
     case BUILD_ON_CLIENT: {
+      debug('reducer:audioplayer', 'BUILD_ON_CLIENT init');
       const audioFromHash = buildAudioFromHash(state.files[action.surahId], state.userAgent);
 
+      debug('reducer:audioplayer', 'BUILD_ON_CLIENT return');
       return {
         ...state,
         isLoadedOnClient: true,
@@ -49,13 +52,6 @@ export default function reducer(state = initialState, action = {}) {
           [action.surahId]: {
             ...state.files[action.surahId],
             ...audioFromHash.files
-          }
-        },
-        segments: {
-          ...state.segments,
-          [action.surahId]: {
-            ...state.segments[action.surahId],
-            ...audioFromHash.segments
           }
         },
         currentFile: Object.values(audioFromHash.files)[0],
@@ -68,18 +64,15 @@ export default function reducer(state = initialState, action = {}) {
         files: {
           ...state.files,
           [action.id]: {}
-        },
-        segments: {
-          ...state.segments,
-          [action.id]: {}
-        },
+        }
       };
     case AYAHS_LOAD:
       return {
         ...state,
-        isLoadedOnClient: false
+        isLoading: false
       };
     case AYAHS_LOAD_SUCCESS: {
+      debug('reducer:audioplayer', 'AYAHS_LOAD_SUCCESS init');
       let currentFile;
       const isSupported = testIfSupported(
         action.result.entities.ayahs[action.result.result[0]],
@@ -95,29 +88,29 @@ export default function reducer(state = initialState, action = {}) {
 
       const ayahs = action.result.entities.ayahs;
       const audioFromHash = __CLIENT__ ? buildAudioFromHash(ayahs, state.userAgent) : ayahs;
-      const segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
       const files = Object.assign(
         {},
         state.files[action.surahId],
         __CLIENT__ ? audioFromHash.files : audioFromHash
       );
 
+      const currentAyah = state.currentAyah ? state.currentAyah : Object.keys(files)[0];
+
       if (state.currentFile && state.currentFile === Object.values(files)[0]) {
         // If the same file is being used, for example in lazy loading, then keep same file
         currentFile = state.currentFile;
       } else {
-        if (state.currentAyah) {
+        if (state.currentAyah || currentAyah) {
           // If the user changes the reciter, we want to maintain the file where
           // the user last left off
-          currentFile = files[state.currentAyah];
+          currentFile = files[state.currentAyah || currentAyah];
         } else {
           // Otherwise, just choose the first file
           currentFile = Object.values(files)[0];
         }
       }
 
-      const currentAyah = state.currentAyah ? state.currentAyah : Object.keys(files)[0];
-
+      debug('reducer:audioplayer', 'AYAHS_LOAD_SUCCESS return');
       return {
         ...state,
         isSupported,
@@ -131,7 +124,7 @@ export default function reducer(state = initialState, action = {}) {
         },
         segments: {
           ...state.segments,
-          [action.surahId]: segments
+          [action.surahId]: extractSegments(action.result.entities.ayahs)
         }
       };
     }
@@ -161,19 +154,25 @@ export default function reducer(state = initialState, action = {}) {
       };
 
     case NEXT: {
-      const surahId = state.currentAyah.split(':')[0];
-      const ayahNum = state.currentAyah.split(':')[1];
+      const [surahId, ayahNum] = action.currentAyah.split(':');
       const nextId = `${surahId}:${parseInt(ayahNum, 10) + 1}`;
 
       return {
         ...state,
+        segments: {
+          ...state.segments,
+          [surahId]: {
+            ...state.segments[surahId],
+            [nextId]: buildSegments(state.segments[surahId][nextId])
+          }
+        },
         currentAyah: nextId,
         currentFile: state.files[surahId][nextId],
         currentTime: 0
       };
     }
     case PREVIOUS: {
-      const [surahId, ayahNum] = state.currentAyah.split(':');
+      const [surahId, ayahNum] = action.currentAyah.split(':');
       const nextId = `${surahId}:${parseInt(ayahNum, 10) - 1}`;
 
       return {
@@ -217,17 +216,28 @@ export default function reducer(state = initialState, action = {}) {
       }
 
       // When the files are not the same.
-      const currentFile = state.files[surahId][`${surahId}:${ayahNum}`];
-      currentTime = state.segments[surahId][`${surahId}:${ayahNum}`].words[word].startTime;
+      const nextId = `${surahId}:${ayahNum}`;
+      const currentFile = state.files[surahId][nextId];
+      const segment = buildSegments(state.segments[surahId][nextId]);
+      currentTime = segment.words[word].startTime;
       currentFile.currentTime = currentTime;
 
       return {
         ...state,
         currentWord: action.word,
-        currentAyah: `${surahId}:${ayahNum}`,
+        currentAyah: nextId,
+        isPlaying: false,
         currentTime,
-        currentFile
+        currentFile,
+        segments: {
+          ...state.segments,
+          [surahId]: {
+            ...state.segments[surahId],
+            [nextId]: segment
+          }
+        }
       };
+
     }
     case SET_CURRENT_AYAH:
       return {
@@ -272,15 +282,17 @@ export function stop() {
   };
 }
 
-export function next() {
+export function next(currentAyah) {
   return {
-    type: NEXT
+    type: NEXT,
+    currentAyah
   };
 }
 
-export function previous() {
+export function previous(currentAyah) {
   return {
-    type: PREVIOUS
+    type: PREVIOUS,
+    currentAyah
   };
 }
 

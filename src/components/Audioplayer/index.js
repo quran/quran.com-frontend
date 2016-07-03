@@ -171,7 +171,7 @@ export default class Audioplayer extends Component {
 
     if (!this[camelize(`get_${direction}`)]()) return stop();
 
-    this.props[direction]();
+    this.props[direction](currentAyah);
 
     this.handleScrollTo(currentAyah);
 
@@ -233,6 +233,7 @@ export default class Audioplayer extends Component {
   handleAddFileListeners(file) {
     const { update, currentTime } = this.props; // eslint-disable-line no-shadow
     debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
+
     // Preload file
     file.setAttribute('preload', 'auto');
 
@@ -251,7 +252,8 @@ export default class Audioplayer extends Component {
     };
 
     const onTimeupdate = () => update({
-      currentTime: file.currentTime
+      currentTime: file.currentTime,
+      duration: file.duration
     });
 
     const onEnded = () => {
@@ -278,10 +280,14 @@ export default class Audioplayer extends Component {
       file.ontimeupdate = null; // eslint-disable-line no-param-reassign
     };
 
+    const onProgress = () => {
+    };
+
     file.onloadeddata = onLoadeddata;  // eslint-disable-line no-param-reassign
     file.onpause = onPause; // eslint-disable-line no-param-reassign
     file.onplay = onPlay; // eslint-disable-line no-param-reassign
     file.onended = onEnded; // eslint-disable-line no-param-reassign
+    file.onprogress = onProgress; // eslint-disable-line no-param-reassign
 
     return file;
   }
@@ -294,6 +300,7 @@ export default class Audioplayer extends Component {
     file.onplay = null; // eslint-disable-line no-param-reassign
     file.onPause = null; // eslint-disable-line no-param-reassign
     file.onended = null; // eslint-disable-line no-param-reassign
+    file.onprogress = null; // eslint-disable-line no-param-reassign
   }
 
   handleTrackChange = (fraction) => {
@@ -361,9 +368,9 @@ export default class Audioplayer extends Component {
       currentAyah,
       currentWord,
       currentTime,
-      duration,
       setCurrentWord, // eslint-disable-line no-shadow
       isSupported,
+      duration,
       isLoadedOnClient,
       shouldRepeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
@@ -414,7 +421,7 @@ export default class Audioplayer extends Component {
               progress={currentTime / duration * 100}
               onTrackChange={this.handleTrackChange}
             /> : null}
-          {isLoadedOnClient && segments[currentAyah] ?
+          {isLoadedOnClient && segments[currentAyah] && typeof segments[currentAyah] !== 'string' ?
             <Segments
               audio={currentFile}
               segments={segments[currentAyah]}
