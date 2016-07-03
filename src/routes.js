@@ -5,24 +5,35 @@ import Route from 'react-router/lib/Route';
 import checkValidSurah from './utils/checkValidSurah';
 import App from './containers/App';
 
+function getComponentByName(name) {
+  return (nextState, cb) => System.import(`./containers/${name}`).then(module => cb(null, module)).catch(err => console.trace(err));
+}
+
+
 export default () => (
   <Route path="/" component={App}>
-    <IndexRoute getComponent={(nextState, cb) => System.import('./containers/Home').then(module => cb(null, module))} />
+    <IndexRoute getComponent={getComponentByName('Home')} />Donations
 
-    <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
-    <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
+    <Route path="/donations" getComponent={getComponentByName('Donations')} />
+    <Route path="/contributions" getComponent={getComponentByName('Donations')} />
 
-    <Route path="/about" getComponent={(nextState, cb) => System.import('./containers/About').then(module => cb(null, module))} />
+    <Route path="/about" getComponent={getComponentByName('About')} />
 
-    <Route path="/contact" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
-    <Route path="/contactus" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
-    <Route path="/error/:errorKey" getComponent={(nextState, cb) => System.import('./containers/Error').then(module => cb(null, module))} />
+    <Route path="/contact" getComponent={getComponentByName('Contact')} />
+    <Route path="/contactus" getComponent={getComponentByName('Contact')} />
+    <Route path="/error/:errorKey" getComponent={getComponentByName('Error')} />
 
-    <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
+    <Route path="/search" getComponent={{getComponentByName('Search')}} />
+
+    <Route
+      path="/:surahId:(:range)"
+      getComponent={getComponentByName('Surah')}
+      onEnter={checkValidSurah}
+    />
 
     <Route
       path="/:surahId(/:range)"
-      getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))}
+      getComponent={getComponentByName('Surah')}
       onEnter={checkValidSurah}
     />
   </Route>
