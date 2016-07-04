@@ -18,7 +18,7 @@ export default class Share extends Component {
     const surahUrl = encodeURIComponent(`http://quran.com/${surahId}`);
 
     return (
-      <div className={Style.shareContainer}>
+      <div className={`${Style.shareContainer} hidden-xs`}>
 
         <i
           onClick={() => this.onClickPopup(`https://www.facebook.com/sharer/sharer.php?u=${surahUrl}`, 'Facebook')}

@@ -1,7 +1,9 @@
+@import '../../styles/variables';
+
 .shareContainer {
   position: relative;
-  bottom: 2px;
   left: 5px;
+  top: 2px;
 
   .iconContainer {
     padding: 0 30px 10px 0;
@@ -30,5 +32,3 @@
   }
 
 }
-
-
