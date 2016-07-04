@@ -5,7 +5,12 @@ import SwitchToggle from '../SwitchToggle';
 const ReadingModeToggle = ({ onReadingModeToggle, isToggled }) => (
   <div>
     Reading:{' '}
-    <SwitchToggle checked={isToggled} onToggle={onReadingModeToggle} flat />
+    <SwitchToggle
+      checked={isToggled}
+      onToggle={onReadingModeToggle}
+      id="reading-mode-toggle"
+      flat
+    />
   </div>
 );
 

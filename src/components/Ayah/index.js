@@ -20,6 +20,7 @@ export default class Ayah extends Component {
     ayah: PropTypes.object.isRequired,
     match: PropTypes.array,
     isSearch: PropTypes.bool,
+    tooltip: PropTypes.string,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
     onWordClick: PropTypes.func.isRequired
   };
@@ -32,6 +33,7 @@ export default class Ayah extends Component {
   shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.ayah !== nextProps.ayah,
+      this.props.tooltip !== nextProps.tooltip,
       this.props.currentWord !== nextProps.currentWord
     ];
 
@@ -73,7 +75,7 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, onWordClick } = this.props;
+    const { ayah, onWordClick, tooltip } = this.props;
 
     if (!ayah.words[0].code) {
       return false;
@@ -92,8 +94,8 @@ export default class Ayah extends Component {
         id = `${word.className}-${word.codeDec}`; // just don't include id
       }
 
-      if (word.translation) {
-        let tooltip = word.translation;
+      if (word.translation || word.transliteration) {
+        let tooltipContent = word[tooltip];
 
         return (
           <b
@@ -104,7 +106,9 @@ export default class Ayah extends Component {
             className={`${className} pointer`}
             data-toggle="tooltip"
             data-trigger="hover"
-            data-placement="top" title={tooltip}
+            data-placement="top"
+            data-original-title={tooltipContent}
+            title={tooltipContent}
             dangerouslySetInnerHTML={{__html: word.code}}
           />
         );

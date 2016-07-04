@@ -16,6 +16,7 @@ import ReciterDropdown from 'components/ReciterDropdown';
 import SurahsDropdown from 'components/SurahsDropdown';
 import VersesDropdown from 'components/VersesDropdown';
 import FontSizeDropdown from 'components/FontSizeDropdown';
+import TooltipDropdown from 'components/TooltipDropdown';
 import InformationToggle from 'components/InformationToggle';
 import SurahInfo from 'components/SurahInfo';
 import Header from './Header';
@@ -186,18 +187,6 @@ export default class Surah extends Component {
     return loadAyahs(surah.id, from, to, Object.assign({}, options, payload));
   }
 
-  handleFontSizeChange = (payload) => {
-    const { setOption } = this.props; // eslint-disable-line no-shadow
-
-    return setOption(payload);
-  }
-
-  handleSurahInfoToggle = (payload) => {
-    const { setOption } = this.props; // eslint-disable-line no-shadow
-
-    return setOption(payload);
-  }
-
   handleNavbar = () => {
     // TODO: This should be done with react!
     if (window.pageYOffset > lastScroll) {
@@ -338,11 +327,12 @@ export default class Surah extends Component {
   }
 
   renderAyahs() {
-    const { ayahs, setCurrentWord } = this.props; // eslint-disable-line no-shadow
+    const { ayahs, setCurrentWord, options } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
+        tooltip={options.tooltip}
         onWordClick={setCurrentWord}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
       />
@@ -350,7 +340,7 @@ export default class Surah extends Component {
   }
 
   renderLines() {
-    const { lines } = this.props;
+    const { lines, options } = this.props;
     const keys = Object.keys(lines);
 
     return keys.map((lineNum, index) => {
@@ -360,17 +350,22 @@ export default class Surah extends Component {
 
       if (index + 1 !== keys.length && pageNum !== nextNum.split('-')[0]) {
         return [
-          <Line line={line} key={lineNum} />,
+          <Line line={line} key={lineNum} tooltip={options.tooltip} />,
           <PageBreak pageNum={parseInt(pageNum, 10) + 1} />
         ];
       }
 
-      return <Line line={line} key={lineNum} />;
+      return <Line line={line} key={lineNum} tooltip={options.tooltip} />;
     });
   }
 
   renderTopOptions() {
-    const { toggleReadingMode, options, surah } = this.props; // eslint-disable-line no-shadow
+    const {
+      toggleReadingMode, // eslint-disable-line no-shadow
+      options,
+      surah,
+      setOption // eslint-disable-line no-shadow
+    } = this.props;
 
     return (
       <Row>
@@ -378,7 +373,7 @@ export default class Surah extends Component {
           <ul className="list-inline">
             <li>
               <InformationToggle
-                onToggle={this.handleSurahInfoToggle}
+                onToggle={setOption}
                 isShowingSurahInfo={options.isShowingSurahInfo}
               />
             </li>
@@ -386,7 +381,14 @@ export default class Surah extends Component {
             <li>
               <FontSizeDropdown
                 options={options}
-                onOptionChange={this.handleFontSizeChange}
+                onOptionChange={setOption}
+              />
+            </li>
+            <li>|</li>
+            <li>
+              <TooltipDropdown
+                options={options}
+                onOptionChange={setOption}
               />
             </li>
             <li>|</li>

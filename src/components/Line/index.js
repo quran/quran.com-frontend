@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import debug from '../../helpers/debug';
 
 const styles = require('../Ayah/style.scss');
 
 export default class Line extends React.Component {
   static propTypes = {
-    line: React.PropTypes.array.isRequired
+    line: PropTypes.array.isRequired,
+    tooltip: PropTypes.string
   };
 
   renderText() {
-    const { line } = this.props;
+    const { line, tooltip } = this.props;
 
     if (!line[0].code) { // TODO shouldn't be possible, remove this clause
       return false;
@@ -17,7 +18,7 @@ export default class Line extends React.Component {
 
     let text = line.map(word => {
       if (word.translation) {
-        let tooltip = word.translation;
+        let tooltipContent = word[tooltip];
 
         return (
           <b
@@ -28,7 +29,9 @@ export default class Line extends React.Component {
             data-line={word.lineNun}
             data-page={word.pageNum}
             data-position={word.position}
-            data-placement="top" title={tooltip}
+            data-placement="top"
+            data-origin-title={tooltipContent}
+            title={tooltipContent}
             dangerouslySetInnerHTML={{__html: word.code}}
           />
         );
