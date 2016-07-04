@@ -9,6 +9,7 @@ const initialState = {
   audio: 8,
   quran: 1,
   content: [19],
+  tooltip: 'translation',
   fontSize: {
     arabic: 3.5,
     translation: 2

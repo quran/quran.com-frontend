@@ -23,7 +23,6 @@ SwitchToggle.propTypes = {
 };
 
 SwitchToggle.defaultProps = {
-  id: 'toggle',
   flat: false,
   checked: false
 };
