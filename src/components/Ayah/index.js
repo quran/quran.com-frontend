@@ -189,7 +189,13 @@ export default class Ayah extends Component {
       );
     }
 
-    return content;
+    return (
+      <Link
+        to={`/${this.props.ayah.surahId}:${this.props.ayah.ayahNum}`}
+        data-metrics-event-name="Ayah:Link"
+      >
+        {content}
+      </Link>);
   }
 
   renderControls() {

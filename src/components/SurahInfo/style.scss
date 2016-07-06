@@ -9,6 +9,11 @@ $transition-speed: 0.75s;
   min-height: 0px;
   transition: max-height $transition-speed, height $transition-speed;
 
+
+  @media(max-width: $screen-xs-max) {
+    margin-bottom: 0;
+  }
+
   &.show{
     max-height: 600px;
     max-height: 70vh;

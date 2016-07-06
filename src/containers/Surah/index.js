@@ -398,7 +398,6 @@ export default class Surah extends Component {
                 onReadingModeToggle={toggleReadingMode}
               />
             </li>
-            <li>|</li>
             <li><Share surah={surah} /></li>
           </ul>
         </Col>
