@@ -34,7 +34,7 @@ export default class App extends Component {
   };
 
   render() {
-    const { surahs, children } = this.props;
+    const { children } = this.props;
     debug('component:APPLICATION', 'Render');
 
     return (
