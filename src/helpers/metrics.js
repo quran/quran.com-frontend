@@ -3,11 +3,15 @@ export default {
   vendors: [
     {
       api: {
-        name: 'Segment',
+        name: 'Analytics',
         pageView() {
+          mixpanel.track('Pageview', window.location);
+
           return ga('send', 'pageview');
         },
         track(eventName, params) {
+          mixpanel.track(eventName, params);
+
           return ga('send', {
             hitType: 'event',
             eventCategory: eventName,

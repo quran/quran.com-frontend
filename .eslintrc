@@ -49,6 +49,7 @@
     "socket": true,
     "webpackIsomorphicTools": true,
     ga: true,
-    Raven: true
+    Raven: true,
+    mixpanel: true
   }
 }
