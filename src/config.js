@@ -55,25 +55,25 @@ module.exports = Object.assign({
         {
           type: 'application/ld+json',
           innerHTML: `{
-            '@context': 'http://schema.org',
-            '@type': 'WebSite',
-            'name': 'Quran',
-            'alternateName': 'Quran.com',
-            'url': 'http://quran.com',
-            'potentialAction': {
-              '@type': 'SearchAction',
-              'target': 'http://quran.com/search?q={search_term_string}',
-              'query-input': 'required name=search_term_string'
+            "@context": "http://schema.org",
+            "@type": "WebSite",
+            "name": "Quran",
+            "alternateName": "Quran.com",
+            "url": "http://quran.com",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "http://quran.com/search?q={search_term_string}&referrer=sitelinks_searchbox",
+              "query-input": "required name=search_term_string"
             }
           }`
         },
         {
           type: 'application/ld+json',
           innerHTML: `{
-            '@context': 'http://schema.org',
-            '@type': 'Organization',
-            'url': 'http://quran.com',
-            'logo': 'http://quran.com/images/thumbnail.png'
+            "@context": "http://schema.org",
+            "@type": "Organization",
+            "url": "http://quran.com",
+            "logo": "http://quran.com/images/thumbnail.png"
           }`
         }
       ],
