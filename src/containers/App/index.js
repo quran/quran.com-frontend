@@ -80,20 +80,6 @@ export default class App extends Component {
               <Col md={10} mdOffset={1} className="text-center">
                 <ul className={`list-inline ${styles.seo}`}>
                   <li><a href="/sitemap.xml">Sitemap</a></li>
-                  {Object.values(surahs)
-                    .filter(surah => [2, 3, 18, 19, 55, 56, 67, 112].indexOf(surah.id))
-                    .map(surah => (
-                      <li key={surah.id}>
-                        <Link
-                          to={`/${surah.id}`}
-                          data-metrics-event-name="FooterLinks:Click"
-                          data-metrics-surah-id={surah.id}
-                        >
-                          {`Surah ${surah.name.simple} (سورة ${surah.name.arabic})`}
-                        </Link>
-                      </li>
-                    ))
-                  }
                   <li>
                     <Link
                       to="/36"
