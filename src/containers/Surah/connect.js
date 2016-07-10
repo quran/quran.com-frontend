@@ -4,7 +4,7 @@ import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/modules/a
 import debug from 'helpers/debug';
 
 const ayahRangeSize = 30;
-console.log('hello')
+
 export const surahsConnect = ({ store: { getState, dispatch } }) => {
   debug('component:Surah:surahsConnect', 'Init');
 
@@ -22,7 +22,7 @@ export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {
 
   const range = params.range;
   const surahId = parseInt(params.surahId, 10);
-debugger;
+
   let from;
   let to;
 

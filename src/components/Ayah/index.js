@@ -22,8 +22,8 @@ export default class Ayah extends Component {
     isSearch: PropTypes.bool,
     tooltip: PropTypes.string,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
-    onWordClick: PropTypes.func.isRequired,
-    actions: PropTypes.object.isRequired
+    onWordClick: PropTypes.func,
+    actions: PropTypes.object
   };
 
   static defaultProps = {

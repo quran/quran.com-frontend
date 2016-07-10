@@ -88,7 +88,6 @@ class Surah extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.actions);
     if (__CLIENT__) {
       window.removeEventListener('scroll', this.handleNavbar, true);
       window.addEventListener('scroll', this.handleNavbar, true);
@@ -461,25 +460,7 @@ class Surah extends Component {
   }
 }
 
-const AsyncSurah = asyncConnect([
-  {
-    promise: surahsConnect
-  },
-  {
-    promise: ayahsConnect
-  }
-])(Surah);
-
-function mapDispatchToProps(dispatch) {
-  return {
-    actions: {
-      options: bindActionCreators(OptionsActions, dispatch),
-      ayah: bindActionCreators(AyahActions, dispatch),
-      audio: bindActionCreators(AudioActions, dispatch),
-      push: bindActionCreators(push, dispatch)
-    }
-  };
-}
+const AsyncSurah = asyncConnect([ { promise: surahsConnect }, { promise: ayahsConnect } ])(Surah);
 
 function mapStateToProps(state, ownProps) {
   const surahId = parseInt(ownProps.params.surahId, 10);
@@ -502,7 +483,15 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AsyncSurah);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      options: bindActionCreators(OptionsActions, dispatch),
+      ayah: bindActionCreators(AyahActions, dispatch),
+      audio: bindActionCreators(AudioActions, dispatch),
+      push: bindActionCreators(push, dispatch)
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AsyncSurah);

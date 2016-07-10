@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
+
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -19,28 +20,7 @@ import { search } from '../../redux/modules/searchResults';
 
 const style = require('./style.scss');
 
-@asyncConnect([{
-  promise({ store: { dispatch }, location: { query } }) {
-    return dispatch(search(query));
-  }
-}])
-@connect(
-  state => ({
-    isErrored: state.searchResults.errored,
-    isLoading: state.searchResults.loading,
-    total: state.searchResults.total,
-    page: state.searchResults.page,
-    size: state.searchResults.size,
-    from: state.searchResults.from,
-    took: state.searchResults.took,
-    query: state.searchResults.query,
-    results: state.searchResults.results,
-    ayahs: state.searchResults.entities,
-    options: state.options
-  }),
-  { push }
-)
-export default class Search extends Component {
+class Search extends Component {
   static propTypes = {
     isErrored: PropTypes.bool,
     isLoading: PropTypes.bool,
@@ -177,3 +157,27 @@ export default class Search extends Component {
     );
   }
 }
+
+const AsyncSearch = asyncConnect([{
+  promise({ store: { dispatch }, location: { query } }) {
+    return dispatch(search(query));
+  }
+}])(Search);
+
+function mapStateToProps(state) {
+  return {
+    isErrored: state.searchResults.errored,
+    isLoading: state.searchResults.loading,
+    total: state.searchResults.total,
+    page: state.searchResults.page,
+    size: state.searchResults.size,
+    from: state.searchResults.from,
+    took: state.searchResults.took,
+    query: state.searchResults.query,
+    results: state.searchResults.results,
+    ayahs: state.searchResults.entities,
+    options: state.options
+  };
+}
+
+export default connect(mapStateToProps, {push})(AsyncSearch);
