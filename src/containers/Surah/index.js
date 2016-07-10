@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 // redux
-import { bindActionCreators } from 'redux'
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
@@ -174,7 +174,7 @@ class Surah extends Component {
   }
 
   handleLazyLoadAyahs = (callback) => {
-    const { loadAyahs, ayahIds, surah, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
+    const { ayahIds, surah, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     const range = [this.getFirst(), this.getLast()];
 
     let size = 10;
@@ -360,7 +360,7 @@ class Surah extends Component {
   }
 
   render() {
-    const { surah, surahs, ayahIds, options, actions } = this.props;
+    const { surah, surahs, ayahIds, options } = this.props;
 
     debug('component:Surah', 'Render');
 
@@ -476,9 +476,9 @@ function mapDispatchToProps(dispatch) {
       options: bindActionCreators(OptionsActions, dispatch),
       ayah: bindActionCreators(AyahActions, dispatch),
       audio: bindActionCreators(AudioActions, dispatch),
-      push:  bindActionCreators(push, dispatch)
+      push: bindActionCreators(push, dispatch)
     }
-  }
+  };
 }
 
 function mapStateToProps(state, ownProps) {

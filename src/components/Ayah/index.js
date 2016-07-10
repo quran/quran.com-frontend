@@ -22,7 +22,8 @@ export default class Ayah extends Component {
     isSearch: PropTypes.bool,
     tooltip: PropTypes.string,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
-    onWordClick: PropTypes.func.isRequired
+    onWordClick: PropTypes.func.isRequired,
+    actions: PropTypes.object.isRequired
   };
 
   static defaultProps = {
@@ -46,7 +47,7 @@ export default class Ayah extends Component {
 
   handlePlay(ayah) {
 
-    const{stop, setAyah, start} = this.props.actions;
+    const {stop, setAyah, start} = this.props.actions;
 
     stop();
     setAyah(ayah);

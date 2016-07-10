@@ -182,15 +182,15 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         segments: {
           ...state.segments,
-        [surahId]: {
-          ...state.segments[surahId],
-        [currentAyah]: buildSegments(state.segments[surahId][currentAyah])
-      }
-    },
-    currentAyah: currentAyah,
-      currentFile: state.files[surahId][currentAyah],
-      currentTime: 0
-    };
+          [surahId]: {
+            ...state.segments[surahId],
+            [currentAyah]: buildSegments(state.segments[surahId][currentAyah])
+          }
+        },
+        currentAyah,
+        currentFile: state.files[surahId][currentAyah],
+        currentTime: 0
+      };
     }
 
     case PREVIOUS: {
