@@ -2,7 +2,6 @@ require('dotenv').load();
 var fs = require('fs');
 var path = require('path');
 var webpack = require('webpack');
-var path = require('path');
 var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration'));
 
@@ -37,7 +36,7 @@ module.exports = {
               'add-module-exports',
               'transform-decorators-legacy',
               'transform-react-display-name',
-              'typecheck',
+              'typecheck'
             ],
             presets: ['react', 'es2015-webpack', 'stage-0', 'react-hmre'],
             cacheDirectory: true

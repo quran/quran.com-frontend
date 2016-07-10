@@ -4,8 +4,9 @@ import { renderIntoDocument } from 'react-addons-test-utils';
 import { Provider } from 'react-redux';
 import { browserHistory } from 'react-router';
 
-import createStore from 'redux/create';
-import ApiClient from 'helpers/ApiClient';
+import { createStore } from 'redux';
+
+import ApiClient from '../../helpers/ApiClient';
 
 let mockStore;
 let component;
@@ -59,7 +60,7 @@ describe('Home', () => {
     dispatch = null;
   });
 
-  it('should return true', () => {
+  xit('should return true', () => {
     expect(true).to.be.truthy;
   });
 });

@@ -1,13 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
-
-import Ayah from './index';
-
+import Ayah from './index.js';
 import ayah from '../../../tests/fixtures/ayah';
+
 let wrapper;
 
-describe('<Ayah />', () => {
+describe("Ayah", () => {
+
   beforeEach(() => {
     wrapper = shallow(<Ayah ayah={ayah} />);
   });
@@ -17,10 +15,13 @@ describe('<Ayah />', () => {
   });
 
   it('should have correct ayah number', () => {
-    expect(wrapper.find('.label').text()).to.eql(ayah.ayahKey);
+    expect(wrapper.find('.label').text()).to.equal(ayah.ayahKey);
   });
 
   it('should contain translations', () => {
-    expect(wrapper.find('.translation').text()).to.eql(ayah.content[0].resource.name);
+    expect(wrapper.find('.translation').text()).to.equal(ayah.content[0].resource.name);
   });
+
+
+
 });

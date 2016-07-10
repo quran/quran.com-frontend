@@ -6,7 +6,7 @@ import ContentDropdown, { slugs } from './index';
 
 let wrapper;
 let onOptionChange = sinon.stub();
-let defaultOption = 19
+let defaultOption = 19;
 
 describe('<ContentDropdown />', () => {
   beforeEach(() => {

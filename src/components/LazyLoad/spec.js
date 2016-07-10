@@ -17,6 +17,7 @@ describe('<LazyLoad />', () => {
           onLazyLoad={onLazyLoad}
           isEnd={isEnd}
           isLoading={isLoading}
+          componentOffset={124}
           endComponent={<p>End</p>}
           loadingComponent={<p>Loading</p>}
         />

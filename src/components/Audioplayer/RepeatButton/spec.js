@@ -2,8 +2,8 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import RepeatButton from './index';
-
 let makeComponent, component, onRepeatToggle;
+
 
 describe('<RepeatButton />', () => {
   beforeEach(() => {
