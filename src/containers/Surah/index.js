@@ -1,8 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
+// redux
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
+
+// bootstrap
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Helmet from 'react-helmet';
@@ -36,64 +40,20 @@ import debug from 'helpers/debug';
 
 import descriptions from './descriptions';
 
-const style = require('./style.scss');
-
-
 import { surahsConnect, ayahsConnect } from './connect';
 
-import {
-  load as loadAyahs,
-  setCurrentAyah,
-  clearCurrentWord
-} from '../../redux/modules/ayahs';
-import { setCurrentWord } from '../../redux/modules/audioplayer';
+import * as AudioActions from '../../redux/modules/audioplayer';
+import * as AyahActions from '../../redux/modules/ayahs';
+import * as OptionsActions from '../../redux/modules/options';
 
-import { setOption, toggleReadingMode } from '../../redux/modules/options';
+const style = require('./style.scss');
 
 let lastScroll = 0;
 
-@asyncConnect([
-  {
-    promise: surahsConnect,
-  },
-  {
-    promise: ayahsConnect
-  }
-])
-@connect(
-  (state, ownProps) => {
-    const surahId = parseInt(ownProps.params.surahId, 10);
-    const surah: Object = state.surahs.entities[surahId];
-    const ayahs: Object = state.ayahs.entities[surahId];
-    const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
-
-    return {
-      surah,
-      ayahs,
-      ayahIds,
-      isStarted: state.audioplayer.isStarted,
-      currentWord: state.ayahs.currentWord,
-      isEndOfSurah: ayahIds.size === surah.ayat,
-      surahs: state.surahs.entities,
-      isLoading: state.ayahs.loading,
-      isLoaded: state.ayahs.loaded,
-      lines: state.lines.lines,
-      options: state.options,
-    };
-  },
-  {
-    loadAyahs,
-    setOption,
-    toggleReadingMode,
-    setCurrentAyah,
-    setCurrentWord,
-    clearCurrentWord,
-    push
-  }
-)
-export default class Surah extends Component {
+class Surah extends Component {
   static propTypes = {
     surah: PropTypes.object.isRequired,
+    actions: PropTypes.object.isRequired,
     lines: PropTypes.object.isRequired,
     isEndOfSurah: PropTypes.bool.isRequired,
     ayahIds: PropTypes.any,
@@ -102,15 +62,8 @@ export default class Surah extends Component {
     isLoading: PropTypes.bool.isRequired,
     isLoaded: PropTypes.bool.isRequired,
     options: PropTypes.object.isRequired,
-    push: PropTypes.func.isRequired,
     params: PropTypes.object.isRequired,
     ayahs: PropTypes.object.isRequired,
-    loadAyahs: PropTypes.func.isRequired,
-    setOption: PropTypes.func.isRequired,
-    toggleReadingMode: PropTypes.func.isRequired,
-    setCurrentAyah: PropTypes.func.isRequired,
-    setCurrentWord: PropTypes.func.isRequired,
-    clearCurrentWord: PropTypes.func.isRequired,
     isStarted: PropTypes.bool
   };
 
@@ -119,13 +72,13 @@ export default class Surah extends Component {
   };
 
   componentWillMount() {
-    const { params, surah, push } = this.props; // eslint-disable-line no-shadow
+    const { params, surah, actions } = this.props; // eslint-disable-line no-shadow
 
     if (params.range && params.range.includes('-')) {
       const start = parseInt(params.range.split('-')[0], 10);
 
       if (start > surah.ayat || isNaN(start)) {
-        return push('/error/invalid-ayah-range');
+        return actions.push.push('/error/invalid-ayah-range');
       }
 
       return false;
@@ -178,13 +131,13 @@ export default class Surah extends Component {
   }
 
   handleOptionChange = (payload) => {
-    const { setOption, loadAyahs, surah, options } = this.props; // eslint-disable-line no-shadow, max-len
+    const {surah, options, actions} = this.props; // eslint-disable-line no-shadow, max-len
     const from = this.getFirst();
     const to = this.getLast();
 
-    setOption(payload);
+    actions.options.setOption(payload);
 
-    return loadAyahs(surah.id, from, to, Object.assign({}, options, payload));
+    return actions.ayah.load(surah.id, from, to, Object.assign({}, options, payload));
   }
 
   handleNavbar = () => {
@@ -201,9 +154,9 @@ export default class Surah extends Component {
   }
 
   handleVerseDropdownClick = (ayahNum) => {
-    const { ayahIds, push, surah, setCurrentAyah } = this.props; // eslint-disable-line no-shadow
+    const { ayahIds, surah, actions } = this.props; // eslint-disable-line no-shadow
 
-    setCurrentAyah(`${surah.id}:${ayahNum}`);
+    actions.ayah.setCurrentAyah(`${surah.id}:${ayahNum}`);
 
     if (ayahIds.has(ayahNum)) {
       return false;
@@ -211,7 +164,7 @@ export default class Surah extends Component {
 
     if (ayahNum > (this.getLast() + 10) || ayahNum < this.getFirst()) {
       // This is beyond lazy loading next page.
-      return push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
+      return actions.push.push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
     }
 
     return this.handleLazyLoadAyahs(() => setTimeout(() =>
@@ -220,7 +173,7 @@ export default class Surah extends Component {
   }
 
   handleLazyLoadAyahs = (callback) => {
-    const { loadAyahs, ayahIds, surah, isEndOfSurah, options } = this.props; // eslint-disable-line no-shadow, max-len
+    const { ayahIds, surah, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     const range = [this.getFirst(), this.getLast()];
 
     let size = 10;
@@ -233,7 +186,7 @@ export default class Surah extends Component {
     const to = (from + size);
 
     if (!isEndOfSurah && !ayahIds.has(to)) {
-      loadAyahs(surah.id, from, to, options).then(() => {
+      actions.ayah.load(surah.id, from, to, options).then(() => {
         this.setState({lazyLoading: false});
         if (callback) {
           callback();
@@ -327,13 +280,14 @@ export default class Surah extends Component {
   }
 
   renderAyahs() {
-    const { ayahs, setCurrentWord, options } = this.props; // eslint-disable-line no-shadow
+    const { ayahs, actions, options } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
         tooltip={options.tooltip}
-        onWordClick={setCurrentWord}
+        onWordClick={actions.audio.setCurrentWord}
+        actions={actions.audio}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
       />
     ));
@@ -361,10 +315,9 @@ export default class Surah extends Component {
 
   renderTopOptions() {
     const {
-      toggleReadingMode, // eslint-disable-line no-shadow
       options,
       surah,
-      setOption // eslint-disable-line no-shadow
+      actions // eslint-disable-line no-shadow
     } = this.props;
 
     return (
@@ -373,7 +326,7 @@ export default class Surah extends Component {
           <ul className="list-inline">
             <li>
               <InformationToggle
-                onToggle={setOption}
+                onToggle={actions.options.setOption}
                 isShowingSurahInfo={options.isShowingSurahInfo}
               />
             </li>
@@ -381,21 +334,21 @@ export default class Surah extends Component {
             <li>
               <FontSizeDropdown
                 options={options}
-                onOptionChange={setOption}
+                onOptionChange={actions.options.setOption}
               />
             </li>
             <li>|</li>
             <li>
               <TooltipDropdown
                 options={options}
-                onOptionChange={setOption}
+                onOptionChange={actions.options.setOption}
               />
             </li>
             <li>|</li>
             <li>
               <ReadingModeToggle
                 isToggled={options.isReadingMode}
-                onReadingModeToggle={toggleReadingMode}
+                onReadingModeToggle={actions.options.toggleReadingMode}
               />
             </li>
             <li><Share surah={surah} /></li>
@@ -407,6 +360,7 @@ export default class Surah extends Component {
 
   render() {
     const { surah, surahs, ayahIds, options } = this.props;
+
     debug('component:Surah', 'Render');
 
     return (
@@ -505,3 +459,39 @@ export default class Surah extends Component {
     );
   }
 }
+
+const AsyncSurah = asyncConnect([ { promise: surahsConnect }, { promise: ayahsConnect } ])(Surah);
+
+function mapStateToProps(state, ownProps) {
+  const surahId = parseInt(ownProps.params.surahId, 10);
+  const surah: Object = state.surahs.entities[surahId];
+  const ayahs: Object = state.ayahs.entities[surahId];
+  const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
+
+  return {
+    surah,
+    ayahs,
+    ayahIds,
+    isStarted: state.audioplayer.isStarted,
+    currentWord: state.ayahs.currentWord,
+    isEndOfSurah: ayahIds.size === surah.ayat,
+    surahs: state.surahs.entities,
+    isLoading: state.ayahs.loading,
+    isLoaded: state.ayahs.loaded,
+    lines: state.lines.lines,
+    options: state.options
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      options: bindActionCreators(OptionsActions, dispatch),
+      ayah: bindActionCreators(AyahActions, dispatch),
+      audio: bindActionCreators(AudioActions, dispatch),
+      push: bindActionCreators(push, dispatch)
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AsyncSurah);

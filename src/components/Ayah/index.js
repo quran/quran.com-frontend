@@ -22,12 +22,13 @@ export default class Ayah extends Component {
     isSearch: PropTypes.bool,
     tooltip: PropTypes.string,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
-    onWordClick: PropTypes.func.isRequired
+    onWordClick: PropTypes.func,
+    actions: PropTypes.object
   };
 
   static defaultProps = {
     currentWord: null,
-    isSearched: false,
+    isSearched: false
   };
 
   shouldComponentUpdate(nextProps) {
@@ -44,10 +45,12 @@ export default class Ayah extends Component {
     return conditions.some(condition => condition);
   }
 
-  handlePlay() {
-    this.setState({
-      open: false
-    });
+  handlePlay(ayah) {
+    const {stop, setAyah, start} = this.props.actions;
+
+    stop();
+    setAyah(ayah);
+    start();
   }
 
   renderTranslations() {
@@ -140,12 +143,12 @@ export default class Ayah extends Component {
   }
 
   renderPlayLink() {
-    const { isSearch, ayah } = this.props;
+    const { isSearched, ayah } = this.props;
 
-    if (!isSearch) {
+    if (!isSearched) {
       return (
         <a
-          onClick={() => this.handlePlay(ayah.ayahNum)}
+          onClick={() => this.handlePlay(ayah.ayahKey)}
           className="text-muted"
         >
           <i className="ss-icon ss-play" /> Play

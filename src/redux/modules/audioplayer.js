@@ -16,6 +16,7 @@ const SET_CURRENT_WORD = '@@quran/audioplayer/SET_CURRENT_WORD';
 const START = '@@quran/audioplayer/START';
 const STOP = '@@quran/audioplayer/STOP';
 export const NEXT = '@@quran/audioplayer/NEXT';
+export const SET_AYAH = '@@quran/audioplayer/SET';
 const PREVIOUS = '@@quran/audioplayer/PREVIOUS';
 const TOGGLE_REPEAT = '@@quran/audioplayer/TOGGLE_REPEAT';
 const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
@@ -171,6 +172,27 @@ export default function reducer(state = initialState, action = {}) {
         currentTime: 0
       };
     }
+
+    case SET_AYAH: {
+
+      const [surahId, ayahNum] = action.currentAyah.split(':');
+      const currentAyah = `${surahId}:${parseInt(ayahNum, 10)}`;
+
+      return {
+        ...state,
+        segments: {
+          ...state.segments,
+          [surahId]: {
+            ...state.segments[surahId],
+            [currentAyah]: buildSegments(state.segments[surahId][currentAyah])
+          }
+        },
+        currentAyah,
+        currentFile: state.files[surahId][currentAyah],
+        currentTime: 0
+      };
+    }
+
     case PREVIOUS: {
       const [surahId, ayahNum] = action.currentAyah.split(':');
       const nextId = `${surahId}:${parseInt(ayahNum, 10) - 1}`;
@@ -285,6 +307,13 @@ export function stop() {
 export function next(currentAyah) {
   return {
     type: NEXT,
+    currentAyah
+  };
+}
+
+export function setAyah(currentAyah) {
+  return {
+    type: SET_AYAH,
     currentAyah
   };
 }
