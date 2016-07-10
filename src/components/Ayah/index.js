@@ -145,9 +145,9 @@ export default class Ayah extends Component {
   }
 
   renderPlayLink() {
-    const { isSearch, ayah } = this.props;
+    const { isSearched, ayah } = this.props;
 
-    if (!isSearch) {
+    if (!isSearched) {
       return (
         <a
           onClick={() => this.handlePlay(ayah.ayahKey)}
