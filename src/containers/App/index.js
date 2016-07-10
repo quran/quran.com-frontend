@@ -17,7 +17,6 @@ import FontStyles from 'components/FontStyles';
 
 const styles = require('./style.scss');
 
-@metrics(metricsConfig)
 class App extends Component {
   static propTypes = {
     surahs: PropTypes.object,
@@ -103,4 +102,6 @@ class App extends Component {
   }
 }
 
-export default metrics(metricsConfig)(connect(state => ({surahs: state.surahs.entities }))(App));
+const metricsApp = metrics(metricsConfig)(App);
+
+export default connect(state => ({surahs: state.surahs.entities }))(metricsApp);
