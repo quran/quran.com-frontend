@@ -34,7 +34,8 @@ const initialState = {
   isPlaying: false,
   repeat: {
     from: undefined,
-    to: undefined
+    to: undefined,
+    times: Infinity
   },
   shouldScroll: false,
   isLoadedOnClient: false,

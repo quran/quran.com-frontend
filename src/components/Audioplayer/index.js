@@ -205,6 +205,54 @@ export default class Audioplayer extends Component {
     }
   }
 
+  handleRepeat = (file) => {
+    const { repeat, currentAyah, setRepeat } = this.props;
+    const ayah = parseInt(currentAyah.split(':')[1], 10);
+
+    file.pause();
+
+    if (repeat.from > ayah && repeat.to < ayah) {
+      // user selected a range where current ayah is outside
+      return this.handleAyahChange();
+    }
+
+    if (repeat.from === repeat.to) {
+      // user selected single ayah repeat
+      if (repeat.times === 1) {
+        // end of times
+        setRepeat({});
+
+        return this.handleAyahChange();
+      }
+
+      setRepeat({ ...repeat, times: repeat.times - 1 });
+      file.currentTime = 0; // eslint-disable-line no-param-reassign
+
+      return file.play();
+    }
+
+    if (repeat.from !== repeat.to) {
+      // user selected a range
+      if (ayah < repeat.to) {
+        // still in range
+        return this.handleAyahChange();
+      }
+
+      if (ayah === repeat.to) {
+        // end of range
+        if (repeat.times === 1) {
+          // end of times
+          setRepeat({});
+
+          return this.handleAyahChange();
+        }
+
+        setRepeat({ ...repeat, times: repeat.times - 1 });
+
+      }
+    }
+  }
+
   handleScrollToggle = (event) => {
     event.preventDefault();
 
@@ -251,10 +299,8 @@ export default class Audioplayer extends Component {
     const onEnded = () => {
       const { repeat } = this.props;
 
-      if (repeat) {
-        file.pause();
-        file.currentTime = 0; // eslint-disable-line no-param-reassign
-        return file.play();
+      if (repeat.from) {
+        return this.handleRepeat(file);
       }
 
       if (file.readyState >= 3 && file.paused) {

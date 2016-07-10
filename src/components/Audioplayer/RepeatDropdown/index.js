@@ -195,7 +195,7 @@ export default class RepeatButton extends Component {
                 times: parseInt(event.target.value, 10)
               })}
             >
-              <option value={null}>
+              <option value={Infinity}>
                 Loop
               </option>
               {
