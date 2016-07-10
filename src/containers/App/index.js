@@ -103,4 +103,4 @@ class App extends Component {
   }
 }
 
-export default connect(state => ({surahs: state.surahs.entities }))(App)
+export default metrics(metricsConfig)(connect(state => ({surahs: state.surahs.entities }))(App));

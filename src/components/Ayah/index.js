@@ -46,13 +46,11 @@ export default class Ayah extends Component {
   }
 
   handlePlay(ayah) {
-
     const {stop, setAyah, start} = this.props.actions;
 
     stop();
     setAyah(ayah);
     start();
-
   }
 
   renderTranslations() {

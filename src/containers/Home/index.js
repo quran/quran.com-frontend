@@ -187,6 +187,5 @@ const AsyncHome = asyncConnect([{
   }
 }])(Home);
 
-
 export default connect(state => ({surahs: state.surahs.entities}))(AsyncHome);
 
