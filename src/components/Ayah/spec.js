@@ -12,7 +12,7 @@ describe('<Ayah />', () => {
     wrapper = shallow(<Ayah ayah={ayah} />);
   });
 
-  it('should render', () => {
+  fit('should render', () => {
     expect(wrapper).to.be.ok;
   });
 
