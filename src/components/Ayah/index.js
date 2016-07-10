@@ -27,7 +27,7 @@ export default class Ayah extends Component {
 
   static defaultProps = {
     currentWord: null,
-    isSearched: false,
+    isSearched: false
   };
 
   shouldComponentUpdate(nextProps) {
@@ -44,10 +44,14 @@ export default class Ayah extends Component {
     return conditions.some(condition => condition);
   }
 
-  handlePlay() {
-    this.setState({
-      open: false
-    });
+  handlePlay(ayah) {
+
+    const{stop, setAyah, start} = this.props.actions;
+
+    stop();
+    setAyah(ayah);
+    start();
+
   }
 
   renderTranslations() {
@@ -145,7 +149,7 @@ export default class Ayah extends Component {
     if (!isSearch) {
       return (
         <a
-          onClick={() => this.handlePlay(ayah.ayahNum)}
+          onClick={() => this.handlePlay(ayah.ayahKey)}
           className="text-muted"
         >
           <i className="ss-icon ss-play" /> Play
