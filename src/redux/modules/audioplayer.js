@@ -18,7 +18,7 @@ const STOP = '@@quran/audioplayer/STOP';
 export const NEXT = '@@quran/audioplayer/NEXT';
 export const SET_AYAH = '@@quran/audioplayer/SET';
 const PREVIOUS = '@@quran/audioplayer/PREVIOUS';
-const TOGGLE_REPEAT = '@@quran/audioplayer/TOGGLE_REPEAT';
+const SET_REPEAT = '@@quran/audioplayer/SET_REPEAT';
 const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
 const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
 const UPDATE = '@@quran/audioplayer/UPDATE';
@@ -32,7 +32,10 @@ const initialState = {
   currentTime: 0,
   isSupported: true,
   isPlaying: false,
-  shouldRepeat: false,
+  repeat: {
+    from: undefined,
+    to: undefined
+  },
   shouldScroll: false,
   isLoadedOnClient: false,
   isLoading: true
@@ -204,10 +207,10 @@ export default function reducer(state = initialState, action = {}) {
         currentTime: 0
       };
     }
-    case TOGGLE_REPEAT:
+    case SET_REPEAT:
       return {
         ...state,
-        shouldRepeat: !state.shouldRepeat
+        repeat: action.repeat
       };
     case TOGGLE_SCROLL:
       return {
@@ -325,9 +328,10 @@ export function previous(currentAyah) {
   };
 }
 
-export function toggleRepeat() {
+export function setRepeat(repeat) {
   return {
-    type: TOGGLE_REPEAT
+    type: SET_REPEAT,
+    repeat
   };
 }
 

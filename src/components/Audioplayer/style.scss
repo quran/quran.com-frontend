@@ -68,9 +68,32 @@
 :local .disabled{
   opacity: 0.5;
   cursor: not-allowed !important;
+  pointer-events: none;
 }
 
 .verse{
   padding: 0px;
   color: $olive;
+}
+
+:local .popover{
+  :global(.popover-title){
+    font-family: $font-montserrat;
+    text-transform: uppercase;
+    color: $cream;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 0.75em;
+  }
+
+  :global(.popover-content){
+    :global(a){
+      font-size: 0.8em;
+    }
+  }
+  .pill{
+    :global(a){
+      padding: 10px 15px;
+    }
+  }
 }

@@ -8,7 +8,7 @@ import {
   stop,
   next,
   previous,
-  toggleRepeat,
+  setRepeat,
   toggleScroll,
   buildOnClient,
   update
@@ -37,7 +37,7 @@ const style = require('./style.scss');
     isPlaying: state.audioplayer.isPlaying,
     isLoadedOnClient: state.audioplayer.isLoadedOnClient,
     isLoading: state.audioplayer.isLoading,
-    shouldRepeat: state.audioplayer.shouldRepeat,
+    repeat: state.audioplayer.repeat,
     shouldScroll: state.audioplayer.shouldScroll,
     duration: state.audioplayer.duration,
     currentTime: state.audioplayer.currentTime,
@@ -47,7 +47,7 @@ const style = require('./style.scss');
     stop,
     next,
     previous,
-    toggleRepeat,
+    setRepeat,
     toggleScroll,
     buildOnClient,
     update
@@ -70,9 +70,9 @@ export default class Audioplayer extends Component {
     next: PropTypes.func.isRequired,
     previous: PropTypes.func.isRequired,
     update: PropTypes.func.isRequired,
-    shouldRepeat: PropTypes.bool.isRequired,
+    repeat: PropTypes.object.isRequired,
     shouldScroll: PropTypes.bool.isRequired,
-    toggleRepeat: PropTypes.func.isRequired,
+    setRepeat: PropTypes.func.isRequired,
     toggleScroll: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool,
     currentTime: PropTypes.number,
@@ -249,9 +249,9 @@ export default class Audioplayer extends Component {
     });
 
     const onEnded = () => {
-      const { shouldRepeat } = this.props;
+      const { repeat } = this.props;
 
-      if (shouldRepeat) {
+      if (repeat) {
         file.pause();
         file.currentTime = 0; // eslint-disable-line no-param-reassign
         return file.play();
@@ -361,10 +361,11 @@ export default class Audioplayer extends Component {
       currentTime,
       isSupported,
       duration,
+      surah,
       isLoadedOnClient,
-      shouldRepeat, // eslint-disable-line no-shadow
+      repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
-      toggleRepeat // eslint-disable-line no-shadow
+      setRepeat // eslint-disable-line no-shadow
     } = this.props;
 
     if (!isSupported) {
@@ -399,7 +400,12 @@ export default class Audioplayer extends Component {
             {this.renderNextButton()}
           </li>
           <li>
-            <RepeatButton shouldRepeat={shouldRepeat} onRepeatToggle={toggleRepeat} />
+            <RepeatButton
+              repeat={repeat}
+              setRepeat={setRepeat}
+              current={parseInt(currentAyah.split(':')[1], 10)}
+              surah={surah}
+            />
           </li>
           <li>
             <ScrollButton shouldScroll={shouldScroll} onScrollToggle={this.handleScrollToggle} />
