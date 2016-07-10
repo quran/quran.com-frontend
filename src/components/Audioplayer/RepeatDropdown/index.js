@@ -3,6 +3,7 @@ import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
+import FormControl from 'react-bootstrap/lib/FormControl';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
@@ -64,10 +65,11 @@ export default class RepeatButton extends Component {
 
     return (
       <Col md={12} style={{paddingTop: 15}}>
-        <ul className="list-inline">
+        From - To: <br />
+        <ul className="list-inline" style={{marginBottom: 0}}>
           <li>
-            <select
-              className="form-control"
+            <FormControl
+              componentClass="select"
               value={repeat.from}
               onChange={(event) => setRepeat({
                 ...repeat,
@@ -82,12 +84,12 @@ export default class RepeatButton extends Component {
                   </option>
                 ))
               }
-            </select>
+            </FormControl>
           </li>
           <li> - </li>
           <li>
-            <select
-              className="form-control"
+            <FormControl
+              componentClass="select"
               value={repeat.to}
               onChange={(event) => setRepeat({ ...repeat, to: parseInt(event.target.value, 10)})}
             >
@@ -98,7 +100,7 @@ export default class RepeatButton extends Component {
                   </option>
                 ))
               }
-            </select>
+            </FormControl>
           </li>
         </ul>
       </Col>
@@ -106,13 +108,29 @@ export default class RepeatButton extends Component {
   }
 
   renderSingleAyah() {
-    const { current } = this.props;
+    const { repeat, setRepeat, surah } = this.props;
+    const array = Array(surah.ayat).join().split(',');
 
     return (
-      <Col md={12}>
-        <h5>
-          Repeating Ayah: {current}
-        </h5>
+      <Col md={12} style={{paddingTop: 15}}>
+        Ayah: <br />
+        <FormControl
+          componentClass="select"
+          value={repeat.from}
+          onChange={(event) => setRepeat({
+            ...repeat,
+            from: parseInt(event.target.value, 10),
+            to: parseInt(event.target.value, 10)
+          })}
+        >
+          {
+            array.map((ayah, index) => (
+              <option key={index} value={index + 1}>
+                {index + 1}
+              </option>
+            ))
+          }
+        </FormControl>
       </Col>
     );
   }
@@ -129,7 +147,7 @@ export default class RepeatButton extends Component {
             onSelect={this.handleNavChange}
           >
             <NavItem eventKey={1} title="Single Ayah" className={style.pill}>
-              Single Ayah
+              Single
             </NavItem>
             <NavItem eventKey={2} title="Range" className={style.pill}>
               Range
@@ -141,7 +159,8 @@ export default class RepeatButton extends Component {
   }
 
   render() {
-    const { repeat } = this.props;
+    const { repeat, setRepeat } = this.props;
+    const times = Array(10).join().split(',');
 
     const popover = (
       <Popover
@@ -162,8 +181,32 @@ export default class RepeatButton extends Component {
         }
       >
         {this.renderOptions()}
-        <Row>
+        <Row className={!repeat.from && style.disabled}>
           {this.state.nav === 1 ? this.renderSingleAyah() : this.renderRangeAyahs()}
+        </Row>
+        <Row className={!repeat.from && style.disabled}>
+          <Col md={12} style={{paddingTop: 15}}>
+            Times: <br />
+            <FormControl
+              componentClass="select"
+              value={repeat.times}
+              onChange={(event) => setRepeat({
+                ...repeat,
+                times: parseInt(event.target.value, 10)
+              })}
+            >
+              <option value={null}>
+                Loop
+              </option>
+              {
+                times.map((ayah, index) => (
+                  <option key={index} value={index + 1}>
+                    {index + 1}
+                  </option>
+                ))
+              }
+            </FormControl>
+          </Col>
         </Row>
       </Popover>
     );

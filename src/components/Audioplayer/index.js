@@ -18,7 +18,7 @@ import {
 import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
-import RepeatButton from './RepeatButton';
+import RepeatDropdown from './RepeatDropdown';
 
 // Helpers
 import debug from '../../helpers/debug';
@@ -400,7 +400,7 @@ export default class Audioplayer extends Component {
             {this.renderNextButton()}
           </li>
           <li>
-            <RepeatButton
+            <RepeatDropdown
               repeat={repeat}
               setRepeat={setRepeat}
               current={parseInt(currentAyah.split(':')[1], 10)}
