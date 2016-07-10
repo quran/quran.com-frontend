@@ -1,7 +1,7 @@
 /* eslint-disable no-case-declarations */
 import { buildAudioFromHash, testIfSupported } from '../../helpers/buildAudio';
 import { buildSegments, extractSegments } from '../../helpers/buildSegments';
-import debug from 'helpers/debug';
+import debug from '../../helpers/debug';
 
 import {
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,

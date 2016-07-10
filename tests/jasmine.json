@@ -1,7 +1,0 @@
-{
-  "spec_dir": "./",
-  "spec_files": [
-    "./tests/jasmine-boot.js",
-    "./src/**/*.test.js"
-  ]
-}

@@ -1,7 +1,7 @@
 import AES from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
 
-import debug from 'helpers/debug';
+import debug from '../helpers/debug';
 
 export const buildSegments = (segments) => {
   let parsedSegments = null;

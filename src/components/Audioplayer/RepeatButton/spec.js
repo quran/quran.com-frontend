@@ -4,6 +4,12 @@ import { mount } from 'enzyme';
 import RepeatButton from './index';
 
 let makeComponent, component, onRepeatToggle;
+require.extensions['.scss'] = function () {
+  return {
+
+  };
+};
+
 
 describe('<RepeatButton />', () => {
   beforeEach(() => {
@@ -16,8 +22,10 @@ describe('<RepeatButton />', () => {
     }
   });
 
-  it('should indicate that shouldRepeat', () => {
+  it.only('should indicate that shouldRepeat', () => {
     makeComponent(true);
+
+    console.log(component.find('label').html())
 
     expect(component.find('label').first().props().className).to.contain('repeat');
   });

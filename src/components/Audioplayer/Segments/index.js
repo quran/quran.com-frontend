@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 
-import debug from 'helpers/debug';
+import debug from '../../../helpers/debug';
 
 export default class Segments extends Component {
   static propTypes = {

@@ -1,0 +1,4 @@
+  src/**/spec.js
+--recursive
+--timeout 10000
+--require ./tests/mocha-init
