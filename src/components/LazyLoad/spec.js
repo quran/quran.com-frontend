@@ -39,7 +39,7 @@ describe('<LazyLoad />', () => {
     expect(wrapper.text()).to.eql('End');
   });
 
-  it('should call onLazyLoad when not end and not loading', () => {
+  it.only('should call onLazyLoad when not end and not loading', () => {
     wrapper.instance().onScroll();
     expect(wrapper.props().onLazyLoad).to.have.been.called;
   });
