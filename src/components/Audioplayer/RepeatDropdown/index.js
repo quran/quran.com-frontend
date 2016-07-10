@@ -15,16 +15,12 @@ export default class RepeatButton extends Component {
   static propTypes = {
     surah: PropTypes.object.isRequired,
     repeat: PropTypes.shape({
-      from: PropTypes.number.isRequired,
-      to: PropTypes.number.isRequired,
+      from: PropTypes.number,
+      to: PropTypes.number,
       times: PropTypes.number
     }).isRequired,
     setRepeat: PropTypes.func.isRequired,
     current: PropTypes.number.isRequired
-  };
-
-  state = {
-    nav: 1
   };
 
   handleToggle = () => {
@@ -42,8 +38,6 @@ export default class RepeatButton extends Component {
 
   handleNavChange = (nav) => {
     const { setRepeat, current } = this.props;
-
-    this.setState({ nav });
 
     if (nav === 1) {
       // Should set single ayah
@@ -135,7 +129,7 @@ export default class RepeatButton extends Component {
     );
   }
 
-  renderOptions() {
+  renderNav() {
     const { repeat } = this.props;
 
     return (
@@ -143,7 +137,7 @@ export default class RepeatButton extends Component {
         <Col md={12}>
           <Nav
             bsStyle="pills"
-            activeKey={this.state.nav}
+            activeKey={repeat.from === repeat.to ? 1 : 2}
             onSelect={this.handleNavChange}
           >
             <NavItem eventKey={1} title="Single Ayah" className={style.pill}>
@@ -158,9 +152,50 @@ export default class RepeatButton extends Component {
     );
   }
 
-  render() {
+  renderOptions() {
+    const { repeat } = this.props;
+
+    return (
+      <Row className={!repeat.from && style.disabled}>
+        {repeat.from === repeat.to ? this.renderSingleAyah() : this.renderRangeAyahs()}
+      </Row>
+    );
+  }
+
+  renderTimes() {
     const { repeat, setRepeat } = this.props;
     const times = Array(10).join().split(',');
+
+    return (
+      <Row className={!repeat.from && style.disabled}>
+        <Col md={12} style={{paddingTop: 15}}>
+          Times: <br />
+          <FormControl
+            componentClass="select"
+            value={repeat.times}
+            onChange={(event) => setRepeat({
+              ...repeat,
+              times: parseInt(event.target.value, 10)
+            })}
+          >
+            <option value={Infinity}>
+              Loop
+            </option>
+            {
+              times.map((ayah, index) => (
+                <option key={index} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))
+            }
+          </FormControl>
+        </Col>
+      </Row>
+    );
+  }
+
+  render() {
+    const { repeat } = this.props;
 
     const popover = (
       <Popover
@@ -180,34 +215,9 @@ export default class RepeatButton extends Component {
           </Row>
         }
       >
+        {this.renderNav()}
         {this.renderOptions()}
-        <Row className={!repeat.from && style.disabled}>
-          {this.state.nav === 1 ? this.renderSingleAyah() : this.renderRangeAyahs()}
-        </Row>
-        <Row className={!repeat.from && style.disabled}>
-          <Col md={12} style={{paddingTop: 15}}>
-            Times: <br />
-            <FormControl
-              componentClass="select"
-              value={repeat.times}
-              onChange={(event) => setRepeat({
-                ...repeat,
-                times: parseInt(event.target.value, 10)
-              })}
-            >
-              <option value={Infinity}>
-                Loop
-              </option>
-              {
-                times.map((ayah, index) => (
-                  <option key={index} value={index + 1}>
-                    {index + 1}
-                  </option>
-                ))
-              }
-            </FormControl>
-          </Col>
-        </Row>
+        {this.renderTimes()}
       </Popover>
     );
 

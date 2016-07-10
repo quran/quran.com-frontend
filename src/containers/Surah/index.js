@@ -460,7 +460,7 @@ class Surah extends Component {
   }
 }
 
-const AsyncSurah = asyncConnect([ { promise: surahsConnect }, { promise: ayahsConnect } ])(Surah);
+const AsyncSurah = asyncConnect([{ promise: surahsConnect }, { promise: ayahsConnect }])(Surah);
 
 function mapStateToProps(state, ownProps) {
   const surahId = parseInt(ownProps.params.surahId, 10);

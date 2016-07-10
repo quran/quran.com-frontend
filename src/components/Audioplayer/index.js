@@ -3,16 +3,7 @@ import { connect } from 'react-redux';
 import { camelize } from 'humps';
 
 // Redux
-import {
-  start,
-  stop,
-  next,
-  previous,
-  setRepeat,
-  toggleScroll,
-  buildOnClient,
-  update
-} from '../../redux/modules/audioplayer';
+import * as AudioActions from '../../redux/modules/audioplayer';
 
 // Components
 import Track from './Track';
@@ -26,34 +17,7 @@ import scroller from '../../utils/scroller';
 
 const style = require('./style.scss');
 
-@connect(
-  (state, ownProps) => ({
-    files: state.audioplayer.files[ownProps.surah.id],
-    segments: state.audioplayer.segments[ownProps.surah.id],
-    currentFile: state.audioplayer.currentFile,
-    currentAyah: state.audioplayer.currentAyah,
-    surahId: state.audioplayer.surahId,
-    isSupported: state.audioplayer.isSupported,
-    isPlaying: state.audioplayer.isPlaying,
-    isLoadedOnClient: state.audioplayer.isLoadedOnClient,
-    isLoading: state.audioplayer.isLoading,
-    repeat: state.audioplayer.repeat,
-    shouldScroll: state.audioplayer.shouldScroll,
-    duration: state.audioplayer.duration,
-    currentTime: state.audioplayer.currentTime,
-  }),
-  {
-    start,
-    stop,
-    next,
-    previous,
-    setRepeat,
-    toggleScroll,
-    buildOnClient,
-    update
-  }
-)
-export default class Audioplayer extends Component {
+export class Audioplayer extends Component {
   static propTypes = {
     className: PropTypes.string,
     surah: PropTypes.object.isRequired,
@@ -65,14 +29,15 @@ export default class Audioplayer extends Component {
     isLoadedOnClient: PropTypes.bool.isRequired,
     isSupported: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
-    start: PropTypes.func.isRequired,
-    stop: PropTypes.func.isRequired,
+    play: PropTypes.func.isRequired,
+    pause: PropTypes.func.isRequired,
     next: PropTypes.func.isRequired,
     previous: PropTypes.func.isRequired,
     update: PropTypes.func.isRequired,
     repeat: PropTypes.object.isRequired,
     shouldScroll: PropTypes.bool.isRequired,
     setRepeat: PropTypes.func.isRequired,
+    setAyah: PropTypes.func.isRequired,
     toggleScroll: PropTypes.func.isRequired,
     isPlaying: PropTypes.bool,
     currentTime: PropTypes.number,
@@ -156,12 +121,12 @@ export default class Audioplayer extends Component {
   }
 
   handleAyahChange = (direction = 'next') => {
-    const { isPlaying, start, stop, currentAyah } = this.props; // eslint-disable-line no-shadow, max-len
+    const { isPlaying, play, pause, currentAyah } = this.props; // eslint-disable-line no-shadow, max-len
     const previouslyPlaying = isPlaying;
 
-    if (isPlaying) stop();
+    if (isPlaying) pause();
 
-    if (!this[camelize(`get_${direction}`)]()) return stop();
+    if (!this[camelize(`get_${direction}`)]()) return pause();
 
     this.props[direction](currentAyah);
 
@@ -169,7 +134,7 @@ export default class Audioplayer extends Component {
 
     this.preloadNext();
 
-    if (previouslyPlaying) start();
+    if (previouslyPlaying) play();
 
     return false;
   }
@@ -182,10 +147,10 @@ export default class Audioplayer extends Component {
     }
   }
 
-  start = () => {
+  play = () => {
     this.handleScrollTo();
 
-    this.props.start();
+    this.props.play();
     this.preloadNext();
   }
 
@@ -206,8 +171,13 @@ export default class Audioplayer extends Component {
   }
 
   handleRepeat = (file) => {
-    const { repeat, currentAyah, setRepeat } = this.props;
-    const ayah = parseInt(currentAyah.split(':')[1], 10);
+    const {
+      repeat,
+      currentAyah,
+      setRepeat, // eslint-disable-line no-shadow
+      setAyah // eslint-disable-line no-shadow
+    } = this.props;
+    const [surah, ayah] = currentAyah.split(':').map(val => parseInt(val, 10));
 
     file.pause();
 
@@ -218,6 +188,8 @@ export default class Audioplayer extends Component {
 
     if (repeat.from === repeat.to) {
       // user selected single ayah repeat
+      if (ayah !== repeat.from) return this.handleAyahChange();
+
       if (repeat.times === 1) {
         // end of times
         setRepeat({});
@@ -248,9 +220,13 @@ export default class Audioplayer extends Component {
         }
 
         setRepeat({ ...repeat, times: repeat.times - 1 });
+        setAyah(`${surah}:${repeat.from}`);
 
+        return this.play();
       }
     }
+
+    return false;
   }
 
   handleScrollToggle = (event) => {
@@ -352,7 +328,7 @@ export default class Audioplayer extends Component {
   }
 
   renderPlayStopButtons() {
-    const { isPlaying, stop } = this.props; // eslint-disable-line no-shadow
+    const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
 
     let icon = <i className="ss-icon ss-play" />;
 
@@ -361,7 +337,7 @@ export default class Audioplayer extends Component {
     }
 
     return (
-      <a className={`pointer ${style.buttons}`} onClick={isPlaying ? stop : this.start}>
+      <a className={`pointer ${style.buttons}`} onClick={isPlaying ? pause : this.play}>
         {icon}
       </a>
     );
@@ -475,3 +451,21 @@ export default class Audioplayer extends Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => ({
+  files: state.audioplayer.files[ownProps.surah.id],
+  segments: state.audioplayer.segments[ownProps.surah.id],
+  currentFile: state.audioplayer.currentFile,
+  currentAyah: state.audioplayer.currentAyah,
+  surahId: state.audioplayer.surahId,
+  isSupported: state.audioplayer.isSupported,
+  isPlaying: state.audioplayer.isPlaying,
+  isLoadedOnClient: state.audioplayer.isLoadedOnClient,
+  isLoading: state.audioplayer.isLoading,
+  repeat: state.audioplayer.repeat,
+  shouldScroll: state.audioplayer.shouldScroll,
+  duration: state.audioplayer.duration,
+  currentTime: state.audioplayer.currentTime,
+});
+
+export default connect(mapStateToProps, AudioActions)(Audioplayer);
