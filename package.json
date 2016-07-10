@@ -140,7 +140,7 @@
     "redux-devtools-dock-monitor": "^1.1.0",
     "redux-devtools-log-monitor": "^1.0.5",
     "selenium-server": "^2.48.2",
-    "sinon": "^1.15.3",
+    "sinon": "^1.17.4",
     "sinon-chai": "^2.8.0",
     "webpack-dev-server": "^1.6.5"
   },

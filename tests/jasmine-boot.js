@@ -16,6 +16,7 @@ jasmine.getEnv().addReporter(new SpecReporter({
 var jsdom = require('jsdom');
 global.document = jsdom.jsdom('<!doctype html><html><body><div id="quran"></div></body></html>');
 global.window = document.defaultView;
+global.sinon = require('sinon');
 propagateToGlobal(global.window);
 
 // from mocha-jsdom https://github.com/rstacruz/mocha-jsdom/blob/master/index.js#L80
