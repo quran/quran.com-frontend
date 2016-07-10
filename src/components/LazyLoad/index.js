@@ -34,7 +34,6 @@ export default class LazyLoad extends Component {
   }
 
   onScroll = () => {
-    console.log("SCROLLLINNG")
     const { isLoading, isEnd, offset, onLazyLoad } = this.props;
     const dom = ReactDOM.findDOMNode(this);
     const componentOffset = (dom.offsetParent || dom).offsetTop - (window.pageYOffset + window.innerHeight); // eslint-disable-line max-len

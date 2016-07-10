@@ -17,6 +17,7 @@ describe('<LazyLoad />', () => {
           onLazyLoad={onLazyLoad}
           isEnd={isEnd}
           isLoading={isLoading}
+          componentOffset={124}
           endComponent={<p>End</p>}
           loadingComponent={<p>Loading</p>}
         />
@@ -39,7 +40,7 @@ describe('<LazyLoad />', () => {
     expect(wrapper.text()).to.eql('End');
   });
 
-  it.only('should call onLazyLoad when not end and not loading', () => {
+  it('should call onLazyLoad when not end and not loading', () => {
     wrapper.instance().onScroll();
     expect(wrapper.props().onLazyLoad).to.have.been.called;
   });
