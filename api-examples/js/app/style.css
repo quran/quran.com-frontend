@@ -1,0 +1,56 @@
+
+body {
+  margin-top: 50px;
+}
+
+a, a:hover, a:visited, a:link, a:active {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.navbar-brand, .panel-title {
+  font-weight: bold;
+}
+
+.panel-heading {
+  padding: 0px;
+}
+.panel-heading div {
+  padding: 10px;
+}
+
+.section {
+  color: #cc3333;
+  font-size: 16px;
+}
+
+.example {
+  color: #228822;
+  cursor: pointer;
+}
+
+#try .panel-body {
+  padding: 0px;
+}
+#try .panel-body pre {
+  border: none;
+  margin: 0px;
+}
+
+#jscode, #output {
+  padding: 15px;
+  font-family: Ubuntu Mono, monospace, courier;
+  font-size: 16px;
+}
+#jscode {
+  line-height: 1.2em;
+}
+
+#output {
+  background-color: #000000;
+  color: #eeeeee;
+}
+
+#jscode-run {
+  margin-left: 5px;
+}

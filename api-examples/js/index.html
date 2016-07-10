@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Quran.com API Examples</title>
+
+    <!-- jQuery 2.1.4 -->
+    <script src="lib/jquery-2.1.4/jquery.min.js"></script>
+
+    <!-- Bootstrap 3.3.5 -->
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="lib/bootstrap-3.3.5-dist/simplex/bootstrap.min.css">
+    <script src="lib/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
+
+    <!-- mustache js templates -->
+    <script src="lib/mustache/mustache.min.js"></script>
+
+    <!-- ace editor -->
+    <script src="lib/ace-1.2.0/ace.js" type="text/javascript" charset="utf-8"></script>
+
+    <!-- app -->
+    <link rel="stylesheet" href="app/style.css" type="text/css" />
+    <script src="app/http_request.js"></script>
+    <script src="app/examples.js"></script>
+    <script src="examples/example_data.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="http://quran.com/api-examples/js/" class="navbar-brand">Quran.com API Examples</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://quran.com/docs/" target="_blank">Quran.com API Reference</a></li>
+            <li><a href="http://quran.com" target="_blank">http://quran.com</a></li>
+          </ul>
+
+        </div>
+      </div>
+    </div><!-- End navbar -->
+
+    <div class="container">
+      <div class="row">
+
+        <!-- List of examples -->
+        <div id="examples" class="col-sm-4 panel-group">
+          <!-- here comes the code from the mustache template #tmpl-examples -->
+        </div>
+
+        <!-- Trying an example -->
+        <div id="try" class="col-sm-8">
+          <!-- Panel: Example Code -->
+          <div class="panel panel-success">
+            <div class="panel-heading clearfix">
+              <div class="panel-title">
+                <span id="jscode-title">Example Code</span>
+                <button id="jscode-run" class="btn btn-info btn-xs pull-right">RUN</button>
+                <a id="jscode-api" href="http://quran.com/docs/api/" target="_blank">
+                  <button class="btn btn-info btn-xs pull-right">API</button>
+                </a>
+              </div>
+            </div>
+            <div class="panel-body">
+              <div id="jscode"></div>
+            </div>
+          </div><!-- panel -->
+
+          <!-- Panel: Debug Output -->
+          <div class="panel panel-success clearfix">
+            <div class="panel-heading">
+              <div class="panel-title">Debug Output
+                <a href="#top">
+                  <button type="button" class="btn btn-info btn-xs pull-right">
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                  </button>
+                </a>
+              </div>
+            </div>
+            <div class="panel-body">
+              <pre id="output">output</pre>
+            </div>
+          </div><!-- panel -->
+
+          <!-- Scroll up to the top -->
+          <a href="#top">
+            <button type="button" class="btn btn-info btn-block" style="margin-bottom: 50px;">
+              <span class="glyphicon glyphicon-arrow-up"> Go to the Top </span>
+            </button>
+          </a>
+
+        </div>
+      </div> <!-- row -->
+    </div>  <!-- container -->
+
+    <!-- mustache template for examples -->
+    <script id="tmpl-examples" type="x-tmpl-mustache">
+      {{#groups}}
+      <!-- panel -->
+      <div class="panel panel-info">
+        <!-- panel-heading -->
+        <div class="panel-heading">
+          <a data-toggle="collapse" data-parent="#examples" href="#{{group}}" class="panel-title">
+            <div>{{group}}</div>
+          </a>
+        </div><!-- panel-heading -->
+
+        <!-- panel-collapse -->
+        <div id="{{group}}" class="panel-collapse collapse">
+          <div class="panel-body">
+            {{#sections}}
+            <div class="section">{{section}}</div>
+            <div>
+              <ul>
+                {{#examples}}
+                <li class="example" jsfile="{{jsfile}}" apiref="{{apiref}}">
+                  {{title}}
+                </li>
+                {{/examples}}
+              </ul>
+            </div>
+            {{/sections}}
+          </div><!-- panel-body -->
+        </div><!-- panel-collapse -->
+
+      </div><!-- panel -->
+      {{/groups}}
+    </script>
+    <!-- end mustache template for examples -->
+
+  </body>
+</html>
