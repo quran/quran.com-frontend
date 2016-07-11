@@ -13,12 +13,12 @@ import {
 const SET_USER_AGENT = '@@quran/audioplayer/SET_USER_AGENT';
 const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
 const SET_CURRENT_WORD = '@@quran/audioplayer/SET_CURRENT_WORD';
-const START = '@@quran/audioplayer/START';
-const STOP = '@@quran/audioplayer/STOP';
+const PLAY = '@@quran/audioplayer/PLAY';
+const PAUSE = '@@quran/audioplayer/PAUSE';
 export const NEXT = '@@quran/audioplayer/NEXT';
 export const SET_AYAH = '@@quran/audioplayer/SET';
 const PREVIOUS = '@@quran/audioplayer/PREVIOUS';
-const TOGGLE_REPEAT = '@@quran/audioplayer/TOGGLE_REPEAT';
+const SET_REPEAT = '@@quran/audioplayer/SET_REPEAT';
 const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
 const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
 const UPDATE = '@@quran/audioplayer/UPDATE';
@@ -32,7 +32,11 @@ const initialState = {
   currentTime: 0,
   isSupported: true,
   isPlaying: false,
-  shouldRepeat: false,
+  repeat: {
+    from: undefined,
+    to: undefined,
+    times: Infinity
+  },
   shouldScroll: false,
   isLoadedOnClient: false,
   isLoading: true
@@ -139,14 +143,14 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         userAgent: action.userAgent
       };
-    case START:
+    case PLAY:
       state.currentFile.play();
 
       return {
         ...state,
         isPlaying: true
       };
-    case STOP:
+    case PAUSE:
       state.currentFile.pause();
 
       return {
@@ -174,7 +178,6 @@ export default function reducer(state = initialState, action = {}) {
     }
 
     case SET_AYAH: {
-
       const [surahId, ayahNum] = action.currentAyah.split(':');
       const currentAyah = `${surahId}:${parseInt(ayahNum, 10)}`;
 
@@ -204,10 +207,10 @@ export default function reducer(state = initialState, action = {}) {
         currentTime: 0
       };
     }
-    case TOGGLE_REPEAT:
+    case SET_REPEAT:
       return {
         ...state,
-        shouldRepeat: !state.shouldRepeat
+        repeat: action.repeat
       };
     case TOGGLE_SCROLL:
       return {
@@ -292,15 +295,15 @@ export function setCurrentWord(word) {
   };
 }
 
-export function start() {
+export function play() {
   return {
-    type: START
+    type: PLAY
   };
 }
 
-export function stop() {
+export function pause() {
   return {
-    type: STOP
+    type: PAUSE
   };
 }
 
@@ -325,9 +328,10 @@ export function previous(currentAyah) {
   };
 }
 
-export function toggleRepeat() {
+export function setRepeat(repeat) {
   return {
-    type: TOGGLE_REPEAT
+    type: SET_REPEAT,
+    repeat
   };
 }
 
