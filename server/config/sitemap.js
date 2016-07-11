@@ -39,13 +39,13 @@ export default (server) => {
         cacheTime: 600000,  // 600 sec cache period
         urls: [
           ...urls,
-          { url: '/about',  changefreq: 'monthly', priority: 0.3 },
-          { url: '/contactus',  changefreq: 'monthly', priority: 0.3 },
-          { url: '/contact',  changefreq: 'monthly', priority: 0.3 },
-          { url: '/donations',  changefreq: 'monthly', priority: 0.3 },
-          { url: '/contributions',  changefreq: 'monthly', priority: 0.3 },
+          { url: '/about', changefreq: 'monthly', priority: 0.3 },
+          { url: '/contactus', changefreq: 'monthly', priority: 0.3 },
+          { url: '/contact', changefreq: 'monthly', priority: 0.3 },
+          { url: '/donations', changefreq: 'monthly', priority: 0.3 },
+          { url: '/contributions', changefreq: 'monthly', priority: 0.3 },
 
-          { url: '/search',  changefreq: 'weekly',  priority: 0.8 }
+          { url: '/search', changefreq: 'weekly', priority: 0.8 }
         ]
       });
 
@@ -53,4 +53,4 @@ export default (server) => {
       res.send(xml.toString());
     }).catch(err => console.trace(err));
   });
-}
+};
