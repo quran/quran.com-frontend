@@ -5,11 +5,11 @@
   "scripts": {
     "test": "./node_modules/karma/bin/karma start",
     "test:ci:unit": "./node_modules/karma/bin/karma start --browsers PhantomJS --single-run; npm run test:ci:lint",
-    "test:ci:functional": "bash tests/functional/test.sh start",
+    "test:ci:functional": "BROWSER=phantomjs bash tests/functional/test.sh start-ci",
     "posttest:ci:functional": "bash tests/functional/test.sh stop",
     "test:ci:lint": "eslint ./src/**/*.js",
     "test:dev:unit": "./node_modules/karma/bin/karma start",
-    "test:dev:functional": "bash tests/functional/test.sh start",
+    "test:dev:functional": "BROWSER=phantomjs bash tests/functional/test.sh start",
     "posttest:dev:functional": "bash tests/functional/test.sh stop",
     "test:dev:lint": "eslint ./src/scripts/**/*.js",
     "test:stylelint": "stylelint './src/**/*.scss' --config webpack/.stylelintrc",
@@ -154,7 +154,9 @@
     "sinon": "^1.15.3",
     "sinon-chai": "^2.8.0",
     "stylelint-webpack-plugin": "^0.2.0",
-    "webdriverio": "3.4.0",
+    "wdio-mocha-framework": "^0.3.7",
+    "wdio-spec-reporter": "0.0.3",
+    "webdriverio": "4.2.1",
     "webpack-dev-server": "^1.6.5"
   },
   "pre-commit": [

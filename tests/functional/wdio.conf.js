@@ -1,9 +1,9 @@
+const browser = process.env.BROWSERNAME || 'phantomjs';
+
 exports.config = {
 
   maxInstances: 4,
-  host: '127.0.0.1',
-  port: 4444,
-  sync: false,
+  sync: true,
   specs: [
     './tests/functional/specs/**/*.js'
   ],
@@ -12,7 +12,7 @@ exports.config = {
 
   capabilities: [
     {
-      browserName: 'phantomjs'
+      browserName: browser
     }
   ],
 
@@ -22,28 +22,23 @@ exports.config = {
 
   waitforTimeout: 10000,
   framework: 'mocha',
-  reporter: 'spec',
-  jasmineNodeOpts: {
-    defaultTimeoutInterval: 60000,
-    expectationResultHandler: function(passed, assertion) {
-    }
+  reporters: ['dot', 'spec'],
+  onPrepare: () => {
   },
-  onPrepare: function() {
-  },
-  before: function() {
+  before: () => {
 
-    var chai = require('chai');
+    const chai = require('chai'); // eslint-disable-line global-require
     global.chai = chai;
     global.expect = chai.expect;
 
-    process.on('unhandledRejection', function unhandledRejection(e) {
+    process.on('unhandledRejection', (e) => {
       console.error(e);
       if (e.stack) {
         console.error(e.stack);
       }
     });
 
-    require("babel-core/register");
-    require("babel-polyfill");
+    require('babel-core/register'); // eslint-disable-line global-require
+    require('babel-polyfill'); // eslint-disable-line global-require
   }
 };

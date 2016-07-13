@@ -1,6 +1,6 @@
 module.exports = class BasePage {
 
-  constructor(browser, object) {
+  constructor() {
 
     this.selectors = {
       SURAH_NAME: '.surah-body .navbar-text.surah-name'
@@ -8,17 +8,17 @@ module.exports = class BasePage {
   }
 
 
-  async wait(time = 200) {
+  wait(time = 200) {
 
-    await browser.pause(time);
+    browser.pause(time);
   }
 
-  async getSurahName() {
-    return await browser.getText(this.selectors.SURAH_NAME);
+  getSurahName() {
+    return browser.getText(this.selectors.SURAH_NAME);
   }
 
-  async goHome() {
-    await browser.url('http://quran.com');
+  goHome() {
+    browser.url('http://quran.com');
   }
 
 };
