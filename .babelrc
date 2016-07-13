@@ -7,11 +7,6 @@
     "transform-react-display-name"
   ],
   "env": {
-    "test": {
-      "plugins": [
-        "rewire"
-      ]
-    },
     "development": {
       "plugins": [
         "typecheck"

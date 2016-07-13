@@ -10,5 +10,10 @@ install:
   - npm install
 notifications:
   email: false
+before_script:
+  - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.31.0.jar"
+  - "java -jar selenium-server-standalone-2.31.0.jar > /dev/null &"
+  - sleep 5
 
 script: "npm run test:ci:$TEST_SUITE"
+script: "npm run test:ci:functional"
