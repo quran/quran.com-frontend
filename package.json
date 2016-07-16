@@ -10,8 +10,7 @@
     "test:dev:functional": "node ./nightwatch.js -c ./nightwatch.json",
     "test:ci:lint": "eslint ./src/**/*.js",
     "test:dev:lint": "eslint ./src/scripts/**/*.js",
-    "test:ci:stylelint": "stylelint './src/**/*.scss' --config webpack/.stylelintrc",
-    "test:dev:stylelint": "stylelint './src/**/*.scss' --config webpack/.stylelintrc",
+    "test:stylelint": "stylelint './src/**/*.scss' --config webpack/.stylelintrc",
     "dev": "node webpack/dev-server.js & PORT=8000 node start.js",
     "start": "NODE_PATH=\"./src\" node ./start",
     "build": "node ./node_modules/webpack/bin/webpack.js --config webpack/prod.config.js",
@@ -157,6 +156,6 @@
   },
   "pre-commit": [
     "test:dev:lint",
-    "test:dev:stylelint"
+    "test:stylelint"
   ]
 }
