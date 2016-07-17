@@ -37,7 +37,7 @@ const initialState = {
     to: undefined,
     times: Infinity
   },
-  shouldScroll: false,
+  shouldScroll: true,
   isLoadedOnClient: false,
   isLoading: true
 };
