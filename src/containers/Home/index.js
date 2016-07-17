@@ -11,18 +11,6 @@ import { isAllLoaded, loadAll } from '../../redux/modules/surahs';
 
 const styles = require('./style.scss');
 
-@asyncConnect([{
-  promise({ store: { getState, dispatch } }) {
-    if (!isAllLoaded(getState())) {
-      return dispatch(loadAll());
-    }
-
-    return true;
-  }
-}])
-@connect(
-  state => ({surahs: state.surahs.entities})
-)
 class Home extends Component {
   static propTypes = {
     lastVisit: PropTypes.any,
@@ -189,4 +177,15 @@ class Home extends Component {
   }
 }
 
-export default Home;
+const AsyncHome = asyncConnect([{
+  promise({ store: { getState, dispatch } }) {
+    if (!isAllLoaded(getState())) {
+      return dispatch(loadAll());
+    }
+
+    return true;
+  }
+}])(Home);
+
+export default connect(state => ({surahs: state.surahs.entities}))(AsyncHome);
+

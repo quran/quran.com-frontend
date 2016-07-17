@@ -74,9 +74,12 @@ export default () => (
             possible with the will of Allah (Glory be unto Him) and with the
             help of the open source Muslim community online. Data sources
             include <a href="http://www.tanzil.info">Tanzil</a>,
-            <a href="http://www.qurancomplex.com">QuranComplex</a>,
+            <a href="http://www.qurancomplex.com"> QuranComplex</a>,
             <a href="http://www.zekr.org"> Zekr</a> and
-            <a href="http://www.al-quran.info">Online Qur'an Project</a>.
+            <a href="http://www.al-quran.info"> Online Qur'an Project</a>.
+            Special thanks to the
+            <a href="http://elmohafez.com"> Elmohafez team</a> for word by
+            word timing files.
             If you have any questions, you may visit the <a href="/contact">Contact</a> page.
           </h4>
         </Col>
