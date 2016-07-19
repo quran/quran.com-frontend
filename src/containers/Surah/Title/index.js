@@ -13,7 +13,6 @@ const zeroPad = (num, places) => {
 
 const Title = ({ surah }) => {
   const title = require(`../../../../static/images/titles/${zeroPad(surah.id, 3)}.svg`); // eslint-disable-line global-require,max-len
-
   return (
     <div className={`row ${styles.container}`}>
       <div className="col-md-3 col-xs-1 surah-title">
@@ -23,7 +22,7 @@ const Title = ({ surah }) => {
           alt="Ornament left"
         />
         {
-          surah.id >= 1 &&
+          surah.id > 1 &&
             <Link
               data-metrics-event-name="Title:PreviousSurah"
               className="navbar-text previous-chapter"
@@ -56,7 +55,7 @@ const Title = ({ surah }) => {
       </div>
       <div className="col-md-3 col-xs-1 surah-title text-right">
         {
-          surah.id <= 114 &&
+          surah.id < 114 &&
             <Link
               data-metrics-event-name="Title:NextSurah"
               className="navbar-text next-chapter"
