@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallow, render } from 'enzyme';
+import { shallow } from 'enzyme';
 
 import Title from './index';
 import getSurahs from '../../../../tests/fixtures/getSurahs.js';
@@ -58,5 +58,5 @@ describe('<Title />', () => {
 });
 
 function renderComponent(data) {
-  return shallow(<Title surah={data}/>)
+  return shallow(<Title surah={data}/>);
 }
