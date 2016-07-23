@@ -7,7 +7,6 @@ module.exports = class BasePage {
     };
   }
 
-
   wait(time = 200) {
 
     browser.pause(time);

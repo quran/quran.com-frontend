@@ -21,7 +21,7 @@ describe('Home Page', () => {
 
   it('Should click a surah from the list of surahs and land on the surah page', () => {
     homePage.goHome();
-    const url = homePage.clickOntheSurahByName(1);
+    const url = homePage.clickOntheSurahByNumber(1);
     expect(url).to.contain('/1');
 
   });

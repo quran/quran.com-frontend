@@ -39,7 +39,7 @@ export default class HomePage extends BasePage {
 
   }
 
-  clickOntheSurahByName(number) {
+  clickOntheSurahByNumber(number) {
     const surahs = browser.elements('.row .col-xs-7 span');
     const surahID = surahs.value[number].ELEMENT;
     browser.elementIdClick(surahID);
