@@ -1,19 +1,12 @@
 import BasePage from './BasePage';
+import selectors from './selectors';
+
 export default class HomePage extends BasePage {
 
   constructor(browser) {
 
-    const selectors = {
-      LANDING_TEXT: 'h4.title',
-      NEXT: 'a[data-direction="next"]',
-      PREVIOUS: 'a[data-direction="previous"]',
-      SURAH_LIST: '.row .col-md-4 li',
-      SEARCH_FORM: '.searchinput input',
-      SEARCH_RESULT_LIST: '.searchinput a',
-      SURAH_NAME: '.navbar-text.surah-name'
-    };
+    super(selectors);
 
-    super(browser, selectors);
     this.browser = browser;
     this.selectors = selectors;
   }
@@ -33,7 +26,7 @@ export default class HomePage extends BasePage {
   searchForSurahAndGoToSurahPage(searchQuery) {
 
     browser.setValue(this.selectors.SEARCH_FORM, searchQuery);
-    this.wait(1000);
+    browser.waitForVisible(this.selectors.SEARCH_RESULT_LIST);
     browser.click(this.selectors.SEARCH_RESULT_LIST);
     return this.getSurahName();
 
@@ -43,7 +36,6 @@ export default class HomePage extends BasePage {
     const surahs = browser.elements('.row .col-xs-7 span');
     const surahID = surahs.value[number].ELEMENT;
     browser.elementIdClick(surahID);
-    this.wait(1000);
     return browser.getUrl();
 
   }

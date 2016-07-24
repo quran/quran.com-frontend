@@ -1,19 +1,15 @@
 module.exports = class BasePage {
 
-  constructor() {
+  constructor(selectors) {
 
-    this.selectors = {
-      SURAH_NAME: '.surah-body .navbar-text.surah-name'
-    };
-  }
+    this.selectors = Object.assign(selectors, {
+      SURAH_PAGE_SURAH_NAME: '.surah-body .navbar-text.surah-name'
+    });
 
-  wait(time = 200) {
-
-    browser.pause(time);
   }
 
   getSurahName() {
-    return browser.getText(this.selectors.SURAH_NAME);
+    return browser.getText(this.selectors.SURAH_PAGE_SURAH_NAME);
   }
 
   goHome() {
