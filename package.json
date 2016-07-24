@@ -156,8 +156,6 @@
   },
   "pre-commit": [
     "test:dev:lint",
-    "test:stylelint",
-    "validate",
-    "test"
+    "test:stylelint"
   ]
 }
