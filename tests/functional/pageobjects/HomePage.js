@@ -14,19 +14,15 @@ export default class HomePage extends BasePage {
   }
 
   getNumberOfSurahs() {
-
     const surahs = browser.elements(this.selectors.SURAH_LIST);
     return surahs.value.length;
-
   }
 
   searchForSurahAndGoToSurahPage(searchQuery) {
-
     browser.setValue(this.selectors.SEARCH_FORM, searchQuery);
     browser.waitForVisible(this.selectors.SEARCH_RESULT_LIST);
     browser.click(this.selectors.SEARCH_RESULT_LIST);
     return this.getSurahName();
-
   }
 
   clickOntheSurahByNumber(number) {
@@ -34,7 +30,6 @@ export default class HomePage extends BasePage {
     const surahID = surahs.value[number].ELEMENT;
     browser.elementIdClick(surahID);
     return browser.getUrl();
-
   }
 
 }
