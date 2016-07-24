@@ -3,11 +3,8 @@ import selectors from './selectors';
 
 export default class HomePage extends BasePage {
 
-  constructor(browser) {
-
+  constructor() {
     super(selectors);
-
-    this.browser = browser;
     this.selectors = selectors;
   }
 
