@@ -3,10 +3,10 @@
   "version": "1.0.0",
   "private": false,
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start",
-    "test:ci:unit": "./node_modules/karma/bin/karma start --browsers PhantomJS --single-run; npm run test:ci:lint",
-    "test:dev:unit": "./node_modules/karma/bin/karma start",
+    "test": "npm run test:dev:unit",
+    "test:ci:unit": "karma start --browsers PhantomJS --single-run; npm run test:ci:lint",
     "test:ci:functional": "node ./nightwatch.js -c ./nightwatch.json -e production",
+    "test:dev:unit": "karma start",
     "test:dev:functional": "node ./nightwatch.js -c ./nightwatch.json",
     "test:ci:lint": "eslint ./src/**/*.js",
     "test:dev:lint": "eslint ./src/scripts/**/*.js",
