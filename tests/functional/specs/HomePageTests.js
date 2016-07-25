@@ -1,7 +1,7 @@
 import Homepage from '../pageobjects/HomePage';
-describe('Home Page', () => {
+const homePage = new Homepage(browser);
 
-  const homePage = new Homepage(browser);
+describe('Home Page', () => {
 
   it('Should Have English Heading', () => {
     homePage.goHome();
@@ -23,7 +23,5 @@ describe('Home Page', () => {
     homePage.goHome();
     const url = homePage.clickOntheSurahByNumber(1);
     expect(url).to.contain('/1');
-
   });
-
 });

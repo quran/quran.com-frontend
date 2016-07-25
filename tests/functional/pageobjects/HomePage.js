@@ -2,7 +2,6 @@ import BasePage from './BasePage';
 import selectors from './selectors';
 
 export default class HomePage extends BasePage {
-
   constructor() {
     super(selectors);
     this.selectors = selectors;
@@ -31,5 +30,4 @@ export default class HomePage extends BasePage {
     browser.elementIdClick(surahID);
     return browser.getUrl();
   }
-
 }

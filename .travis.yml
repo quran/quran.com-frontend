@@ -12,4 +12,3 @@ notifications:
   email: false
 
 script: "npm run test:ci:$TEST_SUITE"
-script: "npm run test:ci:functional"

@@ -1,11 +1,8 @@
-module.exports = class BasePage {
-
+export default class BasePage {
   constructor(selectors) {
-
     this.selectors = Object.assign(selectors, {
       SURAH_PAGE_SURAH_NAME: '.surah-body .navbar-text.surah-name'
     });
-
   }
 
   getSurahName() {
