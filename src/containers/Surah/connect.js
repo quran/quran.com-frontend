@@ -1,5 +1,5 @@
 import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
-import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/modules/ayahs';
+import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/actions/AyahsActions.js';
 
 import debug from 'helpers/debug';
 

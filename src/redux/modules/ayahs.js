@@ -1,14 +1,15 @@
-import { ayahsSchema } from '../schemas';
+import {
+  LOAD,
+  LOAD_SUCCESS,
+  LOAD_FAIL,
+  CLEAR_CURRENT,
+  SET_CURRENT_AYAH,
+  SET_CURRENT_WORD,
+  CLEAR_CURRENT_WORD
+  } from '../constants/AyahsActionTypes.js';
 
-import { arrayOf } from 'normalizr';
 
-export const LOAD = '@@quran/ayahs/LOAD';
-export const LOAD_SUCCESS = '@@quran/ayahs/LOAD_SUCCESS';
-export const LOAD_FAIL = '@@quran/ayahs/LOAD_FAIL';
-export const CLEAR_CURRENT = '@@quran/ayahs/CLEAR_CURRENT';
-export const SET_CURRENT_AYAH = '@@quran/ayahs/SET_CURRENT_AYAH';
-export const SET_CURRENT_WORD = '@@quran/ayahs/SET_CURRENT_WORD';
-export const CLEAR_CURRENT_WORD = '@@quran/ayahs/CLEAR_CURRENT_WORD';
+export {LOAD, LOAD_SUCCESS, LOAD_FAIL, CLEAR_CURRENT, SET_CURRENT_AYAH, SET_CURRENT_WORD, CLEAR_CURRENT_WORD}
 
 const initialState = {
   current: null,
@@ -46,12 +47,13 @@ export default function reducer(state = initialState, action = {}) {
         currentWord: null
       };
     case CLEAR_CURRENT:
+      const stateEntities = state.entities;
       return {
         ...state,
         current: null,
         currentWord: null,
         entities: {
-          ...state.entities,
+          ...stateEntities,
           [action.id]: {}
         }
       };
@@ -63,6 +65,7 @@ export default function reducer(state = initialState, action = {}) {
       };
     case LOAD_SUCCESS:
       const current = state.current ? state.current : action.result.result[0];
+      const stateEntities = state.entities;
 
       return {
         ...state,
@@ -71,7 +74,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         errored: false,
         entities: {
-          ...state.entities,
+          ...stateEntities,
           [action.surahId]: Object.assign(
             {},
             state.entities[action.surahId],
@@ -88,63 +91,3 @@ export default function reducer(state = initialState, action = {}) {
   }
 }
 
-// For safe measure
-const defaultOptions = {
-  audio: 8,
-  quran: 1,
-  content: [19]
-};
-
-export function load(id, from, to, options = defaultOptions) {
-  const { audio, quran, content } = options;
-
-  return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    schema: arrayOf(ayahsSchema),
-    promise: (client) => client.get(`/v2/surahs/${id}/ayahs`, {
-      params: {
-        from,
-        to,
-        audio,
-        quran,
-        content
-      }
-    }),
-    surahId: id
-  };
-}
-
-export function clearCurrent(id) {
-  return {
-    type: CLEAR_CURRENT,
-    id
-  };
-}
-
-export function clearCurrentWord() {
-  return {
-    type: CLEAR_CURRENT_WORD
-  };
-}
-
-export function setCurrentAyah(id) {
-  return {
-    type: SET_CURRENT_AYAH,
-    id
-  };
-}
-
-export function setCurrentWord(id) {
-  return {
-    type: SET_CURRENT_WORD,
-    id
-  };
-}
-
-export function isLoaded(globalState, surahId, from, to) {
-  return (
-    globalState.ayahs.entities[surahId] &&
-    globalState.ayahs.entities[surahId][`${surahId}:${from}`] &&
-    globalState.ayahs.entities[surahId][`${surahId}:${to}`]
-  );
-}
