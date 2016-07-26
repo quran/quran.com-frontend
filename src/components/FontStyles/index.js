@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fontFaceStyle, fontFaceStyleLoaded } from '../../helpers/buildFontFaces';
-import { load } from 'redux/modules/fontFaces';
+import { load } from 'redux/actions/FontFaceActions.js';
 
 import debug from 'helpers/debug';
 import selector from './selector';

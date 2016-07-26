@@ -2,13 +2,13 @@
 import {
   LOAD as AYAHS_LOAD,
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
-  LOAD_FAIL as AYAHS_LOAD_FAIL
-} from './ayahs';
+  LOAD_FAIL as AYAHS_LOAD_FAIL,
+  } from '../constants/AyahsActionTypes.js';
 
-import { SET_CURRENT as SURAHS_SET_CURRENT } from './surahs';
+import { SET_CURRENT as SURAHS_SET_CURRENT } from '../constants/SurahsActionTypes.js'
 
 const initialState = {
-  lines: {},
+  lines: {}
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -26,7 +26,8 @@ export default function reducer(state = initialState, action = {}) {
       };
     case AYAHS_LOAD_SUCCESS:
       const ayahs = action.result.entities.ayahs;
-      const lines = {...state.lines};
+      const stateLines = state.lines;
+      const lines = {...stateLines};
 
       action.result.result.forEach(ayahId => {
         const ayah = ayahs[ayahId];

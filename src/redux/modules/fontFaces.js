@@ -1,7 +1,6 @@
-import { LOAD_SUCCESS } from './ayahs';
-import { SEARCH_SUCCESS } from './searchResults';
-
-export const LOAD = '@@quran/fontFaces/LOAD';
+import { LOAD_SUCCESS } from '../constants/AyahsActionTypes.js';
+import { SEARCH_SUCCESS } from '../constants/SearchActionTypes.js';
+import { LOAD } from '../constants/FontFaceActionTypes.js';
 
 export default function reducer(state = {}, action = {}) {
   switch (action.type) {
@@ -33,9 +32,4 @@ export default function reducer(state = {}, action = {}) {
   }
 }
 
-export function load(className) {
-  return {
-    type: LOAD,
-    className
-  };
-}
+
