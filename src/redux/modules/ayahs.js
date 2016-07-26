@@ -47,13 +47,12 @@ export default function reducer(state = initialState, action = {}) {
         currentWord: null
       };
     case CLEAR_CURRENT:
-      const stateEntities = state.entities;
       return {
         ...state,
         current: null,
         currentWord: null,
         entities: {
-          ...stateEntities,
+          ...state.entities,
           [action.id]: {}
         }
       };
