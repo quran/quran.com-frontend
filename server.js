@@ -25,7 +25,7 @@ import debug from './src/helpers/debug';
 
 import Html from './src/helpers/Html';
 
-import { setUserAgent } from './src/redux/modules/audioplayer';
+import { setUserAgent } from './src/redux/actions/AudioPlayerActions.js';
 import { setOption } from './src/redux/modules/options';
 
 // Use varnish for the static routes, which will cache too
