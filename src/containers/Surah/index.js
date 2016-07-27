@@ -64,7 +64,8 @@ class Surah extends Component {
     options: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
     ayahs: PropTypes.object.isRequired,
-    isStarted: PropTypes.bool
+    isStarted: PropTypes.bool,
+    isPlaying: PropTypes.bool
   };
 
   state = {
@@ -280,7 +281,7 @@ class Surah extends Component {
   }
 
   renderAyahs() {
-    const { ayahs, actions, options } = this.props; // eslint-disable-line no-shadow
+    const { ayahs, actions, options, isPlaying } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(ayahs).map(ayah => (
       <Ayah
@@ -288,6 +289,7 @@ class Surah extends Component {
         tooltip={options.tooltip}
         onWordClick={actions.audio.setCurrentWord}
         actions={actions.audio}
+        isPlaying={isPlaying}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
       />
     ));
@@ -467,12 +469,12 @@ function mapStateToProps(state, ownProps) {
   const surah: Object = state.surahs.entities[surahId];
   const ayahs: Object = state.ayahs.entities[surahId];
   const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
-
   return {
     surah,
     ayahs,
     ayahIds,
     isStarted: state.audioplayer.isStarted,
+    isPlaying: state.audioplayer.isPlaying,
     currentWord: state.ayahs.currentWord,
     isEndOfSurah: ayahIds.size === surah.ayat,
     surahs: state.surahs.entities,
