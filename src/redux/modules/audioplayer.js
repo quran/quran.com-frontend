@@ -23,7 +23,7 @@ import {
   TOGGLE_SCROLL,
   BUILD_ON_CLIENT,
   UPDATE
-  } from '../constants/AudioPlayerActionTypes.js';
+  } from '../constants/audioPlayerActionTypes.js';
 
 export { NEXT, SET_AYAH };
 

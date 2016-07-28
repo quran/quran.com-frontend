@@ -1,6 +1,6 @@
-import { LOAD_SUCCESS } from '../constants/AyahsActionTypes.js';
-import { SEARCH_SUCCESS } from '../constants/SearchActionTypes.js';
-import { LOAD } from '../constants/FontFaceActionTypes.js';
+import { LOAD_SUCCESS } from '../constants/ayahsActionTypes.js';
+import { SEARCH_SUCCESS } from '../constants/searchActionTypes.js';
+import { LOAD } from '../constants/fontFaceActionTypes.js';
 
 export default function reducer(state = {}, action = {}) {
   switch (action.type) {
@@ -31,5 +31,3 @@ export default function reducer(state = {}, action = {}) {
       return state;
   }
 }
-
-

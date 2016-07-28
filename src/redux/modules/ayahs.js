@@ -6,10 +6,14 @@ import {
   SET_CURRENT_AYAH,
   SET_CURRENT_WORD,
   CLEAR_CURRENT_WORD
-  } from '../constants/AyahsActionTypes.js';
+  } from '../constants/ayahsActionTypes.js';
 
-
-export {LOAD, LOAD_SUCCESS, LOAD_FAIL, CLEAR_CURRENT, SET_CURRENT_AYAH, SET_CURRENT_WORD, CLEAR_CURRENT_WORD}
+export {
+  LOAD,
+  LOAD_SUCCESS,
+  CLEAR_CURRENT,
+  SET_CURRENT_AYAH,
+};
 
 const initialState = {
   current: null,

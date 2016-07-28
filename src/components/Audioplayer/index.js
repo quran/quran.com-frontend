@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelize } from 'humps';
 
 // Redux
-import * as AudioActions from '../../redux/actions/AudioPlayerActions';
+import * as AudioActions from '../../redux/actions/audioPlayerActions';
 
 // Components
 import Track from './Track';

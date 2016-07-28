@@ -1,5 +1,14 @@
-import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/actions/SurahsActions.js';
-import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/actions/AyahsActions.js';
+import {
+  isAllLoaded,
+  loadAll,
+  setCurrent as setCurrentSurah
+  } from '../../redux/actions/surahsActions.js';
+
+import {
+  clearCurrent,
+  isLoaded,
+  load as loadAyahs
+  } from '../../redux/actions/ayahsActions.js';
 
 import debug from 'helpers/debug';
 

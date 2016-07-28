@@ -42,9 +42,9 @@ import descriptions from './descriptions';
 
 import { surahsConnect, ayahsConnect } from './connect';
 
-import * as AudioActions from '../../redux/actions/AudioPlayerActions.js';
-import * as AyahActions from '../../redux/actions/AyahsActions.js';
-import * as OptionsActions from '../../redux/actions/OptionsActions.js';
+import * as AudioActions from '../../redux/actions/audioPlayerActions.js';
+import * as AyahActions from '../../redux/actions/ayahsActions.js';
+import * as OptionsActions from '../../redux/actions/optionsActions.js';
 
 const style = require('./style.scss');
 

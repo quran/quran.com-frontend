@@ -1,5 +1,5 @@
 
-import { TOGGLE_READING_MODE, SET_OPTION } from '../constants/OptionsActionTypes.js';
+import { TOGGLE_READING_MODE, SET_OPTION } from '../constants/optionsActionTypes.js';
 
 const initialState = {
   isReadingMode: false,

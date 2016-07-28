@@ -1,12 +1,8 @@
 import {
-  LOAD,
   LOAD_SUCCESS,
   LOAD_FAIL,
-  LOAD_INFO,
-  LOAD_INFO_SUCCESS,
-  LOAD_INFO_FAIL,
   SET_CURRENT
-  } from '../constants/SurahsActionTypes.js'
+  } from '../constants/surahsActionTypes.js';
 
 const initialState = {
   errored: false,
