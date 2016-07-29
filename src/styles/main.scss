@@ -1,6 +1,4 @@
-//@import 'bootstrap';
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
-//@import '~bootstrap-sass/assets/stylesheets/bootstrap';
 
 @import 'mixins/center';
 @import 'components/SurahNav';
@@ -42,38 +40,6 @@ a:hover{
 
     @media (max-width: $screen-sm-max) {
       display: none;
-    }
-  }
-  .right-side{
-    padding-top: 190px;
-    width: 83.33333333%;
-    float: right;
-    display: block;
-    position: relative;
-    background-color: #fff;
-    transition: width 0.5s;
-    min-height: 100vh;
-    z-index: 9999;
-
-    .navbar-brand{
-      display: none;
-    }
-
-    @media (max-width: $screen-sm-max) {
-      width: 100%;
-      padding-top: 150px;
-
-      .navbar-brand{
-        display: block;
-      }
-    }
-
-    &.active{
-      width: 99%;
-
-      .navbar{
-        width: 99; // This is almost like `noop` to get the css working
-      }
     }
   }
 }

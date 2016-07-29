@@ -20,6 +20,7 @@ export default class Ayah extends Component {
     ayah: PropTypes.object.isRequired,
     match: PropTypes.array,
     isSearch: PropTypes.bool,
+    isPlaying: PropTypes.bool,
     tooltip: PropTypes.string,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
     onWordClick: PropTypes.func,
@@ -46,11 +47,14 @@ export default class Ayah extends Component {
   }
 
   handlePlay(ayah) {
-    const {stop, setAyah, start} = this.props.actions;
+    const {isPlaying, actions} = this.props;
+    const {pause, setAyah, play} = actions;
 
-    stop();
+    if (isPlaying) {
+      pause();
+    }
     setAyah(ayah);
-    start();
+    play();
   }
 
   renderTranslations() {

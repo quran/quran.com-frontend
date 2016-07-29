@@ -50,6 +50,8 @@
     "webpackIsomorphicTools": true,
     ga: true,
     Raven: true,
-    mixpanel: true
+    mixpanel: true,
+    "expect": true,
+    "browser": true
   }
 }
