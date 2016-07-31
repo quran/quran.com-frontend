@@ -16,6 +16,10 @@ export default () => (
 
     <Route path="/contact" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
     <Route path="/contactus" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
+
+    <Route path="/mobile" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
+    <Route path="/apps" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
+
     <Route path="/error/:errorKey" getComponent={(nextState, cb) => System.import('./containers/Error').then(module => cb(null, module))} />
 
     <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
