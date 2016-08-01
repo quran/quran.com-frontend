@@ -51,12 +51,13 @@ export default function reducer(state = initialState, action = {}) {
         currentWord: null
       };
     case CLEAR_CURRENT:
+      const entities = state.entities;
       return {
         ...state,
         current: null,
         currentWord: null,
         entities: {
-          ...state.entities,
+          ...entities,
           [action.id]: {}
         }
       };
@@ -93,4 +94,3 @@ export default function reducer(state = initialState, action = {}) {
       return state;
   }
 }
-

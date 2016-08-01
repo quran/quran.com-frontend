@@ -6,11 +6,10 @@ import {
 
 import {
   clearCurrent,
-  isLoaded,
   load as loadAyahs
   } from '../../redux/actions/ayahs.js';
 
-import debug from 'helpers/debug';
+import {isLoaded, debug} from 'helpers';
 
 const ayahRangeSize = 30;
 
