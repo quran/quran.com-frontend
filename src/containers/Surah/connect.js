@@ -9,7 +9,7 @@ import {
   load as loadAyahs
   } from '../../redux/actions/ayahs.js';
 
-import {isLoaded, debug} from 'helpers';
+import {debug, isLoaded} from 'helpers';
 
 const ayahRangeSize = 30;
 

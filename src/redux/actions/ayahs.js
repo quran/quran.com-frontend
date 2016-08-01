@@ -64,11 +64,3 @@ export function setCurrentWord(id) {
     id
   };
 }
-
-export function isLoaded(globalState, surahId, from, to) {
-  return (
-    globalState.ayahs.entities[surahId] &&
-    globalState.ayahs.entities[surahId][`${surahId}:${from}`] &&
-    globalState.ayahs.entities[surahId][`${surahId}:${to}`]
-  );
-}
