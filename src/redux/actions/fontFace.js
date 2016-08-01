@@ -1,4 +1,4 @@
-import { LOAD } from '../constants/fontFaceActionTypes.js';
+import { LOAD } from '../constants/fontFace.js';
 
 export function load(className) {
   return {

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 import debug from '../../helpers/debug';
 
-import { isAllLoaded, loadAll } from '../../redux/actions/surahsActions.js';
+import { isAllLoaded, loadAll } from '../../redux/actions/surahs.js';
 
 const styles = require('./style.scss');
 

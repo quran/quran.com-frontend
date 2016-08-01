@@ -5,7 +5,7 @@ import {
   SEARCH,
   SEARCH_SUCCESS,
   SEARCH_FAIL
-  } from '../constants/searchActionTypes.js';
+  } from '../constants/search.js';
 
 export function search(params) {
   return {

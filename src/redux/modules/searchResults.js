@@ -2,7 +2,7 @@ import {
   SEARCH,
   SEARCH_SUCCESS,
   SEARCH_FAIL
-  } from '../constants/searchActionTypes.js';
+  } from '../constants/search.js';
 
 const initialState = {
   errored: false,

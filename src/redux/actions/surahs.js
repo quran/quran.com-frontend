@@ -7,8 +7,7 @@ import {
   LOAD_INFO,
   LOAD_INFO_SUCCESS,
   LOAD_INFO_FAIL,
-  SET_CURRENT
-  } from '../constants/surahsActionTypes.js';
+  SET_CURRENT } from '../constants/surahs.js';
 
 export function loadAll() {
   return {

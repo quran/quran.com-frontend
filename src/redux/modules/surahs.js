@@ -2,7 +2,7 @@ import {
   LOAD_SUCCESS,
   LOAD_FAIL,
   SET_CURRENT
-  } from '../constants/surahsActionTypes.js';
+  } from '../constants/surahs.js';
 
 const initialState = {
   errored: false,

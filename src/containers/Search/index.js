@@ -16,7 +16,7 @@ import Header from './Header';
 import Ayah from '../../components/Ayah';
 import CoreLoader from '../../components/Loader';
 
-import { search } from '../../redux/actions/searchActions.js';
+import { search } from '../../redux/actions/search.js';
 
 const style = require('./style.scss');
 

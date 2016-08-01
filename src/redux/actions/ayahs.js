@@ -10,8 +10,7 @@ import {
   SET_CURRENT_AYAH,
   SET_CURRENT_WORD,
   CLEAR_CURRENT_WORD
-
-  } from '../constants/AyahsActionTypes.js';
+  } from '../constants/ayahs.js';
 
 // For safe measure
 const defaultOptions = {
@@ -68,8 +67,8 @@ export function setCurrentWord(id) {
 
 export function isLoaded(globalState, surahId, from, to) {
   return (
-  globalState.ayahs.entities[surahId] &&
-  globalState.ayahs.entities[surahId][`${surahId}:${from}`] &&
-  globalState.ayahs.entities[surahId][`${surahId}:${to}`]
+    globalState.ayahs.entities[surahId] &&
+    globalState.ayahs.entities[surahId][`${surahId}:${from}`] &&
+    globalState.ayahs.entities[surahId][`${surahId}:${to}`]
   );
 }

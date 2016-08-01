@@ -25,8 +25,8 @@ import debug from './src/helpers/debug';
 
 import Html from './src/helpers/Html';
 
-import { setUserAgent } from './src/redux/actions/audioPlayerActions.js';
-import { setOption } from './src/redux/actions/optionsActions.js';
+import { setUserAgent } from './src/redux/actions/audioplayer.js';
+import { setOption } from './src/redux/actions/options.js';
 
 // Use varnish for the static routes, which will cache too
 server.use(raven.middleware.express.requestHandler(config.sentryServer));

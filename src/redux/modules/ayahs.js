@@ -6,7 +6,7 @@ import {
   SET_CURRENT_AYAH,
   SET_CURRENT_WORD,
   CLEAR_CURRENT_WORD
-  } from '../constants/ayahsActionTypes.js';
+  } from '../constants/ayahs.js';
 
 export {
   LOAD,

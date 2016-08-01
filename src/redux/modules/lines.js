@@ -3,9 +3,9 @@ import {
   LOAD as AYAHS_LOAD,
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
   LOAD_FAIL as AYAHS_LOAD_FAIL,
-  } from '../constants/ayahsActionTypes.js';
+  } from '../constants/ayahs.js';
 
-import { SET_CURRENT as SURAHS_SET_CURRENT } from '../constants/surahsActionTypes.js';
+import { SET_CURRENT as SURAHS_SET_CURRENT } from '../constants/surahs.js';
 
 const initialState = {
   lines: {}
