@@ -1,17 +1,28 @@
 import React from 'react';
+import Helmet from 'react-helmet';
 
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
 
+import makeHeadTags from 'helpers/makeHeadTags';
+
 const styles = require('./style.scss');
 const apple = require('../../../static/images/apple-white.svg');
 const play = require('../../../static/images/play-store.svg');
-const phones = require('../../../static/images/mockup_desktop@2x.png');
+const phones = require('../../../static/images/mockup-desktop@2x.png');
 
 export default () => (
   <Grid className={`${styles.container} montserrat`}>
+    <Helmet
+      {
+        ...makeHeadTags({
+          title: 'Quran Android and iOS apps by Quran.com',
+          description: 'From the makers of Quran.com comes Quran for iOS and Android, a beautiful, and ad-free mushaf apps' // eslint-disable-line max-len
+        })
+      }
+    />
     <Row>
       <Col md={5}>
         <h1 className={styles.title}>
