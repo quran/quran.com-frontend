@@ -80,7 +80,7 @@ module.exports = {
       jQuery: "jquery",
       "windows.jQuery": "jquery"
     }),
-    new ExtractTextPlugin("[name]-[hash].css", {allChunks: true}),
+    new ExtractTextPlugin({ filename: '[name]-[hash].css', allChunks: true }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': true,
       'process.env.API_URL': JSON.stringify(process.env.API_URL),
