@@ -48,7 +48,7 @@ module.exports = {
         {
           loader: 'babel',
           query: {
-            'presets': ['react', 'es2015-webpack', 'stage-0'],
+            'presets': ['react', ['es2015', {'modules': false}], 'stage-0'],
             'plugins': [
               'transform-runtime',
               'add-module-exports',
@@ -59,7 +59,10 @@ module.exports = {
         }
       ]},
       { test: /\.json$/, loader: 'json-loader'},
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true') },
+      { test: /\.scss$/, loader: ExtractTextPlugin.extract({
+        fallbackLoader: 'style',
+        loader: 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true'
+      }) },
       { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff" },
       { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff" },
       { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream" },
@@ -77,7 +80,7 @@ module.exports = {
       jQuery: "jquery",
       "windows.jQuery": "jquery"
     }),
-    new ExtractTextPlugin("[name]-[hash].css", {allChunks: true}),
+    new ExtractTextPlugin({ filename: '[name]-[hash].css', allChunks: true }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': true,
       'process.env.API_URL': JSON.stringify(process.env.API_URL),
