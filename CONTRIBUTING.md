@@ -26,8 +26,16 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 	# Install the tools necessary for development
 	npm install
 	```
+2. Pull latest changes from "upstream" and push these changes to your "origin"(forked)
+	> NOTE - This step will repeat every time You plan to contribute
 
-2. Create a branch for your feature or fix:
+	```bash
+	# Pull latest changes from "upstream" repository
+	git pull upstream master
+	#Push latest changes to Your "origin" repository
+	git push origin master
+	```
+3. Create a branch for your feature or fix:
 	```bash
 	# Move into a new branch for a feature
 	git checkout -b feature/thing
@@ -37,7 +45,7 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 	git checkout -b fix/something
 	```
 
-3. Be sure your code follows our practices.
+4. Be sure your code follows our practices.
 	```bash
 	# Test current code
 	npm run test
@@ -49,7 +57,7 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 	nightwatch --test tests/functional/specs/Index_spec.js
 	```
 
-4. To create a PR you need to push your branch to the origin(forked) remote and then press some buttons on GitHub:
+5. To create a PR you need to push your branch to the origin(forked) remote and then press some buttons on GitHub:
 	```bash
 	# Push a feature branch
 	git push -u origin feature/thing
@@ -61,7 +69,7 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 
 	This will create the branch on your GitHub project. The ```-u``` flag links this branch with the remote one, so that in the future, you can simply type ```git push origin```.
 
-5. Now [open a pull request] with a clear title and description.
+6. Now [open a pull request] with a clear title and description.
 
 ## Sever-side integration
 Unless you have the backend API running locally, you will need to update the `API_URL`, in `development.env` file, from `localhost` to `api.quran.com`. Leave the port number same.
