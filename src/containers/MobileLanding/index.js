@@ -34,7 +34,7 @@ export default () => (
             From the makers of Quran.com comes Quran for iOS, a beautiful,{' '}
             and ad-free mushaf app.
             It’s now easier to read the Quran on the go, memorize it and listen to your{' '}
-            favorite reciters this Ramadan.
+            favorite reciters.
           </small>
         </h3>
         <Row style={{paddingTop: 15}}>
