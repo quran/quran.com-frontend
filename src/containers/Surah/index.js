@@ -381,14 +381,14 @@ class Surah extends Component {
                 "@type": "ListItem",
                 "position": 1,
                 "item": {
-                  "@id": "http://quran.com/",
+                  "@id": "https://quran.com/",
                   "name": "Quran"
                 }
               },{
                 "@type": "ListItem",
                 "position": 2,
                 "item": {
-                  "@id": "http://quran.com/${surah.id}",
+                  "@id": "https://quran.com/${surah.id}",
                   "name": "${surah.name.simple}"
                 }
               }]

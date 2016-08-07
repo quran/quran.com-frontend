@@ -32,16 +32,16 @@ module.exports = Object.assign({
         {name: 'google-site-verification', content: 'ehFz7FvmL7V9MzP40F8_kLABhCzqGzMDMrCnUP44Too'},
         {name: 'theme-color', content: '#004f54'},
         {property: 'og:site_name', content: title},
-        {property: 'og:image', content: 'http://quran.com/images/thumbnail.png'},
+        {property: 'og:image', content: 'https://quran.com/images/thumbnail.png'},
         {property: 'og:locale', content: 'en_US'},
         {property: 'og:title', content: title},
         {property: 'og:description', content: description},
-        {property: 'og:url', content: 'http://quran.com'},
+        {property: 'og:url', content: 'https://quran.com'},
         {property: 'og:type', content: 'website'},
         {name: 'twitter:card', content: 'summary'},
         {name: 'twitter:title', content: title},
         {name: 'twitter:description', content: description},
-        {name: 'twitter:image', content: 'http://quran.com/images/thumbnail.png'},
+        {name: 'twitter:image', content: 'https://quran.com/images/thumbnail.png'},
         {name: 'twitter:image:width', content: '200'},
         {name: 'twitter:image:height', content: '200'}
       ],
@@ -59,10 +59,10 @@ module.exports = Object.assign({
             "@type": "WebSite",
             "name": "Quran",
             "alternateName": "Quran.com",
-            "url": "http://quran.com",
+            "url": "https://quran.com",
             "potentialAction": {
               "@type": "SearchAction",
-              "target": "http://quran.com/search?q={search_term_string}&referrer=sitelinks_searchbox",
+              "target": "https://quran.com/search?q={search_term_string}&referrer=sitelinks_searchbox",
               "query-input": "required name=search_term_string"
             }
           }`
@@ -72,8 +72,8 @@ module.exports = Object.assign({
           innerHTML: `{
             "@context": "http://schema.org",
             "@type": "Organization",
-            "url": "http://quran.com",
-            "logo": "http://quran.com/images/thumbnail.png"
+            "url": "https://quran.com",
+            "logo": "https://quran.com/images/thumbnail.png"
           }`
         }
       ],
