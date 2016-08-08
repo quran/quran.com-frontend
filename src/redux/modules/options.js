@@ -1,7 +1,5 @@
-import cookie from 'react-cookie';
 
-const TOGGLE_READING_MODE = '@@quran/options/TOGGLE_READING_MODE';
-const SET_OPTION = '@@quran/options/SET_OPTION';
+import { TOGGLE_READING_MODE, SET_OPTION } from '../constants/options.js';
 
 const initialState = {
   isReadingMode: false,
@@ -24,32 +22,12 @@ export default function reducer(state = initialState, action = {}) {
         isReadingMode: !state.isReadingMode
       };
     case SET_OPTION:
+      const payload = action.payload;
       return {
         ...state,
-        ...action.payload
+        ...payload
       };
     default:
       return state;
   }
-}
-
-export function isReadingMode(globalState) {
-  return globalState.options.isReadingMode;
-}
-
-export function setOption(payload) {
-  const options = cookie.load('options') || {}; // protect against first timers.
-  Object.keys(payload).forEach(option => { options[option] = payload[option]; });
-  cookie.save('options', JSON.stringify(options));
-
-  return {
-    type: SET_OPTION,
-    payload
-  };
-}
-
-export function toggleReadingMode() {
-  return {
-    type: TOGGLE_READING_MODE
-  };
 }

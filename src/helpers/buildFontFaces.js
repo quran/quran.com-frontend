@@ -4,8 +4,7 @@ export const fontFaceStyle = (fontClassName) => (
   `@font-face {font-family: '${fontClassName}';
   src: url('//quran-1f14.kxcdn.com/fonts/compressed/eot/${fontClassName}.eot?#iefix') format('embedded-opentype'),
   url('//quran-1f14.kxcdn.com/fonts/ttf/${fontClassName}.ttf') format('truetype'),
-  url('//quran-1f14.kxcdn.com/fonts/woff/${fontClassName}.woff?-snx2rh') format('woff'),
-  url('//quran-1f14.kxcdn.com/fonts/compressed/svg/${fontClassName}.svg#') format('svg');}
+  url('//quran-1f14.kxcdn.com/fonts/woff/${fontClassName}.woff?-snx2rh') format('woff');}
   .${fontClassName} {font-family: '${fontClassName}';}
   .${fontClassName} {display: none;}`
 );
@@ -28,8 +27,7 @@ export function createFontFacesArray(ayahs) {
         `@font-face {font-family: '${font}';
         src: url('//quran-1f14.kxcdn.com/fonts/compressed/eot/${font}.eot?#iefix') format('embedded-opentype'),
         url('//quran-1f14.kxcdn.com/fonts/ttf/${font}.ttf') format('truetype'),
-        url('//quran-1f14.kxcdn.com/fonts/woff/${font}.woff?-snx2rh') format('woff'),
-        url('//quran-1f14.kxcdn.com/fonts/compressed/svg/${font}.svg#') format('svg');}
+        url('//quran-1f14.kxcdn.com/fonts/woff/${font}.woff?-snx2rh') format('woff');}
         .${font} {font-family: '${font}';}`
       );
     }

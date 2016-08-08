@@ -23,6 +23,16 @@ class IndexHeaderNav extends Component {
       return (
         <ul className={classNames}>
           <li>
+            <Link to="/apps" data-metrics-event-name="IndexHeader:Link:Mobile">
+              Mobile
+            </Link>
+          </li>
+          <li>
+            <a href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help" target="_blank" data-metrics-event-name="IndexHeader:Link:Developer">
+              Developers
+            </a>
+          </li>
+          <li>
             <a href="http://legacy.quran.com" data-metrics-event-name="IndexHeader:Link:Legacy">Legacy Quran.com</a>
           </li>
           <li>
@@ -36,6 +46,16 @@ class IndexHeaderNav extends Component {
 
     return (
       <ul className={classNames}>
+        <li>
+          <Link to="/apps" data-metrics-event-name="IndexHeader:Link:Mobile">
+            Mobile
+          </Link>
+        </li>
+        <li>
+          <a href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help" target="_blank" data-metrics-event-name="IndexHeader:Link:Developer">
+            Developers
+          </a>
+        </li>
         <li>
           <a href="http://legacy.quran.com" data-metrics-event-name="IndexHeader:Link:Legacy">Legacy Quran.com</a>
         </li>

@@ -1,9 +1,8 @@
-import { ayahsSchema } from '../schemas';
-import { arrayOf } from 'normalizr';
-
-export const SEARCH = '@@quran/search/LOAD';
-export const SEARCH_SUCCESS = '@@quran/search/LOAD_SUCCESS';
-export const SEARCH_FAIL = '@@quran/search/LOAD_FAIL';
+import {
+  SEARCH,
+  SEARCH_SUCCESS,
+  SEARCH_FAIL
+  } from '../constants/search.js';
 
 const initialState = {
   errored: false,
@@ -45,17 +44,4 @@ export default function reducer(state = initialState, action = {}) {
     default:
       return state;
   }
-}
-
-export function search(params) {
-  return {
-    types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
-    schema: {results: arrayOf({ayah: ayahsSchema})},
-    promise: (client) => client.get('/v2/search', { params }),
-    params
-  };
-}
-
-export function isQueried() {
-  return false;
 }

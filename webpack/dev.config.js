@@ -39,7 +39,7 @@ module.exports = {
               'transform-react-display-name',
               'typecheck',
             ],
-            presets: ['react', 'es2015-webpack', 'stage-0', 'react-hmre'],
+            presets: ['react', ['es2015', {'modules': false}], 'stage-0', 'react-hmre'],
             cacheDirectory: true
           }
         },

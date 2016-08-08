@@ -68,7 +68,7 @@ export default class RepeatButton extends Component {
               onChange={(event) => setRepeat({
                 ...repeat,
                 from: parseInt(event.target.value, 10),
-                to: parseInt(event.target.value, 10)
+                to: parseInt(event.target.value, 10) + 3
               })}
             >
               {

@@ -35,7 +35,7 @@ export default (server) => {
 
 
       const xml = sitemap.createSitemap({
-        hostname: 'http://quran.com',
+        hostname: 'https://quran.com',
         cacheTime: 600000,  // 600 sec cache period
         urls: [
           ...urls,

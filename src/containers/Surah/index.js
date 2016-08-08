@@ -42,9 +42,9 @@ import descriptions from './descriptions';
 
 import { surahsConnect, ayahsConnect } from './connect';
 
-import * as AudioActions from '../../redux/modules/audioplayer';
-import * as AyahActions from '../../redux/modules/ayahs';
-import * as OptionsActions from '../../redux/modules/options';
+import * as AudioActions from '../../redux/actions/audioplayer.js';
+import * as AyahActions from '../../redux/actions/ayahs.js';
+import * as OptionsActions from '../../redux/actions/options.js';
 
 const style = require('./style.scss');
 
@@ -381,14 +381,14 @@ class Surah extends Component {
                 "@type": "ListItem",
                 "position": 1,
                 "item": {
-                  "@id": "http://quran.com/",
+                  "@id": "https://quran.com/",
                   "name": "Quran"
                 }
               },{
                 "@type": "ListItem",
                 "position": 2,
                 "item": {
-                  "@id": "http://quran.com/${surah.id}",
+                  "@id": "https://quran.com/${surah.id}",
                   "name": "${surah.name.simple}"
                 }
               }]
