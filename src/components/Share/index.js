@@ -15,7 +15,7 @@ export default class Share extends Component {
   render() {
 
     const {surahId, name} = this.props.surah;
-    const surahUrl = encodeURIComponent(`http://quran.com/${surahId}`);
+    const surahUrl = encodeURIComponent(`https://quran.com/${surahId}`);
 
     return (
       <div className={`${Style.shareContainer} hidden-xs`}>
