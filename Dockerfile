@@ -1,4 +1,4 @@
-FROM node:5.10.0
+FROM node:6.3
 
 ENV NODE_ENV production
 ENV API_URL http://api.quran.com:3000
