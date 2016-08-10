@@ -2,7 +2,6 @@ require('dotenv').load();
 
 var path = require('path');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var path = require('path');
 var webpack = require('webpack');
 var CleanPlugin = require('clean-webpack-plugin');
 var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin')
