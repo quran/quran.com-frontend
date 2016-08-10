@@ -26,7 +26,7 @@ To start the app, run `npm run dev` which will run both the server and the clien
 
 ## Backend
 Current at: https://github.com/quran/quran-api-rails
-DB is private, message me for acceess.
+DB is private, message me for access.
 
 
 ## Design
