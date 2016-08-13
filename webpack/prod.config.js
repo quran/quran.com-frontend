@@ -20,6 +20,7 @@ module.exports = {
     sourceMapFilename: '[name]-[chunkhash].map.js'
 
   },
+  context: path.resolve(__dirname, '../src'),
   devtool: 'cheap-source-map',
   debug: false,
   target: 'web',
@@ -52,7 +53,9 @@ module.exports = {
               'transform-runtime',
               'add-module-exports',
               'transform-decorators-legacy',
-              'transform-react-display-name'
+              'transform-react-display-name',
+              "transform-react-inline-elements",
+              "transform-react-constant-elements"
             ]
           }
         }

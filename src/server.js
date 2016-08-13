@@ -11,22 +11,22 @@ import raven from 'raven';
 import errorhandler from 'errorhandler';
 
 import config from 'config';
-import expressConfig from 'server/config/express';
+import expressConfig from '../server/config/express';
 
 const pretty = new PrettyError();
 const server = express();
 
 expressConfig(server);
 
-import routes from './src/routes';
-import ApiClient from './src/helpers/ApiClient';
-import createStore from './src/redux/create';
-import debug from './src/helpers/debug';
+import routes from './routes';
+import ApiClient from './helpers/ApiClient';
+import createStore from './redux/create';
+import debug from './helpers/debug';
 
-import Html from './src/helpers/Html';
+import Html from './helpers/Html';
 
-import { setUserAgent } from './src/redux/actions/audioplayer.js';
-import { setOption } from './src/redux/actions/options.js';
+import { setUserAgent } from './redux/actions/audioplayer.js';
+import { setOption } from './redux/actions/options.js';
 
 // Use varnish for the static routes, which will cache too
 server.use(raven.middleware.express.requestHandler(config.sentryServer));

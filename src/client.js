@@ -16,9 +16,9 @@ import { syncHistoryWithStore } from 'react-router-redux';
 import debug from 'debug';
 
 import config from 'config';
-import ApiClient from './src/helpers/ApiClient';
-import createStore from './src/redux/create';
-import routes from './src/routes';
+import ApiClient from './helpers/ApiClient';
+import createStore from './redux/create';
+import routes from './routes';
 
 const client = new ApiClient();
 const store = createStore(browserHistory, client, window.reduxData);
