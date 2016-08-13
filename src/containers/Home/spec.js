@@ -1,65 +1,36 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { renderIntoDocument } from 'react-addons-test-utils';
-import { Provider } from 'react-redux';
-import { browserHistory } from 'react-router';
+import { shallow } from 'enzyme';
+import getSurahs from '../../../tests/fixtures/getSurahs.js';
 
-import createStore from 'redux/create';
-import ApiClient from 'helpers/ApiClient';
+import SurahList from './SurahList.js';
+import QuickSurahs from './QuickSurahs.js';
+import Home from './index.js';
 
-let mockStore;
-let component;
-let dom;
-let store;
-let dispatch;
+describe("<Home />", () => {
 
-// import Home from './index';
+  it.only("Should render Home component", () => {
+    let component = shallow(<Home surahs={getSurahs.default} lastVisit="something"/>);
+    expect(component).to.be.ok;
 
-describe('Home', () => {
-  beforeEach(() => {
-    mockStore = {
-      surahs: {
-        errored: false,
-        loaded: false,
-        current: null,
-        entities: {
-          "1":{"bismillahPre":false,"page":[1,1],"ayat":7,"name":{"arabic":"الفاتحة","simple":"Al-Fatihah","complex":"Al-Fātiĥah","english":"The Opener"},"revelation":{"order":5,"place":"makkah"},"id":1},
-          "2":{"bismillahPre":true,"page":[2,49],"ayat":286,"name":{"arabic":"البقرة","simple":"Al-Baqarah","complex":"Al-Baqarah","english":"The Cow"},"revelation":{"order":87,"place":"madinah"},"id":2}
-        }
-      },
-      routing: {
-        params: {},
-        location: {
-          pathname:"/",
-          search:"",
-          hash:"",
-          state:null,
-          action:"POP",
-          query: {},
-          key:"31zavf"
-        }
-      }
-    };
-
-    store = createStore(browserHistory, new ApiClient(), mockStore);
-    // component = renderIntoDocument(
-    //   <Provider store={store} key="provider">
-    //     <Home />
-    //   </Provider>
-    // );
-    //
-    // dom = ReactDOM.findDOMNode(component);
   });
 
-  afterEach(() => {
-    mockStore = null;
-    component = null;
-    dom = null;
-    store = null;
-    dispatch = null;
+  it("Should render SurahList component", () => {
+    let component = shallow(<SurahList surahs={getSurahs.default.slice(0, 4)}/>);
+    expect(component).to.be.ok;
+    expect(component.find('.col-md-4 li').length).to.equal(4);
   });
 
-  it('should return true', () => {
-    expect(true).to.be.truthy;
+  it("Should render QuickSurahs component", () => {
+    let component = shallow(<QuickSurahs />);
+    expect(component).to.be.ok;
+    expect(component.find('.list-inline li').length).to.equal(5);
   });
+
+  it("Should render QuickSurahs component with Surah Al-Kahf", () => {
+    sinon.useFakeTimers(1470956400000);
+    let component = shallow(<QuickSurahs />);
+    expect(component).to.be.ok;
+    expect(component.find('.list-inline li').length).to.equal(6);
+  })
+
 });
