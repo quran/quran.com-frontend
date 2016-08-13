@@ -14,10 +14,10 @@ const Html = ({ store, component, assets }) => {
         {head.base.toComponent()}
         {head.title.toComponent()}
         {head.meta.toComponent()}
+        <link rel="shortcut icon" href="//quran-1f14.kxcdn.com/images/favicon.ico" />
         {head.link.toComponent()}
         {head.script.toComponent()}
         {head.style.toComponent()}
-
         {Object.keys(assets.styles).map((style, i) => (
           <link
             href={assets.styles[style]}
