@@ -5,11 +5,13 @@ import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import debug from '../../helpers/debug';
 import { isAllLoaded, loadAll } from '../../redux/actions/surahs.js';
-import SurahList from './SurahList';
-import QuickSurahs from './QuickSurahs';
+
+import SurahList from '../../components/Home/SurahList';
+import QuickSurahs from '../../components/Home/QuickSurahs';
+
 const styles = require('./style.scss');
 
-export function Home(props) {
+function Home(props) {
 
   debug('component:Index', 'Render');
 
