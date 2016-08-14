@@ -9,7 +9,8 @@ import SurahList from './SurahList';
 import QuickSurahs from './QuickSurahs';
 const styles = require('./style.scss');
 
-function Home(props) {
+export function Home(props) {
+
   debug('component:Index', 'Render');
 
   return (
