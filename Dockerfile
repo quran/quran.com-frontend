@@ -25,7 +25,8 @@ RUN cp -a /tmp/node_modules /quran
 
 WORKDIR /quran
 ADD . /quran/
-RUN npm run build
+RUN npm run build:client
+RUN npm run build:server
 
 # ssh keys
 WORKDIR /root
