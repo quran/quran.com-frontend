@@ -14,7 +14,7 @@
     "posttest:dev:functional": "bash tests/functional/test.sh stop",
     "test:dev:lint": "node_modules/eslint/bin/eslint.js ./src/scripts/**/*.js",
     "test:stylelint": "node_modules/stylelint/dist/cli.js './src/**/*.scss' --config webpack/.stylelintrc",
-    "dev": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node webpack/webpack-dev-server.js & PORT=8000 node ./bin/server.js",
+    "dev": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node webpack/webpack-dev-server.js & env NODE_PATH='./src' PORT=8000 node ./bin/server.js",
     "start": "NODE_PATH=\"./src\" node ./start",
     "build": "npm run build:client & npm run build:server",
     "build:server": "babel src -d dist -D",
