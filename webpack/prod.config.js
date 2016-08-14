@@ -26,7 +26,7 @@ module.exports = {
   target: 'web',
   cache: false,
   entry: [
-  'bootstrap-sass!./bootstrap.config.prod.js',
+  'bootstrap-sass!./src/styles/bootstrap.config.prod.js',
   './src/client.js',
   ],
   stats: {

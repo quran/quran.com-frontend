@@ -18,7 +18,7 @@ module.exports = {
   entry: [
     'webpack-hot-middleware/client?path=http://localhost:8001/__webpack_hmr',
     'webpack/hot/only-dev-server',
-    'bootstrap-sass!./bootstrap.config.js',
+    'bootstrap-sass!./src/styles/bootstrap.config.js',
     './src/client.js'
   ],
   output: {
