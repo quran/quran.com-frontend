@@ -11,7 +11,7 @@ import raven from 'raven';
 import errorhandler from 'errorhandler';
 
 import config from 'config';
-import expressConfig from '../server/config/express';
+import expressConfig from './server/config/express';
 
 const pretty = new PrettyError();
 const server = express();
