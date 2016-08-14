@@ -4,14 +4,13 @@ import getSurahs from '../../../tests/fixtures/getSurahs.js';
 
 import SurahList from './SurahList.js';
 import QuickSurahs from './QuickSurahs.js';
-import Home from './index.js';
+import { Home } from './index.js';
 
 describe("<Home />", () => {
 
-  it.only("Should render Home component", () => {
-    let component = shallow(<Home surahs={getSurahs.default} lastVisit="something"/>);
+  it("Should render Home component", () => {
+    let component = shallow(<Home surahs={getSurahs.default.slice(0, 4)[1]} lastVisit="something"/>);
     expect(component).to.be.ok;
-
   });
 
   it("Should render SurahList component", () => {
