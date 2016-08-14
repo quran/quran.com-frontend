@@ -40,8 +40,6 @@ subl bundle-stats.json #so that you can the output
 analyze-bundle-size bundle-stats.json
 ```
 
-## [View project issues on waffle.io...](https://waffle.io/quran/quran.com-frontend)
-
 [Reactjs]: https://facebook.github.io/react/docs/getting-started.html
 [Redux]: http://redux.js.org/
 [Expressjs]: http://expressjs.com/en/starter/hello-world.html
