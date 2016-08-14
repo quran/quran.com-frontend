@@ -5,6 +5,7 @@ ENV API_URL http://api.quran.com:3000
 ENV SENTRY_KEY_CLIENT https://44c105328ae544ae9928f9eb74b40061@app.getsentry.com/80639
 ENV SENTRY_KEY_SERVER https://44c105328ae544ae9928f9eb74b40061:41ca814d33124e04ab450104c3938cb1@app.getsentry.com/80639
 ENV PORT 8000
+ENV NODE_PATH "./src"
 
 RUN apt-get -y update && apt-get -y install supervisor ssh rsync
 
@@ -38,6 +39,8 @@ RUN rsync --update --progress -raz . ahmedre@rsync.keycdn.com:zones/assets/
 
 # go back to /quran
 WORKDIR /quran
+
+ENV NODE_PATH "./dist"
 
 EXPOSE 8000
 CMD ["supervisord", "--nodaemon", "-c", "/etc/supervisor/supervisord.conf"]

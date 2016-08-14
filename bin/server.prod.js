@@ -1,6 +1,6 @@
 require('dotenv').load();
 require('app-module-path').addPath(__dirname);
-require('app-module-path').addPath('./src');
+require('app-module-path').addPath('../dist');
 
 var webpackIsomorphicTools = require('webpack-isomorphic-tools');
 var path = require('path');

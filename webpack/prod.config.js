@@ -27,7 +27,7 @@ module.exports = {
   cache: false,
   entry: [
   'bootstrap-sass!./bootstrap.config.prod.js',
-  './client.js',
+  './src/client.js',
   ],
   stats: {
     colors: true,
