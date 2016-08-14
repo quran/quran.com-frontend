@@ -1,6 +1,6 @@
 import sitemap from 'sitemap';
 
-import ApiClient from '../../src/helpers/ApiClient';
+import ApiClient from '../../helpers/ApiClient';
 
 
 export default (server) => {

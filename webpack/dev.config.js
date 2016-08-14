@@ -7,7 +7,7 @@ var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration'));
 
 module.exports = {
-  context: path.join(process.env.PWD, './'),
+  context: path.resolve(__dirname, '..'),
   resolve: {
     extensions: ['', '.js'],
     modules: [
@@ -16,14 +16,14 @@ module.exports = {
     ]
   },
   entry: [
-    'webpack-dev-server/client?http://localhost:8001',
+    'webpack-hot-middleware/client?path=http://localhost:8001/__webpack_hmr',
     'webpack/hot/only-dev-server',
-    'bootstrap-sass!./bootstrap.config.js',
-    './client.js'
+    'bootstrap-sass!./src/styles/bootstrap.config.js',
+    './src/client.js'
   ],
   output: {
     path: path.resolve('./build'),
-    publicPath: '/public/',
+    publicPath: 'http://localhost:8001/public/',
     filename: 'main.js'
   },
   module: {

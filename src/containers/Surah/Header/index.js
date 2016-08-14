@@ -2,33 +2,37 @@ import React, { PropTypes } from 'react';
 
 import Grid from 'react-bootstrap/lib/Grid';
 import Navbar from 'react-bootstrap/lib/Navbar';
+const Header = Navbar.Header;
+const Brand = Navbar.Brand;
+const Toggle = Navbar.Toggle;
+const Collapse = Navbar.Collapse;
 
 import debug from '../../../helpers/debug';
 import Title from '../../../containers/Surah/Title';
 
-const Header = ({ surah, children }) => {
-  debug('component:Header', 'Render');
+const SurahHeader = ({ surah, children }) => {
+  debug('component:SurahHeader', 'Render');
 
   return (
     <Navbar className="montserrat" fixedTop fluid>
-      <Navbar.Header>
-        <Navbar.Brand>
+      <Header>
+        <Brand>
           <Title surah={surah} />
-        </Navbar.Brand>
-        <Navbar.Toggle />
-      </Navbar.Header>
-      <Navbar.Collapse>
+        </Brand>
+        <Toggle />
+      </Header>
+      <Collapse>
         <Grid fluid>
           {children}
         </Grid>
-      </Navbar.Collapse>
+      </Collapse>
     </Navbar>
   );
 };
 
-Header.propTypes = {
+SurahHeader.propTypes = {
   surah: PropTypes.object.isRequired,
   children: PropTypes.any
 };
 
-export default Header;
+export default SurahHeader;

@@ -20,13 +20,14 @@ module.exports = {
     sourceMapFilename: '[name]-[chunkhash].map.js'
 
   },
+  context: path.resolve(__dirname, '../src'),
   devtool: 'cheap-source-map',
   debug: false,
   target: 'web',
   cache: false,
   entry: [
-  'bootstrap-sass!./bootstrap.config.prod.js',
-  './client.js',
+    'bootstrap-sass!./styles/bootstrap.config.prod.js',
+    './client.js',
   ],
   stats: {
     colors: true,
@@ -52,7 +53,9 @@ module.exports = {
               'transform-runtime',
               'add-module-exports',
               'transform-decorators-legacy',
-              'transform-react-display-name'
+              'transform-react-display-name',
+              "transform-react-inline-elements",
+              "transform-react-constant-elements"
             ]
           }
         }

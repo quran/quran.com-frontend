@@ -1,3 +1,4 @@
+/* eslint-disable */
 module.exports = {
   "verbose": false,
   "debug": false,
