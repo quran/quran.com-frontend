@@ -16,8 +16,6 @@ try {
   console.error(err);
 }
 
-config.plugins.push(['system-import-transformer', {modules: 'common'}]);
-
 require('babel-register')(config);
 
 global.__CLIENT__ = false;

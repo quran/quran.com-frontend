@@ -4,7 +4,8 @@
     "transform-runtime",
     "add-module-exports",
     "transform-decorators-legacy",
-    "transform-react-display-name"
+    "transform-react-display-name",
+    ["system-import-transformer", {"modules": "common"}]
   ],
   "env": {
     "development": {
