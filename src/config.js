@@ -14,8 +14,10 @@ module.exports = Object.assign({
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
   api: process.env.API_URL,
+  oneQuran: process.env.ONE_QURAN_URL,
   sentryClient: process.env.SENTRY_KEY_CLIENT,
   sentryServer: process.env.SENTRY_KEY_SERVER,
+  facebookAppId: process.env.FACEBOOK_APP_ID,
   app: {
     head: {
       titleTemplate: `%s - ${title}`,

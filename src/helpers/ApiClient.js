@@ -9,6 +9,10 @@ function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? `/${path}` : path;
 
   if (__SERVER__) {
+    if (adjustedPath.startsWith('/onequran')) {
+      return config.oneQuran + adjustedPath.replace('/onequran', '');
+    }
+
     return `${config.api}${adjustedPath}`;
   }
 
