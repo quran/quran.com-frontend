@@ -95,7 +95,6 @@ export default function reducer(state = initialState, action = {}) {
       let currentFile;
       const isSupported = testIfSupported(
         action.result.entities.ayahs[action.result.result[0]],
-        state.userAgent
       );
 
       if (!isSupported) {

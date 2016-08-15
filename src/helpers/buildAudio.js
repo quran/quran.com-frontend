@@ -1,12 +1,12 @@
-export function testIfSupported(ayah, agent) {
+export function testIfSupported(ayah) {
   const { audio } = ayah;
   if (!audio) {
-     return false;
+    return false;
   }
   return true;
 }
 
-export function buildAudioForAyah(audio, agent) {
+export function buildAudioForAyah(audio) {
   const scopedAudio = new Audio();
   let segments = null;
 
@@ -19,12 +19,12 @@ export function buildAudioForAyah(audio, agent) {
   return { audio: scopedAudio, segments };
 }
 
-export function buildAudioFromHash(ayahsObject = {}, agent) {
+export function buildAudioFromHash(ayahsObject = {}) {
   const audioFromHash = {files: {}, segments: {}};
 
   Object.keys(ayahsObject).forEach(ayahId => {
     const ayah = ayahsObject[ayahId];
-    const audioForAyah = buildAudioForAyah(ayah.audio, agent);
+    const audioForAyah = buildAudioForAyah(ayah.audio);
 
     audioFromHash.files[ayahId] = audioForAyah.audio;
     audioFromHash.segments[ayahId] = audioForAyah.segments;
