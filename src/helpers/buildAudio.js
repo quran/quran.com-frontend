@@ -1,29 +1,8 @@
 export function testIfSupported(ayah, agent) {
   const { audio } = ayah;
-
-  const testOperaOrFirefox = (agent.isOpera || agent.isFirefox);
-  const testChrome = agent.isChrome;
-
   if (!audio) {
-    return false;
+     return false;
   }
-
-  if (testOperaOrFirefox) {
-    if (!(audio.ogg && audio.ogg.url)) {
-      return false;
-    }
-  } else {
-    if (audio.mp3 && audio.mp3.url) {
-      return true;
-    } else if (audio.ogg && audio.ogg.url) {
-      if (!testChrome) {
-        return false;
-      }
-    } else {
-      return false;
-    }
-  }
-
   return true;
 }
 
@@ -32,28 +11,10 @@ export function buildAudioForAyah(audio, agent) {
   let segments = null;
 
   scopedAudio.preload = 'none';
-
-  const testOperaOrFirefox = (agent.isOpera || agent.isFirefox);
-  const testChrome = agent.isChrome;
-
-
-  if (testOperaOrFirefox) {
-    if (audio.ogg && audio.ogg.url) {
-      scopedAudio.src = audio.ogg.url;
-      segments = audio.ogg.encryptedSegments;
-    }
-  } else {
-    if (audio.mp3 && audio.mp3.url) {
-      scopedAudio.src = audio.mp3.url;
-      segments = audio.mp3.encryptedSegments;
-    } else if (audio.ogg && audio.ogg.url) {
-      if (testChrome) {
-        scopedAudio.src = audio.ogg.url;
-        segments = audio.ogg.encryptedSegments;
-      }
-    }
+  if (audio.url) {
+    scopedAudio.src = audio.url;
+    segments = audio.encryptedSegments;
   }
-
 
   return { audio: scopedAudio, segments };
 }
