@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
-import debug from '../../helpers/debug';
+import debug from '../../../helpers/debug';
 const styles = require('./style.scss');
 
-function LastVisit(props) {
-  debug('component:Index', 'SurahList');
+const LastVisit = (props) => {
+
+  debug('component:Index', 'LastVisit');
 
   const {lastVisit, surahs} = props;
 
@@ -47,7 +48,7 @@ function LastVisit(props) {
       );
     }
   }
-}
+};
 
 LastVisit.propTypes = {
   lastVisit: PropTypes.any,

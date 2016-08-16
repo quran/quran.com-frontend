@@ -1,10 +1,10 @@
 import React, { PropTypes } from 'react';
-import debug from '../../helpers/debug';
+import debug from '../../../helpers/debug';
 import Link from 'react-router/lib/Link';
 const styles = require('./style.scss');
 
-function SurahList(props) {
-  debug('component:Index', 'SurahList');
+const SurahsList = (props) => {
+  debug('component:Index', 'SurahsList');
 
   return (
     <ul className="col-md-4 list-unstyled">
@@ -26,10 +26,10 @@ function SurahList(props) {
         </li>
       ))}
     </ul>);
-}
+};
 
-SurahList.propTypes = {
+SurahsList.propTypes = {
   surahs: PropTypes.array.isRequired
 };
 
-export default SurahList;
+export default SurahsList;

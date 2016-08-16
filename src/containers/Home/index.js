@@ -6,8 +6,8 @@ import { connect } from 'react-redux';
 import debug from '../../helpers/debug';
 import { isAllLoaded, loadAll } from '../../redux/actions/surahs.js';
 
-import SurahList from '../../components/Home/SurahList';
-import QuickSurahs from '../../components/Home/QuickSurahs';
+import SurahsList from '../../components/Home/SurahsList/index.js';
+import QuickSurahs from '../../components/Home/QuickSurahs/index.js';
 
 const styles = require('./style.scss');
 
@@ -27,9 +27,9 @@ function Home(props) {
               <QuickSurahs />
             </h4>
             <div className="row">
-              <SurahList surahs={Object.values(props.surahs).slice(0, 38)} />
-              <SurahList surahs={Object.values(props.surahs).slice(38, 76)} />
-              <SurahList surahs={Object.values(props.surahs).slice(76, 114)} />
+              <SurahsList surahs={Object.values(props.surahs).slice(0, 38)} />
+              <SurahsList surahs={Object.values(props.surahs).slice(38, 76)} />
+              <SurahsList surahs={Object.values(props.surahs).slice(76, 114)} />
             </div>
           </div>
         </div>
