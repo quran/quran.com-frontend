@@ -22,19 +22,19 @@ export default `
       <li>
         <p>The Community should work with the utmost zeal to propagate its ideology and win over to its side the greatest possible number of people.</p>
       </li>
+      <li>
+        <p>It should so expose its opponents as to leave no room for doubt in the mind of any sensible person that they were adhering to an absolutely wrong position.</p>
+      </li>
+      <li>
+        <p>It should infuse in it's members (the majority of whom were homeless and indigent and surrounded on all sides by enemies) that courage and fortitude which is so indispensable to their very existence in the adverse circumstances in which they were struggling and to prepare them to face these boldly.</p>
+      </li>
+      <li>
+        <p>It should also keep them ready and prepared to meet any armed menace, which might come from any side to suppress and crush their ideology, and to oppose it tooth and nail without minding the overwhelming numerical strength and the material resources of its enemies</p>
+      </li>
+      <li>
+        <p>It should also create in them that courage which is needed for the eradication of evil ways and for the establishment of the Islamic Way instead.</p>
+      </li>
     </ol>
-  </li>
-  <li>
-    <p>It should so expose its opponents as to leave no room for doubt in the mind of any sensible person that they were adhering to an absolutely wrong position.</p>
-  </li>
-  <li>
-    <p>It should infuse in it's members (the majority of whom were homeless and indigent and surrounded on all sides by enemies) that courage and fortitude which is so indispensable to their very existence in the adverse circumstances in which they were struggling and to prepare them to face these boldly.</p>
-  </li>
-  <li>
-    <p>It should also keep them ready and prepared to meet any armed menace, which might come from any side to suppress and crush their ideology, and to oppose it tooth and nail without minding the overwhelming numerical strength and the material resources of its enemies</p>
-  </li>
-  <li>
-    <p>It should also create in them that courage which is needed for the eradication of evil ways and for the establishment of the Islamic Way instead.</p>
     <p>That is why Allah has revealed in this Surah such instructions as may help achieve all the above mentioned objects.</p>
   </li>
   <li>
@@ -44,7 +44,7 @@ export default `
   </li>
 </ol>
 <h2>Theme: Guidance</h2>
-<p>This Surah is an invitation to the Divine Guidance and all the stories, incidents etc., revolve round this central theme. As this Surah has particularly been addressed to the Jews, many historical events have been cited from their own traditions to admonish and advise them that their own good lies in accepting the Guidance revealed to the Holy Prophet. They should, therefore, be the first to accept it because it was basically]y the same that was revealed to Prophet Moses (Allah's peace be upon him).</p>
+<p>This Surah is an invitation to the Divine Guidance and all the stories, incidents etc., revolve round this central theme. As this Surah has particularly been addressed to the Jews, many historical events have been cited from their own traditions to admonish and advise them that their own good lies in accepting the Guidance revealed to the Holy Prophet. They should, therefore, be the first to accept it because it was basically the same that was revealed to Prophet Moses (Allah's peace be upon him).</p>
 <h3>Topics and their Interconnection</h3>
 <p>These introductory verses declare the Quran to be the Book of Guidance : enunciate the articles of the Faith -- belief in Allah, Prophethood and Life-after-death; divide mankind into three main groups with regard to its acceptance or rejection -- Believers, disbelievers and hypocrites. <strong>1 - 20</strong></p>
 <p>Allah invites mankind to accept the Guidance voluntarily and to submit to Him, the Lord and the Creator of the Universe and to believe in the Quran, His Guidance, and in the Life-after-death. <strong>21 - 29</strong></p>
