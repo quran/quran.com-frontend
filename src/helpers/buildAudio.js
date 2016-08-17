@@ -1,11 +1,3 @@
-export function testIfSupported(ayah) {
-  const { audio } = ayah;
-  if (!audio) {
-    return false;
-  }
-  return true;
-}
-
 export function buildAudioForAyah(audio) {
   const scopedAudio = new Audio();
   let segments = null;

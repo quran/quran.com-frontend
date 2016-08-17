@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { buildAudioFromHash, testIfSupported } from '../../helpers/buildAudio';
+import { buildAudioFromHash } from '../../helpers/buildAudio';
 import { buildSegments, extractSegments } from '../../helpers/buildSegments';
 import debug from 'helpers/debug';
 
@@ -93,9 +93,8 @@ export default function reducer(state = initialState, action = {}) {
     case AYAHS_LOAD_SUCCESS: {
       debug('reducer:audioplayer', 'AYAHS_LOAD_SUCCESS init');
       let currentFile;
-      const isSupported = testIfSupported(
-        action.result.entities.ayahs[action.result.result[0]],
-      );
+      const isSupported =
+        action.result.entities.ayahs[action.result.result[0]] != null;
 
       if (!isSupported) {
         return {
