@@ -93,8 +93,8 @@ export default function reducer(state = initialState, action = {}) {
     case AYAHS_LOAD_SUCCESS: {
       debug('reducer:audioplayer', 'AYAHS_LOAD_SUCCESS init');
       let currentFile;
-      const isSupported = true;
-      //  action.result.entities.ayahs[action.result.result[0]] != null;
+      const isSupported =
+        action.result.entities.ayahs[action.result.result[0]] != null;
 
       if (!isSupported) {
         return {
