@@ -34,7 +34,6 @@ const initialState = {
   currentAyah: null,
   currentWord: null,
   currentTime: 0,
-  isSupported: true,
   isPlaying: false,
   repeat: {
     from: undefined,
@@ -92,16 +91,6 @@ export default function reducer(state = initialState, action = {}) {
     }
     case AYAHS_LOAD_SUCCESS: {
       debug('reducer:audioplayer', 'AYAHS_LOAD_SUCCESS init');
-      let currentFile;
-      const isSupported =
-        action.result.entities.ayahs[action.result.result[0]] != null;
-
-      if (!isSupported) {
-        return {
-          ...state,
-          isSupported: false
-        };
-      }
 
       const ayahs = action.result.entities.ayahs;
       const audioFromHash = __CLIENT__ ? buildAudioFromHash(ayahs, state.userAgent) : ayahs;
@@ -113,6 +102,7 @@ export default function reducer(state = initialState, action = {}) {
 
       const currentAyah = state.currentAyah ? state.currentAyah : Object.keys(files)[0];
 
+      let currentFile;
       if (state.currentFile && state.currentFile === Object.values(files)[0]) {
         // If the same file is being used, for example in lazy loading, then keep same file
         currentFile = state.currentFile;
@@ -133,7 +123,6 @@ export default function reducer(state = initialState, action = {}) {
       debug('reducer:audioplayer', 'AYAHS_LOAD_SUCCESS return');
       return {
         ...state,
-        isSupported,
         currentAyah,
         currentFile,
         surahId: action.surahId,
