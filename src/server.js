@@ -53,7 +53,7 @@ server.use((req, res, next) => {
   store.dispatch(setUserAgent(req.useragent));
   store.dispatch(setOption(cookie.load('options') || {}));
   debug('Server', 'Executing navigate action');
-  match({ history, routes: routes(), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
+  match({ history, routes: routes(store), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
     debug('Server', 'Route match callback');
 
 

@@ -1,9 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
+import { connect } from 'react-redux';
 
-class IndexHeaderNav extends Component {
+
+export class IndexHeaderNav extends Component {
   static propTypes = {
-    navlink: PropTypes.bool
+    user: PropTypes.object
   };
 
   state = {
@@ -17,32 +19,8 @@ class IndexHeaderNav extends Component {
   }
 
   links() {
+    const { user } = this.props;
     let classNames = `links ${this.state.open ? 'open' : ''}`;
-
-    if (this.props.navlink === false) {
-      return (
-        <ul className={classNames}>
-          <li>
-            <Link to="/apps" data-metrics-event-name="IndexHeader:Link:Mobile">
-              Mobile
-            </Link>
-          </li>
-          <li>
-            <a href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help" target="_blank" data-metrics-event-name="IndexHeader:Link:Developer">
-              Developers
-            </a>
-          </li>
-          <li>
-            <a href="http://legacy.quran.com" data-metrics-event-name="IndexHeader:Link:Legacy">Legacy Quran.com</a>
-          </li>
-          <li>
-            <a href="https://quran.zendesk.com/hc/en-us" data-metrics-event-name="IndexHeader:Link:Contact">
-              Contact us
-            </a>
-          </li>
-        </ul>
-      );
-    }
 
     return (
       <ul className={classNames}>
@@ -69,6 +47,14 @@ class IndexHeaderNav extends Component {
             Contact us
           </a>
         </li>
+        {
+          user &&
+            <li>
+              <Link to="/profile" data-metrics-event-name="IndexHeader:Link:Profile">
+                {user.firstName}
+              </Link>
+            </li>
+        }
       </ul>
     );
   }
@@ -82,4 +68,8 @@ class IndexHeaderNav extends Component {
   }
 }
 
-export default IndexHeaderNav;
+export default connect(
+  state => ({
+    user: state.auth.user
+  })
+)(IndexHeaderNav);

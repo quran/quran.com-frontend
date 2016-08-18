@@ -1,15 +1,25 @@
-import { FACEBOOK, FACEBOOK_SUCCESS, FACEBOOK_FAILURE, LOGOUT_SUCCESS } from '../constants/auth';
+import cookie from 'react-cookie';
+
+import {
+  FACEBOOK,
+  FACEBOOK_SUCCESS,
+  FACEBOOK_FAILURE,
+  LOGOUT_SUCCESS,
+  LOAD,
+  LOAD_SUCCESS,
+  LOAD_FAILURE
+} from '../constants/auth';
 
 export function isLoaded(globalState) {
   return globalState.auth && globalState.auth.loaded;
 }
 
-// export function load() {
-//   return {
-//     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-//     promise: (client) => client.get('/users/load_user')
-//   };
-// }
+export function load() {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAILURE],
+    promise: (client) => client.get('/onequran/api/v1/auth/current')
+  };
+}
 
 export function facebook() {
   return {
@@ -23,7 +33,7 @@ export function logout() {
     type: LOGOUT_SUCCESS
   };
 }
-//
-// export function hasAccessToken() {
-//   return !!cookie.load('accessToken');
-// }
+
+export function hasAccessToken() {
+  return !!cookie.load('accessToken');
+}

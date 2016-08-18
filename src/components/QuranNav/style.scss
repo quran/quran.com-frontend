@@ -1,0 +1,27 @@
+$navbar-height: 40px;
+.nav {
+  min-height: $navbar-height;
+  border-radius: 0px;
+  margin-bottom: 0px;
+
+  :global(.navbar-nav > li > a) {
+    padding-top: ($navbar-height - 20) / 2;
+    padding-bottom: ($navbar-height - 20) / 2;
+  }
+
+  &.transparent{
+    background: transparent;
+  }
+}
+
+.name{
+  padding-left: 25px;
+}
+
+.image{
+  width: 30px;
+  position: absolute;
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+}

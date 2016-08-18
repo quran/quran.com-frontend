@@ -39,7 +39,7 @@ export default class FacebookLogin extends Component {
     size: 'md',
     fields: 'first_name,name,picture',
     cssClass: 'btn btn-facebook btn-',
-    version: '2.5'
+    version: '2.7'
   };
 
   componentDidMount() {

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 
 import SearchInput from '../SearchInput';
-import IndexHeaderNav from './Nav';
+import Nav from './Nav';
 
 import debug from '../../helpers/debug';
 
@@ -10,8 +10,7 @@ const logo = require('../../../static/images/logo-lg-w.png');
 
 export default class IndexHeader extends Component {
   static propTypes = {
-    noSearch: PropTypes.bool,
-    navlink: PropTypes.any
+    noSearch: PropTypes.bool
   };
 
   renderSearch() {
@@ -29,7 +28,7 @@ export default class IndexHeader extends Component {
 
     return (
       <div className="index-header" style={{backgroundColor: '#2CA4AB'}}>
-        <IndexHeaderNav navlink={this.props.navlink} />
+        <Nav />
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">

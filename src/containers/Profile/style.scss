@@ -1,0 +1,13 @@
+@import '../../styles/variables.scss';
+
+.header{
+  background: $brand-primary;
+  height: 7rem;
+  padding-top: 15px;
+}
+
+.image{
+  margin: -70px auto 40px;
+  display: block;
+  height: 10rem;
+}

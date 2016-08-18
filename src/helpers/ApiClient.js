@@ -1,6 +1,7 @@
 import superagent from 'superagent';
 import qs from 'qs';
 import { decamelizeKeys } from 'humps';
+import cookie from 'react-cookie';
 
 import config from '../config';
 
@@ -31,6 +32,10 @@ export default class {
           request.query(qs.stringify(decamelizeKeys(params), {
             arrayFormat: arrayFormat || 'brackets'
           }));
+        }
+
+        if (cookie.load('accessToken')) {
+          request.set('Authorization', `Bearer ${cookie.load('accessToken')}`);
         }
 
         if (__SERVER__ && req.get('cookie')) {

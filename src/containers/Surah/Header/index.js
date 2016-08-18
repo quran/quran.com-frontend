@@ -14,7 +14,7 @@ const SurahHeader = ({ surah, children }) => {
   debug('component:SurahHeader', 'Render');
 
   return (
-    <Navbar className="montserrat" fixedTop fluid>
+    <Navbar className="montserrat surah" fixedTop fluid>
       <Header>
         <Brand>
           <Title surah={surah} />
