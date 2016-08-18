@@ -1,5 +1,6 @@
 import superagent from 'superagent';
 import qs from 'qs';
+import { decamelizeKeys } from 'humps';
 
 import config from '../config';
 
@@ -27,7 +28,9 @@ export default class {
         const request = superagent[method](formatUrl(path));
 
         if (params) {
-          request.query(qs.stringify(params, {arrayFormat: arrayFormat || 'brackets'}));
+          request.query(qs.stringify(decamelizeKeys(params), {
+            arrayFormat: arrayFormat || 'brackets'
+          }));
         }
 
         if (__SERVER__ && req.get('cookie')) {

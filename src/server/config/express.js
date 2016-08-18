@@ -57,7 +57,7 @@ export default function(server) {
   });
 
   server.use('/api/onequran', (req, res) => {
-    proxyApi.web(req, res);
+    proxyOneQuran.web(req, res);
   });
 
   server.use('/api', (req, res) => {

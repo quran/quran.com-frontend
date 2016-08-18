@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { facebook } from 'redux/modules/auth';
+import { facebook } from 'redux/actions/auth';
 
 import config from 'config';
 
@@ -32,14 +32,14 @@ export default class FacebookLogin extends Component {
     appId: config.facebookAppId,
     textButton: 'Connect with Facebook',
     icon: 'fa-facebook',
-    scope: 'email,user_location,user_photos',
+    scope: 'email,public_profile,user_location',
     xfbml: true,
     cookie: true,
     autoLoad: false,
     size: 'md',
     fields: 'first_name,name,picture',
     cssClass: 'btn btn-facebook btn-',
-    version: '2.7'
+    version: '2.5'
   };
 
   componentDidMount() {

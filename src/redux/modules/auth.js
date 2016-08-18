@@ -15,7 +15,7 @@ export default function reducer(state = initialState, action = {}) {
     case FACEBOOK:
       return state;
     case FACEBOOK_SUCCESS:
-      // cookie.save('accessToken', action.result.accessToken);
+      cookie.save('oauthToken', action.result.user.oauthToken);
 
       return {
         ...state,
@@ -24,6 +24,14 @@ export default function reducer(state = initialState, action = {}) {
       };
     case FACEBOOK_FAILURE:
       return state;
+    case LOGOUT_SUCCESS:
+      cookie.remove('oauthToken');
+
+      return {
+        ...state,
+        loggingOut: false,
+        user: null
+      };
     default:
       return state;
   }
