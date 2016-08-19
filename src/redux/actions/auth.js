@@ -11,7 +11,7 @@ import {
 } from '../constants/auth';
 
 export function isLoaded(globalState) {
-  return globalState.auth && globalState.auth.loaded;
+  return globalState.auth && globalState.auth.user;
 }
 
 export function load() {

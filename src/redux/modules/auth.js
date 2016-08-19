@@ -4,7 +4,8 @@ import {
   FACEBOOK_SUCCESS,
   FACEBOOK_FAILURE,
   LOGOUT_SUCCESS,
-  LOAD_SUCCESS
+  LOAD_SUCCESS,
+  LOAD_FAILURE
 } from '../constants/auth';
 
 const initialState = {
@@ -29,6 +30,7 @@ export default function reducer(state = initialState, action = {}) {
       };
     case FACEBOOK_FAILURE:
       return state;
+    case LOAD_FAILURE:
     case LOGOUT_SUCCESS:
       cookie.remove('accessToken');
 
