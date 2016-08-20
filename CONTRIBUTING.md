@@ -14,6 +14,7 @@ Found a problem? Want a new feature?
 Pull requests are the greatest contributions, so be sure they are focused in scope, and do avoid unrelated commits.
 
 1. To begin, [fork this project], clone your fork, and add our [upstream].
+
 	```bash
 	# Clone your fork of the repository into the current directory
 	git clone https://github.com/<your-username>/quran.com-frontend
@@ -36,6 +37,7 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 	git push origin master
 	```
 3. Create a branch for your feature or fix:
+
 	```bash
 	# Move into a new branch for a feature
 	git checkout -b feature/thing
@@ -46,6 +48,7 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 	```
 
 4. Be sure your code follows our practices.
+
 	```bash
 	# Test current code
 	npm run test
@@ -58,6 +61,7 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 	```
 
 5. To create a PR you need to push your branch to the origin(forked) remote and then press some buttons on GitHub:
+
 	```bash
 	# Push a feature branch
 	git push -u origin feature/thing
