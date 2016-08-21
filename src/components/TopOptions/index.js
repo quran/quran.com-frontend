@@ -8,12 +8,7 @@ import TooltipDropdown from 'components/TooltipDropdown';
 import ReadingModeToggle from 'components/ReadingModeToggle';
 import Share from 'components/Share';
 
-const TopOptions = (props) => {
-  const {
-    options,
-    surah,
-    actions // eslint-disable-line no-shadow
-    } = props;
+const TopOptions = ({options, surah, actions}) => {
 
   return (
     <Row>

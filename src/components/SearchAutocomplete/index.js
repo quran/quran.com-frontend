@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import ApiClient from '../../helpers/ApiClient';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { bindActionCreators } from 'redux';
 
 const client = new ApiClient();
 
@@ -149,6 +148,7 @@ class SearchAutocomplete extends Component {
       case 9: // tab
         return;
       case 13: // enter
+        console.log(this.props);
         this.props.push(item.href); // change url
         break;
       case 27: // escape
@@ -226,10 +226,4 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return {
-    push: bindActionCreators(push, dispatch)
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchAutocomplete);
+export default connect(mapStateToProps, {push})(SearchAutocomplete);

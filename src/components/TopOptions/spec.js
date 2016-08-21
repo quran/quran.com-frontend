@@ -13,20 +13,25 @@ import Share from 'components/Share';
 describe("<TopOptions />", () => {
 
   it("Should render QuickSurahs component", () => {
-    let component = shallow(<TopOptions
-                                        options={{
-                                          isReadingMode: false,
-                                          isShowingSurahInfo: false,
-                                          tooltip:"translation",
-                                          fontSize: {}}}
-                                        actions={{
-                                        options: {
-                                          setOption: () => {},
-                                          toggleReadingMode: () => {}}}}
-                                        surah={getSurahs[5]}/>);
+
+    const options = {
+      isReadingMode: false,
+      isShowingSurahInfo: false,
+      tooltip:"translation",
+      fontSize: {}
+    };
+
+    const actions = {
+      setOption: () => {},
+      toggleReadingMode: () => {}
+    };
+
+    const component = shallow(<TopOptions
+                                        options={options}
+                                        actions={actions}
+                                        surah={getSurahs[5]} />);
 
     expect(component).to.be.ok;
-
     expect(component.find(Share).length).to.eql(1);
     expect(component.find(InformationToggle).length).to.eql(1);
     expect(component.find(FontSizeDropdown).length).to.eql(1);
