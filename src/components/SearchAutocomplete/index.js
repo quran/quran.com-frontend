@@ -2,38 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import ApiClient from '../../helpers/ApiClient';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { bindActionCreators } from 'redux';
 
 const client = new ApiClient();
 
 const styles = require('./style.scss');
 
-@connect(
-  state => {
-    const surahs = state.surahs.entities;
-    const surahId = state.surahs.current;
-    let lang = 'en';
-
-    if (state.ayahs && state.ayahs.entities && state.ayahs.entities[surahId]) {
-      const ayahs = state.ayahs.entities[surahId];
-      const ayahKey = Object.keys(ayahs)[0];
-
-      if (ayahKey) {
-        const ayah = ayahs[ayahKey];
-
-        if (ayah.content && ayah.content[0] && ayah.content[0].lang) {
-          lang = ayah.content[0].lang;
-        }
-      }
-    }
-
-    return {
-      surahs,
-      lang
-    };
-  },
-  { push }
-)
-export default class SearchAutocomplete extends Component {
+class SearchAutocomplete extends Component {
   static propTypes = {
     surahs: PropTypes.object.isRequired,
     value: PropTypes.string,
@@ -225,3 +200,36 @@ export default class SearchAutocomplete extends Component {
     );
   }
 }
+
+
+function mapStateToProps(state) {
+  const surahs = state.surahs.entities;
+  const surahId = state.surahs.current;
+  let lang = 'en';
+
+  if (state.ayahs && state.ayahs.entities && state.ayahs.entities[surahId]) {
+    const ayahs = state.ayahs.entities[surahId];
+    const ayahKey = Object.keys(ayahs)[0];
+
+    if (ayahKey) {
+      const ayah = ayahs[ayahKey];
+
+      if (ayah.content && ayah.content[0] && ayah.content[0].lang) {
+        lang = ayah.content[0].lang;
+      }
+    }
+  }
+
+  return {
+    surahs,
+    lang
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    push: bindActionCreators(push, dispatch)
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchAutocomplete);
