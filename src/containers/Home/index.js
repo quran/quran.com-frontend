@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 import Helmet from 'react-helmet';
-import IndexHeader from '../../components/IndexHeader';
+import IndexHeader from 'components/IndexHeader';
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import debug from '../../helpers/debug';
 import { isAllLoaded, loadAll } from '../../redux/actions/surahs.js';
 
-import SurahsList from '../../components/Home/SurahsList/index.js';
-import QuickSurahs from '../../components/Home/QuickSurahs/index.js';
+import SurahsList from 'components/Home/SurahsList';
+import QuickSurahs from 'components/Home/QuickSurahs';
 
 const styles = require('./style.scss');
 
