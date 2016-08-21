@@ -198,6 +198,13 @@ class Surah extends Component {
     return false;
   }
 
+  handleSurahInfoToggle = (payload) => {
+    const { actions } = this.props; // eslint-disable-line no-shadow
+
+    return actions.options.setOption(payload);
+
+  }
+
   title() {
     const { params, surah } = this.props;
 
