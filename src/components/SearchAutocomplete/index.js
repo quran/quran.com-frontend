@@ -7,33 +7,7 @@ const client = new ApiClient();
 
 const styles = require('./style.scss');
 
-@connect(
-  state => {
-    const surahs = state.surahs.entities;
-    const surahId = state.surahs.current;
-    let lang = 'en';
-
-    if (state.ayahs && state.ayahs.entities && state.ayahs.entities[surahId]) {
-      const ayahs = state.ayahs.entities[surahId];
-      const ayahKey = Object.keys(ayahs)[0];
-
-      if (ayahKey) {
-        const ayah = ayahs[ayahKey];
-
-        if (ayah.content && ayah.content[0] && ayah.content[0].lang) {
-          lang = ayah.content[0].lang;
-        }
-      }
-    }
-
-    return {
-      surahs,
-      lang
-    };
-  },
-  { push }
-)
-export default class SearchAutocomplete extends Component {
+class SearchAutocomplete extends Component {
   static propTypes = {
     surahs: PropTypes.object.isRequired,
     value: PropTypes.string,
@@ -174,6 +148,7 @@ export default class SearchAutocomplete extends Component {
       case 9: // tab
         return;
       case 13: // enter
+        console.log(this.props);
         this.props.push(item.href); // change url
         break;
       case 27: // escape
@@ -225,3 +200,30 @@ export default class SearchAutocomplete extends Component {
     );
   }
 }
+
+
+function mapStateToProps(state) {
+  const surahs = state.surahs.entities;
+  const surahId = state.surahs.current;
+  let lang = 'en';
+
+  if (state.ayahs && state.ayahs.entities && state.ayahs.entities[surahId]) {
+    const ayahs = state.ayahs.entities[surahId];
+    const ayahKey = Object.keys(ayahs)[0];
+
+    if (ayahKey) {
+      const ayah = ayahs[ayahKey];
+
+      if (ayah.content && ayah.content[0] && ayah.content[0].lang) {
+        lang = ayah.content[0].lang;
+      }
+    }
+  }
+
+  return {
+    surahs,
+    lang
+  };
+}
+
+export default connect(mapStateToProps, {push})(SearchAutocomplete);

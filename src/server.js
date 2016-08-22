@@ -56,12 +56,16 @@ server.use((req, res, next) => {
   match({ history, routes: routes(), location: req.originalUrl }, (error, redirectLocation, renderProps) => {
     debug('Server', 'Route match callback');
 
+
     if (redirectLocation) {
       res.redirect(redirectLocation.pathname + redirectLocation.search);
     } else if (error) {
       console.error('ROUTER ERROR:', pretty.render(error));
       res.status(500).send(error);
     } else if (renderProps) {
+
+      const status = renderProps.location.pathname.indexOf('/error') > -1 ? 404 : 200;
+
       loadOnServer({...renderProps, store, helpers: { client }}).then(() => {
         const component = (
           <Provider store={store}>
@@ -71,7 +75,7 @@ server.use((req, res, next) => {
 
         res.type('html');
         res.setHeader('Cache-Control', 'public, max-age=31557600');
-        res.status(200);
+        res.status(status);
         debug('Server', 'Sending markup');
         res.send('<!doctype html>\n' + ReactDOM.renderToString(
           <Html
