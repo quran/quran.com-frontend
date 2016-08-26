@@ -4,6 +4,22 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 const style = require('./style.scss');
 
+const compareAlphabetically = property =>
+  (a, b) => {
+    const textA = a[property].toUpperCase();
+    const textB = b[property].toUpperCase();
+
+    if (textA < textB) {
+      return -1;
+    }
+
+    if (textA > textB) {
+      return 1;
+    }
+
+    return 0;
+  };
+
 // To save API calls.
 export const slugs = [
   {
@@ -426,7 +442,7 @@ export const slugs = [
     id: 56,
     type: 'transliteration'
   }
-].sort((current, next) => current.name - next.name);
+].sort(compareAlphabetically('name'));
 
 export default class ContentDropdown extends Component {
   static propTypes = {
@@ -457,23 +473,6 @@ export default class ContentDropdown extends Component {
     } else {
       onOptionChange({content: [...content, id]});
     }
-  }
-
-  compareAlphabetically(property) {
-    return (a, b) => {
-      const textA = a[property].toUpperCase();
-      const textB = b[property].toUpperCase();
-
-      if (textA < textB) {
-        return -1;
-      }
-
-      if (textA > textB) {
-        return 1;
-      }
-
-      return 0;
-    };
   }
 
   renderItems(items) {
@@ -508,9 +507,7 @@ export default class ContentDropdown extends Component {
 
   renderLanguagesList() {
     return this.renderItems(
-      slugs
-        .filter(slug => slug.language !== 'en' && slug.type === 'translation')
-        .sort(this.compareAlphabetically('name'))
+      slugs.filter(slug => slug.language !== 'en' && slug.type === 'translation')
     );
   }
 
