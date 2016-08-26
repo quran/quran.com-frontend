@@ -459,6 +459,23 @@ export default class ContentDropdown extends Component {
     }
   }
 
+  compareAlphabetically(property) {
+    return (a, b) => {
+      const textA = a[property].toUpperCase();
+      const textB = b[property].toUpperCase();
+
+      if (textA < textB) {
+        return -1;
+      }
+
+      if (textA > textB) {
+        return 1;
+      }
+
+      return 0;
+    };
+  }
+
   renderItems(items) {
     const { options: { content } } = this.props;
 
@@ -491,7 +508,9 @@ export default class ContentDropdown extends Component {
 
   renderLanguagesList() {
     return this.renderItems(
-      slugs.filter(slug => slug.language !== 'en' && slug.type === 'translation')
+      slugs
+        .filter(slug => slug.language !== 'en' && slug.type === 'translation')
+        .sort(this.compareAlphabetically('name'))
     );
   }
 
