@@ -5,15 +5,15 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 const style = require('./style.scss');
 
 const compareAlphabetically = property =>
-  (a, b) => {
-    const textA = a[property].toUpperCase();
-    const textB = b[property].toUpperCase();
+  (previous, next) => {
+    const previousText = previous[property].toUpperCase();
+    const nextText = next[property].toUpperCase();
 
-    if (textA < textB) {
+    if (previousText < nextText) {
       return -1;
     }
 
-    if (textA > textB) {
+    if (previousText > nextText) {
       return 1;
     }
 
