@@ -1,10 +1,8 @@
 require('dotenv').load();
-var fs = require('fs');
-var path = require('path');
-var webpack = require('webpack');
-var path = require('path');
-var IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
-var webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration'));
+const webpack = require('webpack');
+const path = require('path');
+const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
+const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration')); // eslint-disable-line max-len, global-require
 
 module.exports = {
   context: path.resolve(__dirname, '..'),
@@ -27,45 +25,76 @@ module.exports = {
     filename: 'main.js'
   },
   module: {
+    preLoaders: [
+      // {
+      //   test: /\.js$/,
+      //   loader: 'eslint',
+      //   exclude: /node_modules|bootstrap\.config/
+      // }
+    ],
     loaders: [
-      { test: /\.js$/, exclude: /node_modules/, loaders: [
-        {
-          loader: 'babel',
-          query: {
-            plugins: [
-              'transform-runtime',
-              'add-module-exports',
-              'transform-decorators-legacy',
-              'transform-react-display-name',
-              'typecheck',
-            ],
-            presets: ['react', ['es2015', {'modules': false}], 'stage-0', 'react-hmre'],
-            cacheDirectory: true
+      { test: /\.json$/, loader: 'json'},
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loaders: [
+          {
+            loader: 'babel',
+            query: {
+              plugins: [
+                'transform-runtime',
+                'add-module-exports',
+                'transform-decorators-legacy',
+                'transform-react-display-name',
+                'typecheck',
+              ],
+              presets: ['react', ['es2015', {modules: false}], 'stage-0', 'react-hmre'],
+              cacheDirectory: true
+            }
           }
-        },
-        'eslint-loader'
-      ]},
-      { test: /\.json$/, loader: 'json-loader'},
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff" },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream" },
-      { test: /\.otf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream" },
-      { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file?name=fonts/[name].[ext]" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml" },
-      { test: webpackIsomorphicToolsPlugin.regular_expression('images'), loader: 'url-loader?name=images/[name].[ext]&limit=10240' },
-      { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' }
+        ]
+      },
+      {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+      },
+      {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file?name=fonts/[name].[ext]'
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
+      },
+      {
+        test: webpackIsomorphicToolsPlugin.regular_expression('images'),
+        loader: 'url-loader?name=images/[name].[ext]&limit=10240'
+      },
+      {
+        test: /\.scss$/,
+        loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' // eslint-disable-line max-len
+      }
     ]
-  },
-  node: {
-    setImmediate: false
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery",
-      "windows.jQuery": "jquery"
+      $: 'jquery',
+      jQuery: 'jquery',
+      'windows.jQuery': 'jquery'
     }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': true,
@@ -92,6 +121,7 @@ module.exports = {
   debug: true,
   cache: true,
   node: {
+    setImmediate: false,
     console: true,
     fs: 'empty',
     net: 'empty',

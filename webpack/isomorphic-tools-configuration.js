@@ -1,4 +1,4 @@
-var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
+const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 
 // see this link for more info on what all of this means
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
@@ -47,12 +47,13 @@ module.exports = {
     bootstrap: {
       extension: 'js',
       include: ['./bootstrap.config.js'],
-      filter: function(module, regex, options, log) {
-        function is_bootstrap_style(name) {
+      filter(module, regex, options, log) {
+        function isBootstrapStyle(name) {
           return name.indexOf('./bootstrap.config.js') >= 0;
         }
         if (options.development) {
-          return is_bootstrap_style(module.name) && WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log);
+          return (isBootstrapStyle(module.name) &&
+                  WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log));
         }
         // no need for it in production mode
       },
@@ -62,37 +63,34 @@ module.exports = {
       parser: WebpackIsomorphicToolsPlugin.css_loader_parser
     },
     style_modules: {
-      extensions: ['less','scss'],
-      filter: function(module, regex, options, log) {
+      extensions: ['less', 'scss'],
+      filter(module, regex, options, log) {
         if (options.development) {
           // in development mode there's webpack "style-loader",
           // so the module.name is not equal to module.name
           return WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log);
-        } else {
-          // in production mode there's no webpack "style-loader",
-          // so the module.name will be equal to the asset path
-          return regex.test(module.name);
         }
+        // in production mode there's no webpack "style-loader",
+        // so the module.name will be equal to the asset path
+        return regex.test(module.name);
       },
-      path: function(module, options, log) {
+      path(module, options, log) {
         if (options.development) {
           // in development mode there's webpack "style-loader",
           // so the module.name is not equal to module.name
           return WebpackIsomorphicToolsPlugin.style_loader_path_extractor(module, options, log);
-        } else {
-          // in production mode there's no webpack "style-loader",
-          // so the module.name will be equal to the asset path
-          return module.name;
         }
+        // in production mode there's no webpack "style-loader",
+        // so the module.name will be equal to the asset path
+        return module.name;
       },
-      parser: function(module, options, log) {
+      parser(module, options, log) {
         if (options.development) {
           return WebpackIsomorphicToolsPlugin.css_modules_loader_parser(module, options, log);
-        } else {
-          // in production mode there's Extract Text Loader which extracts CSS text away
-          return module.source;
         }
+        // in production mode there's Extract Text Loader which extracts CSS text away
+        return module.source;
       }
     }
   }
-}
+};

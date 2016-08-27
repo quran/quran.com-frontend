@@ -1,6 +1,6 @@
-var webpack = require('webpack');
-var WebpackDevServer = require('webpack-dev-server');
-var config = require('./dev.config');
+const webpack = require('webpack');
+const WebpackDevServer = require('webpack-dev-server');
+const config = require('./dev.config');
 
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
@@ -21,10 +21,8 @@ new WebpackDevServer(webpack(config), {
   cache: true,
   inline: true,
   debug: true,
-  headers:     {"Access-Control-Allow-Origin": "*"},
+  headers: {'Access-Control-Allow-Origin': '*'},
   proxy: {
     '*': { target: 'http://localhost:8000' }
   }
-}).listen(8001, function () {
-  console.info('==> 💻  Webpack Dev Server at http://localhost:8001');
-});
+}).listen(8001, () => console.info('==> 💻  Webpack Dev Server at http://localhost:8001'));
