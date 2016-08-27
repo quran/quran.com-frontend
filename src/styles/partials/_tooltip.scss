@@ -1,9 +1,42 @@
-.tooltip{
-  font-size: 16px;
-  font-weight: 300;
-  @extend .montserrat;
+.Tooltip {
+  position: relative;
 
-  .tooltip-inner{
-    padding: 10px 15px;
+  &:after {
+    content: attr(aria-label);
+    padding: .625rem .9375rem;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translate(-50%, 0);
+    font-family: Montserrat, sans-serif;
+    font-weight: 300;
+    font-size: 1.25rem;
+    line-height: 1.2;
+    background-color: $tooltip-bg;
+    color: #fff;
+    border-radius: 3px;
+    opacity: 0;
+  }
+
+  // The arrow
+  &:before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 0;
+    height: 0;
+    border-left: .75rem solid transparent;
+    border-right: .75rem solid transparent;
+    border-top: .75rem solid $tooltip-bg;
+    opacity: 0;
+  }
+
+
+  &:hover {
+    &:after,
+    &:before {
+      opacity: 1;
+    }
   }
 }

@@ -40,16 +40,6 @@ window.clearCookies = () => {
   reactCookie.remove('isFirstTime');
 };
 
-// Init tooltip
-if (typeof window !== 'undefined') {
-  $(() => {
-    $(document.body).tooltip({
-      selector: '[data-toggle="tooltip"]',
-      animation: false
-    });
-  });
-}
-
 match({ history, routes: routes() }, (error, redirectLocation, renderProps) => {
   const component = (
     <Router
