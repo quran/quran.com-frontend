@@ -1,5 +1,5 @@
+#!/usr/bin/env bash
 
-#!/bin/bash
 if [ "$1" == 'stop' ]; then
         echo "Stopping selenium server..."
         pid=`ps -eo pid,args | grep selenium-server-standalone | grep -v grep | cut -c1-6`
