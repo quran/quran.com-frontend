@@ -344,6 +344,7 @@ export class Audioplayer extends Component {
 
   renderPreviousButton() {
     const { currentAyah, files } = this.props;
+    if (!files) return false;
     const index = Object.keys(files).findIndex(id => id === currentAyah);
 
     return (
@@ -358,6 +359,7 @@ export class Audioplayer extends Component {
 
   renderNextButton() {
     const { surah, currentAyah } = this.props;
+    if (!surah) return false;
     const isEnd = surah.ayat === parseInt(currentAyah.split(':')[1], 10);
 
     return (
