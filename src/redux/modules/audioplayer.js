@@ -239,13 +239,13 @@ export default function reducer(state = initialState, action = {}) {
     }
     case SET_CURRENT_WORD: {
       if (!action.word) return state;
-
-      const [surahId, ayahNum, word] = action.word.split(':');
       let currentTime = null;
-
-      if (state.files[surahId][`${surahId}:${ayahNum}`] === state.currentFile) {
+      const [surahId, ayahNum, word] = action.word.split(':');
+      const nextId = `${surahId}:${ayahNum}`;
+      if (!state.segments[surahId][nextId]) return state;
+      if (state.files[surahId][nextId] === state.currentFile) {
         // When the files are the same, set the current time to that word
-        currentTime = state.segments[surahId][`${surahId}:${ayahNum}`].words[word].startTime;
+        currentTime = state.segments[surahId][nextId].words[word].startTime;
         state.currentFile.currentTime = currentTime; // eslint-disable-line no-param-reassign
 
         return {
@@ -256,7 +256,6 @@ export default function reducer(state = initialState, action = {}) {
       }
 
       // When the files are not the same.
-      const nextId = `${surahId}:${ayahNum}`;
       const currentFile = state.files[surahId][nextId];
       const segment = buildSegments(state.segments[surahId][nextId]);
       currentTime = segment.words[word].startTime;

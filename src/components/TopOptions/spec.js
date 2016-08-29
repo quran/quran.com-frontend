@@ -22,8 +22,10 @@ describe("<TopOptions />", () => {
     };
 
     const actions = {
-      setOption: () => {},
-      toggleReadingMode: () => {}
+      options: {
+        setOption: () => {},
+        toggleReadingMode: () => {}
+      }
     };
 
     const component = shallow(<TopOptions

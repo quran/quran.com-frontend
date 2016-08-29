@@ -6,6 +6,13 @@ export function buildAudioForAyah(audio) {
   if (audio.url) {
     scopedAudio.src = audio.url;
     segments = audio.encryptedSegments;
+    return { audio: scopedAudio, segments };
+  }
+
+  if (audio.mp3) {
+    scopedAudio.src = audio.mp3.url;
+    segments = audio.mp3.encryptedSegments;
+    return { audio: scopedAudio, segments };
   }
 
   return { audio: scopedAudio, segments };
