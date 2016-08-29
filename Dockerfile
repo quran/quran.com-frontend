@@ -18,7 +18,7 @@ RUN cp /etc/cron.daily/logrotate /etc/cron.hourly
 # cache npm install when package.json hasn't changed
 WORKDIR /tmp
 ADD package.json package.json
-RUN npm install
+RUN npm install --silent --no-progress
 RUN npm install -g pm2
 
 RUN mkdir /quran

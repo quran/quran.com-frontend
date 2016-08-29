@@ -1,8 +1,8 @@
 sudo: false
 language: node_js
 env: TEST_SUITE=unit
-node_js:
-  - "6.3.0"
+# Node version is handled inside `.nvmrc` file & travis picks it up automatically because it uses `nvm`
+# https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Using-.nvmrc
 cache:
   directories:
     - node_modules
