@@ -15,7 +15,7 @@ import { syncHistoryWithStore } from 'react-router-redux';
 
 import debug from 'debug';
 
-import config from 'config';
+import config from './config';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import routes from './routes';
@@ -39,16 +39,6 @@ window.clearCookies = () => {
   reactCookie.remove('audio');
   reactCookie.remove('isFirstTime');
 };
-
-// Init tooltip
-if (typeof window !== 'undefined') {
-  $(() => {
-    $(document.body).tooltip({
-      selector: '[data-toggle="tooltip"]',
-      animation: false
-    });
-  });
-}
 
 match({ history, routes: routes() }, (error, redirectLocation, renderProps) => {
   const component = (

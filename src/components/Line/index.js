@@ -23,15 +23,12 @@ export default class Line extends React.Component {
         return (
           <b
             key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-            className={`${word.className} pointer`}
-            data-toggle="tooltip"
+            className={`${word.className} ${styles.Tooltip}`}
             data-ayah={word.ayahKey}
             data-line={word.lineNun}
             data-page={word.pageNum}
             data-position={word.position}
-            data-placement="top"
-            data-origin-title={tooltipContent}
-            title={tooltipContent}
+            aria-label={tooltipContent}
             dangerouslySetInnerHTML={{__html: word.code}}
           />
         );

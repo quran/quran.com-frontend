@@ -8,11 +8,13 @@ import debug from '../../helpers/debug';
 
 const styles = require('./style.scss');
 
+/* eslint-disable no-unused-vars */
 const CHAR_TYPE_WORD = 1;
-const CHAR_TYPE_END = 2; // eslint-disable-line no-unused-vars
-const CHAR_TYPE_PAUSE = 3; // eslint-disable-line no-unused-vars
-const CHAR_TYPE_RUB = 4; // eslint-disable-line no-unused-vars
-const CHAR_TYPE_SAJDAH = 5; // eslint-disable-line no-unused-vars
+const CHAR_TYPE_END = 2;
+const CHAR_TYPE_PAUSE = 3;
+const CHAR_TYPE_RUB = 4;
+const CHAR_TYPE_SAJDAH = 5;
+/* eslint-enable no-unused-vars */
 
 export default class Ayah extends Component {
   static propTypes = {
@@ -92,7 +94,7 @@ export default class Ayah extends Component {
     let position = -1;
     let text = ayah.words.map(word => {
       let id = null;
-      const className = `${word.className} ${word.highlight && word.highlight}`;
+      const className = `${word.className} ${word.highlight ? word.highlight : ''}`;
 
       if (word.charTypeId === CHAR_TYPE_WORD) {
         position = position + 1;
@@ -110,12 +112,8 @@ export default class Ayah extends Component {
             id={id}
             onClick={(event) => onWordClick(event.target.dataset.key)}
             data-key={`${word.ayahKey}:${position}`}
-            className={`${className} pointer`}
-            data-toggle="tooltip"
-            data-trigger="hover"
-            data-placement="top"
-            data-original-title={tooltipContent}
-            title={tooltipContent}
+            className={`${className} ${styles.Tooltip}`}
+            aria-label={tooltipContent}
             dangerouslySetInnerHTML={{__html: word.code}}
           />
         );
