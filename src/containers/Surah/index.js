@@ -161,7 +161,9 @@ class Surah extends Component {
 
     if (ayahNum > (this.getLast() + 10) || ayahNum < this.getFirst()) {
       // This is beyond lazy loading next page.
-      return actions.push.push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
+      if (actions.push) {
+        return actions.push.push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
+      }
     }
 
     return this.handleLazyLoadAyahs(() => setTimeout(() =>

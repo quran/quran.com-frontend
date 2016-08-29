@@ -152,19 +152,32 @@ export default function reducer(state = initialState, action = {}) {
       };
     }
     case PLAY: {
-      state.currentFile.play();
-      return {
-        ...state,
-        isPlaying: true
-      };
+
+      if (state.currentFile) {
+        state.currentFile.play();
+        return {
+          ...state,
+          isPlaying: true
+        };
+      }
+
+      return state;
+
     }
     case PAUSE: {
-      state.currentFile.pause();
 
-      return {
-        ...state,
-        isPlaying: false
-      };
+      if (state.currentFile) {
+        state.currentFile.pause();
+
+        return {
+          ...state,
+          isPlaying: false
+        };
+      }
+
+      return state;
+
+
     }
     case NEXT: {
       const [surahId, ayahNum] = action.currentAyah.split(':');
