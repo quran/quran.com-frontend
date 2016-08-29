@@ -59,7 +59,11 @@ export class Audioplayer extends Component {
       return buildOnClient(surah.id);
     }
 
-    return this.handleAddFileListeners(currentFile);
+    if (currentFile) {
+      return this.handleAddFileListeners(currentFile);
+    }
+
+    return false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -247,7 +251,7 @@ export class Audioplayer extends Component {
 
   handleAddFileListeners(file) {
     const { update, currentTime } = this.props; // eslint-disable-line no-shadow
-    debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
+    console.log('component:Audioplayer', `Attaching listeners to ${file.src}`);
 
     // Preload file
     file.setAttribute('preload', 'auto');
