@@ -1,7 +1,7 @@
 {
   "rules": {
-					"unit-no-unknown": true,
-					"no-duplicate-selectors": true,
-					"block-no-empty": true
-				}
+    "unit-no-unknown": true,
+    "no-duplicate-selectors": true,
+    "block-no-empty": true
+  }
 }

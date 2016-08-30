@@ -44,14 +44,9 @@ export const extractSegments = (ayahs) => {
   const segments = {};
 
   Object.values(ayahs).forEach((ayah, index) => {
-    if (ayah.audio.mp3) {
-      // great! this works for all browsers
-      if (ayah.audio.mp3.encryptedSegments) {
-        segments[ayah.ayahKey] = ayah.audio.mp3.encryptedSegments;
-      }
-    } else if (ayah.audio.ogg) {
-      if (ayah.audio.ogg.encryptedSegments) {
-        segments[ayah.ayahKey] = ayah.audio.ogg.encryptedSegments;
+    if (ayah.audio) {
+      if (ayah.audio.encryptedSegments) {
+        segments[ayah.ayahKey] = ayah.audio.encryptedSegments;
       }
     }
 

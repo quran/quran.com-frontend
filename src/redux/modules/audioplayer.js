@@ -1,5 +1,5 @@
 /* eslint-disable no-case-declarations */
-import { buildAudioFromHash, testIfSupported } from '../../helpers/buildAudio';
+import { buildAudioFromHash } from '../../helpers/buildAudio';
 import { buildSegments, extractSegments } from '../../helpers/buildSegments';
 import debug from 'helpers/debug';
 
@@ -34,7 +34,6 @@ const initialState = {
   currentAyah: null,
   currentWord: null,
   currentTime: 0,
-  isSupported: true,
   isPlaying: false,
   repeat: {
     from: undefined,
@@ -92,18 +91,6 @@ export default function reducer(state = initialState, action = {}) {
     }
     case AYAHS_LOAD_SUCCESS: {
       debug('reducer:audioplayer', 'AYAHS_LOAD_SUCCESS init');
-      let currentFile;
-      const isSupported = testIfSupported(
-        action.result.entities.ayahs[action.result.result[0]],
-        state.userAgent
-      );
-
-      if (!isSupported) {
-        return {
-          ...state,
-          isSupported: false
-        };
-      }
 
       const ayahs = action.result.entities.ayahs;
       const audioFromHash = __CLIENT__ ? buildAudioFromHash(ayahs, state.userAgent) : ayahs;
@@ -115,6 +102,7 @@ export default function reducer(state = initialState, action = {}) {
 
       const currentAyah = state.currentAyah ? state.currentAyah : Object.keys(files)[0];
 
+      let currentFile;
       if (state.currentFile && state.currentFile === Object.values(files)[0]) {
         // If the same file is being used, for example in lazy loading, then keep same file
         currentFile = state.currentFile;
@@ -135,7 +123,6 @@ export default function reducer(state = initialState, action = {}) {
       debug('reducer:audioplayer', 'AYAHS_LOAD_SUCCESS return');
       return {
         ...state,
-        isSupported,
         currentAyah,
         currentFile,
         surahId: action.surahId,
@@ -165,19 +152,32 @@ export default function reducer(state = initialState, action = {}) {
       };
     }
     case PLAY: {
-      state.currentFile.play();
-      return {
-        ...state,
-        isPlaying: true
-      };
+
+      if (state.currentFile) {
+        state.currentFile.play();
+        return {
+          ...state,
+          isPlaying: true
+        };
+      }
+
+      return state;
+
     }
     case PAUSE: {
-      state.currentFile.pause();
 
-      return {
-        ...state,
-        isPlaying: false
-      };
+      if (state.currentFile) {
+        state.currentFile.pause();
+
+        return {
+          ...state,
+          isPlaying: false
+        };
+      }
+
+      return state;
+
+
     }
     case NEXT: {
       const [surahId, ayahNum] = action.currentAyah.split(':');
@@ -252,13 +252,13 @@ export default function reducer(state = initialState, action = {}) {
     }
     case SET_CURRENT_WORD: {
       if (!action.word) return state;
-
-      const [surahId, ayahNum, word] = action.word.split(':');
       let currentTime = null;
-
-      if (state.files[surahId][`${surahId}:${ayahNum}`] === state.currentFile) {
+      const [surahId, ayahNum, word] = action.word.split(':');
+      const nextId = `${surahId}:${ayahNum}`;
+      if (!state.segments[surahId][nextId]) return state;
+      if (state.files[surahId][nextId] === state.currentFile) {
         // When the files are the same, set the current time to that word
-        currentTime = state.segments[surahId][`${surahId}:${ayahNum}`].words[word].startTime;
+        currentTime = state.segments[surahId][nextId].words[word].startTime;
         state.currentFile.currentTime = currentTime; // eslint-disable-line no-param-reassign
 
         return {
@@ -269,7 +269,6 @@ export default function reducer(state = initialState, action = {}) {
       }
 
       // When the files are not the same.
-      const nextId = `${surahId}:${ayahNum}`;
       const currentFile = state.files[surahId][nextId];
       const segment = buildSegments(state.segments[surahId][nextId]);
       currentTime = segment.words[word].startTime;

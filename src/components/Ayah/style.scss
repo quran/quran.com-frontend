@@ -1,4 +1,5 @@
-@import '../../styles/variables.scss';
+@import '../../styles/variables';
+@import '../../styles/partials/_tooltip';
 
 .container{
   padding: 2.5% 0%;
@@ -84,7 +85,7 @@
   color: #000;
   width: 100%;
   overflow-wrap: break-word;
-  line-height: 150%;
+  line-height: 1.5;
   word-break: break-all;
   text-align: right;
   float: left;
@@ -101,9 +102,10 @@
   }
 
   .line{
+    direction: rtl;
     b{
       float: none;
-      display: inline;
+      display: inline-block;
     }
   }
 
@@ -114,7 +116,7 @@
     color: #000;
     &:hover{
       color: $brand-primary;
-      cursor: pointer;
+      cursor: help;
     }
     &:focus{
       color: $brand-primary-darker-10;

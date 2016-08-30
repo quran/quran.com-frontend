@@ -12,7 +12,7 @@ export default class InformationToggle extends Component {
     event.preventDefault();
 
     this.props.onToggle({isShowingSurahInfo: !isShowingSurahInfo});
-  }
+  };
 
   render() {
     const { isShowingSurahInfo } = this.props;

@@ -3,8 +3,10 @@ build
 node_modules
 /node_modules
 static/dist
+dist
 test-results.xml
 npm-debug.log
+npm-debug.log.*
 webpack-stats.json
 webpack-assets.json
 bundle-stats.json

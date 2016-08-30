@@ -27,7 +27,6 @@ export class Audioplayer extends Component {
     currentAyah: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
     isLoadedOnClient: PropTypes.bool.isRequired,
-    isSupported: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     play: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
@@ -60,7 +59,11 @@ export class Audioplayer extends Component {
       return buildOnClient(surah.id);
     }
 
-    return this.handleAddFileListeners(currentFile);
+    if (currentFile) {
+      return this.handleAddFileListeners(currentFile);
+    }
+
+    return false;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -248,7 +251,7 @@ export class Audioplayer extends Component {
 
   handleAddFileListeners(file) {
     const { update, currentTime } = this.props; // eslint-disable-line no-shadow
-    debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
+    console.log('component:Audioplayer', `Attaching listeners to ${file.src}`);
 
     // Preload file
     file.setAttribute('preload', 'auto');
@@ -345,6 +348,7 @@ export class Audioplayer extends Component {
 
   renderPreviousButton() {
     const { currentAyah, files } = this.props;
+    if (!files) return false;
     const index = Object.keys(files).findIndex(id => id === currentAyah);
 
     return (
@@ -359,6 +363,7 @@ export class Audioplayer extends Component {
 
   renderNextButton() {
     const { surah, currentAyah } = this.props;
+    if (!surah) return false;
     const isEnd = surah.ayat === parseInt(currentAyah.split(':')[1], 10);
 
     return (
@@ -381,7 +386,6 @@ export class Audioplayer extends Component {
       isLoading,
       currentAyah,
       currentTime,
-      isSupported,
       duration,
       surah,
       isLoadedOnClient,
@@ -389,14 +393,6 @@ export class Audioplayer extends Component {
       shouldScroll, // eslint-disable-line no-shadow
       setRepeat // eslint-disable-line no-shadow
     } = this.props;
-
-    if (!isSupported) {
-      return (
-        <li className={`${style.container} ${className}`}>
-          Your browser does not support this audio.
-        </li>
-      );
-    }
 
     if (isLoading) {
       return (
@@ -458,7 +454,6 @@ const mapStateToProps = (state, ownProps) => ({
   currentFile: state.audioplayer.currentFile,
   currentAyah: state.audioplayer.currentAyah,
   surahId: state.audioplayer.surahId,
-  isSupported: state.audioplayer.isSupported,
   isPlaying: state.audioplayer.isPlaying,
   isLoadedOnClient: state.audioplayer.isLoadedOnClient,
   isLoading: state.audioplayer.isLoading,

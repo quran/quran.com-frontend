@@ -26,7 +26,7 @@ To start the app, run `npm run dev` which will run both the server and the clien
 
 ## Backend
 Current at: https://github.com/quran/quran-api-rails
-DB is private, message me for acceess.
+DB is private, message me for access.
 
 
 ## Design
@@ -39,8 +39,6 @@ env NODE_ENV=development webpack --json > bundle-stats.json
 subl bundle-stats.json #so that you can the output
 analyze-bundle-size bundle-stats.json
 ```
-
-## [View project issues on waffle.io...](https://waffle.io/quran/quran.com-frontend)
 
 [Reactjs]: https://facebook.github.io/react/docs/getting-started.html
 [Redux]: http://redux.js.org/

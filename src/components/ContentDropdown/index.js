@@ -4,6 +4,22 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 const style = require('./style.scss');
 
+const compareAlphabetically = property =>
+  (previous, next) => {
+    const previousText = previous[property].toUpperCase();
+    const nextText = next[property].toUpperCase();
+
+    if (previousText < nextText) {
+      return -1;
+    }
+
+    if (previousText > nextText) {
+      return 1;
+    }
+
+    return 0;
+  };
+
 // To save API calls.
 export const slugs = [
   {
@@ -426,7 +442,7 @@ export const slugs = [
     id: 56,
     type: 'transliteration'
   }
-].sort((current, next) => current.name - next.name);
+].sort(compareAlphabetically('name'));
 
 export default class ContentDropdown extends Component {
   static propTypes = {
