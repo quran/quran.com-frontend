@@ -92,8 +92,9 @@ export default class Ayah extends Component {
 
     // position is important as it will differentiate between words and symbols, see 2:25:13
     let position = -1;
-    let text = ayah.words.map(word => {
+    let text = ayah.words.map((word, index) => {
       let id = null;
+      const isLast = ayah.words.length === index + 1;
       const className = `${word.className} ${word.highlight ? word.highlight : ''}`;
 
       if (word.charTypeId === CHAR_TYPE_WORD) {
@@ -119,14 +120,16 @@ export default class Ayah extends Component {
         );
       }
 
+      const label = isLast ? {'aria-label': `Verse ${ayah.ayahNum}`} : {}
       return (
         <b
           id={id}
           onClick={(event) => onWordClick(event.target.dataset.key)}
           data-key={`${word.ayahKey}:${position}`}
-          className={`${className} pointer`}
+          className={`${className} ${isLast && styles.Tooltip} pointer`}
           key={word.code}
           dangerouslySetInnerHTML={{__html: word.code}}
+          {...label}
         />
       );
     });
