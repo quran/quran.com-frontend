@@ -1,29 +1,29 @@
 @font-face{
   font-family: 'Montserrat';
-  src: url('./static/fonts/montserrat/Montserrat-Regular.otf');
+  src: url('../../static/fonts/montserrat/Montserrat-Regular.otf');
 }
 
 @font-face{
   font-family: 'Montserrat';
-  src: url('./static/fonts/montserrat/Montserrat-Bold.otf');
+  src: url('../../static/fonts/montserrat/Montserrat-Bold.otf');
   font-weight: 700;
 }
 
 @font-face{
   font-family: 'Montserrat';
-  src: url('./static/fonts/montserrat/Montserrat-Light.otf');
+  src: url('../../static/fonts/montserrat/Montserrat-Light.otf');
   font-weight: 300;
 }
 
 @font-face{
   font-family: 'Montserrat';
-  src: url('./static/fonts/montserrat/Montserrat-Hairline.otf');
+  src: url('../../static/fonts/montserrat/Montserrat-Hairline.otf');
   font-weight: 100;
 }
 
 @font-face{
   font-family: 'Montserrat';
-  src: url('./static/fonts/montserrat/Montserrat-Black.otf');
+  src: url('../../static/fonts/montserrat/Montserrat-Black.otf');
   font-weight: 600;
 }
 
@@ -39,11 +39,11 @@
 
 @font-face {
   font-family: "SSStandard";
-  src: url('./static/fonts/ss-standard/ss-standard.eot');
-  src: url('./static/fonts/ss-standard/ss-standard.eot?#iefix') format('embedded-opentype'),
-  url('./static/fonts/ss-standard/ss-standard.woff') format('woff'),
-  url('./static/fonts/ss-standard/ss-standard.ttf')  format('truetype'),
-  url('./static/fonts/ss-standard/ss-standard.svg#SSStandard') format('svg');
+  src: url('../../static/fonts/ss-standard/ss-standard.eot');
+  src: url('../../static/fonts/ss-standard/ss-standard.eot?#iefix') format('embedded-opentype'),
+  url('../../static/fonts/ss-standard/ss-standard.woff') format('woff'),
+  url('../../static/fonts/ss-standard/ss-standard.ttf')  format('truetype'),
+  url('../../static/fonts/ss-standard/ss-standard.svg#SSStandard') format('svg');
   font-weight: normal;
   font-style: normal;
 }

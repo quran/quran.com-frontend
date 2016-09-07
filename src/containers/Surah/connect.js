@@ -1,7 +1,15 @@
-import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
-import { clearCurrent, isLoaded, load as loadAyahs } from '../../redux/modules/ayahs';
+import {
+  isAllLoaded,
+  loadAll,
+  setCurrent as setCurrentSurah
+  } from '../../redux/actions/surahs.js';
 
-import debug from 'helpers/debug';
+import {
+  clearCurrent,
+  load as loadAyahs
+  } from '../../redux/actions/ayahs.js';
+
+import {debug, isLoaded} from 'helpers';
 
 const ayahRangeSize = 30;
 

@@ -19,17 +19,13 @@ import ContentDropdown from 'components/ContentDropdown';
 import ReciterDropdown from 'components/ReciterDropdown';
 import SurahsDropdown from 'components/SurahsDropdown';
 import VersesDropdown from 'components/VersesDropdown';
-import FontSizeDropdown from 'components/FontSizeDropdown';
-import TooltipDropdown from 'components/TooltipDropdown';
-import InformationToggle from 'components/InformationToggle';
 import SurahInfo from 'components/SurahInfo';
 import Header from './Header';
-import ReadingModeToggle from 'components/ReadingModeToggle';
 import Ayah from 'components/Ayah';
 import Line from 'components/Line';
 import SearchInput from 'components/SearchInput';
 import Bismillah from 'components/Bismillah';
-import Share from 'components/Share';
+import TopOptions from 'components/TopOptions';
 
 // utils
 import scroller from 'utils/scroller';
@@ -42,9 +38,9 @@ import descriptions from './descriptions';
 
 import { surahsConnect, ayahsConnect } from './connect';
 
-import * as AudioActions from '../../redux/modules/audioplayer';
-import * as AyahActions from '../../redux/modules/ayahs';
-import * as OptionsActions from '../../redux/modules/options';
+import * as AudioActions from '../../redux/actions/audioplayer.js';
+import * as AyahActions from '../../redux/actions/ayahs.js';
+import * as OptionsActions from '../../redux/actions/options.js';
 
 const style = require('./style.scss');
 
@@ -165,7 +161,9 @@ class Surah extends Component {
 
     if (ayahNum > (this.getLast() + 10) || ayahNum < this.getFirst()) {
       // This is beyond lazy loading next page.
-      return actions.push.push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
+      if (actions.push) {
+        return actions.push.push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
+      }
     }
 
     return this.handleLazyLoadAyahs(() => setTimeout(() =>
@@ -196,6 +194,13 @@ class Surah extends Component {
     }
 
     return false;
+  }
+
+  handleSurahInfoToggle = (payload) => {
+    const { actions } = this.props; // eslint-disable-line no-shadow
+
+    return actions.options.setOption(payload);
+
   }
 
   title() {
@@ -315,53 +320,8 @@ class Surah extends Component {
     });
   }
 
-  renderTopOptions() {
-    const {
-      options,
-      surah,
-      actions // eslint-disable-line no-shadow
-    } = this.props;
-
-    return (
-      <Row>
-        <Col md={6} mdOffset={6} className="text-right">
-          <ul className="list-inline">
-            <li>
-              <InformationToggle
-                onToggle={actions.options.setOption}
-                isShowingSurahInfo={options.isShowingSurahInfo}
-              />
-            </li>
-            <li>|</li>
-            <li>
-              <FontSizeDropdown
-                options={options}
-                onOptionChange={actions.options.setOption}
-              />
-            </li>
-            <li>|</li>
-            <li>
-              <TooltipDropdown
-                options={options}
-                onOptionChange={actions.options.setOption}
-              />
-            </li>
-            <li>|</li>
-            <li>
-              <ReadingModeToggle
-                isToggled={options.isReadingMode}
-                onReadingModeToggle={actions.options.toggleReadingMode}
-              />
-            </li>
-            <li><Share surah={surah} /></li>
-          </ul>
-        </Col>
-      </Row>
-    );
-  }
-
   render() {
-    const { surah, surahs, ayahIds, options } = this.props;
+    const { surah, surahs, ayahIds, options, actions } = this.props;
 
     debug('component:Surah', 'Render');
 
@@ -381,14 +341,14 @@ class Surah extends Component {
                 "@type": "ListItem",
                 "position": 1,
                 "item": {
-                  "@id": "http://quran.com/",
+                  "@id": "https://quran.com/",
                   "name": "Quran"
                 }
               },{
                 "@type": "ListItem",
                 "position": 2,
                 "item": {
-                  "@id": "http://quran.com/${surah.id}",
+                  "@id": "https://quran.com/${surah.id}",
                   "name": "${surah.name.simple}"
                 }
               }]
@@ -448,7 +408,7 @@ class Surah extends Component {
               onClose={this.handleSurahInfoToggle}
             />
             <Col md={10} mdOffset={1}>
-              {this.renderTopOptions()}
+              <TopOptions options={options} actions={actions} surah={surah} />
               <Bismillah surah={surah} />
               {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
             </Col>
