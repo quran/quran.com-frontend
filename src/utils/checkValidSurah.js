@@ -5,20 +5,18 @@ export default function isValidSurah(nextState, replaceState) {
     replaceState('/error/invalid-surah');
   }
 
-  if (nextState.location.pathname.includes(':')) {
-    const range = nextState.params.range;
-    replaceState(`/${surahId}/${range}`);
-  }
-
   if (nextState.params.range) {
     if (nextState.params.range.includes('-')) {
       const [from, to] = nextState.params.range.split('-').map(num => parseInt(num, 10));
       if (from > to) {
         replaceState(`/${surahId}/${to}-${from}`);
-      }
-      if (from === to) {
+      } else if (from === to) {
         replaceState(`/${surahId}/${from}`);
+      } else if (nextState.location.pathname.includes(':')) {
+        const range = nextState.params.range;
+        replaceState(`/${surahId}/${range}`);
       }
+      // TODO: Add check to make sure the range is within the ayah limit
     }
   }
 }
