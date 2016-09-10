@@ -2,6 +2,7 @@
 import React from 'react';
 import IndexRoute from 'react-router/lib/IndexRoute';
 import Route from 'react-router/lib/Route';
+import Redirect from 'react-router/lib/Redirect';
 import checkValidSurah from './utils/checkValidSurah';
 import App from './containers/App';
 
@@ -24,11 +25,7 @@ export default () => (
 
     <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
 
-    <Route
-      path="/:surahId:(:range)"
-      getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))}
-      onEnter={checkValidSurah}
-    />
+    <Redirect from="/:surahId:(:range)" to="/:surahId(/:range)" />
 
     <Route
       path="/:surahId(/:range)"

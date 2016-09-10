@@ -12,9 +12,6 @@ export default function isValidSurah(nextState, replaceState) {
         replaceState(`/${surahId}/${to}-${from}`);
       } else if (from === to) {
         replaceState(`/${surahId}/${from}`);
-      } else if (nextState.location.pathname.includes(':')) {
-        const range = nextState.params.range;
-        replaceState(`/${surahId}/${range}`);
       }
       // TODO: Add check to make sure the range is within the ayah limit
     }
