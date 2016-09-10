@@ -4,4 +4,21 @@ export default function isValidSurah(nextState, replaceState) {
   if (isNaN(surahId) || surahId > 114 || surahId < 1) {
     replaceState('/error/invalid-surah');
   }
+
+  if (nextState.location.pathname.includes(':')) {
+    const range = nextState.params.range;
+    replaceState(`/${surahId}/${range}`);
+  }
+
+  if (nextState.params.range) {
+    if (nextState.params.range.includes('-')) {
+      const [from, to] = nextState.params.range.split('-').map(num => parseInt(num, 10));
+      if (from > to) {
+        replaceState(`/${surahId}/${to}-${from}`);
+      }
+      if (from === to) {
+        replaceState(`/${surahId}/${from}`);
+      }
+    }
+  }
 }
