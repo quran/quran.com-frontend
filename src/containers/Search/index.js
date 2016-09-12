@@ -109,7 +109,7 @@ class Search extends Component {
   }
 
   renderBody() {
-    const { isErrored, isLoading, total, results, ayahs } = this.props;
+    const { isErrored, isLoading, total, results,options, ayahs } = this.props;
 
     if (isErrored) {
       return (
@@ -128,7 +128,7 @@ class Search extends Component {
     }
 
     return results.map(result => (
-      <Ayah ayah={ayahs[result.ayah]} match={result.match} key={result.ayah} isSearched />
+      <Ayah ayah={ayahs[result.ayah]} match={result.match} key={result.ayah} tooltip={options.tooltip} isSearched />
     ));
   }
 
