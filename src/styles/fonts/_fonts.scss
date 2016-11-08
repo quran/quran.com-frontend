@@ -48,6 +48,18 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Nafees';
+  src: url('../../static/fonts/nafees/nafees-nastaleeq-webfont.eot?#iefix') format('embedded-opentype'),
+  url('../../static/fonts/nafees/nafees-nastaleeq-webfont.woff') format('woff'),
+  url('../../static/fonts/nafees/nafees-nastaleeq-webfont.ttf') format('truetype'),
+  url('../../static/fonts/nafees/nafees-nastaleeq-webfont.svg#NafeesRegular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+
 /* This triggers a redraw in IE to Fix IE8's :before content rendering. */
 html:hover [class^="ss-"]{-ms-zoom: 1;}
 

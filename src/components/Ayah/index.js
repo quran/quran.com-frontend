@@ -67,7 +67,8 @@ export default class Ayah extends Component {
     return array.map((content, index) => {
       const arabic = new RegExp(/[\u0600-\u06FF]/);
       const character = content.text;
-      const isArabic = arabic.test(character);
+      const isArabic  = arabic.test(character);
+      const lang      = (content.name || content.resource.name).replace(/\s+/g, '-').toLowerCase();
 
       return (
         <div
@@ -76,7 +77,7 @@ export default class Ayah extends Component {
         >
           <h4 className="montserrat">{content.name || content.resource.name}</h4>
           <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
-            <small dangerouslySetInnerHTML={{__html: content.text}} className="times-new" />
+            <small dangerouslySetInnerHTML={{__html: content.text}} className={`${styles[lang] || 'times-new'}`} />
           </h2>
         </div>
       );
