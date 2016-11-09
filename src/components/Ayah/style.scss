@@ -135,9 +135,15 @@
     color: $light-green;
     margin-bottom: 5px;
   }
+
   h2{
     margin-top: 5px;
     margin-bottom: 25px;
+  }
+
+  .urdu, .punjabi{
+    direction: rtl;
+    font-family: 'Nafees';
   }
 }
 
