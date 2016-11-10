@@ -7,6 +7,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Image from 'react-bootstrap/lib/Image';
 
 import QuranNav from 'components/QuranNav';
+import userType from 'types/userType';
 
 const styles = require('./style.scss');
 
@@ -17,10 +18,9 @@ const styles = require('./style.scss');
 )
 export default class Profile extends Component {
   static propTypes = {
-    user: PropTypes.object
+    user: PropTypes.shape(userType)
   };
 
-  something() {}
   render() {
     const { user } = this.props;
 

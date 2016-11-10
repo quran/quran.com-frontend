@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 import { connect } from 'react-redux';
 
-
 export class IndexHeaderNav extends Component {
   static propTypes = {
     user: PropTypes.object
@@ -12,15 +11,15 @@ export class IndexHeaderNav extends Component {
     open: false
   };
 
-  openNav(e) {
-    e.preventDefault();
+  openNav(event) {
+    event.preventDefault();
 
     this.setState({open: !this.state.open});
   }
 
   links() {
     const { user } = this.props;
-    let classNames = `links ${this.state.open ? 'open' : ''}`;
+    const classNames = `links ${this.state.open ? 'open' : ''}`;
 
     return (
       <ul className={classNames}>
