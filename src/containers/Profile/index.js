@@ -16,30 +16,27 @@ const styles = require('./style.scss');
     user: state.auth.user
   })
 )
-export default class Profile extends Component {
-  static propTypes = {
-    user: PropTypes.shape(userType)
-  };
+export const Profile = ({ user }) => (
+  <div>
+    <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
+    <QuranNav />
+    <div className={styles.header} />
+    <Grid>
+      <Row>
+        <Col md={12} className="text-center">
+          <Image src={`${user.image}?type=large`} circle className={styles.image} />
+          <h2>
+            {user.name}
+          </h2>
+        </Col>
+      </Row>
+    </Grid>
+  </div>
+);
 
-  render() {
-    const { user } = this.props;
 
-    return (
-      <div>
-        <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
-        <QuranNav />
-        <div className={styles.header} />
-        <Grid>
-          <Row>
-            <Col md={12} className="text-center">
-              <Image src={`${user.image}?type=large`} circle className={styles.image} />
-              <h2>
-                {user.name}
-              </h2>
-            </Col>
-          </Row>
-        </Grid>
-      </div>
-    );
-  }
-}
+Profile.propTypes = {
+  user: PropTypes.shape(userType)
+};
+
+export default Profile;

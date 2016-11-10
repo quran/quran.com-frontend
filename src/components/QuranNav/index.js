@@ -11,6 +11,8 @@ const Collapse = Navbar.Collapse;
 const Toggle = Navbar.Toggle;
 import { connect } from 'react-redux';
 
+import userType from 'types/userType';
+
 const styles = require('./style.scss');
 
 export const QuranNav = ({ user }) => (
@@ -66,7 +68,7 @@ export const QuranNav = ({ user }) => (
 );
 
 QuranNav.propTypes = {
-  user: PropTypes.object
+  user: PropTypes.shape(userType)
 };
 
 export default connect(
