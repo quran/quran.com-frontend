@@ -56,8 +56,6 @@ export default (store) => {
 
       <Route path="/login" getComponent={(nextState, cb) => System.import('./containers/Login').then(module => cb(null, module))} />
 
-
-      <Route path="/login" getComponent={(nextState, cb) => System.import('./containers/Login').then(module => cb(null, module))} />
       <Route onEnter={requireLogin}>
         <Route path="/profile" getComponent={(nextState, cb) => System.import('./containers/Profile').then(module => cb(null, module))} />
       </Route>
@@ -69,7 +67,6 @@ export default (store) => {
         getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))}
         onEnter={checkValidSurah}
       />
-
     </Route>
   );
 };
