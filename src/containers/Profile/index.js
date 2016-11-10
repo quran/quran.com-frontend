@@ -11,11 +11,6 @@ import userType from 'types/userType';
 
 const styles = require('./style.scss');
 
-@connect(
-  state => ({
-    user: state.auth.user
-  })
-)
 export const Profile = ({ user }) => (
   <div>
     <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
@@ -39,4 +34,8 @@ Profile.propTypes = {
   user: PropTypes.shape(userType)
 };
 
-export default Profile;
+export default connect(
+  state => ({
+    user: state.auth.user
+  })
+)(Profile);
