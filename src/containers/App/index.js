@@ -37,9 +37,11 @@ class App extends Component {
         <FontStyles />
         {children}
         <footer className={styles.footer}>
-          <Grid fluid>
+          <Grid>
+            <div className="col-md-10 col-md-offset-1">
             <Row>
-              <Col md={2} mdOffset={3} xs={4} xsOffset={1} className={styles.about}>
+              <Col md={2} sm={4} xs={12} className={styles.about}>
+                <p>Navigate</p>
                 <ul className={`source-sans ${styles.list}`}>
                   <li><a href="/about">About</a></li>
                   <li><a href="/contact">Contact</a></li>
@@ -50,7 +52,8 @@ class App extends Component {
                   </li>
                 </ul>
               </Col>
-              <Col md={2} xs={5} className={styles.links}>
+              <Col md={3} sm={4} xs={12} className={styles.links}>
+                <p>Useful sites</p>
                 <ul className={`source-sans ${styles.list}`}>
                   <li><a target="_blank" href="http://sunnah.com/" data-metrics-event-name="Footer:Link:Sunnah">Sunnah.com</a></li>
                   <li><a target="_blank" href="http://salah.com/" data-metrics-event-name="Footer:Link:Salah">Salah.com</a></li>
@@ -62,17 +65,9 @@ class App extends Component {
                   </li>
                 </ul>
               </Col>
-              <Col md={2} className={`text-right ${styles.links}`}>
-                <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>
-                <p className="monserrat">
-                  Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran){' '}
-                  is a pro bono project.
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={10} mdOffset={1} className="text-center">
-                <ul className={`list-inline ${styles.seo}`}>
+              <Col md={3} sm={4} xs={12} className={styles.links}>
+                <p>Other links</p>
+                <ul className={`source-sans ${styles.list}`}>
                   <li><a href="/sitemap.xml">Sitemap</a></li>
                   <li>
                     <Link
@@ -94,7 +89,16 @@ class App extends Component {
                   </li>
                 </ul>
               </Col>
+              <Col md={4} sm={12} xs={12} className={styles.links}>
+                <p className="monserrat">
+                  Quran.com ( also known as The Noble Quran, Al Quran, Holy Quran, Koran ){' '}
+                  is a pro bono project.
+                </p>
+
+                <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>
+              </Col>
             </Row>
+            </div>
           </Grid>
         </footer>
       </div>
