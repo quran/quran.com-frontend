@@ -43,7 +43,7 @@ export default class {
         }
 
         if (data) {
-          request.send(data);
+          request.send(decamelizeKeys(data));
         }
 
         request.end((err, { body } = {}) => {
