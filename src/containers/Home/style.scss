@@ -1,11 +1,11 @@
 @import '../../styles/variables.scss';
 
-.list{
-  .title{
+.list {
+  .title {
     padding: 20px 0;
     font-size: 14px;
-    margin: 0px;
-
+    margin-top: 20px;
+    
     span {
       margin: 0;
       line-height: 2;
@@ -15,14 +15,15 @@
       &:after {
         content: '|';
       }
-      &:first-child, &:last-child{
+      &:first-child, &:last-child {
         &:after {
           content: none;
         }
       }
     }
-
-    &:last-child{
+    
+    &:last-child {
+      margin-top: 25px;
       border-bottom: solid 2px rgba(0,0,0,.05)
     }
   }
