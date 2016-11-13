@@ -22,9 +22,9 @@ function Home(props) {
       <div className={`container ${styles.list}`}>
         <div className="row">
           <div className="col-md-10 col-md-offset-1">
+            <QuickSurahs />
             <h4 className={`text-muted ${styles.title}`}>
               SURAHS (CHAPTERS)
-              <QuickSurahs />
             </h4>
             <div className="row">
               <SurahsList surahs={Object.values(props.surahs).slice(0, 38)} />
