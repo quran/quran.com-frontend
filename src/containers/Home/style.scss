@@ -1,13 +1,30 @@
 @import '../../styles/variables.scss';
 
-.list{
-  .title{
-    padding: 50px 0px;
+.list {
+  .title {
+    padding: 20px 0;
     font-size: 14px;
-    margin: 0px;
-
-    @media(max-width: $screen-xs-max) {
-      padding: 10px 0;
+    margin-top: 20px;
+    
+    span {
+      margin: 0;
+      line-height: 2;
+      a {
+        padding: 0 15px;
+      }
+      &:after {
+        content: '|';
+      }
+      &:first-child, &:last-child {
+        &:after {
+          content: none;
+        }
+      }
+    }
+    
+    &:last-child {
+      margin-top: 25px;
+      border-bottom: solid 2px rgba(0,0,0,.05)
     }
   }
 }
