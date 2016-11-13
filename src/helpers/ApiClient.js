@@ -1,5 +1,7 @@
 import superagent from 'superagent';
 import qs from 'qs';
+import { decamelizeKeys } from 'humps';
+import cookie from 'react-cookie';
 
 import config from '../config';
 
@@ -9,6 +11,10 @@ function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? `/${path}` : path;
 
   if (__SERVER__) {
+    if (adjustedPath.startsWith('/onequran')) {
+      return config.oneQuran + adjustedPath.replace('/onequran', '');
+    }
+
     return `${config.api}${adjustedPath}`;
   }
 
@@ -23,7 +29,13 @@ export default class {
         const request = superagent[method](formatUrl(path));
 
         if (params) {
-          request.query(qs.stringify(params, {arrayFormat: arrayFormat || 'brackets'}));
+          request.query(qs.stringify(decamelizeKeys(params), {
+            arrayFormat: arrayFormat || 'brackets'
+          }));
+        }
+
+        if (cookie.load('accessToken')) {
+          request.set('Authorization', `Bearer ${cookie.load('accessToken')}`);
         }
 
         if (__SERVER__ && req.get('cookie')) {

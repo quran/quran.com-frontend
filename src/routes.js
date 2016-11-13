@@ -3,34 +3,70 @@ import React from 'react';
 import IndexRoute from 'react-router/lib/IndexRoute';
 import Route from 'react-router/lib/Route';
 import Redirect from 'react-router/lib/Redirect';
+
+import { isLoaded as isAuthLoaded, load as loadAuth, hasAccessToken } from 'redux/actions/auth';
+
 import checkValidSurah from './utils/checkValidSurah';
 import App from './containers/App';
 
-export default () => (
-  <Route path="/" component={App}>
-    <IndexRoute getComponent={(nextState, cb) => System.import('./containers/Home').then(module => cb(null, module))} />
+export default (store) => {
+  const requireLogin = (nextState, replace, cb) => {
+    function checkAuth() {
+      const { auth: { user }} = store.getState();
+      if (!user) {
+        // oops, not logged in, so can't be here!
+        replace('/');
+      }
+      cb();
+    }
 
-    <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
-    <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
+    if (!isAuthLoaded(store.getState())) {
+      store.dispatch(loadAuth()).then(checkAuth);
+    } else {
+      checkAuth();
+    }
+  };
 
-    <Route path="/about" getComponent={(nextState, cb) => System.import('./containers/About').then(module => cb(null, module))} />
+  const shouldAuth = (nextState, replace, cb) => {
+    if (!isAuthLoaded(store.getState()) && hasAccessToken()) {
+      return store.dispatch(loadAuth()).then(() => cb());
+    }
 
-    <Route path="/contact" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
-    <Route path="/contactus" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
+    return cb();
+  };
 
-    <Route path="/mobile" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
-    <Route path="/apps" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
+  return (
+    <Route path="/" component={App} onEnter={shouldAuth}>
+      <IndexRoute getComponent={(nextState, cb) => System.import('./containers/Home').then(module => cb(null, module))} />
 
-    <Route path="/error/:errorKey" getComponent={(nextState, cb) => System.import('./containers/Error').then(module => cb(null, module))} />
+      <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
+      <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
 
-    <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
+      <Route path="/about" getComponent={(nextState, cb) => System.import('./containers/About').then(module => cb(null, module))} />
 
-    <Redirect from="/:surahId:(:range)" to="/:surahId(/:range)" />
+      <Route path="/contact" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
+      <Route path="/contactus" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
 
-    <Route
-      path="/:surahId(/:range)"
-      getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))}
-      onEnter={checkValidSurah}
-    />
-  </Route>
-);
+      <Route path="/mobile" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
+      <Route path="/apps" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
+
+      <Route path="/error/:errorKey" getComponent={(nextState, cb) => System.import('./containers/Error').then(module => cb(null, module))} />
+
+      <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
+
+      <Route path="/login" getComponent={(nextState, cb) => System.import('./containers/Login').then(module => cb(null, module))} />
+
+      <Route onEnter={requireLogin}>
+        <Route path="/profile" getComponent={(nextState, cb) => System.import('./containers/Profile').then(module => cb(null, module))} />
+      </Route>
+
+      <Redirect from="/:surahId:(:range)" to="/:surahId(/:range)" />
+
+      <Route
+        path="/:surahId(/:range)"
+        getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))}
+        onEnter={checkValidSurah}
+      />
+    </Route>
+  );
+};

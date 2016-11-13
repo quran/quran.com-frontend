@@ -40,7 +40,7 @@ window.clearCookies = () => {
   reactCookie.remove('isFirstTime');
 };
 
-match({ history, routes: routes() }, (error, redirectLocation, renderProps) => {
+match({ history, routes: routes(store) }, (error, redirectLocation, renderProps) => {
   const component = (
     <Router
       {...renderProps}

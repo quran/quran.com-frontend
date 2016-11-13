@@ -52,6 +52,7 @@
     Raven: true,
     mixpanel: true,
     "expect": true,
-    "browser": true
+    "browser": true,
+    "FB": true
   }
 }
