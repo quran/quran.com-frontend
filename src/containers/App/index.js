@@ -9,6 +9,12 @@ import Helmet from 'react-helmet';
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import Button from 'react-bootstrap/lib/Button';
+import Modal from 'react-bootstrap/lib/Modal';
+const ModalHeader = Modal.Header;
+const ModalTitle = Modal.Title;
+const ModalBody = Modal.Body;
+const ModalFooter = Modal.Footer;
 
 import debug from '../../helpers/debug';
 import config from '../../config';
@@ -17,11 +23,15 @@ import { authConnect } from './connect';
 
 import FontStyles from 'components/FontStyles';
 
+import { removeMedia } from 'redux/actions/media';
+
 const styles = require('./style.scss');
 
 class App extends Component {
   static propTypes = {
-    surahs: PropTypes.object,
+    surahs: PropTypes.object.isRequired,
+    media: PropTypes.object.isRequired,
+    removeMedia: PropTypes.func.isRequired,
     children: PropTypes.any
   };
 
@@ -30,7 +40,7 @@ class App extends Component {
   };
 
   render() {
-    const { children } = this.props;
+    const { children, media, removeMedia } = this.props;
     debug('component:APPLICATION', 'Render');
 
     return (
@@ -103,6 +113,19 @@ class App extends Component {
             </div>
           </Grid>
         </footer>
+        <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>
+          <ModalHeader closeButton>
+            <ModalTitle className="montserrat">
+              {media.content && media.content.resource.name}
+            </ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            {
+              media.content &&
+              <iframe width="100%" height="515" src={media.content.url} frameBorder="0" allowFullScreen />
+            }
+          </ModalBody>
+        </Modal>
       </div>
     );
   }
@@ -112,4 +135,7 @@ const metricsApp = metrics(metricsConfig)(App);
 
 const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 
-export default connect(state => ({surahs: state.surahs.entities }))(AsyncApp);
+export default connect(
+  state => ({surahs: state.surahs.entities, media: state.media }),
+  { removeMedia }
+)(AsyncApp);

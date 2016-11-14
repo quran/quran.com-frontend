@@ -22,6 +22,7 @@ export default class Ayah extends Component {
     ayah: PropTypes.object.isRequired,
     bookmarked: PropTypes.bool.isRequired,
     bookmarkActions: PropTypes.object,
+    mediaActions: PropTypes.object.isRequired,
     match: PropTypes.array,
     isSearch: PropTypes.bool,
     isPlaying: PropTypes.bool,
@@ -85,6 +86,41 @@ export default class Ayah extends Component {
         </div>
       );
     });
+  }
+
+  renderMedia() {
+    const { ayah, mediaActions } = this.props;
+
+    if (!ayah.mediaContent.length) return false;
+
+    return (
+      <div>
+        {
+          ayah.mediaContent.map((content, index) => (
+            <div
+              className={`${styles.translation} translation`}
+              key={index}
+            >
+              <h4 className="montserrat">Media: {content.resource.name}</h4>
+              <h2 className="text-translation times-new">
+                <small>
+                  <a
+                    className="pointer"
+                    onClick={() => mediaActions.setMedia(content)}
+                    data-metrics-event-name="Media Click"
+                    data-metrics-media-content-url={content.url}
+                    data-metrics-media-content-id={content.id}
+                    data-metrics-media-content-ayah-key={ayah.ayahKey}
+                  >
+                    Watch lecture
+                  </a>
+                </small>
+              </h2>
+            </div>
+          ))
+        }
+      </div>
+    );
   }
 
   renderText() {
@@ -257,6 +293,7 @@ export default class Ayah extends Component {
         <div className="col-md-11">
           {this.renderText()}
           {this.renderTranslations()}
+          {this.renderMedia()}
         </div>
       </Element>
     );
