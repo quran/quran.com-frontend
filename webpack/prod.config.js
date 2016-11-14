@@ -117,6 +117,7 @@ module.exports = {
       'process.env.SEGMENTS_KEY': JSON.stringify(process.env.SEGMENTS_KEY),
       'process.env.SENTRY_KEY_CLIENT': JSON.stringify(process.env.SENTRY_KEY_CLIENT),
       'process.env.SENTRY_KEY_SERVER': JSON.stringify(process.env.SENTRY_KEY_SERVER),
+      'process.env.FACEBOOK_APP_ID': JSON.stringify(process.env.FACEBOOK_APP_ID),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       __SERVER__: false,
       __CLIENT__: true,
