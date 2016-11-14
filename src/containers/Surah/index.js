@@ -42,6 +42,7 @@ import * as AudioActions from '../../redux/actions/audioplayer.js';
 import * as AyahActions from '../../redux/actions/ayahs.js';
 import * as BookmarkActions from '../../redux/actions/bookmarks.js';
 import * as OptionsActions from '../../redux/actions/options.js';
+import * as MediaActions from '../../redux/actions/media.js';
 
 const style = require('./style.scss');
 
@@ -306,6 +307,7 @@ class Surah extends Component {
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
         audioActions={actions.audio}
+        mediaActions={actions.media}
         isPlaying={isPlaying}
         isAuthenticated={isAuthenticated}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
@@ -466,8 +468,9 @@ function mapDispatchToProps(dispatch) {
       options: bindActionCreators(OptionsActions, dispatch),
       ayah: bindActionCreators(AyahActions, dispatch),
       audio: bindActionCreators(AudioActions, dispatch),
-      push: bindActionCreators(push, dispatch),
-      bookmark: bindActionCreators(BookmarkActions, dispatch)
+      bookmark: bindActionCreators(BookmarkActions, dispatch),
+      media: bindActionCreators(MediaActions, dispatch),
+      push: bindActionCreators(push, dispatch)
     }
   };
 }

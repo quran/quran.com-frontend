@@ -11,12 +11,14 @@ import searchResults from './searchResults';
 import fontFaces from './fontFaces';
 import auth from './auth';
 import bookmarks from './bookmarks';
+import media from './media';
 
 export default combineReducers({
   routing: routerReducer,
   reduxAsyncConnect,
   auth,
   bookmarks,
+  media,
   surahs,
   ayahs,
   audioplayer,
