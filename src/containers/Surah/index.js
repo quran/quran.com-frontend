@@ -40,6 +40,7 @@ import { surahsConnect, ayahsConnect } from './connect';
 
 import * as AudioActions from '../../redux/actions/audioplayer.js';
 import * as AyahActions from '../../redux/actions/ayahs.js';
+import * as BookmarkActions from '../../redux/actions/bookmarks.js';
 import * as OptionsActions from '../../redux/actions/options.js';
 
 const style = require('./style.scss');
@@ -55,8 +56,10 @@ class Surah extends Component {
     ayahIds: PropTypes.any,
     currentWord: PropTypes.string,
     surahs: PropTypes.object.isRequired,
+    bookmarks: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
     isLoaded: PropTypes.bool.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
     options: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
     ayahs: PropTypes.object.isRequired,
@@ -99,6 +102,7 @@ class Surah extends Component {
       this.props.isEndOfSurah !== nextProps.isEndOfSurah,
       this.props.ayahIds.length !== nextProps.ayahIds.length,
       this.props.surahs !== nextProps.surahs,
+      this.props.bookmarks !== nextProps.bookmarks,
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
       this.props.options !== nextProps.options
@@ -286,15 +290,24 @@ class Surah extends Component {
   }
 
   renderAyahs() {
-    const { ayahs, actions, options, isPlaying } = this.props; // eslint-disable-line no-shadow
+    const {
+      ayahs,
+      actions,
+      options,
+      bookmarks,
+      isPlaying,
+      isAuthenticated
+    } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
+        bookmarked={!!bookmarks[ayah.ayahKey]}
         tooltip={options.tooltip}
-        onWordClick={actions.audio.setCurrentWord}
-        actions={actions.audio}
+        bookmarkActions={actions.bookmark}
+        audioActions={actions.audio}
         isPlaying={isPlaying}
+        isAuthenticated={isAuthenticated}
         key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
       />
     ));
@@ -435,9 +448,11 @@ function mapStateToProps(state, ownProps) {
     ayahIds,
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
+    isAuthenticated: state.auth.loaded,
     currentWord: state.ayahs.currentWord,
     isEndOfSurah: ayahIds.size === surah.ayat,
     surahs: state.surahs.entities,
+    bookmarks: state.bookmarks.entities,
     isLoading: state.ayahs.loading,
     isLoaded: state.ayahs.loaded,
     lines: state.lines.lines,
@@ -451,7 +466,8 @@ function mapDispatchToProps(dispatch) {
       options: bindActionCreators(OptionsActions, dispatch),
       ayah: bindActionCreators(AyahActions, dispatch),
       audio: bindActionCreators(AudioActions, dispatch),
-      push: bindActionCreators(push, dispatch)
+      push: bindActionCreators(push, dispatch),
+      bookmark: bindActionCreators(BookmarkActions, dispatch)
     }
   };
 }

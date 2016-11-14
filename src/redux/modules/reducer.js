@@ -10,11 +10,13 @@ import options from './options';
 import searchResults from './searchResults';
 import fontFaces from './fontFaces';
 import auth from './auth';
+import bookmarks from './bookmarks';
 
 export default combineReducers({
   routing: routerReducer,
   reduxAsyncConnect,
   auth,
+  bookmarks,
   surahs,
   ayahs,
   audioplayer,

@@ -11,3 +11,42 @@
   display: block;
   height: 10rem;
 }
+
+.tabs{
+  :global(.nav-pills){
+    border-bottom: 1px solid $brand-primary;
+
+    :global(li){
+      :global(a){
+        background: #fff;
+        color: $text-color;
+        font-size: 1.2rem;
+
+        &:hover{
+          background: #f7f7f7;
+          color: $brand-primary;
+        }
+
+        &:active, &:focus, &:visited{
+          color: $brand-primary;
+          background: #fff;
+          outline: none;
+        }
+      }
+    }
+
+    :global(li.active){
+      border-bottom: 2px solid $brand-primary;
+
+
+      :global(a){
+        color: $brand-primary;
+
+        &:hover{
+          background: transparent;
+          color: $brand-primary;
+        }
+      }
+    }
+  }
+}

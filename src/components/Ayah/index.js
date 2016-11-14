@@ -20,13 +20,15 @@ export default class Ayah extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
     ayah: PropTypes.object.isRequired,
+    bookmarked: PropTypes.bool.isRequired,
+    bookmarkActions: PropTypes.object,
     match: PropTypes.array,
     isSearch: PropTypes.bool,
     isPlaying: PropTypes.bool,
+    isAuthenticated: PropTypes.bool,
     tooltip: PropTypes.string,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
-    onWordClick: PropTypes.func,
-    actions: PropTypes.object
+    audioActions: PropTypes.object.isRequired
   };
 
   static defaultProps = {
@@ -37,6 +39,7 @@ export default class Ayah extends Component {
   shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.ayah !== nextProps.ayah,
+      this.props.bookmarked !== nextProps.bookmarked,
       this.props.tooltip !== nextProps.tooltip,
       this.props.currentWord !== nextProps.currentWord
     ];
@@ -49,8 +52,8 @@ export default class Ayah extends Component {
   }
 
   handlePlay(ayah) {
-    const {isPlaying, actions} = this.props;
-    const {pause, setAyah, play} = actions;
+    const { isPlaying, audioActions } = this.props;
+    const { pause, setAyah, play } = audioActions;
 
     if (isPlaying) {
       pause();
@@ -85,7 +88,7 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, onWordClick, tooltip } = this.props;
+    const { ayah, audioActions: { setCurrentWord }, tooltip } = this.props;
 
     if (!ayah.words[0].code) {
       return false;
@@ -93,7 +96,7 @@ export default class Ayah extends Component {
 
     // position is important as it will differentiate between words and symbols, see 2:25:13
     let position = -1;
-    let text = ayah.words.map((word, index) => {
+    const text = ayah.words.map((word, index) => {
       let id = null;
       const isLast = ayah.words.length === index + 1;
       const className = `${word.className} ${word.highlight ? word.highlight : ''}`;
@@ -106,13 +109,13 @@ export default class Ayah extends Component {
       }
 
       if (word.translation || word.transliteration) {
-        let tooltipContent = word[tooltip];
+        const tooltipContent = word[tooltip];
 
         return (
           <b
             key={word.code}
             id={id}
-            onClick={(event) => onWordClick(event.target.dataset.key)}
+            onClick={(event) => setCurrentWord(event.target.dataset.key)}
             data-key={`${word.ayahKey}:${position}`}
             className={`${className} ${styles.Tooltip}`}
             aria-label={tooltipContent}
@@ -125,7 +128,7 @@ export default class Ayah extends Component {
       return (
         <b
           id={id}
-          onClick={(event) => onWordClick(event.target.dataset.key)}
+          onClick={(event) => setCurrentWord(event.target.dataset.key)}
           data-key={`${word.ayahKey}:${position}`}
           className={`${className} ${isLast && styles.Tooltip} pointer`}
           key={word.code}
@@ -177,6 +180,32 @@ export default class Ayah extends Component {
     return false;
   }
 
+  renderBookmark() {
+    const { ayah, bookmarked, isAuthenticated, bookmarkActions } = this.props;
+
+    if (!isAuthenticated) return false;
+
+    if (bookmarked) {
+      return (
+        <a
+          onClick={() => bookmarkActions.removeBookmark(ayah.ayahKey)}
+          className="text-muted"
+        >
+          <strong><i className="ss-icon ss-bookmark" /> Bookmarked</strong>
+        </a>
+      );
+    }
+
+    return (
+      <a
+        onClick={() => bookmarkActions.addBookmark(ayah.ayahKey)}
+        className="text-muted"
+      >
+        <i className="ss-icon ss-bookmark" /> Bookmark
+      </a>
+    );
+  }
+
   renderAyahBadge() {
     const { isSearched } = this.props;
     const content = (
@@ -213,6 +242,7 @@ export default class Ayah extends Component {
         {this.renderAyahBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
+        {this.renderBookmark()}
       </div>
     );
   }

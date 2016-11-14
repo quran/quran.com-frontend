@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
 import Link from 'react-router/lib/Link';
 import Helmet from 'react-helmet';
 
@@ -12,6 +13,7 @@ import Col from 'react-bootstrap/lib/Col';
 import debug from '../../helpers/debug';
 import config from '../../config';
 import metricsConfig from '../../helpers/metrics';
+import { authConnect } from './connect';
 
 import FontStyles from 'components/FontStyles';
 
@@ -108,4 +110,6 @@ class App extends Component {
 
 const metricsApp = metrics(metricsConfig)(App);
 
-export default connect(state => ({surahs: state.surahs.entities }))(metricsApp);
+const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
+
+export default connect(state => ({surahs: state.surahs.entities }))(AsyncApp);

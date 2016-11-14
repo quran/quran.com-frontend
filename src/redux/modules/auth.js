@@ -18,6 +18,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
+        loaded: true,
         user: action.result.user
       };
     case FACEBOOK_SUCCESS:
@@ -26,10 +27,10 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loading: false,
+        loaded: true,
         user: action.result.user
       };
     case FACEBOOK_FAILURE:
-      return state;
     case LOAD_FAILURE:
     case LOGOUT_SUCCESS:
       cookie.remove('accessToken');
@@ -37,6 +38,8 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loggingOut: false,
+        loaded: false,
+        loading: false,
         user: null
       };
     default:
