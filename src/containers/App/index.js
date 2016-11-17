@@ -32,7 +32,7 @@ class App extends Component {
   };
 
   render() {
-    const { children, media, removeMedia } = this.props; // eslint-disable no-shadow
+    const { children, media, removeMedia } = this.props; // eslint-disable-line no-shadow
     debug('component:APPLICATION', 'Render');
 
     return (
@@ -54,7 +54,6 @@ class App extends Component {
                   <iframe
                     className="embed-responsive-item"
                     src={media.content.url}
-                    frameBorder="0"
                     allowFullScreen
                   />
               }

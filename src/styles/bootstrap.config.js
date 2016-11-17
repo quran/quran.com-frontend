@@ -20,10 +20,8 @@ module.exports = {
   },
   "styles": {
     "mixins": true,
-
     "normalize": true,
     "print": false,
-
     "scaffolding": true,
     "type": true,
     "code": true,
@@ -31,7 +29,6 @@ module.exports = {
     "tables": true,
     "forms": true,
     "buttons": true,
-
     "component-animations": true,
     "glyphicons": false,
     "dropdowns": true,
@@ -52,6 +49,7 @@ module.exports = {
     "list-group": true,
     "panels": true,
     "wells": false,
+    "responsive-embed": true,
     "close": true,
 
     "modals": true,

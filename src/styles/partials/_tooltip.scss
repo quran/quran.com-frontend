@@ -1,5 +1,6 @@
 .Tooltip {
   position: relative;
+  white-space: pre;
 
   &:after {
     content: attr(aria-label);
