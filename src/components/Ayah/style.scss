@@ -62,8 +62,8 @@
       border-radius: 0px;
       display: inline-block;
       margin-bottom: 15px;
-      color: darken($text-muted, 30%);
       font-weight: 300;
+      color: $text-color;
 
       &:hover{
         opacity: 0.7;
@@ -112,7 +112,6 @@
   b, a{
     font-weight: 100;
     margin: 0px 2px;
-    white-space: pre;
     color: #000;
     &:hover{
       color: $brand-primary;

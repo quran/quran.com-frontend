@@ -13,6 +13,17 @@ const zeroPad = (num, places) => {
 
 const Title = ({ surah }) => {
   const title = require(`../../../../static/images/titles/${zeroPad(surah.id, 3)}.svg`); // eslint-disable-line global-require,max-len
+
+  if (!surah) return <noscript />;
+
+  return (
+    <img
+      src={title}
+      className={styles.title}
+      alt={`${surah.name.simple} (${surah.name.english}) - سورة ${surah.name.arabic}`}
+    />
+  );
+
   return (
     <div className={`row ${styles.container}`}>
       <div className="col-md-3 col-xs-1 surah-title">

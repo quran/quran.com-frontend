@@ -7,7 +7,7 @@
     padding: 10px 15px;
     height: 100%;
     padding-right: 48px;
-    background: transparent;
+    background: $text-muted;
   }
 
   input::-webkit-input-placeholder { /* WebKit browsers */
@@ -28,7 +28,6 @@
     height: 100%;
     text-align: center;
     border: 0;
-    background: transparent;
     right: 0px;
   }
 }
@@ -76,19 +75,10 @@
     color: #fff;
     cursor: pointer;
     height: 100%;
-      border: 3px solid #fff;
+    border: 3px solid #fff;
 
     &:hover{
       background-color: lighten($brand-primary, 10%);
-    }
-  }
-}
-
-
-@media (max-width: $screen-xs-max) {
-  .right-inner-addon.search-input{
-    i{
-      display: none;
     }
   }
 }

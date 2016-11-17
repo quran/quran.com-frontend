@@ -1,0 +1,50 @@
+.footer{
+  background-color: #32312C;
+  padding: 3% 0%;
+  font-size: 14px;
+  margin-top: 50px;
+
+  .about, .links{
+    padding-top: 30px;
+    text-transform: uppercase;
+
+    .list{
+      padding-left: 0px;
+      :global(li){
+        list-style: none;
+        padding: 5px 0;
+      }
+    }
+
+    p{
+      line-height: 30px;
+      color: #fff;
+    }
+
+    a{
+      font-size: 13px;
+      color: rgba(#fff, 0.5);
+    }
+
+    a:hover{
+      color: #fff;
+    }
+  }
+
+  :global(a){
+    -webkit-transition: color .15s ease-in-out;
+    -moz-transition: color .15s ease-in-out;
+    -o-transition: color .15s ease-in-out;
+    -ms-transition: color .15s ease-in-out;
+    transition: color .15s ease-in-out;
+  }
+
+  .links {
+    &:last-child{
+      p{
+        color: rgba(#fff, 0.5);
+      }
+    }
+  }
+
+}

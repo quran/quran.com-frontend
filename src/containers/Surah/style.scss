@@ -1,10 +1,15 @@
 @import '../../styles/variables.scss';
 
-:local .dropdown {
-  padding-left: 0;
-  padding-right: 0;
+.dropdown {
+  padding: 5px 0;
 
-  &> button {
+  &.open{
+    :global(.dropdown-icon.ss-icon:before){
+      content:"▴";
+    }
+  }
+
+  & > button {
     width: 100%;
     text-align: left;
   }
@@ -26,5 +31,19 @@
 
   @media(max-width: $screen-xs-max) {
     padding-top: 100px;
+  }
+}
+
+.sidebar{
+  background: #fff;
+  width: 30%;
+
+  @media(max-width: $screen-sm) {
+    width: 80%;
+
+    .sidebarTitle{
+      margin-left: 15px;
+    }
+
   }
 }

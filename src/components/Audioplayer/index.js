@@ -44,10 +44,6 @@ export class Audioplayer extends Component {
     currentFile: PropTypes.object
   };
 
-  static defaultProps = {
-    className: 'col-md-3'
-  };
-
   componentDidMount() {
     const { isLoadedOnClient, buildOnClient, surah, currentFile } = this.props; // eslint-disable-line no-shadow, max-len
 
@@ -340,7 +336,7 @@ export class Audioplayer extends Component {
     }
 
     return (
-      <a className={`pointer ${style.buttons}`} onClick={isPlaying ? pause : this.play}>
+      <a className={`pointer text-center ${style.playingButton} ${style.buttons}`} onClick={isPlaying ? pause : this.play}>
         {icon}
       </a>
     );
@@ -388,6 +384,7 @@ export class Audioplayer extends Component {
       currentTime,
       duration,
       surah,
+      isPlaying,
       isLoadedOnClient,
       repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
@@ -403,32 +400,7 @@ export class Audioplayer extends Component {
     }
 
     return (
-      <div className={`${style.padding_left} ${style.container} ${className}`}>
-        <ul className={style.list}>
-          <li className={style.verse}>
-            Playing: {currentAyah.split(':')[1]}
-          </li>
-          <li>
-            {this.renderPreviousButton()}
-          </li>
-          <li>
-            {this.renderPlayStopButtons()}
-          </li>
-          <li>
-            {this.renderNextButton()}
-          </li>
-          <li>
-            <RepeatDropdown
-              repeat={repeat}
-              setRepeat={setRepeat}
-              current={parseInt(currentAyah.split(':')[1], 10)}
-              surah={surah}
-            />
-          </li>
-          <li>
-            <ScrollButton shouldScroll={shouldScroll} onScrollToggle={this.handleScrollToggle} />
-          </li>
-        </ul>
+      <div className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}>
         <div className={style.wrapper}>
           {isLoadedOnClient ?
             <Track
@@ -443,6 +415,31 @@ export class Audioplayer extends Component {
               currentTime={currentTime}
             /> : null}
         </div>
+        <ul className={`list-inline ${style.controls}`}>
+          <li className={style.controlItem}>
+            Ayah: {currentAyah.split(':')[1]}
+          </li>
+          <li className={style.controlItem}>
+            {this.renderPreviousButton()}
+          </li>
+          <li className={style.controlItem}>
+            {this.renderPlayStopButtons()}
+          </li>
+          <li className={style.controlItem}>
+            {this.renderNextButton()}
+          </li>
+          <li className={style.controlItem}>
+            <RepeatDropdown
+              repeat={repeat}
+              setRepeat={setRepeat}
+              current={parseInt(currentAyah.split(':')[1], 10)}
+              surah={surah}
+            />
+          </li>
+          <li className={style.controlItem}>
+            <ScrollButton shouldScroll={shouldScroll} onScrollToggle={this.handleScrollToggle} />
+          </li>
+        </ul>
       </div>
     );
   }

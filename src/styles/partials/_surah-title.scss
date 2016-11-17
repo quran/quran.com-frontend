@@ -13,21 +13,6 @@ $transition-timing: 0.5s;
     float: none;
   }
 
-  img {
-    height: 100%;
-
-    &.title{
-      display: block;
-      margin: auto;
-      height: 170px;
-      margin-top: -60px;
-      margin-bottom: -75px;
-    }
-    &.ornament{
-      opacity: 0.15;
-    }
-  }
-
   .previous-chapter,
   .next-chapter{
     text-transform: uppercase;
@@ -65,7 +50,7 @@ $transition-timing: 0.5s;
 @media (max-width: $screen-sm-max) {
   .surah-title{
     padding:0px !important;
-    height: 70px;
+    height: auto;
 
     img.title{
       height: 175%;

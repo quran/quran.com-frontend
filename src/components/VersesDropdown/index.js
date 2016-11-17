@@ -56,7 +56,7 @@ export default class VersesDropdown extends Component {
 
     const title = (
       <span>
-        Verses
+        Go to verse
       </span>
     );
 
