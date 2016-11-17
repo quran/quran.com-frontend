@@ -6,11 +6,15 @@ import InformationToggle from 'components/InformationToggle';
 import FontSizeDropdown from 'components/FontSizeDropdown';
 import TooltipDropdown from 'components/TooltipDropdown';
 import ReadingModeToggle from 'components/ReadingModeToggle';
+import Title from 'containers/Surah/Title';
 import Share from 'components/Share';
 
 const TopOptions = ({options, surah, actions}) => (
   <Row>
-    <Col md={6} mdOffset={6} className="text-right">
+    <Col md={6} className="hidden-xs hidden-sm">
+      <Title surah={surah} />
+    </Col>
+    <Col md={6} className="text-right">
       <ul className="list-inline">
         <li>
           <InformationToggle

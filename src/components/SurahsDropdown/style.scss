@@ -1,12 +1,13 @@
 .dropdown{
   :global(ul) {
-    max-height: 600px;
+    max-height: 400px;
+    max-height: 60vh;
     overflow-y: scroll;
     overflow-x: hidden;
   }
 }
 
-:local .arabic_name {
+.arabicName {
   direction: rtl;
   padding-right: 5px;
 }

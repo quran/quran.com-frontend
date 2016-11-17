@@ -1,9 +1,7 @@
-@import '../../../styles/variables.scss';
-
-.container{
-  @media(max-width: $screen-sm-max) {
-    width: 80%;
-    margin-left: 15px;
-    display: inline-block;
-  }
+.title{
+  width: 30%;
+  display: inherit;
+  position: absolute;
+  top: 0px;
+  transform: translateY(-50%);
 }

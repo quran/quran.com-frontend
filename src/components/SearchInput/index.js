@@ -8,8 +8,8 @@ import SearchAutocomplete from '../SearchAutocomplete';
 
 import debug from '../../helpers/debug';
 
-@connect(null, { push })
-export default class SearchInput extends Component {
+
+class SearchInput extends Component {
   static propTypes = {
     push: PropTypes.func.isRequired,
     className: PropTypes.string
@@ -116,3 +116,5 @@ export default class SearchInput extends Component {
     );
   }
 }
+
+export default connect(null, { push })(SearchInput);

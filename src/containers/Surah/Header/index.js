@@ -1,38 +1,84 @@
 import React, { PropTypes } from 'react';
-
-import Grid from 'react-bootstrap/lib/Grid';
+import { Link } from 'react-router';
 import Navbar from 'react-bootstrap/lib/Navbar';
 const Header = Navbar.Header;
-const Brand = Navbar.Brand;
-const Toggle = Navbar.Toggle;
-const Collapse = Navbar.Collapse;
 
 import debug from '../../../helpers/debug';
-import Title from '../../../containers/Surah/Title';
 
-const SurahHeader = ({ surah, children }) => {
+const ornamentLeft = require('../../../../static/images/ornament-left.png');
+const ornamentRight = require('../../../../static/images/ornament-right.png');
+
+const styles = require('./style.scss');
+
+const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
   debug('component:SurahHeader', 'Render');
 
   return (
     <Navbar className="montserrat surah" fixedTop fluid>
       <Header>
-        <Brand>
-          <Title surah={surah} />
-        </Brand>
-        <Toggle />
+        <button type="button" className="navbar-toggle collapsed" onClick={handleToggleSidebar}>
+          <span className="sr-only">Toggle navigation</span>
+          <span className="icon-bar"></span>
+          <span className="icon-bar"></span>
+          <span className="icon-bar"></span>
+        </button>
+        <ul className={`list-inline ${styles.container}`}>
+          <li className={styles.verticalAlign}>
+            {/* <img
+              src={ornamentLeft}
+              className={`${styles.ornament} pull-left hidden-xs hidden-sm`}
+              alt="Ornament left"
+            /> */}
+            {
+              surah.id > 1 &&
+                <Link
+                  data-metrics-event-name="Title:PreviousSurah"
+                  className="navbar-text previous-chapter"
+                  to={`/${surah.id - 1}`}
+                >
+                  <i
+                    data-metrics-event-name="Title:PreviousSurah"
+                    className="ss-icon ss-navigateleft"
+                  />
+                  <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
+                </Link>
+            }
+          </li>
+          <li className={styles.verticalAlign}>
+            {
+              surah &&
+                <p className="navbar-text text-uppercase surah-name">
+                  {surah.name.simple} ({surah.name.english}) - سورة {surah.name.arabic}
+                </p>
+            }
+          </li>
+          <li className={styles.verticalAlign}>
+            {
+              surah.id < 114 &&
+                <Link
+                  data-metrics-event-name="Title:NextSurah"
+                  className="navbar-text next-chapter"
+                  to={`/${surah.id + 1}`}
+                >
+                  <span className="hidden-xs hidden-sm">NEXT SURAH </span>
+                  <i data-metrics-event-name="Title:NextSurah" className="ss-icon ss-navigateright" />
+                </Link>
+            }
+            {/* <img
+              src={ornamentRight}
+              className={`${styles.ornament} hidden-xs hidden-sm`}
+              alt="Ornament right"
+            /> */}
+          </li>
+        </ul>
       </Header>
-      <Collapse>
-        <Grid fluid>
-          {children}
-        </Grid>
-      </Collapse>
     </Navbar>
   );
 };
 
 SurahHeader.propTypes = {
   surah: PropTypes.object.isRequired,
-  children: PropTypes.any
+  handleToggleSidebar: PropTypes.func.isRequired
 };
 
 export default SurahHeader;

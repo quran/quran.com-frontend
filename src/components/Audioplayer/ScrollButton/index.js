@@ -16,13 +16,14 @@ const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
       <input type="checkbox" id="scroll" className={style.checkbox} />
       <OverlayTrigger
         overlay={tooltip}
-        placement="right"
+        placement="top"
         trigger={['hover', 'focus']}
       >
         <label
           htmlFor="scroll"
           className={`pointer ${style.buttons} ${shouldScroll ? style.scroll : ''}`}
           onClick={onScrollToggle}
+          style={{marginBottom: 0}}
         >
           <i className="ss-icon ss-link" />
         </label>

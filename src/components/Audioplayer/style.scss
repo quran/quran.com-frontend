@@ -1,28 +1,45 @@
 @import '../../styles/variables.scss';
 
-:local .container{
-  position:relative;
+.container{
+  position: fixed;
+  bottom: 15px;
   display: block;
   user-select: none;
-  height: 40px;
-  padding: 10px 20px;
+  height: auto;
+  padding: 10px 20px 5px;
+  background: #fff;
+  box-shadow: 0 0 0.5rem 0 rgba(0,0,0,.2);
+  min-width: 340px;
+  @media(max-width: $screen-sm){
+    bottom: 0px;
+    width: 100%;
+  }
+  // border: 0.08333rem solid transparent !important;
 }
 
-:local .wrapper{
+.wrapper{
   width: 100%;
   position: absolute;
-  top: 90%;
+  top: 0;
   left: 0px;
   height: 10%;
 }
 
-:local .options{
+.options{
   border-radius: 4px;
   width: 100%;
   display: inline-block;
   margin: 0px;
   height: 90%;
   text-align: center;
+}
+
+.controls{
+  margin: 0px;
+  .controlItem{
+    vertical-align: middle;
+    padding-right: 20px;
+  }
 }
 
 .list{
@@ -43,12 +60,24 @@
   display: inline-block;
   cursor: pointer;
   padding-right: 1.5%;
-  color: $olive;
+  color: $text-color;
   outline: none;
 
-  &.playing{
-    color: $brand-primary;
+  &.playingButton{
+    background: $brand-primary;
+    color: #fff;
+    height: 32px;
+    width: 32px;
+    padding: 8px;
+    border-radius: 50%;
+    position: relative;
+    vertical-align: middle;
+
+    &:hover{
+      opacity: 0.75;
+    }
   }
+
   i.fa{
     color: inherit;
     font-size: 100%;
@@ -65,7 +94,7 @@
   color: $brand-primary;
 }
 
-:local .disabled{
+.disabled{
   opacity: 0.5;
   cursor: not-allowed !important;
   pointer-events: none;
@@ -76,7 +105,7 @@
   color: $olive;
 }
 
-:local .popover{
+.popover{
   :global(.popover-title){
     font-family: $font-montserrat;
     text-transform: uppercase;

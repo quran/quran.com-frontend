@@ -24,10 +24,10 @@ $tooltip-bg: $brand-primary;
 $tooltip-opacity: 1;
 $tooltip-max-width: 400px;
 
-
 $text-muted: #d1d0d0;
+$text-color: #939598;
 
-$navbar-height: 240px * $proportion-factor;
+$navbar-height: 50px;
 $navbar-default-bg: $beige;
 $navbar-default-link-active-bg: transparent;
 $navbar-default-border: transparent;
@@ -40,11 +40,10 @@ $navbar-inverse-border: transparent;
 $navbar-collapse-width: 1000px;
 $navbar-scroll-up-height: 90px;
 
-$dropdown-bg: darken($olive, 5%);
-$dropdown-link-color: #fff;
+// $dropdown-bg: darken($olive, 5%);
+$dropdown-link-color: $text-color;
 
 $input-border-focus: $light-green;
-$text-color: #939598;
 
 $label-default-bg: lighten($text-muted, 13%);
 

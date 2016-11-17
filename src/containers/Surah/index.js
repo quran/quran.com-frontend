@@ -9,7 +9,11 @@ import { push } from 'react-router-redux';
 // bootstrap
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import Navbar from 'react-bootstrap/lib/Navbar';
+const NavbarHeader = Navbar.Header;
+
 import Helmet from 'react-helmet';
+import Sidebar from 'react-sidebar';
 
 // components
 import LazyLoad from 'components/LazyLoad';
@@ -35,6 +39,7 @@ import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
 import descriptions from './descriptions';
+import Title from './Title';
 
 import { surahsConnect, ayahsConnect } from './connect';
 
@@ -47,6 +52,12 @@ import * as MediaActions from '../../redux/actions/media.js';
 const style = require('./style.scss');
 
 let lastScroll = 0;
+
+const zeroPad = (num, places) => {
+  const zero = places - num.toString().length + 1;
+
+  return Array(+(zero > 0 && zero)).join('0') + num;
+};
 
 class Surah extends Component {
   static propTypes = {
@@ -69,7 +80,8 @@ class Surah extends Component {
   };
 
   state = {
-    lazyLoading: false
+    lazyLoading: false,
+    sidebarOpen: false
   };
 
   componentWillMount() {
@@ -99,6 +111,7 @@ class Surah extends Component {
   shouldComponentUpdate(nextProps, nextState) {
     const conditions = [
       this.state.lazyLoading !== nextState.lazyLoading,
+      this.state.sidebarOpen !== nextState.sidebarOpen,
       this.props.surah !== nextProps.surah,
       this.props.isEndOfSurah !== nextProps.isEndOfSurah,
       this.props.ayahIds.length !== nextProps.ayahIds.length,
@@ -335,8 +348,48 @@ class Surah extends Component {
     });
   }
 
-  render() {
+  renderSidebar() {
     const { surah, surahs, ayahIds, options, actions } = this.props;
+
+    return (
+      <div>
+        <Navbar static fluid>
+          <NavbarHeader>
+            <p className={`navbar-text ${style.sidebarTitle}`}>Options</p>
+          </NavbarHeader>
+        </Navbar>
+        <SearchInput
+          className="search-input"
+        />
+        <SurahsDropdown
+          surahs={surahs}
+          className={`${style.dropdown}`}
+        />
+        <VersesDropdown
+          ayat={surah.ayat}
+          loadedAyahs={ayahIds}
+          isReadingMode={options.isReadingMode}
+          onClick={this.handleVerseDropdownClick}
+          surah={surah}
+          className={`${style.dropdown}`}
+        />
+        <ReciterDropdown
+          onOptionChange={this.handleOptionChange}
+          options={options}
+          className={`${style.dropdown}`}
+        />
+        <ContentDropdown
+          onOptionChange={this.handleOptionChange}
+          options={options}
+          className={`${style.dropdown}`}
+        />
+      </div>
+    );
+  }
+
+  render() {
+    const { surah, surahs, ayahIds, options, actions, footer } = this.props;
+    const title = require(`../../../static/images/titles/${zeroPad(surah.id, 3)}.svg`); // eslint-disable-line global-require,max-len
 
     debug('component:Surah', 'Render');
 
@@ -373,65 +426,37 @@ class Surah extends Component {
             cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
           }]}
         />
-        <Header surah={surah}>
-          <Row className="navbar-bottom">
-            <Col md={9}>
-              <Row>
-                <SurahsDropdown
-                  surahs={surahs}
-                  className={`col-md-3 ${style.rightborder} ${style.dropdown}`}
-                />
-                <VersesDropdown
-                  ayat={surah.ayat}
-                  loadedAyahs={ayahIds}
-                  isReadingMode={options.isReadingMode}
-                  onClick={this.handleVerseDropdownClick}
-                  surah={surah}
-                  className={`col-md-1 ${style.rightborder} ${style.dropdown}`}
-                />
-                <ReciterDropdown
-                  onOptionChange={this.handleOptionChange}
-                  options={options}
-                  className={`col-md-2 ${style.rightborder} ${style.dropdown}`}
-                />
-                <Audioplayer
-                  surah={surah}
-                  onLoadAyahs={this.handleLazyLoadAyahs}
-                  className={`col-md-4 ${style.rightborder}`}
-                />
-                <ContentDropdown
-                  onOptionChange={this.handleOptionChange}
-                  options={options}
-                  className={`col-md-2 ${style.rightborder} ${style.dropdown}`}
-                />
-              </Row>
-            </Col>
-            <Col md={3}>
-              <Row>
-                <SearchInput
-                  className="col-md-12 search-input"
-                />
-              </Row>
-            </Col>
-          </Row>
-        </Header>
-        <div className={`container-fluid ${style['surah-container']}`}>
-          <Row>
-            <SurahInfo
-              surah={surah}
-              isShowingSurahInfo={options.isShowingSurahInfo}
-              onClose={this.handleSurahInfoToggle}
-            />
-            <Col md={10} mdOffset={1}>
-              <TopOptions options={options} actions={actions} surah={surah} />
-              <Bismillah surah={surah} />
-              {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
-            </Col>
-            <Col md={10} mdOffset={1}>
-              {this.renderPagination()}
-            </Col>
-          </Row>
-        </div>
+        <Header surah={surah} handleToggleSidebar={() => this.setState({sidebarOpen: true})} />
+        <Sidebar
+          sidebarClassName={style.sidebar}
+          sidebar={this.renderSidebar()}
+          open={this.state.sidebarOpen}
+          onSetOpen={(open) => this.setState({sidebarOpen: open})}
+          styles={{sidebar: {zIndex: 9999}}}
+        >
+          <div className={`container-fluid ${style['surah-container']}`}>
+            <Row>
+              <SurahInfo
+                surah={surah}
+                isShowingSurahInfo={options.isShowingSurahInfo}
+                onClose={this.handleSurahInfoToggle}
+              />
+              <Col md={10} mdOffset={1}>
+                <TopOptions options={options} actions={actions} surah={surah} />
+                <Bismillah surah={surah} />
+                {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
+              </Col>
+              <Col md={10} mdOffset={1}>
+                {this.renderPagination()}
+              </Col>
+            </Row>
+          </div>
+          <Audioplayer
+            surah={surah}
+            onLoadAyahs={this.handleLazyLoadAyahs}
+          />
+          {footer}
+        </Sidebar>
       </div>
     );
   }

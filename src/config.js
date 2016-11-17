@@ -49,7 +49,8 @@ module.exports = Object.assign({
       ],
       link: [
         {rel: 'apple-touch-icon', href: '/images/apple-touch-icon.png'},
-        {rel: 'apple-touch-icon-precomposed', href: '/images/apple-touch-icon-precomposed.png'}
+        {rel: 'apple-touch-icon-precomposed', href: '/images/apple-touch-icon-precomposed.png'},
+        {rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'}
       ],
       /* SEO: https://developers.google.com/structured-data/slsb-overview#markup_examples */
       /* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */

@@ -142,10 +142,11 @@ li em{
   .btn-link:hover, .btn-link:focus{
     text-decoration: none;
   }
+}
 
-  &.open{
-    .btn-link{
-      color: $cream;
-    }
-  }
+.navbar-toggle{
+  display: inline-block !important;
+  float: left;
+  margin-left: 15px;
+  margin-right: 0px;
 }
