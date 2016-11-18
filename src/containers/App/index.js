@@ -39,8 +39,8 @@ class App extends Component {
       <div>
         <Helmet {...config.app.head} />
         <FontStyles />
-        {React.cloneElement(children, {footer: <Footer />})}
-
+        {children}
+        <Footer />
         <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>
           <ModalHeader closeButton>
             <ModalTitle className="montserrat">

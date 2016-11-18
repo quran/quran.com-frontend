@@ -33,17 +33,3 @@
     padding-top: 100px;
   }
 }
-
-.sidebar{
-  background: #fff;
-  width: 30%;
-
-  @media(max-width: $screen-sm) {
-    width: 80%;
-
-    .sidebarTitle{
-      margin-left: 15px;
-    }
-
-  }
-}
