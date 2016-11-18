@@ -49,11 +49,15 @@ proxyOneQuran.on('error', (error, req, res) => {
   res.end(JSON.stringify(json));
 });
 
+proxyOneQuran.on('proxyRes', function (proxyRes, req, res) {
+  console.log('RAW Response from the target', JSON.stringify(proxyRes.headers, true, 2));
+});
+
 export default function(server) {
   server.use(logger('dev'));
   // Must be first thing. See: https://github.com/nodejitsu/node-http-proxy/issues/180#issuecomment-3677221
   server.use('/onequran', (req, res) => {
-    console.log(req);
+    console.log(process.env.ONE_QURAN_URL);
     proxyOneQuran.web(req, res);
   });
 
