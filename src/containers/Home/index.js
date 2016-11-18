@@ -34,13 +34,15 @@ function Home(props) {
           </div>
         </div>
       </div>
+      {props.footer}
     </div>
   );
 }
 
 Home.propTypes = {
   lastVisit: PropTypes.any,
-  surahs: PropTypes.object.isRequired
+  surahs: PropTypes.object.isRequired,
+  footer: PropTypes.node.isRequired
 };
 
 const AsyncHome = asyncConnect([{

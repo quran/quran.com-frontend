@@ -53,7 +53,7 @@ proxyOneQuran.on('error', (error, req, res) => {
 
 export default function(server) {
   // Must be first thing. See: https://github.com/nodejitsu/node-http-proxy/issues/180#issuecomment-3677221
-  server.use('/api/onequran', (req, res) => {
+  server.use('/onequran', (req, res) => {
     proxyOneQuran.web(req, res);
   });
 
