@@ -20,7 +20,9 @@ const proxyApi = httpProxy.createProxyServer({
 const proxyOneQuran = httpProxy.createProxyServer({
   target: process.env.ONE_QURAN_URL,
   secure: false,
-  proxyTimeout: 15000
+  proxyTimeout: 15000,
+  autoRewrite: true,
+  changeOrigin: true
 });
 
 proxyApi.on('error', (error, req, res) => {
