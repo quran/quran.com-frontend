@@ -38,7 +38,7 @@ export default class Ayah extends Component {
   };
 
   componentDidMount() {
-    
+
     function getOffset(elem) {
       var offsetLeft = 0, offsetTop = 0;
       do {
@@ -57,9 +57,9 @@ export default class Ayah extends Component {
     title   = false,
     tip     = false;
 
-    for(var i = 0; i < targets.length; i++) {
-      targets[i].addEventListener("mouseenter", function() {
-        target  = this;
+    Array.from(targets).forEach((target)=>{
+      target.addEventListener("mouseenter", function() {
+        
         tip     = target.getAttribute("title");
         tooltip = document.createElement("div");
         tooltip.id = "tooltip";
@@ -72,9 +72,7 @@ export default class Ayah extends Component {
         tooltip.innerHTML = tip;
         document.body.appendChild(tooltip);
 
-        var init_tooltip = function()
-        {
-          console.log(getOffset(target));
+        var init_tooltip = function() {
           // set width of tooltip to half of window width
           if(window.innerWidth < tooltip.offsetWidth * 1.5)
           tooltip.style.maxWidth = window.innerWidth / 2;
@@ -125,7 +123,7 @@ export default class Ayah extends Component {
         target.addEventListener("mouseleave", remove_tooltip );
         tooltip.addEventListener("click", remove_tooltip );
       });
-    }
+    }); // forEach ends
   }
 
   shouldComponentUpdate(nextProps) {
