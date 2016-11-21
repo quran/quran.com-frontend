@@ -13,7 +13,7 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 const NavbarHeader = Navbar.Header;
 
 import Helmet from 'react-helmet';
-import Sidebar from 'react-sidebar';
+import Sidebar from 'components/Sidebar';
 
 // components
 import LazyLoad from 'components/LazyLoad';
@@ -428,35 +428,32 @@ class Surah extends Component {
         />
         <Header surah={surah} handleToggleSidebar={() => this.setState({sidebarOpen: true})} />
         <Sidebar
-          sidebarClassName={style.sidebar}
-          sidebar={this.renderSidebar()}
           open={this.state.sidebarOpen}
           onSetOpen={(open) => this.setState({sidebarOpen: open})}
-          styles={{sidebar: {zIndex: 9999}}}
         >
-          <div className={`container-fluid ${style['surah-container']}`}>
-            <Row>
-              <SurahInfo
-                surah={surah}
-                isShowingSurahInfo={options.isShowingSurahInfo}
-                onClose={this.handleSurahInfoToggle}
-              />
-              <Col md={10} mdOffset={1}>
-                <TopOptions options={options} actions={actions} surah={surah} />
-                <Bismillah surah={surah} />
-                {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
-              </Col>
-              <Col md={10} mdOffset={1}>
-                {this.renderPagination()}
-              </Col>
-            </Row>
-          </div>
-          <Audioplayer
-            surah={surah}
-            onLoadAyahs={this.handleLazyLoadAyahs}
-          />
-          {footer}
+          {this.renderSidebar()}
         </Sidebar>
+        <div className={`container-fluid ${style['surah-container']}`}>
+          <Row>
+            <SurahInfo
+              surah={surah}
+              isShowingSurahInfo={options.isShowingSurahInfo}
+              onClose={this.handleSurahInfoToggle}
+            />
+            <Col md={10} mdOffset={1}>
+              <TopOptions options={options} actions={actions} surah={surah} />
+              <Bismillah surah={surah} />
+              {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
+            </Col>
+            <Col md={10} mdOffset={1}>
+              {this.renderPagination()}
+            </Col>
+          </Row>
+        </div>
+        <Audioplayer
+          surah={surah}
+          onLoadAyahs={this.handleLazyLoadAyahs}
+        />
       </div>
     );
   }

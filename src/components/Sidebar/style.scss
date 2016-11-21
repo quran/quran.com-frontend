@@ -1,0 +1,26 @@
+@import '../../styles/variables.scss';
+
+$width: 20%;
+
+.container{
+  position: fixed;
+  right: 100%;
+  top: 0px;
+  bottom: 0px;
+  background: #fff;
+  z-index: 9999;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.15);
+
+  background: #fff;
+  width: $width;
+
+  transition: right 0.3s;
+
+  @media(max-width: $screen-sm) {
+    width: 100% - $width;
+  }
+
+  &.open{
+    right: 100% - $width;
+  }
+}
