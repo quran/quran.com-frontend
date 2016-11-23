@@ -6,6 +6,8 @@ import Copy from '../Copy';
 
 import debug from '../../helpers/debug';
 
+import getOffset from '../../utils/getOffset';
+
 const styles = require('./style.scss');
 
 /* eslint-disable no-unused-vars */
@@ -39,18 +41,6 @@ export default class Ayah extends Component {
 
   componentDidMount() {
 
-    function getOffset(elem) {
-      var offsetLeft = 0, offsetTop = 0;
-      do {
-        if ( !isNaN( elem.offsetLeft ) )
-        {
-          offsetLeft += elem.offsetLeft;
-          offsetTop += elem.offsetTop;
-        }
-      } while( elem = elem.offsetParent );
-      return {left: offsetLeft, top: offsetTop};
-    }
-
     var targets = document.querySelectorAll( '[rel=tooltip]' ),
     target  = false,
     tooltip = false,
@@ -59,7 +49,7 @@ export default class Ayah extends Component {
 
     Array.from(targets).forEach((target)=>{
       target.addEventListener("mouseenter", function() {
-        
+
         tip     = target.getAttribute("title");
         tooltip = document.createElement("div");
         tooltip.id = "tooltip";
