@@ -1,41 +1,62 @@
 import React, { Component, PropTypes } from 'react';
-const Style = require('./style.scss');
+import Style from './style.scss';
+
 export default class Share extends Component {
-
-
   static propTypes = {
     surah: PropTypes.object.isRequired
   };
 
+  getId() {
+    const { surahId } = this.props.surah;
+    return surahId;
+  }
+
+  getName() {
+    const { _, name } = this.props.surah;
+    return name;
+  }
+
+  getNameSimple() {
+    return this.getName().simple;
+  }
+
+  getUrl() {
+    return encodeURIComponent(`https://quran.com/${this.getId()}`);
+  }
 
   onClickPopup(url, title) {
     window.open(url, title, 'width=670,height=540,scrollbars=no,toolbar=0');
   }
 
+  handleFacebook = () => {
+    const baseUrl = `https://www.facebook.com/sharer/sharer.php?u=${this.getUrl()}`;
+    this.onClickPopup(baseUrl, 'Facebook')
+  }
+
+  handleTwitter = () => {
+    const baseUrl = `https://twitter.com/intent/tweet?url=${this.getUrl()}&text=Surat ${this.getNameSimple()}`;
+    this.onClickPopup(baseUrl, 'Twitter');
+  }
+
   render() {
-
-    const {surahId, name} = this.props.surah;
-    const surahUrl = encodeURIComponent(`https://quran.com/${surahId}`);
-
     return (
-      <div className={`${Style.shareContainer} hidden-xs`}>
-
-        <i
-          onClick={() => this.onClickPopup(`https://www.facebook.com/sharer/sharer.php?u=${surahUrl}`, 'Facebook')}
-          className={`${Style.iconContainer} ${Style.facebook}`}
-          data-metrics-event-name="Share:Facebook"
-          title="Share on Facebook"
+      <div className={`${Style.share} hidden-xs`}>
+        <a
+          className={Style.shareLink}
+          onClick={this.handleFacebook}
+          data-metrics-event-name='Share:Facebook'
+          title='Share on Facebook'
         >
-        </i>
-
-        <i
-          onClick={() => this.onClickPopup(`https://twitter.com/intent/tweet?url=${surahUrl}&text=Surat ${name.simple}`, 'Twitter')}
-          className={`${Style.iconContainer}  ${Style.twitter}`}
-          data-metrics-event-name="Share:Twitter"
-          title="Share on Twitter"
+          <i className={`fa fa-facebook ${Style.shareIcon}`} />
+        </a>
+        <a
+          className={Style.shareLink}
+          onClick={this.handleTwitter}
+          data-metrics-event-name='Share:Twitter'
+          title='Share on Twitter'
         >
-        </i>
-
+          <i className={`fa fa-twitter ${Style.shareIcon}`} />
+        </a>
       </div>
     );
   }
