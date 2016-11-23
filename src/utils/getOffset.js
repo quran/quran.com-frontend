@@ -1,13 +1,14 @@
-export default function getOffset(elem) {
-  let offsetLeft = 0, offsetTop = 0;
+export default function getOffset(element) {
+  let elem       = element, 
+      offsetLeft = 0,
+      offsetTop  = 0;
 
   do {
-    if (!isNaN( elem.offsetLeft ))
-    {
+    if (!isNaN(elem.offsetLeft)) {
       offsetLeft += elem.offsetLeft;
       offsetTop += elem.offsetTop;
     }
-  } while (elem = elem.offsetParent);
+  } while ((elem = elem.offsetParent));
 
   return {left: offsetLeft, top: offsetTop};
 }
