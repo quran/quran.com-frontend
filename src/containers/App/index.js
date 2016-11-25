@@ -42,7 +42,7 @@ class App extends Component {
         <Helmet {...config.app.head} />
         <FontStyles />
         {children}
-        <SmartBanner title="Quran" force="ios"/>
+        <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install"/>
         <Footer />
         <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>
           <ModalHeader closeButton>
