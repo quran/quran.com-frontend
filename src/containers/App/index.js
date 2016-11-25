@@ -5,6 +5,8 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
+import SmartBanner from 'components/SmartBanner';
+
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
@@ -40,6 +42,7 @@ class App extends Component {
         <Helmet {...config.app.head} />
         <FontStyles />
         {children}
+        <SmartBanner title="Quran" force="ios"/>
         <Footer />
         <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>
           <ModalHeader closeButton>

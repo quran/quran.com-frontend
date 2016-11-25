@@ -45,7 +45,9 @@ module.exports = Object.assign({
         {name: 'twitter:description', content: description},
         {name: 'twitter:image', content: 'https://quran.com/images/thumbnail.png'},
         {name: 'twitter:image:width', content: '200'},
-        {name: 'twitter:image:height', content: '200'}
+        {name: 'twitter:image:height', content: '200'},
+        {name: 'google-play-app', content: 'app-id=com.quran.labs.androidquran'},
+        {name: 'apple-itunes-app', content: 'app-id=1118663303' }
       ],
       link: [
         {rel: 'apple-touch-icon', href: '/images/apple-touch-icon.png'},
