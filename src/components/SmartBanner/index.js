@@ -13,7 +13,6 @@ class SmartBanner extends Component {
     force: PropTypes.string,
     title: PropTypes.string,
     author: PropTypes.string,
-    url: PropTypes.string,
   };
 
   static defaultProps = {
@@ -52,7 +51,7 @@ class SmartBanner extends Component {
       deviceType = forceDeviceType;
     } else if (agent.isAndroid || agent.isAndroidTablet) {
       deviceType = 'android';
-    } else if ((agent.isiPad || agent.isiPhone) && parseInt(agent.version, 10) < 6) {
+    } else if ((agent.isiPad || agent.isiPhone)) {
       deviceType = 'ios';
     }
 
@@ -173,7 +172,7 @@ class SmartBanner extends Component {
     return (
       <div className={wrapperClassName}>
         <div className="smartbanner-container">
-          <a className="smartbanner-close" onClick={::this.close}><i className="fa fa-times-circle"></i></a>
+          <a className="smartbanner-close" onClick={::this.close} data-metrics-event-name="SmartBanner:close"><i className="fa fa-times-circle"></i></a>
           <span className="smartbanner-icon" style={iconStyle}></span>
           <div className="smartbanner-info">
             <div className="smartbanner-title">{this.props.title}</div>
@@ -181,7 +180,7 @@ class SmartBanner extends Component {
             <span>{inStore}</span>
           </div>
 
-          <a href={link} onClick={::this.install} className="smartbanner-button">
+          <a href={link} onClick={::this.install} className="smartbanner-button" data-metrics-event-name="SmartBanner:InstallAapp">
             <span className="smartbanner-button-text">{this.props.button}</span>
           </a>
         </div>

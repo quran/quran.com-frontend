@@ -91,7 +91,7 @@ export default class Ayah extends Component {
   renderMedia() {
     const { ayah, mediaActions } = this.props;
 
-    if (!ayah.mediaContent.length) return false;
+    if (!!ayah.mediaContent) return false;
 
     return (
       <div>
