@@ -67,6 +67,7 @@ class Surah extends Component {
     isEndOfSurah: PropTypes.bool.isRequired,
     ayahIds: PropTypes.any,
     currentWord: PropTypes.string,
+    currentAyah: PropTypes.string,
     surahs: PropTypes.object.isRequired,
     bookmarks: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
@@ -119,7 +120,8 @@ class Surah extends Component {
       this.props.bookmarks !== nextProps.bookmarks,
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
-      this.props.options !== nextProps.options
+      this.props.options !== nextProps.options,
+      this.props.currentAyah !== nextProps.currentAyah
     ];
 
     return conditions.some(condition => condition);
@@ -310,12 +312,14 @@ class Surah extends Component {
       options,
       bookmarks,
       isPlaying,
-      isAuthenticated
+      isAuthenticated,
+      currentAyah,
     } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
+        currentAyah={currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
@@ -466,12 +470,14 @@ function mapStateToProps(state, ownProps) {
   const surah: Object = state.surahs.entities[surahId];
   const ayahs: Object = state.ayahs.entities[surahId];
   const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
+
   return {
     surah,
     ayahs,
     ayahIds,
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
+    currentAyah: state.audioplayer.currentAyah,
     isAuthenticated: state.auth.loaded,
     currentWord: state.ayahs.currentWord,
     isEndOfSurah: ayahIds.size === surah.ayat,
