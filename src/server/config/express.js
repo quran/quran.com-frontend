@@ -20,11 +20,12 @@ const proxyApi = httpProxy.createProxyServer({
 const proxyOneQuran = httpProxy.createProxyServer({
   target: process.env.ONE_QURAN_URL,
   secure: false,
-  proxyTimeout: 15000
+  proxyTimeout: 15000,
+  autoRewrite: true,
+  changeOrigin: true
 });
 
 proxyApi.on('error', (error, req, res) => {
-  let json;
   if (error.code !== 'ECONNRESET') {
     console.error('proxy error', error);
   }
@@ -32,12 +33,11 @@ proxyApi.on('error', (error, req, res) => {
     res.writeHead(500, {'content-type': 'application/json'});
   }
 
-  json = {error: 'proxy_error', reason: error.message};
+  const json = {error: 'proxy_error', reason: error.message};
   res.end(JSON.stringify(json));
 });
 
 proxyOneQuran.on('error', (error, req, res) => {
-  let json;
   if (error.code !== 'ECONNRESET') {
     console.error('proxy error', error);
   }
@@ -45,13 +45,14 @@ proxyOneQuran.on('error', (error, req, res) => {
     res.writeHead(500, {'content-type': 'application/json'});
   }
 
-  json = {error: 'proxy_error', reason: error.message};
+  const json = {error: 'proxy_error', reason: error.message};
   res.end(JSON.stringify(json));
 });
 
 export default function(server) {
+  server.use(logger('dev'));
   // Must be first thing. See: https://github.com/nodejitsu/node-http-proxy/issues/180#issuecomment-3677221
-  server.use('/api/onequran', (req, res) => {
+  server.use('/onequran', (req, res) => {
     proxyOneQuran.web(req, res);
   });
 
@@ -61,7 +62,6 @@ export default function(server) {
 
   server.use(compression());
   server.use(bodyParser.json());
-  server.use(logger('dev'));
   server.use(useragent.express());
   server.use(cookieParser());
   server.use(cors());

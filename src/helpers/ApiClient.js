@@ -18,6 +18,10 @@ function formatUrl(path) {
     return `${config.api}${adjustedPath}`;
   }
 
+  if (adjustedPath.startsWith('/onequran')) {
+    return adjustedPath;
+  }
+
   return `/api${adjustedPath}`;
 }
 

@@ -101,7 +101,6 @@ export default class Ayah extends Component {
               className={`${styles.translation} translation`}
               key={index}
             >
-              <h4 className="montserrat">Media: {content.resource.name}</h4>
               <h2 className="text-translation times-new">
                 <small>
                   <a
@@ -112,7 +111,7 @@ export default class Ayah extends Component {
                     data-metrics-media-content-id={content.id}
                     data-metrics-media-content-ayah-key={ayah.ayahKey}
                   >
-                    Watch lecture
+                    Watch lecture by {content.resource.name}
                   </a>
                 </small>
               </h2>

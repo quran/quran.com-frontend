@@ -4,7 +4,6 @@ import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
-
 import Modal from 'react-bootstrap/lib/Modal';
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
@@ -33,14 +32,15 @@ class App extends Component {
   };
 
   render() {
-    const { children, media, removeMedia } = this.props; // eslint-disable no-shadow
+    const { children, media, removeMedia } = this.props; // eslint-disable-line no-shadow
     debug('component:APPLICATION', 'Render');
 
     return (
       <div>
         <Helmet {...config.app.head} />
         <FontStyles />
-        {React.cloneElement(children, {footer: <Footer />})}
+        {children}
+        <Footer />
         <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>
           <ModalHeader closeButton>
             <ModalTitle className="montserrat">
@@ -48,16 +48,16 @@ class App extends Component {
             </ModalTitle>
           </ModalHeader>
           <ModalBody>
-            {
-              media.content &&
-                <iframe
-                  width="100%"
-                  height="515"
-                  src={media.content.url}
-                  frameBorder="0"
-                  allowFullScreen
-                />
-            }
+            <div className="embed-responsive embed-responsive-16by9">
+              {
+                media.content &&
+                  <iframe
+                    className="embed-responsive-item"
+                    src={media.content.url}
+                    allowFullScreen
+                  />
+              }
+            </div>
           </ModalBody>
         </Modal>
       </div>

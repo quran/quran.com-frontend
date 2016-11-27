@@ -139,6 +139,10 @@ li em{
 }
 
 .dropdown{
+  .btn-link{
+    color: inherit;
+  }
+
   .btn-link:hover, .btn-link:focus{
     text-decoration: none;
   }
