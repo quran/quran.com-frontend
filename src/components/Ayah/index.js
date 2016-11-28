@@ -71,7 +71,6 @@ export default class Ayah extends Component {
 
           var pos_left = getOffset(target).left + (target.offsetWidth / 2) - (tooltip.offsetWidth / 2),
           pos_top  = getOffset(target).top - tooltip.offsetHeight - 10;
-          console.log("top is", pos_top);
           if( pos_left < 0 )
           {
             pos_left = getOffset(target).left + target.offsetWidth / 2 - 20;
