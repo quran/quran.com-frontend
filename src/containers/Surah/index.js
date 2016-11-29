@@ -434,7 +434,7 @@ class Surah extends Component {
         <Sidebar
           open={this.state.sidebarOpen}
           onSetOpen={(open) => this.setState({sidebarOpen: open})}
-        >
+          >
           {this.renderSidebar()}
         </Sidebar>
         <div className={`container-fluid ${style['surah-container']}`}>

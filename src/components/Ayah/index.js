@@ -6,6 +6,8 @@ import Copy from '../Copy';
 
 import debug from '../../helpers/debug';
 
+import bindTooltip from '../../utils/bindTooltip';
+
 const styles = require('./style.scss');
 
 /* eslint-disable no-unused-vars */
@@ -37,6 +39,10 @@ export default class Ayah extends Component {
     currentWord: null,
     isSearched: false
   };
+
+  componentDidMount() {
+    bindTooltip();
+  }
 
   shouldComponentUpdate(nextProps) {
     const conditions = [
@@ -152,22 +158,24 @@ export default class Ayah extends Component {
           <b
             key={word.code}
             id={id}
+            rel="tooltip"
             onClick={(event) => setCurrentWord(event.target.dataset.key)}
             data-key={`${word.ayahKey}:${position}`}
-            className={`${className} ${styles.Tooltip}`}
-            aria-label={tooltipContent}
+            className={`${className}`}
+            title={tooltipContent}
             dangerouslySetInnerHTML={{__html: word.code}}
           />
         );
       }
 
-      const label = isLast ? {'aria-label': `Verse ${ayah.ayahNum}`} : {}
+      const label = isLast ? {'title': `Verse ${ayah.ayahNum}`} : {}
       return (
         <b
           id={id}
           onClick={(event) => setCurrentWord(event.target.dataset.key)}
           data-key={`${word.ayahKey}:${position}`}
-          className={`${className} ${isLast && styles.Tooltip} pointer`}
+          rel="tooltip"
+          className={`${className} ${isLast} pointer`}
           key={word.code}
           dangerouslySetInnerHTML={{__html: word.code}}
           {...label}
@@ -275,7 +283,7 @@ export default class Ayah extends Component {
 
   renderControls() {
     return (
-      <div className={`col-md-1 ${styles.controls}`}>
+      <div className={`col-md-2 col-sm-2 ${styles.controls}`}>
         {this.renderAyahBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
@@ -293,7 +301,7 @@ export default class Ayah extends Component {
     return (
       <Element name={`ayah:${ayah.ayahKey}`} className={`row ${className} ${styles.container}`}>
         {this.renderControls()}
-        <div className="col-md-11">
+        <div className="col-md-10 col-sm-10">
           {this.renderText()}
           {this.renderTranslations()}
           {this.renderMedia()}
