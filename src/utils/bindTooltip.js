@@ -1,21 +1,21 @@
 import getOffset from './getOffset';
 
 export default function bindTooltip() {
-  let targets = document.querySelectorAll( '[rel=tooltip]' ),
-  target  = false,
-  tooltip = false,
-  title   = false,
-  tip     = false;
+  let targets = document.querySelectorAll( '[rel=tooltip]' );
+  let target  = false;
+  let tooltip = false;
+  let title   = false;
+  let tip     = false;
 
   Array.from(targets).map( target => {
-    target.addEventListener("mouseenter", function() {
+    target.addEventListener("mouseenter", () => {
 
-      tip     = target.getAttribute("title");
-      tooltip = document.createElement("div");
+      tip        = target.getAttribute("title");
+      tooltip    = document.createElement("div");
       tooltip.id = "tooltip";
 
       if(!tip || tip == "")
-      return false;
+        return false;
 
       target.removeAttribute("title");
       tooltip.style.opacity = 0;
@@ -23,7 +23,6 @@ export default function bindTooltip() {
       document.body.appendChild(tooltip);
 
       const init_tooltip = () => {
-        // set width of tooltip to half of window width
         if (window.innerWidth < tooltip.offsetWidth * 1.5)
           tooltip.style.maxWidth = window.innerWidth / 2;
         else
@@ -52,13 +51,14 @@ export default function bindTooltip() {
         }
         else
           tooltip.classList.remove("top");
-        // adding "px" is very important
+        
         tooltip.style.left = pos_left + "px";
         tooltip.style.top = pos_top + "px";
         tooltip.style.opacity  = 1;
       };
 
       init_tooltip();
+      
       window.addEventListener("resize", init_tooltip);
 
       const remove_tooltip = () => {
@@ -70,5 +70,5 @@ export default function bindTooltip() {
       target.addEventListener("mouseleave", remove_tooltip );
       tooltip.addEventListener("click", remove_tooltip );
     });
-  }); // forEach ends
+  });
 }
