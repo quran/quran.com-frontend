@@ -63,7 +63,7 @@ export default function bindTooltip() {
         tooltip.style.opacity = 1;
       };
 
-      init_tooltip();
+      initTooltip();
 
       window.addEventListener('resize', init_tooltip);
 
