@@ -8,7 +8,10 @@ describe("<QuickSurahs />", () => {
   it("Should render QuickSurahs component", () => {
     let component = mount(<QuickSurahs />);
     expect(component).to.be.ok;
-    expect(component.find('a').length).to.equal(4);
+    if (new Date().getDay() === 5)
+      expect(component.find('.list-inline li').length).to.equal(5);
+    else
+      expect(component.find('.list-inline li').length).to.equal(4);
   });
 
   it("Should render QuickSurahs component with Surah Al-Kahf", () => {
