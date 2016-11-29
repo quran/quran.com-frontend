@@ -6,7 +6,7 @@ export default function bindTooltip() {
   let tooltip = false;
 
   Array.from(targets).forEach(target => {
-    target.addEventListener("mouseenter", () => {
+    target.addEventListener('mouseenter', () => {
 
       tip = target.getAttribute('title');
       tooltip = document.createElement('div');
@@ -50,8 +50,8 @@ export default function bindTooltip() {
             tooltip.classList.remove('top');
           }
 
-          tooltip.style.left = String(posLeft) + 'px';
-          tooltip.style.top = String(posTop) + 'px';
+          tooltip.style.left = posLeft.toString() + 'px';
+          tooltip.style.top = posTop.toString() + 'px';
           tooltip.style.opacity = 1;
         };
 
