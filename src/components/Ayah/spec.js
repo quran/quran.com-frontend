@@ -7,9 +7,10 @@ import Ayah from './index';
 import ayah from '../../../tests/fixtures/ayah';
 let wrapper;
 
+
 describe('<Ayah />', () => {
   beforeEach(() => {
-    wrapper = shallow(<Ayah ayah={ayah} />);
+    wrapper = shallow(<Ayah ayah={ayah} audioActions={{ setCurrentWord: () => {} }} />);
   });
 
   it('should render', () => {

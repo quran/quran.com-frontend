@@ -1,21 +1,21 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
+import { mount } from 'enzyme';
+import Link from 'react-router/lib/Link';
 import QuickSurahs from './index.js';
 
 describe("<QuickSurahs />", () => {
 
   it("Should render QuickSurahs component", () => {
-    let component = shallow(<QuickSurahs />);
+    let component = mount(<QuickSurahs />);
     expect(component).to.be.ok;
-    expect(component.find('.list-inline li').length).to.equal(5);
+    expect(component.find('a').length).to.equal(4);
   });
 
   it("Should render QuickSurahs component with Surah Al-Kahf", () => {
     sinon.useFakeTimers(1470956400000);
-    let component = shallow(<QuickSurahs />);
+    let component = mount(<QuickSurahs />);
     expect(component).to.be.ok;
-    expect(component.find('.list-inline li').length).to.equal(6);
+    expect(component.find('a').length).to.equal(5);
   })
 
 });
