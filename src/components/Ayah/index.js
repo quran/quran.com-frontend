@@ -353,7 +353,7 @@ export default class Ayah extends Component {
 
   renderControls() {
     return (
-      <div className={`col-md-1 ${styles.controls}`}>
+      <div className={`col-md-2 col-sm-2 ${styles.controls}`}>
         {this.renderAyahBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
@@ -369,7 +369,7 @@ export default class Ayah extends Component {
     return (
       <Element name={`ayah:${ayah.ayahKey}`} className={`row ${styles.container}`}>
         {this.renderControls()}
-        <div className="col-md-11">
+        <div className="col-md-10 col-sm-10">
           {this.renderText()}
           {this.renderTranslations()}
           {this.renderMedia()}
