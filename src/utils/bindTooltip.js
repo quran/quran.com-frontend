@@ -50,8 +50,8 @@ export default function bindTooltip() {
             tooltip.classList.remove('top');
           }
 
-          tooltip.style.left = posLeft.toString() + 'px';
-          tooltip.style.top = posTop.toString() + 'px';
+          tooltip.style.left = `${posLeft}px`;
+          tooltip.style.top = `${posTop}px`;
           tooltip.style.opacity = 1;
         };
 
