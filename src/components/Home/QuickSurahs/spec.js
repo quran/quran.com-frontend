@@ -21,7 +21,7 @@ describe("<QuickSurahs />", () => {
     console.log("Second Test date is -", new Date());
     let component = mount(<QuickSurahs />);
     expect(component).to.be.ok;
-    expect(component.find('a').length).to.equal(5);
+    expect(component.find('Link').length).to.equal(5);
   })
 
 });
