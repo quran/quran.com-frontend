@@ -69,14 +69,14 @@ class SmartBanner extends Component {
   setSettingsForDevice(deviceType) {
     const mixins = {
       ios: {
-        appMeta: 'apple-itunes-app',
-        iconRels: ['apple-touch-icon-precomposed', 'apple-touch-icon'],
+        icon: 'app-banner-ios.jpg',
+        appMeta: 'google-play-app',
         getStoreLink: () =>
           `https://itunes.apple.com/${this.props.appStoreLanguage}/app/id`,
       },
       android: {
-        appMeta: 'google-play-app',
-        iconRels: ['android-touch-icon', 'apple-touch-icon-precomposed', 'apple-touch-icon'],
+        icon: 'app-banner-android.png',
+        appMeta: 'apple-itunes-app',
         getStoreLink: () =>
           'http://play.google.com/store/apps/details?id=',
       }
@@ -118,17 +118,7 @@ class SmartBanner extends Component {
     const link = this.state.settings.getStoreLink() + this.state.appId;
     const inStore = `
       ${this.props.price[this.state.deviceType]} - ${this.props.storeText[this.state.deviceType]}`;
-    let icon;
-
-    for (let i = 0, max = this.state.settings.iconRels.length; i < max; i++) {
-      const rel = window.document.querySelector(
-        `link[rel="${this.state.settings.iconRels[i]}"]`);
-
-      if (rel) {
-        icon = rel.getAttribute('href');
-        break;
-      }
-    }
+    const icon = require(`../../../static/images/${this.state.settings.icon}`);
 
     return {
       icon,
