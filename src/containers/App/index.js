@@ -64,6 +64,7 @@ class App extends Component {
     );
   }
 }
+console.log(metricsConfig);
 
 const metricsApp = metrics(metricsConfig)(App);
 const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);

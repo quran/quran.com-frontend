@@ -110,7 +110,7 @@
     "superagent": "1.8.4",
     "url": "0.11.0",
     "url-loader": "0.5.7",
-    "webpack": "2.1.0-beta.27",
+    "webpack": "2.1.0-beta.20",
     "webpack-isomorphic-tools": "2.5.7",
     "winston": "1.1.2"
   },
@@ -162,7 +162,6 @@
     "wdio-mocha-framework": "0.3.7",
     "wdio-spec-reporter": "0.0.3",
     "webdriverio": "4.2.1",
-    "webpack": "2.1.0-beta.21",
     "webpack-dev-server": "1.6.5",
     "webpack-hot-middleware": "2.12.2"
   },
