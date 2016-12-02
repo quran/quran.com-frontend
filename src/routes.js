@@ -8,6 +8,7 @@ import { isLoaded as isAuthLoaded, load as loadAuth, hasAccessToken } from 'redu
 
 import checkValidSurah from './utils/checkValidSurah';
 import App from './containers/App';
+import Home from './containers/Home';
 
 export default (store) => {
   const requireLogin = (nextState, replace, cb) => {
@@ -37,8 +38,7 @@ export default (store) => {
 
   return (
     <Route path="/" component={App} onEnter={shouldAuth}>
-      <IndexRoute getComponent={(nextState, cb) => System.import('./containers/Home').then(module => cb(null, module))} />
-
+      <IndexRoute component={Home} />
       <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
       <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
 

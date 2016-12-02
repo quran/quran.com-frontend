@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import debug from '../../../helpers/debug';
+import debug from 'helpers/debug';
 const styles = require('./style.scss');
 
 const LastVisit = (props) => {

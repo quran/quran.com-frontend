@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
 const Header = Navbar.Header;
 
-import debug from '../../../helpers/debug';
+import debug from 'helpers/debug';
 
 // const ornamentLeft = require('../../../../static/images/ornament-left.png');
 // const ornamentRight = require('../../../../static/images/ornament-right.png');

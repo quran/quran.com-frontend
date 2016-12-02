@@ -5,7 +5,7 @@ import Popover from 'react-bootstrap/lib/Popover';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-import SwitchToggle from '../SwitchToggle';
+import SwitchToggle from 'components/SwitchToggle';
 
 const style = require('./style.scss');
 

@@ -8,7 +8,7 @@ import {
   LOAD,
   LOAD_SUCCESS,
   LOAD_FAILURE
-} from '../constants/auth';
+} from 'redux/constants/auth';
 
 export function isLoaded(globalState) {
   return globalState.auth && globalState.auth.user;

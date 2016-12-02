@@ -10,7 +10,7 @@ import {
   SET_REPEAT,
   TOGGLE_SCROLL,
   BUILD_ON_CLIENT,
-  UPDATE } from '../constants/audioplayer.js';
+  UPDATE } from 'redux/constants/audioplayer.js';
 
 export function setUserAgent(userAgent) {
   return {

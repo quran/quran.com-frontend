@@ -41,6 +41,7 @@ module.exports = {
           {
             loader: 'babel',
             query: {
+              babelrc: false,
               plugins: [
                 'transform-runtime',
                 'add-module-exports',

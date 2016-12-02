@@ -2,7 +2,7 @@ import {
   SEARCH,
   SEARCH_SUCCESS,
   SEARCH_FAIL
-  } from '../constants/search.js';
+} from 'redux/constants/search.js';
 
 const initialState = {
   errored: false,

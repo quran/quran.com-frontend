@@ -1,4 +1,4 @@
-import { LOAD } from '../constants/fontFace.js';
+import { LOAD } from 'redux/constants/fontFace.js';
 
 export function load(className) {
   return {

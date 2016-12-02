@@ -3,8 +3,8 @@ import Helmet from 'react-helmet';
 import IndexHeader from 'components/IndexHeader';
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
-import debug from '../../helpers/debug';
-import { isAllLoaded, loadAll } from '../../redux/actions/surahs.js';
+import debug from 'helpers/debug';
+import { isAllLoaded, loadAll } from 'redux/actions/surahs.js';
 
 import SurahsList from 'components/Home/SurahsList';
 import QuickSurahs from 'components/Home/QuickSurahs';

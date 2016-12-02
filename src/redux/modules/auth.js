@@ -6,7 +6,7 @@ import {
   LOGOUT_SUCCESS,
   LOAD_SUCCESS,
   LOAD_FAILURE
-} from '../constants/auth';
+} from 'redux/constants/auth';
 
 const initialState = {
   loaded: false

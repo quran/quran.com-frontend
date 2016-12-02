@@ -1,4 +1,4 @@
-import { ayahsSchema } from '../schemas';
+import { ayahsSchema } from 'redux/schemas';
 
 import { arrayOf } from 'normalizr';
 
@@ -10,7 +10,7 @@ import {
   SET_CURRENT_AYAH,
   SET_CURRENT_WORD,
   CLEAR_CURRENT_WORD
-  } from '../constants/ayahs.js';
+  } from 'redux/constants/ayahs.js';
 
 // For safe measure
 const defaultOptions = {
