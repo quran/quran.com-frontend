@@ -422,9 +422,16 @@ class Surah extends Component {
               }]
             }`
           }]}
-          style={[{
-            cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
-          }]}
+          style={[
+            {
+              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+            },
+            {
+              cssText: `@font-face {font-family: 'bismillah';
+                src: url('//quran-1f14.kxcdn.com/fonts/ttf/bismillah.ttf') format('truetype')}
+                .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}` // eslint-disable-line max-len
+            }
+          ]}
         />
         <Header surah={surah} handleToggleSidebar={() => this.setState({sidebarOpen: true})} />
         <Sidebar
