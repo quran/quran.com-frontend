@@ -1,5 +1,5 @@
 import cookie from 'react-cookie';
-import { TOGGLE_READING_MODE, SET_OPTION } from '../constants/options.js';
+import { TOGGLE_READING_MODE, SET_OPTION } from 'redux/constants/options.js';
 
 export function isReadingMode(globalState) {
   return globalState.options.isReadingMode;

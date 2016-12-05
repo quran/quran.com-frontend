@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import IndexHeader from '../../components/IndexHeader';
+import IndexHeader from 'components/IndexHeader';
 import Helmet from 'react-helmet';
 
 const error = {

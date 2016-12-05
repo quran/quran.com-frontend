@@ -39,15 +39,14 @@ import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
 import descriptions from './descriptions';
-import Title from './Title';
 
 import { surahsConnect, ayahsConnect } from './connect';
 
-import * as AudioActions from '../../redux/actions/audioplayer.js';
-import * as AyahActions from '../../redux/actions/ayahs.js';
-import * as BookmarkActions from '../../redux/actions/bookmarks.js';
-import * as OptionsActions from '../../redux/actions/options.js';
-import * as MediaActions from '../../redux/actions/media.js';
+import * as AudioActions from 'redux/actions/audioplayer.js';
+import * as AyahActions from 'redux/actions/ayahs.js';
+import * as BookmarkActions from 'redux/actions/bookmarks.js';
+import * as OptionsActions from 'redux/actions/options.js';
+import * as MediaActions from 'redux/actions/media.js';
 
 const style = require('./style.scss');
 

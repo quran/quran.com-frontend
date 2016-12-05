@@ -50,7 +50,8 @@ module.exports = {
           {
             loader: 'babel',
             query: {
-              presets: ['react', ['es2015', {modules: false}], 'stage-0'],
+              babelrc: false,
+              presets: ['react', 'es2015', 'stage-0'],
               plugins: [
                 'transform-runtime',
                 'add-module-exports',

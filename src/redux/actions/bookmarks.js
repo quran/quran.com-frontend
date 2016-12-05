@@ -1,4 +1,4 @@
-import { bookmarksSchema } from '../schemas';
+import { bookmarksSchema } from 'redux/schemas';
 import { arrayOf } from 'normalizr';
 import {
   LOAD,
@@ -10,7 +10,7 @@ import {
   REMOVE_BOOKMARK,
   REMOVE_BOOKMARK_SUCCESS,
   REMOVE_BOOKMARK_FAILURE
-} from '../constants/bookmarks';
+} from 'redux/constants/bookmarks';
 
 export function isLoaded(globalState) {
   return globalState.auth && globalState.auth.user;

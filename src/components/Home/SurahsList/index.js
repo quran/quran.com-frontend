@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import debug from '../../../helpers/debug';
+import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
 const styles = require('./style.scss');
 

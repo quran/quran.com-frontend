@@ -1,10 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 
-import SearchInput from '../SearchInput';
+import SearchInput from 'components/SearchInput';
 import Nav from './Nav';
 
-import debug from '../../helpers/debug';
+import debug from 'helpers/debug';
 
 const logo = require('../../../static/images/logo-lg-w.png');
 

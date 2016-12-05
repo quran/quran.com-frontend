@@ -41,6 +41,7 @@ module.exports = {
           {
             loader: 'babel',
             query: {
+              babelrc: false,
               plugins: [
                 'transform-runtime',
                 'add-module-exports',
@@ -48,7 +49,7 @@ module.exports = {
                 'transform-react-display-name',
                 'typecheck',
               ],
-              presets: ['react', ['es2015', {modules: false}], 'stage-0', 'react-hmre'],
+              presets: ['react', 'es2015', 'stage-0', 'react-hmre'],
               cacheDirectory: true
             }
           }

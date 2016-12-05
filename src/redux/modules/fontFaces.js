@@ -1,6 +1,6 @@
-import { LOAD_SUCCESS } from '../constants/ayahs.js';
-import { SEARCH_SUCCESS } from '../constants/search.js';
-import { LOAD } from '../constants/fontFace.js';
+import { LOAD_SUCCESS } from 'redux/constants/ayahs.js';
+import { SEARCH_SUCCESS } from 'redux/constants/search.js';
+import { LOAD } from 'redux/constants/fontFace.js';
 
 export default function reducer(state = {}, action = {}) {
   switch (action.type) {
