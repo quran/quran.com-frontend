@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import ApiClient from '../../helpers/ApiClient';
+import ApiClient from 'helpers/ApiClient';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 

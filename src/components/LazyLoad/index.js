@@ -1,7 +1,7 @@
 import { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
-import debug from '../../helpers/debug';
+import debug from 'helpers/debug';
 
 export default class LazyLoad extends Component {
   static propTypes = {

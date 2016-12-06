@@ -8,7 +8,7 @@ import {
   REMOVE_BOOKMARK,
   REMOVE_BOOKMARK_SUCCESS,
   REMOVE_BOOKMARK_FAILURE
-} from '../constants/bookmarks';
+} from 'redux/constants/bookmarks';
 
 const initialState = {
   loaded: false,

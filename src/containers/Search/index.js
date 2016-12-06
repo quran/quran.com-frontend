@@ -13,10 +13,10 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import Header from './Header';
-import Ayah from '../../components/Ayah';
-import CoreLoader from '../../components/Loader';
+import Ayah from 'components/Ayah';
+import CoreLoader from 'components/Loader';
 
-import { search } from '../../redux/actions/search.js';
+import { search } from 'redux/actions/search.js';
 
 const style = require('./style.scss');
 

@@ -6,7 +6,7 @@ import {
   SET_CURRENT_AYAH,
   SET_CURRENT_WORD,
   CLEAR_CURRENT_WORD
-  } from '../constants/ayahs.js';
+  } from 'redux/constants/ayahs.js';
 
 export {
   LOAD,

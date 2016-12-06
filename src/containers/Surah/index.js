@@ -39,15 +39,14 @@ import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
 import descriptions from './descriptions';
-import Title from './Title';
 
 import { surahsConnect, ayahsConnect } from './connect';
 
-import * as AudioActions from '../../redux/actions/audioplayer.js';
-import * as AyahActions from '../../redux/actions/ayahs.js';
-import * as BookmarkActions from '../../redux/actions/bookmarks.js';
-import * as OptionsActions from '../../redux/actions/options.js';
-import * as MediaActions from '../../redux/actions/media.js';
+import * as AudioActions from 'redux/actions/audioplayer.js';
+import * as AyahActions from 'redux/actions/ayahs.js';
+import * as BookmarkActions from 'redux/actions/bookmarks.js';
+import * as OptionsActions from 'redux/actions/options.js';
+import * as MediaActions from 'redux/actions/media.js';
 
 const style = require('./style.scss');
 
@@ -422,15 +421,22 @@ class Surah extends Component {
               }]
             }`
           }]}
-          style={[{
-            cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
-          }]}
+          style={[
+            {
+              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+            },
+            {
+              cssText: `@font-face {font-family: 'bismillah';
+                src: url('//quran-1f14.kxcdn.com/fonts/ttf/bismillah.ttf') format('truetype')}
+                .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}` // eslint-disable-line max-len
+            }
+          ]}
         />
         <Header surah={surah} handleToggleSidebar={() => this.setState({sidebarOpen: true})} />
         <Sidebar
           open={this.state.sidebarOpen}
           onSetOpen={(open) => this.setState({sidebarOpen: open})}
-        >
+          >
           {this.renderSidebar()}
         </Sidebar>
         <div className={`container-fluid ${style['surah-container']}`}>

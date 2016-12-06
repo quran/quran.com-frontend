@@ -1,5 +1,5 @@
 import React from 'react';
-import IndexHeader from '../../components/IndexHeader';
+import IndexHeader from 'components/IndexHeader';
 
 import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';

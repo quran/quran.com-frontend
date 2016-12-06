@@ -1,11 +1,11 @@
-import { ayahsSchema } from '../schemas';
+import { ayahsSchema } from 'redux/schemas';
 import { arrayOf } from 'normalizr';
 
 import {
   SEARCH,
   SEARCH_SUCCESS,
   SEARCH_FAIL
-  } from '../constants/search.js';
+  } from 'redux/constants/search.js';
 
 export function search(params) {
   return {

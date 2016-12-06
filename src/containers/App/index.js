@@ -9,9 +9,9 @@ const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
-import debug from '../../helpers/debug';
-import config from '../../config';
-import metricsConfig from '../../helpers/metrics';
+import debug from 'helpers/debug';
+import config from 'config';
+import metricsConfig from 'helpers/metrics';
 import { authConnect } from './connect';
 import Footer from 'components/Footer';
 
@@ -64,6 +64,7 @@ class App extends Component {
     );
   }
 }
+console.log(metricsConfig);
 
 const metricsApp = metrics(metricsConfig)(App);
 const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
