@@ -2,7 +2,7 @@ import {
   LOAD_SUCCESS,
   LOAD_FAIL,
   SET_CURRENT
-  } from '../constants/surahs.js';
+} from 'redux/constants/surahs.js';
 
 const initialState = {
   errored: false,

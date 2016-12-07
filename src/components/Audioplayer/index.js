@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { camelize } from 'humps';
 
 // Redux
-import * as AudioActions from '../../redux/actions/audioplayer';
+import * as AudioActions from 'redux/actions/audioplayer';
 
 // Components
 import Track from './Track';
@@ -12,8 +12,8 @@ import ScrollButton from './ScrollButton';
 import RepeatDropdown from './RepeatDropdown';
 
 // Helpers
-import debug from '../../helpers/debug';
-import scroller from '../../utils/scroller';
+import debug from 'helpers/debug';
+import scroller from 'utils/scroller';
 
 const style = require('./style.scss');
 

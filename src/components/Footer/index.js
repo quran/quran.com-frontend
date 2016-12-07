@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
 import Link from 'react-router/lib/Link';
 
 import Grid from 'react-bootstrap/lib/Grid';
@@ -15,8 +15,8 @@ const Footer = () => (
           <Col md={2} sm={4} xs={12} className={styles.about}>
             <p>Navigate</p>
             <ul className={`source-sans ${styles.list}`}>
-              <li><a href="/about">About</a></li>
-              <li><a href="/contact">Contact</a></li>
+              <li><Link to="/about">About</Link></li>
+              <li><Link to="/contact">Contact</Link></li>
               <li>
                 <a href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help" target="_blank" data-metrics-event-name="Footer:Link:Developer">
                   Developers

@@ -4,9 +4,9 @@ import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 
-import SearchAutocomplete from '../SearchAutocomplete';
+import SearchAutocomplete from 'components/SearchAutocomplete';
 
-import debug from '../../helpers/debug';
+import debug from 'helpers/debug';
 
 
 class SearchInput extends Component {

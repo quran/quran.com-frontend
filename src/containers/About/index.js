@@ -1,5 +1,5 @@
 import React from 'react';
-import IndexHeader from '../../components/IndexHeader';
+import IndexHeader from 'components/IndexHeader';
 import Helmet from 'react-helmet';
 
 import Grid from 'react-bootstrap/lib/Grid';

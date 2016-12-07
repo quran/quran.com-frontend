@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 
-import Copy from '../Copy';
+import Copy from 'components/Copy';
 
-import debug from '../../helpers/debug';
+import debug from 'helpers/debug';
 
-import bindTooltip from '../../utils/bindTooltip';
+import bindTooltip from 'utils/bindTooltip';
 
 const styles = require('./style.scss');
 
