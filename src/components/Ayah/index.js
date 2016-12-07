@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 
-import Copy from '../Copy';
+import Copy from 'components/Copy';
 
-import debug from '../../helpers/debug';
+import debug from 'helpers/debug';
 
-import bindTooltip from '../../utils/bindTooltip';
+import bindTooltip from 'utils/bindTooltip';
 
 const styles = require('./style.scss');
 
@@ -31,6 +31,7 @@ export default class Ayah extends Component {
     isAuthenticated: PropTypes.bool,
     tooltip: PropTypes.string,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
+    currentAyah: PropTypes.string,
     audioActions: PropTypes.object.isRequired
   };
 
@@ -48,7 +49,8 @@ export default class Ayah extends Component {
       this.props.ayah !== nextProps.ayah,
       this.props.bookmarked !== nextProps.bookmarked,
       this.props.tooltip !== nextProps.tooltip,
-      this.props.currentWord !== nextProps.currentWord
+      this.props.currentWord !== nextProps.currentWord,
+      this.props.currentAyah !== nextProps.currentAyah
     ];
 
     if (this.props.match) {
@@ -291,11 +293,13 @@ export default class Ayah extends Component {
   }
 
   render() {
-    const { ayah } = this.props;
+    const { ayah, currentAyah } = this.props;
+    const currentIndex = parseInt(currentAyah.split(":")[1], 10);
+    const className = ayah.ayahIndex === currentIndex ? styles.highlight : "";
     debug('component:Ayah', `Render ${this.props.ayah.ayahNum}`);
 
     return (
-      <Element name={`ayah:${ayah.ayahKey}`} className={`row ${styles.container}`}>
+      <Element name={`ayah:${ayah.ayahKey}`} className={`row ${className} ${styles.container}`}>
         {this.renderControls()}
         <div className="col-md-10 col-sm-10">
           {this.renderText()}

@@ -6,10 +6,13 @@ import Col from 'react-bootstrap/lib/Col';
 const style = require('./style.scss');
 
 const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
+  // So we don't need to load images and files unless needed
+  if (!isShowingSurahInfo) return <noscript />;
+
   const html = require(`./htmls/${surah.id}.html.js`); // eslint-disable-line global-require
 
   return (
-    <Col xs={12} className={`${style.container} ${isShowingSurahInfo ? style.show : ''}`}>
+    <Col xs={12} className={`${style.container} ${style.show}`}>
       <div
         className={`${style.close} ss-delete`}
         onClick={() => onClose({isShowingSurahInfo: !isShowingSurahInfo})}

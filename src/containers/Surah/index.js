@@ -39,15 +39,14 @@ import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
 import descriptions from './descriptions';
-import Title from './Title';
 
 import { surahsConnect, ayahsConnect } from './connect';
 
-import * as AudioActions from '../../redux/actions/audioplayer.js';
-import * as AyahActions from '../../redux/actions/ayahs.js';
-import * as BookmarkActions from '../../redux/actions/bookmarks.js';
-import * as OptionsActions from '../../redux/actions/options.js';
-import * as MediaActions from '../../redux/actions/media.js';
+import * as AudioActions from 'redux/actions/audioplayer.js';
+import * as AyahActions from 'redux/actions/ayahs.js';
+import * as BookmarkActions from 'redux/actions/bookmarks.js';
+import * as OptionsActions from 'redux/actions/options.js';
+import * as MediaActions from 'redux/actions/media.js';
 
 const style = require('./style.scss');
 
@@ -67,6 +66,7 @@ class Surah extends Component {
     isEndOfSurah: PropTypes.bool.isRequired,
     ayahIds: PropTypes.any,
     currentWord: PropTypes.string,
+    currentAyah: PropTypes.string,
     surahs: PropTypes.object.isRequired,
     bookmarks: PropTypes.object.isRequired,
     isLoading: PropTypes.bool.isRequired,
@@ -119,7 +119,8 @@ class Surah extends Component {
       this.props.bookmarks !== nextProps.bookmarks,
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
-      this.props.options !== nextProps.options
+      this.props.options !== nextProps.options,
+      this.props.currentAyah !== nextProps.currentAyah
     ];
 
     return conditions.some(condition => condition);
@@ -310,12 +311,14 @@ class Surah extends Component {
       options,
       bookmarks,
       isPlaying,
-      isAuthenticated
+      isAuthenticated,
+      currentAyah,
     } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
+        currentAyah={currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
@@ -422,9 +425,16 @@ class Surah extends Component {
               }]
             }`
           }]}
-          style={[{
-            cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
-          }]}
+          style={[
+            {
+              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+            },
+            {
+              cssText: `@font-face {font-family: 'bismillah';
+                src: url('//quran-1f14.kxcdn.com/fonts/ttf/bismillah.ttf') format('truetype')}
+                .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}` // eslint-disable-line max-len
+            }
+          ]}
         />
         <Header surah={surah} handleToggleSidebar={() => this.setState({sidebarOpen: true})} />
         <Sidebar
@@ -466,12 +476,14 @@ function mapStateToProps(state, ownProps) {
   const surah: Object = state.surahs.entities[surahId];
   const ayahs: Object = state.ayahs.entities[surahId];
   const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
+
   return {
     surah,
     ayahs,
     ayahIds,
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
+    currentAyah: state.audioplayer.currentAyah,
     isAuthenticated: state.auth.loaded,
     currentWord: state.ayahs.currentWord,
     isEndOfSurah: ayahIds.size === surah.ayat,

@@ -1,4 +1,4 @@
-import { surahsSchema } from '../schemas';
+import { surahsSchema } from 'redux/schemas';
 import { arrayOf } from 'normalizr';
 import {
   LOAD,
@@ -7,7 +7,7 @@ import {
   LOAD_INFO,
   LOAD_INFO_SUCCESS,
   LOAD_INFO_FAIL,
-  SET_CURRENT } from '../constants/surahs.js';
+  SET_CURRENT } from 'redux/constants/surahs.js';
 
 export function loadAll() {
   return {

@@ -2,12 +2,12 @@ import {
   isAllLoaded,
   loadAll,
   setCurrent as setCurrentSurah
-  } from '../../redux/actions/surahs.js';
+  } from 'redux/actions/surahs.js';
 
 import {
   clearCurrent,
   load as loadAyahs
-  } from '../../redux/actions/ayahs.js';
+  } from 'redux/actions/ayahs.js';
 
 import {debug, isLoaded} from 'helpers';
 

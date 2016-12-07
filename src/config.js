@@ -111,12 +111,6 @@ module.exports = Object.assign({
             "logo": "https://quran.com/images/thumbnail.png"
           }`
         }
-      ],
-      style: [
-        {cssText: `@font-face {font-family: 'bismillah';
-          src: url('//quran-1f14.kxcdn.com/fonts/ttf/bismillah.ttf') format('truetype')}
-          .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}` // eslint-disable-line max-len
-        }
       ]
     }
   }

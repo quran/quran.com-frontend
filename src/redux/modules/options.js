@@ -1,5 +1,5 @@
 
-import { TOGGLE_READING_MODE, SET_OPTION } from '../constants/options.js';
+import { TOGGLE_READING_MODE, SET_OPTION } from 'redux/constants/options.js';
 
 const initialState = {
   isReadingMode: false,

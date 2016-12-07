@@ -1,6 +1,6 @@
 /* eslint-disable no-case-declarations */
-import { buildAudioFromHash } from '../../helpers/buildAudio';
-import { buildSegments, extractSegments } from '../../helpers/buildSegments';
+import { buildAudioFromHash } from 'helpers/buildAudio';
+import { buildSegments, extractSegments } from 'helpers/buildSegments';
 import debug from 'helpers/debug';
 
 import {
@@ -23,7 +23,7 @@ import {
   TOGGLE_SCROLL,
   BUILD_ON_CLIENT,
   UPDATE
-  } from '../constants/audioplayer.js';
+  } from 'redux/constants/audioplayer.js';
 
 export { NEXT, SET_AYAH };
 

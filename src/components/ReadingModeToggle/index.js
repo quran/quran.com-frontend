@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-import SwitchToggle from '../SwitchToggle';
+import SwitchToggle from 'components/SwitchToggle';
 
 const ReadingModeToggle = ({ onReadingModeToggle, isToggled }) => (
   <div>
