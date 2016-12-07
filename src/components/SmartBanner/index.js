@@ -46,15 +46,13 @@ class SmartBanner extends Component {
   setSettings(forceDeviceType) {
     const agent = useragent.parse(window.navigator.userAgent);
     let deviceType = '';
-    let osVersion = parseInt(agents.version, 10);
-    //TODO: added for debugging
-    window.agents= agent;
+    let osVersion = parseInt(agent.version, 10);
 
     if (forceDeviceType) {
       deviceType = forceDeviceType;
-    } else if (agent.isAndroid || agent.isAndroidTablet) {
+    } else if ((agent.isAndroid || agent.isAndroidTablet) && (agent.isChrome ? osVersion < 44 : true)) {
       deviceType = 'android';
-    } else if ((agent.isiPad || agent.isiPhone)) {
+    } else if ((agent.isiPad || agent.isiPhone) && (agent.isSafari ? osVersion < 6 : true)) {
       deviceType = 'ios';
     }
 
