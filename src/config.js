@@ -80,6 +80,8 @@ module.exports = Object.assign({
         {rel: 'apple-touch-icon', sizes: '144x144', href: '/apple-touch-icon-144x144.png'},
         {rel: 'apple-touch-icon', sizes: '152x152', href: '/apple-touch-icon-152x152.png'},
         {rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon-180x180.png'},
+        {rel: 'preconnect', href: 'https://quran-1f14.kxcdn.com', crossorigin: ''},
+        {rel: 'preconnect', href: 'https://assets-1f14.kxcdn.com', crossorigin: ''},
         {rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css'}
       ],
       /* SEO: https://developers.google.com/structured-data/slsb-overview#markup_examples */
