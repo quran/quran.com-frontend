@@ -39,6 +39,7 @@ export default class Share extends Component {
         <TwitterShareButton
           url={surahUrl}
           title={`Surat ${name.simple}`}
+          className={`${Style.iconContainer}`}
         >
           <TwitterIcon size={24} round />
         </TwitterShareButton>
