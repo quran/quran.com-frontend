@@ -47,6 +47,12 @@ const Html = ({ store, component, assets }) => {
           charSet="UTF-8"
         />
         <script
+          dangerouslySetInnerHTML={{
+            __html: `if ('serviceWorker' in navigator) {navigator.serviceWorker.register('/quran-service-worker.js', {scope: './'}).then(function(registration) {}).catch(function(error) {});}`
+          }}
+          charSet="UTF-8"
+        />
+        <script
           dangerouslySetInnerHTML={{__html: `window.reduxData=${serialize(store.getState())};`}}
           charSet="UTF-8"
         />

@@ -15,3 +15,4 @@ tests/functional/output/*
 test/functional/screenshots/*
 .ssh
 webpack-stats.debug.json
+*.DS_Store

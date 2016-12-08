@@ -1,0 +1,9 @@
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/"
+                       xmlns:moz="http://www.mozilla.org/2006/browser/search/">
+<ShortName>Quran.com</ShortName>
+<Description>Search Quran.com</Description>
+<InputEncoding>UTF-8</InputEncoding>
+<Image width="16" height="16" type="image/x-icon">https://quran.com/favicon.ico</Image>
+<Url type="text/html" method="get" template="https://quran.com/search?q={searchTerms}&amp;ref=opensearch"/>
+<moz:SearchForm>https://quran.com/search</moz:SearchForm>
+</OpenSearchDescription>

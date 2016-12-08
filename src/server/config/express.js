@@ -67,7 +67,7 @@ export default function(server) {
   server.use(cors());
 
   // Static content
-  server.use(favicon(path.join((process.env.PWD || process.env.pm_cwd) , '/static/images/favicon.ico')));
+  server.use(favicon(path.join((process.env.PWD || process.env.pm_cwd) , '/static/favicon.ico')));
   server.use(express.static(path.join(process.env.PWD || process.env.pm_cwd, '/static')));
   server.use('/public', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/static/dist')));
   // server.use('/build', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/static/dist')));
