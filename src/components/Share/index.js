@@ -21,7 +21,7 @@ export default class Share extends Component {
   render() {
 
     const {surahId, name} = this.props.surah;
-    const surahUrl = encodeURIComponent(`https://quran.com/${surahId}`);
+    const surahUrl = `https://quran.com/${surahId}`;
 
     return (
       <div className={`${Style.shareContainer} hidden-xs`}>
@@ -37,8 +37,8 @@ export default class Share extends Component {
         </FacebookShareButton>
 
         <TwitterShareButton
-          url={`${surahUrl}`}
-          title={`Surat ${name.simple} ${decodeURIComponent(surahUrl)}`}
+          url={surahUrl}
+          title={`Surat ${name.simple}`}
         >
           <TwitterIcon size={24} round />
         </TwitterShareButton>
