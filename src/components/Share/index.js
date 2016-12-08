@@ -1,21 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import {
-  ShareButtons,
-  ShareCounts,
-  generateShareIcon,
-} from 'react-share';
-
+import { ShareButtons, generateShareIcon } from 'react-share';
 const Style = require('./style.scss');
 
-const {
-  FacebookShareButton,
-  TwitterShareButton,
-} = ShareButtons;
-
-const {
-  FacebookShareCount,
-} = ShareCounts;
-
+const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 const FacebookIcon = generateShareIcon('facebook');
 const TwitterIcon = generateShareIcon('twitter');
 
@@ -44,14 +31,16 @@ export default class Share extends Component {
           title="Facebook"
           windowWidth={670}
           windowHeight={540}
-          className={`${Style.iconContainer} ${Style.facebook}`}
+          className={`${Style.iconContainer}`}
         >
+          <FacebookIcon size={24} round />
         </FacebookShareButton>
 
         <TwitterShareButton
           url={`${surahUrl}`}
           title={`Surat ${name.simple} ${decodeURIComponent(surahUrl)}`}
-          className={`${Style.iconContainer}  ${Style.twitter}`}>
+        >
+          <TwitterIcon size={24} round />
         </TwitterShareButton>
 
       </div>
