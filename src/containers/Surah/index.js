@@ -475,7 +475,9 @@ function mapStateToProps(state, ownProps) {
   const surahId = parseInt(ownProps.params.surahId, 10);
   const surah: Object = state.surahs.entities[surahId];
   const ayahs: Object = state.ayahs.entities[surahId];
-  const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
+  const ayahArray = Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10));
+  const ayahIds = new Set(ayahArray);
+  const lastAyahInArray = ayahArray.slice(-1)[0];
 
   return {
     surah,
@@ -486,7 +488,7 @@ function mapStateToProps(state, ownProps) {
     currentAyah: state.audioplayer.currentAyah,
     isAuthenticated: state.auth.loaded,
     currentWord: state.ayahs.currentWord,
-    isEndOfSurah: ayahIds.size === surah.ayat,
+    isEndOfSurah: lastAyahInArray === surah.ayat,
     surahs: state.surahs.entities,
     bookmarks: state.bookmarks.entities,
     isLoading: state.ayahs.loading,
