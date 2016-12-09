@@ -30,5 +30,28 @@
       background-image: url(../../../static/images/Twitter-beige.png);
     }
   }
+}
 
+.share {
+  display: block;
+
+  &-link {
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  &-link + &-link {
+    margin-left: ($base-margin / 3) * 2;
+  }
+
+  &-link:hover {
+    color: $text-muted;
+  }
+
+  &-icon {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 20px;
+  }
 }
