@@ -18,6 +18,8 @@ module.exports = Object.assign({
   sentryClient: process.env.SENTRY_KEY_CLIENT,
   sentryServer: process.env.SENTRY_KEY_SERVER,
   facebookAppId: process.env.FACEBOOK_APP_ID,
+  // Supported locales
+  locales: ["en", "ar", "ur"],
   app: {
     head: {
       titleTemplate: `%s - ${title}`,

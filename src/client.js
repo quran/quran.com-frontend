@@ -12,6 +12,7 @@ import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
 import useScroll from 'react-router-scroll';
 import { ReduxAsyncConnect } from 'redux-connect';
 import { syncHistoryWithStore } from 'react-router-redux';
+import { IntlProvider } from 'react-intl';
 
 import debug from 'debug';
 
@@ -19,7 +20,9 @@ import config from './config';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import routes from './routes';
+import localeData from './locale/ur.js';
 
+const localMessages = localeData.messages;
 const client = new ApiClient();
 const store = createStore(browserHistory, client, window.reduxData);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -60,9 +63,11 @@ match({ history, routes: routes(store) }, (error, redirectLocation, renderProps)
   debug('client', 'React Rendering');
 
   ReactDOM.render(
-    <Provider store={store} key="provider">
+    <IntlProvider locale='en' messages={localMessages}>
+      <Provider  store={store} key="provider">
       {component}
-    </Provider>, mountNode, () => {
+      </Provider>
+    </IntlProvider>, mountNode, () => {
       debug('client', 'React Rendered');
     }
   );

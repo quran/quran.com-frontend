@@ -3,6 +3,7 @@ import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 
 import Copy from 'components/Copy';
+import {FormattedMessage} from 'react-intl';
 
 import debug from 'helpers/debug';
 
@@ -50,7 +51,8 @@ export default class Ayah extends Component {
       this.props.bookmarked !== nextProps.bookmarked,
       this.props.tooltip !== nextProps.tooltip,
       this.props.currentWord !== nextProps.currentWord,
-      this.props.currentAyah !== nextProps.currentAyah
+      this.props.currentAyah !== nextProps.currentAyah,
+      this.props.isPlaying !== nextProps.isPlaying
     ];
 
     if (this.props.match) {
@@ -61,12 +63,12 @@ export default class Ayah extends Component {
   }
 
   handlePlay(ayah) {
-    const { isPlaying, audioActions } = this.props;
+    const { isPlaying, audioActions, currentAyah } = this.props;
     const { pause, setAyah, play } = audioActions;
+    const  isPreviouslyPlaying = isPlaying;
 
-    if (isPlaying) {
+    if (isPlaying)
       pause();
-    }
     setAyah(ayah);
     play();
   }
@@ -197,7 +199,13 @@ export default class Ayah extends Component {
   }
 
   renderPlayLink() {
-    const { isSearched, ayah } = this.props;
+    const { isSearched, ayah, currentAyah, isPlaying } = this.props;
+    const playing = ayah.ayahKey == currentAyah && isPlaying;
+    let icon = <i className="ss-icon ss-play" />
+
+    if (playing) {
+      icon = <i className="ss-icon ss-pause" />;
+    }
 
     if (!isSearched) {
       return (
@@ -205,7 +213,11 @@ export default class Ayah extends Component {
           onClick={() => this.handlePlay(ayah.ayahKey)}
           className="text-muted"
         >
-          <i className="ss-icon ss-play" /> Play
+          {icon}
+          <FormattedMessage
+            id={ playing ? 'actions.pause' : 'actions.play' }
+            defaultMessage={ playing ? 'Pause' : 'Play'}
+          />
         </a>
       );
     }
@@ -236,7 +248,7 @@ export default class Ayah extends Component {
           onClick={() => bookmarkActions.removeBookmark(ayah.ayahKey)}
           className="text-muted"
         >
-          <strong><i className="ss-icon ss-bookmark" /> Bookmarked</strong>
+          <strong><i className="ss-icon ss-bookmark" /> Bookmarked </strong>
         </a>
       );
     }
@@ -294,8 +306,7 @@ export default class Ayah extends Component {
 
   render() {
     const { ayah, currentAyah } = this.props;
-    const currentIndex = parseInt(currentAyah.split(":")[1], 10);
-    const className = ayah.ayahIndex === currentIndex ? styles.highlight : "";
+    const className = ayah.ayahKey === currentAyah ? styles.highlight : "";
     debug('component:Ayah', `Render ${this.props.ayah.ayahNum}`);
 
     return (

@@ -10,6 +10,7 @@ import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
 import RepeatDropdown from './RepeatDropdown';
+import {FormattedMessage} from 'react-intl';
 
 // Helpers
 import debug from 'helpers/debug';
@@ -394,7 +395,12 @@ export class Audioplayer extends Component {
     if (isLoading) {
       return (
         <li className={`${style.container} ${className}`}>
-          <div>Loading...</div>
+          <div>
+            <FormattedMessage
+              id='app.loading'
+              defaultMessage={ 'Loading...' }
+            />
+          </div>
         </li>
       );
     }
@@ -417,7 +423,10 @@ export class Audioplayer extends Component {
         </div>
         <ul className={`list-inline ${style.controls}`}>
           <li className={style.controlItem}>
-            Ayah: {currentAyah.split(':')[1]}
+            <FormattedMessage
+              id='player.currentAyah'
+              defaultMessage={ 'Ayah' }
+            />: {currentAyah.split(':')[1]}
           </li>
           <li className={style.controlItem}>
             {this.renderPreviousButton()}
