@@ -6,24 +6,37 @@ const styles = require('../Ayah/style.scss');
 export default class Line extends React.Component {
   static propTypes = {
     line: PropTypes.array.isRequired,
-    tooltip: PropTypes.string
+    tooltip: PropTypes.string,
+    currentAyah: PropTypes.string.isRequired
   };
 
+  shouldComponentUpdate(nextProps, nextState) {
+    const conditions = [
+      this.props.currentAyah !== nextProps.currentAyah,
+      this.props.line !== nextProps.line
+    ];
+
+    return conditions.some(condition => condition);
+  }
+
   renderText() {
-    const { line, tooltip } = this.props;
+    const { line, tooltip, currentAyah } = this.props;
 
     if (!line[0].code) { // TODO shouldn't be possible, remove this clause
       return false;
     }
 
     let text = line.map(word => {
+      let highlight = currentAyah == word.ayahKey ? 'highlight' : '';
+
       if (word.translation) {
         let tooltipContent = word[tooltip];
+        console.log("highlight "+word.ayahKey);
 
         return (
           <b
             key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-            className={`${word.className} ${styles.Tooltip}`}
+            className={`${word.className} ${styles.Tooltip} ${highlight}`}
             data-ayah={word.ayahKey}
             data-line={word.lineNun}
             data-page={word.pageNum}
@@ -36,7 +49,7 @@ export default class Line extends React.Component {
 
       return (
         <b
-          className={`${word.className} pointer`}
+          className={`${word.className} ${highlight} pointer`}
           key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
           data-line={word.lineNum}
           data-page={word.pageNum}

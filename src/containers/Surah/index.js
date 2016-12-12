@@ -332,7 +332,7 @@ class Surah extends Component {
   }
 
   renderLines() {
-    const { lines, options } = this.props;
+    const { lines, options, currentAyah } = this.props;
     const keys = Object.keys(lines);
 
     return keys.map((lineNum, index) => {
@@ -342,12 +342,12 @@ class Surah extends Component {
 
       if (index + 1 !== keys.length && pageNum !== nextNum.split('-')[0]) {
         return [
-          <Line line={line} key={lineNum} tooltip={options.tooltip} />,
+          <Line line={line} key={lineNum} currentAyah={currentAyah} tooltip={options.tooltip} />,
           <PageBreak pageNum={parseInt(pageNum, 10) + 1} />
         ];
       }
 
-      return <Line line={line} key={lineNum} tooltip={options.tooltip} />;
+      return <Line line={line} key={lineNum} currentAyah={currentAyah} tooltip={options.tooltip} />;
     });
   }
 
@@ -392,8 +392,6 @@ class Surah extends Component {
 
   render() {
     const { surah, surahs, ayahIds, options, actions, footer } = this.props;
-    const title = require(`../../../static/images/titles/${zeroPad(surah.id, 3)}.svg`); // eslint-disable-line global-require,max-len
-
     debug('component:Surah', 'Render');
 
     return (
