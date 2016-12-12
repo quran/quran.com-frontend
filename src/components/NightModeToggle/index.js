@@ -4,32 +4,38 @@ import SwitchToggle from 'components/SwitchToggle';
 
 export default class NightModeToggle extends Component {
   static propTypes = {
-    isToggled: PropTypes.bool.isRequired
+    isNightMode: PropTypes.bool.isRequired,
+    onToggle: PropTypes.func.isRequired
   };
 
   static defaultProps = {
-    isToggled: false
+    isNightMode: false
   };
 
   toggleNightMode = () => {
-    if(document.body.classList.contains('night-mode'))
+    const { isNightMode } = this.props;
+
+    if(isNightMode)
       document.body.classList.remove('night-mode');
     else
       document.body.classList.add('night-mode');
+
+    this.props.onToggle({isNightMode: !isNightMode});
   }
 
   render() {
-    const { isToggled } = this.props;
+    const { isNightMode } = this.props;
 
     return(
     <div>
-      Night Mode:{' '}
-      <SwitchToggle
-        checked={isToggled}
-        onToggle={this.toggleNightMode}
-        id="night-mode-toggle"
-        flat
-      />
+      <a
+        title={isNightMode ? "Switch to day more" : "Switch to night mode"}
+        className={`${isNightMode ? 'text-primary' : 'text-color'} pointer`}
+        onClick={this.toggleNightMode}
+      >
+        Night Mode:{' '}
+        <i className="ss-icon ss-lightbulb"/>
+      </a>
     </div>
     );
   }
