@@ -31,7 +31,7 @@ export default class Line extends React.Component {
 
       if (word.translation) {
         let tooltipContent = word[tooltip];
-        
+
         return (
           <b
             key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}

@@ -16,9 +16,9 @@ export default class NightModeToggle extends Component {
     const { isNightMode } = this.props;
 
     if(isNightMode)
-      document.body.classList.remove('night-mode');
-    else
       document.body.classList.add('night-mode');
+    else
+      document.body.classList.remove('night-mode');
 
     this.props.onToggle({isNightMode: !isNightMode});
   }
@@ -29,7 +29,7 @@ export default class NightModeToggle extends Component {
     return(
     <div>
       <a
-        title={isNightMode ? "Switch to day more" : "Switch to night mode"}
+        title={isNightMode ? "Switch to day mode" : "Switch to night mode"}
         className={`${isNightMode ? 'text-primary' : 'text-color'} pointer`}
         onClick={this.toggleNightMode}
       >
