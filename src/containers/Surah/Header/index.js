@@ -4,7 +4,6 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
 const Header = Navbar.Header;
-import Title from 'containers/Surah/Title';
 
 import debug from 'helpers/debug';
 
