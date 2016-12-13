@@ -16,6 +16,7 @@ import config from 'config';
 import metricsConfig from 'helpers/metrics';
 import { authConnect } from './connect';
 import Footer from 'components/Footer';
+import NoScriptWarning from 'components/NoScriptWarning';
 
 import FontStyles from 'components/FontStyles';
 
@@ -41,6 +42,7 @@ class App extends Component {
       <div>
         <Helmet {...config.app.head} />
         <FontStyles />
+        <NoScriptWarning />
         {children}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install"/>
         <Footer />

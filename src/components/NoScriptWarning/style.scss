@@ -1,0 +1,13 @@
+.noscript_warning {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 101;
+  text-align: center;
+  font-weight: bold;
+  font-size: 120%;
+  color: #FFF;
+  background-color: #AE0000;
+  padding: 5px 0 5px 0;
+}
