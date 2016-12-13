@@ -10,11 +10,10 @@ const NoScriptWarning = () => (
   <noscript>
     <Row>
       <Col md={12} id={styles.noscript_warning}>
-        <p> Looks like either your browser does not support Javascript or its disabled. For a better
-          EpicBuzz experience, please enable JavaScript in your browser.
-          For more instruction on how to enable javascript'
+        <p> Looks like either your browser does not support Javascript or its disabled. Quran.com workes best with JavaScript enabled.
+          For more instruction on how to enable javascript
 
-          <Link to="http://www.enable-javascript.com/">Contact</Link>
+          <Link to="http://www.enable-javascript.com/">Click here</Link>
         </p>
         </Col>
       </Row>
