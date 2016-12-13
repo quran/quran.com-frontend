@@ -96,6 +96,7 @@
     "react-router-redux": "4.0.5",
     "react-router-scroll": "0.2.1",
     "react-scroll": "1.2.0",
+    "react-share": "1.11.0",
     "react-sidebar": "2.2.1",
     "redux": "3.5.2",
     "redux-connect": "2.4.0",
