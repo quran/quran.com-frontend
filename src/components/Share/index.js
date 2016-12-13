@@ -1,5 +1,11 @@
 import React, { Component, PropTypes } from 'react';
+import { ShareButtons, generateShareIcon } from 'react-share';
 const Style = require('./style.scss');
+
+const { FacebookShareButton, TwitterShareButton } = ShareButtons;
+const FacebookIcon = generateShareIcon('facebook');
+const TwitterIcon = generateShareIcon('twitter');
+
 export default class Share extends Component {
 
 
@@ -15,26 +21,28 @@ export default class Share extends Component {
   render() {
 
     const {surahId, name} = this.props.surah;
-    const surahUrl = encodeURIComponent(`https://quran.com/${surahId}`);
+    const surahUrl = `https://quran.com/${surahId}`;
 
     return (
       <div className={`${Style.shareContainer} hidden-xs`}>
 
-        <i
-          onClick={() => this.onClickPopup(`https://www.facebook.com/sharer/sharer.php?u=${surahUrl}`, 'Facebook')}
-          className={`${Style.iconContainer} ${Style.facebook}`}
-          data-metrics-event-name="Share:Facebook"
-          title="Share on Facebook"
+        <FacebookShareButton
+          url={surahUrl}
+          title="Facebook"
+          windowWidth={670}
+          windowHeight={540}
+          className={`${Style.iconContainer}`}
         >
-        </i>
+          <FacebookIcon size={24} round />
+        </FacebookShareButton>
 
-        <i
-          onClick={() => this.onClickPopup(`https://twitter.com/intent/tweet?url=${surahUrl}&text=Surat ${name.simple}`, 'Twitter')}
-          className={`${Style.iconContainer}  ${Style.twitter}`}
-          data-metrics-event-name="Share:Twitter"
-          title="Share on Twitter"
+        <TwitterShareButton
+          url={surahUrl}
+          title={`Surat ${name.simple}`}
+          className={`${Style.iconContainer}`}
         >
-        </i>
+          <TwitterIcon size={24} round />
+        </TwitterShareButton>
 
       </div>
     );
