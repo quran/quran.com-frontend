@@ -117,7 +117,7 @@
 
   b, a{
     font-weight: 100;
-    margin: 0px 2px;
+    padding: 0px 2px;
     color: #000;
     &:hover{
       color: $brand-primary;
@@ -161,8 +161,4 @@
   display: block;
   width: 100%;
   margin: 0px auto;
-}
-
-.highlight {
-  background-color: #fffed9;
 }

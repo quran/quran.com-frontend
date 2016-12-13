@@ -30,11 +30,6 @@ const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
           <Col xs={10}>
             <ul className={`list-inline ${styles.container} text-center`}>
               <li className={styles.verticalAlign}>
-                {/* <img
-                  src={ornamentLeft}
-                  className={`${styles.ornament} pull-left hidden-xs hidden-sm`}
-                  alt="Ornament left"
-                /> */}
                 {
                   surah.id > 1 &&
                     <Link
@@ -46,7 +41,7 @@ const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
                         data-metrics-event-name="Title:PreviousSurah"
                         className="ss-icon ss-navigateleft"
                       />
-                      <span className="hidden-xs hidden-sm"> PREVIOUS SURAH</span>
+                      <span className="hidden-xs hidden-sm"> PREVIOUS SURAH </span>
                     </Link>
                 }
               </li>
@@ -66,15 +61,10 @@ const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
                       className="navbar-text next-chapter"
                       to={`/${surah.id + 1}`}
                     >
-                      <span className="hidden-xs hidden-sm">NEXT SURAH </span>
+                      <span className="hidden-xs hidden-sm"> NEXT SURAH </span>
                       <i data-metrics-event-name="Title:NextSurah" className="ss-icon ss-navigateright" />
                     </Link>
                 }
-                {/* <img
-                  src={ornamentRight}
-                  className={`${styles.ornament} hidden-xs hidden-sm`}
-                  alt="Ornament right"
-                /> */}
               </li>
             </ul>
           </Col>

@@ -14,6 +14,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import 'partials/modal';
 @import 'partials/tooltip';
 @import 'partials/highlight';
+@import 'nightmode';
 
 
 html,body{
@@ -24,6 +25,11 @@ html,body{
   @media(max-width: $screen-sm-max) {
     font-size: 12px;
   }
+}
+
+
+.highlight {
+  background-color: #F5FBF7;
 }
 
 a:hover{
@@ -154,4 +160,12 @@ li em{
   float: left;
   margin-left: 15px;
   margin-right: 0px;
+}
+
+.ayah-name-svg{
+  width: 35%;
+  display: inherit;
+  position: absolute;
+  top: 0px;
+  transform: translateY(-40%);
 }
