@@ -36,7 +36,7 @@ class Sidebar extends Component {
     const { open, children } = this.props;
 
     return (
-      <div ref="container" className={`${styles.container} ${open && styles.open}`}>
+      <div ref="container" className={`${styles.container} sidebar ${open && styles.open}`}>
         {children}
       </div>
     );

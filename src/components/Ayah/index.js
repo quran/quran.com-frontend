@@ -306,7 +306,7 @@ export default class Ayah extends Component {
 
   render() {
     const { ayah, currentAyah } = this.props;
-    const className = ayah.ayahKey === currentAyah ? styles.highlight : "";
+    const className = ayah.ayahKey === currentAyah ? 'highlight' : "";
     debug('component:Ayah', `Render ${this.props.ayah.ayahNum}`);
 
     return (

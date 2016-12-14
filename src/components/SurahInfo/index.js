@@ -12,7 +12,7 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
   const html = require(`./htmls/${surah.id}.html.js`); // eslint-disable-line global-require
 
   return (
-    <Col xs={12} className={`${style.container} ${style.show}`}>
+    <Col xs={12} className={`${style.container} surah-info ${style.show}`}>
       <div
         className={`${style.close} ss-delete`}
         onClick={() => onClose({isShowingSurahInfo: !isShowingSurahInfo})}

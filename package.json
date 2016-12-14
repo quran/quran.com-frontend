@@ -96,6 +96,7 @@
     "react-router-redux": "4.0.5",
     "react-router-scroll": "0.2.1",
     "react-scroll": "1.2.0",
+    "react-share": "1.11.0",
     "react-sidebar": "2.2.1",
     "redux": "3.5.2",
     "redux-connect": "2.4.0",
@@ -113,7 +114,8 @@
     "webpack": "2.1.0-beta.20",
     "webpack-isomorphic-tools": "2.5.7",
     "react-intl":"2.1.5",
-    "winston": "1.1.2"
+    "winston": "1.1.2",
+    "react-inlinesvg": "0.5.4"
   },
   "devDependencies": {
     "babel-eslint": "6.0.4",
