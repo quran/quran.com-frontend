@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { Link } from 'react-scroll';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 const style = require('./style.scss');
 
 export default class VersesDropdown extends Component {
@@ -55,9 +57,7 @@ export default class VersesDropdown extends Component {
     const { className } = this.props;
 
     const title = (
-      <span>
-        Go to verse
-      </span>
+      <LocaleFormattedMessage id={'setting.verses'} defaultMessage={'Go to verse'} />
     );
 
     return (

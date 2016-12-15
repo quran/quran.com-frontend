@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 
 import MenuItem from 'react-bootstrap/lib/MenuItem';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 
 const style = require('./style.scss');
 
@@ -524,18 +526,25 @@ export default class ContentDropdown extends Component {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          Translations
+          <LocaleFormattedMessage id={'setting.translations.title'} defaultMessage={'Translations'}/>
+
           <span className="caret" />
         </button>
         <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
           {
             content.length &&
-              <MenuItem eventKey={1} onClick={this.handleRemoveContent}>Remove all</MenuItem>
+              <MenuItem eventKey={1} onClick={this.handleRemoveContent}>
+                <LocaleFormattedMessage id={'setting.translations.removeAll'} defaultMessage={'Remove all'}/>
+              </MenuItem>
           }
-          <MenuItem header>English</MenuItem>
+          <MenuItem header>
+            <LocaleFormattedMessage id={'setting.translations.english'} defaultMessage={'English'}/>
+          </MenuItem>
           {this.renderEnglishList()}
           <MenuItem divider />
-          <MenuItem header>Other Languages</MenuItem>
+          <MenuItem header>
+            <LocaleFormattedMessage id={'setting.translations.other'} defaultMessage={'Other Languages'}/>
+          </MenuItem>
           {this.renderLanguagesList()}
         </ul>
       </div>

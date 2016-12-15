@@ -2,6 +2,8 @@ import React from 'react';
 import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 const styles = require('containers/Home/style.scss');
 
 export default () => {
@@ -12,7 +14,7 @@ export default () => {
   return (
     <div className="">
       <h4 className={`text-muted ${styles.title}`}>
-        <span>Quick links:</span>
+        <LocaleFormattedMessage id={'surah.index.quickLinks'} defaultMessage={'Quick links :'}/>
         {
           isFriday &&
             <span>

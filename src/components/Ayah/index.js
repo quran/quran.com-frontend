@@ -3,7 +3,7 @@ import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 
 import Copy from 'components/Copy';
-import {FormattedMessage} from 'react-intl';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import debug from 'helpers/debug';
 
@@ -91,7 +91,7 @@ export default class Ayah extends Component {
         >
           <h4 className="montserrat">{content.name || content.resource.name}</h4>
           <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
-            <small dangerouslySetInnerHTML={{__html: content.text}} className={`${styles[lang] || 'times-new'}`} />
+            <small dangerouslySetInnerHTML={{__html: content.text}} className={lang} />
           </h2>
         </div>
       );
@@ -121,7 +121,11 @@ export default class Ayah extends Component {
                     data-metrics-media-content-id={content.id}
                     data-metrics-media-content-ayah-key={ayah.ayahKey}
                   >
-                    Watch lecture by {content.resource.name}
+                    <LocaleFormattedMessage
+                      id={'ayah.media.lectureFrom'}
+                      defaultMessage={"Watch lecture by {from}"}
+                      values={{from: content.resource.name}}
+                      />
                   </a>
                 </small>
               </h2>
@@ -169,7 +173,6 @@ export default class Ayah extends Component {
           />
         );
       }
-
       const label = isLast ? {'title': `Verse ${ayah.ayahNum}`} : {}
       return (
         <b
@@ -214,7 +217,7 @@ export default class Ayah extends Component {
           className="text-muted"
         >
           {icon}
-          <FormattedMessage
+          <LocaleFormattedMessage
             id={ playing ? 'actions.pause' : 'actions.play' }
             defaultMessage={ playing ? 'Pause' : 'Play'}
           />

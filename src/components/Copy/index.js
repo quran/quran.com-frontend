@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import copyToClipboard from 'copy-to-clipboard';
-import {FormattedMessage } from 'react-intl';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 export default class Copy extends Component {
   static propTypes = {
@@ -28,7 +28,7 @@ export default class Copy extends Component {
         data-metrics-event-name="Ayah:Copy"
       >
         <i className="ss-icon ss-attach" />
-        <FormattedMessage
+        <LocaleFormattedMessage
           id={ isCopied ? 'actions.copied' : 'actions.copy' }
           defaultMessage={ isCopied ? 'Copied!' : 'Copy'}
         />

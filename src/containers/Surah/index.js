@@ -14,6 +14,7 @@ const NavbarHeader = Navbar.Header;
 
 import Helmet from 'react-helmet';
 import Sidebar from 'components/Sidebar';
+import {FormattedMessage} from 'react-intl';
 
 // components
 import LazyLoad from 'components/LazyLoad';
@@ -30,6 +31,7 @@ import Line from 'components/Line';
 import SearchInput from 'components/SearchInput';
 import Bismillah from 'components/Bismillah';
 import TopOptions from 'components/TopOptions';
+
 
 // utils
 import scroller from 'utils/scroller';
@@ -280,26 +282,45 @@ class Surah extends Component {
               surah.id > 1 &&
                 <li className="previous">
                   <Link to={`/${surah.id * 1 - 1}`}>
-                    &larr; Previous Surah
+                    &larr;
+                    <FormattedMessage
+                      id='surah.previous'
+                      defaultMessage={ 'Previous Surah' }
+                      className="heyyyy"
+                    />
                   </Link>
                 </li>
             }
             <li className="text-center">
               <Link to={`/${surah.id}`}>
-                Beginning of Surah
+                <FormattedMessage
+                  id='surah.goToBeginning'
+                  defaultMessage={ 'Beginning of Surah' }
+                  className="heyyyy"
+                />
               </Link>
             </li>
             {
               surah.id < 114 &&
                 <li className="next">
                   <Link to={`/${surah.id * 1 + 1}`}>
-                    Next Surah &rarr;
+                    <FormattedMessage
+                      id='surah.next'
+                      defaultMessage={ 'Next Surah' }
+                    />
+                    &rarr;
                   </Link>
                 </li>
             }
           </ul>
         }
-        loadingComponent={<p>Loading...</p>}
+        loadingComponent={
+          <p className="text-center">
+            <FormattedMessage
+            id='app.loading'
+            defaultMessage={ 'Loading...' }
+            />
+          </p>}
       />
     );
   }

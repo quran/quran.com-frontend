@@ -5,6 +5,8 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 const styles = require('./style.scss');
 
 const Footer = () => (
@@ -15,17 +17,39 @@ const Footer = () => (
           <Col md={2} sm={4} xs={12} className={styles.about}>
             <p>Navigate</p>
             <ul className={`source-sans ${styles.list}`}>
-              <li><Link to="/about">About</Link></li>
-              <li><Link to="/contact">Contact</Link></li>
+              <li>
+                <Link to="/about">
+                  <LocaleFormattedMessage
+                    id={'nav.aboutUs'}
+                    defaultMessage={'About Us'}
+                  />
+                </Link>
+              </li>
+              <li>
+                <Link to="/contact">
+                  <LocaleFormattedMessage
+                    id={'nav.contactUs'}
+                    defaultMessage={'Contact Us'}
+                  />
+                </Link>
+              </li>
               <li>
                 <a href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help" target="_blank" data-metrics-event-name="Footer:Link:Developer">
-                  Developers
+                  <LocaleFormattedMessage
+                    id={'nav.developers'}
+                    defaultMessage={'Developers'}
+                  />
                 </a>
               </li>
             </ul>
           </Col>
           <Col md={3} sm={4} xs={12} className={styles.links}>
-            <p>Useful sites</p>
+            <p>
+              <LocaleFormattedMessage
+                id={'nav.usefulSites'}
+                defaultMessage={'USEFUL SITES'}
+              />
+            </p>
             <ul className={`source-sans ${styles.list}`}>
               <li><a target="_blank" href="http://sunnah.com/" data-metrics-event-name="Footer:Link:Sunnah">Sunnah.com</a></li>
               <li><a target="_blank" href="http://salah.com/" data-metrics-event-name="Footer:Link:Salah">Salah.com</a></li>
@@ -38,7 +62,12 @@ const Footer = () => (
             </ul>
           </Col>
           <Col md={3} sm={4} xs={12} className={styles.links}>
-            <p>Other links</p>
+            <p>
+              <LocaleFormattedMessage
+                id={'nav.otherLinks'}
+                defaultMessage={'Other links'}
+              />
+            </p>
             <ul className={`source-sans ${styles.list}`}>
               <li><a href="/sitemap.xml">Sitemap</a></li>
               <li>
@@ -63,8 +92,10 @@ const Footer = () => (
           </Col>
           <Col md={4} sm={12} xs={12} className={styles.links}>
             <p className="monserrat">
-              Quran.com ( also known as The Noble Quran, Al Quran, Holy Quran, Koran ){' '}
-              is a pro bono project.
+              <LocaleFormattedMessage
+                id={'nav.aboutQuranProject'}
+                defaultMessage={'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.'}
+              />
             </p>
 
             <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>

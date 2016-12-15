@@ -3,7 +3,7 @@ export default {
   locales: ["ur"],
 
   messages: {
-    "local": "ur",
+    "local": "urdu",
     "setting.title": "اختیارات",
     "setting.surahs": "سورة",
     "setting.verses": "آیت منتخب کریں",
@@ -13,13 +13,19 @@ export default {
     "setting.translations.english": "انگریزی",
     "setting.translations.other": "دوسری زبانیں",
     "setting.fontSize": "حرف کا سائز",
+    "setting.fontSize.arabic": "عربی",
     "setting.reading": "پڑہائی",
     "setting.tooltip": "لفظ کے اوپر",
     "setting.tooltip.title": "لفظ کے اوپر کیا ہو",
     "setting.tooltip.translation": "ترجمہ",
     "setting.tooltip.transliteration": "تلفظ",
+    "setting.nightMode": "رات کا وقت",
+    "setting.nightMode.dayTip": "دن کے موڈ میں دیکھیں",
+    "setting.nightMode.nightTip": "رات کے موڈ میں دیکھیں",
 
-    "search.placeholder": "تلاش",
+    "ayah.media.lectureFrom": "{from} کے لیکچرو دیکھے",
+
+    "search.placeholder": "تلاش کر یں",
     "search.resultHeading": "{from}-{to} OF <span class='colored'> {total} SEARCH RESULTS FOR: <span class='colored'>{query}</span>",
     //TODO: "{total} میں سے {from} تا {to} نتائج"
     "search.noResult": "تلاش",
@@ -29,6 +35,7 @@ export default {
     "surah.info": "سورہ کی معلومات",
     "surah.index.heading": "سورتیں",
     "surah.index.quickLinks": "فوری لنک",
+    "surah.goToBeginning": "سورہ کے شروع میں جائیں",
 
     "player.currentAyah": "آیت",
     "player.nextAyah": "اگلی آیت",
@@ -42,10 +49,21 @@ export default {
     "player.repeat.loop": "چلاتے رہو",
     "player.scrollButtonTip": "جو آیت چل رہیی ہو اس کو  صفہ پر سامنے رکھو",
 
-    "app.loading": "لوڈ ہو رہا ہے...",
+    "app.loading": "لوڈ ہو رہا ہے",
     "actions.copy": "کاپی",
     "actions.copied": "کاپی کر لیا",
     "actions.play": "چلاو",
-    "actions.pause": "روک دیں"
+    "actions.pause": "روک دیں",
+
+    "nav.contribute": "تعاون کریں",
+    "nav.aboutUs": "ہمارے متعلق",
+    "nav.developers": "ڈویلپرز",
+    "nav.usefulSites": "مفید سائٹس",
+    "nav.otherLinks": "دیگر لنکس",
+    "nav.contactUs": "ہم سے رابطہ",
+    "nav.aboutQuranProject": "قرآن کریم ایک فلاں عامہ (عوامی بہبود کے لئے) منصوبہ ہے",
+    "nav.mobile": "موبائل",
+    "nav.legacySite": "پرانی سائٹ"
+
   }
 };

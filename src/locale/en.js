@@ -25,6 +25,7 @@ export default {
     "surah.info": "Surah Info",
     "surah.index.heading": "SURAHS (CHAPTERS)",
     "surah.index.quickLinks": "Quick links",
+    "surah.goToBeginning": "Beginning of Surah",
 
     "player.currentAyah": "Ayah",
     "player.nextAyah": "Next Ayah",

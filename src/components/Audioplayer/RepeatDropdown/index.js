@@ -6,13 +6,14 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import { intlShape, injectIntl } from 'react-intl';
 
 import SwitchToggle from 'components/SwitchToggle';
-import {FormattedMessage } from 'react-intl';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('../style.scss');
 
-export default class RepeatButton extends Component {
+class RepeatButton extends Component {
   static propTypes = {
     surah: PropTypes.object.isRequired,
     repeat: PropTypes.shape({
@@ -21,7 +22,8 @@ export default class RepeatButton extends Component {
       times: PropTypes.number
     }).isRequired,
     setRepeat: PropTypes.func.isRequired,
-    current: PropTypes.number.isRequired
+    current: PropTypes.number.isRequired,
+    intl: intlShape.isRequired
   };
 
   handleToggle = () => {
@@ -62,7 +64,7 @@ export default class RepeatButton extends Component {
       <Col md={12} style={{paddingTop: 15}}>
         <ul className="list-inline" style={{marginBottom: 0}}>
           <li>
-            <FormattedMessage
+            <LocaleFormattedMessage
               id={ "player.repeat.rangeStart" }
               defaultMessage={'From'}
             />{' '}:
@@ -87,7 +89,7 @@ export default class RepeatButton extends Component {
           </li>
           <li> - </li>
           <li>
-            <FormattedMessage
+            <LocaleFormattedMessage
               id={ "player.repeat.rangeEnd" }
               defaultMessage={'To'}
             />{' '}:
@@ -117,7 +119,7 @@ export default class RepeatButton extends Component {
 
     return (
       <Col md={12} style={{paddingTop: 15}}>
-        <FormattedMessage
+        <LocaleFormattedMessage
           id={ "player.currentAyah" }
           defaultMessage={'Ayah'}
         />{' '}: <br />
@@ -154,13 +156,13 @@ export default class RepeatButton extends Component {
             onSelect={this.handleNavChange}
           >
             <NavItem eventKey={1} title="Single Ayah" className={style.pill}>
-              <FormattedMessage
+              <LocaleFormattedMessage
                 id={ "player.repeat.single" }
                 defaultMessage={'Single'}
               />
             </NavItem>
             <NavItem eventKey={2} title="Range" className={style.pill}>
-              <FormattedMessage
+              <LocaleFormattedMessage
                 id={ "player.repeat.range" }
                 defaultMessage={'Range'}
               />
@@ -182,13 +184,13 @@ export default class RepeatButton extends Component {
   }
 
   renderTimes() {
-    const { repeat, setRepeat } = this.props;
+    const { repeat, setRepeat, intl } = this.props;
     const times = Array(10).join().split(',');
 
     return (
       <Row className={!repeat.from && style.disabled}>
         <Col md={12} style={{paddingTop: 15}}>
-          <FormattedMessage
+          <LocaleFormattedMessage
             id={ "player.repeat.title" }
             defaultMessage={'Repeat'}
           />: <br />
@@ -201,10 +203,9 @@ export default class RepeatButton extends Component {
             })}
           >
             <option value={'Infinity'}>
-              {<FormattedMessage
-                id={ "player.repeat.loop" }
-                defaultMessage={'Loop'}
-              />}
+              {
+                intl.formatMessage({id: "player.repeat.loop", defaultMessage: 'Loop'})
+              }
             </option>
             {
               times.map((ayah, index) => (
@@ -229,7 +230,7 @@ export default class RepeatButton extends Component {
         title={
           <Row>
             <Col md={12} className="text-center">
-              <FormattedMessage
+              <LocaleFormattedMessage
                 id={ "player.repeat.title" }
                 defaultMessage={'TOGGLE REPEAT'}
               />{'  '}
@@ -265,3 +266,5 @@ export default class RepeatButton extends Component {
     );
   }
 }
+
+export default injectIntl(RepeatButton);

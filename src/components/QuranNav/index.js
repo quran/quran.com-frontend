@@ -13,6 +13,9 @@ import { connect } from 'react-redux';
 
 import userType from 'types/userType';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
+
 const styles = require('./style.scss');
 
 export const QuranNav = ({ user }) => (
@@ -25,22 +28,34 @@ export const QuranNav = ({ user }) => (
       <Nav pullRight>
         <LinkContainer to="/apps" data-metrics-event-name="IndexHeader:Link:Mobile">
           <NavItem>
-            Mobile
+            <LocaleFormattedMessage
+              id={'nav.mobile'}
+              defaultMessage={'Mobile'}
+            />
           </NavItem>
         </LinkContainer>
         <NavItem href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help" target="_blank" data-metrics-event-name="IndexHeader:Link:Developer">
-          Developers
+          <LocaleFormattedMessage
+            id={'nav.developers'}
+            defaultMessage={'Developers'}
+          />
         </NavItem>
         <NavItem href="http://legacy.quran.com" data-metrics-event-name="IndexHeader:Link:Legacy">
           Legacy Quran.com
         </NavItem>
         <LinkContainer to="/donations" data-metrics-event-name="IndexHeader:Link:Contribute">
           <NavItem>
-            Contribute
+            <LocaleFormattedMessage
+              id={'nav.contribute'}
+              defaultMessage={'Contribute'}
+            />
           </NavItem>
         </LinkContainer>
         <NavItem href="https://quran.zendesk.com/hc/en-us" data-metrics-event-name="IndexHeader:Link:Contact">
-          Contact us
+          <LocaleFormattedMessage
+            id={'nav.contactUs'}
+            defaultMessage={'Contact Us'}
+          />
         </NavItem>
         {
           user &&

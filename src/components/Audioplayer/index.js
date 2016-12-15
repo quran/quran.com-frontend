@@ -10,7 +10,7 @@ import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
 import RepeatDropdown from './RepeatDropdown';
-import {FormattedMessage} from 'react-intl';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 // Helpers
 import debug from 'helpers/debug';
@@ -396,7 +396,7 @@ export class Audioplayer extends Component {
       return (
         <li className={`${style.container} ${className}`}>
           <div>
-            <FormattedMessage
+            <LocaleFormattedMessage
               id='app.loading'
               defaultMessage={ 'Loading...' }
             />
@@ -423,7 +423,7 @@ export class Audioplayer extends Component {
         </div>
         <ul className={`list-inline ${style.controls}`}>
           <li className={style.controlItem}>
-            <FormattedMessage
+            <LocaleFormattedMessage
               id='player.currentAyah'
               defaultMessage={ 'Ayah' }
             />: {currentAyah.split(':')[1]}

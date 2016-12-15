@@ -5,6 +5,9 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
+
 const styles = require('./style.scss');
 
 export default class SurahsDropdown extends Component {
@@ -60,7 +63,7 @@ export default class SurahsDropdown extends Component {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          Surahs
+          <LocaleFormattedMessage id={'setting.surahs'} defaultMessage={'Surahs'}/>
           <span className="caret"></span>
         </button>
         <ul className="dropdown-menu" aria-labelledby="surahs-dropdown">

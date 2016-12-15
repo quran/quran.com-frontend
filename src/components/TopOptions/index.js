@@ -46,10 +46,7 @@ const TopOptions = ({options, surah, actions}) => (
         </li>
         <li>|</li>
         <li>
-          <NightModeToggle
-            isNightMode={options.isNightMode}
-            onToggle={actions.options.setOption}
-          />
+          <NightModeToggle />
         </li>
         <li><Share surah={surah} /></li>
       </ul>

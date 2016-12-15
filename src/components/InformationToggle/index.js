@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 export default class InformationToggle extends Component {
   static propTypes = {
     isShowingSurahInfo: PropTypes.bool.isRequired,
@@ -23,7 +25,7 @@ export default class InformationToggle extends Component {
         className={`${isShowingSurahInfo ? ' text-primary' : 'text-color'} pointer`}
         onClick={this.toggleInformationMode}
       >
-        Surah Info
+        <LocaleFormattedMessage id={'surah.info'} defaultMessage={'Surah Info'}/>
       </a>
     );
   }

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
+import { intlShape, injectIntl } from 'react-intl';
 
 import SearchAutocomplete from 'components/SearchAutocomplete';
 
@@ -12,7 +13,8 @@ import debug from 'helpers/debug';
 class SearchInput extends Component {
   static propTypes = {
     push: PropTypes.func.isRequired,
-    className: PropTypes.string
+    className: PropTypes.string,
+    intl: intlShape.isRequired
   };
 
   static contextTypes = {
@@ -91,7 +93,8 @@ class SearchInput extends Component {
 
   render() {
     const { showAutocomplete } = this.state;
-    const { className } = this.props;
+    const { className, intl } = this.props;
+    const placeholder = intl.formatMessage({id: 'search.placeholder', defaultMessage: 'Search'});
 
     debug('component:SearchInput', 'Render');
 
@@ -100,7 +103,7 @@ class SearchInput extends Component {
         <i className="ss-icon ss-search" onClick={this.search} />
         <input
           type="search"
-          placeholder="Search"
+          placeholder={placeholder}
           ref="search"
           onFocus={() => this.setState({showAutocomplete: true})}
           onKeyUp={this.search}
@@ -117,4 +120,4 @@ class SearchInput extends Component {
   }
 }
 
-export default connect(null, { push })(SearchInput);
+export default injectIntl(connect(null, { push })(SearchInput));
