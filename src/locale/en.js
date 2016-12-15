@@ -11,14 +11,21 @@ export default {
     "setting.translations.english": "English",
     "setting.translations.other": "Other Languages",
     "setting.fontSize": "Font size",
+    "setting.fontSize.arabic": "Arabic",
     "setting.reading": "Reading",
     "setting.tooltip.title": "TOOLTIP DISPLAY",
     "setting.tooltip.translation": "Translation",
     "setting.tooltip.transliteration": "Transliteration",
+    "setting.nightMode": "Night Mode",
+    "setting.nightMode.dayTip": "Switch to day mode",
+    "setting.nightMode.nightTip": "Switch to night mode",
+
+    "ayah.media.lectureFrom": "Watch lecture of {from}",
 
     "search.placeholder": "Search",
-    "search.resultHeading": "{from}-{to} OF <span class='colored'> {total} SEARCH RESULTS FOR: <span class='colored'>{query}</span>",
-    "search.noResult": "Search",
+    "search.resultHeading": "{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>",
+    "search.error": "Sorry, there was an error with your search.",
+    "search.noResult": "No results found.",
 
     "surah.next": "NEXT SURAH",
     "surah.previous": "PREVIOUS SURAH",
@@ -43,6 +50,16 @@ export default {
     "actions.copy": "Copy",
     "actions.copied": "Copied!",
     "actions.play": "Play",
-    "actions.pause": "Pause"
+    "actions.pause": "Pause",
+
+    "nav.contribute": "Contribute",
+    "nav.aboutUs": "About us",
+    "nav.developers": "developers",
+    "nav.usefulSites": "Useful sites",
+    "nav.otherLinks": "Other links",
+    "nav.contactUs": "Contact us",
+    "nav.aboutQuranProject": "Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.",
+    "nav.mobile": "Mobile",
+    "nav.legacySite": "Legacy Quran.com"
   }
 };

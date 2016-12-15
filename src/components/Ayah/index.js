@@ -99,9 +99,9 @@ export default class Ayah extends Component {
   }
 
   renderMedia() {
-    const { ayah, mediaActions } = this.props;
+    const { ayah, mediaActions, isSearched } = this.props;
 
-    if (!!ayah.mediaContent) return false;
+    if (isSearched || !!ayah.mediaContent) return false;
 
     return (
       <div>
@@ -137,7 +137,7 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, audioActions: { setCurrentWord }, tooltip } = this.props;
+    const { ayah, audioActions, tooltip, isSearched } = this.props;
 
     if (!ayah.words[0].code) {
       return false;
@@ -165,7 +165,7 @@ export default class Ayah extends Component {
             key={word.code}
             id={id}
             rel="tooltip"
-            onClick={(event) => setCurrentWord(event.target.dataset.key)}
+            onClick={(event) => isSearched ? '' : audioActions.setCurrentWord(event.target.dataset.key)}
             data-key={`${word.ayahKey}:${position}`}
             className={`${className}`}
             title={tooltipContent}
@@ -177,7 +177,7 @@ export default class Ayah extends Component {
       return (
         <b
           id={id}
-          onClick={(event) => setCurrentWord(event.target.dataset.key)}
+          onClick={(event) => isSearched? '' : audioActions.setCurrentWord(event.target.dataset.key)}
           data-key={`${word.ayahKey}:${position}`}
           rel="tooltip"
           className={`${className} ${isLast} pointer`}
@@ -241,9 +241,9 @@ export default class Ayah extends Component {
   }
 
   renderBookmark() {
-    const { ayah, bookmarked, isAuthenticated, bookmarkActions } = this.props;
+    const { ayah, bookmarked, isAuthenticated, bookmarkActions, isSearched } = this.props;
 
-    if (!isAuthenticated) return false;
+    if (isSearched || !isAuthenticated) return false;
 
     if (bookmarked) {
       return (

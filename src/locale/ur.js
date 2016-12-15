@@ -1,7 +1,5 @@
 // jscs:disable disallowQuotedKeysInObjects
 export default {
-  locales: ["ur"],
-
   messages: {
     "local": "urdu",
     "setting.title": "اختیارات",
@@ -26,9 +24,9 @@ export default {
     "ayah.media.lectureFrom": "{from} کے لیکچرو دیکھے",
 
     "search.placeholder": "تلاش کر یں",
-    "search.resultHeading": "{from}-{to} OF <span class='colored'> {total} SEARCH RESULTS FOR: <span class='colored'>{query}</span>",
-    //TODO: "{total} میں سے {from} تا {to} نتائج"
-    "search.noResult": "تلاش",
+    "search.resultHeading": "{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>",
+    "search.error": "معذرت، آپ کی تلاش کے ساتھ ایک خرابی پیش آگئی.",
+    "search.noResult": "کوئی نتیجہ نہیں ملا",
 
     "surah.next": "اگلی سورت",
     "surah.previous": "پچھلی سورت",
@@ -64,6 +62,5 @@ export default {
     "nav.aboutQuranProject": "قرآن کریم ایک فلاں عامہ (عوامی بہبود کے لئے) منصوبہ ہے",
     "nav.mobile": "موبائل",
     "nav.legacySite": "پرانی سائٹ"
-
   }
 };

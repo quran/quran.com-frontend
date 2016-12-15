@@ -5,6 +5,8 @@ import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
 const Header = Navbar.Header;
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 import debug from 'helpers/debug';
 
 // const ornamentLeft = require('../../../../static/images/ornament-left.png');
@@ -41,7 +43,9 @@ const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
                         data-metrics-event-name="Title:PreviousSurah"
                         className="ss-icon ss-navigateleft"
                       />
-                      <span className="hidden-xs hidden-sm"> PREVIOUS SURAH </span>
+                      <span className="hidden-xs hidden-sm">
+                        <LocaleFormattedMessage id={'surah.previous'} defaultMessage={'PREVIOUS SURAH'} />
+                      </span>
                     </Link>
                 }
               </li>
@@ -61,7 +65,9 @@ const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
                       className="navbar-text next-chapter"
                       to={`/${surah.id + 1}`}
                     >
-                      <span className="hidden-xs hidden-sm"> NEXT SURAH </span>
+                      <span className="hidden-xs hidden-sm">
+                        <LocaleFormattedMessage id={'surah.next'} defaultMessage={'NEXT SURAH'} />
+                      </span>
                       <i data-metrics-event-name="Title:NextSurah" className="ss-icon ss-navigateright" />
                     </Link>
                 }
