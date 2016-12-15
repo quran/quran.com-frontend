@@ -1,7 +1,10 @@
 // jscs:disable disallowQuotedKeysInObjects
 export default {
   messages: {
-    "local": 'en',
+    "local": "en",
+    "local.changeLocal": 'Choose the language you want the site to display with',
+    "local.navtiveName": 'English',
+    "local.selectLabel": 'Language',
     "setting.title": "Options",
     "setting.surahs": "Surahs",
     "setting.verses": "Go to verse",

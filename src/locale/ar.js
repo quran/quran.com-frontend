@@ -1,10 +1,10 @@
 // jscs:disable disallowQuotedKeysInObjects
 export default {
   messages: {
-    "local": "urdu",
-    "local.changeLocal": 'جس زبان میں سایٹ دیکہنا چاہتے ہیں اس زبان کا انتخاب کریں',
-    "local.navtiveName": 'اردو',
-    "local.selectLabel": 'زبان',
+    "local": "arabic",
+    "local.changeLocal": 'اختر اللغة التي تود عرض الموقع بها',
+    "local.navtiveName": 'العربية',
+    "local.selectLabel": 'اللغة',
     "setting.title": "اختیارات",
     "setting.surahs": "سورة",
     "setting.verses": "آیت منتخب کریں",

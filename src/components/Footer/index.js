@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import LocaleSwitcher from 'components/LocaleSwitcher'
 
 const styles = require('./style.scss');
 
@@ -15,7 +16,7 @@ const Footer = () => (
       <Col md={10} mdOffset={1}>
         <Row>
           <Col md={2} sm={4} xs={12} className={styles.about}>
-            <p>Navigate</p>
+            <p className={styles.header}>Navigate</p>
             <ul className={`source-sans ${styles.list}`}>
               <li>
                 <Link to="/about">
@@ -43,8 +44,9 @@ const Footer = () => (
               </li>
             </ul>
           </Col>
+
           <Col md={3} sm={4} xs={12} className={styles.links}>
-            <p>
+            <p className={styles.header}>
               <LocaleFormattedMessage
                 id={'nav.usefulSites'}
                 defaultMessage={'USEFUL SITES'}
@@ -61,8 +63,9 @@ const Footer = () => (
               </li>
             </ul>
           </Col>
+
           <Col md={3} sm={4} xs={12} className={styles.links}>
-            <p>
+            <p className={styles.header}>
               <LocaleFormattedMessage
                 id={'nav.otherLinks'}
                 defaultMessage={'Other links'}
@@ -90,15 +93,27 @@ const Footer = () => (
               </li>
             </ul>
           </Col>
+
           <Col md={4} sm={12} xs={12} className={styles.links}>
-            <p className="monserrat">
+            <p className={styles.header}>
               <LocaleFormattedMessage
-                id={'nav.aboutQuranProject'}
-                defaultMessage={'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.'}
+                id={'local.selectLabel'}
+                defaultMessage={'Site Language'}
               />
             </p>
 
-            <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>
+            <div className={styles.list}>
+              <LocaleSwitcher/>
+
+              <p className="monserrat">
+                <LocaleFormattedMessage
+                  id={'nav.aboutQuranProject'}
+                defaultMessage={'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.'}
+                />
+              </p>
+
+              <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>
+            </div>
           </Col>
         </Row>
       </Col>

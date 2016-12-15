@@ -101,17 +101,24 @@ class SmartBanner extends Component {
 
   close() {
     this.hide();
+
+    let expireDate = new Date();
+    expireDate = new Date(expireDate.setDate(expireDate.getDate()+this.props.daysHidden));
+
     cookie.save('smartbanner-closed', 'true', {
       path: '/',
-      expires: +new Date() + this.props.daysHidden * 1000 * 60 * 60 * 24,
+      expires: expireDate,
     });
   }
 
   install() {
+    let expireDate = new Date();
+    expireDate = new Date(expireDate.setDate(expireDate.getDate()+this.props.daysReminder));
+
     this.hide();
     cookie.save('smartbanner-installed', 'true', {
       path: '/',
-      expires: +new Date() + this.props.daysReminder * 1000 * 60 * 60 * 24,
+      expires: expireDate,
     });
   }
 

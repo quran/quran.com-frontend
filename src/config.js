@@ -19,7 +19,8 @@ module.exports = Object.assign({
   sentryServer: process.env.SENTRY_KEY_SERVER,
   facebookAppId: process.env.FACEBOOK_APP_ID,
   // Supported locales
-  locales: ["en", "ar", "ur"],
+  locales: {"en": 'English', "ar": 'العربية', "ur": 'اردو'},
+  defaultLocale: 'en',
   app: {
     head: {
       titleTemplate: `%s - ${title}`,

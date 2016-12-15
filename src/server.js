@@ -28,7 +28,7 @@ import Html from './helpers/Html';
 
 import { setUserAgent } from './redux/actions/audioplayer.js';
 import { setOption } from './redux/actions/options.js';
-import localeData from './locale/ur.js';
+import { getLocalMessages } from './helpers/setLocal';
 
 // Use varnish for the static routes, which will cache too
 server.use(raven.middleware.express.requestHandler(config.sentryServer));
@@ -38,6 +38,7 @@ server.use((req, res, next) => {
   const client = new ApiClient(req);
   const history = createHistory(req.originalUrl);
   const store = createStore(history, client);
+  const localMessages = getLocalMessages(req);
 
   if (process.env.NODE_ENV === 'development') {
     webpack_isomorphic_tools.refresh()
@@ -45,7 +46,7 @@ server.use((req, res, next) => {
 
   if (req.query.DISABLE_SSR) {
     return res.status(200).send('<!doctype html>\n' + ReactDOM.renderToString(
-        <IntlProvider locale='ur' messages={localData.messages}>
+        <IntlProvider locale='en' messages={localMessages}>
           <Html
           store={store}
           assets={webpack_isomorphic_tools.assets()}
@@ -72,7 +73,7 @@ server.use((req, res, next) => {
 
       loadOnServer({...renderProps, store, helpers: { client }}).then(() => {
         const component = (
-          <IntlProvider messages={localeData.messages} locale='en' >
+          <IntlProvider messages={localMessages} locale='en' >
             <Provider store={store}>
               <ReduxAsyncConnect {...renderProps}  />
             </Provider>

@@ -20,9 +20,8 @@ import config from './config';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import routes from './routes';
-import localeData from './locale/ur.js';
+import getLocalMessages from './helpers/setLocal';
 
-const localMessages = localeData.messages;
 const client = new ApiClient();
 const store = createStore(browserHistory, client, window.reduxData);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -41,6 +40,9 @@ window.clearCookies = () => {
   reactCookie.remove('content');
   reactCookie.remove('audio');
   reactCookie.remove('isFirstTime');
+  reactCookie.remove('currentLocale');
+  reactCookie.remove('smartbanner-closed');
+  reactCookie.remove('smartbanner-installed');
 };
 
 match({ history, routes: routes(store) }, (error, redirectLocation, renderProps) => {
@@ -63,7 +65,7 @@ match({ history, routes: routes(store) }, (error, redirectLocation, renderProps)
   debug('client', 'React Rendering');
 
   ReactDOM.render(
-    <IntlProvider locale='en' messages={localMessages}>
+    <IntlProvider locale='en' messages={getLocalMessages()}>
       <Provider  store={store} key="provider">
       {component}
       </Provider>
