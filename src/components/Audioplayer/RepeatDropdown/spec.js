@@ -1,5 +1,5 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import { mountWithIntl } from '../../../../tests/helpers/intl-enzyme-test-helper.js';
 
 import RepeatDropdown from './index';
 
@@ -11,7 +11,7 @@ const surah = {
 makeComponent = (repeat) => {
   setRepeat = sinon.stub();
 
-  component = mount(
+  component = mountWithIntl(
     <RepeatDropdown
       repeat={repeat}
       setRepeat={setRepeat}
@@ -20,7 +20,7 @@ makeComponent = (repeat) => {
     />
   );
 
-  overlay = mount(component.find('OverlayTrigger').first().props().overlay);
+  overlay = mountWithIntl(component.find('OverlayTrigger').first().props().overlay);
 }
 
 describe('<RepeatDropdown />', () => {
