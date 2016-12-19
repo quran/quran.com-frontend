@@ -1,20 +1,20 @@
-import config from "../config";
+import config from '../config';
 import cookie from 'react-cookie';
 
 export function getLocalMessages(req) {
   let currentLocal;
   let expireDate = new Date();
-  expireDate.setYear(expireDate.getFullYear()+1);
+  expireDate.setYear(expireDate.getFullYear() + 1);
   const availableLocals = Object.keys(config.locales);
 
   if (req && req.query.local) {
-    currentLocal =  req.query.local;
+    currentLocal = req.query.local;
   }
   else{
     currentLocal = cookie.load('currentLocale');
   }
 
-  if(availableLocals.indexOf(currentLocal) == -1){
+  if (availableLocals.indexOf(currentLocal) === -1){
     currentLocal = config.defaultLocale;
   }
 
@@ -23,7 +23,7 @@ export function getLocalMessages(req) {
     expires: new Date(expireDate),
   });
 
-  let localeData = require('../locale/'+currentLocal+'.js');
+  const localeData = require('../locale/' + currentLocal + '.js');
 
   return localeData.messages;
 }

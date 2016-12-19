@@ -1,7 +1,7 @@
 // jscs:disable disallowQuotedKeysInObjects
 export default {
   messages: {
-    'local': 'en',
+    local: 'english',
     'local.changeLocal': 'Choose the language you want the site to display with',
     'local.navtiveName': 'English',
     'local.selectLabel': 'Language',
