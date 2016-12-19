@@ -26,7 +26,7 @@ export default {
     'ayah.media.lectureFrom': 'Watch lecture of {from}',
 
     'search.placeholder': 'Search',
-    'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>',
+    'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Sorry, there was an error with your search.',
     'search.noResult': 'No results found.',
 
@@ -47,7 +47,7 @@ export default {
     'player.repeat.rangeEnd': 'To',
     'player.repeat.times': 'Times',
     'player.repeat.loop': 'loop',
-    'player.scrollButtonTip': 'Automatically scrolls to the currently playing ayah on transitions...',
+    'player.scrollButtonTip': 'Automatically scrolls to the currently playing ayah on transitions...', // eslint-disable-line max-len
 
     'app.loading': 'Loading ...',
     'actions.copy': 'Copy',
@@ -61,7 +61,7 @@ export default {
     'nav.usefulSites': 'Useful sites',
     'nav.otherLinks': 'Other links',
     'nav.contactUs': 'Contact us',
-    'nav.aboutQuranProject': 'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.',
+    'nav.aboutQuranProject': 'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.', // eslint-disable-line max-len
     'nav.mobile': 'Mobile',
     'nav.legacySite': 'Legacy Quran.com'
   }

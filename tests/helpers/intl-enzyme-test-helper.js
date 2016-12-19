@@ -16,7 +16,7 @@ import { mount, shallow } from 'enzyme';
 const messages = require('../../src/locale/en.js');
 
 // Create the IntlProvider to retrieve context for wrapping around.
-const intlProvider = new IntlProvider({ locale: 'en', messages }, {});
+const intlProvider = new IntlProvider({ locale: 'en', messages: messages }, {});
 const { intl } = intlProvider.getChildContext();
 
 /**

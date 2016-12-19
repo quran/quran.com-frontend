@@ -13,7 +13,7 @@ export default function bindTooltip() {
       tooltip.id = 'tooltip';
 
       if (tip && tip !== '') {
-        //target.removeAttribute('title');
+        // target.removeAttribute('title');
         tooltip.style.opacity = 0;
         tooltip.innerHTML = tip;
         document.body.appendChild(tooltip);
@@ -64,7 +64,7 @@ export default function bindTooltip() {
           if (document.querySelector('#tooltip')) {
             document.body.removeChild(document.querySelector('#tooltip'));
           }
-          //target.setAttribute('title', tip);
+          // target.setAttribute('title', tip);
         };
 
         target.addEventListener('mouseleave', removeTooltip);

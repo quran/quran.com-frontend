@@ -27,7 +27,7 @@ export default {
     'ayah.media.lectureFrom': '{from} کے لیکچرو دیکھے',
 
     'search.placeholder': 'تلاش کر یں',
-    'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>',
+    'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'معذرت، آپ کی تلاش کے ساتھ ایک خرابی پیش آگئی.',
     'search.noResult': 'کوئی نتیجہ نہیں ملا',
 
