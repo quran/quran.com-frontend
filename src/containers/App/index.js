@@ -6,6 +6,9 @@ import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import SmartBanner from 'components/SmartBanner';
+import Link from 'react-router/lib/Link';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
@@ -16,7 +19,7 @@ import config from 'config';
 import metricsConfig from 'helpers/metrics';
 import { authConnect } from './connect';
 import Footer from 'components/Footer';
-import NoScriptWarning from 'components/NoScriptWarning';
+import NoScript from 'components/NoScript';
 
 import FontStyles from 'components/FontStyles';
 
@@ -42,7 +45,16 @@ class App extends Component {
       <div>
         <Helmet {...config.app.head} />
         <FontStyles />
-        <NoScriptWarning />
+        <NoScript>
+          <Row className='noscript-warning'>
+            <Col md={12}>
+              <p> Looks like either your browser does not support Javascript or its disabled. Quran.com workes best with JavaScript enabled.
+               For more instruction on how to enable javascript
+               <Link to="http://www.enable-javascript.com/"> Click here </Link>
+              </p>
+            </Col>
+          </Row>
+        </NoScript>
         {children}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install"/>
         <Footer />
