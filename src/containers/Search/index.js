@@ -14,7 +14,7 @@ import Col from 'react-bootstrap/lib/Col';
 
 import Header from './Header';
 import Ayah from 'components/Ayah';
-import CoreLoader from 'components/Loader';
+import Loader from 'components/Loader';
 
 import { search } from 'redux/actions/search.js';
 
@@ -34,6 +34,10 @@ class Search extends Component {
     ayahs: PropTypes.object,
     push: PropTypes.func.isRequired,
     options: PropTypes.object
+  };
+
+  static defaultProps = {
+    results: []
   };
 
   static contextTypes = {
@@ -94,8 +98,8 @@ class Search extends Component {
                   initialSelected={page - 1}
                   forceSelected={page - 1}
                   clickCallback={this.handlePageChange}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
+                  containerClassName="pagination"
+                  subContainerClassName="pages pagination"
                   activeClass={style.active}
                 />
               </Col>
@@ -109,7 +113,7 @@ class Search extends Component {
   }
 
   renderBody() {
-    const { isErrored, isLoading, total, results,options, ayahs } = this.props;
+    const { isErrored, isLoading, results, options, ayahs } = this.props;
 
     if (isErrored) {
       return (
@@ -119,16 +123,22 @@ class Search extends Component {
       );
     }
 
-    if (!total) {
-      return <h3 className="text-center" style={{padding: '15%'}}>No results found.</h3>;
+    if (isLoading) {
+      return <div style={{ padding: '15%' }}><Loader /></div>;
     }
 
-    if (isLoading) {
-      return <div style={{padding: '15%'}}><CoreLoader /></div>;
+    if (!results.length) {
+      return <h3 className="text-center" style={{ padding: '15%' }}>No results found.</h3>;
     }
 
     return results.map(result => (
-      <Ayah ayah={ayahs[result.ayah]} match={result.match} key={result.ayah} tooltip={options.tooltip} isSearched />
+      <Ayah
+        ayah={ayahs[result.ayah]}
+        match={result.match}
+        key={result.ayah}
+        tooltip={options.tooltip}
+        isSearched
+      />
     ));
   }
 
@@ -160,6 +170,11 @@ class Search extends Component {
 
 const AsyncSearch = asyncConnect([{
   promise({ store: { dispatch }, location: { query } }) {
+    if (__CLIENT__) {
+      dispatch(search(query));
+      return false;
+    }
+
     return dispatch(search(query));
   }
 }])(Search);

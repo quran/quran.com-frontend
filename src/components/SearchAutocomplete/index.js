@@ -1,3 +1,5 @@
+// TODO: Should be handled by redux and not component states.
+// TODO: This needs to be rewritten
 import React, { Component, PropTypes } from 'react';
 import ApiClient from 'helpers/ApiClient';
 import { connect } from 'react-redux';
@@ -49,13 +51,13 @@ class SearchAutocomplete extends Component {
     this.handleSurahSuggestions(value);
 
     if (value.length === 0 && this.state.surahs.length > 0) {
-      this.setState({surahs: []});
+      this.setState({ surahs: [] });
     }
 
     if (value.length >= 3) {
       this.handleAyahSuggestions(value);
     } else if (this.state.ayat.length > 0) {
-      this.setState({ayat: []});
+      this.setState({ ayat: [] });
     }
   }
 
@@ -100,7 +102,7 @@ class SearchAutocomplete extends Component {
     if (this.cached[lang][value]) {
       this.setState({ ayat: this.cached[lang][value] });
     } else {
-      client.get('/v2/suggest', {params: {q: value, l: lang}}).then((res) => {
+      client.get('/v2/suggest', { params: { q: value, l: lang } }).then((res) => {
         this.cached[lang][value] = res;
 
         if (this.props.value.trim() === value) {
@@ -200,7 +202,6 @@ class SearchAutocomplete extends Component {
     );
   }
 }
-
 
 function mapStateToProps(state) {
   const surahs = state.surahs.entities;
