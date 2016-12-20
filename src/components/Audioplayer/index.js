@@ -63,6 +63,11 @@ export class Audioplayer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // Make sure we have a current ayah to mount it to Audio
+    if (!this.props.currentAyah && !nextProps.currentFile) {
+      return false;
+    }
+
     // When you go directly to the surah page, /2, the files are not loaded yet
     if (this.props.isLoadedOnClient !== nextProps.isLoadedOnClient) {
       return this.handleAddFileListeners(nextProps.currentFile);
@@ -391,7 +396,7 @@ export class Audioplayer extends Component {
       setRepeat // eslint-disable-line no-shadow
     } = this.props;
 
-    if (isLoading) {
+    if (isLoading || !currentAyah) {
       return (
         <li className={`${style.container} ${className}`}>
           <div>Loading...</div>
@@ -407,13 +412,19 @@ export class Audioplayer extends Component {
               progress={currentTime / duration * 100}
               onTrackChange={this.handleTrackChange}
             /> : null}
-          {isLoadedOnClient && segments[currentAyah] && typeof segments[currentAyah] !== 'string' ?
-            <Segments
-              audio={currentFile}
-              segments={segments[currentAyah]}
-              currentAyah={currentAyah}
-              currentTime={currentTime}
-            /> : null}
+          {
+            isLoadedOnClient &&
+            segments &&
+            segments[currentAyah] &&
+            typeof segments[currentAyah] !== 'string' ?
+              <Segments
+                audio={currentFile}
+                segments={segments[currentAyah]}
+                currentAyah={currentAyah}
+                currentTime={currentTime}
+              /> :
+            null
+          }
         </div>
         <ul className={`list-inline ${style.controls}`}>
           <li className={style.controlItem}>
