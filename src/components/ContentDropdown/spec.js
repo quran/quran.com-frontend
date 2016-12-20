@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallowWithIntl } from '../../../tests/helpers/intl-enzyme-test-helper.js';
+import { mountWithIntl } from '../../../tests/helpers/intl-enzyme-test-helper.js';
 
 import ContentDropdown, { slugs } from './index';
 
@@ -11,7 +11,7 @@ let defaultOption = 19
 describe('<ContentDropdown />', () => {
   beforeEach(() => {
     onOptionChange = sinon.stub();
-    wrapper = shallowWithIntl(<ContentDropdown options={{content: [defaultOption]}} onOptionChange={onOptionChange} />);
+    wrapper = mountWithIntl(<ContentDropdown options={{content: [defaultOption]}} onOptionChange={onOptionChange} />);
   });
 
   it('should render', () => {

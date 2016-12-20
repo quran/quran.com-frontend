@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallowWithIntl } from '../../../tests/helpers/intl-enzyme-test-helper.js';
+import {shallow} from 'enzyme';
 
 import PageBreak from './index';
 
 let wrapper;
 let pageNum = 15;
 
-describe('<ContentDropdown />', () => {
+describe('<PageBreak />', () => {
   beforeEach(() => {
-    wrapper = shallowWithIntl(<PageBreak pageNum={pageNum} />);
+    wrapper = shallow(<PageBreak pageNum={pageNum} />);
   });
 
   it('should render', () => {
