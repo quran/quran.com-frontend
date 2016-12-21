@@ -26,8 +26,9 @@
   border-right: 1px solid rgba(173, 170, 156, 0.5);
 }
 
-:local .surah-container {
+.surah-container {
   padding-top: 70px;
+  min-height: 80vh;
 
   @media(max-width: $screen-xs-max) {
     padding-top: 70px;

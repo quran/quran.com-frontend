@@ -16,6 +16,7 @@ import Helmet from 'react-helmet';
 import Sidebar from 'components/Sidebar';
 
 // components
+import Loader from 'components/Loader';
 import LazyLoad from 'components/LazyLoad';
 import PageBreak from 'components/PageBreak';
 import Audioplayer from 'components/Audioplayer';
@@ -52,12 +53,6 @@ const style = require('./style.scss');
 
 let lastScroll = 0;
 
-const zeroPad = (num, places) => {
-  const zero = places - num.toString().length + 1;
-
-  return Array(+(zero > 0 && zero)).join('0') + num;
-};
-
 class Surah extends Component {
   static propTypes = {
     surah: PropTypes.object.isRequired,
@@ -74,7 +69,7 @@ class Surah extends Component {
     isAuthenticated: PropTypes.bool.isRequired,
     options: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
-    ayahs: PropTypes.object.isRequired,
+    ayahs: PropTypes.object,
     isStarted: PropTypes.bool,
     isPlaying: PropTypes.bool
   };
@@ -299,7 +294,7 @@ class Surah extends Component {
             }
           </ul>
         }
-        loadingComponent={<p>Loading...</p>}
+        loadingComponent={<Loader />}
       />
     );
   }
@@ -352,7 +347,7 @@ class Surah extends Component {
   }
 
   renderSidebar() {
-    const { surah, surahs, ayahIds, options, actions } = this.props;
+    const { surah, surahs, ayahIds, options } = this.props;
 
     return (
       <div>
@@ -391,8 +386,10 @@ class Surah extends Component {
   }
 
   render() {
-    const { surah, surahs, ayahIds, options, actions, footer } = this.props;
+    const { surah, options, ayahs, actions } = this.props;
     debug('component:Surah', 'Render');
+
+    if (!ayahs) return <div style={{ margin: '50px auto'}}><Loader /></div>;
 
     return (
       <div className="surah-body">
@@ -438,7 +435,7 @@ class Surah extends Component {
         <Sidebar
           open={this.state.sidebarOpen}
           onSetOpen={(open) => this.setState({sidebarOpen: open})}
-          >
+        >
           {this.renderSidebar()}
         </Sidebar>
         <div className={`container-fluid ${style['surah-container']}`}>
@@ -467,13 +464,16 @@ class Surah extends Component {
   }
 }
 
-const AsyncSurah = asyncConnect([{ promise: surahsConnect }, { promise: ayahsConnect }])(Surah);
+const AsyncSurah = asyncConnect([
+  { promise: surahsConnect },
+  { promise: ayahsConnect }
+])(Surah);
 
 function mapStateToProps(state, ownProps) {
   const surahId = parseInt(ownProps.params.surahId, 10);
   const surah: Object = state.surahs.entities[surahId];
-  const ayahs: Object = state.ayahs.entities[surahId];
-  const ayahArray = Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10));
+  const ayahs: ?Object = state.ayahs.entities[surahId];
+  const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
   const ayahIds = new Set(ayahArray);
   const lastAyahInArray = ayahArray.slice(-1)[0];
 

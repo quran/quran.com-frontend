@@ -47,7 +47,7 @@ match({ history, routes: routes(store) }, (error, redirectLocation, renderProps)
       render={(props) => (
         <ReduxAsyncConnect
           {...props}
-          helpers={{client}}
+          helpers={{ client }}
           filter={item => !item.deferred}
           render={applyRouterMiddleware(useScroll())}
         />

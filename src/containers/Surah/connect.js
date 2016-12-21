@@ -19,6 +19,11 @@ export const surahsConnect = ({ store: { getState, dispatch } }) => {
   if (!isAllLoaded(getState())) {
     debug('component:Surah:surahsConnect', 'Surahs not loaded');
 
+    if (__CLIENT__) {
+      dispatch(loadAll());
+      return true;
+    }
+
     return dispatch(loadAll());
   }
 
@@ -63,6 +68,11 @@ export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {
     debug('component:Surah:ayahsConnect', 'Not loaded');
 
     dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
+
+    if (__CLIENT__) {
+      dispatch(loadAyahs(surahId, from, to, getState().options));
+      return true;
+    }
 
     return dispatch(loadAyahs(surahId, from, to, getState().options));
   }

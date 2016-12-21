@@ -1,15 +1,10 @@
 import React from 'react';
 
-const loading = require('../../../static/images/loading.gif');
+const styles = require('./style.scss');
 
 const Loader = () => (
-  <div className="loading" nghide="currentSurah.ayahs">
-    <div className="row">
-      <div className="colmd6 colmdoffset3 textcenter">
-        <img src={loading} alt="Loader" />
-        <h3>Loading...</h3>
-      </div>
-    </div>
+  <div className={styles.loader}>
+    Loading...
   </div>
 );
 

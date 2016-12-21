@@ -42,7 +42,8 @@ const initialState = {
   },
   shouldScroll: true,
   isLoadedOnClient: false,
-  isLoading: true
+  isLoading: true,
+  segments: {}
 };
 
 export default function reducer(state = initialState, action = {}) {
