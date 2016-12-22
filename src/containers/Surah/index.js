@@ -48,6 +48,7 @@ import * as AyahActions from 'redux/actions/ayahs.js';
 import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
+import { loadInfo } from 'redux/actions/surahs.js';
 
 const style = require('./style.scss');
 
@@ -71,7 +72,7 @@ class Surah extends Component {
     params: PropTypes.object.isRequired,
     ayahs: PropTypes.object,
     isStarted: PropTypes.bool,
-    isPlaying: PropTypes.bool
+    isPlaying: PropTypes.bool,
   };
 
   state = {
@@ -313,7 +314,7 @@ class Surah extends Component {
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
-        currentAyah={currentAyah}
+        isCurrentAyah={ayah.ayahKey === currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
@@ -386,7 +387,7 @@ class Surah extends Component {
   }
 
   render() {
-    const { surah, options, ayahs, actions } = this.props;
+    const { surah, options, ayahs, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
     if (!ayahs) return <div style={{ margin: '50px auto'}}><Loader /></div>;
@@ -442,6 +443,7 @@ class Surah extends Component {
           <Row>
             <SurahInfo
               surah={surah}
+              loadInfo={actions.loadInfo}
               isShowingSurahInfo={options.isShowingSurahInfo}
               onClose={this.handleSurahInfoToggle}
             />
@@ -504,8 +506,9 @@ function mapDispatchToProps(dispatch) {
       audio: bindActionCreators(AudioActions, dispatch),
       bookmark: bindActionCreators(BookmarkActions, dispatch),
       media: bindActionCreators(MediaActions, dispatch),
-      push: bindActionCreators(push, dispatch)
-    }
+      push: bindActionCreators(push, dispatch),
+      loadInfo: bindActionCreators(loadInfo, dispatch)
+    },
   };
 }
 

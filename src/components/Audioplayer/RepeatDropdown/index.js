@@ -225,7 +225,7 @@ export default class RepeatButton extends Component {
       <div className="text-center">
         <OverlayTrigger
           overlay={popover}
-          placement="bottom"
+          placement="top"
           trigger="click"
           rootClose
         >

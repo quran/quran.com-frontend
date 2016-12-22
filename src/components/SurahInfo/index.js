@@ -3,13 +3,21 @@ import React, { PropTypes } from 'react';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
+import Loader from 'components/Loader';
+
 const style = require('./style.scss');
 
-const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
+const SurahInfo = ({ surah, isShowingSurahInfo, onClose, loadInfo }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
+  if (!surah.info) {
+    // This will get called twice if we have the component open and navigating between surahs.
+    // Fine for now. Technically should check for fetching.
+    // TODO: When Surah component becomes smaller, pass fetching here to avoid rerender.
+    loadInfo(surah.id);
 
-  const html = require(`./htmls/${surah.id}.html.js`); // eslint-disable-line global-require
+    return <Loader />;
+  }
 
   return (
     <Col xs={12} className={`${style.container} surah-info ${style.show}`}>
@@ -32,11 +40,11 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
           </dl>
         </Col>
         <Col md={8} className={`${style.info} times-new`}>
-          <div dangerouslySetInnerHTML={{__html: html}} />
+          <div dangerouslySetInnerHTML={{__html: surah.info.description}} />
           <div>
             <p>
               <em>
-                Source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Quran
+                Source: {surah.info.contentSource}
               </em>
             </p>
           </div>
@@ -48,6 +56,7 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
 
 SurahInfo.propTypes = {
   onClose: PropTypes.func,
+  loadInfo: PropTypes.func,
   isShowingSurahInfo: PropTypes.bool,
   surah: PropTypes.object
 };

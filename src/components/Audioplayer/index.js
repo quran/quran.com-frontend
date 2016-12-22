@@ -1,3 +1,4 @@
+// TODO: This file is too too large.
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
@@ -252,7 +253,7 @@ export class Audioplayer extends Component {
 
   handleAddFileListeners(file) {
     const { update, currentTime } = this.props; // eslint-disable-line no-shadow
-    console.log('component:Audioplayer', `Attaching listeners to ${file.src}`);
+    debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
 
     // Preload file
     file.setAttribute('preload', 'auto');
@@ -298,14 +299,10 @@ export class Audioplayer extends Component {
       file.ontimeupdate = null; // eslint-disable-line no-param-reassign
     };
 
-    const onProgress = () => {
-    };
-
     file.onloadeddata = onLoadeddata;  // eslint-disable-line no-param-reassign
     file.onpause = onPause; // eslint-disable-line no-param-reassign
     file.onplay = onPlay; // eslint-disable-line no-param-reassign
     file.onended = onEnded; // eslint-disable-line no-param-reassign
-    file.onprogress = onProgress; // eslint-disable-line no-param-reassign
 
     return file;
   }
@@ -334,15 +331,12 @@ export class Audioplayer extends Component {
   renderPlayStopButtons() {
     const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
 
-    let icon = <i className="ss-icon ss-play" />;
-
-    if (isPlaying) {
-      icon = <i className="ss-icon ss-pause" />;
-    }
-
     return (
-      <a className={`pointer text-center ${style.playingButton} ${style.buttons}`} onClick={isPlaying ? pause : this.play}>
-        {icon}
+      <a
+        className={`pointer text-center ${style.playingButton} ${style.buttons}`}
+        onClick={isPlaying ? pause : this.play}
+      >
+        <i className={`ss-icon ${isPlaying ? 'ss-pause' : 'ss-play'}`} />
       </a>
     );
   }
@@ -382,7 +376,6 @@ export class Audioplayer extends Component {
 
     const {
       className,
-      currentFile,
       segments,
       isLoading,
       currentAyah,
@@ -416,14 +409,12 @@ export class Audioplayer extends Component {
             isLoadedOnClient &&
             segments &&
             segments[currentAyah] &&
-            typeof segments[currentAyah] !== 'string' ?
+            segments[currentAyah] &&
               <Segments
-                audio={currentFile}
                 segments={segments[currentAyah]}
                 currentAyah={currentAyah}
                 currentTime={currentTime}
-              /> :
-            null
+              />
           }
         </div>
         <ul className={`list-inline ${style.controls}`}>
