@@ -15,25 +15,30 @@ function Home(props) {
 
   debug('component:Index', 'Render');
 
+  const footer = props.footer;
+
   return (
-    <div className="index-page">
-      <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
-      <IndexHeader />
-      <div className={`container ${styles.list}`}>
-        <div className="row">
-          <div className="col-md-10 col-md-offset-1">
-            <QuickSurahs />
-            <h4 className={`text-muted ${styles.title}`}>
-              SURAHS (CHAPTERS)
-            </h4>
-            <div className="row">
-              <SurahsList surahs={Object.values(props.surahs).slice(0, 38)} />
-              <SurahsList surahs={Object.values(props.surahs).slice(38, 76)} />
-              <SurahsList surahs={Object.values(props.surahs).slice(76, 114)} />
+    <div>
+      <div className="index-page">
+        <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
+        <IndexHeader />
+        <div className={`container ${styles.list}`}>
+          <div className="row">
+            <div className="col-md-10 col-md-offset-1">
+              <QuickSurahs />
+              <h4 className={`text-muted ${styles.title}`}>
+                SURAHS (CHAPTERS)
+              </h4>
+              <div className="row">
+                <SurahsList surahs={Object.values(props.surahs).slice(0, 38)} />
+                <SurahsList surahs={Object.values(props.surahs).slice(38, 76)} />
+                <SurahsList surahs={Object.values(props.surahs).slice(76, 114)} />
+              </div>
             </div>
           </div>
         </div>
       </div>
+      {footer}
     </div>
   );
 }
