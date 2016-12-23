@@ -1,6 +1,7 @@
 import {
   isAllLoaded,
   loadAll,
+  loadInfo,
   setCurrent as setCurrentSurah
   } from 'redux/actions/surahs.js';
 
@@ -28,6 +29,15 @@ export const surahsConnect = ({ store: { getState, dispatch } }) => {
   }
 
   return true;
+};
+
+export const surahInfoConnect = ({ store: { dispatch }, params }) => {
+  if (__CLIENT__) {
+    dispatch(loadInfo(params.surahId));
+    return true;
+  }
+
+  return dispatch(loadInfo(params.surahId));
 };
 
 export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {

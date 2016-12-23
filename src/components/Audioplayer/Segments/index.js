@@ -5,7 +5,6 @@ import debug from 'helpers/debug';
 
 export default class Segments extends Component {
   static propTypes = {
-    audio: PropTypes.object,
     segments: PropTypes.object.isRequired,
     currentAyah: PropTypes.string,
     currentTime: PropTypes.number
@@ -13,7 +12,6 @@ export default class Segments extends Component {
 
   shouldComponentUpdate(nextProps) {
     return [
-      this.props.audio !== nextProps.audio,
       this.props.currentAyah !== nextProps.currentAyah,
       this.props.currentTime !== nextProps.currentTime,
     ].some(test => test);

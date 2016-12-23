@@ -39,9 +39,7 @@ import scroller from 'utils/scroller';
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
-import descriptions from './descriptions';
-
-import { surahsConnect, ayahsConnect } from './connect';
+import { surahsConnect, surahInfoConnect, ayahsConnect } from './connect';
 
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/ayahs.js';
@@ -71,7 +69,7 @@ class Surah extends Component {
     params: PropTypes.object.isRequired,
     ayahs: PropTypes.object,
     isStarted: PropTypes.bool,
-    isPlaying: PropTypes.bool
+    isPlaying: PropTypes.bool,
   };
 
   state = {
@@ -258,7 +256,7 @@ class Surah extends Component {
       return `Surat ${surah.name.simple} [verse ${params.range}]`;
     }
 
-    return `${descriptions[surah.id]} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${surah.info.shortDescription} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderPagination() {
@@ -313,7 +311,7 @@ class Surah extends Component {
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
-        currentAyah={currentAyah}
+        isCurrentAyah={ayah.ayahKey === currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
@@ -386,7 +384,7 @@ class Surah extends Component {
   }
 
   render() {
-    const { surah, options, ayahs, actions } = this.props;
+    const { surah, options, ayahs, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
     if (!ayahs) return <div style={{ margin: '50px auto'}}><Loader /></div>;
@@ -442,6 +440,7 @@ class Surah extends Component {
           <Row>
             <SurahInfo
               surah={surah}
+              loadInfo={actions.loadInfo}
               isShowingSurahInfo={options.isShowingSurahInfo}
               onClose={this.handleSurahInfoToggle}
             />
@@ -466,6 +465,7 @@ class Surah extends Component {
 
 const AsyncSurah = asyncConnect([
   { promise: surahsConnect },
+  { promise: surahInfoConnect },
   { promise: ayahsConnect }
 ])(Surah);
 
@@ -505,7 +505,7 @@ function mapDispatchToProps(dispatch) {
       bookmark: bindActionCreators(BookmarkActions, dispatch),
       media: bindActionCreators(MediaActions, dispatch),
       push: bindActionCreators(push, dispatch)
-    }
+    },
   };
 }
 

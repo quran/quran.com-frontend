@@ -31,7 +31,7 @@ export default class Ayah extends Component {
     isAuthenticated: PropTypes.bool,
     tooltip: PropTypes.string,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
-    currentAyah: PropTypes.string,
+    isCurrentAyah: PropTypes.bool,
     audioActions: PropTypes.object.isRequired
   };
 
@@ -50,7 +50,7 @@ export default class Ayah extends Component {
       this.props.bookmarked !== nextProps.bookmarked,
       this.props.tooltip !== nextProps.tooltip,
       this.props.currentWord !== nextProps.currentWord,
-      this.props.currentAyah !== nextProps.currentAyah
+      this.props.isCurrentAyah !== nextProps.isCurrentAyah
     ];
 
     if (this.props.match) {
@@ -285,7 +285,8 @@ export default class Ayah extends Component {
         data-metrics-event-name="Ayah:Link"
       >
         {content}
-      </Link>);
+      </Link>
+    );
   }
 
   renderControls() {
@@ -300,12 +301,14 @@ export default class Ayah extends Component {
   }
 
   render() {
-    const { ayah, currentAyah } = this.props;
-    const className = ayah.ayahKey === currentAyah ? 'highlight' : '';
+    const { ayah, isCurrentAyah } = this.props;
     debug('component:Ayah', `Render ${this.props.ayah.ayahNum}`);
 
     return (
-      <Element name={`ayah:${ayah.ayahKey}`} className={`row ${className} ${styles.container}`}>
+      <Element
+        name={`ayah:${ayah.ayahKey}`}
+        className={`row ${isCurrentAyah && 'highlight'} ${styles.container}`}
+      >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">
           {this.renderText()}
