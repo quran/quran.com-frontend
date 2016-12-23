@@ -1,12 +1,12 @@
 import React, { PropTypes } from 'react';
-
-import {Row, Col} from 'react-bootstrap/lib';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
 
 import InformationToggle from 'components/InformationToggle';
 import FontSizeDropdown from 'components/FontSizeDropdown';
 import TooltipDropdown from 'components/TooltipDropdown';
 import ReadingModeToggle from 'components/ReadingModeToggle';
-import NightModeToggle from 'components/NightModeToggle'
+import NightModeToggle from 'components/NightModeToggle';
 import Title from 'containers/Surah/Title';
 import Share from 'components/Share';
 

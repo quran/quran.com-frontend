@@ -1,19 +1,18 @@
 import React, { PropTypes } from 'react';
 import debug from 'helpers/debug';
+import Link from 'react-router/lib/Link';
+
 const styles = require('./style.scss');
 
 const LastVisit = (props) => {
-
   debug('component:Index', 'LastVisit');
 
-  const {lastVisit, surahs} = props;
+  const { lastVisit, surahs } = props;
 
   if (lastVisit) {
-
     const surah = surahs[lastVisit.surah - 1];
 
     if (surah) {
-
       const lastVisitedAyah = parseInt(lastVisit.ayah, 10);
 
       return (
@@ -48,6 +47,8 @@ const LastVisit = (props) => {
       );
     }
   }
+
+  return false;
 };
 
 LastVisit.propTypes = {

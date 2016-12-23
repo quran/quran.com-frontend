@@ -13,8 +13,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const styles = require('./style.scss');
 
-function Home(props) {
-
+const Home = (props) => {
   debug('component:Index', 'Render');
 
   return (
@@ -38,7 +37,7 @@ function Home(props) {
       </div>
     </div>
   );
-}
+};
 
 Home.propTypes = {
   lastVisit: PropTypes.any,
@@ -55,4 +54,4 @@ const AsyncHome = asyncConnect([{
   }
 }])(Home);
 
-export default connect(state => ({surahs: state.surahs.entities}))(AsyncHome);
+export default connect(state => ({ surahs: state.surahs.entities }))(AsyncHome);

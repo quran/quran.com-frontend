@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/lib/Col';
 const PageBreak = ({ pageNum }) => (
   <Row>
     <Col md={12}>
-      <hr style={{width: '100%'}} />
+      <hr style={{ width: '100%' }} />
       Page {pageNum}
     </Col>
   </Row>

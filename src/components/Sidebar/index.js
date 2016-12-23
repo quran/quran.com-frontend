@@ -1,3 +1,4 @@
+/* global document */
 import React, { PropTypes, Component } from 'react';
 
 const styles = require('./style.scss');
@@ -25,7 +26,7 @@ class Sidebar extends Component {
   onBodyClick = (event) => {
     const { onSetOpen } = this.props;
 
-    if (!this.refs.container.contains(event.target)) {
+    if (!this.container.contains(event.target)) {
       return onSetOpen();
     }
 
@@ -36,7 +37,10 @@ class Sidebar extends Component {
     const { open, children } = this.props;
 
     return (
-      <div ref="container" className={`${styles.container} sidebar ${open && styles.open}`}>
+      <div
+        ref={(container) => { this.container = container; }}
+        className={`${styles.container} sidebar ${open && styles.open}`}
+      >
         {children}
       </div>
     );

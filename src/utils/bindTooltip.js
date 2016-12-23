@@ -1,3 +1,4 @@
+/* global document, window */
 import getOffset from './getOffset';
 
 export default function bindTooltip() {
@@ -5,9 +6,8 @@ export default function bindTooltip() {
   let tip = false;
   let tooltip = false;
 
-  Array.from(targets).forEach(target => {
+  Array.from(targets).forEach((target) => {
     target.addEventListener('mouseenter', () => {
-
       tip = target.getAttribute('title');
       tooltip = document.createElement('div');
       tooltip.id = 'tooltip';
@@ -30,14 +30,14 @@ export default function bindTooltip() {
           let posTop = getOffset(target).top - tooltip.offsetHeight - 10;
 
           if (posLeft < 0) {
-            posLeft = getOffset(target).left + target.offsetWidth / 2 - 20;
+            posLeft = (getOffset(target).left + target.offsetWidth) / (2 - 20);
             tooltip.classList.add('left');
           } else {
             tooltip.classList.remove('left');
           }
 
           if (posLeft + tooltip.offsetWidth > window.innerWidth) {
-            posLeft = getOffset(target).left - tooltip.offsetWidth + target.offsetWidth / 2 + 20;
+            posLeft = (getOffset(target).left - tooltip.offsetWidth + target.offsetWidth) / (2 + 20);
             tooltip.classList.add('right');
           } else {
             tooltip.classList.remove('right');

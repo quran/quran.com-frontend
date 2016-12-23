@@ -14,7 +14,7 @@ export default () => (
       <Row>
         <Col md={8} mdOffset={2}>
           <h4 className="source-sans">
-            The Noble Qur'an is the central
+            The Noble Quran is the central
             religious text of Islam. Muslims believe the Qur’an is the
             book of Divine guidance and direction for mankind, and
             consider the original Arabic text the final revelation of
@@ -22,7 +22,7 @@ export default () => (
             All translations of the original Arabic text
             are thus interpretations of the original meanings and should
             be embraced as such. For more information about the Noble
-            Qur'an, you may visit its <a href="https://en.wikipedia.org/wiki/Quran">Wikipedia article.</a>
+            Quran, you may visit its <a href="https://en.wikipedia.org/wiki/Quran">Wikipedia article.</a>
           </h4>
         </Col>
       </Row>
@@ -31,7 +31,7 @@ export default () => (
           <h3>MECCAN SURAHS</h3>
           <h4 className="source-sans">
             The Meccan suras are the chronologically earlier chapters
-            (suras) of the Qur'an that were, according to Islamic
+            (suras) of the Quran that were, according to Islamic
             tradition, revealed anytime before the migration of the
             Islamic prophet Muhammed and his followers from Mecca to
             Medina (Hijra). The Medinan suras are those revelations that
@@ -43,9 +43,9 @@ export default () => (
         <Col md={8} mdOffset={2}>
           <h3>MEDINAN SURAHS</h3>
           <h4 className="source-sans">
-            The Medinan suras or Medinan chapters of the Qur'an are the
+            The Medinan suras or Medinan chapters of the Quran are the
             latest 24 suras that, according to Islamic tradition, were
-            revealed at Medina after Muhammad's hijra from Mecca. These
+            revealed at Medina after Muhammad&apos;s hijra from Mecca. These
             suras were revealed by Allah when the Muslim community was
             larger and more developed, as opposed to their minority position
             in Mecca.
@@ -77,7 +77,7 @@ export default () => (
             <a href="http://www.qurancomplex.com"> QuranComplex</a>,
             <a href="https://github.com/cpfair/quran-align">Colin Fair's work on audio segments</a>,
             <a href="http://www.zekr.org"> Zekr</a> and
-            <a href="http://www.al-quran.info"> Online Qur'an Project</a>.
+            <a href="http://www.al-quran.info"> Online Quran Project</a>.
             Special thanks to the
             <a href="http://elmohafez.com"> Elmohafez team</a> for word by
             word timing files.

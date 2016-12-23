@@ -27,7 +27,7 @@ function formatUrl(path) {
 
 export default class {
   constructor(req) {
-    methods.forEach(method => {
+    methods.forEach((method) => {
       this[method] = (path, { params, data, arrayFormat } = {}) =>
       new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));

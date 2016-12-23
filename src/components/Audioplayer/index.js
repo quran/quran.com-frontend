@@ -1,28 +1,31 @@
+/* global document */
 // TODO: This file is too too large.
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
 
-// Redux
-import * as AudioActions from 'redux/actions/audioplayer';
-
-// Components
-import Track from './Track';
-import Segments from './Segments';
-import ScrollButton from './ScrollButton';
-import RepeatDropdown from './RepeatDropdown';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 // Helpers
 import debug from 'helpers/debug';
 import scroller from 'utils/scroller';
 
+import surahType from 'types/surahType';
+
+// Redux
+import * as AudioActions from 'redux/actions/audioplayer';
+
+import Track from './Track';
+import Segments from './Segments';
+import ScrollButton from './ScrollButton';
+import RepeatDropdown from './RepeatDropdown';
+
 const style = require('./style.scss');
 
 export class Audioplayer extends Component {
   static propTypes = {
     className: PropTypes.string,
-    surah: PropTypes.object.isRequired,
+    surah: surahType,
     onLoadAyahs: PropTypes.func.isRequired,
     segments: PropTypes.object,
     files: PropTypes.object,
@@ -32,10 +35,14 @@ export class Audioplayer extends Component {
     isLoading: PropTypes.bool.isRequired,
     play: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
-    next: PropTypes.func.isRequired,
-    previous: PropTypes.func.isRequired,
+    next: PropTypes.func.isRequired, // eslint-disable-line
+    previous: PropTypes.func.isRequired, // eslint-disable-line
     update: PropTypes.func.isRequired,
-    repeat: PropTypes.object.isRequired,
+    repeat: PropTypes.shape({
+      from: PropTypes.number,
+      to: PropTypes.number,
+      time: PropTypes.number,
+    }).isRequired,
     shouldScroll: PropTypes.bool.isRequired,
     setRepeat: PropTypes.func.isRequired,
     setAyah: PropTypes.func.isRequired,
@@ -165,7 +172,7 @@ export class Audioplayer extends Component {
     const ayahIds = Object.keys(files);
     const index = ayahIds.findIndex(id => id === currentAyah) + 1;
 
-    for (let id = index; id <= index + 2; id++) {
+    for (let id = index; id <= index + 2; id += 1) {
       if (ayahIds[id]) {
         const ayahKey = ayahIds[id];
 
@@ -308,7 +315,7 @@ export class Audioplayer extends Component {
     return file;
   }
 
-  handleRemoveFileListeneres(file) {
+  handleRemoveFileListeneres = (file) => {
     file.pause();
     file.currentTime = 0; // eslint-disable-line no-param-reassign
     file.onloadeddata = null; // eslint-disable-line no-param-reassign
@@ -334,6 +341,7 @@ export class Audioplayer extends Component {
 
     return (
       <a
+        tabIndex="-1"
         className={`pointer text-center ${style.playingButton} ${style.buttons}`}
         onClick={isPlaying ? pause : this.play}
       >
@@ -349,6 +357,7 @@ export class Audioplayer extends Component {
 
     return (
       <a
+        tabIndex="-1"
         className={`pointer ${style.buttons} ${!index ? style.disabled : ''}`}
         onClick={() => index && this.handleAyahChange('previous')}
       >
@@ -364,6 +373,7 @@ export class Audioplayer extends Component {
 
     return (
       <a
+        tabIndex="-1"
         className={`pointer ${style.buttons} ${isEnd ? style.disabled : ''}`}
         onClick={() => !isEnd && this.handleAyahChange()}
       >
@@ -395,8 +405,8 @@ export class Audioplayer extends Component {
         <li className={`${style.container} ${className}`}>
           <div>
             <LocaleFormattedMessage
-              id='app.loading'
-              defaultMessage={ 'Loading...' }
+              id="app.loading"
+              defaultMessage="Loading..."
             />
           </div>
         </li>
@@ -408,7 +418,7 @@ export class Audioplayer extends Component {
         <div className={style.wrapper}>
           {isLoadedOnClient ?
             <Track
-              progress={currentTime / duration * 100}
+              progress={(currentTime / duration) * 100}
               onTrackChange={this.handleTrackChange}
             /> : null}
           {
@@ -426,8 +436,8 @@ export class Audioplayer extends Component {
         <ul className={`list-inline ${style.controls}`}>
           <li className={style.controlItem}>
             <LocaleFormattedMessage
-              id='player.currentAyah'
-              defaultMessage={ 'Ayah' }
+              id="player.currentAyah"
+              defaultMessage="Ayah"
             />: {currentAyah.split(':')[1]}
           </li>
           <li className={style.controlItem}>

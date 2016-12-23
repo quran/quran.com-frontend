@@ -33,7 +33,8 @@ export default class Ayah extends Component {
     tooltip: PropTypes.string,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
     isCurrentAyah: PropTypes.bool,
-    audioActions: PropTypes.object.isRequired
+    audioActions: PropTypes.object.isRequired,
+    currentAyah: PropTypes.string
   };
 
   static defaultProps = {
@@ -64,10 +65,11 @@ export default class Ayah extends Component {
   handlePlay(ayah) {
     const { isPlaying, audioActions, currentAyah } = this.props;
     const { pause, setAyah, play } = audioActions;
-    const  isPreviouslyPlaying = isPlaying;
 
-    if (isPlaying)
+    if (isPlaying) {
       pause();
+    }
+
     setAyah(ayah);
     play();
   }

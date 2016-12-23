@@ -74,7 +74,7 @@ class SearchAutocomplete extends Component {
     } else if (value.length >= 2) {
       const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
-      Object.keys(this.props.surahs).forEach(surahId => {
+      Object.keys(this.props.surahs).forEach((surahId) => {
         const surah = this.props.surahs[surahId];
         if (RegExp(escaped, 'i').test(surah.name.simple.replace(/['-]/g, ''))) {
           matches.push([surah.name.simple, surah.id]);
@@ -85,7 +85,7 @@ class SearchAutocomplete extends Component {
     }
 
     return this.setState({
-      surahs: matches.map((match) => ({
+      surahs: matches.map(match => ({
         text: `<b>${match[0]}</b>`,
         href: `/${match[1]}`
       })).slice(0, 5)
@@ -177,13 +177,13 @@ class SearchAutocomplete extends Component {
   }
 
   renderList(key) {
-    return this.state[key].map((item) => (
-      <li key={item.href} tabIndex="0" onKeyDown={(event) => this.handleItemKeyDown(event, item)}>
+    return this.state[key].map(item => (
+      <li key={item.href} tabIndex="-1" onKeyDown={event => this.handleItemKeyDown(event, item)}>
         <div className={styles.link}>
           <a href={item.href} tabIndex="-1">{item.href}</a>
         </div>
         <div className={styles.text}>
-          <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{__html: item.text}} />
+          <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{ __html: item.text }} />
         </div>
       </li>
     ));
@@ -227,4 +227,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {push})(SearchAutocomplete);
+export default connect(mapStateToProps, { push })(SearchAutocomplete);

@@ -7,7 +7,7 @@ import Loader from 'components/Loader';
 
 const style = require('./style.scss');
 
-const SurahInfo = ({ surah, isShowingSurahInfo, onClose, loadInfo }) => {
+const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
   if (!surah.info) {
@@ -16,9 +16,10 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose, loadInfo }) => {
 
   return (
     <Col xs={12} className={`${style.container} surah-info ${style.show}`}>
-      <div
+      <button
+        tabIndex="-1"
         className={`${style.close} ss-delete`}
-        onClick={() => onClose({isShowingSurahInfo: !isShowingSurahInfo})}
+        onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
       />
       <Row className={style.row}>
         <Col
@@ -35,7 +36,7 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose, loadInfo }) => {
           </dl>
         </Col>
         <Col md={8} className={`${style.info} times-new`}>
-          <div dangerouslySetInnerHTML={{__html: surah.info.description}} />
+          <div dangerouslySetInnerHTML={{ __html: surah.info.description }} />
           <div>
             <p>
               <em>

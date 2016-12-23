@@ -6,31 +6,30 @@ import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import SmartBanner from 'components/SmartBanner';
-import Link from 'react-router/lib/Link';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+
+import debug from 'helpers/debug';
+import config from 'config';
+import metricsConfig from 'helpers/metrics';
+import Footer from 'components/Footer';
+import NoScript from 'components/NoScript';
+import FontStyles from 'components/FontStyles';
+import { removeMedia } from 'redux/actions/media';
+
+import authConnect from './connect';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
-import debug from 'helpers/debug';
-import config from 'config';
-import metricsConfig from 'helpers/metrics';
-import { authConnect } from './connect';
-import Footer from 'components/Footer';
-import NoScript from 'components/NoScript';
-
-import FontStyles from 'components/FontStyles';
-
-import { removeMedia } from 'redux/actions/media';
 
 class App extends Component {
   static propTypes = {
     surahs: PropTypes.object.isRequired,
     media: PropTypes.object.isRequired,
     removeMedia: PropTypes.func.isRequired,
-    children: PropTypes.any
+    children: PropTypes.element
   };
 
   static contextTypes = {
@@ -46,10 +45,12 @@ class App extends Component {
         <Helmet {...config.app.head} />
         <FontStyles />
         <NoScript>
-          <Row className='noscript-warning'>
+          <Row className="noscript-warning">
             <Col md={12}>
-              <p> Looks like either your browser does not support Javascript or its disabled. Quran.com workes best with JavaScript enabled.
-               For more instruction on how to enable javascript
+              <p>
+                Looks like either your browser does not support Javascript or its disabled.
+                Quran.com workes best with JavaScript enabled.
+                For more instruction on how to enable javascript
                 <a href="http://www.enable-javascript.com/">
                   Click here
                 </a>
@@ -58,7 +59,7 @@ class App extends Component {
           </Row>
         </NoScript>
         {children}
-        <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install"/>
+        <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
         <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>
           <ModalHeader closeButton>
@@ -83,12 +84,11 @@ class App extends Component {
     );
   }
 }
-console.log(metricsConfig);
 
 const metricsApp = metrics(metricsConfig)(App);
 const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 
 export default connect(
-  state => ({surahs: state.surahs.entities, media: state.media }),
+  state => ({ surahs: state.surahs.entities, media: state.media }),
   { removeMedia }
 )(AsyncApp);

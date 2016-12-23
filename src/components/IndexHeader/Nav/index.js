@@ -16,7 +16,7 @@ export class IndexHeaderNav extends Component {
   openNav(event) {
     event.preventDefault();
 
-    this.setState({open: !this.state.open});
+    this.setState({ open: !this.state.open });
   }
 
   links() {

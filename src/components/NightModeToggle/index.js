@@ -1,3 +1,4 @@
+/* global document */
 import React, { Component, PropTypes } from 'react';
 import { intlShape, injectIntl } from 'react-intl';
 

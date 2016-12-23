@@ -3,15 +3,11 @@ import {
   REMOVE_MEDIA
 } from 'redux/constants/media';
 
-export function setMedia(content) {
-  return {
-    type: SET_MEDIA,
-    content
-  };
-};
+export const setMedia = content => ({
+  type: SET_MEDIA,
+  content
+});
 
-export function removeMedia() {
-  return {
-    type: REMOVE_MEDIA
-  };
-};
+export const removeMedia = () => ({
+  type: REMOVE_MEDIA
+});

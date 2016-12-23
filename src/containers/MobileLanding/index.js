@@ -37,7 +37,7 @@ export default () => (
             favorite reciters.
           </small>
         </h3>
-        <Row style={{paddingTop: 15}}>
+        <Row style={{ paddingTop: 15 }}>
           <Col md={6}>
             <Button
               bsStyle="primary"
@@ -50,7 +50,7 @@ export default () => (
                 src={apple}
                 alt="App Store"
                 height="28px"
-                style={{paddingRight: 10, marginTop: -6}}
+                style={{ paddingRight: 10, marginTop: -6 }}
               />
               Download
             </Button>
@@ -62,7 +62,7 @@ export default () => (
               href="https://play.google.com/store/apps/details?id=com.quran.labs.androidquran&hl=en"
               block
             >
-              <img src={play} alt="Play Store" height="24px" style={{paddingRight: 10}} />
+              <img src={play} alt="Play Store" height="24px" style={{ paddingRight: 10 }} />
               Download
             </Button>
           </Col>

@@ -55,13 +55,14 @@ export default () => (
           <br /><br />
           <a
             target="_blank"
+            rel="noopener noreferrer"
             href="https://quran.tilt.com/support-quran-com-preorder/checkout/payment"
             className="btn btn-lg btn-block btn-primary"
           >
             Support Quran.com
           </a>
           <br /><br />
-          If you have any questions, please don't hesitate to contact
+          If you have any questions, please do not hesitate to contact
           us at <a href="mailto:support@quran.zendesk.com">support@quran.zendesk.com.</a>
         </Col>
       </Row>

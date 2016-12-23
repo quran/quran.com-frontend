@@ -53,11 +53,43 @@ const Footer = () => (
               />
             </p>
             <ul className={`source-sans ${styles.list}`}>
-              <li><a target="_blank" href="http://sunnah.com/" data-metrics-event-name="Footer:Link:Sunnah">Sunnah.com</a></li>
-              <li><a target="_blank" href="http://salah.com/" data-metrics-event-name="Footer:Link:Salah">Salah.com</a></li>
-              <li><a target="_blank" href="http://quranicaudio.com/" data-metrics-event-name="Footer:Link:QuranicAudio">QuranicAudio.com</a></li>
               <li>
-                <a target="_blank" href="http://corpus.quran.com/wordbyword.jsp" data-metrics-event-name="Footer:Link:Corpus">
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="http://sunnah.com/"
+                  data-metrics-event-name="Footer:Link:Sunnah"
+                >
+                  Sunnah.com
+                </a>
+              </li>
+              <li>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="http://salah.com/"
+                  data-metrics-event-name="Footer:Link:Salah"
+                >
+                  Salah.com
+                </a>
+              </li>
+              <li>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="http://quranicaudio.com/"
+                  data-metrics-event-name="Footer:Link:QuranicAudio"
+                >
+                  QuranicAudio.com
+                </a>
+              </li>
+              <li>
+                <a
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  href="http://corpus.quran.com/wordbyword.jsp"
+                  data-metrics-event-name="Footer:Link:Corpus"
+                >
                   Corpus: Word by Word
                 </a>
               </li>

@@ -23,7 +23,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         current: action.current
       };
-    case LOAD_SUCCESS:
+    case LOAD_SUCCESS: {
       const entities = state.entities;
       const { surahs } = action.result.entities;
       return {
@@ -35,8 +35,8 @@ export default function reducer(state = initialState, action = {}) {
           ...surahs
         }
       };
+    }
     case LOAD_FAIL:
-      console.log(action);
       return state;
     case LOAD_INFO:
       return {

@@ -1,3 +1,4 @@
+/* global window */
 import { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -7,7 +8,6 @@ export default class LazyLoad extends Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     isEnd: PropTypes.bool.isRequired,
-    isLoaded: PropTypes.bool,
     onLazyLoad: PropTypes.func.isRequired,
     loadingComponent: PropTypes.any,
     endComponent: PropTypes.any,

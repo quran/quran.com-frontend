@@ -1,3 +1,4 @@
+/* global document, window */
 export default {
   scrollTo(name, offset = 0) {
     const node = document.getElementsByName(name)[0];

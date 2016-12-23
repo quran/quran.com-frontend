@@ -3,7 +3,9 @@ import { mount } from 'enzyme';
 
 import ScrollButton from './index';
 
-let makeComponent, component, onScrollToggle;
+let makeComponent;
+let component;
+let onScrollToggle;
 
 describe('<ScrollButton />', () => {
   beforeEach(() => {
@@ -13,7 +15,7 @@ describe('<ScrollButton />', () => {
       component = mount(
         <ScrollButton shouldScroll={shouldScroll} onScrollToggle={onScrollToggle} />
       );
-    }
+    };
   });
 
   it('should indicate that shouldScroll', () => {
@@ -31,6 +33,6 @@ describe('<ScrollButton />', () => {
   it('should call onScrollToggle when clicked', () => {
     component.find('label').first().simulate('click');
 
-    expect(onScrollToggle).to.have.been.called;
+    expect(onScrollToggle).to.have.been.called; // eslint-disable-line
   });
 });

@@ -10,8 +10,8 @@ import {
 export function search(params) {
   return {
     types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
-    schema: {results: arrayOf({ayah: ayahsSchema})},
-    promise: (client) => client.get('/v2/search', { params }),
+    schema: { results: arrayOf({ ayah: ayahsSchema }) },
+    promise: client => client.get('/v2/search', { params }),
     params
   };
 }

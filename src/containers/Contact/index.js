@@ -13,11 +13,11 @@ export default class Contact extends Component {
     event.preventDefault();
 
     const form = {
-      subject: ReactDOM.findDOMNode(this.refs.purpose).value.trim(),
-      description: ReactDOM.findDOMNode(this.refs.body).value.trim(),
+      subject: ReactDOM.findDOMNode(this.purpose).value.trim(),
+      description: ReactDOM.findDOMNode(this.body).value.trim(),
       requester: {
-        name: ReactDOM.findDOMNode(this.refs.name).value.trim(),
-        email: ReactDOM.findDOMNode(this.refs.email).value.trim(),
+        name: ReactDOM.findDOMNode(this.name).value.trim(),
+        email: ReactDOM.findDOMNode(this.email).value.trim(),
         locale_id: 8
       }
     };
@@ -37,20 +37,20 @@ export default class Contact extends Component {
         <div className="form-group">
           <label htmlFor="name" className="col-sm-2 control-label">Name</label>
           <div className="col-sm-8">
-            <input type="text" className="form-control" ref="name" />
+            <input type="text" className="form-control" ref={(name) => { this.name = name; }} />
           </div>
         </div>
         <input type="hidden" name="_next" value="google.com" />
         <div className="form-group">
           <label htmlFor="email" className="col-sm-2 control-label">Email</label>
           <div className="col-sm-8">
-            <input type="email" className="form-control" ref="email" />
+            <input type="email" className="form-control" ref={(email) => { this.email = email; }} />
           </div>
         </div>
         <div className="form-group">
           <label htmlFor="message" className="col-sm-2 control-label">Purpose</label>
           <div className="col-sm-8">
-            <select className="form-control" ref="purpose" defaultValue="feedback">
+            <select className="form-control" ref={(purpose) => { this.purpose = purpose; }} defaultValue="feedback">
               <option value="feedback">Feedback & Suggestions</option>
               <option value="translation-bug">Translation Error</option>
               <option value="bug">Site Bug</option>
@@ -62,7 +62,7 @@ export default class Contact extends Component {
         <div className="form-group">
           <label htmlFor="message" className="col-sm-2 control-label">Message</label>
           <div className="col-sm-8">
-            <textarea rows="4" cols="50" className="form-control" ref="body" />
+            <textarea rows="4" cols="50" className="form-control" ref={(body) => { this.body = body; }} />
           </div>
         </div>
         <div className="form-group">
@@ -74,15 +74,13 @@ export default class Contact extends Component {
     );
   }
 
-  renderSubmitSuccess() {
-    return (
-      <h3 className="text-center form-success-message">
-        Thank you for contacting us - we look forward to speaking with you. While this is a
-        volunteer effort, we do experience many
-        support tickets on a daily basis and would love to get back to everyone on a timely manner.
-      </h3>
-    );
-  }
+  renderSubmitSuccess = () => (
+    <h3 className="text-center form-success-message">
+      Thank you for contacting us - we look forward to speaking with you. While this is a
+      volunteer effort, we do experience many
+      support tickets on a daily basis and would love to get back to everyone on a timely manner.
+    </h3>
+  );
 
   render() {
     let body;

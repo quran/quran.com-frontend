@@ -3,18 +3,19 @@ import { Link } from 'react-router';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
-const Header = Navbar.Header;
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import debug from 'helpers/debug';
+
+const Header = Navbar.Header;
 
 // const ornamentLeft = require('../../../../static/images/ornament-left.png');
 // const ornamentRight = require('../../../../static/images/ornament-right.png');
 
 const styles = require('./style.scss');
 
-const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
+const SurahHeader = ({ surah, handleToggleSidebar }) => {
   debug('component:SurahHeader', 'Render');
 
   return (
@@ -24,9 +25,9 @@ const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
           <Col xs={1}>
             <button type="button" className="navbar-toggle collapsed" onClick={handleToggleSidebar}>
               <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+              <span className="icon-bar" />
             </button>
           </Col>
           <Col xs={10}>

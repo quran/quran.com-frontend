@@ -9,21 +9,26 @@ import {
   LOAD_INFO_FAIL,
   SET_CURRENT } from 'redux/constants/surahs.js';
 
-export const loadAll = () => ({
-  types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-  schema: arrayOf(surahsSchema),
-  promise: (client) => client.get('/v2/surahs')
-});
 
-export const load = id => ({
-  types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-  schema: arrayOf(surahsSchema),
-  promise: (client) => client.get(`/v2/surahs/${id}`)
-});
+export function loadAll() {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    schema: arrayOf(surahsSchema),
+    promise: client => client.get('/v2/surahs')
+  };
+}
+
+export function load(id) {
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    schema: arrayOf(surahsSchema),
+    promise: client => client.get(`/v2/surahs/${id}`)
+  };
+}
 
 export const loadInfo = id => ({
   types: [LOAD_INFO, LOAD_INFO_SUCCESS, LOAD_INFO_FAIL],
-  promise: (client) => client.get(`/v2/surahs/${id}/info`),
+  promise: client => client.get(`/v2/surahs/${id}/info`),
   id
 });
 

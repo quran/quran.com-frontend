@@ -9,7 +9,7 @@ const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
   const tooltip = (
     <Tooltip id="scroll-button-tooltip">
       <LocaleFormattedMessage
-        id={ "player.scrollButtonTip" }
+        id="player.scrollButtonTip"
         defaultMessage={'Automatically scrolls to the currently playing ayah on transitions...'}
       />
     </Tooltip>
@@ -24,10 +24,11 @@ const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
         trigger={['hover', 'focus']}
       >
         <label
+          tabIndex="-1"
           htmlFor="scroll"
           className={`pointer ${style.buttons} ${shouldScroll ? style.scroll : ''}`}
           onClick={onScrollToggle}
-          style={{marginBottom: 0}}
+          style={{ marginBottom: 0 }}
         >
           <i className="ss-icon ss-link" />
         </label>
