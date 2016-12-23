@@ -11,11 +11,6 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose, loadInfo }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
   if (!surah.info) {
-    // This will get called twice if we have the component open and navigating between surahs.
-    // Fine for now. Technically should check for fetching.
-    // TODO: When Surah component becomes smaller, pass fetching here to avoid rerender.
-    loadInfo(surah.id);
-
     return <Loader />;
   }
 

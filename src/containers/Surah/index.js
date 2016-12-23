@@ -39,16 +39,13 @@ import scroller from 'utils/scroller';
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
-import descriptions from './descriptions';
-
-import { surahsConnect, ayahsConnect } from './connect';
+import { surahsConnect, surahInfoConnect, ayahsConnect } from './connect';
 
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/ayahs.js';
 import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
-import { loadInfo } from 'redux/actions/surahs.js';
 
 const style = require('./style.scss');
 
@@ -259,7 +256,7 @@ class Surah extends Component {
       return `Surat ${surah.name.simple} [verse ${params.range}]`;
     }
 
-    return `${descriptions[surah.id]} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${surah.info.shortDescription} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderPagination() {
@@ -468,6 +465,7 @@ class Surah extends Component {
 
 const AsyncSurah = asyncConnect([
   { promise: surahsConnect },
+  { promise: surahInfoConnect },
   { promise: ayahsConnect }
 ])(Surah);
 
@@ -506,8 +504,7 @@ function mapDispatchToProps(dispatch) {
       audio: bindActionCreators(AudioActions, dispatch),
       bookmark: bindActionCreators(BookmarkActions, dispatch),
       media: bindActionCreators(MediaActions, dispatch),
-      push: bindActionCreators(push, dispatch),
-      loadInfo: bindActionCreators(loadInfo, dispatch)
+      push: bindActionCreators(push, dispatch)
     },
   };
 }
