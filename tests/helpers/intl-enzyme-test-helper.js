@@ -12,30 +12,28 @@ import React from 'react';
 import { IntlProvider, intlShape } from 'react-intl';
 import { mount, shallow } from 'enzyme';
 
-// You can pass your messages to the IntlProvider. Optional: remove if unneeded.
-const messages = require('../../src/locale/en.js');
 
 // Create the IntlProvider to retrieve context for wrapping around.
-const intlProvider = new IntlProvider({ locale: 'en', messages: messages.messages }, {});
-const { intl } = intlProvider.getChildContext();
+var intlProvider = new IntlProvider({ locale: 'en' }, {});
+var intl  = intlProvider.getChildContext();
 
 /**
  * When using React-Intl `injectIntl` on components, props.intl is required.
  */
 function nodeWithIntlProp(node) {
-  return React.cloneElement(node, { intl });
+  return React.cloneElement(node,  intl );
 }
 
-/**
+/**a
  * Export these methods.
  */
 export function shallowWithIntl(node) {
-  return shallow(nodeWithIntlProp(node), { context: { intl } });
+  return shallow(nodeWithIntlProp(node), { context: intl  });
 }
 
 export function mountWithIntl(node) {
   return mount(nodeWithIntlProp(node), {
-    context: { intl },
+    context: intl ,
     childContextTypes: { intl: intlShape }
   });
 }

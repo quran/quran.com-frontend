@@ -113,7 +113,7 @@
     "url-loader": "0.5.7",
     "webpack": "2.1.0-beta.20",
     "webpack-isomorphic-tools": "2.5.7",
-    "react-intl":"2.1.5",
+    "react-intl": "2.1.5",
     "winston": "1.1.2",
     "react-inlinesvg": "0.5.4"
   },
@@ -136,6 +136,7 @@
     "karma-chai": "0.1.0",
     "karma-chai-sinon": "0.1.5",
     "karma-chrome-launcher": "0.2.0",
+    "karma-intl-shim": "1.0.3",
     "karma-junit-reporter": "0.3.4",
     "karma-mocha": "0.2.0",
     "karma-phantomjs-launcher": "~0.2.1",

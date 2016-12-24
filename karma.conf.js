@@ -13,17 +13,19 @@ module.exports = function(config) {
       'karma-sinon',
       'karma-webpack',
       'karma-chrome-launcher',
-      'karma-phantomjs-launcher'
+      'karma-phantomjs-launcher',
+      'karma-intl-shim'
     ],
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai-sinon', 'sinon'],
+    frameworks: ['mocha', 'chai-sinon', 'sinon', 'intl-shim'],
 
     // list of files / patterns to load in the browser
     files: [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
       './tests/polyfill/Event.js',
+      './node_modules/Intl/locale-data/jsonp/en-US.js',
       {pattern: 'static/images/*', watched: false, included: false, served: true},
 
       // Actual tests here
