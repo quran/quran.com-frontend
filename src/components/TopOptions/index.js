@@ -10,7 +10,7 @@ import NightModeToggle from 'components/NightModeToggle'
 import Title from 'containers/Surah/Title';
 import Share from 'components/Share';
 
-const TopOptions = ({options, surah, actions}) => (
+const TopOptions = ({ options, surah, actions }) => (
   <Row>
     <Col md={4} className="hidden-xs hidden-sm">
       <Title surah={surah} />

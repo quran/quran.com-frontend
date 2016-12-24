@@ -16,6 +16,7 @@ import Helmet from 'react-helmet';
 import Sidebar from 'components/Sidebar';
 
 // components
+import Loader from 'components/Loader';
 import LazyLoad from 'components/LazyLoad';
 import PageBreak from 'components/PageBreak';
 import Audioplayer from 'components/Audioplayer';
@@ -40,9 +41,7 @@ import scroller from 'utils/scroller';
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
-import descriptions from './descriptions';
-
-import { surahsConnect, ayahsConnect } from './connect';
+import { surahsConnect, surahInfoConnect, ayahsConnect } from './connect';
 
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/ayahs.js';
@@ -53,12 +52,6 @@ import * as MediaActions from 'redux/actions/media.js';
 const style = require('./style.scss');
 
 let lastScroll = 0;
-
-const zeroPad = (num, places) => {
-  const zero = places - num.toString().length + 1;
-
-  return Array(+(zero > 0 && zero)).join('0') + num;
-};
 
 class Surah extends Component {
   static propTypes = {
@@ -76,9 +69,9 @@ class Surah extends Component {
     isAuthenticated: PropTypes.bool.isRequired,
     options: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
-    ayahs: PropTypes.object.isRequired,
+    ayahs: PropTypes.object,
     isStarted: PropTypes.bool,
-    isPlaying: PropTypes.bool
+    isPlaying: PropTypes.bool,
   };
 
   state = {
@@ -265,7 +258,7 @@ class Surah extends Component {
       return `Surat ${surah.name.simple} [verse ${params.range}]`;
     }
 
-    return `${descriptions[surah.id]} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${surah.info.shortDescription} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderPagination() {
@@ -312,13 +305,7 @@ class Surah extends Component {
             }
           </ul>
         }
-        loadingComponent={
-          <p className="text-center">
-            <LocaleFormattedMessage
-            id='app.loading'
-            defaultMessage={ 'Loading...' }
-            />
-          </p>}
+        loadingComponent={<Loader />}
       />
     );
   }
@@ -337,7 +324,7 @@ class Surah extends Component {
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
-        currentAyah={currentAyah}
+        isCurrentAyah={ayah.ayahKey === currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
@@ -371,7 +358,7 @@ class Surah extends Component {
   }
 
   renderSidebar() {
-    const { surah, surahs, ayahIds, options, actions } = this.props;
+    const { surah, surahs, ayahIds, options } = this.props;
 
     return (
       <div>
@@ -412,8 +399,10 @@ class Surah extends Component {
   }
 
   render() {
-    const { surah, surahs, ayahIds, options, actions, footer } = this.props;
+    const { surah, options, ayahs, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
+
+    if (!ayahs) return <div style={{ margin: '50px auto'}}><Loader /></div>;
 
     return (
       <div className="surah-body">
@@ -459,13 +448,14 @@ class Surah extends Component {
         <Sidebar
           open={this.state.sidebarOpen}
           onSetOpen={(open) => this.setState({sidebarOpen: open})}
-          >
+        >
           {this.renderSidebar()}
         </Sidebar>
         <div className={`container-fluid ${style['surah-container']}`}>
           <Row>
             <SurahInfo
               surah={surah}
+              loadInfo={actions.loadInfo}
               isShowingSurahInfo={options.isShowingSurahInfo}
               onClose={this.handleSurahInfoToggle}
             />
@@ -488,13 +478,17 @@ class Surah extends Component {
   }
 }
 
-const AsyncSurah = asyncConnect([{ promise: surahsConnect }, { promise: ayahsConnect }])(Surah);
+const AsyncSurah = asyncConnect([
+  { promise: surahsConnect },
+  { promise: surahInfoConnect },
+  { promise: ayahsConnect }
+])(Surah);
 
 function mapStateToProps(state, ownProps) {
   const surahId = parseInt(ownProps.params.surahId, 10);
   const surah: Object = state.surahs.entities[surahId];
-  const ayahs: Object = state.ayahs.entities[surahId];
-  const ayahArray = Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10));
+  const ayahs: ?Object = state.ayahs.entities[surahId];
+  const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
   const ayahIds = new Set(ayahArray);
   const lastAyahInArray = ayahArray.slice(-1)[0];
 
@@ -526,7 +520,7 @@ function mapDispatchToProps(dispatch) {
       bookmark: bindActionCreators(BookmarkActions, dispatch),
       media: bindActionCreators(MediaActions, dispatch),
       push: bindActionCreators(push, dispatch)
-    }
+    },
   };
 }
 

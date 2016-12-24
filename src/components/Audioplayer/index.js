@@ -1,3 +1,4 @@
+// TODO: This file is too too large.
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
@@ -64,6 +65,11 @@ export class Audioplayer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // Make sure we have a current ayah to mount it to Audio
+    if (!this.props.currentAyah && !nextProps.currentFile) {
+      return false;
+    }
+
     // When you go directly to the surah page, /2, the files are not loaded yet
     if (this.props.isLoadedOnClient !== nextProps.isLoadedOnClient) {
       return this.handleAddFileListeners(nextProps.currentFile);
@@ -248,7 +254,7 @@ export class Audioplayer extends Component {
 
   handleAddFileListeners(file) {
     const { update, currentTime } = this.props; // eslint-disable-line no-shadow
-    console.log('component:Audioplayer', `Attaching listeners to ${file.src}`);
+    debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
 
     // Preload file
     file.setAttribute('preload', 'auto');
@@ -294,14 +300,10 @@ export class Audioplayer extends Component {
       file.ontimeupdate = null; // eslint-disable-line no-param-reassign
     };
 
-    const onProgress = () => {
-    };
-
     file.onloadeddata = onLoadeddata;  // eslint-disable-line no-param-reassign
     file.onpause = onPause; // eslint-disable-line no-param-reassign
     file.onplay = onPlay; // eslint-disable-line no-param-reassign
     file.onended = onEnded; // eslint-disable-line no-param-reassign
-    file.onprogress = onProgress; // eslint-disable-line no-param-reassign
 
     return file;
   }
@@ -330,15 +332,12 @@ export class Audioplayer extends Component {
   renderPlayStopButtons() {
     const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
 
-    let icon = <i className="ss-icon ss-play" />;
-
-    if (isPlaying) {
-      icon = <i className="ss-icon ss-pause" />;
-    }
-
     return (
-      <a className={`pointer text-center ${style.playingButton} ${style.buttons}`} onClick={isPlaying ? pause : this.play}>
-        {icon}
+      <a
+        className={`pointer text-center ${style.playingButton} ${style.buttons}`}
+        onClick={isPlaying ? pause : this.play}
+      >
+        <i className={`ss-icon ${isPlaying ? 'ss-pause' : 'ss-play'}`} />
       </a>
     );
   }
@@ -378,7 +377,6 @@ export class Audioplayer extends Component {
 
     const {
       className,
-      currentFile,
       segments,
       isLoading,
       currentAyah,
@@ -392,7 +390,7 @@ export class Audioplayer extends Component {
       setRepeat // eslint-disable-line no-shadow
     } = this.props;
 
-    if (isLoading) {
+    if (isLoading || !currentAyah) {
       return (
         <li className={`${style.container} ${className}`}>
           <div>
@@ -413,13 +411,17 @@ export class Audioplayer extends Component {
               progress={currentTime / duration * 100}
               onTrackChange={this.handleTrackChange}
             /> : null}
-          {isLoadedOnClient && segments[currentAyah] && typeof segments[currentAyah] !== 'string' ?
-            <Segments
-              audio={currentFile}
-              segments={segments[currentAyah]}
-              currentAyah={currentAyah}
-              currentTime={currentTime}
-            /> : null}
+          {
+            isLoadedOnClient &&
+            segments &&
+            segments[currentAyah] &&
+            segments[currentAyah] &&
+              <Segments
+                segments={segments[currentAyah]}
+                currentAyah={currentAyah}
+                currentTime={currentTime}
+              />
+          }
         </div>
         <ul className={`list-inline ${style.controls}`}>
           <li className={style.controlItem}>

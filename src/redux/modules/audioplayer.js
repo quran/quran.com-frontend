@@ -42,7 +42,8 @@ const initialState = {
   },
   shouldScroll: true,
   isLoadedOnClient: false,
-  isLoading: true
+  isLoading: true,
+  segments: {}
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -186,13 +187,6 @@ export default function reducer(state = initialState, action = {}) {
 
       return {
         ...state,
-        segments: {
-          ...stateSegments,
-          [surahId]: {
-            ...stateSegmentsId,
-            [nextId]: buildSegments(state.segments[surahId][nextId])
-          }
-        },
         currentAyah: nextId,
         currentFile: state.files[surahId][nextId],
         currentTime: 0
@@ -218,13 +212,6 @@ export default function reducer(state = initialState, action = {}) {
 
       return {
         ...state,
-        segments: {
-          ...stateSegments,
-          [surahId]: {
-            ...stateSegmentsId,
-            [currentAyah]: buildSegments(state.segments[surahId][currentAyah])
-          }
-        },
         currentAyah,
         currentFile,
         currentTime: 0

@@ -105,7 +105,8 @@ class SearchInput extends Component {
           type="search"
           placeholder={placeholder}
           ref="search"
-          onFocus={() => this.setState({showAutocomplete: true})}
+          onFocus={() => this.setState({ showAutocomplete: true })}
+          onBlur={() => this.setState({ showAutocomplete: false })}
           onKeyUp={this.search}
           ref={(ref) => {
             this.input = ref;

@@ -32,7 +32,7 @@ export default class Ayah extends Component {
     isAuthenticated: PropTypes.bool,
     tooltip: PropTypes.string,
     currentWord: PropTypes.any, // gets passed in an integer, null by default
-    currentAyah: PropTypes.string,
+    isCurrentAyah: PropTypes.bool,
     audioActions: PropTypes.object.isRequired
   };
 
@@ -51,8 +51,7 @@ export default class Ayah extends Component {
       this.props.bookmarked !== nextProps.bookmarked,
       this.props.tooltip !== nextProps.tooltip,
       this.props.currentWord !== nextProps.currentWord,
-      this.props.currentAyah !== nextProps.currentAyah,
-      this.props.isPlaying !== nextProps.isPlaying
+      this.props.isCurrentAyah !== nextProps.isCurrentAyah
     ];
 
     if (this.props.match) {
@@ -81,8 +80,8 @@ export default class Ayah extends Component {
     return array.map((content, index) => {
       const arabic = new RegExp(/[\u0600-\u06FF]/);
       const character = content.text;
-      const isArabic  = arabic.test(character);
-      const lang      = (content.name || content.resource.name).replace(/\s+/g, '-').toLowerCase();
+      const isArabic = arabic.test(character);
+      const lang = (content.name || content.resource.name).replace(/\s+/g, '-').toLowerCase();
 
       return (
         <div
@@ -91,7 +90,10 @@ export default class Ayah extends Component {
         >
           <h4 className="montserrat">{content.name || content.resource.name}</h4>
           <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
-            <small dangerouslySetInnerHTML={{__html: content.text}} className={lang} />
+            <small
+              dangerouslySetInnerHTML={{__html: content.text}}
+              className={`${styles[lang] || 'times-new'}`}
+            />
           </h2>
         </div>
       );
@@ -101,7 +103,7 @@ export default class Ayah extends Component {
   renderMedia() {
     const { ayah, mediaActions, isSearched } = this.props;
 
-    if (isSearched || !!ayah.mediaContent) return false;
+    if (isSearched || !ayah.mediaContent) return false;
 
     return (
       <div>
@@ -165,7 +167,9 @@ export default class Ayah extends Component {
             key={word.code}
             id={id}
             rel="tooltip"
-            onClick={(event) => isSearched ? '' : audioActions.setCurrentWord(event.target.dataset.key)}
+            onClick={event =>
+              !isSearched && audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
+            }
             data-key={`${word.ayahKey}:${position}`}
             className={`${className}`}
             title={tooltipContent}
@@ -173,11 +177,13 @@ export default class Ayah extends Component {
           />
         );
       }
-      const label = isLast ? {'title': `Verse ${ayah.ayahNum}`} : {}
+      const label = isLast ? { title: `Verse ${ayah.ayahNum}` } : {};
       return (
         <b
           id={id}
-          onClick={(event) => isSearched? '' : audioActions.setCurrentWord(event.target.dataset.key)}
+          onClick={event =>
+            !isSearched && audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
+          }
           data-key={`${word.ayahKey}:${position}`}
           rel="tooltip"
           className={`${className} ${isLast} pointer`}
@@ -293,12 +299,13 @@ export default class Ayah extends Component {
         data-metrics-event-name="Ayah:Link"
       >
         {content}
-      </Link>);
+      </Link>
+    );
   }
 
   renderControls() {
     return (
-      <div className={`col-md-2 col-sm-2 ${styles.controls}`}>
+      <div className={`col-md-1 col-sm-1 ${styles.controls}`}>
         {this.renderAyahBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
@@ -308,14 +315,16 @@ export default class Ayah extends Component {
   }
 
   render() {
-    const { ayah, currentAyah } = this.props;
-    const className = ayah.ayahKey === currentAyah ? 'highlight' : "";
+    const { ayah, isCurrentAyah } = this.props;
     debug('component:Ayah', `Render ${this.props.ayah.ayahNum}`);
 
     return (
-      <Element name={`ayah:${ayah.ayahKey}`} className={`row ${className} ${styles.container}`}>
+      <Element
+        name={`ayah:${ayah.ayahKey}`}
+        className={`row ${isCurrentAyah && 'highlight'} ${styles.container}`}
+      >
         {this.renderControls()}
-        <div className="col-md-10 col-sm-10">
+        <div className="col-md-11 col-sm-11">
           {this.renderText()}
           {this.renderTranslations()}
           {this.renderMedia()}
