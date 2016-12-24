@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { intlShape, injectIntl } from 'react-intl';
+import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 
 class LocaleFormattedMessage extends React.Component {
   static propTypes = {
@@ -11,12 +11,10 @@ class LocaleFormattedMessage extends React.Component {
 
   render() {
     const {id, defaultMessage, intl, values } = this.props;
-    const params = {id: id, defaultMessage: defaultMessage, values: {values}}
-    const formattedMessage = intl.formatMessage(params);
-
+   
     return (
       <span className={intl.messages.local}>
-        {formattedMessage}
+        <FormattedMessage id={id} defaultMessage={defaultMessage} values={values}/>
       </span>
     );
   }

@@ -24,7 +24,7 @@ export default {
     'setting.nightMode.dayTip': 'دن کے موڈ میں دیکھیں',
     'setting.nightMode.nightTip': 'رات کے موڈ میں دیکھیں',
 
-    'ayah.media.lectureFrom': '{from} کے لیکچرو دیکھے',
+    'ayah.media.lectureFrom': 'کے لیکچر دیکھے  {from}',
 
     'search.placeholder': 'تلاش کر یں',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len

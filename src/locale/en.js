@@ -16,6 +16,7 @@ export default {
     'setting.fontSize': 'Font size',
     'setting.fontSize.arabic': 'Arabic',
     'setting.reading': 'Reading',
+    'setting.tooltip': 'tooltip',
     'setting.tooltip.title': 'TOOLTIP DISPLAY',
     'setting.tooltip.translation': 'Translation',
     'setting.tooltip.transliteration': 'Transliteration',
