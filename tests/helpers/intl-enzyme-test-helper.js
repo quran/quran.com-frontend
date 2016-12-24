@@ -24,7 +24,7 @@ function nodeWithIntlProp(node) {
   return React.cloneElement(node,  intl );
 }
 
-/**a
+/**
  * Export these methods.
  */
 export function shallowWithIntl(node) {

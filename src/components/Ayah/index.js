@@ -210,11 +210,6 @@ export default class Ayah extends Component {
   renderPlayLink() {
     const { isSearched, ayah, currentAyah, isPlaying } = this.props;
     const playing = ayah.ayahKey == currentAyah && isPlaying;
-    let icon = <i className="ss-icon ss-play" />
-
-    if (playing) {
-      icon = <i className="ss-icon ss-pause" />;
-    }
 
     if (!isSearched) {
       return (
@@ -222,7 +217,7 @@ export default class Ayah extends Component {
           onClick={() => this.handlePlay(ayah.ayahKey)}
           className="text-muted"
         >
-          {icon}
+          <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'}`} />
           <LocaleFormattedMessage
             id={ playing ? 'actions.pause' : 'actions.play' }
             defaultMessage={ playing ? 'Pause' : 'Play'}
@@ -257,7 +252,12 @@ export default class Ayah extends Component {
           onClick={() => bookmarkActions.removeBookmark(ayah.ayahKey)}
           className="text-muted"
         >
-          <strong><i className="ss-icon ss-bookmark" /> Bookmarked </strong>
+          <strong><i className="ss-icon ss-bookmark" />
+            <LocaleFormattedMessage
+              id={'ayah.bookmarked'}
+              defaultMessage={"Bookmarked"}
+            />
+          </strong>
         </a>
       );
     }
@@ -267,7 +267,11 @@ export default class Ayah extends Component {
         onClick={() => bookmarkActions.addBookmark(ayah.ayahKey)}
         className="text-muted"
       >
-        <i className="ss-icon ss-bookmark" /> Bookmark
+        <i className="ss-icon ss-bookmark" />
+        <LocaleFormattedMessage
+          id={'ayah.bookmark'}
+          defaultMessage={"Bookmark"}
+        />
       </a>
     );
   }

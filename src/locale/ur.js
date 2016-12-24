@@ -25,6 +25,8 @@ export default {
     'setting.nightMode.nightTip': 'رات کے موڈ میں دیکھیں',
 
     'ayah.media.lectureFrom': 'کے لیکچر دیکھے  {from}',
+    'ayah.bookmarked': 'حوالہ ہے',
+    'ayah.bookmark': 'حوالہ',
 
     'search.placeholder': 'تلاش کر یں',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len

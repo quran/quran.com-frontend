@@ -25,6 +25,8 @@ export default {
     'setting.nightMode.nightTip': 'التبديل إلى الوضع الليلي',
 
     'ayah.media.lectureFrom': 'مشاهدة محاضرة {from}',
+    'ayah.bookmarked': 'إشارة مرجعية',
+    'ayah.bookmark': 'المرجعية',
 
     'search.placeholder': 'بحث',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len

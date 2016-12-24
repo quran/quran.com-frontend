@@ -25,6 +25,8 @@ export default {
     'setting.nightMode.nightTip': 'Switch to night mode',
 
     'ayah.media.lectureFrom': 'Watch lecture of {from}',
+    'ayah.bookmarked': 'Bookmarked',
+    'ayah.bookmark': 'Bookmark',
 
     'search.placeholder': 'Search',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
