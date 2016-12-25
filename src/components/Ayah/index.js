@@ -3,6 +3,7 @@ import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 
 import Copy from 'components/Copy';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import debug from 'helpers/debug';
 
@@ -61,12 +62,12 @@ export default class Ayah extends Component {
   }
 
   handlePlay(ayah) {
-    const { isPlaying, audioActions } = this.props;
+    const { isPlaying, audioActions, currentAyah } = this.props;
     const { pause, setAyah, play } = audioActions;
+    const  isPreviouslyPlaying = isPlaying;
 
-    if (isPlaying) {
+    if (isPlaying)
       pause();
-    }
     setAyah(ayah);
     play();
   }
@@ -100,9 +101,9 @@ export default class Ayah extends Component {
   }
 
   renderMedia() {
-    const { ayah, mediaActions } = this.props;
+    const { ayah, mediaActions, isSearched } = this.props;
 
-    if (!ayah.mediaContent) return false;
+    if (isSearched || !ayah.mediaContent) return false;
 
     return (
       <div>
@@ -122,7 +123,11 @@ export default class Ayah extends Component {
                     data-metrics-media-content-id={content.id}
                     data-metrics-media-content-ayah-key={ayah.ayahKey}
                   >
-                    Watch lecture by {content.resource.name}
+                    <LocaleFormattedMessage
+                      id={'ayah.media.lectureFrom'}
+                      defaultMessage={"Watch lecture by {from}"}
+                      values={{from: content.resource.name}}
+                      />
                   </a>
                 </small>
               </h2>
@@ -134,7 +139,7 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, audioActions, tooltip } = this.props;
+    const { ayah, audioActions, tooltip, isSearched } = this.props;
 
     if (!ayah.words[0].code) {
       return false;
@@ -163,7 +168,7 @@ export default class Ayah extends Component {
             id={id}
             rel="tooltip"
             onClick={event =>
-              audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
+              !isSearched && audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
             }
             data-key={`${word.ayahKey}:${position}`}
             className={`${className}`}
@@ -172,13 +177,12 @@ export default class Ayah extends Component {
           />
         );
       }
-
       const label = isLast ? { title: `Verse ${ayah.ayahNum}` } : {};
       return (
         <b
           id={id}
           onClick={event =>
-            audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
+            !isSearched && audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
           }
           data-key={`${word.ayahKey}:${position}`}
           rel="tooltip"
@@ -204,7 +208,8 @@ export default class Ayah extends Component {
   }
 
   renderPlayLink() {
-    const { isSearched, ayah } = this.props;
+    const { isSearched, ayah, currentAyah, isPlaying } = this.props;
+    const playing = ayah.ayahKey == currentAyah && isPlaying;
 
     if (!isSearched) {
       return (
@@ -212,7 +217,11 @@ export default class Ayah extends Component {
           onClick={() => this.handlePlay(ayah.ayahKey)}
           className="text-muted"
         >
-          <i className="ss-icon ss-play" /> Play
+          <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'}`} />
+          <LocaleFormattedMessage
+            id={ playing ? 'actions.pause' : 'actions.play' }
+            defaultMessage={ playing ? 'Pause' : 'Play'}
+          />
         </a>
       );
     }
@@ -233,9 +242,9 @@ export default class Ayah extends Component {
   }
 
   renderBookmark() {
-    const { ayah, bookmarked, isAuthenticated, bookmarkActions } = this.props;
+    const { ayah, bookmarked, isAuthenticated, bookmarkActions, isSearched } = this.props;
 
-    if (!isAuthenticated) return false;
+    if (isSearched || !isAuthenticated) return false;
 
     if (bookmarked) {
       return (
@@ -243,7 +252,12 @@ export default class Ayah extends Component {
           onClick={() => bookmarkActions.removeBookmark(ayah.ayahKey)}
           className="text-muted"
         >
-          <strong><i className="ss-icon ss-bookmark" /> Bookmarked</strong>
+          <strong><i className="ss-icon ss-bookmark" />
+            <LocaleFormattedMessage
+              id={'ayah.bookmarked'}
+              defaultMessage={"Bookmarked"}
+            />
+          </strong>
         </a>
       );
     }
@@ -253,7 +267,11 @@ export default class Ayah extends Component {
         onClick={() => bookmarkActions.addBookmark(ayah.ayahKey)}
         className="text-muted"
       >
-        <i className="ss-icon ss-bookmark" /> Bookmark
+        <i className="ss-icon ss-bookmark" />
+        <LocaleFormattedMessage
+          id={'ayah.bookmark'}
+          defaultMessage={"Bookmark"}
+        />
       </a>
     );
   }

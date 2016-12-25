@@ -31,6 +31,8 @@ import Line from 'components/Line';
 import SearchInput from 'components/SearchInput';
 import Bismillah from 'components/Bismillah';
 import TopOptions from 'components/TopOptions';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 
 // utils
 import scroller from 'utils/scroller';
@@ -273,20 +275,31 @@ class Surah extends Component {
               surah.id > 1 &&
                 <li className="previous">
                   <Link to={`/${surah.id * 1 - 1}`}>
-                    &larr; Previous Surah
+                    &larr;
+                    <LocaleFormattedMessage
+                      id='surah.previous'
+                      defaultMessage={ 'Previous Surah' }
+                    />
                   </Link>
                 </li>
             }
             <li className="text-center">
               <Link to={`/${surah.id}`}>
-                Beginning of Surah
+                <LocaleFormattedMessage
+                  id='surah.goToBeginning'
+                  defaultMessage={ 'Beginning of Surah' }
+                />
               </Link>
             </li>
             {
               surah.id < 114 &&
                 <li className="next">
                   <Link to={`/${surah.id * 1 + 1}`}>
-                    Next Surah &rarr;
+                    <LocaleFormattedMessage
+                      id='surah.next'
+                      defaultMessage={ 'Next Surah' }
+                    />
+                    &rarr;
                   </Link>
                 </li>
             }
@@ -351,7 +364,9 @@ class Surah extends Component {
       <div>
         <Navbar static fluid>
           <NavbarHeader>
-            <p className={`navbar-text ${style.sidebarTitle}`}>Options</p>
+            <p className={`navbar-text ${style.sidebarTitle}`}>
+              <LocaleFormattedMessage id={'setting.title'} defaultMessage={'Options'}/>
+            </p>
           </NavbarHeader>
         </Navbar>
         <SearchInput

@@ -11,6 +11,7 @@ import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
 import RepeatDropdown from './RepeatDropdown';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 // Helpers
 import debug from 'helpers/debug';
@@ -392,7 +393,12 @@ export class Audioplayer extends Component {
     if (isLoading || !currentAyah) {
       return (
         <li className={`${style.container} ${className}`}>
-          <div>Loading...</div>
+          <div>
+            <LocaleFormattedMessage
+              id='app.loading'
+              defaultMessage={ 'Loading...' }
+            />
+          </div>
         </li>
       );
     }
@@ -419,7 +425,10 @@ export class Audioplayer extends Component {
         </div>
         <ul className={`list-inline ${style.controls}`}>
           <li className={style.controlItem}>
-            Ayah: {currentAyah.split(':')[1]}
+            <LocaleFormattedMessage
+              id='player.currentAyah'
+              defaultMessage={ 'Ayah' }
+            />: {currentAyah.split(':')[1]}
           </li>
           <li className={style.controlItem}>
             {this.renderPreviousButton()}

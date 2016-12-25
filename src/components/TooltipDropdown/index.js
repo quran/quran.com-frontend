@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import SwitchToggle from 'components/SwitchToggle';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('./style.scss');
 
@@ -25,19 +26,22 @@ export default class TooltipDropdown extends Component {
 
   renderPopup() {
     const { options: { tooltip }} = this.props;
+    const tooltipTitle = <LocaleFormattedMessage id={'setting.tooltip.title'} defaultMessage={'DISPLAY TOOLTIP'}/>;
 
     return (
-      <Popover id="TooltipDropdown" title="Tooltip display" className={style.popover}>
+      <Popover id="TooltipDropdown" title={tooltipTitle} className={style.popover}>
         <Row>
           <Col xs={12}>
-            Translation{' '}
+            <LocaleFormattedMessage id={'setting.tooltip.translation'} defaultMessage={'Translation'}/>
+            {' '}
             <SwitchToggle
               checked={tooltip === 'transliteration'}
               onToggle={this.handleOptionSelected}
               id="tooltip-toggle"
               flat
             />
-            {' '}Transliteration
+            {' '}
+            <LocaleFormattedMessage id={'setting.tooltip.transliteration'} defaultMessage={'Transliteration'}/>
           </Col>
         </Row>
       </Popover>
@@ -52,7 +56,7 @@ export default class TooltipDropdown extends Component {
           className="text-color"
           data-metrics-event-name="TooltipDropdown"
         >
-          Tooltip
+          <LocaleFormattedMessage id={'setting.tooltip'} defaultMessage={'Tooltip'} />
         </a>
       </OverlayTrigger>
     );

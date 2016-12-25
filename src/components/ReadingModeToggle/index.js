@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 
 import SwitchToggle from 'components/SwitchToggle';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const ReadingModeToggle = ({ onReadingModeToggle, isToggled }) => (
   <div>
-    Reading:{' '}
+    <LocaleFormattedMessage id={'setting.reading'} defaultMessage={'Reading'}/>:{' '}
     <SwitchToggle
       checked={isToggled}
       onToggle={onReadingModeToggle}

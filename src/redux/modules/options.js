@@ -4,7 +4,6 @@ import { TOGGLE_READING_MODE, SET_OPTION } from 'redux/constants/options.js';
 const initialState = {
   isReadingMode: false,
   isShowingSurahInfo: false,
-  isNightMode: false,
   audio: 8,
   quran: 1,
   content: [19],

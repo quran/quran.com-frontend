@@ -178,7 +178,6 @@ export default function reducer(state = initialState, action = {}) {
 
       return state;
 
-
     }
     case NEXT: {
       const [surahId, ayahNum] = action.currentAyah.split(':');

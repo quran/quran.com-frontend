@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { shallow } from 'enzyme';
+import {shallow} from 'enzyme';
 
 import PageBreak from './index';
 
 let wrapper;
 let pageNum = 15;
 
-describe('<ContentDropdown />', () => {
+describe('<PageBreak />', () => {
   beforeEach(() => {
     wrapper = shallow(<PageBreak pageNum={pageNum} />);
   });

@@ -14,6 +14,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import 'partials/modal';
 @import 'partials/tooltip';
 @import 'partials/highlight';
+@import 'partials/local-switcher';
 @import 'nightmode';
 @import 'partials/no-script';
 
@@ -167,4 +168,9 @@ li em{
   position: absolute;
   top: 0px;
   transform: translateY(-40%);
+}
+
+.urdu, .punjabi{
+  direction: rtl;
+  font-family: 'Nafees';
 }

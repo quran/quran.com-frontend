@@ -6,12 +6,14 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import { intlShape, injectIntl } from 'react-intl';
 
 import SwitchToggle from 'components/SwitchToggle';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('../style.scss');
 
-export default class RepeatButton extends Component {
+class RepeatButton extends Component {
   static propTypes = {
     surah: PropTypes.object.isRequired,
     repeat: PropTypes.shape({
@@ -20,7 +22,8 @@ export default class RepeatButton extends Component {
       times: PropTypes.number
     }).isRequired,
     setRepeat: PropTypes.func.isRequired,
-    current: PropTypes.number.isRequired
+    current: PropTypes.number.isRequired,
+    intl: intlShape.isRequired
   };
 
   handleToggle = () => {
@@ -59,9 +62,13 @@ export default class RepeatButton extends Component {
 
     return (
       <Col md={12} style={{paddingTop: 15}}>
-        From - To: <br />
         <ul className="list-inline" style={{marginBottom: 0}}>
           <li>
+            <LocaleFormattedMessage
+              id={ "player.repeat.rangeStart" }
+              defaultMessage={'From'}
+            />{' '}:
+            <br />
             <FormControl
               componentClass="select"
               value={repeat.from}
@@ -82,6 +89,11 @@ export default class RepeatButton extends Component {
           </li>
           <li> - </li>
           <li>
+            <LocaleFormattedMessage
+              id={ "player.repeat.rangeEnd" }
+              defaultMessage={'To'}
+            />{' '}:
+            <br />
             <FormControl
               componentClass="select"
               value={repeat.to}
@@ -107,7 +119,10 @@ export default class RepeatButton extends Component {
 
     return (
       <Col md={12} style={{paddingTop: 15}}>
-        Ayah: <br />
+        <LocaleFormattedMessage
+          id={ "player.currentAyah" }
+          defaultMessage={'Ayah'}
+        />{' '}: <br />
         <FormControl
           componentClass="select"
           value={repeat.from}
@@ -141,10 +156,16 @@ export default class RepeatButton extends Component {
             onSelect={this.handleNavChange}
           >
             <NavItem eventKey={1} title="Single Ayah" className={style.pill}>
-              Single
+              <LocaleFormattedMessage
+                id={ "player.repeat.single" }
+                defaultMessage={'Single'}
+              />
             </NavItem>
             <NavItem eventKey={2} title="Range" className={style.pill}>
-              Range
+              <LocaleFormattedMessage
+                id={ "player.repeat.range" }
+                defaultMessage={'Range'}
+              />
             </NavItem>
           </Nav>
         </Col>
@@ -163,13 +184,16 @@ export default class RepeatButton extends Component {
   }
 
   renderTimes() {
-    const { repeat, setRepeat } = this.props;
+    const { repeat, setRepeat, intl } = this.props;
     const times = Array(10).join().split(',');
 
     return (
       <Row className={!repeat.from && style.disabled}>
         <Col md={12} style={{paddingTop: 15}}>
-          Times: <br />
+          <LocaleFormattedMessage
+            id={ "player.repeat.title" }
+            defaultMessage={'Repeat'}
+          />: <br />
           <FormControl
             componentClass="select"
             value={repeat.times}
@@ -178,8 +202,10 @@ export default class RepeatButton extends Component {
               times: parseInt(event.target.value, 10)
             })}
           >
-            <option value={Infinity}>
-              Loop
+            <option value={'Infinity'}>
+              {
+                intl.formatMessage({id: "player.repeat.loop", defaultMessage: 'Loop'})
+              }
             </option>
             {
               times.map((ayah, index) => (
@@ -204,7 +230,10 @@ export default class RepeatButton extends Component {
         title={
           <Row>
             <Col md={12} className="text-center">
-              Toggle repeat{'  '}
+              <LocaleFormattedMessage
+                id={ "player.repeat.title" }
+                defaultMessage={'TOGGLE REPEAT'}
+              />{'  '}
               <SwitchToggle
                 checked={!!repeat.from}
                 onToggle={this.handleToggle}
@@ -237,3 +266,5 @@ export default class RepeatButton extends Component {
     );
   }
 }
+
+export default injectIntl(RepeatButton);

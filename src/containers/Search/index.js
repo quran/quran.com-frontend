@@ -18,6 +18,9 @@ import Loader from 'components/Loader';
 
 import { search } from 'redux/actions/search.js';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import {FormattedHTMLMessage} from 'react-intl'
+
 const style = require('./style.scss');
 
 class Search extends Component {
@@ -65,6 +68,8 @@ class Search extends Component {
 
   renderStatsBar() {
     const { total, size, page, from, query } = this.props;
+    const values = {from: 2, to: from +size - 1, total: 10, query: query};
+
 
     if (total) {
       const pageNum = Math.ceil(total / size);
@@ -73,11 +78,12 @@ class Search extends Component {
         <div className={style.header}>
           <Grid>
             <Row>
-              <Col md={6} className="text-uppercase">
-                {from}-{from + size - 1} OF
-                <span className={style.colored}> {total} </span>
-                SEARCH RESULTS FOR:
-                <span className={style.colored}> {query}</span>
+              <Col md={6} className="text-uppercase search-status">
+                <FormattedHTMLMessage
+                  id={'search.resultHeading'}
+                  defaultMessage={"{from}-{to} OF {total} SEARCH RESULTS FOR: {query}"}
+                  values={values}
+                  />
               </Col>
               <Col className="text-right">
                 <ReactPaginate
@@ -118,7 +124,7 @@ class Search extends Component {
     if (isErrored) {
       return (
         <h3 className="text-center" style={{padding: '15%'}}>
-          Sorry, there was an error with your search.
+          <LocaleFormattedMessage id={'search.error'} defaultMessage={'Sorry, there was an error with your search.'}/>
         </h3>
       );
     }
@@ -128,7 +134,9 @@ class Search extends Component {
     }
 
     if (!results.length) {
-      return <h3 className="text-center" style={{ padding: '15%' }}>No results found.</h3>;
+      return <h3 className="text-center" style={{ padding: '15%' }}>
+        <LocaleFormattedMessage id={'search.noResult'} defaultMessage={'No results found.'}/>
+      </h3>;
     }
 
     return results.map(result => (

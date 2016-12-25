@@ -8,17 +8,17 @@
     padding-top: 30px;
     text-transform: uppercase;
 
+    .header{
+      line-height: 30px;
+      color: #fff;
+    }
+
     .list{
       padding-left: 0px;
       :global(li){
         list-style: none;
         padding: 5px 0;
       }
-    }
-
-    p{
-      line-height: 30px;
-      color: #fff;
     }
 
     a{
@@ -38,13 +38,4 @@
     -ms-transition: color .15s ease-in-out;
     transition: color .15s ease-in-out;
   }
-
-  .links {
-    &:last-child{
-      p{
-        color: rgba(#fff, 0.5);
-      }
-    }
-  }
-
 }

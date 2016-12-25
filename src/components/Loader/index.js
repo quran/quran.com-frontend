@@ -1,10 +1,12 @@
 import React from 'react';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 const styles = require('./style.scss');
 
 const Loader = () => (
   <div className={styles.loader}>
-    Loading...
+    <LocaleFormattedMessage id={'app.loading'} defaultMessage={'Loading...'}/>
   </div>
 );
 

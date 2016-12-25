@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 const style = require('./style.scss');
 
 // To save API calls.
@@ -229,7 +231,7 @@ export default class ReciterDropdown extends Component {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          Reciters
+          <LocaleFormattedMessage id={'setting.reciters'} defaultMessage={'Reciters'}/>
           <span className="caret" />
         </button>
         <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">

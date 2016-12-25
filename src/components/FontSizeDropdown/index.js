@@ -5,6 +5,8 @@ import Popover from 'react-bootstrap/lib/Popover';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 const style = require('./style.scss');
 
 export default class FontSizeDropdown extends Component {
@@ -29,8 +31,10 @@ export default class FontSizeDropdown extends Component {
   }
 
   renderPopup() {
+    const title = <LocaleFormattedMessage id={'setting.fontSize'} defaultMessage={'Font size'}/>
+
     return (
-      <Popover id="FontSizeDropdown" title="Font Size" className={style.popover}>
+      <Popover id="FontSizeDropdown" title={title} className={style.popover}>
         <Row>
           <Col xs={3}>
             <a onClick={() => this.handleOptionSelected('arabic', -1)} className="pointer">
@@ -38,7 +42,7 @@ export default class FontSizeDropdown extends Component {
             </a>
           </Col>
           <Col xs={6} className="text-center">
-            Arabic
+            <LocaleFormattedMessage id={'setting.fontSize.arabic'} defaultMessage={'Arabic'}/>
           </Col>
           <Col xs={3} className="text-right">
             <a onClick={() => this.handleOptionSelected('arabic', 1)} className="pointer">
@@ -54,7 +58,7 @@ export default class FontSizeDropdown extends Component {
             </a>
           </Col>
           <Col xs={6} className="text-center">
-            Translations
+            <LocaleFormattedMessage id={'setting.translations.title'} defaultMessage={'Translations'}/>
           </Col>
           <Col xs={3} className="text-right">
             <a onClick={() => this.handleOptionSelected('translation', 1)} className="pointer">
@@ -74,7 +78,7 @@ export default class FontSizeDropdown extends Component {
           className="text-color"
           data-metrics-event-name="FontSizeDropdown"
         >
-          Font size
+          <LocaleFormattedMessage id={'setting.fontSize'} defaultMessage={'Font size'}/>
         </a>
       </OverlayTrigger>
     );

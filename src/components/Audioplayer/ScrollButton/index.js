@@ -1,13 +1,17 @@
 import React, { PropTypes } from 'react';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('../style.scss');
 
 const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
   const tooltip = (
     <Tooltip id="scroll-button-tooltip">
-      Automatically scrolls to the currently playing ayah on transitions...
+      <LocaleFormattedMessage
+        id={ "player.scrollButtonTip" }
+        defaultMessage={'Automatically scrolls to the currently playing ayah on transitions...'}
+      />
     </Tooltip>
   );
 
