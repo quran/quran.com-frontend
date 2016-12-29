@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Isvg from 'react-inlinesvg';
+import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
@@ -26,7 +27,7 @@ const Title = ({ surah }) => {
 };
 
 Title.propTypes = {
-  surah: PropTypes.object.isRequired
+  surah: surahType.isRequired
 };
 
 export default Title;

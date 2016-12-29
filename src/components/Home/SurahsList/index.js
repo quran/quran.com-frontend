@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
 
+import { surahType } from 'types';
+
 const styles = require('./style.scss');
 
 const SurahsList = (props) => {
@@ -30,7 +32,7 @@ const SurahsList = (props) => {
 };
 
 SurahsList.propTypes = {
-  surahs: PropTypes.array.isRequired
+  surahs: PropTypes.arrayOf(surahType).isRequired
 };
 
 export default SurahsList;

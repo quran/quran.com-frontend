@@ -26,7 +26,6 @@ const ModalBody = Modal.Body;
 
 class App extends Component {
   static propTypes = {
-    surahs: PropTypes.object.isRequired,
     media: PropTypes.object.isRequired,
     removeMedia: PropTypes.func.isRequired,
     children: PropTypes.element
@@ -89,6 +88,6 @@ const metricsApp = metrics(metricsConfig)(App);
 const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 
 export default connect(
-  state => ({ surahs: state.surahs.entities, media: state.media }),
+  state => ({ media: state.media }),
   { removeMedia }
 )(AsyncApp);

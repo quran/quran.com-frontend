@@ -6,13 +6,13 @@ import Col from 'react-bootstrap/lib/Col';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
+import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
 export default class SurahsDropdown extends Component {
   static propTypes = {
-    surahs: PropTypes.object.isRequired,
+    surahs: PropTypes.objectOf(surahType).isRequired,
     className: PropTypes.string
   };
 

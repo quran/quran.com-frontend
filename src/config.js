@@ -19,7 +19,7 @@ module.exports = Object.assign({
   sentryServer: process.env.SENTRY_KEY_SERVER,
   facebookAppId: process.env.FACEBOOK_APP_ID,
   // Supported locales
-  locales: {"en": 'English', "ar": 'العربية', "ur": 'اردو'},
+  locales: { en: 'English', ar: 'العربية', ur: 'اردو' },
   defaultLocale: 'en',
   app: {
     head: {
@@ -90,7 +90,7 @@ module.exports = Object.assign({
       /* SEO: https://developers.google.com/structured-data/slsb-overview#markup_examples */
       /* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */
       script: [
-        { src: "https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en"},
+        { src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en' },
         {
           type: 'application/ld+json',
           innerHTML: `{

@@ -7,13 +7,14 @@ import Col from 'react-bootstrap/lib/Col';
 
 import SwitchToggle from 'components/SwitchToggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import { optionsType } from 'types';
 
 const style = require('./style.scss');
 
 export default class TooltipDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func,
-    options: PropTypes.object
+    options: optionsType
   }
 
   handleOptionSelected = ({ target: { checked } }) => {
@@ -25,14 +26,14 @@ export default class TooltipDropdown extends Component {
   }
 
   renderPopup() {
-    const { options: { tooltip }} = this.props;
-    const tooltipTitle = <LocaleFormattedMessage id={'setting.tooltip.title'} defaultMessage={'DISPLAY TOOLTIP'}/>;
+    const { options: { tooltip } } = this.props;
+    const tooltipTitle = <LocaleFormattedMessage id="setting.tooltip.title" defaultMessage="DISPLAY TOOLTIP" />;
 
     return (
       <Popover id="TooltipDropdown" title={tooltipTitle} className={style.popover}>
         <Row>
           <Col xs={12}>
-            <LocaleFormattedMessage id={'setting.tooltip.translation'} defaultMessage={'Translation'}/>
+            <LocaleFormattedMessage id="setting.tooltip.translation" defaultMessage="Translation" />
             {' '}
             <SwitchToggle
               checked={tooltip === 'transliteration'}
@@ -41,7 +42,7 @@ export default class TooltipDropdown extends Component {
               flat
             />
             {' '}
-            <LocaleFormattedMessage id={'setting.tooltip.transliteration'} defaultMessage={'Transliteration'}/>
+            <LocaleFormattedMessage id="setting.tooltip.transliteration" defaultMessage="Transliteration" />
           </Col>
         </Row>
       </Popover>
@@ -56,7 +57,7 @@ export default class TooltipDropdown extends Component {
           className="text-color"
           data-metrics-event-name="TooltipDropdown"
         >
-          <LocaleFormattedMessage id={'setting.tooltip'} defaultMessage={'Tooltip'} />
+          <LocaleFormattedMessage id="setting.tooltip" defaultMessage="Tooltip" />
         </a>
       </OverlayTrigger>
     );

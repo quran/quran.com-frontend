@@ -1,6 +1,7 @@
 /* global window */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import { ShareButtons, generateShareIcon } from 'react-share';
+import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
@@ -10,7 +11,7 @@ const TwitterIcon = generateShareIcon('twitter');
 
 export default class Share extends Component {
   static propTypes = {
-    surah: PropTypes.object.isRequired
+    surah: surahType.isRequired
   };
 
   onClickPopup = (url, title) => {

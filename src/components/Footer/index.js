@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import LocaleSwitcher from 'components/LocaleSwitcher'
+import LocaleSwitcher from 'components/LocaleSwitcher';
 
 const styles = require('./style.scss');
 
@@ -35,10 +35,15 @@ const Footer = () => (
                 </Link>
               </li>
               <li>
-                <a href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help" target="_blank" data-metrics-event-name="Footer:Link:Developer">
+                <a
+                  href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-metrics-event-name="Footer:Link:Developer"
+                >
                   <LocaleFormattedMessage
-                    id={'nav.developers'}
-                    defaultMessage={'Developers'}
+                    id="nav.developers"
+                    defaultMessage="Developers"
                   />
                 </a>
               </li>
@@ -48,8 +53,8 @@ const Footer = () => (
           <Col md={3} sm={4} xs={12} className={styles.links}>
             <p className={styles.header}>
               <LocaleFormattedMessage
-                id={'nav.usefulSites'}
-                defaultMessage={'USEFUL SITES'}
+                id="nav.usefulSites"
+                defaultMessage="USEFUL SITES"
               />
             </p>
             <ul className={`source-sans ${styles.list}`}>
@@ -99,8 +104,8 @@ const Footer = () => (
           <Col md={3} sm={4} xs={12} className={styles.links}>
             <p className={styles.header}>
               <LocaleFormattedMessage
-                id={'nav.otherLinks'}
-                defaultMessage={'Other links'}
+                id="nav.otherLinks"
+                defaultMessage="Other links"
               />
             </p>
             <ul className={`source-sans ${styles.list}`}>
@@ -129,18 +134,17 @@ const Footer = () => (
           <Col md={4} sm={12} xs={12} className={styles.links}>
             <p className={styles.header}>
               <LocaleFormattedMessage
-                id={'local.selectLabel'}
-                defaultMessage={'Site Language'}
+                id="local.selectLabel"
+                defaultMessage="Site Language"
               />
             </p>
 
             <div className={styles.list}>
-              <LocaleSwitcher/>
-
+              <LocaleSwitcher />
               <p className="monserrat">
                 <LocaleFormattedMessage
-                  id={'nav.aboutQuranProject'}
-                defaultMessage={'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.'}
+                  id="nav.aboutQuranProject"
+                  defaultMessage="Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project."
                 />
               </p>
 

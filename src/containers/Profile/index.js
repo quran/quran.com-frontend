@@ -11,14 +11,14 @@ import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
 
 import QuranNav from 'components/QuranNav';
-import userType from 'types/userType';
+import { bookmarkType, userType } from 'types';
 
 const styles = require('./style.scss');
 
-class Profile extends Component {
+class Profile extends Component { // eslint-disable-line
   static propTypes = {
-    user: PropTypes.shape(userType),
-    bookmarks: PropTypes.object.isRequired
+    user: userType.isRequired,
+    bookmarks: bookmarkType.isRequired
   };
 
   render() {

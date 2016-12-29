@@ -30,18 +30,18 @@ export default () => (
             We need to continue innovating the product and the experience to serve you
             better. To do so we
             have overhead costs which include:
-            <ul>
-              <li>Server costs</li>
-              <li>
-                Data analytics and metrics tools to best learn about your
-                needs (Optimizely, Heap, Keen, etc.)
-              </li>
-              <li>
-                Design help (we are striving to follow our beautiful religion
-                by making beautiful products)
-              </li>
-            </ul>
           </p>
+          <ul>
+            <li>Server costs</li>
+            <li>
+              Data analytics and metrics tools to best learn about your
+              needs (Optimizely, Heap, Keen, etc.)
+            </li>
+            <li>
+              Design help (we are striving to follow our beautiful religion
+              by making beautiful products)
+            </li>
+          </ul>
           <h3>Make a difference.</h3>
           <p>
             Making a difference for Quran.com is as simple as a Tweet,

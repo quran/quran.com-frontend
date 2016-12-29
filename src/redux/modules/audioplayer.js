@@ -175,8 +175,6 @@ export default function reducer(state = initialState, action = {}) {
     case NEXT: {
       const [surahId, ayahNum] = action.currentAyah.split(':');
       const nextId = `${surahId}:${parseInt(ayahNum, 10) + 1}`;
-      const stateSegments = state.segments;
-      const stateSegmentsId = stateSegments[surahId];
 
       return {
         ...state,
@@ -199,8 +197,6 @@ export default function reducer(state = initialState, action = {}) {
     case SET_AYAH: {
       const [surahId, ayahNum] = action.currentAyah.split(':');
       const currentAyah = `${surahId}:${parseInt(ayahNum, 10)}`;
-      const stateSegments = state.segments;
-      const stateSegmentsId = state.segments[surahId];
       const currentFile = state.files[surahId][currentAyah];
 
       return {

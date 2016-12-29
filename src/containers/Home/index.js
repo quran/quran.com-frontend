@@ -9,7 +9,7 @@ import { isAllLoaded, loadAll } from 'redux/actions/surahs.js';
 import SurahsList from 'components/Home/SurahsList';
 import QuickSurahs from 'components/Home/QuickSurahs';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
+import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
@@ -25,7 +25,7 @@ const Home = (props) => {
           <div className="col-md-10 col-md-offset-1">
             <QuickSurahs />
             <h4 className={`text-muted ${styles.title}`}>
-              <LocaleFormattedMessage id={'surah.index.heading'} defaultMessage={'SURAHS (CHAPTERS)'}/>
+              <LocaleFormattedMessage id="surah.index.heading" defaultMessage="SURAHS (CHAPTERS)" />
             </h4>
             <div className="row">
               <SurahsList surahs={Object.values(props.surahs).slice(0, 38)} />
@@ -40,8 +40,7 @@ const Home = (props) => {
 };
 
 Home.propTypes = {
-  lastVisit: PropTypes.any,
-  surahs: PropTypes.object.isRequired
+  surahs: PropTypes.objectOf(surahType).isRequired
 };
 
 const AsyncHome = asyncConnect([{

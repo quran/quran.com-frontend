@@ -8,12 +8,11 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import Image from 'react-bootstrap/lib/Image';
 import userType from 'types/userType';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const Header = Navbar.Header;
 const Collapse = Navbar.Collapse;
 const Toggle = Navbar.Toggle;
-
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 
 const styles = require('./style.scss');

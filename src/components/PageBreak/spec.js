@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {shallow} from 'enzyme';
+import { shallow } from 'enzyme';
 
 import PageBreak from './index';
 
 let wrapper;
-let pageNum = 15;
+const pageNum = 15;
 
 describe('<PageBreak />', () => {
   beforeEach(() => {
@@ -13,7 +12,7 @@ describe('<PageBreak />', () => {
   });
 
   it('should render', () => {
-    expect(wrapper).to.be.ok;
+    expect(wrapper).to.be.ok; // eslint-disable-line
   });
 
   it('should show page number', () => {

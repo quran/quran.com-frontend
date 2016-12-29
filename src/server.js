@@ -23,7 +23,7 @@ import Html from './helpers/Html';
 
 import { setUserAgent } from './redux/actions/audioplayer.js';
 import { setOption } from './redux/actions/options.js';
-import { getLocalMessages } from './helpers/setLocal';
+import getLocalMessages from './helpers/setLocal';
 
 const pretty = new PrettyError();
 const server = express();

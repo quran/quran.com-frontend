@@ -9,7 +9,7 @@ export default (server) => {
 
     client.get('/api/v2/surahs').then((surahs) => {
       surahs.forEach((surah) => {
-        Array.apply(null, { length: surah.ayat }).forEach((_, index) => {
+        Array(surah.ayat).fill().forEach((_, index) => {
           const ayahId = index + 1;
 
           urls.push({

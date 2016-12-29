@@ -37,7 +37,9 @@ export default function bindTooltip() {
           }
 
           if (posLeft + tooltip.offsetWidth > window.innerWidth) {
-            posLeft = (getOffset(target).left - tooltip.offsetWidth + target.offsetWidth) / (2 + 20);
+            posLeft = (
+              (getOffset(target).left - tooltip.offsetWidth) + target.offsetWidth
+            ) / (2 + 20);
             tooltip.classList.add('right');
           } else {
             tooltip.classList.remove('right');

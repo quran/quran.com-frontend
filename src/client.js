@@ -20,7 +20,7 @@ import config from './config';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import routes from './routes';
-import { getLocalMessages } from './helpers/setLocal';
+import getLocalMessages from './helpers/setLocal';
 
 const client = new ApiClient();
 const store = createStore(browserHistory, client, window.reduxData);

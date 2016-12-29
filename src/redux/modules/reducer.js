@@ -8,6 +8,7 @@ import audioplayer from './audioplayer';
 import lines from './lines';
 import options from './options';
 import searchResults from './searchResults';
+import suggestResults from './suggestResults';
 import fontFaces from './fontFaces';
 import auth from './auth';
 import bookmarks from './bookmarks';
@@ -25,5 +26,6 @@ export default combineReducers({
   fontFaces,
   lines,
   searchResults,
+  suggestResults,
   options
 });

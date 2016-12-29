@@ -13,11 +13,11 @@ export default class Contact extends Component {
     event.preventDefault();
 
     const form = {
-      subject: ReactDOM.findDOMNode(this.purpose).value.trim(),
-      description: ReactDOM.findDOMNode(this.body).value.trim(),
+      subject: this.purpose.value.trim(),
+      description: this.body.value.trim(),
       requester: {
-        name: ReactDOM.findDOMNode(this.name).value.trim(),
-        email: ReactDOM.findDOMNode(this.email).value.trim(),
+        name: this.name.value.trim(),
+        email: this.email.value.trim(),
         locale_id: 8
       }
     };

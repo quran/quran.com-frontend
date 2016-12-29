@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
+import { segmentType } from 'types';
 
 import debug from 'helpers/debug';
 
 export default class Segments extends Component {
   static propTypes = {
-    segments: PropTypes.object.isRequired,
+    segments: PropTypes.objectOf(segmentType).isRequired,
     currentAyah: PropTypes.string,
     currentTime: PropTypes.number
   };

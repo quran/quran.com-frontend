@@ -113,7 +113,7 @@ class SmartBanner extends Component {
     this.hide();
 
     let expireDate = new Date();
-    expireDate = new Date(expireDate.setDate(expireDate.getDate()+this.props.daysHidden));
+    expireDate = new Date(expireDate.setDate(expireDate.getDate() + this.props.daysHidden));
 
     cookie.save('smartbanner-closed', 'true', {
       path: '/',
@@ -123,7 +123,7 @@ class SmartBanner extends Component {
 
   install() {
     let expireDate = new Date();
-    expireDate = new Date(expireDate.setDate(expireDate.getDate()+this.props.daysReminder));
+    expireDate = new Date(expireDate.setDate(expireDate.getDate() + this.props.daysReminder));
 
     this.hide();
     cookie.save('smartbanner-installed', 'true', {

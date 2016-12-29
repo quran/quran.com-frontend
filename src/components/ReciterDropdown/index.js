@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import { optionsType } from 'types';
 
 const style = require('./style.scss');
 
@@ -192,7 +193,7 @@ export const slugs = [
 export default class ReciterDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func,
-    options: PropTypes.object,
+    options: optionsType,
     className: PropTypes.string
   };
 
@@ -231,7 +232,7 @@ export default class ReciterDropdown extends Component {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <LocaleFormattedMessage id={'setting.reciters'} defaultMessage={'Reciters'}/>
+          <LocaleFormattedMessage id="setting.reciters" defaultMessage="Reciters" />
           <span className="caret" />
         </button>
         <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">

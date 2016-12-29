@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-
+import { surahType } from 'types';
 import Loader from 'components/Loader';
 
 const style = require('./style.scss');
@@ -52,9 +52,8 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
 
 SurahInfo.propTypes = {
   onClose: PropTypes.func,
-  loadInfo: PropTypes.func,
   isShowingSurahInfo: PropTypes.bool,
-  surah: PropTypes.object
+  surah: surahType
 };
 
 export default SurahInfo;

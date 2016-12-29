@@ -85,8 +85,8 @@ const Html = ({ store, component, assets }) => {
 };
 
 Html.propTypes = {
-  store: PropTypes.object,
-  assets: PropTypes.object,
+  store: PropTypes.object, // eslint-disable-line
+  assets: PropTypes.object, // eslint-disable-line
   component: PropTypes.element
 };
 

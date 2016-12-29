@@ -9,6 +9,7 @@ import ReadingModeToggle from 'components/ReadingModeToggle';
 import NightModeToggle from 'components/NightModeToggle';
 import Title from 'containers/Surah/Title';
 import Share from 'components/Share';
+import { surahType, optionsType } from 'types';
 
 const TopOptions = ({ options, surah, actions }) => (
   <Row>
@@ -55,8 +56,8 @@ const TopOptions = ({ options, surah, actions }) => (
 );
 
 TopOptions.propTypes = {
-  options: PropTypes.object.isRequired,
-  surah: PropTypes.object.isRequired,
+  options: optionsType.isRequired,
+  surah: surahType.isRequired,
   actions: PropTypes.object.isRequired
 };
 

@@ -26,7 +26,7 @@ export default class InformationToggle extends Component {
         className={`${isShowingSurahInfo ? ' text-primary' : 'text-color'} pointer`}
         onClick={this.toggleInformationMode}
       >
-        <LocaleFormattedMessage id={'surah.info'} defaultMessage={'Surah Info'}/>
+        <LocaleFormattedMessage id="surah.info" defaultMessage="Surah Info" />
       </a>
     );
   }

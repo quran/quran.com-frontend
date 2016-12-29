@@ -7,6 +7,7 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import debug from 'helpers/debug';
+import surahType from 'types/surahType';
 
 const Header = Navbar.Header;
 
@@ -83,7 +84,7 @@ const SurahHeader = ({ surah, handleToggleSidebar }) => {
 };
 
 SurahHeader.propTypes = {
-  surah: PropTypes.object.isRequired,
+  surah: surahType.isRequired,
   handleToggleSidebar: PropTypes.func.isRequired
 };
 

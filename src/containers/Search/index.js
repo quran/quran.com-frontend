@@ -6,6 +6,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
+import { FormattedHTMLMessage } from 'react-intl';
 
 // Bootstrap
 import Grid from 'react-bootstrap/lib/Grid';
@@ -18,7 +19,9 @@ import Loader from 'components/Loader';
 import { search } from 'redux/actions/search.js';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import {FormattedHTMLMessage} from 'react-intl'
+
+import { ayahType, optionsType } from 'types';
+
 import Header from './Header';
 
 const style = require('./style.scss');
@@ -32,10 +35,10 @@ class Search extends Component {
     size: PropTypes.number,
     from: PropTypes.number,
     query: PropTypes.string,
-    results: PropTypes.array,
-    ayahs: PropTypes.object,
+    results: PropTypes.array, // eslint-disable-line
+    ayahs: PropTypes.objectOf(ayahType),
     push: PropTypes.func.isRequired,
-    options: PropTypes.object
+    options: optionsType
   };
 
   static defaultProps = {
@@ -67,7 +70,7 @@ class Search extends Component {
 
   renderStatsBar() {
     const { total, size, page, from, query } = this.props;
-    const values = {from: 2, to: from +size - 1, total: 10, query: query};
+    const values = { from: 2, to: (from + size) - 1, total: 10, query };
 
 
     if (total) {
@@ -79,10 +82,10 @@ class Search extends Component {
             <Row>
               <Col md={6} className="text-uppercase search-status">
                 <FormattedHTMLMessage
-                  id={'search.resultHeading'}
-                  defaultMessage={"{from}-{to} OF {total} SEARCH RESULTS FOR: {query}"}
+                  id="search.resultHeading"
+                  defaultMessage="{from}-{to} OF {total} SEARCH RESULTS FOR: {query}"
                   values={values}
-                  />
+                />
               </Col>
               <Col className="text-right">
                 <ReactPaginate
@@ -122,8 +125,8 @@ class Search extends Component {
 
     if (isErrored) {
       return (
-        <h3 className="text-center" style={{padding: '15%'}}>
-          <LocaleFormattedMessage id={'search.error'} defaultMessage={'Sorry, there was an error with your search.'}/>
+        <h3 className="text-center" style={{ padding: '15%' }}>
+          <LocaleFormattedMessage id="search.error" defaultMessage="Sorry, there was an error with your search." />
         </h3>
       );
     }
@@ -133,9 +136,11 @@ class Search extends Component {
     }
 
     if (!results.length) {
-      return <h3 className="text-center" style={{ padding: '15%' }}>
-        <LocaleFormattedMessage id={'search.noResult'} defaultMessage={'No results found.'}/>
-      </h3>;
+      return (
+        <h3 className="text-center" style={{ padding: '15%' }}>
+          <LocaleFormattedMessage id="search.noResult" defaultMessage="No results found." />
+        </h3>
+      );
     }
 
     return results.map(result => (

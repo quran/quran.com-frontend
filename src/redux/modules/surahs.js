@@ -3,7 +3,6 @@ import {
   LOAD_FAIL,
   LOAD_INFO,
   LOAD_INFO_SUCCESS,
-  LOAD_INFO_FAIL,
   SET_CURRENT
 } from 'redux/constants/surahs.js';
 

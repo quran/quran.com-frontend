@@ -75,7 +75,7 @@ export default () => (
             help of the open source Muslim community online. Data sources
             include <a href="http://www.tanzil.info">Tanzil</a>,
             <a href="http://www.qurancomplex.com"> QuranComplex</a>,
-            <a href="https://github.com/cpfair/quran-align">Colin Fair's work on audio segments</a>,
+            <a href="https://github.com/cpfair/quran-align">Colin Fair&apos;s work on audio segments</a>,
             <a href="http://www.zekr.org"> Zekr</a> and
             <a href="http://www.al-quran.info"> Online Quran Project</a>.
             Special thanks to the

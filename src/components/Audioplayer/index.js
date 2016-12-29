@@ -1,4 +1,4 @@
-/* global document */
+/* global document, Audio */
 // TODO: This file is too too large.
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
@@ -10,7 +10,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import debug from 'helpers/debug';
 import scroller from 'utils/scroller';
 
-import surahType from 'types/surahType';
+import { surahType, segmentType } from 'types';
 
 // Redux
 import * as AudioActions from 'redux/actions/audioplayer';
@@ -27,8 +27,8 @@ export class Audioplayer extends Component {
     className: PropTypes.string,
     surah: surahType,
     onLoadAyahs: PropTypes.func.isRequired,
-    segments: PropTypes.object,
-    files: PropTypes.object,
+    segments: PropTypes.objectOf(segmentType),
+    files: PropTypes.objectOf(PropTypes.instanceOf(Audio)),
     currentAyah: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
     isLoadedOnClient: PropTypes.bool.isRequired,
@@ -50,7 +50,7 @@ export class Audioplayer extends Component {
     isPlaying: PropTypes.bool,
     currentTime: PropTypes.number,
     duration: PropTypes.number,
-    currentFile: PropTypes.object
+    currentFile: PropTypes.instanceOf(Audio)
   };
 
   componentDidMount() {
