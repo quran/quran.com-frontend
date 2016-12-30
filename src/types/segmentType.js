@@ -2,11 +2,12 @@ import { PropTypes } from 'react';
 
 export default PropTypes.shape({
   words: PropTypes.objectOf(PropTypes.shape({
-    startTime: PropTypes.string.isRequired,
-    endTime: PropTypes.string.isRequired,
+    startTime: PropTypes.number.isRequired,
+    endTime: PropTypes.number.isRequired,
     duration: PropTypes.number.isRequired,
   })),
-  intervals: PropTypes.arrayOf(
-    PropTypes.arrayOf(() => true)
-  )
+  intervals: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]) // TODO: This should be done a better way.
 });

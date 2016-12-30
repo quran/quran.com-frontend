@@ -4,7 +4,7 @@ export default {
     const node = document.getElementsByName(name)[0];
 
     if (!node) {
-      console.warn(`node [name=${name}] not found, could not scroll`);
+      console.warn(`node [name=${name}] not found, could not scroll`); // eslint-disable-line
       return;
     }
 

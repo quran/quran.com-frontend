@@ -1,4 +1,4 @@
-/* global document, Audio */
+/* global document */
 // TODO: This file is too too large.
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
@@ -28,7 +28,8 @@ export class Audioplayer extends Component {
     surah: surahType,
     onLoadAyahs: PropTypes.func.isRequired,
     segments: PropTypes.objectOf(segmentType),
-    files: PropTypes.objectOf(PropTypes.instanceOf(Audio)),
+    // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
+    files: PropTypes.object, // eslint-disable-line
     currentAyah: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
     isLoadedOnClient: PropTypes.bool.isRequired,
@@ -50,7 +51,8 @@ export class Audioplayer extends Component {
     isPlaying: PropTypes.bool,
     currentTime: PropTypes.number,
     duration: PropTypes.number,
-    currentFile: PropTypes.instanceOf(Audio)
+    // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
+    currentFile: PropTypes.any // eslint-disable-line
   };
 
   componentDidMount() {
