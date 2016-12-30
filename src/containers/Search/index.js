@@ -181,13 +181,13 @@ class Search extends Component {
 }
 
 const AsyncSearch = asyncConnect([{
-  promise({ store: { dispatch }, location: { query } }) {
+  promise({ store: { dispatch }, location }) {
     if (__CLIENT__) {
-      dispatch(search(query));
+      dispatch(search(location.query));
       return false;
     }
 
-    return dispatch(search(query));
+    return dispatch(search(location.query));
   }
 }])(Search);
 
