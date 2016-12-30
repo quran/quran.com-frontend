@@ -4,7 +4,6 @@ import Popover from 'react-bootstrap/lib/Popover';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import { intlShape, injectIntl } from 'react-intl';
 
@@ -150,7 +149,7 @@ class RepeatButton extends Component {
     const { repeat } = this.props;
 
     return (
-      <Row className={!repeat.from && style.disabled}>
+      <div className={`${!repeat.from && style.disabled} row`}>
         <Col md={12}>
           <Nav
             bsStyle="pills"
@@ -171,7 +170,7 @@ class RepeatButton extends Component {
             </NavItem>
           </Nav>
         </Col>
-      </Row>
+      </div>
     );
   }
 
@@ -179,9 +178,9 @@ class RepeatButton extends Component {
     const { repeat } = this.props;
 
     return (
-      <Row className={!repeat.from && style.disabled}>
+      <div className={`${!repeat.from && style.disabled} row`}>
         {repeat.from === repeat.to ? this.renderSingleAyah() : this.renderRangeAyahs()}
-      </Row>
+      </div>
     );
   }
 
@@ -190,7 +189,7 @@ class RepeatButton extends Component {
     const times = Array(10).join().split(',');
 
     return (
-      <Row className={!repeat.from && style.disabled}>
+      <div className={`${!repeat.from && style.disabled} row`}>
         <Col md={12} style={{ paddingTop: 15 }}>
           <LocaleFormattedMessage
             id="player.repeat.title"
@@ -218,7 +217,7 @@ class RepeatButton extends Component {
             }
           </FormControl>
         </Col>
-      </Row>
+      </div>
     );
   }
 
@@ -230,7 +229,7 @@ class RepeatButton extends Component {
         id="FontSizeDropdown"
         className={style.popover}
         title={
-          <Row>
+          <div className="row">
             <Col md={12} className="text-center">
               <LocaleFormattedMessage
                 id="player.repeat.title"
@@ -243,7 +242,7 @@ class RepeatButton extends Component {
                 flat
               />
             </Col>
-          </Row>
+          </div>
         }
       >
         {this.renderNav()}

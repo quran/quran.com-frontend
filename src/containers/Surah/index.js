@@ -8,7 +8,6 @@ import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
 // bootstrap
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
 
@@ -429,7 +428,7 @@ class Surah extends Component {
           {this.renderSidebar()}
         </Sidebar>
         <div className={`container-fluid ${style['surah-container']}`}>
-          <Row>
+          <div className="row">
             <SurahInfo
               surah={surah}
               loadInfo={actions.loadInfo}
@@ -444,7 +443,7 @@ class Surah extends Component {
             <Col md={10} mdOffset={1}>
               {this.renderPagination()}
             </Col>
-          </Row>
+          </div>
         </div>
         <Audioplayer
           surah={surah}

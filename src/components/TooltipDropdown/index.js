@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import SwitchToggle from 'components/SwitchToggle';
@@ -31,7 +30,7 @@ export default class TooltipDropdown extends Component {
 
     return (
       <Popover id="TooltipDropdown" title={tooltipTitle} className={style.popover}>
-        <Row>
+        <div className="row">
           <Col xs={12}>
             <LocaleFormattedMessage id="setting.tooltip.translation" defaultMessage="Translation" />
             {' '}
@@ -44,7 +43,7 @@ export default class TooltipDropdown extends Component {
             {' '}
             <LocaleFormattedMessage id="setting.tooltip.transliteration" defaultMessage="Transliteration" />
           </Col>
-        </Row>
+        </div>
       </Popover>
     );
   }

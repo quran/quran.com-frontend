@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -42,7 +41,7 @@ export default class FontSizeDropdown extends Component {
 
     return (
       <Popover id="FontSizeDropdown" title={title} className={style.popover}>
-        <Row>
+        <div className="row">
           <Col xs={3}>
             <a
               tabIndex="-1"
@@ -64,9 +63,9 @@ export default class FontSizeDropdown extends Component {
               <i className="ss-icon ss-plus" />
             </a>
           </Col>
-        </Row>
+        </div>
         <br />
-        <Row>
+        <div className="row">
           <Col xs={3}>
             <a
               tabIndex="-1"
@@ -88,7 +87,7 @@ export default class FontSizeDropdown extends Component {
               <i className="ss-icon ss-plus" />
             </a>
           </Col>
-        </Row>
+        </div>
       </Popover>
     );
   }

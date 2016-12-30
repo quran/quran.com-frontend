@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
 
@@ -22,7 +21,7 @@ const SurahHeader = ({ surah, handleToggleSidebar }) => {
   return (
     <Navbar className="montserrat surah" fixedTop fluid>
       <Header>
-        <Row>
+        <div className="row">
           <Col xs={1}>
             <button type="button" className="navbar-toggle collapsed" onClick={handleToggleSidebar}>
               <span className="sr-only">Toggle navigation</span>
@@ -76,7 +75,7 @@ const SurahHeader = ({ surah, handleToggleSidebar }) => {
               </li>
             </ul>
           </Col>
-        </Row>
+        </div>
 
       </Header>
     </Navbar>

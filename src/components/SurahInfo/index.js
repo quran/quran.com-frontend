@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import { surahType } from 'types';
 import Loader from 'components/Loader';
@@ -21,7 +20,7 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
         className={`${style.close} ss-delete`}
         onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
       />
-      <Row className={style.row}>
+      <div className={`${style.row} row`}>
         <Col
           md={3}
           xs={6}
@@ -45,7 +44,7 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
             </p>
           </div>
         </Col>
-      </Row>
+      </div>
     </Col>
   );
 };

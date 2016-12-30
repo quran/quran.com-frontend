@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import InformationToggle from 'components/InformationToggle';
@@ -12,7 +11,7 @@ import Share from 'components/Share';
 import { surahType, optionsType } from 'types';
 
 const TopOptions = ({ options, surah, actions }) => (
-  <Row>
+  <div className="row">
     <Col md={4} className="hidden-xs hidden-sm">
       <Title surah={surah} />
     </Col>
@@ -52,7 +51,7 @@ const TopOptions = ({ options, surah, actions }) => (
         <li><Share surah={surah} /></li>
       </ul>
     </Col>
-  </Row>
+  </div>
 );
 
 TopOptions.propTypes = {

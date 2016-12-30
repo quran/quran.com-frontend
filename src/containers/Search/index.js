@@ -10,7 +10,6 @@ import { FormattedHTMLMessage } from 'react-intl';
 
 // Bootstrap
 import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import Ayah from 'components/Ayah';
@@ -79,7 +78,7 @@ class Search extends Component {
       return (
         <div className={style.header}>
           <Grid>
-            <Row>
+            <div className="row">
               <Col md={6} className="text-uppercase search-status">
                 <FormattedHTMLMessage
                   id="search.resultHeading"
@@ -111,7 +110,7 @@ class Search extends Component {
                   activeClass={style.active}
                 />
               </Col>
-            </Row>
+            </div>
           </Grid>
         </div>
       );
@@ -169,11 +168,11 @@ class Search extends Component {
         <Header />
         {this.renderStatsBar()}
         <div className="container surah-list">
-          <Row>
+          <div className="row">
             <Col md={12}>
               {this.renderBody()}
             </Col>
-          </Row>
+          </div>
         </div>
       </div>
     );

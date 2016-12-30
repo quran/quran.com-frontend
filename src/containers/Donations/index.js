@@ -2,14 +2,13 @@ import React from 'react';
 import IndexHeader from 'components/IndexHeader';
 
 import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 export default () => (
   <div className="top-section">
     <IndexHeader noSearch />
     <Grid>
-      <Row>
+      <div className="row">
         <Col md={12} className="text-center">
           <h1>Quran.com</h1>
         </Col>
@@ -65,7 +64,7 @@ export default () => (
           If you have any questions, please do not hesitate to contact
           us at <a href="mailto:support@quran.zendesk.com">support@quran.zendesk.com.</a>
         </Col>
-      </Row>
+      </div>
     </Grid>
   </div>
 );

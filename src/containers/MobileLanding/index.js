@@ -2,7 +2,6 @@ import React from 'react';
 import Helmet from 'react-helmet';
 
 import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
 
@@ -23,7 +22,7 @@ export default () => (
         })
       }
     />
-    <Row>
+    <div className="row">
       <Col md={5}>
         <h1 className={styles.title}>
           <strong>Quran</strong><br />
@@ -37,7 +36,7 @@ export default () => (
             favorite reciters.
           </small>
         </h3>
-        <Row style={{ paddingTop: 15 }}>
+        <div className="row" style={{ paddingTop: 15 }}>
           <Col md={6}>
             <Button
               bsStyle="primary"
@@ -66,11 +65,11 @@ export default () => (
               Download
             </Button>
           </Col>
-        </Row>
+        </div>
       </Col>
       <Col md={7}>
         <img src={phones} width="100%" alt="Apps" />
       </Col>
-    </Row>
+    </div>
   </Grid>
 );

@@ -2,7 +2,6 @@ import React from 'react';
 import Link from 'react-router/lib/Link';
 
 import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -14,7 +13,7 @@ const Footer = () => (
   <footer className={styles.footer}>
     <Grid>
       <Col md={10} mdOffset={1}>
-        <Row>
+        <div className="row">
           <Col md={2} sm={4} xs={12} className={styles.about}>
             <p className={styles.header}>Navigate</p>
             <ul className={`source-sans ${styles.list}`}>
@@ -151,7 +150,7 @@ const Footer = () => (
               <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>
             </div>
           </Col>
-        </Row>
+        </div>
       </Col>
     </Grid>
   </footer>

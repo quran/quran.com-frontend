@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
 import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Image from 'react-bootstrap/lib/Image';
 import Tabs from 'react-bootstrap/lib/Tabs';
@@ -30,15 +29,15 @@ class Profile extends Component { // eslint-disable-line
         <QuranNav />
         <div className={styles.header} />
         <Grid>
-          <Row>
+          <div className="row">
             <Col md={12} className="text-center">
               <Image src={`${user.image}?type=large`} circle className={styles.image} />
               <h2>
                 {user.name}
               </h2>
             </Col>
-          </Row>
-          <Row>
+          </div>
+          <div className="row">
             <Col md={6} mdOffset={3}>
               <Tabs bsStyle="pills" defaultActiveKey={1} className={styles.tabs} id="tabs">
                 <Tab eventKey={1} title="Bookmarks">
@@ -57,7 +56,7 @@ class Profile extends Component { // eslint-disable-line
                 </Tab>
               </Tabs>
             </Col>
-          </Row>
+          </div>
         </Grid>
       </div>
     );

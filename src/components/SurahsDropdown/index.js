@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
@@ -30,7 +29,7 @@ export default class SurahsDropdown extends Component {
     return Object.values(surahs).map((surah, index) => (
       <LinkContainer to={`/${surah.id}`} activeClass="active" key={`surah-${index}`}>
         <MenuItem>
-          <Row>
+          <div className="row">
             <Col xs={2} md={2}>
               <span className="surah-num">
                 {surah.id}
@@ -44,7 +43,7 @@ export default class SurahsDropdown extends Component {
             <Col xs={3} md={3} className={`text-right ${styles.arabicName}`}>
               {surah.name.arabic}
             </Col>
-          </Row>
+          </div>
         </MenuItem>
       </LinkContainer>
     ));

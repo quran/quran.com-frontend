@@ -3,7 +3,6 @@ import IndexHeader from 'components/IndexHeader';
 import Helmet from 'react-helmet';
 
 import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 export default () => (
@@ -11,7 +10,7 @@ export default () => (
     <Helmet title="About Quran.com" />
     <IndexHeader noSearch />
     <Grid className="about-text" fluid>
-      <Row>
+      <div className="row">
         <Col md={8} mdOffset={2}>
           <h4 className="source-sans">
             The Noble Quran is the central
@@ -25,8 +24,8 @@ export default () => (
             Quran, you may visit its <a href="https://en.wikipedia.org/wiki/Quran">Wikipedia article.</a>
           </h4>
         </Col>
-      </Row>
-      <Row>
+      </div>
+      <div className="row">
         <Col md={8} mdOffset={2}>
           <h3>MECCAN SURAHS</h3>
           <h4 className="source-sans">
@@ -38,8 +37,8 @@ export default () => (
             occurred after the move to the city of that name.
           </h4>
         </Col>
-      </Row>
-      <Row>
+      </div>
+      <div className="row">
         <Col md={8} mdOffset={2}>
           <h3>MEDINAN SURAHS</h3>
           <h4 className="source-sans">
@@ -51,8 +50,8 @@ export default () => (
             in Mecca.
           </h4>
         </Col>
-      </Row>
-      <Row>
+      </div>
+      <div className="row">
         <Col md={8} mdOffset={2}>
           <h3>BROWSING SURAHS ON THIS WEBSITE</h3>
           <h4 className="source-sans">
@@ -65,8 +64,8 @@ export default () => (
             please do not hesitate to <a href="https://quran.zendesk.com/hc/en-us">contact us</a>.
           </h4>
         </Col>
-      </Row>
-      <Row className="credits">
+      </div>
+      <div className="row credits">
         <Col md={8} mdOffset={2}>
           <h3><strong>CREDITS</strong></h3>
           <h4>
@@ -84,7 +83,7 @@ export default () => (
             If you have any questions, you may visit the <a href="/contact">Contact</a> page.
           </h4>
         </Col>
-      </Row>
+      </div>
     </Grid>
   </div>
 );

@@ -6,7 +6,6 @@ import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import SmartBanner from 'components/SmartBanner';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import debug from 'helpers/debug';
@@ -46,7 +45,7 @@ class App extends Component {
         <Helmet {...config.app.head} />
         <FontStyles />
         <NoScript>
-          <Row className="noscript-warning">
+          <div className="row noscript-warning">
             <Col md={12}>
               <p>
                 Looks like either your browser does not support Javascript or its disabled.
@@ -57,7 +56,7 @@ class App extends Component {
                 </a>
               </p>
             </Col>
-          </Row>
+          </div>
         </NoScript>
         {children}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
