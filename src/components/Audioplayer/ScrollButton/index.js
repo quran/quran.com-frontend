@@ -10,7 +10,7 @@ const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
     <Tooltip id="scroll-button-tooltip">
       <LocaleFormattedMessage
         id="player.scrollButtonTip"
-        defaultMessage={'Automatically scrolls to the currently playing ayah on transitions...'}
+        defaultMessage="Automatically scrolls to the currently playing ayah on transitions..."
       />
     </Tooltip>
   );

@@ -21,17 +21,17 @@ describe('<ScrollButton />', () => {
   it('should indicate that shouldScroll', () => {
     makeComponent(true);
 
-    expect(component.find('label').first().props().className).to.contain('scroll');
+    expect(component.find('a').first().props().className).to.contain('scroll');
   });
 
   it('should not indicate that shouldScroll', () => {
     makeComponent(false);
 
-    expect(component.find('label').first().props().className).not.to.contain('scroll');
+    expect(component.find('a').first().props().className).not.to.contain('scroll');
   });
 
   it('should call onScrollToggle when clicked', () => {
-    component.find('label').first().simulate('click');
+    component.find('a').first().simulate('click');
 
     expect(onScrollToggle).to.have.been.called; // eslint-disable-line
   });

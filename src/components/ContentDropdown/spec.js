@@ -48,7 +48,8 @@ describe('<ContentDropdown />', () => {
   });
 
   it('should remove all content', () => {
-    const removeAll = wrapper.find({ eventKey: 1 });
+    const removeAll = wrapper.find('a');
+
     expect(removeAll.html()).to.contain('Remove all');
 
     removeAll.simulate('click');

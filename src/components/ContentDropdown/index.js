@@ -533,8 +533,8 @@ export default class ContentDropdown extends Component {
         <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
           {
             content.length &&
-              <MenuItem eventKey={1} onClick={this.handleRemoveContent}>
-                <LocaleFormattedMessage id={'setting.translations.removeAll'} defaultMessage="Remove all" />
+              <MenuItem onClick={this.handleRemoveContent}>
+                <LocaleFormattedMessage id="setting.translations.removeAll" defaultMessage="Remove all" />
               </MenuItem>
           }
           <MenuItem header>
