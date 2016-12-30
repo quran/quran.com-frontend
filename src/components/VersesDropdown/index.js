@@ -3,7 +3,7 @@ import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { Link } from 'react-scroll';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { surahType, ayahType } from 'types';
+import { surahType } from 'types';
 
 const style = require('./style.scss');
 

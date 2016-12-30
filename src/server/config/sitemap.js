@@ -50,6 +50,6 @@ export default (server) => {
 
       res.header('Content-Type', 'application/xml');
       res.send(xml.toString());
-    }).catch(err => console.trace(err));
+    }).catch(err => console.trace(err)); // eslint-disable-line
   });
 };

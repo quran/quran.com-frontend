@@ -437,7 +437,7 @@ class Surah extends Component {
               onClose={this.handleSurahInfoToggle}
             />
             <Col md={10} mdOffset={1}>
-              <TopOptions options={options} actions={actions} surah={surah} />
+              <TopOptions options={options} actions={actions.options} surah={surah} />
               <Bismillah surah={surah} />
               {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
             </Col>

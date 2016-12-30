@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react';
 import debug from 'helpers/debug';
 
+import { wordType } from 'types';
+
 const styles = require('../Ayah/style.scss');
 
 export default class Line extends React.Component {
   static propTypes = {
-    line: PropTypes.array.isRequired,
+    line: PropTypes.arrayOf(wordType).isRequired,
     tooltip: PropTypes.string,
     currentAyah: PropTypes.string.isRequired
   };

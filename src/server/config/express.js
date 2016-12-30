@@ -27,7 +27,7 @@ const proxyOneQuran = httpProxy.createProxyServer({
 
 proxyApi.on('error', (error, req, res) => {
   if (error.code !== 'ECONNRESET') {
-    console.error('proxy error', error);
+    console.error('proxy error', error); // eslint-disable-line
   }
   if (!res.headersSent) {
     res.writeHead(500, { 'content-type': 'application/json' });
@@ -39,7 +39,7 @@ proxyApi.on('error', (error, req, res) => {
 
 proxyOneQuran.on('error', (error, req, res) => {
   if (error.code !== 'ECONNRESET') {
-    console.error('proxy error', error);
+    console.error('proxy error', error); // eslint-disable-line
   }
   if (!res.headersSent) {
     res.writeHead(500, { 'content-type': 'application/json' });

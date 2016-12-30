@@ -20,7 +20,7 @@ const TopOptions = ({ options, surah, actions }) => (
       <ul className="list-inline">
         <li>
           <InformationToggle
-            onToggle={actions.options.setOption}
+            onToggle={actions.setOption}
             isShowingSurahInfo={options.isShowingSurahInfo}
           />
         </li>
@@ -28,21 +28,21 @@ const TopOptions = ({ options, surah, actions }) => (
         <li>
           <FontSizeDropdown
             options={options}
-            onOptionChange={actions.options.setOption}
+            onOptionChange={actions.setOption}
           />
         </li>
         <li>|</li>
         <li>
           <TooltipDropdown
             options={options}
-            onOptionChange={actions.options.setOption}
+            onOptionChange={actions.setOption}
           />
         </li>
         <li>|</li>
         <li>
           <ReadingModeToggle
             isToggled={options.isReadingMode}
-            onReadingModeToggle={actions.options.toggleReadingMode}
+            onReadingModeToggle={actions.toggleReadingMode}
           />
         </li>
         <li>|</li>
@@ -58,7 +58,10 @@ const TopOptions = ({ options, surah, actions }) => (
 TopOptions.propTypes = {
   options: optionsType.isRequired,
   surah: surahType.isRequired,
-  actions: PropTypes.object.isRequired
+  actions: PropTypes.shape({
+    toggleReadingMode: PropTypes.func.isRequired,
+    setOption: PropTypes.func.isRequired,
+  }).isRequired
 };
 
 export default TopOptions;

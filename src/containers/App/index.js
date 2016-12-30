@@ -26,7 +26,9 @@ const ModalBody = Modal.Body;
 
 class App extends Component {
   static propTypes = {
-    media: PropTypes.object.isRequired,
+    media: PropTypes.shape({
+      content: PropTypes.string
+    }).isRequired,
     removeMedia: PropTypes.func.isRequired,
     children: PropTypes.element
   };

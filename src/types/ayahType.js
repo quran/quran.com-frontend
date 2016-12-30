@@ -1,4 +1,5 @@
 import { PropTypes } from 'react';
+import wordType from './wordType';
 
 export default PropTypes.shape({
   ayahIndex: PropTypes.number.isRequired,
@@ -11,8 +12,8 @@ export default PropTypes.shape({
   text: PropTypes.string.isRequired,
   ayahKey: PropTypes.string.isRequired,
   sajdah: PropTypes.bool,
-  words: PropTypes.array.isRequired,
+  words: PropTypes.arrayOf(wordType).isRequired,
   textTashkeel: PropTypes.string.isRequired,
-  content: PropTypes.array.isRequired,
-  audio: PropTypes.object.isRequired
+  content: PropTypes.array, // NOTE: In search, it is not required.
+  audio: PropTypes.object // NOTE: In search, it is not required.
 });

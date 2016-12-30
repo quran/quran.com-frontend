@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import superagent from 'superagent';
 
 import IndexHeader from 'components/IndexHeader';

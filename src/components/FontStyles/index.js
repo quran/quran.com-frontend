@@ -14,7 +14,7 @@ import selector from './selector';
 )
 export default class FontStyles extends Component {
   static propTypes = {
-    fontFaces: PropTypes.object.isRequired,
+    fontFaces: PropTypes.objectOf(PropTypes.bool).isRequired,
     load: PropTypes.func.isRequired
   };
 

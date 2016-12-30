@@ -25,12 +25,12 @@ export default function clientMiddleware(client) {
 
         return next({ ...rest, result: camelizedJson, type: SUCCESS });
       },
-      error => {
-        console.log(error)
-        return next({ ...rest, error, type: FAILURE })
+      (error) => {
+        console.error('MIDDLEWARE ERROR:', error); // eslint-disable-line
+        return next({ ...rest, error, type: FAILURE });
       }
     ).catch((error) => {
-      console.error('MIDDLEWARE ERROR:', error);
+      console.error('MIDDLEWARE ERROR:', error); // eslint-disable-line
       next({ ...rest, error, type: FAILURE });
     });
   };

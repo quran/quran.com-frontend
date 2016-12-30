@@ -4,3 +4,5 @@ export userType from './userType';
 export optionsType from './optionsType';
 export bookmarkType from './bookmarkType';
 export segmentType from './segmentType';
+export wordType from './wordType';
+export matchType from './matchType';

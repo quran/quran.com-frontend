@@ -63,8 +63,8 @@ export default class SurahsDropdown extends Component {
           aria-haspopup="true"
           aria-expanded="false"
         >
-          <LocaleFormattedMessage id={'setting.surahs'} defaultMessage={'Surahs'}/>
-          <span className="caret"></span>
+          <LocaleFormattedMessage id="setting.surahs" defaultMessage="Surahs" />
+          <span className="caret" />
         </button>
         <ul className="dropdown-menu" aria-labelledby="surahs-dropdown">
           {this.renderList()}

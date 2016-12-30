@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 
-import ayahType from 'types/ayahType';
+import { ayahType, matchType } from 'types';
 import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
@@ -24,7 +24,7 @@ export default class Ayah extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
     ayah: ayahType.isRequired,
-    bookmarked: PropTypes.bool.isRequired,
+    bookmarked: PropTypes.bool, // TODO: Add this for search
     bookmarkActions: PropTypes.shape({
       isLoaded: PropTypes.func.isRequired,
       load: PropTypes.func.isRequired,
@@ -40,8 +40,8 @@ export default class Ayah extends Component {
       setAyah: PropTypes.func.isRequired,
       play: PropTypes.func.isRequired,
       setCurrentWord: PropTypes.func.isRequired,
-    }).isRequired,
-    match: PropTypes.array,
+    }), // not required because in search it is not.
+    match: PropTypes.arrayOf(matchType),
     isPlaying: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
     tooltip: PropTypes.string,
