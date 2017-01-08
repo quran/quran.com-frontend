@@ -165,6 +165,7 @@ class Surah extends Component {
   }
 
   handleVerseDropdownClick = (ayahNum) => {
+    alert("r");
     const { ayahIds, surah, actions } = this.props; // eslint-disable-line no-shadow
 
     actions.ayah.setCurrentAyah(`${surah.id}:${ayahNum}`);
@@ -258,7 +259,7 @@ class Surah extends Component {
       return `Surat ${surah.name.simple} [verse ${params.range}]`;
     }
 
-    return `${surah.info.shortDescription} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${surah.info ? surah.info.shortDescription : ''} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderPagination() {

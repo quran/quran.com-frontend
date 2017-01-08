@@ -66,7 +66,7 @@ module.exports = Object.assign({
         {name: 'msapplication-square310x310logo', content: '/mstitle-310x310.jpg'}
       ],
       link: [
-        {rel: 'manifest', href: 'manifest.json'},
+        {rel: 'manifest', href: '/manifest.json'},
         {rel: 'search', type: 'application/opensearchdescription+xml', href: '/opensearch.xml', title: 'Quran.com'},
         {rel:'fluid-icon', href: '/apple-touch-icon-180x180.png', title: 'Quran.com'},
         {rel: 'icon', type: 'image/png', href: '/favicon-32x32.png', sizes:'32x32'},
@@ -74,7 +74,7 @@ module.exports = Object.assign({
         {rel: 'icon', type: 'image/png', href: '/favicon-16x16.png', sizes: '16x16'},
         {rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#004f54'},
         {rel: 'shortcut icon', href: '/favicon.ico', type: 'image/x-icon'},
-        {rel: 'apple-touch-icon', href: 'apple-touch-icon.png'},
+        {rel: 'apple-touch-icon', href: '/apple-touch-icon.png'},
         {rel: 'apple-touch-icon', sizes: '57x57', href:' /apple-touch-icon-57x57.png'},
         {rel: 'apple-touch-icon', sizes: '72x72', href: '/apple-touch-icon-72x72.png'},
         {rel: 'apple-touch-icon', sizes: '76x76', href: '/apple-touch-icon-76x76.png'},
