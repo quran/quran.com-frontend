@@ -1,11 +1,13 @@
 import React, { PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import IndexHeader from 'components/IndexHeader';
+import cookie from 'react-cookie';
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import debug from 'helpers/debug';
 import { isAllLoaded, loadAll } from 'redux/actions/surahs.js';
 
+import LastVisit from 'components/Home/LastVisit';
 import SurahsList from 'components/Home/SurahsList';
 import QuickSurahs from 'components/Home/QuickSurahs';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -14,8 +16,9 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 const styles = require('./style.scss');
 
 function Home(props) {
-
   debug('component:Index', 'Render');
+
+  const lastVisit = cookie.load('lastVisit') || null;
 
   return (
     <div className="index-page">
@@ -24,6 +27,7 @@ function Home(props) {
       <div className={`container ${styles.list}`}>
         <div className="row">
           <div className="col-md-10 col-md-offset-1">
+            {lastVisit ? <LastVisit surah={props.surahs[lastVisit.surahId]} ayah={lastVisit.ayah || 1}/> : null}
             <QuickSurahs />
             <h4 className={`text-muted ${styles.title}`}>
               <LocaleFormattedMessage id={'surah.index.heading'} defaultMessage={'SURAHS (CHAPTERS)'}/>
