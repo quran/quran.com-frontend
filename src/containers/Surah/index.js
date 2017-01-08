@@ -165,7 +165,6 @@ class Surah extends Component {
   }
 
   handleVerseDropdownClick = (ayahNum) => {
-    alert("r");
     const { ayahIds, surah, actions } = this.props; // eslint-disable-line no-shadow
 
     actions.ayah.setCurrentAyah(`${surah.id}:${ayahNum}`);
