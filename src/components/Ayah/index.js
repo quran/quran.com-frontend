@@ -24,8 +24,8 @@ export default class Ayah extends Component {
     isSearched: PropTypes.bool,
     ayah: PropTypes.object.isRequired,
     bookmarked: PropTypes.bool.isRequired,
-    bookmarkActions: PropTypes.object,
     mediaActions: PropTypes.object.isRequired,
+    bookmarkActions: PropTypes.object,
     match: PropTypes.array,
     isSearch: PropTypes.bool,
     isPlaying: PropTypes.bool,
@@ -62,9 +62,8 @@ export default class Ayah extends Component {
   }
 
   handlePlay(ayah) {
-    const { isPlaying, audioActions, currentAyah } = this.props;
+    const { isPlaying, audioActions } = this.props;
     const { pause, setAyah, play } = audioActions;
-    const  isPreviouslyPlaying = isPlaying;
 
     if (isPlaying)
       pause();
@@ -155,8 +154,6 @@ export default class Ayah extends Component {
       if (word.charTypeId === CHAR_TYPE_WORD) {
         position = position + 1;
         id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
-      } else {
-        id = `${word.className}-${word.codeDec}`; // just don't include id
       }
 
       if (word.translation || word.transliteration) {

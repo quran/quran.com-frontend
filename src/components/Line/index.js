@@ -2,12 +2,15 @@ import React, { PropTypes } from 'react';
 import debug from 'helpers/debug';
 
 const styles = require('../Ayah/style.scss');
+const CHAR_TYPE_WORD = 1;
 
 export default class Line extends React.Component {
   static propTypes = {
     line: PropTypes.array.isRequired,
     tooltip: PropTypes.string,
-    currentAyah: PropTypes.string.isRequired
+    currentAyah: PropTypes.string.isRequired,
+    audioActions: PropTypes.object.isRequired,
+    currentWord: PropTypes.any
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -20,27 +23,41 @@ export default class Line extends React.Component {
   }
 
   renderText() {
-    const { line, tooltip, currentAyah } = this.props;
+    const { line, tooltip, currentAyah, audioActions } = this.props;
 
     if (!line[0].code) { // TODO shouldn't be possible, remove this clause
       return false;
     }
+    let position = -1;
 
     let text = line.map(word => {
-      let highlight = currentAyah == word.ayahKey ? 'highlight' : '';
+      const highlight = currentAyah == word.ayahKey ? 'highlight' : '';
+      const className = `${word.className} ${word.highlight ? word.highlight : ''}`;
+      let id = null;
+
+      if (word.charTypeId === CHAR_TYPE_WORD) {
+        position = position + 1;
+        id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
+      }
+
 
       if (word.translation) {
         let tooltipContent = word[tooltip];
 
         return (
           <b
+            id={id}
+            data-key={`${word.ayahKey}:${position}`}
             key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-            className={`${word.className} ${styles.Tooltip} ${highlight}`}
+            className={`${word.className} ${styles.Tooltip} ${highlight} ${className}`}
             data-ayah={word.ayahKey}
             data-line={word.lineNun}
             data-page={word.pageNum}
             data-position={word.position}
             aria-label={tooltipContent}
+            onClick={event =>
+              audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
+            }
             dangerouslySetInnerHTML={{__html: word.code}}
           />
         );
@@ -48,11 +65,14 @@ export default class Line extends React.Component {
 
       return (
         <b
-          className={`${word.className} ${highlight} pointer`}
+          className={`${word.className} ${highlight} pointer ${className}`}
           key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
           data-line={word.lineNum}
           data-page={word.pageNum}
           dangerouslySetInnerHTML={{__html: word.code}}
+          onClick={event =>
+            audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
+          }
         />
       );
     });

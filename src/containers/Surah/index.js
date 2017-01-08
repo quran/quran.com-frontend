@@ -338,7 +338,7 @@ class Surah extends Component {
   }
 
   renderLines() {
-    const { lines, options, currentAyah } = this.props;
+    const { lines, options, currentAyah, audioActions, actions } = this.props;
     const keys = Object.keys(lines);
 
     return keys.map((lineNum, index) => {
@@ -348,12 +348,27 @@ class Surah extends Component {
 
       if (index + 1 !== keys.length && pageNum !== nextNum.split('-')[0]) {
         return [
-          <Line line={line} key={lineNum} currentAyah={currentAyah} tooltip={options.tooltip} />,
+          <Line
+            line={line}
+            key={lineNum}
+            currentAyah={currentAyah}
+            tooltip={options.tooltip}
+            audioActions={actions.audio}
+          />,
           <PageBreak pageNum={parseInt(pageNum, 10) + 1} />
         ];
       }
 
-      return <Line line={line} key={lineNum} currentAyah={currentAyah} tooltip={options.tooltip} />;
+      return (
+        <Line
+          line={line}
+          key={lineNum}
+          currentAyah={currentAyah}
+          tooltip={options.tooltip}
+          audioActions={actions.audio}
+        />
+      )
+
     });
   }
 
