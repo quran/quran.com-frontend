@@ -14,6 +14,7 @@ import {
   SET_USER_AGENT,
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
+  PLAY_CURRENT_WORD,
   PLAY,
   PAUSE,
   NEXT,
@@ -277,6 +278,29 @@ export default function reducer(state = initialState, action = {}) {
           }
         }
       };
+    }
+    case PLAY_CURRENT_WORD: {
+      if (!action.word) return state;
+
+      const [surahId, ayahNum, word] = action.word.split(':');
+      const nextId = `${surahId}:${ayahNum}`;
+      const currentFile = state.files[surahId][nextId];
+
+      if (!state.segments[surahId][nextId].words[word]) return state;
+      
+      const currentTime = state.segments[surahId][nextId].words[word].startTime;
+      const endTime = state.segments[surahId][nextId].words[word].endTime;
+      currentFile.currentTime = currentTime;
+
+      const int = setInterval(function() {
+        if (currentFile.currentTime > endTime) {
+          currentFile.pause();
+          clearInterval(int);
+        }
+      }, 10);
+      currentFile.play();
+
+      return state;
     }
     case SET_CURRENT_AYAH: {
       return {

@@ -10,7 +10,8 @@ export default class Line extends React.Component {
     tooltip: PropTypes.string,
     currentAyah: PropTypes.string.isRequired,
     audioActions: PropTypes.object.isRequired,
-    currentWord: PropTypes.any
+    currentWord: PropTypes.any,
+    isPlaying: PropTypes.bool
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -22,8 +23,23 @@ export default class Line extends React.Component {
     return conditions.some(condition => condition);
   }
 
+  handleWordClick(word){
+    const { currentAyah, audioActions, isPlaying } = this.props;
+
+    if(!audioActions.setCurrentWord)
+      return;
+
+    if(currentAyah && isPlaying) {
+      audioActions.setCurrentWord(word.dataset.key) ;
+    }
+    else {
+      audioActions.setAyah(word.dataset.ayah);
+      audioActions.playCurrentWord(word.dataset.key);
+    }
+  }
+
   renderText() {
-    const { line, tooltip, currentAyah, audioActions } = this.props;
+    const { line, tooltip, currentAyah } = this.props;
 
     if (!line[0].code) { // TODO shouldn't be possible, remove this clause
       return false;
@@ -55,9 +71,7 @@ export default class Line extends React.Component {
             data-page={word.pageNum}
             data-position={word.position}
             aria-label={tooltipContent}
-            onClick={event =>
-              audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
-            }
+            onClick={(event) => this.handleWordClick(event.target)}
             dangerouslySetInnerHTML={{__html: word.code}}
           />
         );
@@ -70,9 +84,7 @@ export default class Line extends React.Component {
           data-line={word.lineNum}
           data-page={word.pageNum}
           dangerouslySetInnerHTML={{__html: word.code}}
-          onClick={event =>
-            audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
-          }
+          onClick={(event) => this.handleWordClick(event.target)}
         />
       );
     });

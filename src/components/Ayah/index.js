@@ -71,6 +71,22 @@ export default class Ayah extends Component {
     play();
   }
 
+  handleWordClick(word){ 
+    const { isCurrentAyah, audioActions, isSearched, isPlaying } = this.props;  
+
+    if(isSearched || !audioActions.setCurrentWord) 
+      return; 
+
+     if(isCurrentAyah && isPlaying) { 
+       audioActions.setCurrentWord(word.dataset.key) ;
+    } 
+    else {
+       audioActions.setAyah(word.dataset.ayah);
+       audioActions.playCurrentWord(word.dataset.key);
+       //audioActions.play();
+     } 
+  }
+
   renderTranslations() {
     const { ayah, match } = this.props;
 
@@ -164,10 +180,9 @@ export default class Ayah extends Component {
             key={word.code}
             id={id}
             rel="tooltip"
-            onClick={event =>
-              !isSearched && audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
-            }
+            onClick={(event) => this.handleWordClick(event.target)}
             data-key={`${word.ayahKey}:${position}`}
+            data-ayah={word.ayahKey}
             className={`${className}`}
             title={tooltipContent}
             dangerouslySetInnerHTML={{__html: word.code}}
@@ -178,13 +193,12 @@ export default class Ayah extends Component {
       return (
         <b
           id={id}
-          onClick={event =>
-            !isSearched && audioActions.setCurrentWord && audioActions.setCurrentWord(event.target.dataset.key)
-          }
+          onClick={(event) => this.handleWordClick(event.target)}
           data-key={`${word.ayahKey}:${position}`}
           rel="tooltip"
           className={`${className} ${isLast} pointer`}
           key={word.code}
+          data-ayah={word.ayahKey}
           dangerouslySetInnerHTML={{__html: word.code}}
           {...label}
         />

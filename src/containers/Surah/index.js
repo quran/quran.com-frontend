@@ -115,7 +115,8 @@ class Surah extends Component {
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
       this.props.options !== nextProps.options,
-      this.props.currentAyah !== nextProps.currentAyah
+      this.props.currentAyah !== nextProps.currentAyah,
+      this.props.isPlaying !== nextProps.isPlaying,
     ];
 
     return conditions.some(condition => condition);
@@ -338,7 +339,7 @@ class Surah extends Component {
   }
 
   renderLines() {
-    const { lines, options, currentAyah, audioActions, actions } = this.props;
+    const { lines, options, currentAyah, isPlaying, actions } = this.props;
     const keys = Object.keys(lines);
 
     return keys.map((lineNum, index) => {
@@ -354,6 +355,7 @@ class Surah extends Component {
             currentAyah={currentAyah}
             tooltip={options.tooltip}
             audioActions={actions.audio}
+            isPlaying={isPlaying}
           />,
           <PageBreak pageNum={parseInt(pageNum, 10) + 1} />
         ];
@@ -366,6 +368,7 @@ class Surah extends Component {
           currentAyah={currentAyah}
           tooltip={options.tooltip}
           audioActions={actions.audio}
+          isPlaying={isPlaying}
         />
       )
 
