@@ -287,7 +287,7 @@ export default function reducer(state = initialState, action = {}) {
       const currentFile = state.files[surahId][nextId];
 
       if (!state.segments[surahId][nextId].words[word]) return state;
-      
+
       const currentTime = state.segments[surahId][nextId].words[word].startTime;
       const endTime = state.segments[surahId][nextId].words[word].endTime;
       currentFile.currentTime = currentTime;

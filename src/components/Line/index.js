@@ -44,7 +44,7 @@ export default class Line extends React.Component {
     if (!line[0].code) { // TODO shouldn't be possible, remove this clause
       return false;
     }
-    let position = -1;
+    let position;
 
     let text = line.map(word => {
       const highlight = currentAyah == word.ayahKey ? 'highlight' : '';
@@ -52,10 +52,9 @@ export default class Line extends React.Component {
       let id = null;
 
       if (word.charTypeId === CHAR_TYPE_WORD) {
-        position = position + 1;
+        position = word.position - 1;
         id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
       }
-
 
       if (word.translation) {
         let tooltipContent = word[tooltip];
