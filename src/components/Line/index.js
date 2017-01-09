@@ -31,11 +31,20 @@ export default class Line extends React.Component {
 
     if(currentAyah && isPlaying) {
       audioActions.setCurrentWord(word.dataset.key) ;
-    }
-    else {
+    } else {
       audioActions.setAyah(word.dataset.ayah);
       audioActions.playCurrentWord(word.dataset.key);
     }
+  }
+
+  buildTooltip(word, tooltip){
+    let title;
+    if (!word.wordId) {
+      title = `Verse ${word.ayahKey.split(':')[1]}`;
+    } else {
+      title = word[tooltip];
+    }
+    return title;
   }
 
   renderText() {
@@ -46,9 +55,9 @@ export default class Line extends React.Component {
     }
     let position;
 
-    let text = line.map(word => {
+    let text = line.map((word, index) => {
       const highlight = currentAyah == word.ayahKey ? 'highlight' : '';
-      const className = `${word.className} ${word.highlight ? word.highlight : ''}`;
+      const className = `${word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
       let id = null;
 
       if (word.charTypeId === CHAR_TYPE_WORD) {
@@ -56,35 +65,21 @@ export default class Line extends React.Component {
         id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
       }
 
-      if (word.translation) {
-        let tooltipContent = word[tooltip];
-
-        return (
+      return (
           <b
             id={id}
+            rel="tooltip"
             data-key={`${word.ayahKey}:${position}`}
             key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-            className={`${word.className} ${styles.Tooltip} ${highlight} ${className}`}
+            className={`${className} pointer`}
             data-ayah={word.ayahKey}
             data-line={word.lineNun}
             data-page={word.pageNum}
             data-position={word.position}
-            aria-label={tooltipContent}
             onClick={(event) => this.handleWordClick(event.target)}
+            title={this.buildTooltip(word, tooltip)}
             dangerouslySetInnerHTML={{__html: word.code}}
           />
-        );
-      }
-
-      return (
-        <b
-          className={`${word.className} ${highlight} pointer ${className}`}
-          key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-          data-line={word.lineNum}
-          data-page={word.pageNum}
-          dangerouslySetInnerHTML={{__html: word.code}}
-          onClick={(event) => this.handleWordClick(event.target)}
-        />
       );
     });
 

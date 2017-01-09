@@ -79,11 +79,9 @@ export default class Ayah extends Component {
 
      if(isCurrentAyah && isPlaying) { 
        audioActions.setCurrentWord(word.dataset.key) ;
-    } 
-    else {
+    }  else {
        audioActions.setAyah(word.dataset.ayah);
        audioActions.playCurrentWord(word.dataset.key);
-       //audioActions.play();
      } 
   }
 
@@ -153,6 +151,17 @@ export default class Ayah extends Component {
     );
   }
 
+  buildTooltip(word, tooltip){
+    let title;
+
+    if (!word.wordId) {
+      title = `Verse ${word.ayahKey.split(':')[1]}`;
+    } else {
+       title = word[tooltip];
+    }
+    return title;
+  }
+
   renderText() {
     const { ayah, audioActions, tooltip, isSearched } = this.props;
 
@@ -172,35 +181,17 @@ export default class Ayah extends Component {
         id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
       }
 
-      if (word.translation || word.transliteration) {
-        const tooltipContent = word[tooltip];
-
-        return (
-          <b
-            key={word.code}
-            id={id}
-            rel="tooltip"
-            onClick={(event) => this.handleWordClick(event.target)}
-            data-key={`${word.ayahKey}:${position}`}
-            data-ayah={word.ayahKey}
-            className={`${className}`}
-            title={tooltipContent}
-            dangerouslySetInnerHTML={{__html: word.code}}
-          />
-        );
-      }
-      const label = isLast ? { title: `Verse ${ayah.ayahNum}` } : {};
       return (
         <b
+          key={word.code}
           id={id}
+          rel="tooltip"
           onClick={(event) => this.handleWordClick(event.target)}
           data-key={`${word.ayahKey}:${position}`}
-          rel="tooltip"
-          className={`${className} ${isLast} pointer`}
-          key={word.code}
           data-ayah={word.ayahKey}
+          className={`${className} pointer`}
+          title={this.buildTooltip(word, tooltip)}
           dangerouslySetInnerHTML={{__html: word.code}}
-          {...label}
         />
       );
     });
