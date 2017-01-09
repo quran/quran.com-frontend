@@ -3,7 +3,8 @@ import { mount } from 'enzyme';
 
 import Track from './index';
 
-let component, onTrackChange;
+let component;
+let onTrackChange;
 
 describe('<Track />', () => {
   beforeEach(() => {
@@ -18,9 +19,9 @@ describe('<Track />', () => {
   });
 
   it('should return click progress', () => {
-    component.simulate('click', {nativeEvent: {offsetX: 1}});
+    component.simulate('click', { nativeEvent: { offsetX: 1 } });
 
-    expect(onTrackChange).to.have.been.called;
+    expect(onTrackChange).to.have.been.called; // eslint-disable-line
     expect(onTrackChange).to.have.been.calledWith(Infinity); // because the bounding box is 0!
   });
 });

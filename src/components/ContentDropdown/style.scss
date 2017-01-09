@@ -1,21 +1,21 @@
 @import '../../styles/variables.scss';
 
-:local .dropdown{
-  @media (max-width: 1150px) {
-    min-width: initial;
+.dropdown{
+  & + :global(.dropdown-menu){
+    @media (max-width: 1150px) {
+      min-width: initial;
 
-    :global(i + span){
-      display: none;
+      :global(i + span){
+        display: none;
+      }
     }
-  }
 
-  @media (max-width: 1000px) {
-    :global(i + span){
-      display: initial;
+    @media (max-width: 1000px) {
+      :global(i + span){
+        display: initial;
+      }
     }
-  }
 
-  :global(ul){
     height: 315px;
     overflow-x: hidden;
     overflow-y: auto;

@@ -14,26 +14,27 @@ import { mount, shallow } from 'enzyme';
 
 
 // Create the IntlProvider to retrieve context for wrapping around.
-var intlProvider = new IntlProvider({ locale: 'en' }, {});
-var intl  = intlProvider.getChildContext();
+// NOTE: Phantomjs requires usage of `var`
+var intlProvider = new IntlProvider({ locale: 'en' }, {}); // eslint-disable-line
+var intl = intlProvider.getChildContext(); // eslint-disable-line
 
 /**
  * When using React-Intl `injectIntl` on components, props.intl is required.
  */
 function nodeWithIntlProp(node) {
-  return React.cloneElement(node,  intl );
+  return React.cloneElement(node, intl);
 }
 
 /**
  * Export these methods.
  */
 export function shallowWithIntl(node) {
-  return shallow(nodeWithIntlProp(node), { context: intl  });
+  return shallow(nodeWithIntlProp(node), { context: intl });
 }
 
 export function mountWithIntl(node) {
   return mount(nodeWithIntlProp(node), {
-    context: intl ,
+    context: intl,
     childContextTypes: { intl: intlShape }
   });
 }

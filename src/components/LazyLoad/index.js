@@ -1,3 +1,4 @@
+/* global window */
 import { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
@@ -7,10 +8,9 @@ export default class LazyLoad extends Component {
   static propTypes = {
     isLoading: PropTypes.bool.isRequired,
     isEnd: PropTypes.bool.isRequired,
-    isLoaded: PropTypes.bool,
     onLazyLoad: PropTypes.func.isRequired,
-    loadingComponent: PropTypes.any,
-    endComponent: PropTypes.any,
+    loadingComponent: PropTypes.element,
+    endComponent: PropTypes.element,
     offset: PropTypes.number
   }
 
@@ -35,7 +35,8 @@ export default class LazyLoad extends Component {
 
   onScroll = () => {
     const { isLoading, isEnd, offset, onLazyLoad } = this.props;
-    const dom = ReactDOM.findDOMNode(this);
+    // TODO: Remove ReactDOM!
+    const dom = ReactDOM.findDOMNode(this); // eslint-disable-line
     const componentOffset = (dom.offsetParent || dom).offsetTop - (window.pageYOffset + window.innerHeight); // eslint-disable-line max-len
 
     if ((!isLoading && !isEnd) && componentOffset < offset) {

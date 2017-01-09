@@ -1,3 +1,4 @@
+/* global window */
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -82,10 +83,8 @@ export default class FacebookLogin extends Component {
   checkLoginState = (response) => {
     if (response.authResponse) {
       this.responseApi(response.authResponse);
-    } else {
-      if (this.props.callback) {
-        this.props.callback({ status: response.status });
-      }
+    } else if (this.props.callback) {
+      this.props.callback({ status: response.status });
     }
   };
 
@@ -103,7 +102,7 @@ export default class FacebookLogin extends Component {
           {this.props.icon && <i className={`margin-md-right fa ${this.props.icon}`} />}
           {this.props.textButton}
         </button>
-        <div id="fb-root"></div>
+        <div id="fb-root" />
       </div>
     );
   }

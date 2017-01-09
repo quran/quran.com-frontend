@@ -3,7 +3,6 @@ import {
   LOAD_FAIL,
   LOAD_INFO,
   LOAD_INFO_SUCCESS,
-  LOAD_INFO_FAIL,
   SET_CURRENT
 } from 'redux/constants/surahs.js';
 
@@ -23,7 +22,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         current: action.current
       };
-    case LOAD_SUCCESS:
+    case LOAD_SUCCESS: {
       const entities = state.entities;
       const { surahs } = action.result.entities;
       return {
@@ -35,8 +34,8 @@ export default function reducer(state = initialState, action = {}) {
           ...surahs
         }
       };
+    }
     case LOAD_FAIL:
-      console.log(action);
       return state;
     case LOAD_INFO:
       return {

@@ -41,7 +41,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.css$/, loader: 'style!css' },
-      { test: /\.json$/, loader: 'json'},
+      { test: /\.json$/, loader: 'json' },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -58,7 +58,8 @@ module.exports = {
                 'transform-decorators-legacy',
                 'transform-react-display-name',
                 'transform-react-inline-elements',
-                'transform-react-constant-elements'
+                'transform-react-constant-elements',
+                'transform-react-remove-prop-types'
               ]
             }
           }

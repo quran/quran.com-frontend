@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
@@ -6,14 +7,12 @@ import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import Image from 'react-bootstrap/lib/Image';
+import userType from 'types/userType';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 const Header = Navbar.Header;
 const Collapse = Navbar.Collapse;
 const Toggle = Navbar.Toggle;
-import { connect } from 'react-redux';
-
-import userType from 'types/userType';
-
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 
 const styles = require('./style.scss');

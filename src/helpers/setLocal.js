@@ -1,7 +1,8 @@
-import config from '../config';
 import cookie from 'react-cookie';
 
-export function getLocalMessages(req) {
+import config from '../config';
+
+export default (req) => {
   let currentLocal;
   const expireDate = new Date();
   expireDate.setYear(expireDate.getFullYear() + 1);
@@ -26,4 +27,4 @@ export function getLocalMessages(req) {
   const localeData = require('../locale/' + currentLocal + '.js'); // eslint-disable-line
 
   return localeData.messages;
-}
+};

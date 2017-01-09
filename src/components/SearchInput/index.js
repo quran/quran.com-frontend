@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
@@ -8,7 +7,6 @@ import { intlShape, injectIntl } from 'react-intl';
 import SearchAutocomplete from 'components/SearchAutocomplete';
 
 import debug from 'helpers/debug';
-
 
 class SearchInput extends Component {
   static propTypes = {
@@ -32,7 +30,7 @@ class SearchInput extends Component {
     const splitSearch = /[\.,\:,\,,\\,//]/g; // eslint-disable-line no-useless-escape
 
     if (event.key === 'Enter' || event.keyCode === 13 || event.type === 'click') {
-      const inputEl = ReactDOM.findDOMNode(this).querySelector('input');
+      const inputEl = this.input;
       const searching = inputEl.value.trim();
       let ayah;
       let surah;
@@ -94,23 +92,20 @@ class SearchInput extends Component {
   render() {
     const { showAutocomplete } = this.state;
     const { className, intl } = this.props;
-    const placeholder = intl.formatMessage({id: 'search.placeholder', defaultMessage: 'Search'});
+    const placeholder = intl.formatMessage({ id: 'search.placeholder', defaultMessage: 'Search' });
 
     debug('component:SearchInput', 'Render');
 
     return (
       <div className={`right-inner-addon searchinput ${className}`}>
-        <i className="ss-icon ss-search" onClick={this.search} />
+        <a tabIndex="-1" onClick={this.search}><i className="ss-icon ss-search" /></a>
         <input
           type="search"
           placeholder={placeholder}
-          ref="search"
+          ref={(input) => { this.input = input; }}
           onFocus={() => this.setState({ showAutocomplete: true })}
-          onBlur={() => this.setState({ showAutocomplete: false })}
+          // onBlur={() => this.setState({ showAutocomplete: false })}
           onKeyUp={this.search}
-          ref={(ref) => {
-            this.input = ref;
-          }}
         />
         {
           showAutocomplete &&

@@ -64,6 +64,10 @@
   color: $text-color;
   outline: none;
 
+  &:focus, &:active{
+    outline: none;
+  }
+
   &.playingButton{
     background: $brand-primary;
     color: #fff;

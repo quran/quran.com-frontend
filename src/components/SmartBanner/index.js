@@ -1,3 +1,4 @@
+/* global window */
 import React, { Component, PropTypes } from 'react';
 import useragent from 'express-useragent';
 import cookie from 'react-cookie';
@@ -43,6 +44,12 @@ class SmartBanner extends Component {
     appId: ''
   };
 
+  componentDidMount() {
+    if (__CLIENT__) {
+      this.setSettings(this.props.force);
+    }
+  }
+
   setSettings(forceDeviceType) {
     const agent = useragent.parse(window.navigator.userAgent);
     let deviceType = '';
@@ -50,21 +57,19 @@ class SmartBanner extends Component {
 
     if (forceDeviceType) {
       deviceType = forceDeviceType;
-    } else if ((agent.isAndroid || agent.isAndroidTablet) && (agent.isChrome ? osVersion < 44 : true)) {
+    } else if (
+      (agent.isAndroid || agent.isAndroidTablet) &&
+      (agent.isChrome ? osVersion < 44 : true)
+    ) {
       deviceType = 'android';
     } else if ((agent.isiPad || agent.isiPhone) && (agent.isSafari ? osVersion < 6 : true)) {
       deviceType = 'ios';
     }
 
-    this.setState({deviceType: deviceType});
+    this.setState({ deviceType });
     if (deviceType) {
       this.setSettingsForDevice(deviceType);
     }
-  }
-
-  parseAppId(metaName) {
-    const meta = window.document.querySelector(`meta[name="${metaName}"]`);
-    return /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];;
   }
 
   setSettingsForDevice(deviceType) {
@@ -91,11 +96,16 @@ class SmartBanner extends Component {
     }
   }
 
-  hide() {
+  parseAppId = (metaName) => {
+    const meta = window.document.querySelector(`meta[name="${metaName}"]`);
+    return /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];
+  }
+
+  hide = () => {
     window.document.querySelector('html').classList.remove('smartbanner-show');
   }
 
-  show() {
+  show = () => {
     window.document.querySelector('html').classList.add('smartbanner-show');
   }
 
@@ -103,7 +113,7 @@ class SmartBanner extends Component {
     this.hide();
 
     let expireDate = new Date();
-    expireDate = new Date(expireDate.setDate(expireDate.getDate()+this.props.daysHidden));
+    expireDate = new Date(expireDate.setDate(expireDate.getDate() + this.props.daysHidden));
 
     cookie.save('smartbanner-closed', 'true', {
       path: '/',
@@ -113,7 +123,7 @@ class SmartBanner extends Component {
 
   install() {
     let expireDate = new Date();
-    expireDate = new Date(expireDate.setDate(expireDate.getDate()+this.props.daysReminder));
+    expireDate = new Date(expireDate.setDate(expireDate.getDate() + this.props.daysReminder));
 
     this.hide();
     cookie.save('smartbanner-installed', 'true', {
@@ -126,7 +136,7 @@ class SmartBanner extends Component {
     const link = this.state.settings.getStoreLink() + this.state.appId;
     const inStore = `
       ${this.props.price[this.state.deviceType]} - ${this.props.storeText[this.state.deviceType]}`;
-    const icon = require(`../../../static/images/${this.state.settings.icon}`);
+    const icon = require(`../../../static/images/${this.state.settings.icon}`); // eslint-disable-line
 
     return {
       icon,
@@ -135,11 +145,6 @@ class SmartBanner extends Component {
     };
   }
 
-  componentDidMount() {
-    if (__CLIENT__) {
-      this.setSettings(this.props.force);
-    }
-  }
 
   render() {
     // Don't show banner when:
@@ -170,15 +175,22 @@ class SmartBanner extends Component {
     return (
       <div className={wrapperClassName}>
         <div className="smartbanner-container">
-          <a className="smartbanner-close" onClick={::this.close} data-metrics-event-name="SmartBanner:close"><i className="fa fa-times-circle"></i></a>
-          <span className="smartbanner-icon" style={iconStyle}></span>
+          <a
+            tabIndex="-1"
+            className="smartbanner-close"
+            onClick={this.close}
+            data-metrics-event-name="SmartBanner:close"
+          >
+            <i className="fa fa-times-circle" />
+          </a>
+          <span className="smartbanner-icon" style={iconStyle} />
           <div className="smartbanner-info">
             <div className="smartbanner-title">{this.props.title}</div>
             <div>{this.props.author}</div>
             <span>{inStore}</span>
           </div>
 
-          <a href={link} onClick={::this.install} className="smartbanner-button" data-metrics-event-name="SmartBanner:InstallAapp">
+          <a href={link} onClick={this.install} className="smartbanner-button" data-metrics-event-name="SmartBanner:InstallAapp">
             <span className="smartbanner-button-text">{this.props.button}</span>
           </a>
         </div>

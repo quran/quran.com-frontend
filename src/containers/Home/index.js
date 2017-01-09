@@ -9,12 +9,11 @@ import { isAllLoaded, loadAll } from 'redux/actions/surahs.js';
 import SurahsList from 'components/Home/SurahsList';
 import QuickSurahs from 'components/Home/QuickSurahs';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
+import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
-function Home(props) {
-
+const Home = (props) => {
   debug('component:Index', 'Render');
 
   return (
@@ -26,7 +25,7 @@ function Home(props) {
           <div className="col-md-10 col-md-offset-1">
             <QuickSurahs />
             <h4 className={`text-muted ${styles.title}`}>
-              <LocaleFormattedMessage id={'surah.index.heading'} defaultMessage={'SURAHS (CHAPTERS)'}/>
+              <LocaleFormattedMessage id="surah.index.heading" defaultMessage="SURAHS (CHAPTERS)" />
             </h4>
             <div className="row">
               <SurahsList surahs={Object.values(props.surahs).slice(0, 38)} />
@@ -38,11 +37,10 @@ function Home(props) {
       </div>
     </div>
   );
-}
+};
 
 Home.propTypes = {
-  lastVisit: PropTypes.any,
-  surahs: PropTypes.object.isRequired
+  surahs: PropTypes.objectOf(surahType).isRequired
 };
 
 const AsyncHome = asyncConnect([{
@@ -55,4 +53,4 @@ const AsyncHome = asyncConnect([{
   }
 }])(Home);
 
-export default connect(state => ({surahs: state.surahs.entities}))(AsyncHome);
+export default connect(state => ({ surahs: state.surahs.entities }))(AsyncHome);

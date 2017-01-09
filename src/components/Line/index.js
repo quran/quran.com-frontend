@@ -1,16 +1,18 @@
 import React, { PropTypes } from 'react';
 import debug from 'helpers/debug';
 
+import { wordType } from 'types';
+
 const styles = require('../Ayah/style.scss');
 
 export default class Line extends React.Component {
   static propTypes = {
-    line: PropTypes.array.isRequired,
+    line: PropTypes.arrayOf(wordType).isRequired,
     tooltip: PropTypes.string,
     currentAyah: PropTypes.string.isRequired
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.currentAyah !== nextProps.currentAyah,
       this.props.line !== nextProps.line
@@ -26,11 +28,11 @@ export default class Line extends React.Component {
       return false;
     }
 
-    let text = line.map(word => {
-      let highlight = currentAyah == word.ayahKey ? 'highlight' : '';
+    const text = line.map((word) => {
+      const highlight = currentAyah === word.ayahKey ? 'highlight' : '';
 
       if (word.translation) {
-        let tooltipContent = word[tooltip];
+        const tooltipContent = word[tooltip];
 
         return (
           <b
@@ -41,7 +43,7 @@ export default class Line extends React.Component {
             data-page={word.pageNum}
             data-position={word.position}
             aria-label={tooltipContent}
-            dangerouslySetInnerHTML={{__html: word.code}}
+            dangerouslySetInnerHTML={{ __html: word.code }}
           />
         );
       }
@@ -52,7 +54,7 @@ export default class Line extends React.Component {
           key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
           data-line={word.lineNum}
           data-page={word.pageNum}
-          dangerouslySetInnerHTML={{__html: word.code}}
+          dangerouslySetInnerHTML={{ __html: word.code }}
         />
       );
     });
