@@ -105,7 +105,7 @@ export default class Ayah extends Component {
           <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
             <small
               dangerouslySetInnerHTML={{__html: content.text}}
-              className={`${styles[lang] || 'times-new'}`}
+              className={`${lang || 'times-new'}`}
             />
           </h2>
         </div>
@@ -173,7 +173,6 @@ export default class Ayah extends Component {
     let position = -1;
     const text = ayah.words.map((word, index) => {
       let id = null;
-      const isLast = ayah.words.length === index + 1;
       const className = `${word.className} ${word.highlight ? word.highlight : ''}`;
 
       if (word.charTypeId === CHAR_TYPE_WORD) {
