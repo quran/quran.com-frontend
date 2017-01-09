@@ -14,8 +14,9 @@ import { mount, shallow } from 'enzyme';
 
 
 // Create the IntlProvider to retrieve context for wrapping around.
-const intlProvider = new IntlProvider({ locale: 'en' }, {});
-const intl = intlProvider.getChildContext();
+// NOTE: Phantomjs requires usage of `var`
+var intlProvider = new IntlProvider({ locale: 'en' }, {}); // eslint-disable-line
+var intl = intlProvider.getChildContext(); // eslint-disable-line
 
 /**
  * When using React-Intl `injectIntl` on components, props.intl is required.
