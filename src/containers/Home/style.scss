@@ -5,13 +5,22 @@
     padding: 20px 0;
     font-size: 14px;
     margin-top: 20px;
-    
+
     span {
       margin: 0;
       line-height: 2;
       a {
         padding: 0 15px;
       }
+    }
+
+    &:last-child {
+      margin-top: 25px;
+      border-bottom: solid 2px rgba(0,0,0,.05)
+    }
+  }
+  .items {
+    span {
       &:after {
         content: '|';
       }
@@ -20,11 +29,6 @@
           content: none;
         }
       }
-    }
-    
-    &:last-child {
-      margin-top: 25px;
-      border-bottom: solid 2px rgba(0,0,0,.05)
     }
   }
 }
