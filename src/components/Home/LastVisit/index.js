@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
+import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const styles = require('containers/Home/style.scss');
 
 const LastVisit = (props) => {
+  debug('component:Index', 'LastVisit');
   return (
     <div className="">
       <h4 className={`text-muted ${styles.title}`}>
