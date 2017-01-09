@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -223,22 +224,12 @@ export default class ReciterDropdown extends Component {
     const { className } = this.props;
 
     return (
-      <div className={`dropdown ${className} ${style.dropdown}`}>
-        <button
-          className="btn btn-link no-outline"
-          id="reciters-dropdown"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <LocaleFormattedMessage id="setting.reciters" defaultMessage="Reciters" />
-          <span className="caret" />
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
-          {this.renderMenu()}
-        </ul>
-      </div>
+      <DropdownButton
+        className={`${className} ${style.dropdown}`}
+        title={<LocaleFormattedMessage id="setting.reciters" defaultMessage="Reciters" />}
+      >
+        {this.renderMenu()}
+      </DropdownButton>
     );
   }
 }

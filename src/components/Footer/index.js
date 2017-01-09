@@ -15,21 +15,26 @@ const Footer = () => (
       <Col md={10} mdOffset={1}>
         <div className="row">
           <Col md={2} sm={4} xs={12} className={styles.about}>
-            <p className={styles.header}>Navigate</p>
+            <p className={styles.header}>
+              <LocaleFormattedMessage
+                id="nav.navigate"
+                defaultMessage="Navigate"
+              />
+            </p>
             <ul className={`source-sans ${styles.list}`}>
               <li>
                 <Link to="/about">
                   <LocaleFormattedMessage
-                    id={'nav.aboutUs'}
-                    defaultMessage={'About Us'}
+                    id="nav.aboutUs"
+                    defaultMessage="About Us"
                   />
                 </Link>
               </li>
               <li>
                 <Link to="/contact">
                   <LocaleFormattedMessage
-                    id={'nav.contactUs'}
-                    defaultMessage={'Contact Us'}
+                    id="nav.contactUs"
+                    defaultMessage="Contact Us"
                   />
                 </Link>
               </li>

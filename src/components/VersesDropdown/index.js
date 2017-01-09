@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { Link } from 'react-scroll';
 
@@ -62,22 +63,9 @@ export default class VersesDropdown extends Component {
     );
 
     return (
-      <div className={`dropdown ${className} ${style.dropdown}`}>
-        <button
-          className="btn btn-link no-outline"
-          id="verses-dropdown"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          {title}
-          <span className="caret" />
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="verses-dropdown">
-          {this.renderMenu()}
-        </ul>
-      </div>
+      <DropdownButton className={`dropdown ${className} ${style.dropdown}`} title={title}>
+        {this.renderMenu()}
+      </DropdownButton>
     );
   }
 }

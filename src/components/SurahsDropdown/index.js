@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 
 import Col from 'react-bootstrap/lib/Col';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -53,22 +54,14 @@ export default class SurahsDropdown extends Component {
     const { className } = this.props;
 
     return (
-      <div className={`dropdown ${className} ${styles.dropdown}`}>
-        <button
-          className="btn btn-link no-outline"
-          id="surahs-dropdown"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <LocaleFormattedMessage id="setting.surahs" defaultMessage="Surahs" />
-          <span className="caret" />
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="surahs-dropdown">
-          {this.renderList()}
-        </ul>
-      </div>
+      <DropdownButton
+        link
+        className={`${className} ${styles.dropdown}`}
+        id="surahs-dropdown"
+        title={<LocaleFormattedMessage id="setting.surahs" defaultMessage="Surahs" />}
+      >
+        {this.renderList()}
+      </DropdownButton>
     );
   }
 }

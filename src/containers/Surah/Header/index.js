@@ -22,7 +22,7 @@ const SurahHeader = ({ surah, handleToggleSidebar }) => {
     <Navbar className="montserrat surah" fixedTop fluid>
       <Header>
         <div className="row">
-          <Col xs={1}>
+          <Col xs={3} md={1}>
             <button type="button" className="navbar-toggle collapsed" onClick={handleToggleSidebar}>
               <span className="sr-only">Toggle navigation</span>
               <span className="icon-bar" />
@@ -30,7 +30,7 @@ const SurahHeader = ({ surah, handleToggleSidebar }) => {
               <span className="icon-bar" />
             </button>
           </Col>
-          <Col xs={10}>
+          <Col xs={6} md={10}>
             <ul className={`list-inline ${styles.container} text-center`}>
               <li className={styles.verticalAlign}>
                 {
@@ -54,7 +54,7 @@ const SurahHeader = ({ surah, handleToggleSidebar }) => {
                 {
                   surah &&
                     <p className="navbar-text text-uppercase surah-name">
-                      {surah.name.simple} ({surah.name.english}) - سورة {surah.name.arabic}
+                      {surah.name.simple} <span className="hidden-xs">({surah.name.english}) - سورة {surah.name.arabic}</span>
                     </p>
                 }
               </li>
