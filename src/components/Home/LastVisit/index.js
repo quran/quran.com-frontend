@@ -9,7 +9,7 @@ const LastVisit = (props) => {
     <div className="">
       <h4 className={`text-muted ${styles.title}`}>
         <span>
-          Resume
+          <LocaleFormattedMessage id={'surah.index.continue'} defaultMessage={'Continue'}/>
           <Link to={`/${props.surah.id}/${props.ayah}`}>
             <span>
               {props.surah.name.simple} ({props.surah.id}:{props.ayah})
