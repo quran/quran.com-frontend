@@ -61,13 +61,15 @@ export default {
 
     'nav.contribute': 'Contribute',
     'nav.aboutUs': 'About us',
-    'nav.developers': 'developers',
+    'nav.developers': 'Developers',
     'nav.usefulSites': 'Useful sites',
     'nav.otherLinks': 'Other links',
     'nav.contactUs': 'Contact us',
     'nav.aboutQuranProject': 'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.', // eslint-disable-line max-len
     'nav.mobile': 'Mobile',
     'nav.navigate': 'Navigate',
-    'nav.legacySite': 'Legacy Quran.com'
+    'nav.legacySite': 'Legacy Quran.com',
+
+    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes and activities.'
   }
 };
