@@ -8,16 +8,14 @@ const styles = require('containers/Home/style.scss');
 const LastVisit = (props) => {
   debug('component:Index', 'LastVisit');
   return (
-    <div className="">
+    <div>
       <h4 className={`text-muted ${styles.title}`}>
-        <span>
-          <LocaleFormattedMessage id='surah.index.continue' defaultMessage={'Continue'}/>
-          <Link to={`/${props.surah.id}/${props.ayah}`}>
-            <span>
-              {props.surah.name.simple} ({props.surah.id}:{props.ayah})
-            </span>
-          </Link>
-        </span>
+        <LocaleFormattedMessage id='surah.index.continue' defaultMessage={'Continue'}/>
+        <Link to={`/${props.surah.id}/${props.ayah}`}>
+          <span>
+            {props.surah.name.simple} ({props.surah.id}:{props.ayah})
+          </span>
+        </Link>
       </h4>
     </div>
   );
