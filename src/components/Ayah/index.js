@@ -80,20 +80,6 @@ export default class Ayah extends Component {
     play();
   }
 
-  handleWordClick(word){ 
-    const { isCurrentAyah, audioActions, isSearched, isPlaying } = this.props;  
-
-    if(isSearched || !audioActions.setCurrentWord) 
-      return; 
-
-     if(isCurrentAyah && isPlaying) { 
-       audioActions.setCurrentWord(word.dataset.key) ;
-    }  else {
-       audioActions.setAyah(word.dataset.ayah);
-       audioActions.playCurrentWord(word.dataset.key);
-     } 
-  }
-
   renderTranslations() {
     const { ayah, match } = this.props;
 
@@ -161,23 +147,19 @@ export default class Ayah extends Component {
     );
   }
 
-  buildTooltip(word, tooltip){
-    let title;
-
-    if (!word.wordId) {
-      title = `Verse ${word.ayahKey.split(':')[1]}`;
-    } else {
-       title = word[tooltip];
-    }
-    return title;
-  }
-
   renderText() {
-    const { ayah, tooltip, currentAyah, isPlaying,  audioActions} = this.props;
+    const { ayah, tooltip, currentAyah, isPlaying,  audioActions, isSearched} = this.props;
 
     const text = ayah.words.map(word => {
       return(
-        <Word word={word} currentAyah={currentAyah} tooltip={tooltip} isPlaying={isPlaying} audioActions={audioActions}/>
+        <Word
+          word={word}
+          currentAyah={currentAyah}
+          tooltip={tooltip}
+          isPlaying={isPlaying}
+          audioActions={audioActions}
+          isSearched={isSearched}
+        />
       )
     });
 

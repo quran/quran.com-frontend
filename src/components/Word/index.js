@@ -17,7 +17,8 @@ export default class Line extends React.Component {
     audioActions: PropTypes.object.isRequired,
     word: PropTypes.object.isRequired,
     currentAyah: PropTypes.object.isRequired,
-    isPlaying: PropTypes.bool
+    isPlaying: PropTypes.bool,
+    isSearched: PropTypes.bool
   };
 
   buildTooltip(word, tooltip){
@@ -31,7 +32,8 @@ export default class Line extends React.Component {
   }
 
   handleWordClick(word){
-    const { currentAyah, audioActions, isPlaying } = this.props;
+    const { currentAyah, audioActions, isPlaying, isSearched } = this.props;
+    if(isSearched) return;
 
     if(currentAyah == word.ayahKey && isPlaying) {
       audioActions.setCurrentWord(word.dataset.key) ;
