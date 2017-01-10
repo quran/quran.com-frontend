@@ -18,6 +18,9 @@ We trust that you will not copy this idea/project, this is at the end for the sa
 
 Read the [contributing] section before creating an issue.
 
+## Slack Group
+Signup at https://quranslack.herokuapp.com to be added to the Slack group
+
 ## Server-Side Integration
 Unless you have the backend API running locally, you will need to update the `API_URL`, in `development.env` file, from `localhost` to `api.quran.com`. Leave the port number same.
 
