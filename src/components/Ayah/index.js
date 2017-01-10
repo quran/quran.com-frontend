@@ -163,7 +163,7 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, audioActions, tooltip, isSearched } = this.props;
+    const { ayah, tooltip, isSearched } = this.props;
 
     if (!ayah.words[0].code) {
       return false;
