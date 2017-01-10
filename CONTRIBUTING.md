@@ -77,7 +77,6 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 
 
 [upstream]: https://help.github.com/articles/syncing-a-fork/
-[contributing]: https://guides.github.com/activities/contributing-to-open-source/
 [already been reported]: https://github.com/quran/quran.com-frontend/issues
 [fork this project]:     https://github.com/quran/quran.com-frontend/fork
 [open a pull request]:   https://help.github.com/articles/using-pull-requests/
