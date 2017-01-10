@@ -37,6 +37,7 @@ export default {
     'surah.previous': 'پچھلی سورت',
     'surah.info': 'سورہ کی معلومات',
     'surah.index.heading': 'سورتیں',
+    'surah.index.continue': 'جاری رہے',
     'surah.index.quickLinks': 'فوری لنک',
     'surah.goToBeginning': 'سورہ کے شروع میں جائیں',
 
