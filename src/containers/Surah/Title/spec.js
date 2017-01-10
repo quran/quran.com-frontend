@@ -1,27 +1,25 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
 
 import Title from './index';
-import getSurahs from '../../../../tests/fixtures/getSurahs.js';
 
 let wrapper;
-let surah = {
-  "id": 1,
-  "name": {
-    "arabic": "الفاتحة",
-    "simple": "Al-Fatihah",
-    "complex": "Al-Fātiĥah",
-    "english": "The Opener"
+const surah = {
+  id: 1,
+  name: {
+    arabic: 'الفاتحة',
+    simple: 'Al-Fatihah',
+    complex: 'Al-Fātiĥah',
+    english: 'The Opener'
   }
 };
 
+const renderComponent = data => shallow(<Title surah={data} />);
 
 describe('<Title />', () => {
-
   it('should render', () => {
     wrapper = renderComponent(surah);
-    expect(wrapper).to.be.ok;
+    expect(wrapper).to.be.ok; // eslint-disable-line
   });
 
   it('should not show previous surah if on the first surah', () => {
@@ -36,9 +34,4 @@ describe('<Title />', () => {
     const next = wrapper.find('.next-chapter').length;
     expect(next).to.equal(0);
   });
-
 });
-
-function renderComponent(data) {
-  return shallow(<Title surah={data}/>);
-}

@@ -7,7 +7,7 @@ export function isReadingMode(globalState) {
 
 export function setOption(payload) {
   const options = cookie.load('options') || {}; // protect against first timers.
-  Object.keys(payload).forEach(option => { options[option] = payload[option]; });
+  Object.keys(payload).forEach((option) => { options[option] = payload[option]; });
   cookie.save('options', JSON.stringify(options));
 
   return {

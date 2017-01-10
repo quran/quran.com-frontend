@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
+import { segmentType } from 'types';
 
 import debug from 'helpers/debug';
 
 export default class Segments extends Component {
   static propTypes = {
-    segments: PropTypes.object.isRequired,
+    segments: PropTypes.objectOf(segmentType).isRequired,
     currentAyah: PropTypes.string,
     currentTime: PropTypes.number
   };
@@ -24,7 +25,7 @@ export default class Segments extends Component {
 
     if (!Object.keys(segments).length) return <noscript />;
 
-    Object.keys(segments.words).forEach(wordIndex => {
+    Object.keys(segments.words).forEach((wordIndex) => {
       const word = segments.words[wordIndex];
 
       if (currentTime >= word.startTime && currentTime < word.endTime) {

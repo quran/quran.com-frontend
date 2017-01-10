@@ -1,3 +1,4 @@
+/* global window */
 export default {
   pageViewEvent: 'pageLoad',
   vendors: [
@@ -20,7 +21,7 @@ export default {
           });
         },
         user(user) {
-          return new Promise(resolve => {
+          return new Promise((resolve) => {
             resolve({
               user
             });

@@ -13,7 +13,7 @@ export default class InformationToggle extends Component {
 
     event.preventDefault();
 
-    this.props.onToggle({isShowingSurahInfo: !isShowingSurahInfo});
+    this.props.onToggle({ isShowingSurahInfo: !isShowingSurahInfo });
   };
 
   render() {
@@ -21,11 +21,12 @@ export default class InformationToggle extends Component {
 
     return (
       <a
+        tabIndex="-1"
         title="See information for this surah"
         className={`${isShowingSurahInfo ? ' text-primary' : 'text-color'} pointer`}
         onClick={this.toggleInformationMode}
       >
-        <LocaleFormattedMessage id={'surah.info'} defaultMessage={'Surah Info'}/>
+        <LocaleFormattedMessage id="surah.info" defaultMessage="Surah Info" />
       </a>
     );
   }

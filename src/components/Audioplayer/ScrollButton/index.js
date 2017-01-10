@@ -9,28 +9,27 @@ const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
   const tooltip = (
     <Tooltip id="scroll-button-tooltip">
       <LocaleFormattedMessage
-        id={ "player.scrollButtonTip" }
-        defaultMessage={'Automatically scrolls to the currently playing ayah on transitions...'}
+        id="player.scrollButtonTip"
+        defaultMessage="Automatically scrolls to the currently playing ayah on transitions..."
       />
     </Tooltip>
   );
 
   return (
     <div className="text-center">
-      <input type="checkbox" id="scroll" className={style.checkbox} />
       <OverlayTrigger
         overlay={tooltip}
         placement="top"
         trigger={['hover', 'focus']}
       >
-        <label
-          htmlFor="scroll"
+        <a
+          tabIndex="-1"
           className={`pointer ${style.buttons} ${shouldScroll ? style.scroll : ''}`}
           onClick={onScrollToggle}
-          style={{marginBottom: 0}}
+          style={{ marginBottom: 0 }}
         >
           <i className="ss-icon ss-link" />
-        </label>
+        </a>
       </OverlayTrigger>
     </div>
   );

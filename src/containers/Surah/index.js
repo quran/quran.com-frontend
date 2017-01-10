@@ -1,3 +1,4 @@
+/* global window, document */
 import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 // redux
@@ -7,10 +8,8 @@ import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
 // bootstrap
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
-const NavbarHeader = Navbar.Header;
 
 import Helmet from 'react-helmet';
 import Sidebar from 'components/Sidebar';
@@ -25,7 +24,6 @@ import ReciterDropdown from 'components/ReciterDropdown';
 import SurahsDropdown from 'components/SurahsDropdown';
 import VersesDropdown from 'components/VersesDropdown';
 import SurahInfo from 'components/SurahInfo';
-import Header from './Header';
 import Ayah from 'components/Ayah';
 import Line from 'components/Line';
 import SearchInput from 'components/SearchInput';
@@ -41,7 +39,7 @@ import scroller from 'utils/scroller';
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
-import { surahsConnect, surahInfoConnect, ayahsConnect } from './connect';
+import { surahType, ayahType } from 'types';
 
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/ayahs.js';
@@ -49,29 +47,33 @@ import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
-const style = require('./style.scss');
+import { surahsConnect, surahInfoConnect, ayahsConnect } from './connect';
 
-let lastScroll = 0;
+import Header from './Header';
+
+const NavbarHeader = Navbar.Header;
+
+const style = require('./style.scss');
 
 class Surah extends Component {
   static propTypes = {
-    surah: PropTypes.object.isRequired,
-    actions: PropTypes.object.isRequired,
-    lines: PropTypes.object.isRequired,
+    surah: surahType.isRequired,
+    surahs: PropTypes.objectOf(surahType).isRequired,
+    actions: PropTypes.object.isRequired, // eslint-disable-line
+    lines: PropTypes.object.isRequired, // eslint-disable-line
     isEndOfSurah: PropTypes.bool.isRequired,
-    ayahIds: PropTypes.any,
-    currentWord: PropTypes.string,
+    ayahIds: PropTypes.instanceOf(Set),
     currentAyah: PropTypes.string,
-    surahs: PropTypes.object.isRequired,
-    bookmarks: PropTypes.object.isRequired,
+    bookmarks: PropTypes.object.isRequired, // eslint-disable-line
     isLoading: PropTypes.bool.isRequired,
     isLoaded: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    options: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired,
-    ayahs: PropTypes.object,
-    isStarted: PropTypes.bool,
-    isPlaying: PropTypes.bool,
+    options: PropTypes.object.isRequired, // eslint-disable-line
+    params: PropTypes.shape({
+      surahId: PropTypes.string.isRequired
+    }).isRequired,
+    ayahs: PropTypes.objectOf(ayahType),
+    isPlaying: PropTypes.bool
   };
 
   state = {
@@ -95,14 +97,6 @@ class Surah extends Component {
     return false;
   }
 
-  componentDidMount() {
-    if (__CLIENT__) {
-      window.removeEventListener('scroll', this.handleNavbar, true);
-      window.addEventListener('scroll', this.handleNavbar, true);
-      lastScroll = window.pageYOffset;
-    }
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     const conditions = [
       this.state.lazyLoading !== nextState.lazyLoading,
@@ -121,14 +115,6 @@ class Surah extends Component {
     return conditions.some(condition => condition);
   }
 
-  componentWillUnmount() {
-    if (__CLIENT__) {
-      window.removeEventListener('scroll', this.handleNavbar, true);
-    }
-
-    return false;
-  }
-
   getLast() {
     const { ayahIds } = this.props;
 
@@ -141,27 +127,18 @@ class Surah extends Component {
     return [...ayahIds][0];
   }
 
+  hasAyahs() {
+    return Object.keys(this.props.ayahs).length;
+  }
+
   handleOptionChange = (payload) => {
-    const {surah, options, actions} = this.props; // eslint-disable-line no-shadow, max-len
+    const { surah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     const from = this.getFirst();
     const to = this.getLast();
 
     actions.options.setOption(payload);
 
     return actions.ayah.load(surah.id, from, to, Object.assign({}, options, payload));
-  }
-
-  handleNavbar = () => {
-    // TODO: This should be done with react!
-    if (window.pageYOffset > lastScroll) {
-      document.querySelector('nav').classList.add('scroll-up');
-    } else {
-      document.querySelector('nav').classList.remove('scroll-up');
-    }
-
-    lastScroll = window.pageYOffset;
-
-    return false;
   }
 
   handleVerseDropdownClick = (ayahNum) => {
@@ -191,8 +168,8 @@ class Surah extends Component {
 
     let size = 10;
 
-    if ((range[1] - range[0] + 1) < 10) {
-      size = range[1] - range[0] + 1;
+    if (((range[1] - range[0]) + 1) < 10) {
+      size = (range[1] - range[0]) + 1;
     }
 
     const from = range[1];
@@ -200,7 +177,7 @@ class Surah extends Component {
 
     if (!isEndOfSurah && !ayahIds.has(to)) {
       actions.ayah.load(surah.id, from, to, options).then(() => {
-        this.setState({lazyLoading: false});
+        this.setState({ lazyLoading: false });
         if (callback) {
           callback();
         }
@@ -214,7 +191,6 @@ class Surah extends Component {
     const { actions } = this.props; // eslint-disable-line no-shadow
 
     return actions.options.setOption(payload);
-
   }
 
   title() {
@@ -258,7 +234,7 @@ class Surah extends Component {
       return `Surat ${surah.name.simple} [verse ${params.range}]`;
     }
 
-    return `${surah.info.shortDescription} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${surah.info ? surah.info.shortDescription : ''} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderPagination() {
@@ -274,11 +250,11 @@ class Surah extends Component {
             {
               surah.id > 1 &&
                 <li className="previous">
-                  <Link to={`/${surah.id * 1 - 1}`}>
+                  <Link to={`/${(surah.id * 1) - 1}`}>
                     &larr;
                     <LocaleFormattedMessage
-                      id='surah.previous'
-                      defaultMessage={ 'Previous Surah' }
+                      id="surah.previous"
+                      defaultMessage="Previous Surah"
                     />
                   </Link>
                 </li>
@@ -286,18 +262,18 @@ class Surah extends Component {
             <li className="text-center">
               <Link to={`/${surah.id}`}>
                 <LocaleFormattedMessage
-                  id='surah.goToBeginning'
-                  defaultMessage={ 'Beginning of Surah' }
+                  id="surah.goToBeginning"
+                  defaultMessage="Beginning of Surah"
                 />
               </Link>
             </li>
             {
               surah.id < 114 &&
                 <li className="next">
-                  <Link to={`/${surah.id * 1 + 1}`}>
+                  <Link to={`/${(surah.id * 1) + 1}`}>
                     <LocaleFormattedMessage
-                      id='surah.next'
-                      defaultMessage={ 'Next Surah' }
+                      id="surah.next"
+                      defaultMessage="Next Surah"
                     />
                     &rarr;
                   </Link>
@@ -365,7 +341,7 @@ class Surah extends Component {
         <Navbar static fluid>
           <NavbarHeader>
             <p className={`navbar-text ${style.sidebarTitle}`}>
-              <LocaleFormattedMessage id={'setting.title'} defaultMessage={'Options'}/>
+              <LocaleFormattedMessage id="setting.title" defaultMessage="Options" />
             </p>
           </NavbarHeader>
         </Navbar>
@@ -399,10 +375,10 @@ class Surah extends Component {
   }
 
   render() {
-    const { surah, options, ayahs, actions } = this.props; // eslint-disable-line no-shadow
+    const { surah, options, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!ayahs) return <div style={{ margin: '50px auto'}}><Loader /></div>;
+    if (!this.hasAyahs()) return <div style={{ margin: '50px auto' }}><Loader /></div>;
 
     return (
       <div className="surah-body">
@@ -444,15 +420,15 @@ class Surah extends Component {
             }
           ]}
         />
-        <Header surah={surah} handleToggleSidebar={() => this.setState({sidebarOpen: true})} />
+        <Header surah={surah} handleToggleSidebar={() => this.setState({ sidebarOpen: true })} />
         <Sidebar
           open={this.state.sidebarOpen}
-          onSetOpen={(open) => this.setState({sidebarOpen: open})}
+          onSetOpen={open => this.setState({ sidebarOpen: open })}
         >
           {this.renderSidebar()}
         </Sidebar>
         <div className={`container-fluid ${style['surah-container']}`}>
-          <Row>
+          <div className="row">
             <SurahInfo
               surah={surah}
               loadInfo={actions.loadInfo}
@@ -460,14 +436,14 @@ class Surah extends Component {
               onClose={this.handleSurahInfoToggle}
             />
             <Col md={10} mdOffset={1}>
-              <TopOptions options={options} actions={actions} surah={surah} />
+              <TopOptions options={options} actions={actions.options} surah={surah} />
               <Bismillah surah={surah} />
               {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
             </Col>
             <Col md={10} mdOffset={1}>
               {this.renderPagination()}
             </Col>
-          </Row>
+          </div>
         </div>
         <Audioplayer
           surah={surah}

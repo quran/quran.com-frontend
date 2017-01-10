@@ -1,5 +1,5 @@
 .dropdown{
-  :global(ul) {
+  & + :global(.dropdown-menu){
     max-height: 400px;
     max-height: 60vh;
     overflow-y: scroll;

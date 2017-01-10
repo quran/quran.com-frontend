@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-export const fontFaceStyle = (fontClassName) => (
+export const fontFaceStyle = fontClassName => (
   `@font-face {font-family: '${fontClassName}';
   src: url('//quran-1f14.kxcdn.com/fonts/compressed/eot/${fontClassName}.eot?#iefix') format('embedded-opentype'),
   url('//quran-1f14.kxcdn.com/fonts/ttf/${fontClassName}.ttf') format('truetype'),
@@ -9,7 +9,7 @@ export const fontFaceStyle = (fontClassName) => (
   .${fontClassName} {display: none;}`
 );
 
-export const fontFaceStyleLoaded = (fontClassName) => (
+export const fontFaceStyleLoaded = fontClassName => (
   `.${fontClassName} {display: block;}
   .text-${fontClassName} {display: none;}`
 );
@@ -18,7 +18,7 @@ export function createFontFacesArray(ayahs) {
   const fontFaces = [];
   const fontFacesArray = [];
 
-  ayahs.forEach(ayah => {
+  ayahs.forEach((ayah) => {
     const font = ayah.words[0].className;
 
     if (fontFaces.indexOf(font) === -1) {
