@@ -397,7 +397,7 @@ class Surah extends Component {
     const { surah, options, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!this.hasAyahs()) return <div style={{ margin: '50px auto' }}><Loader /></div>;
+    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}><Loader /></div>;
 
     return (
       <div className="surah-body">
@@ -446,7 +446,7 @@ class Surah extends Component {
         >
           {this.renderSidebar()}
         </Sidebar>
-        <div className={`container-fluid ${style['surah-container']}`}>
+        <div className={`container-fluid ${style.container}`}>
           <div className="row">
             <SurahInfo
               surah={surah}
