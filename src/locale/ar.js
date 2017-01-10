@@ -37,6 +37,7 @@ export default {
     'surah.previous': 'السابقة سورة',
     'surah.info': 'سورہ معلومات',
     'surah.index.heading': 'السور',
+    'surah.index.continue': 'استءنف',
     'surah.index.quickLinks': 'روابط سريعة',
     'surah.goToBeginning': 'ابتداء من سورة',
 

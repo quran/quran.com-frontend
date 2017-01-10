@@ -13,8 +13,8 @@ export default () => {
 
   return (
     <div className="">
-      <h4 className={`text-muted ${styles.title}`}>
-        <LocaleFormattedMessage id="surah.index.quickLinks" defaultMessage="Quick links : " />
+      <h4 className={`text-muted ${styles.title} ${styles.items}`}>
+        <LocaleFormattedMessage id='surah.index.quickLinks' defaultMessage={'Quick links'}/>
         {
           isFriday &&
             <span>
