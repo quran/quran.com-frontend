@@ -1,5 +1,4 @@
 import { surahsSchema } from 'redux/schemas';
-import { arrayOf } from 'normalizr';
 import {
   LOAD,
   LOAD_SUCCESS,
@@ -13,7 +12,7 @@ import {
 export function loadAll() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    schema: arrayOf(surahsSchema),
+    schema: [surahsSchema],
     promise: client => client.get('/v2/surahs')
   };
 }
@@ -21,7 +20,7 @@ export function loadAll() {
 export function load(id) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    schema: arrayOf(surahsSchema),
+    schema: [surahsSchema],
     promise: client => client.get(`/v2/surahs/${id}`)
   };
 }
