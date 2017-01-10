@@ -5,6 +5,7 @@ import {
   FACEBOOK_SUCCESS,
   FACEBOOK_FAILURE,
   LOGOUT_SUCCESS,
+  SAVE,
   LOAD,
   LOAD_SUCCESS,
   LOAD_FAILURE
@@ -17,16 +18,20 @@ export function isLoaded(globalState) {
 export function load() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAILURE],
-    promise: client => client.get('/onequran/api/v1/auth/current')
+    promise: client => client.get('/onequran/auth/validate_token')
   };
 }
 
 export function facebook() {
   return {
     types: [FACEBOOK, FACEBOOK_SUCCESS, FACEBOOK_FAILURE],
-    promise: client => client.get('/onequran/auth/facebook/callback')
   };
 }
+
+export const save = data => ({
+  type: SAVE,
+  data
+});
 
 export function logout() {
   return {

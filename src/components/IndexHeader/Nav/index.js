@@ -75,7 +75,7 @@ export class IndexHeaderNav extends Component {
           user &&
             <li>
               <Link to="/profile" data-metrics-event-name="IndexHeader:Link:Profile">
-                {user.firstName}
+                {user.firstName || user.name}
               </Link>
             </li>
         }

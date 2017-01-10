@@ -19,14 +19,14 @@ export function load() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAILURE],
     schema: [bookmarksSchema],
-    promise: client => client.get('/onequran/api/v1/bookmarks')
+    promise: client => client.get('/onequran/api/v1/bookmarks.json')
   };
 }
 
 export function addBookmark(ayahKey) {
   return {
     types: [ADD_BOOKMARK, ADD_BOOKMARK_SUCCESS, ADD_BOOKMARK_FAILURE],
-    promise: client => client.post('/onequran/api/v1/bookmarks', {
+    promise: client => client.post('/onequran/api/v1/bookmarks.json', {
       data: {
         bookmark: { ayahKey }
       }
@@ -38,7 +38,7 @@ export function addBookmark(ayahKey) {
 export function removeBookmark(ayahKey) {
   return {
     types: [REMOVE_BOOKMARK, REMOVE_BOOKMARK_SUCCESS, REMOVE_BOOKMARK_FAILURE],
-    promise: client => client.del(`/onequran/api/v1/bookmarks/${ayahKey}`),
+    promise: client => client.del(`/onequran/api/v1/bookmarks/${ayahKey}.json`),
     ayahKey
   };
 }
