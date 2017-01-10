@@ -24,7 +24,7 @@ class Profile extends Component { // eslint-disable-line
     const { user, bookmarks } = this.props;
 
     return (
-      <div>
+      <div className="min-container">
         <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
         <QuranNav />
         <div className={styles.header} />

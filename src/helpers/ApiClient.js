@@ -38,8 +38,9 @@ export default class {
           }));
         }
 
-        if (cookie.load('accessToken')) {
-          request.set('Authorization', `Bearer ${cookie.load('accessToken')}`);
+        if (cookie.load('auth')) {
+          const headers = cookie.load('auth');
+          Object.keys(headers).forEach(key => request.set(key, headers[key]));
         }
 
         if (__SERVER__ && req.get('cookie')) {
@@ -50,9 +51,19 @@ export default class {
           request.send(decamelizeKeys(data));
         }
 
-        request.end((err, { body } = {}) => {
+        request.end((err, { header, body } = {}) => {
           if (err) {
             return reject(body || err);
+          }
+
+          if (header['access-token']) {
+            cookie.save('auth', {
+              'access-token': header['access-token'],
+              client: header.client,
+              expiry: header.expiry,
+              uid: header.uid,
+              'token-type': 'Bearer'
+            });
           }
 
           return resolve(body);
