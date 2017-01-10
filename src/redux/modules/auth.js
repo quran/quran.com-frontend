@@ -18,9 +18,9 @@ export default function reducer(state = initialState, action = {}) {
     case SAVE: {
       cookie.save('auth', {
         client: action.data.client_id,
-        'access-token': action.data.auth_token,
         expiry: action.data.expiry,
         uid: action.data.uid,
+        'access-token': action.data.auth_token,
         'token-type': 'Bearer'
       });
 
