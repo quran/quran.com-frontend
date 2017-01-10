@@ -77,7 +77,7 @@
     "json-loader": "0.5.4",
     "morgan": "1.7.0",
     "node-sass": "4.1.1",
-    "normalizr": "2.2.1",
+    "normalizr": "3.0.2",
     "pretty-error": "2.0.0",
     "promise": "7.1.1",
     "proxy-middleware": "0.14.0",

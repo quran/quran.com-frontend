@@ -109,7 +109,8 @@ class Surah extends Component {
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
       this.props.options !== nextProps.options,
-      this.props.currentAyah !== nextProps.currentAyah
+      this.props.currentAyah !== nextProps.currentAyah,
+      this.props.isPlaying !== nextProps.isPlaying
     ];
 
     return conditions.some(condition => condition);
@@ -300,7 +301,7 @@ class Surah extends Component {
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
-        isCurrentAyah={ayah.ayahKey === currentAyah}
+        isCurrentAyah={isPlaying && ayah.ayahKey === currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
@@ -378,7 +379,7 @@ class Surah extends Component {
     const { surah, options, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!this.hasAyahs()) return <div style={{ margin: '50px auto' }}><Loader /></div>;
+    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}><Loader /></div>;
 
     return (
       <div className="surah-body">
@@ -427,7 +428,7 @@ class Surah extends Component {
         >
           {this.renderSidebar()}
         </Sidebar>
-        <div className={`container-fluid ${style['surah-container']}`}>
+        <div className={`container-fluid ${style.container}`}>
           <div className="row">
             <SurahInfo
               surah={surah}

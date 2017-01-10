@@ -1,12 +1,8 @@
 import React from 'react';
 
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
-const styles = require('./style.scss');
-
 const Loader = () => (
-  <div className={styles.loader}>
-    <LocaleFormattedMessage id="app.loading" defaultMessage="Loading..." />
+  <div className="text-center">
+    <i className="fa fa-circle-o-notch fa-spin fa-3x fa-fw text-center text-primary" />
   </div>
 );
 
