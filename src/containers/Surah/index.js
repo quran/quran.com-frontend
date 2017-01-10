@@ -302,6 +302,7 @@ class Surah extends Component {
       <Ayah
         ayah={ayah}
         isCurrentAyah={ayah.ayahKey === currentAyah}
+        currentAyah={currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
@@ -481,7 +482,7 @@ const AsyncSurah = asyncConnect([
 function mapStateToProps(state, ownProps) {
   const surahId = parseInt(ownProps.params.surahId, 10);
   const surah: Object = state.surahs.entities[surahId];
-  const ayahs: ?Object = state.ayahs.entities[surahId];
+  const ayahs: Object = state.ayahs.entities[surahId];
   const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
   const ayahIds = new Set(ayahArray);
   const lastAyahInArray = ayahArray.slice(-1)[0];

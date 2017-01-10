@@ -5,20 +5,13 @@ import { Element } from 'react-scroll';
 import { ayahType, matchType } from 'types';
 import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import Word from 'components/Word';
 
 import debug from 'helpers/debug';
 
 import bindTooltip from 'utils/bindTooltip';
 
 const styles = require('./style.scss');
-
-/* eslint-disable no-unused-vars */
-const CHAR_TYPE_WORD = 1;
-const CHAR_TYPE_END = 2;
-const CHAR_TYPE_PAUSE = 3;
-const CHAR_TYPE_RUB = 4;
-const CHAR_TYPE_SAJDAH = 5;
-/* eslint-enable no-unused-vars */
 
 export default class Ayah extends Component {
   static propTypes = {
@@ -180,36 +173,12 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, tooltip, isSearched } = this.props;
+    const { ayah, tooltip, currentAyah, isPlaying,  audioActions} = this.props;
 
-    if (!ayah.words[0].code) {
-      return false;
-    }
-
-    // position is important as it will differentiate between words and symbols, see 2:25:13
-    let position = -1;
-    const text = ayah.words.map((word, index) => {
-      let id = null;
-      const className = `${word.className} ${word.highlight ? word.highlight : ''}`;
-
-      if (word.charTypeId === CHAR_TYPE_WORD) {
-        position += 1;
-        id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
-      }
-
-      return (
-        <b
-          key={word.code}
-          id={id}
-          rel="tooltip"
-          onClick={(event) => this.handleWordClick(event.target)}
-          data-key={`${word.ayahKey}:${position}`}
-          data-ayah={word.ayahKey}
-          className={`${className} pointer`}
-          title={this.buildTooltip(word, tooltip)}
-          dangerouslySetInnerHTML={{__html: word.code}}
-        />
-      );
+    const text = ayah.words.map(word => {
+      return(
+        <Word word={word} currentAyah={currentAyah} tooltip={tooltip} isPlaying={isPlaying} audioActions={audioActions}/>
+      )
     });
 
     return (

@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import debug from 'helpers/debug';
 
 import { wordType } from 'types';
+import Word from 'components/Word';
 
 const styles = require('../Ayah/style.scss');
 const CHAR_TYPE_WORD = 1;
@@ -19,71 +20,21 @@ export default class Line extends React.Component {
   shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.currentAyah !== nextProps.currentAyah,
-      this.props.line !== nextProps.line
+      this.props.line !== nextProps.line,
+      this.props.isPlaying !== nextProps.isPlaying
     ];
 
     return conditions.some(condition => condition);
   }
 
-  handleWordClick(word){
-    const { currentAyah, audioActions, isPlaying } = this.props;
-
-    if(!audioActions.setCurrentWord)
-      return;
-
-    if(currentAyah && isPlaying) {
-      audioActions.setCurrentWord(word.dataset.key) ;
-    } else {
-      audioActions.setAyah(word.dataset.ayah);
-      audioActions.playCurrentWord(word.dataset.key);
-    }
-  }
-
-  buildTooltip(word, tooltip){
-    let title;
-    if (!word.wordId) {
-      title = `Verse ${word.ayahKey.split(':')[1]}`;
-    } else {
-      title = word[tooltip];
-    }
-    return title;
-  }
-
   renderText() {
-    const { line, tooltip, currentAyah } = this.props;
+    const { tooltip, currentAyah, audioActions, isPlaying, line } = this.props;
 
-    if (!line[0].code) { // TODO shouldn't be possible, remove this clause
-      return false;
-    }
-    let position;
-
-    const text = line.map((word, index) => {
-      const highlight = currentAyah == word.ayahKey ? 'highlight' : '';
-      const className = `${word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
-      let id = null;
-
-      if (word.charTypeId === CHAR_TYPE_WORD) {
-        position = word.position - 1;
-        id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
-      }
-
+    const text = line.map(word => {
       return (
-        <b
-          id={id}
-          rel="tooltip"
-          data-key={`${word.ayahKey}:${position}`}
-          key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-          className={`${className} pointer`}
-          data-ayah={word.ayahKey}
-          data-line={word.lineNun}
-          data-page={word.pageNum}
-          data-position={word.position}
-          onClick={(event) => this.handleWordClick(event.target)}
-          title={this.buildTooltip(word, tooltip)}
-          dangerouslySetInnerHTML={{__html: word.code}}
-        />
-      );
-    }
+        <Word word={word} currentAyah={currentAyah} tooltip={tooltip} isPlaying={isPlaying} audioActions={audioActions}/>
+      )
+    });
 
     return (
       <span className={`${styles.line} text-center`}>
