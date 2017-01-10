@@ -5,7 +5,6 @@ import { wordType } from 'types';
 import Word from 'components/Word';
 
 const styles = require('../Ayah/style.scss');
-const CHAR_TYPE_WORD = 1;
 
 export default class Line extends React.Component {
   static propTypes = {
@@ -53,7 +52,7 @@ export default class Line extends React.Component {
 
     return (
       <div className={`row ${styles.font} text-justify text-arabic`}>
-        <div className="col-md-12 line-container">
+        <div className="col-md-12 line-container"  name={`ayah:${line[0].ayahKey}`}>
           {this.renderText()}
         </div>
       </div>
