@@ -4,13 +4,6 @@ import { buildSegments, extractSegments } from 'helpers/buildSegments';
 import debug from 'helpers/debug';
 
 import {
-  LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
-  LOAD as AYAHS_LOAD,
-  CLEAR_CURRENT as AYAHS_CLEAR_CURRENT,
-  SET_CURRENT_AYAH
-  } from './ayahs';
-
-import {
   SET_USER_AGENT,
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
@@ -25,6 +18,13 @@ import {
   BUILD_ON_CLIENT,
   UPDATE
   } from 'redux/constants/audioplayer.js';
+
+import {
+  LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
+  LOAD as AYAHS_LOAD,
+  CLEAR_CURRENT as AYAHS_CLEAR_CURRENT,
+  SET_CURRENT_AYAH
+  } from './ayahs';
 
 export { NEXT, SET_AYAH };
 
@@ -48,7 +48,6 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action = {}) {
-
   switch (action.type) {
     case BUILD_ON_CLIENT: {
       debug('reducer:audioplayer', 'BUILD_ON_CLIENT init');
@@ -108,15 +107,13 @@ export default function reducer(state = initialState, action = {}) {
       if (state.currentFile && state.currentFile === Object.values(files)[0]) {
         // If the same file is being used, for example in lazy loading, then keep same file
         currentFile = state.currentFile;
+      } else if (state.currentAyah || currentAyah) {
+        // If the user changes the reciter, we want to maintain the file where
+        // the user last left off
+        currentFile = files[state.currentAyah || currentAyah];
       } else {
-        if (state.currentAyah || currentAyah) {
-          // If the user changes the reciter, we want to maintain the file where
-          // the user last left off
-          currentFile = files[state.currentAyah || currentAyah];
-        } else {
-          // Otherwise, just choose the first file
-          currentFile = Object.values(files)[0];
-        }
+        // Otherwise, just choose the first file
+        currentFile = Object.values(files)[0];
       }
 
       const stateFiles = state.files;
@@ -140,21 +137,20 @@ export default function reducer(state = initialState, action = {}) {
       };
     }
     case UPDATE: {
-      const {payload} = action;
+      const { payload } = action;
       return {
         ...state,
         ...payload
       };
     }
     case SET_USER_AGENT: {
-      const {userAgent} = action;
+      const { userAgent } = action;
       return {
         ...state,
         userAgent
       };
     }
     case PLAY: {
-
       if (state.currentFile) {
         state.currentFile.play();
         return {
@@ -164,10 +160,8 @@ export default function reducer(state = initialState, action = {}) {
       }
 
       return state;
-
     }
     case PAUSE: {
-
       if (state.currentFile) {
         state.currentFile.pause();
 
@@ -178,13 +172,10 @@ export default function reducer(state = initialState, action = {}) {
       }
 
       return state;
-
     }
     case NEXT: {
       const [surahId, ayahNum] = action.currentAyah.split(':');
       const nextId = `${surahId}:${parseInt(ayahNum, 10) + 1}`;
-      const stateSegments = state.segments;
-      const stateSegmentsId = stateSegments[surahId];
 
       return {
         ...state,
@@ -207,8 +198,6 @@ export default function reducer(state = initialState, action = {}) {
     case SET_AYAH: {
       const [surahId, ayahNum] = action.currentAyah.split(':');
       const currentAyah = `${surahId}:${parseInt(ayahNum, 10)}`;
-      const stateSegments = state.segments;
-      const stateSegmentsId = state.segments[surahId];
       const currentFile = state.files[surahId][currentAyah];
 
       return {
@@ -219,7 +208,7 @@ export default function reducer(state = initialState, action = {}) {
       };
     }
     case SET_REPEAT: {
-      const {repeat} = action;
+      const { repeat } = action;
       return {
         ...state,
         repeat

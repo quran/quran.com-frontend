@@ -6,7 +6,7 @@ const styles = require('./style.scss');
 
 const Loader = () => (
   <div className={styles.loader}>
-    <LocaleFormattedMessage id={'app.loading'} defaultMessage={'Loading...'}/>
+    <LocaleFormattedMessage id="app.loading" defaultMessage="Loading..." />
   </div>
 );
 

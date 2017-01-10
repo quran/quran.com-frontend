@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { Component, PropTypes } from 'react';
 
 const styles = require('./style.scss');
@@ -13,7 +14,7 @@ export default class Track extends Component {
 
     const fraction = (
       event.nativeEvent.offsetX /
-      this.refs.container.getBoundingClientRect().width
+      this.container.getBoundingClientRect().width
     );
 
     return onTrackChange(fraction);
@@ -23,8 +24,12 @@ export default class Track extends Component {
     const { progress } = this.props;
 
     return (
-      <div ref="container" className={styles.container} onClick={this.handleClick}>
-        <div className={styles.progress} style={{width: `${progress}%`}}/>
+      <div
+        ref={(container) => { this.container = container; }}
+        className={styles.container}
+        onClick={this.handleClick}
+      >
+        <div className={styles.progress} style={{ width: `${progress}%` }} />
       </div>
     );
   }

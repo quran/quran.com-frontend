@@ -12,7 +12,7 @@ export default () => (
           <Link to="/">
             <img src={logo} className="logo" alt="logo" />
           </Link>
-          <h4 className="title">THE NOBLE QUR'AN</h4>
+          <h4 className="title">THE NOBLE QURAN</h4>
           <SearchInput />
         </div>
       </div>

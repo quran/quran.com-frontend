@@ -1,1 +1,3 @@
-export const LOAD = '@@quran/fontFaces/LOAD';
+const LOAD = '@@quran/fontFaces/LOAD';
+
+export default LOAD;

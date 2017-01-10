@@ -17,14 +17,14 @@ export function isLoaded(globalState) {
 export function load() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAILURE],
-    promise: (client) => client.get('/onequran/api/v1/auth/current')
+    promise: client => client.get('/onequran/api/v1/auth/current')
   };
 }
 
 export function facebook() {
   return {
     types: [FACEBOOK, FACEBOOK_SUCCESS, FACEBOOK_FAILURE],
-    promise: (client) => client.get('/onequran/auth/facebook/callback')
+    promise: client => client.get('/onequran/auth/facebook/callback')
   };
 }
 

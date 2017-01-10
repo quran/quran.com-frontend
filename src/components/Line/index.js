@@ -1,12 +1,14 @@
 import React, { PropTypes } from 'react';
 import debug from 'helpers/debug';
 
+import { wordType } from 'types';
+
 const styles = require('../Ayah/style.scss');
 const CHAR_TYPE_WORD = 1;
 
 export default class Line extends React.Component {
   static propTypes = {
-    line: PropTypes.array.isRequired,
+    line: PropTypes.arrayOf(wordType).isRequired,
     tooltip: PropTypes.string,
     currentAyah: PropTypes.string.isRequired,
     audioActions: PropTypes.object.isRequired,
@@ -14,7 +16,7 @@ export default class Line extends React.Component {
     isPlaying: PropTypes.bool
   };
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.currentAyah !== nextProps.currentAyah,
       this.props.line !== nextProps.line
@@ -55,7 +57,7 @@ export default class Line extends React.Component {
     }
     let position;
 
-    let text = line.map((word, index) => {
+    const text = line.map((word, index) => {
       const highlight = currentAyah == word.ayahKey ? 'highlight' : '';
       const className = `${word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
       let id = null;
@@ -66,22 +68,22 @@ export default class Line extends React.Component {
       }
 
       return (
-          <b
-            id={id}
-            rel="tooltip"
-            data-key={`${word.ayahKey}:${position}`}
-            key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-            className={`${className} pointer`}
-            data-ayah={word.ayahKey}
-            data-line={word.lineNun}
-            data-page={word.pageNum}
-            data-position={word.position}
-            onClick={(event) => this.handleWordClick(event.target)}
-            title={this.buildTooltip(word, tooltip)}
-            dangerouslySetInnerHTML={{__html: word.code}}
-          />
+        <b
+          id={id}
+          rel="tooltip"
+          data-key={`${word.ayahKey}:${position}`}
+          key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
+          className={`${className} pointer`}
+          data-ayah={word.ayahKey}
+          data-line={word.lineNun}
+          data-page={word.pageNum}
+          data-position={word.position}
+          onClick={(event) => this.handleWordClick(event.target)}
+          title={this.buildTooltip(word, tooltip)}
+          dangerouslySetInnerHTML={{__html: word.code}}
+        />
       );
-    });
+    }
 
     return (
       <span className={`${styles.line} text-center`}>

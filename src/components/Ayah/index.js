@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 
+import { ayahType, matchType } from 'types';
 import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
@@ -22,18 +23,31 @@ const CHAR_TYPE_SAJDAH = 5;
 export default class Ayah extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
-    ayah: PropTypes.object.isRequired,
-    bookmarked: PropTypes.bool.isRequired,
-    mediaActions: PropTypes.object.isRequired,
-    bookmarkActions: PropTypes.object,
-    match: PropTypes.array,
-    isSearch: PropTypes.bool,
+    ayah: ayahType.isRequired,
+    bookmarked: PropTypes.bool, // TODO: Add this for search
+    bookmarkActions: PropTypes.shape({
+      isLoaded: PropTypes.func.isRequired,
+      load: PropTypes.func.isRequired,
+      addBookmark: PropTypes.func.isRequired,
+      removeBookmark: PropTypes.func.isRequired,
+    }),
+    mediaActions: PropTypes.shape({
+      setMedia: PropTypes.func.isRequired,
+      removeMedia: PropTypes.func.isRequired,
+    }),
+    audioActions: PropTypes.shape({
+      pause: PropTypes.func.isRequired,
+      setAyah: PropTypes.func.isRequired,
+      play: PropTypes.func.isRequired,
+      setCurrentWord: PropTypes.func.isRequired,
+    }), // not required because in search it is not.
+    match: PropTypes.arrayOf(matchType),
     isPlaying: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
     tooltip: PropTypes.string,
-    currentWord: PropTypes.any, // gets passed in an integer, null by default
+    currentWord: PropTypes.number, // gets passed in an integer, null by default
     isCurrentAyah: PropTypes.bool,
-    audioActions: PropTypes.object.isRequired
+    currentAyah: PropTypes.string
   };
 
   static defaultProps = {
@@ -65,8 +79,10 @@ export default class Ayah extends Component {
     const { isPlaying, audioActions } = this.props;
     const { pause, setAyah, play } = audioActions;
 
-    if (isPlaying)
+    if (isPlaying) {
       pause();
+    }
+
     setAyah(ayah);
     play();
   }
@@ -129,6 +145,7 @@ export default class Ayah extends Component {
               <h2 className="text-translation times-new">
                 <small>
                   <a
+                    tabIndex="-1"
                     className="pointer"
                     onClick={() => mediaActions.setMedia(content)}
                     data-metrics-event-name="Media Click"
@@ -137,10 +154,10 @@ export default class Ayah extends Component {
                     data-metrics-media-content-ayah-key={ayah.ayahKey}
                   >
                     <LocaleFormattedMessage
-                      id={'ayah.media.lectureFrom'}
-                      defaultMessage={"Watch lecture by {from}"}
-                      values={{from: content.resource.name}}
-                      />
+                      id="ayah.media.lectureFrom"
+                      defaultMessage="Watch lecture by {from}"
+                      values={{ from: content.resource.name }}
+                    />
                   </a>
                 </small>
               </h2>
@@ -176,7 +193,7 @@ export default class Ayah extends Component {
       const className = `${word.className} ${word.highlight ? word.highlight : ''}`;
 
       if (word.charTypeId === CHAR_TYPE_WORD) {
-        position = position + 1;
+        position += 1;
         id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
       }
 
@@ -202,7 +219,7 @@ export default class Ayah extends Component {
           dir="rtl"
           lang="ar"
           className={`text-tashkeel text-p${ayah.pageNum}`}
-          dangerouslySetInnerHTML={{__html: ayah.textTashkeel}}
+          dangerouslySetInnerHTML={{ __html: ayah.textTashkeel }}
         />
       </h1>
     );
@@ -210,18 +227,19 @@ export default class Ayah extends Component {
 
   renderPlayLink() {
     const { isSearched, ayah, currentAyah, isPlaying } = this.props;
-    const playing = ayah.ayahKey == currentAyah && isPlaying;
+    const playing = ayah.ayahKey === currentAyah && isPlaying;
 
     if (!isSearched) {
       return (
         <a
+          tabIndex="-1"
           onClick={() => this.handlePlay(ayah.ayahKey)}
           className="text-muted"
         >
           <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'}`} />
           <LocaleFormattedMessage
-            id={ playing ? 'actions.pause' : 'actions.play' }
-            defaultMessage={ playing ? 'Pause' : 'Play'}
+            id={playing ? 'actions.pause' : 'actions.play'}
+            defaultMessage={playing ? 'Pause' : 'Play'}
           />
         </a>
       );
@@ -250,13 +268,14 @@ export default class Ayah extends Component {
     if (bookmarked) {
       return (
         <a
+          tabIndex="-1"
           onClick={() => bookmarkActions.removeBookmark(ayah.ayahKey)}
           className="text-muted"
         >
           <strong><i className="ss-icon ss-bookmark" />
             <LocaleFormattedMessage
-              id={'ayah.bookmarked'}
-              defaultMessage={"Bookmarked"}
+              id="ayah.bookmarked"
+              defaultMessage="Bookmarked"
             />
           </strong>
         </a>
@@ -265,13 +284,14 @@ export default class Ayah extends Component {
 
     return (
       <a
+        tabIndex="-1"
         onClick={() => bookmarkActions.addBookmark(ayah.ayahKey)}
         className="text-muted"
       >
         <i className="ss-icon ss-bookmark" />
         <LocaleFormattedMessage
-          id={'ayah.bookmark'}
-          defaultMessage={"Bookmark"}
+          id="ayah.bookmark"
+          defaultMessage="Bookmark"
         />
       </a>
     );

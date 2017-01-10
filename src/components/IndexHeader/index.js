@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 
 import SearchInput from 'components/SearchInput';
-import Nav from './Nav';
-
 import debug from 'helpers/debug';
+
+import Nav from './Nav';
 
 const logo = require('../../../static/images/logo-lg-w.png');
 
@@ -27,7 +27,7 @@ export default class IndexHeader extends Component {
     debug('component:IndexHeader', 'Render');
 
     return (
-      <div className="index-header" style={{backgroundColor: '#2CA4AB'}}>
+      <div className="index-header" style={{ backgroundColor: '#2CA4AB' }}>
         <Nav />
         <div className="container">
           <div className="row">

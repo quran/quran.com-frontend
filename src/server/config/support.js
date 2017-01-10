@@ -10,4 +10,4 @@ export default (server) => {
         res.send(body || err);
       });
   });
-}
+};

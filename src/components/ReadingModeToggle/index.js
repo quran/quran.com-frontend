@@ -5,7 +5,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const ReadingModeToggle = ({ onReadingModeToggle, isToggled }) => (
   <div>
-    <LocaleFormattedMessage id={'setting.reading'} defaultMessage={'Reading'}/>:{' '}
+    <LocaleFormattedMessage id="setting.reading" defaultMessage="Reading" />:{' '}
     <SwitchToggle
       checked={isToggled}
       onToggle={onReadingModeToggle}

@@ -1,13 +1,12 @@
 import React, { PropTypes } from 'react';
 
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
-
+import { surahType } from 'types';
 import Loader from 'components/Loader';
 
 const style = require('./style.scss');
 
-const SurahInfo = ({ surah, isShowingSurahInfo, onClose, loadInfo }) => {
+const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
   if (!surah.info) {
@@ -16,11 +15,12 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose, loadInfo }) => {
 
   return (
     <Col xs={12} className={`${style.container} surah-info ${style.show}`}>
-      <div
+      <button
+        tabIndex="-1"
         className={`${style.close} ss-delete`}
-        onClick={() => onClose({isShowingSurahInfo: !isShowingSurahInfo})}
+        onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
       />
-      <Row className={style.row}>
+      <div className={`${style.row} row`}>
         <Col
           md={3}
           xs={6}
@@ -35,7 +35,7 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose, loadInfo }) => {
           </dl>
         </Col>
         <Col md={8} className={`${style.info} times-new`}>
-          <div dangerouslySetInnerHTML={{__html: surah.info.description}} />
+          <div dangerouslySetInnerHTML={{ __html: surah.info.description }} />
           <div>
             <p>
               <em>
@@ -44,16 +44,15 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose, loadInfo }) => {
             </p>
           </div>
         </Col>
-      </Row>
+      </div>
     </Col>
   );
 };
 
 SurahInfo.propTypes = {
   onClose: PropTypes.func,
-  loadInfo: PropTypes.func,
   isShowingSurahInfo: PropTypes.bool,
-  surah: PropTypes.object
+  surah: surahType
 };
 
 export default SurahInfo;

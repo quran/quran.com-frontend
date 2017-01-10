@@ -1,6 +1,6 @@
 import { PropTypes } from 'react';
 
-export default {
+export default PropTypes.shape({
   provider: PropTypes.string,
   uid: PropTypes.string,
   firstName: PropTypes.string,
@@ -10,4 +10,4 @@ export default {
   image: PropTypes.string,
   email: PropTypes.string,
   name: PropTypes.string
-};
+});

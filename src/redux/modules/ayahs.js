@@ -27,13 +27,14 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case SET_CURRENT_AYAH:
+    case SET_CURRENT_AYAH: {
       return {
         ...state,
         current: action.id,
         currentWord: state.current === action.id ? state.currentWord : null
       };
-    case SET_CURRENT_WORD:
+    }
+    case SET_CURRENT_WORD: {
       let currentAyah = state.current;
       if (action.id && currentAyah) {
         if (!(new RegExp(`^${currentAyah}:`)).test(action.id)) {
@@ -45,12 +46,14 @@ export default function reducer(state = initialState, action = {}) {
         current: currentAyah,
         currentWord: action.id
       };
-    case CLEAR_CURRENT_WORD:
+    }
+    case CLEAR_CURRENT_WORD: {
       return {
         ...state,
         currentWord: null
       };
-    case CLEAR_CURRENT:
+    }
+    case CLEAR_CURRENT: {
       const entities = state.entities;
       return {
         ...state,
@@ -61,13 +64,15 @@ export default function reducer(state = initialState, action = {}) {
           [action.id]: {}
         }
       };
-    case LOAD:
+    }
+    case LOAD: {
       return {
         ...state,
         loaded: false,
         loading: true
       };
-    case LOAD_SUCCESS:
+    }
+    case LOAD_SUCCESS: {
       const current = state.current ? state.current : action.result.result[0];
       const stateEntities = state.entities;
 
@@ -87,9 +92,10 @@ export default function reducer(state = initialState, action = {}) {
         },
         result: Object.assign({}, state.result, action.result.result)
       };
-    case LOAD_FAIL:
-      console.log(action);
+    }
+    case LOAD_FAIL: {
       return state;
+    }
     default:
       return state;
   }

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fontFaceStyle, fontFaceStyleLoaded } from 'helpers/buildFontFaces';
-import { load } from 'redux/actions/fontFace.js';
+import load from 'redux/actions/fontFace.js';
 
 import debug from 'helpers/debug';
 import selector from './selector';
@@ -14,7 +14,7 @@ import selector from './selector';
 )
 export default class FontStyles extends Component {
   static propTypes = {
-    fontFaces: PropTypes.object.isRequired,
+    fontFaces: PropTypes.objectOf(PropTypes.bool).isRequired,
     load: PropTypes.func.isRequired
   };
 
@@ -29,7 +29,7 @@ export default class FontStyles extends Component {
     if (__CLIENT__) {
       const FontFaceObserver = require('fontfaceobserver'); // eslint-disable-line global-require
 
-      Object.keys(fontFaces).filter(className => !fontFaces[className]).forEach(className => {
+      Object.keys(fontFaces).filter(className => !fontFaces[className]).forEach((className) => {
         const font = new FontFaceObserver(className);
 
         font.load().then(() => load(className), () => load(className));

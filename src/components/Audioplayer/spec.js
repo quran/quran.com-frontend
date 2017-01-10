@@ -3,7 +3,11 @@ import { shallow } from 'enzyme';
 
 import { Audioplayer } from './index';
 
-let makeComponent, component, setRepeat, setAyah, file;
+let makeComponent;
+let component;
+let setRepeat;
+let setAyah;
+let file;
 
 describe('<Audioplayer />', () => {
   describe('#handleRepeat', () => {
@@ -36,38 +40,38 @@ describe('<Audioplayer />', () => {
         makeComponent({});
         component.instance().handleRepeat(file);
 
-        expect(component.instance().handleAyahChange).to.have.been.called;
-        expect(component.instance().play).not.to.have.been.called;
-        expect(setRepeat).not.to.have.been.called;
-        expect(setAyah).not.to.have.been.called;
+        expect(component.instance().handleAyahChange).to.have.been.called; // eslint-disable-line
+        expect(component.instance().play).not.to.have.been.called; // eslint-disable-line
+        expect(setRepeat).not.to.have.been.called; // eslint-disable-line
+        expect(setAyah).not.to.have.been.called; // eslint-disable-line
       });
 
       it('should not do anything when out of range', () => {
-        makeComponent({from: 13, to: 13, times: 10});
+        makeComponent({ from: 13, to: 13, times: 10 });
         component.instance().handleRepeat(file);
 
-        expect(component.instance().handleAyahChange).to.have.been.called;
-        expect(setRepeat).not.to.have.been.called;
+        expect(component.instance().handleAyahChange).to.have.been.called; // eslint-disable-line
+        expect(setRepeat).not.to.have.been.called; // eslint-disable-line
       });
 
       it('should repeat current ayah', () => {
-        makeComponent({from: 3, to: 3, times: 10});
+        makeComponent({ from: 3, to: 3, times: 10 });
         component.instance().handleRepeat(file);
 
-        expect(file.pause).to.have.been.called;
-        expect(setRepeat).to.have.been.called;
-        expect(setRepeat).to.have.been.calledWith({from: 3, to: 3, times: 9});
+        expect(file.pause).to.have.been.called; // eslint-disable-line
+        expect(setRepeat).to.have.been.called; // eslint-disable-line
+        expect(setRepeat).to.have.been.calledWith({ from: 3, to: 3, times: 9 });
         expect(file.currentTime).to.eql(0);
-        expect(file.play).to.have.been.called;
+        expect(file.play).to.have.been.called; // eslint-disable-line
       });
 
       it('should not repeat when last time to repeat', () => {
-        makeComponent({from: 3, to: 3, times: 1});
+        makeComponent({ from: 3, to: 3, times: 1 });
         component.instance().handleRepeat(file);
 
-        expect(setRepeat).to.have.been.called;
+        expect(setRepeat).to.have.been.called; // eslint-disable-line
         expect(setRepeat).to.have.been.calledWith({});
-        expect(component.instance().handleAyahChange).to.have.been.called;
+        expect(component.instance().handleAyahChange).to.have.been.called; // eslint-disable-line
       });
     });
 
@@ -97,39 +101,39 @@ describe('<Audioplayer />', () => {
       });
 
       it('should not do anything when out of range', () => {
-        makeComponent({from: 7, to: 13, times: 10});
+        makeComponent({ from: 7, to: 13, times: 10 });
         component.instance().handleRepeat(file);
 
-        expect(component.instance().handleAyahChange).to.have.been.called;
-        expect(setRepeat).not.to.have.been.called;
+        expect(component.instance().handleAyahChange).to.have.been.called; // eslint-disable-line
+        expect(setRepeat).not.to.have.been.called; // eslint-disable-line
       });
 
       it('should play next ayah when within range', () => {
-        makeComponent({from: 2, to: 5, times: 10});
+        makeComponent({ from: 2, to: 5, times: 10 });
         component.instance().handleRepeat(file);
 
-        expect(file.pause).to.have.been.called;
-        expect(setRepeat).not.to.have.been.called;
-        expect(component.instance().handleAyahChange).to.have.been.called;
+        expect(file.pause).to.have.been.called; // eslint-disable-line
+        expect(setRepeat).not.to.have.been.called; // eslint-disable-line
+        expect(component.instance().handleAyahChange).to.have.been.called; // eslint-disable-line
       });
 
       it('should start the range from the beginning when at the end', () => {
-        makeComponent({from: 1, to: 3, times: 10});
+        makeComponent({ from: 1, to: 3, times: 10 });
         component.instance().handleRepeat(file);
 
-        expect(file.pause).to.have.been.called;
-        expect(setRepeat).to.have.been.called;
-        expect(setRepeat).to.have.been.calledWith({from: 1, to: 3, times: 9});
+        expect(file.pause).to.have.been.called; // eslint-disable-line
+        expect(setRepeat).to.have.been.called; // eslint-disable-line
+        expect(setRepeat).to.have.been.calledWith({ from: 1, to: 3, times: 9 });
         expect(setAyah).to.have.been.calledWith('2:1');
       });
 
       it('should not repeat when last time to repeat when range ayah', () => {
-        makeComponent({from: 1, to: 3, times: 1});
+        makeComponent({ from: 1, to: 3, times: 1 });
         component.instance().handleRepeat(file);
 
-        expect(setRepeat).to.have.been.called;
+        expect(setRepeat).to.have.been.called; // eslint-disable-line
         expect(setRepeat).to.have.been.calledWith({});
-        expect(component.instance().handleAyahChange).to.have.been.called;
+        expect(component.instance().handleAyahChange).to.have.been.called; // eslint-disable-line
       });
     });
   });
