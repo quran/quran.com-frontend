@@ -33,8 +33,8 @@ export default {
     'search.error': 'Sorry, there was an error with your search.',
     'search.noResult': 'No results found.',
 
-    'surah.next': 'NEXT SURAH',
-    'surah.previous': 'PREVIOUS SURAH',
+    'surah.next': 'NEXT',
+    'surah.previous': 'PREVIOUS',
     'surah.info': 'Surah Info',
     'surah.index.heading': 'SURAHS (CHAPTERS)',
     'surah.index.continue': 'Continue',
@@ -67,6 +67,7 @@ export default {
     'nav.contactUs': 'Contact us',
     'nav.aboutQuranProject': 'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.', // eslint-disable-line max-len
     'nav.mobile': 'Mobile',
+    'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com'
   }
 };

@@ -13,14 +13,26 @@ $width: 20%;
 
   background: #fff;
   width: $width;
-
   transition: right 0.3s;
 
-  @media(max-width: $screen-sm) {
-    width: 100% - $width;
-  }
 
   &.open{
     right: 100% - $width;
+  }
+
+  :global(.navbar-text){
+    margin-left: 0px;
+  }
+
+  @media(max-width: $screen-sm) {
+    width: 100% - $width;
+
+    &.open{
+      right: $width;
+    }
+
+    :global(.navbar-text){
+      padding-left: 15px;
+    }
   }
 }

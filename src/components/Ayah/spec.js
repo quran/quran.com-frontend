@@ -1,12 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
 
 import Ayah from './index';
-
 import ayah from '../../../tests/fixtures/ayah';
-let wrapper;
 
+let wrapper;
 
 describe('<Ayah />', () => {
   beforeEach(() => {
@@ -14,7 +12,7 @@ describe('<Ayah />', () => {
   });
 
   it('should render', () => {
-    expect(wrapper).to.be.ok;
+    expect(wrapper).to.be.ok; // eslint-disable-line
   });
 
   it('should have correct ayah number', () => {

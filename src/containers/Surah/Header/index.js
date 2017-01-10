@@ -1,35 +1,36 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
-const Header = Navbar.Header;
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import debug from 'helpers/debug';
+import surahType from 'types/surahType';
+
+const Header = Navbar.Header;
 
 // const ornamentLeft = require('../../../../static/images/ornament-left.png');
 // const ornamentRight = require('../../../../static/images/ornament-right.png');
 
 const styles = require('./style.scss');
 
-const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
+const SurahHeader = ({ surah, handleToggleSidebar }) => {
   debug('component:SurahHeader', 'Render');
 
   return (
     <Navbar className="montserrat surah" fixedTop fluid>
       <Header>
-        <Row>
-          <Col xs={1}>
+        <div className="row">
+          <Col xs={3} md={1}>
             <button type="button" className="navbar-toggle collapsed" onClick={handleToggleSidebar}>
               <span className="sr-only">Toggle navigation</span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
-              <span className="icon-bar"></span>
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+              <span className="icon-bar" />
             </button>
           </Col>
-          <Col xs={10}>
+          <Col xs={6} md={10}>
             <ul className={`list-inline ${styles.container} text-center`}>
               <li className={styles.verticalAlign}>
                 {
@@ -53,7 +54,7 @@ const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
                 {
                   surah &&
                     <p className="navbar-text text-uppercase surah-name">
-                      {surah.name.simple} ({surah.name.english}) - سورة {surah.name.arabic}
+                      {surah.name.simple} <span className="hidden-xs">({surah.name.english}) - سورة {surah.name.arabic}</span>
                     </p>
                 }
               </li>
@@ -74,7 +75,7 @@ const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
               </li>
             </ul>
           </Col>
-        </Row>
+        </div>
 
       </Header>
     </Navbar>
@@ -82,7 +83,7 @@ const SurahHeader = ({ surah, handleToggleSidebar, children }) => {
 };
 
 SurahHeader.propTypes = {
-  surah: PropTypes.object.isRequired,
+  surah: surahType.isRequired,
   handleToggleSidebar: PropTypes.func.isRequired
 };
 

@@ -27,14 +27,14 @@ export default function reducer(state = initialState, action = {}) {
     case AYAHS_LOAD_SUCCESS:
       const ayahs = action.result.entities.ayahs;
       const stateLines = state.lines;
-      const lines = {...stateLines};
+      const lines = { ...stateLines };
 
-      action.result.result.forEach(ayahId => {
+      action.result.result.forEach((ayahId) => {
         const ayah = ayahs[ayahId];
 
-        ayah.words.forEach(word => {
+        ayah.words.forEach((word) => {
           if (lines[`${word.pageNum}-${word.lineNum}`]) {
-            const isInArray = lines[`${word.pageNum}-${word.lineNum}`].find(item => {
+            const isInArray = lines[`${word.pageNum}-${word.lineNum}`].find((item) => {
               const itemChecksum = `${item.lineNum}${item.code}${item.ayahKey}${item.position}`;
               const dataChecksum = `${word.lineNum}${word.code}${word.ayahKey}${item.position}`;
 
@@ -58,7 +58,6 @@ export default function reducer(state = initialState, action = {}) {
         lines
       };
     case AYAHS_LOAD_FAIL:
-      console.log(action);
       return state;
     default:
       return state;

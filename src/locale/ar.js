@@ -67,6 +67,7 @@ export default {
     'nav.contactUs': 'اتصل بنا',
     'nav.aboutQuranProject': 'Quran.com المعروف أيضا باسم القرآن الكريم، قناة القرآن الكريم، القرآن الكريم، القرآن الكريم) هو مشروع خيري)',  // eslint-disable-line max-len
     'nav.mobile': 'التليفون المحمول',
+    'nav.navigate': 'انتقل',
     'nav.legacySite': 'الموقع القديم'
   }
 };

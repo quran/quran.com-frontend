@@ -1,17 +1,17 @@
 import React, { PropTypes } from 'react';
-
-import {Row, Col} from 'react-bootstrap/lib';
+import Col from 'react-bootstrap/lib/Col';
 
 import InformationToggle from 'components/InformationToggle';
 import FontSizeDropdown from 'components/FontSizeDropdown';
 import TooltipDropdown from 'components/TooltipDropdown';
 import ReadingModeToggle from 'components/ReadingModeToggle';
-import NightModeToggle from 'components/NightModeToggle'
+import NightModeToggle from 'components/NightModeToggle';
 import Title from 'containers/Surah/Title';
 import Share from 'components/Share';
+import { surahType, optionsType } from 'types';
 
 const TopOptions = ({ options, surah, actions }) => (
-  <Row>
+  <div className="row">
     <Col md={4} className="hidden-xs hidden-sm">
       <Title surah={surah} />
     </Col>
@@ -19,7 +19,7 @@ const TopOptions = ({ options, surah, actions }) => (
       <ul className="list-inline">
         <li>
           <InformationToggle
-            onToggle={actions.options.setOption}
+            onToggle={actions.setOption}
             isShowingSurahInfo={options.isShowingSurahInfo}
           />
         </li>
@@ -27,21 +27,21 @@ const TopOptions = ({ options, surah, actions }) => (
         <li>
           <FontSizeDropdown
             options={options}
-            onOptionChange={actions.options.setOption}
+            onOptionChange={actions.setOption}
           />
         </li>
         <li>|</li>
         <li>
           <TooltipDropdown
             options={options}
-            onOptionChange={actions.options.setOption}
+            onOptionChange={actions.setOption}
           />
         </li>
         <li>|</li>
         <li>
           <ReadingModeToggle
             isToggled={options.isReadingMode}
-            onReadingModeToggle={actions.options.toggleReadingMode}
+            onReadingModeToggle={actions.toggleReadingMode}
           />
         </li>
         <li>|</li>
@@ -51,13 +51,16 @@ const TopOptions = ({ options, surah, actions }) => (
         <li><Share surah={surah} /></li>
       </ul>
     </Col>
-  </Row>
+  </div>
 );
 
 TopOptions.propTypes = {
-  options: PropTypes.object.isRequired,
-  surah: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
+  options: optionsType.isRequired,
+  surah: surahType.isRequired,
+  actions: PropTypes.shape({
+    toggleReadingMode: PropTypes.func.isRequired,
+    setOption: PropTypes.func.isRequired,
+  }).isRequired
 };
 
 export default TopOptions;

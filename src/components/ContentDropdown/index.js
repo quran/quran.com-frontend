@@ -1,8 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
+import { optionsType } from 'types';
 
 const style = require('./style.scss');
 
@@ -449,7 +450,7 @@ export const slugs = [
 export default class ContentDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func.isRequired,
-    options: PropTypes.object.isRequired,
+    options: optionsType.isRequired,
     className: PropTypes.string
   };
 
@@ -464,23 +465,23 @@ export default class ContentDropdown extends Component {
   handleRemoveContent = () => {
     const { onOptionChange } = this.props;
 
-    onOptionChange({content: []});
+    onOptionChange({ content: [] });
   }
 
   handleOptionSelected(id) {
     const { onOptionChange, options: { content } } = this.props;
 
     if (content.find(option => option === id)) {
-      onOptionChange({content: content.filter(option => option !== id)});
+      onOptionChange({ content: content.filter(option => option !== id) });
     } else {
-      onOptionChange({content: [...content, id]});
+      onOptionChange({ content: [...content, id] });
     }
   }
 
   renderItems(items) {
     const { options: { content } } = this.props;
 
-    return items.map(slug => {
+    return items.map((slug) => {
       const checked = content.find(option => option === slug.id);
 
       return (
@@ -517,37 +518,26 @@ export default class ContentDropdown extends Component {
     const { className, options: { content } } = this.props;
 
     return (
-      <div className={`dropdown ${className} ${style.dropdown}`}>
-        <button
-          className="btn btn-link no-outline"
-          id="content-dropdown"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <LocaleFormattedMessage id={'setting.translations.title'} defaultMessage={'Translations'}/>
-
-          <span className="caret" />
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
-          {
-            content.length &&
-              <MenuItem eventKey={1} onClick={this.handleRemoveContent}>
-                <LocaleFormattedMessage id={'setting.translations.removeAll'} defaultMessage={'Remove all'}/>
-              </MenuItem>
-          }
-          <MenuItem header>
-            <LocaleFormattedMessage id={'setting.translations.english'} defaultMessage={'English'}/>
-          </MenuItem>
-          {this.renderEnglishList()}
-          <MenuItem divider />
-          <MenuItem header>
-            <LocaleFormattedMessage id={'setting.translations.other'} defaultMessage={'Other Languages'}/>
-          </MenuItem>
-          {this.renderLanguagesList()}
-        </ul>
-      </div>
+      <DropdownButton
+        className={`dropdown ${className} ${style.dropdown}`}
+        title={<LocaleFormattedMessage id="setting.translations.title" defaultMessage="Translations" />}
+      >
+        {
+          content.length &&
+            <MenuItem onClick={this.handleRemoveContent}>
+              <LocaleFormattedMessage id="setting.translations.removeAll" defaultMessage="Remove all" />
+            </MenuItem>
+        }
+        <MenuItem header>
+          <LocaleFormattedMessage id="setting.translations.english" defaultMessage="English" />
+        </MenuItem>
+        {this.renderEnglishList()}
+        <MenuItem divider />
+        <MenuItem header>
+          <LocaleFormattedMessage id="setting.translations.other" defaultMessage="Other Languages" />
+        </MenuItem>
+        {this.renderLanguagesList()}
+      </DropdownButton>
     );
   }
 }

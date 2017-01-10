@@ -67,6 +67,7 @@ export default {
     'nav.contactUs': 'ہم سے رابطہ',
     'nav.aboutQuranProject': 'قرآن کریم ایک فلاں عامہ (عوامی بہبود کے لئے) منصوبہ ہے',
     'nav.mobile': 'موبائل',
+    'nav.navigate': 'تشریف لے جائیں',
     'nav.legacySite': 'پرانی سائٹ'
   }
 };

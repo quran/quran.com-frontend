@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import { optionsType } from 'types';
 
 const style = require('./style.scss');
 
@@ -192,7 +194,7 @@ export const slugs = [
 export default class ReciterDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func,
-    options: PropTypes.object,
+    options: optionsType,
     className: PropTypes.string
   };
 
@@ -211,7 +213,7 @@ export default class ReciterDropdown extends Component {
       <MenuItem
         key={slug.name.english}
         active={slug.id === options.audio}
-        onClick={() => onOptionChange({audio: slug.id})}
+        onClick={() => onOptionChange({ audio: slug.id })}
       >
         {slug.name.english}
       </MenuItem>
@@ -222,22 +224,12 @@ export default class ReciterDropdown extends Component {
     const { className } = this.props;
 
     return (
-      <div className={`dropdown ${className} ${style.dropdown}`}>
-        <button
-          className="btn btn-link no-outline"
-          id="reciters-dropdown"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <LocaleFormattedMessage id={'setting.reciters'} defaultMessage={'Reciters'}/>
-          <span className="caret" />
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
-          {this.renderMenu()}
-        </ul>
-      </div>
+      <DropdownButton
+        className={`${className} ${style.dropdown}`}
+        title={<LocaleFormattedMessage id="setting.reciters" defaultMessage="Reciters" />}
+      >
+        {this.renderMenu()}
+      </DropdownButton>
     );
   }
 }

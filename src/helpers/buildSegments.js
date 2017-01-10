@@ -1,6 +1,6 @@
 export const buildSegments = (segments) => {
   const words = {};
-  const intervals = segments.map(segment => {
+  const intervals = segments.map((segment) => {
     const startTime = segment[2];
     const endTime = segment[3];
     const duration = segment[3] - segment[2];
@@ -24,7 +24,7 @@ export const buildSegments = (segments) => {
 export const extractSegments = (ayahs) => {
   const segments = {};
 
-  Object.values(ayahs).forEach(ayah => {
+  Object.values(ayahs).forEach((ayah) => {
     if (ayah.audio) {
       if (ayah.audio.segments) {
         segments[ayah.ayahKey] = buildSegments(ayah.audio.segments);

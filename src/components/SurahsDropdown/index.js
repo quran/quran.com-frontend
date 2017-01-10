@@ -1,18 +1,18 @@
 import React, { Component, PropTypes } from 'react';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
+import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
 export default class SurahsDropdown extends Component {
   static propTypes = {
-    surahs: PropTypes.object.isRequired,
+    surahs: PropTypes.objectOf(surahType).isRequired,
     className: PropTypes.string
   };
 
@@ -30,7 +30,7 @@ export default class SurahsDropdown extends Component {
     return Object.values(surahs).map((surah, index) => (
       <LinkContainer to={`/${surah.id}`} activeClass="active" key={`surah-${index}`}>
         <MenuItem>
-          <Row>
+          <div className="row">
             <Col xs={2} md={2}>
               <span className="surah-num">
                 {surah.id}
@@ -44,7 +44,7 @@ export default class SurahsDropdown extends Component {
             <Col xs={3} md={3} className={`text-right ${styles.arabicName}`}>
               {surah.name.arabic}
             </Col>
-          </Row>
+          </div>
         </MenuItem>
       </LinkContainer>
     ));
@@ -54,22 +54,14 @@ export default class SurahsDropdown extends Component {
     const { className } = this.props;
 
     return (
-      <div className={`dropdown ${className} ${styles.dropdown}`}>
-        <button
-          className="btn btn-link no-outline"
-          id="surahs-dropdown"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          <LocaleFormattedMessage id={'setting.surahs'} defaultMessage={'Surahs'}/>
-          <span className="caret"></span>
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="surahs-dropdown">
-          {this.renderList()}
-        </ul>
-      </div>
+      <DropdownButton
+        link
+        className={`${className} ${styles.dropdown}`}
+        id="surahs-dropdown"
+        title={<LocaleFormattedMessage id="setting.surahs" defaultMessage="Surahs" />}
+      >
+        {this.renderList()}
+      </DropdownButton>
     );
   }
 }
