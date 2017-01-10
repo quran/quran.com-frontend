@@ -47,9 +47,6 @@ export default class Line extends React.Component {
   render() {
     const { tooltip, word, currentAyah, isPlaying } = this.props;
 
-    console.info(currentAyah);
-    console.info("playing "+isPlaying);
-
     let id = null;
     const  position = word.position - 1;
     const highlight = currentAyah == word.ayahKey && isPlaying ? 'highlight' : '';
