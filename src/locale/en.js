@@ -37,6 +37,7 @@ export default {
     'surah.previous': 'PREVIOUS',
     'surah.info': 'Surah Info',
     'surah.index.heading': 'SURAHS (CHAPTERS)',
+    'surah.index.continue': 'Continue',
     'surah.index.quickLinks': 'Quick links',
     'surah.goToBeginning': 'Beginning of Surah',
 
