@@ -1,5 +1,4 @@
 import { bookmarksSchema } from 'redux/schemas';
-import { arrayOf } from 'normalizr';
 import {
   LOAD,
   LOAD_SUCCESS,
@@ -19,7 +18,7 @@ export function isLoaded(globalState) {
 export function load() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAILURE],
-    schema: arrayOf(bookmarksSchema),
+    schema: [bookmarksSchema],
     promise: client => client.get('/onequran/api/v1/bookmarks')
   };
 }

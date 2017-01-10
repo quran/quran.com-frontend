@@ -301,8 +301,8 @@ class Surah extends Component {
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
-        isCurrentAyah={ayah.ayahKey === currentAyah}
         currentAyah={currentAyah}
+        isCurrentAyah={isPlaying && ayah.ayahKey === currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
