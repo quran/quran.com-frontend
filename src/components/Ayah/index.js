@@ -80,6 +80,17 @@ export default class Ayah extends Component {
     play();
   }
 
+  denderOptimizedBism(){
+    const text = `<b id="word-1-1-0" rel="tooltip" data-key="1:1:0" data-ayah="1:1" class="p1-optimized   pointer" title="In (the) name">ٱ</b>
+      <b id="word-1-1-1" rel="tooltip" data-key="1:1:1" data-ayah="1:1" class="p1-optimized pointer" title="(of) Allah">ٻ</b>
+      <b id="word-1-1-2" rel="tooltip" data-key="1:1:2" data-ayah="1:1" class="p1-optimized pointer" title="the Most Gracious">ڂ</b>
+      <b id="word-1-1-3" rel="tooltip" data-key="1:1:3" data-ayah="1:1" class="p1-optimized pointer" title="the Most Merciful">ڃ</b>`;
+
+    return(
+    <h2 className={`text-right arabic`}   dangerouslySetInnerHTML={{__html: text}}/>
+    )
+  }
+
   renderTranslations() {
     const { ayah, match } = this.props;
 
@@ -301,6 +312,7 @@ export default class Ayah extends Component {
       >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">
+          {this.denderOptimizedBism()}
           {this.renderText()}
           {this.renderTranslations()}
           {this.renderMedia()}
