@@ -109,7 +109,8 @@ class Surah extends Component {
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
       this.props.options !== nextProps.options,
-      this.props.currentAyah !== nextProps.currentAyah
+      this.props.currentAyah !== nextProps.currentAyah,
+      this.props.isPlaying !== nextProps.isPlaying,
     ];
 
     return conditions.some(condition => condition);
@@ -300,7 +301,8 @@ class Surah extends Component {
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
-        isCurrentAyah={ayah.ayahKey === currentAyah}
+        currentAyah={currentAyah}
+        isCurrentAyah={isPlaying && ayah.ayahKey === currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
@@ -314,7 +316,7 @@ class Surah extends Component {
   }
 
   renderLines() {
-    const { lines, options, currentAyah } = this.props;
+    const { lines, options, currentAyah, isPlaying, actions } = this.props;
     const keys = Object.keys(lines);
 
     return keys.map((lineNum, index) => {
@@ -324,12 +326,29 @@ class Surah extends Component {
 
       if (index + 1 !== keys.length && pageNum !== nextNum.split('-')[0]) {
         return [
-          <Line line={line} key={lineNum} currentAyah={currentAyah} tooltip={options.tooltip} />,
+          <Line
+            line={line}
+            key={lineNum}
+            currentAyah={currentAyah}
+            tooltip={options.tooltip}
+            audioActions={actions.audio}
+            isPlaying={isPlaying}
+          />,
           <PageBreak pageNum={parseInt(pageNum, 10) + 1} />
         ];
       }
 
-      return <Line line={line} key={lineNum} currentAyah={currentAyah} tooltip={options.tooltip} />;
+      return (
+        <Line
+          line={line}
+          key={lineNum}
+          currentAyah={currentAyah}
+          tooltip={options.tooltip}
+          audioActions={actions.audio}
+          isPlaying={isPlaying}
+        />
+      )
+
     });
   }
 
@@ -378,7 +397,7 @@ class Surah extends Component {
     const { surah, options, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!this.hasAyahs()) return <div style={{ margin: '50px auto' }}><Loader /></div>;
+    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}><Loader /></div>;
 
     return (
       <div className="surah-body">
@@ -427,7 +446,7 @@ class Surah extends Component {
         >
           {this.renderSidebar()}
         </Sidebar>
-        <div className={`container-fluid ${style['surah-container']}`}>
+        <div className={`container-fluid ${style.container}`}>
           <div className="row">
             <SurahInfo
               surah={surah}
@@ -463,7 +482,7 @@ const AsyncSurah = asyncConnect([
 function mapStateToProps(state, ownProps) {
   const surahId = parseInt(ownProps.params.surahId, 10);
   const surah: Object = state.surahs.entities[surahId];
-  const ayahs: ?Object = state.ayahs.entities[surahId];
+  const ayahs: Object = state.ayahs.entities[surahId];
   const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
   const ayahIds = new Set(ayahArray);
   const lastAyahInArray = ayahArray.slice(-1)[0];

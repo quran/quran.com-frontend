@@ -37,6 +37,7 @@ export default {
     'surah.previous': 'پچھلی سورت',
     'surah.info': 'سورہ کی معلومات',
     'surah.index.heading': 'سورتیں',
+    'surah.index.continue': 'جاری رہے',
     'surah.index.quickLinks': 'فوری لنک',
     'surah.goToBeginning': 'سورہ کے شروع میں جائیں',
 
@@ -67,6 +68,8 @@ export default {
     'nav.aboutQuranProject': 'قرآن کریم ایک فلاں عامہ (عوامی بہبود کے لئے) منصوبہ ہے',
     'nav.mobile': 'موبائل',
     'nav.navigate': 'تشریف لے جائیں',
-    'nav.legacySite': 'پرانی سائٹ'
+    'nav.legacySite': 'پرانی سائٹ',
+
+    'login.message': 'Quran.com کرنے کیلئے سائن ان سب کو اپنے بک مارکس، نوٹوں اور سرگرمیوں کو ذخیرہ کرنے.'
   }
 };

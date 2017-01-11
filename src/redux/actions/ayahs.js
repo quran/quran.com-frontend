@@ -1,6 +1,5 @@
+import cookie from 'react-cookie';
 import { ayahsSchema } from 'redux/schemas';
-
-import { arrayOf } from 'normalizr';
 
 import {
   LOAD,
@@ -22,9 +21,11 @@ const defaultOptions = {
 export function load(id, from, to, options = defaultOptions) {
   const { audio, quran, content } = options;
 
+  cookie.save('lastVisit', JSON.stringify({surahId: id, ayahId: from}));
+
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    schema: arrayOf(ayahsSchema),
+    schema: [ayahsSchema],
     promise: client => client.get(`/v2/surahs/${id}/ayahs`, {
       params: {
         from,

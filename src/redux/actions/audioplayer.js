@@ -2,6 +2,7 @@ import {
   SET_USER_AGENT,
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
+  PLAY_CURRENT_WORD,
   PLAY,
   PAUSE,
   NEXT,
@@ -29,6 +30,13 @@ export function setCurrentFile(file) {
 export function setCurrentWord(word) {
   return {
     type: SET_CURRENT_WORD,
+    word
+  };
+}
+
+export function playCurrentWord(word) {
+  return {
+    type: PLAY_CURRENT_WORD,
     word
   };
 }

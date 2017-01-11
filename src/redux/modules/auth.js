@@ -5,7 +5,8 @@ import {
   FACEBOOK_FAILURE,
   LOGOUT_SUCCESS,
   LOAD_SUCCESS,
-  LOAD_FAILURE
+  LOAD_FAILURE,
+  SAVE
 } from 'redux/constants/auth';
 
 const initialState = {
@@ -14,6 +15,22 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
+    case SAVE: {
+      cookie.save('auth', {
+        client: action.data.client_id,
+        expiry: action.data.expiry,
+        uid: action.data.uid,
+        'access-token': action.data.auth_token,
+        'token-type': 'Bearer'
+      });
+
+      return {
+        ...state,
+        loading: false,
+        loaded: true,
+        user: action.data
+      };
+    }
     case LOAD_SUCCESS:
       return {
         ...state,

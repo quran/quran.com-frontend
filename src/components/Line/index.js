@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import debug from 'helpers/debug';
 
 import { wordType } from 'types';
+import Word from 'components/Word';
 
 const styles = require('../Ayah/style.scss');
 
@@ -9,54 +10,29 @@ export default class Line extends React.Component {
   static propTypes = {
     line: PropTypes.arrayOf(wordType).isRequired,
     tooltip: PropTypes.string,
-    currentAyah: PropTypes.string.isRequired
+    currentAyah: PropTypes.string.isRequired,
+    audioActions: PropTypes.object.isRequired,
+    currentWord: PropTypes.any,
+    isPlaying: PropTypes.bool
   };
 
   shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.currentAyah !== nextProps.currentAyah,
-      this.props.line !== nextProps.line
+      this.props.line !== nextProps.line,
+      this.props.isPlaying !== nextProps.isPlaying
     ];
 
     return conditions.some(condition => condition);
   }
 
   renderText() {
-    const { line, tooltip, currentAyah } = this.props;
+    const { tooltip, currentAyah, audioActions, isPlaying, line } = this.props;
 
-    if (!line[0].code) { // TODO shouldn't be possible, remove this clause
-      return false;
-    }
-
-    const text = line.map((word) => {
-      const highlight = currentAyah === word.ayahKey ? 'highlight' : '';
-
-      if (word.translation) {
-        const tooltipContent = word[tooltip];
-
-        return (
-          <b
-            key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-            className={`${word.className} ${styles.Tooltip} ${highlight}`}
-            data-ayah={word.ayahKey}
-            data-line={word.lineNun}
-            data-page={word.pageNum}
-            data-position={word.position}
-            aria-label={tooltipContent}
-            dangerouslySetInnerHTML={{ __html: word.code }}
-          />
-        );
-      }
-
+    const text = line.map(word => {
       return (
-        <b
-          className={`${word.className} ${highlight} pointer`}
-          key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-          data-line={word.lineNum}
-          data-page={word.pageNum}
-          dangerouslySetInnerHTML={{ __html: word.code }}
-        />
-      );
+        <Word word={word} currentAyah={currentAyah} tooltip={tooltip} isPlaying={isPlaying} audioActions={audioActions}/>
+      )
     });
 
     return (
@@ -76,7 +52,7 @@ export default class Line extends React.Component {
 
     return (
       <div className={`row ${styles.font} text-justify text-arabic`}>
-        <div className="col-md-12 line-container">
+        <div className="col-md-12 line-container"  name={`ayah:${line[0].ayahKey}`}>
           {this.renderText()}
         </div>
       </div>
