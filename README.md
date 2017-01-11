@@ -26,9 +26,9 @@ Read the [contributing] section before creating an issue.
 ## Backend
 The API source is at https://github.com/quran/quran-api-rails
 
-DB is private, message me for access.
+DB is private, message @mmahalwy for access.
 
-The dev server uses the production API by default. If you want to use a local API server, follow the instructions in the API repo and run the server locally then update the API_URL field in app.json to point to the local address.
+The dev server uses the staging API by default. If you want to use a local API server, follow the instructions in the API repo and run the server locally then update the API_URL field in app.json to point to the local address.
 
 ## Slack
 Signup at https://quranslack.herokuapp.com to be added to the Slack group
