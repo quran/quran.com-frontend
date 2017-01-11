@@ -60,6 +60,32 @@
   font-style: normal;
 }
 
+
+
+@font-face {
+  font-family: 'p1';
+  src: url('../../static/ttf/1.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.p1 {
+  font-family: 'p1';
+}
+
+
+  @font-face {
+    font-family: 'p2';
+    src: url('../../static/ttf/2.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  .p2 {
+    font-family: 'p2';
+  }
+
+
 /* This triggers a redraw in IE to Fix IE8's :before content rendering. */
 html:hover [class^="ss-"] {
   -ms-zoom: 1;
