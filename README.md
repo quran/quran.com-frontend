@@ -23,6 +23,9 @@ Read the [contributing] section before creating an issue.
 - Run `npm run dev` to start the dev server
 - Open `http://localhost:8000` in your browser to see the app.
 
+## Staging
+To see the app with the latest changes, see the [staging] site. Production releases are made periodically when staging is stable and well tested.
+
 ## Backend
 The API source is at https://github.com/quran/quran-api-rails
 
@@ -51,3 +54,4 @@ analyze-bundle-size bundle-stats.json
 [nodejs]: https://nodejs.org/en/
 [contributing]: CONTRIBUTING.md
 [fork]: https://help.github.com/articles/fork-a-repo/
+[staging]: https://staging.quran.com
