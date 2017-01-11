@@ -5,20 +5,13 @@ import { Element } from 'react-scroll';
 import { ayahType, matchType } from 'types';
 import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import Word from 'components/Word';
 
 import debug from 'helpers/debug';
 
 import bindTooltip from 'utils/bindTooltip';
 
 const styles = require('./style.scss');
-
-/* eslint-disable no-unused-vars */
-const CHAR_TYPE_WORD = 1;
-const CHAR_TYPE_END = 2;
-const CHAR_TYPE_PAUSE = 3;
-const CHAR_TYPE_RUB = 4;
-const CHAR_TYPE_SAJDAH = 5;
-/* eslint-enable no-unused-vars */
 
 export default class Ayah extends Component {
   static propTypes = {
@@ -106,8 +99,8 @@ export default class Ayah extends Component {
           <h4 className="montserrat">{content.name || content.resource.name}</h4>
           <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
             <small
-              dangerouslySetInnerHTML={{ __html: content.text }}
-              className={`${styles[lang] || 'times-new'}`}
+              dangerouslySetInnerHTML={{__html: content.text}}
+              className={`${lang || 'times-new'}`}
             />
           </h2>
         </div>
@@ -155,63 +148,19 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, audioActions, tooltip, isSearched } = this.props;
+    const { ayah, tooltip, currentAyah, isPlaying,  audioActions, isSearched} = this.props;
 
-    if (!ayah.words[0].code) {
-      return false;
-    }
-
-    // position is important as it will differentiate between words and symbols, see 2:25:13
-    let position = -1;
-    const text = ayah.words.map((word, index) => {
-      let id = null;
-      const isLast = ayah.words.length === index + 1;
-      const className = `${word.className} ${word.highlight ? word.highlight : ''}`;
-
-      if (word.charTypeId === CHAR_TYPE_WORD) {
-        position += 1;
-        id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
-      } else {
-        id = `${word.className}-${word.codeDec}`; // just don't include id
-      }
-
-      if (word.translation || word.transliteration) {
-        const tooltipContent = word[tooltip];
-
-        return (
-          <b // eslint-disable-line
-            key={word.code}
-            id={id}
-            rel="tooltip"
-            onClick={event =>
-              !isSearched &&
-              audioActions.setCurrentWord &&
-              audioActions.setCurrentWord(event.target.dataset.key)
-            }
-            data-key={`${word.ayahKey}:${position}`}
-            className={`${className}`}
-            title={tooltipContent}
-            dangerouslySetInnerHTML={{ __html: word.code }}
-          />
-        );
-      }
-      const label = isLast ? { title: `Verse ${ayah.ayahNum}` } : {};
-      return (
-        <b // eslint-disable-line
-          id={id}
-          onClick={event =>
-            !isSearched &&
-            audioActions.setCurrentWord &&
-            audioActions.setCurrentWord(event.target.dataset.key)
-          }
-          data-key={`${word.ayahKey}:${position}`}
-          rel="tooltip"
-          className={`${className} ${isLast} pointer`}
-          key={word.code}
-          dangerouslySetInnerHTML={{ __html: word.code }}
-          {...label}
+    const text = ayah.words.map(word => {
+      return(
+        <Word
+          word={word}
+          currentAyah={currentAyah}
+          tooltip={tooltip}
+          isPlaying={isPlaying}
+          audioActions={audioActions}
+          isSearched={isSearched}
         />
-      );
+      )
     });
 
     return (
