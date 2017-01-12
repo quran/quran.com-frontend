@@ -17,13 +17,16 @@ const SurahsList = (props) => {
             <div className="col-xs-2 text-muted">
               {surah.id}
             </div>
+
             <div className="col-xs-7">
-              {surah.name.simple}
+              سورة {surah.name.arabic}
               <br />
               <span className={`text-uppercase ${styles.english}`}>{surah.name.english}</span>
             </div>
-            <div className={`col-xs-3 text-right ${styles.arabic}`}>
-              {surah.name.arabic}
+
+            <div className={`col-xs-3 text-left ${styles.arabic}`}>
+              <span className={`icon-surah${surah.id}`}>
+              </span>
             </div>
           </Link>
         </li>
