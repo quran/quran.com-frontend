@@ -11,7 +11,7 @@
   }
 }
 
-@for $i from 1 through 604 {
+@for $i from 1 through 2 {
   @include word_font($i);
 }
 
@@ -86,6 +86,23 @@
   url('../../static/fonts/surah_names/surah_names.svg?yg3f94#surah_names') format('svg');
   font-weight: normal;
   font-style: normal;
+}
+
+@font-face {
+  font-family: 'bismillah';
+  src:  url('../../static/fonts/bismillah/bismillah.eot?yg3f94');
+  src:  url('../../static/fonts/bismillah/bismillah.eot?yg3f94#iefix') format('embedded-opentype'),
+  url('../../static/fonts/bismillah/bismillah.ttf?yg3f94') format('truetype'),
+  url('../../static/fonts/bismillah/bismillah.woff?yg3f94') format('woff'),
+  url('../../static/fonts/bismillah/bismillah.svg?yg3f94#bismillah') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.bismillah{
+  font-family: 'bismillah';
+  font-size: 60px !important;
+  color: #000; padding: 25px 0px;
 }
 
 /* This triggers a redraw in IE to Fix IE8's :before content rendering. */

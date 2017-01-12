@@ -8,7 +8,7 @@ const Bismillah = ({ surah }) => {
         className="bismillah text-center word-font"
         style={{ textAlign: 'center' }}
       >
-        ﭑﭒﭓ
+        ﰡ
       </div>
     );
   }
