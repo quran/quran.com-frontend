@@ -27,7 +27,7 @@ import SurahInfo from 'components/SurahInfo';
 import Ayah from 'components/Ayah';
 import Line from 'components/Line';
 import SearchInput from 'components/SearchInput';
-import Bismillah from 'components/Bismillah';
+import Bismillah from 'components/Bismillah'
 import TopOptions from 'components/TopOptions';
 import ReadingModeToggle from 'components/ReadingModeToggle';
 import NightModeToggle from 'components/NightModeToggle';
