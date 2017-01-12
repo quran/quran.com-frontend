@@ -6,6 +6,7 @@ import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import SmartBanner from 'components/SmartBanner';
+import GlobalNav from 'components/GlobalNav';
 import Col from 'react-bootstrap/lib/Col';
 
 import debug from 'helpers/debug';
@@ -60,7 +61,7 @@ class App extends Component {
             </Col>
           </div>
         </NoScript>
-        {nav}
+        {nav || <GlobalNav />}
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
