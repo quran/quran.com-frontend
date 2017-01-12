@@ -9,28 +9,16 @@ const Form = Navbar.Form;
 
 class Navigator extends Component {
 
-  // childContext;
-
-  // getChildContext() {
-  //   return this.childContext;
-  // }
-
   constructor(props) {
     console.log("Navigator");
     super(props);
   }
 
-  // componentWillMount() {
-  //   this.childContext = {
-  //     location: this.props.location
-  //   };
-  // }
-
   render() {
-    const { location, surah} = this.props;
-    console.log(location, surah);
-    return (
-      <div className={styles.navigator} id="quran-Navigator">
+    const { location, surah, params} = this.props;
+    let nav;
+    if (params && params.surahId) {
+      nav = (
         <Navbar className="montserrat" fixedTop fluid>
           <button type="button" className="navbar-toggle collapsed">
             <span className="sr-only">Toggle navigation</span>
@@ -45,26 +33,46 @@ class Navigator extends Component {
                 />
             </Form>
           </Nav>
-          <p>Hello Test</p>
+          <p>I am Surah Nav</p>
         </Navbar>
+      )
+    } else {
+      nav = (
+        <Navbar className="montserrat" fixedTop fluid>
+          <button type="button" className="navbar-toggle collapsed">
+            <span className="sr-only">Toggle navigation</span>
+            <span className="icon-bar" />
+            <span className="icon-bar" />
+            <span className="icon-bar" />
+          </button>
+          <Nav>
+            <Form pullLeft>
+              <SearchInput
+                className="search-input"
+                />
+            </Form>
+          </Nav>
+          <p>I am other nav</p>
+        </Navbar>
+
+      )
+    }
+
+    return (
+      <div className={styles.navigator} id="quran-Navigator">
+        {nav}
         {this.props.children}
       </div >
+
     )
+
   }
 }
-
-// Navigator.childContextTypes = {
-//   location: PropTypes.any
-// };
-
-// Navigator.contextTypes = {
-//   location: PropTypes.any
-// };
-
 
 function mapStateToProps(state, ownProps) {
   return {
     location: ownProps.children.props.location,
+    params: ownProps.children.props.params,
     surah: ownProps.children.props.params ? state.surahs.entities[Number(ownProps.children.props.params.surahId)] : {},
     surahs: state.surahs.entities,
     options: state.options
