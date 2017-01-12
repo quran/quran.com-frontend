@@ -28,7 +28,7 @@ export default {
     'ayah.bookmarked': 'Bookmarked',
     'ayah.bookmark': 'Bookmark',
 
-    'search.placeholder': 'Search',
+    'search.placeholder': 'Search "Noah"',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Sorry, there was an error with your search.',
     'search.noResult': 'No results found.',
