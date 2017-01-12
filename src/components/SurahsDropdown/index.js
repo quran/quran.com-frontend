@@ -13,7 +13,6 @@ const styles = require('./style.scss');
 export default class SurahsDropdown extends Component {
   static propTypes = {
     surahs: PropTypes.objectOf(surahType).isRequired,
-    className: PropTypes.string,
     title: PropTypes.string,
   };
 
@@ -48,7 +47,7 @@ export default class SurahsDropdown extends Component {
   }
 
   render() {
-    const { className, title } = this.props;
+    const { title } = this.props;
 
     return (
       <NavDropdown

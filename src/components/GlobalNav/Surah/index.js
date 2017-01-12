@@ -25,7 +25,8 @@ const GlobalNavSurah = ({ surah, surahs, setOption, options }) => (
 GlobalNavSurah.propTypes = {
   surah: surahType.isRequired,
   surahs: PropTypes.objectOf(surahType).isRequired,
-  options: optionsType.isRequired
+  options: optionsType.isRequired,
+  setOption: PropTypes.func.isRequired,
 };
 
 export default connect((state, ownProps) => ({

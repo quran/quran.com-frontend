@@ -4,6 +4,7 @@ import IndexRoute from 'react-router/lib/IndexRoute';
 import Route from 'react-router/lib/Route';
 import Redirect from 'react-router/lib/Redirect';
 import GlobalNavSurah from 'components/GlobalNav/Surah';
+import GlobalNav from 'components/GlobalNav';
 
 import { isLoaded as isAuthLoaded, load as loadAuth, hasAccessToken } from 'redux/actions/auth';
 
@@ -39,7 +40,7 @@ export default (store) => {
 
   return (
     <Route path="/" component={App} onEnter={shouldAuth}>
-      <IndexRoute component={Home} />
+      <IndexRoute components={{ main: Home, nav: GlobalNav }} />
       <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
       <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
 

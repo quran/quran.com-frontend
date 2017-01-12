@@ -1,15 +1,11 @@
 import React, { PropTypes } from 'react';
-import { Link } from 'react-router';
-import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import SearchInput from 'components/SearchInput';
 
 import debug from 'helpers/debug';
 
-const Header = Navbar.Header;
 const Form = Navbar.Form;
 
 // const styles = require('./style.scss');
