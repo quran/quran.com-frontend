@@ -6,18 +6,19 @@ import Col from 'react-bootstrap/lib/Col';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-import { optionsType } from 'types';
-
 const style = require('./style.scss');
 
 export default class FontSizeDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func,
-    options: optionsType
+    fontSize: PropTypes.shape({
+      arabic: PropTypes.number,
+      translation: PropTypes.number
+    }).isRequired
   }
 
   handleOptionSelected = (type, direction) => {
-    const { onOptionChange, options: { fontSize } } = this.props;
+    const { onOptionChange, fontSize } = this.props;
     const changeFactor = {
       translation: 0.5,
       arabic: 0.5
@@ -94,15 +95,16 @@ export default class FontSizeDropdown extends Component {
 
   render() {
     return (
-      <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
-        <a
-          tabIndex="-1"
-          className="text-color"
-          data-metrics-event-name="FontSizeDropdown"
-        >
-          <LocaleFormattedMessage id="setting.fontSize" defaultMessage="Font size" />
-        </a>
-      </OverlayTrigger>
+      <div className={style.link}>
+        <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose container={this} positionLeft={0}>
+          <a
+            tabIndex="-1"
+            data-metrics-event-name="FontSizeDropdown"
+          >
+            <LocaleFormattedMessage id="setting.fontSize" defaultMessage="Font size" />
+          </a>
+        </OverlayTrigger>
+      </div>
     );
   }
 }

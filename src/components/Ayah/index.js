@@ -99,7 +99,7 @@ export default class Ayah extends Component {
           <h4 className="montserrat">{content.name || content.resource.name}</h4>
           <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
             <small
-              dangerouslySetInnerHTML={{__html: content.text}}
+              dangerouslySetInnerHTML={{ __html: content.text }}
               className={`${lang || 'times-new'}`}
             />
           </h2>
@@ -148,20 +148,19 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, tooltip, currentAyah, isPlaying,  audioActions, isSearched} = this.props;
+    const { ayah, tooltip, currentAyah, isPlaying, audioActions, isSearched } = this.props;
 
-    const text = ayah.words.map(word => {
-      return(
-        <Word
-          word={word}
-          currentAyah={currentAyah}
-          tooltip={tooltip}
-          isPlaying={isPlaying}
-          audioActions={audioActions}
-          isSearched={isSearched}
-        />
-      )
-    });
+    const text = ayah.words.map(word => (
+      <Word
+        word={word}
+        key={`${word.position}-${word.code}-${word.lineNum}`}
+        currentAyah={currentAyah}
+        tooltip={tooltip}
+        isPlaying={isPlaying}
+        audioActions={audioActions}
+        isSearched={isSearched}
+      />
+    ));
 
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>

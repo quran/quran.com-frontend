@@ -35,3 +35,16 @@
     padding-top: 70px;
   }
 }
+
+.sidebarItem{
+  padding: 10px 12px;
+  color: #333;
+  font-weight: 300;
+
+  :global(.switch){
+    float: right;
+  }
+  :global(a){
+    color: #333;
+  }
+}

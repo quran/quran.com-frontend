@@ -1,64 +1,52 @@
 import React, { Component, PropTypes } from 'react';
 
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import Popover from 'react-bootstrap/lib/Popover';
-import Col from 'react-bootstrap/lib/Col';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
 
-import SwitchToggle from 'components/SwitchToggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { optionsType } from 'types';
-
-const style = require('./style.scss');
 
 export default class TooltipDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func,
-    options: optionsType
+    tooltip: PropTypes.string.isRequired,
+    className: PropTypes.string.isRequired
   }
 
-  handleOptionSelected = ({ target: { checked } }) => {
+  handleOptionSelected = (type) => {
     const { onOptionChange } = this.props;
 
     return onOptionChange({
-      tooltip: checked ? 'transliteration' : 'translation'
+      tooltip: type
     });
   }
 
-  renderPopup() {
-    const { options: { tooltip } } = this.props;
-    const tooltipTitle = <LocaleFormattedMessage id="setting.tooltip.title" defaultMessage="DISPLAY TOOLTIP" />;
+  renderList() {
+    const { tooltip } = this.props;
 
-    return (
-      <Popover id="TooltipDropdown" title={tooltipTitle} className={style.popover}>
-        <div className="row">
-          <Col xs={12}>
-            <LocaleFormattedMessage id="setting.tooltip.translation" defaultMessage="Translation" />
-            {' '}
-            <SwitchToggle
-              checked={tooltip === 'transliteration'}
-              onToggle={this.handleOptionSelected}
-              id="tooltip-toggle"
-              flat
-            />
-            {' '}
-            <LocaleFormattedMessage id="setting.tooltip.transliteration" defaultMessage="Transliteration" />
-          </Col>
-        </div>
-      </Popover>
-    );
+    return ['translation', 'transliteration'].map(type => (
+      <MenuItem
+        onClick={() => this.handleOptionSelected(type)}
+        active={tooltip === type}
+        key={type}
+      >
+        <i className={`fa fa-check ${tooltip !== type && 'invisible'}`} />{' '}
+        <LocaleFormattedMessage id={`setting.tooltip.${type}`} defaultMessage={type.toUpperCase()} />
+      </MenuItem>
+    ));
   }
 
   render() {
+    const { className } = this.props;
+
     return (
-      <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
-        <a
-          tabIndex="-1"
-          className="text-color"
-          data-metrics-event-name="TooltipDropdown"
-        >
-          <LocaleFormattedMessage id="setting.tooltip" defaultMessage="Tooltip" />
-        </a>
-      </OverlayTrigger>
+      <DropdownButton
+        link
+        className={className}
+        id="tooltip-dropdown"
+        title={<LocaleFormattedMessage id="setting.tooltip" defaultMessage="Tooltip content" />}
+      >
+        {this.renderList()}
+      </DropdownButton>
     );
   }
 }

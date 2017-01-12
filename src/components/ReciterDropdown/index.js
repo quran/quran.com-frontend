@@ -3,7 +3,6 @@ import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { optionsType } from 'types';
 
 const style = require('./style.scss');
 
@@ -194,7 +193,7 @@ export const slugs = [
 export default class ReciterDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func,
-    options: optionsType,
+    audio: PropTypes.number,
     className: PropTypes.string
   };
 
@@ -202,17 +201,14 @@ export default class ReciterDropdown extends Component {
     className: 'col-md-3'
   };
 
-  shouldComponentUpdate(nextProps) {
-    return this.props.options !== nextProps.options;
-  }
 
   renderMenu() {
-    const { options, onOptionChange } = this.props;
+    const { audio, onOptionChange } = this.props;
 
     return slugs.map(slug => (
       <MenuItem
         key={slug.name.english}
-        active={slug.id === options.audio}
+        active={slug.id === audio}
         onClick={() => onOptionChange({ audio: slug.id })}
       >
         {slug.name.english}
