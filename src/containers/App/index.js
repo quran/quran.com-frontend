@@ -61,7 +61,6 @@ class App extends Component {
             </Col>
           </div>
         </NoScript>
-        {nav || <GlobalNav />}
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
