@@ -182,8 +182,12 @@ export default class Ayah extends Component {
       <h1 className={`${styles.font} text-right text-arabic`}>
         {text}
         <br/>
-        <p>New fonts</p>
+        <small>New fonts</small>
+        <br/>
         {textOptimized}
+        <br/>
+        <small>Text tashkeel</small>
+        <br/>
         <p
           dir="rtl"
           lang="ar"
