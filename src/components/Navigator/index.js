@@ -27,6 +27,8 @@ class Navigator extends Component {
   // }
 
   render() {
+    const { location, surah} = this.props;
+    console.log(location, surah);
     return (
       <div className={styles.navigator} id="quran-Navigator">
         <Navbar className="montserrat" fixedTop fluid>
@@ -62,6 +64,8 @@ class Navigator extends Component {
 
 function mapStateToProps(state, ownProps) {
   return {
+    location: ownProps.children.props.location,
+    surah: ownProps.children.props.params ? state.surahs.entities[Number(ownProps.children.props.params.surahId)] : {},
     surahs: state.surahs.entities,
     options: state.options
   };
