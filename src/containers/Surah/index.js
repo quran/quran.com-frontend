@@ -54,7 +54,6 @@ import * as MediaActions from 'redux/actions/media.js';
 
 import { surahsConnect, surahInfoConnect, ayahsConnect } from './connect';
 
-import Header from './Header';
 
 const NavbarHeader = Navbar.Header;
 
@@ -469,7 +468,6 @@ class Surah extends Component {
             }
           ]}
         />
-        <Header surah={surah} handleToggleSidebar={() => this.setState({ sidebarOpen: true })} />
         <Sidebar
           open={this.state.sidebarOpen}
           onSetOpen={open => this.setState({ sidebarOpen: open })}
