@@ -11,7 +11,7 @@
   }
 }
 
-@for $i from 1 through 2 {
+@for $i from 1 through 604 {
   @include word_font($i);
 }
 
