@@ -18,7 +18,8 @@ export default class Line extends React.Component {
     word: PropTypes.object.isRequired,
     currentAyah: PropTypes.object.isRequired,
     isPlaying: PropTypes.bool,
-    isSearched: PropTypes.bool
+    isSearched: PropTypes.bool,
+    useNewFonts: PropTypes.bool
   };
 
   buildTooltip(word, tooltip){
@@ -45,12 +46,12 @@ export default class Line extends React.Component {
   }
 
   render() {
-    const { tooltip, word, currentAyah, isPlaying } = this.props;
+    const { tooltip, word, currentAyah, isPlaying, useNewFonts } = this.props;
 
     let id = null;
     const  position = word.position - 1;
     const highlight = currentAyah == word.ayahKey && isPlaying ? 'highlight' : '';
-    const className = `${word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    const className = `${useNewFonts ? 'opt'+word.className : word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
 
     if (word.charTypeId === CHAR_TYPE_WORD) {
       id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;

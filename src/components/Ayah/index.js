@@ -163,10 +163,27 @@ export default class Ayah extends Component {
       )
     });
 
+    const textOptimized = ayah.words.map(word => {
+      return(
+        <Word
+          word={word}
+          currentAyah={currentAyah}
+          tooltip={tooltip}
+          isPlaying={isPlaying}
+          audioActions={audioActions}
+          isSearched={isSearched}
+          useNewFonts={true}
+        />
+      )
+    });
+
+
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
         {text}
         <br/>
+        <p>New fonts</p>
+        {textOptimized}
         <p
           dir="rtl"
           lang="ar"

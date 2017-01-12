@@ -1,13 +1,13 @@
 @mixin word_font($page) {
   @font-face {
-    font-family: p#{$page};
+    font-family: optp#{$page};
     src: url('../../static/fonts/ttf/p#{$page}.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 
-  .p#{$page} {
-    font-family: p#{$page};
+  .opt#{$page} {
+    font-family: optp#{$page};
   }
 }
 
