@@ -36,9 +36,5 @@ describe('<TopOptions />', () => {
 
     expect(component).to.be.ok; // eslint-disable-line
     expect(component.find(Share).length).to.eql(1);
-    expect(component.find(InformationToggle).length).to.eql(1);
-    expect(component.find(FontSizeDropdown).length).to.eql(1);
-    expect(component.find(TooltipDropdown).length).to.eql(1);
-    expect(component.find(ReadingModeToggle).length).to.eql(1);
   });
 });
