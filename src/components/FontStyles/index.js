@@ -37,20 +37,7 @@ export default class FontStyles extends Component {
     }
 
     return (
-      <div>
-        {
-          Object.keys(fontFaces).map(className => (
-            <style
-              key={className}
-              dangerouslySetInnerHTML={{
-                __html: fontFaces[className] ?
-                `${fontFaceStyle(className)} ${fontFaceStyleLoaded(className)}` :
-                fontFaceStyle(className)
-              }}
-            />
-          ))
-        }
-      </div>
+      <noscript/>
     );
   }
 }
