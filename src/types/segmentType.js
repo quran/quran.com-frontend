@@ -6,5 +6,8 @@ export default PropTypes.shape({
     endTime: PropTypes.number.isRequired,
     duration: PropTypes.number.isRequired,
   })),
-  intervals: PropTypes.any // TODO: This should be done a better way.
+  intervals: PropTypes.oneOfType([
+    PropTypes.array,
+    PropTypes.object
+  ]) // TODO: This should be done a better way.
 });

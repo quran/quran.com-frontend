@@ -3,7 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { optionsType } from 'types';
 
 const style = require('./style.scss');
 
@@ -450,16 +449,12 @@ export const slugs = [
 export default class ContentDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func.isRequired,
-    options: optionsType.isRequired,
+    content: PropTypes.arrayOf(PropTypes.number).isRequired,
     className: PropTypes.string
   };
 
   static defaultProps = {
     className: 'col-md-3'
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.options !== nextProps.options;
   }
 
   handleRemoveContent = () => {
@@ -469,7 +464,7 @@ export default class ContentDropdown extends Component {
   }
 
   handleOptionSelected(id) {
-    const { onOptionChange, options: { content } } = this.props;
+    const { onOptionChange, content } = this.props;
 
     if (content.find(option => option === id)) {
       onOptionChange({ content: content.filter(option => option !== id) });
@@ -479,7 +474,7 @@ export default class ContentDropdown extends Component {
   }
 
   renderItems(items) {
-    const { options: { content } } = this.props;
+    const { content } = this.props;
 
     return items.map((slug) => {
       const checked = content.find(option => option === slug.id);
@@ -515,7 +510,7 @@ export default class ContentDropdown extends Component {
   }
 
   render() {
-    const { className, options: { content } } = this.props;
+    const { className, content } = this.props;
 
     return (
       <DropdownButton

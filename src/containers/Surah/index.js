@@ -29,6 +29,11 @@ import Line from 'components/Line';
 import SearchInput from 'components/SearchInput';
 import Bismillah from 'components/Bismillah';
 import TopOptions from 'components/TopOptions';
+import ReadingModeToggle from 'components/ReadingModeToggle';
+import NightModeToggle from 'components/NightModeToggle';
+import TooltipDropdown from 'components/TooltipDropdown';
+import FontSizeDropdown from 'components/FontSizeDropdown';
+import InformationToggle from 'components/InformationToggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 
@@ -347,13 +352,12 @@ class Surah extends Component {
           audioActions={actions.audio}
           isPlaying={isPlaying}
         />
-      )
-
+      );
     });
   }
 
   renderSidebar() {
-    const { surah, surahs, ayahIds, options } = this.props;
+    const { surah, surahs, ayahIds, options, actions } = this.props;
 
     return (
       <div>
@@ -369,7 +373,7 @@ class Surah extends Component {
         />
         <SurahsDropdown
           surahs={surahs}
-          className={`${style.dropdown}`}
+          className={style.dropdown}
         />
         <VersesDropdown
           ayat={surah.ayat}
@@ -377,18 +381,44 @@ class Surah extends Component {
           isReadingMode={options.isReadingMode}
           onClick={this.handleVerseDropdownClick}
           surah={surah}
-          className={`${style.dropdown}`}
+          className={style.dropdown}
         />
         <ReciterDropdown
           onOptionChange={this.handleOptionChange}
-          options={options}
-          className={`${style.dropdown}`}
+          audio={options.audio}
+          className={style.dropdown}
         />
         <ContentDropdown
           onOptionChange={this.handleOptionChange}
-          options={options}
-          className={`${style.dropdown}`}
+          content={options.content}
+          className={style.dropdown}
         />
+        <TooltipDropdown
+          tooltip={options.tooltip}
+          onOptionChange={actions.options.setOption}
+          className={style.dropdown}
+        />
+        <div className={style.sidebarItem}>
+          <FontSizeDropdown
+            fontSize={options.fontSize}
+            onOptionChange={actions.options.setOption}
+          />
+        </div>
+        <div className={style.sidebarItem}>
+          <InformationToggle
+            onToggle={actions.options.setOption}
+            isShowingSurahInfo={options.isShowingSurahInfo}
+          />
+        </div>
+        <div className={style.sidebarItem}>
+          <ReadingModeToggle
+            isToggled={options.isReadingMode}
+            onReadingModeToggle={actions.options.toggleReadingMode}
+          />
+        </div>
+        <div className={style.sidebarItem}>
+          <NightModeToggle />
+        </div>
       </div>
     );
   }
@@ -455,7 +485,7 @@ class Surah extends Component {
               onClose={this.handleSurahInfoToggle}
             />
             <Col md={10} mdOffset={1}>
-              <TopOptions options={options} actions={actions.options} surah={surah} />
+              <TopOptions surah={surah} />
               <Bismillah surah={surah} />
               {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
             </Col>

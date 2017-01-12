@@ -1,33 +1,23 @@
-import React, { Component, PropTypes } from 'react';
+import React, { PropTypes } from 'react';
 
+import SwitchToggle from 'components/SwitchToggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-export default class InformationToggle extends Component {
-  static propTypes = {
-    isShowingSurahInfo: PropTypes.bool.isRequired,
-    onToggle: PropTypes.func.isRequired
-  };
+const InformationToggle = ({ isShowingSurahInfo, onToggle }) => (
+  <div>
+    <LocaleFormattedMessage id="surah.info" defaultMessage="Surah Info" />
+    <SwitchToggle
+      checked={isShowingSurahInfo}
+      onToggle={() => onToggle({ isShowingSurahInfo: !isShowingSurahInfo })}
+      id="info-toggle"
+      flat
+    />
+  </div>
+);
 
-  toggleInformationMode = (event) => {
-    const { isShowingSurahInfo } = this.props;
+InformationToggle.propTypes = {
+  isShowingSurahInfo: PropTypes.bool.isRequired,
+  onToggle: PropTypes.func.isRequired
+};
 
-    event.preventDefault();
-
-    this.props.onToggle({ isShowingSurahInfo: !isShowingSurahInfo });
-  };
-
-  render() {
-    const { isShowingSurahInfo } = this.props;
-
-    return (
-      <a
-        tabIndex="-1"
-        title="See information for this surah"
-        className={`${isShowingSurahInfo ? ' text-primary' : 'text-color'} pointer`}
-        onClick={this.toggleInformationMode}
-      >
-        <LocaleFormattedMessage id="surah.info" defaultMessage="Surah Info" />
-      </a>
-    );
-  }
-}
+export default InformationToggle;

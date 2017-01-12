@@ -63,7 +63,11 @@ export default class VersesDropdown extends Component {
     );
 
     return (
-      <DropdownButton className={`dropdown ${className} ${style.dropdown}`} title={title}>
+      <DropdownButton
+        className={`dropdown ${className} ${style.dropdown}`}
+        title={title}
+        id="verses-dropdown"
+      >
         {this.renderMenu()}
       </DropdownButton>
     );
