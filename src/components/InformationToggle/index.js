@@ -1,18 +1,15 @@
 import React, { PropTypes } from 'react';
 
-import SwitchToggle from 'components/SwitchToggle';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
 const InformationToggle = ({ isShowingSurahInfo, onToggle }) => (
-  <div>
-    <LocaleFormattedMessage id="surah.info" defaultMessage="Surah Info" />
-    <SwitchToggle
-      checked={isShowingSurahInfo}
-      onToggle={() => onToggle({ isShowingSurahInfo: !isShowingSurahInfo })}
-      id="info-toggle"
-      flat
+  <a
+    tabIndex="-1"
+    className={`pointer ${isShowingSurahInfo && 'active'}`}
+    onClick={() => onToggle({ isShowingSurahInfo: !isShowingSurahInfo })}
+  >
+    <i
+      className="ss-icon ss-info"
     />
-  </div>
+  </a>
 );
 
 InformationToggle.propTypes = {

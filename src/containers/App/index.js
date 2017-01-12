@@ -29,7 +29,9 @@ class App extends Component {
       content: PropTypes.string
     }).isRequired,
     removeMedia: PropTypes.func.isRequired,
-    children: PropTypes.element
+    children: PropTypes.element,
+    main: PropTypes.element,
+    nav: PropTypes.element,
   };
 
   static contextTypes = {
@@ -37,7 +39,7 @@ class App extends Component {
   };
 
   render() {
-    const { children, media, removeMedia } = this.props; // eslint-disable-line no-shadow
+    const { main, nav, children, media, removeMedia } = this.props; // eslint-disable-line no-shadow
     debug('component:APPLICATION', 'Render');
 
     return (
@@ -58,7 +60,8 @@ class App extends Component {
             </Col>
           </div>
         </NoScript>
-        {children}
+        {nav}
+        {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
         <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>
