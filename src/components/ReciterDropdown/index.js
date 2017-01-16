@@ -193,6 +193,7 @@ export const slugs = [
 
 export default class ReciterDropdown extends Component {
   static propTypes = {
+    id: PropTypes.string,
     onOptionChange: PropTypes.func,
     options: optionsType,
     className: PropTypes.string
@@ -221,10 +222,10 @@ export default class ReciterDropdown extends Component {
   }
 
   render() {
-    const { className } = this.props;
-
+    const { id, className } = this.props;
     return (
       <DropdownButton
+        id={`${id}`}
         className={`${className} ${style.dropdown}`}
         title={<LocaleFormattedMessage id="setting.reciters" defaultMessage="Reciters" />}
       >

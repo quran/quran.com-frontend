@@ -39,34 +39,25 @@ export default (store) => {
   return (
     <Route path="/" component={App} onEnter={shouldAuth}>
       <IndexRoute component={Home} />
-      <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
-      <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
-
       <Route path="/about" getComponent={(nextState, cb) => System.import('./containers/About').then(module => cb(null, module))} />
-
+      <Route path="/apps" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
       <Route path="/contact" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
       <Route path="/contactus" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
-
-      <Route path="/mobile" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
-      <Route path="/apps" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
-
+      <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
+      <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
       <Route path="/error/:errorKey" getComponent={(nextState, cb) => System.import('./containers/Error').then(module => cb(null, module))} />
-
-      <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
-
       <Route path="/login" getComponent={(nextState, cb) => System.import('./containers/Login').then(module => cb(null, module))} />
-
+      <Route path="/mobile" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
       <Route onEnter={requireLogin}>
         <Route path="/profile" getComponent={(nextState, cb) => System.import('./containers/Profile').then(module => cb(null, module))} />
       </Route>
+      <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
+      <Route path="/settings" getComponent={(nextState, cb) => System.import('./containers/Settings').then(module => cb(null, module))} />
+      <Route path="/:surahId(/:range)"
+        getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))}
+        onEnter={checkValidSurah} />
 
       <Redirect from="/:surahId:(:range)" to="/:surahId(/:range)" />
-
-      <Route
-        path="/:surahId(/:range)"
-        getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))}
-        onEnter={checkValidSurah}
-      />
     </Route>
   );
 };

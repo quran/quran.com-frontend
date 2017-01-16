@@ -379,16 +379,6 @@ class Surah extends Component {
           surah={surah}
           className={`${style.dropdown}`}
         />
-        <ReciterDropdown
-          onOptionChange={this.handleOptionChange}
-          options={options}
-          className={`${style.dropdown}`}
-        />
-        <ContentDropdown
-          onOptionChange={this.handleOptionChange}
-          options={options}
-          className={`${style.dropdown}`}
-        />
       </div>
     );
   }
