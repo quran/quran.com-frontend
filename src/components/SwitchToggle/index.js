@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 const styles = require('./style.scss');
 
 const SwitchToggle = ({ id, flat, checked, onToggle }) => (
-  <div className={styles.switch}>
+  <div className={`${styles.switch} switch`}>
     <input
       id={id}
       className={`${styles.toggle} ${flat ? styles.toggleFlat : styles.toggleRound}`}

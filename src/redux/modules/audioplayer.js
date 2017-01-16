@@ -281,7 +281,7 @@ export default function reducer(state = initialState, action = {}) {
       const endTime = state.segments[surahId][nextId].words[word].endTime;
       currentFile.currentTime = currentTime;
 
-      const int = setInterval(function() {
+      const int = setInterval(() => {
         if (currentFile.currentTime > endTime) {
           currentFile.pause();
           clearInterval(int);
