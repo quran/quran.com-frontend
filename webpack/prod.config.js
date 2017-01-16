@@ -4,7 +4,7 @@ const webpack = require('webpack');
 const CompressionPlugin = require('compression-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
-const strip = require('strip-loadßer');
+const strip = require('strip-loader');
 
 const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration')); // eslint-disable-line max-len, global-require
 
