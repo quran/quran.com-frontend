@@ -449,6 +449,7 @@ export const slugs = [
 
 export default class ContentDropdown extends Component {
   static propTypes = {
+    id: PropTypes.string,
     onOptionChange: PropTypes.func.isRequired,
     options: optionsType.isRequired,
     className: PropTypes.string
@@ -515,10 +516,11 @@ export default class ContentDropdown extends Component {
   }
 
   render() {
-    const { className, options: { content } } = this.props;
+    const { id, className, options: { content } } = this.props;
 
     return (
       <DropdownButton
+        id={`${id}`}
         className={`dropdown ${className} ${style.dropdown}`}
         title={<LocaleFormattedMessage id="setting.translations.title" defaultMessage="Translations" />}
       >
