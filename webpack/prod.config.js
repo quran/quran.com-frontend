@@ -1,11 +1,13 @@
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
-const strip = require('strip-loader');
+const strip = require('strip-loadßer');
 
 const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration')); // eslint-disable-line max-len, global-require
+
 const relativeAssetsPath = '../static/dist';
 const assetsPath = path.join(__dirname, relativeAssetsPath);
 
@@ -19,7 +21,7 @@ module.exports = {
 
   },
   context: path.resolve(__dirname, '../src'),
-  devtool: 'cheap-source-map',
+  devtool: 'cheap-module-source-map',
   debug: false,
   target: 'web',
   cache: false,
@@ -141,6 +143,13 @@ module.exports = {
       test: /\.css$/, // optionally pass test, include and exclude, default affects all loaders
       minimize: true,
       debug: false
+    }),
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0
     }),
     webpackIsomorphicToolsPlugin
   ]
