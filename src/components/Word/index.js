@@ -45,13 +45,26 @@ export default class Line extends React.Component {
     }
   }
 
+  renderCode(word) {
+    const { useNewFonts } = this.props;
+
+    if (useNewFonts && word.charTypeId == CHAR_TYPE_END) {
+      console.info(`&#xa${("000" + word.ayahKey.split(':')[1]).slice(-3)};`);
+
+      return `&#xa${("000" + word.ayahKey.split(':')[1]).slice(-3)};`;
+    } else {
+      return word.code;
+    }
+  }
+
   render() {
     const { tooltip, word, currentAyah, isPlaying, useNewFonts } = this.props;
 
     let id = null;
     const  position = word.position - 1;
     const highlight = currentAyah == word.ayahKey && isPlaying ? 'highlight' : '';
-    const className = `${useNewFonts ? 'opt'+word.className : word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    let font = `${useNewFonts ? word.charTypeId == CHAR_TYPE_END ? 'opt-ayah-number' : 'opt'+word.className : word.className}`;
+    const className = `${font} ${highlight} ${word.highlight ? word.highlight : ''}`;
 
     if (word.charTypeId === CHAR_TYPE_WORD) {
       id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
@@ -67,7 +80,7 @@ export default class Line extends React.Component {
         data-ayah={word.ayahKey}
         className={`${className} pointer`}
         title={this.buildTooltip(word, tooltip)}
-        dangerouslySetInnerHTML={{__html: word.code}}
+        dangerouslySetInnerHTML={{__html: this.renderCode(word)}}
       />
     );
   }

@@ -16,6 +16,19 @@
 }
 
 @font-face {
+    font-family: opt-ayah-number;
+    src: url('../../static/fonts/ttf/ayah_number.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.opt-ayah-number {
+  font-size: 100px;
+  margin-top: -50px;
+  font-family: opt-ayah-number;
+}
+
+@font-face {
   font-family: 'Montserrat';
   src: url('../../static/fonts/montserrat/Montserrat-Regular.otf');
 }
