@@ -65,7 +65,7 @@ export default (store) => {
 
       <Route
         path="/:surahId(/:range)"
-        getComponents={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, { main: module, nav: GlobalNavSurah })).catch(err => console.trace(err))}
+        getComponent={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, module)).catch(err => console.trace(err))}
         onEnter={checkValidSurah}
       />
     </Route>

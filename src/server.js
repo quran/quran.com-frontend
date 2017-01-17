@@ -24,6 +24,7 @@ import Html from './helpers/Html';
 import { setUserAgent } from './redux/actions/audioplayer.js';
 import { setOption } from './redux/actions/options.js';
 import getLocalMessages from './helpers/setLocal';
+import Navigator from 'components/Navigator';
 
 const pretty = new PrettyError();
 const server = express();
@@ -76,7 +77,9 @@ server.use((req, res, next) => {
           const component = (
             <IntlProvider messages={localMessages} locale="en" >
               <Provider store={store}>
-                <ReduxAsyncConnect {...renderProps} />
+                <Navigator>
+                  <ReduxAsyncConnect {...renderProps} />
+                </Navigator>
               </Provider>
             </IntlProvider>
           );

@@ -13,7 +13,7 @@ import useScroll from 'react-router-scroll';
 import { ReduxAsyncConnect } from 'redux-connect';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { IntlProvider } from 'react-intl';
-
+import Navigator from 'components/Navigator';
 import debug from 'debug';
 
 import config from './config';
@@ -50,11 +50,13 @@ match({ history, routes: routes(store) }, (error, redirectLocation, renderProps)
     <Router
       {...renderProps}
       render={props => (
-        <ReduxAsyncConnect
-          {...props}
-          helpers={{ client }}
-          render={applyRouterMiddleware(useScroll())}
-        />
+           <Navigator>
+            <ReduxAsyncConnect
+              {...props}
+              helpers={{ client }}
+              render={applyRouterMiddleware(useScroll())}
+            />
+        </Navigator>
       )}
     />
   );
@@ -66,7 +68,8 @@ match({ history, routes: routes(store) }, (error, redirectLocation, renderProps)
   ReactDOM.render(
     <IntlProvider locale="en" messages={getLocalMessages()}>
       <Provider store={store} key="provider">
-        {component}
+
+          {component}
       </Provider>
     </IntlProvider>, mountNode, () => {
       debug('client', 'React Rendered');
