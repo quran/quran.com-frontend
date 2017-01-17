@@ -1,19 +1,21 @@
 import React, { PropTypes } from 'react';
 
-const InformationToggle = ({ isShowingSurahInfo, onToggle }) => (
-  <a
-    tabIndex="-1"
-    className={`pointer ${isShowingSurahInfo && 'active'}`}
-    onClick={() => onToggle({ isShowingSurahInfo: !isShowingSurahInfo })}
-  >
-    <i
-      className="ss-icon ss-info"
-    />
-  </a>
+const InformationToggle = ({ isToggled, onToggle }) => (
+  <li className={isToggled && 'active'}>
+    <a
+      tabIndex="-1"
+      className="pointer"
+      onClick={() => onToggle({ isShowingSurahInfo: !isToggled })}
+    >
+      <i
+        className="ss-icon ss-info"
+      />
+    </a>
+  </li>
 );
 
 InformationToggle.propTypes = {
-  isShowingSurahInfo: PropTypes.bool.isRequired,
+  isToggled: PropTypes.bool.isRequired,
   onToggle: PropTypes.func.isRequired
 };
 
