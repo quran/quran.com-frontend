@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 
 import { surahType, optionsType } from 'types';
 import * as OptionsActions from 'redux/actions/options.js';
@@ -7,16 +8,44 @@ import * as OptionsActions from 'redux/actions/options.js';
 import SurahsDropdown from 'components/SurahsDropdown';
 import ReadingModeToggle from 'components/ReadingModeToggle';
 import NightModeToggle from 'components/NightModeToggle';
+import FontSizeDropdown from 'components/FontSizeDropdown';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 // TODO: import VersesDropdown from 'components/VersesDropdown';
 import InformationToggle from 'components/InformationToggle';
 import GlobalNav from '../index';
 
-const GlobalNavSurah = ({ surah, surahs, setOption, options }) => (
+const styles = require('../style.scss');
+
+const GlobalNavSurah = ({ surah, surahs, setOption, options, ...props }) => (
   <GlobalNav
+    {...props}
     leftControls={[
       <SurahsDropdown title={surah.name.simple} surahs={surahs} />,
+      <NavDropdown
+        id="hidden-dropdown"
+        className={`visible-xs-inline-block ${styles.optionsDropdown}`}
+        title={<LocaleFormattedMessage id="settings.options" defaultMessage="Options" />}
+      >
+        <FontSizeDropdown
+          fontSize={options.fontSize}
+          onOptionChange={setOption}
+        />
+        <InformationToggle
+          onToggle={setOption}
+          isToggled={options.isShowingSurahInfo}
+        />
+        <ReadingModeToggle
+          isToggled={options.isReadingMode}
+          onToggle={setOption}
+        />
+        <NightModeToggle />
+      </NavDropdown>
     ]}
     rightControls={[
+      <FontSizeDropdown
+        fontSize={options.fontSize}
+        onOptionChange={setOption}
+      />,
       <InformationToggle
         onToggle={setOption}
         isToggled={options.isShowingSurahInfo}
@@ -40,26 +69,10 @@ GlobalNavSurah.propTypes = {
 function mapStateToProps(state, ownProps) {
   const surahId = parseInt(ownProps.params.surahId, 10);
   const surah: Object = state.surahs.entities[surahId];
-  const ayahs: Object = state.ayahs.entities[surahId];
-  const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
-  const ayahIds = new Set(ayahArray);
-  const lastAyahInArray = ayahArray.slice(-1)[0];
 
   return {
     surah,
-    ayahs,
-    ayahIds,
-    isStarted: state.audioplayer.isStarted,
-    isPlaying: state.audioplayer.isPlaying,
-    currentAyah: state.audioplayer.currentAyah,
-    isAuthenticated: state.auth.loaded,
-    currentWord: state.ayahs.currentWord,
-    isEndOfSurah: lastAyahInArray === surah.ayat,
     surahs: state.surahs.entities,
-    bookmarks: state.bookmarks.entities,
-    isLoading: state.ayahs.loading,
-    isLoaded: state.ayahs.loaded,
-    lines: state.lines.lines,
     options: state.options
   };
 }

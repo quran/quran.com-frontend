@@ -1,6 +1,6 @@
 /* global document */
 import React, { Component } from 'react';
-
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import bindTooltip from 'utils/bindTooltip';
 
 class NightModeToggle extends Component {
@@ -27,8 +27,9 @@ class NightModeToggle extends Component {
           onClick={this.toggleNightMode}
         >
           <i
-            className="ss-icon ss-lightbulb"
+            className="ss-icon ss-lightbulb vertical-align-middle"
           />
+          {' '}<LocaleFormattedMessage id="settings.nightMode" defaultMessage="Night Mode" className="visible-xs-inline-block" />
         </a>
       </li>
     );

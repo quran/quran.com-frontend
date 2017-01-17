@@ -2,9 +2,11 @@
 export default {
   messages: {
     local: 'urdu',
+    'local.siteLocale': 'سائٹ کی زبان',
     'local.changeLocal': 'جس زبان میں سایٹ دیکہنا چاہتے ہیں اس زبان کا انتخاب کریں',
     'local.navtiveName': 'اردو',
     'local.selectLabel': 'زبان',
+    'setting.options': 'اختیارات',
     'setting.title': 'اختیارات',
     'setting.surahs': 'سورة',
     'setting.verses': 'آیت منتخب کریں',
@@ -65,6 +67,7 @@ export default {
     'nav.usefulSites': 'مفید سائٹس',
     'nav.otherLinks': 'دیگر لنکس',
     'nav.contactUs': 'ہم سے رابطہ',
+    'nav.help': 'مدد اور تاثرات',
     'nav.aboutQuranProject': 'قرآن کریم ایک فلاں عامہ (عوامی بہبود کے لئے) منصوبہ ہے',
     'nav.mobile': 'موبائل',
     'nav.navigate': 'تشریف لے جائیں',

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const ReadingModeToggle = ({ onToggle, isToggled }) => (
   <li className={isToggled && 'active'}>
@@ -8,8 +9,9 @@ const ReadingModeToggle = ({ onToggle, isToggled }) => (
       onClick={() => onToggle({ isReadingMode: !isToggled })}
     >
       <i
-        className="ss-icon ss-openbook"
+        className="ss-icon ss-openbook vertical-align-middle"
       />
+      {' '}<LocaleFormattedMessage id="settings.reading" defaultMessage="Reading" className="visible-xs-inline-block" />
     </a>
   </li>
 );

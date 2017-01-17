@@ -4,8 +4,6 @@ import Link from 'react-router/lib/Link';
 import SearchInput from 'components/SearchInput';
 import debug from 'helpers/debug';
 
-import Nav from './Nav';
-
 const logo = require('../../../static/images/logo-lg-w.png');
 
 export default class IndexHeader extends Component {
@@ -28,7 +26,6 @@ export default class IndexHeader extends Component {
 
     return (
       <div className="index-header" style={{ backgroundColor: '#2CA4AB' }}>
-        <Nav />
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">

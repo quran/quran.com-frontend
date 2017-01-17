@@ -95,16 +95,17 @@ export default class FontSizeDropdown extends Component {
 
   render() {
     return (
-      <div className={style.link}>
-        <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose container={this} positionLeft={0}>
+      <li className={style.link}>
+        <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
           <a
             tabIndex="-1"
             data-metrics-event-name="FontSizeDropdown"
           >
-            <LocaleFormattedMessage id="setting.fontSize" defaultMessage="Font size" />
+            <i className="ss-icon ss-font vertical-align-middle" />
+            {' '}<LocaleFormattedMessage id="setting.fontSize" defaultMessage="Font Size" className="visible-xs-inline-block" />
           </a>
         </OverlayTrigger>
-      </div>
+      </li>
     );
   }
 }

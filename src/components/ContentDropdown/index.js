@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -453,10 +454,6 @@ export default class ContentDropdown extends Component {
     className: PropTypes.string
   };
 
-  static defaultProps = {
-    className: 'col-md-3'
-  }
-
   handleRemoveContent = () => {
     const { onOptionChange } = this.props;
 
@@ -511,28 +508,33 @@ export default class ContentDropdown extends Component {
 
   render() {
     const { className, content } = this.props;
+    const title = slugs.filter(slug => content.includes(slug.id)).map(slug => slug.name).join(', ');
 
     return (
-      <DropdownButton
-        className={`dropdown ${className} ${style.dropdown}`}
-        title={<LocaleFormattedMessage id="setting.translations.title" defaultMessage="Translations" />}
-      >
-        {
-          content.length &&
-            <MenuItem onClick={this.handleRemoveContent}>
-              <LocaleFormattedMessage id="setting.translations.removeAll" defaultMessage="Remove all" />
-            </MenuItem>
-        }
-        <MenuItem header>
-          <LocaleFormattedMessage id="setting.translations.english" defaultMessage="English" />
-        </MenuItem>
-        {this.renderEnglishList()}
-        <MenuItem divider />
-        <MenuItem header>
-          <LocaleFormattedMessage id="setting.translations.other" defaultMessage="Other Languages" />
-        </MenuItem>
-        {this.renderLanguagesList()}
-      </DropdownButton>
+      <ButtonToolbar>
+        <DropdownButton
+          block
+          id="content-dropdown"
+          className={`dropdown ${className} ${style.dropdown}`}
+          title={title}
+        >
+          {
+            content.length &&
+              <MenuItem onClick={this.handleRemoveContent}>
+                <LocaleFormattedMessage id="setting.translations.removeAll" defaultMessage="Remove all" />
+              </MenuItem>
+          }
+          <MenuItem header>
+            <LocaleFormattedMessage id="setting.translations.english" defaultMessage="English" />
+          </MenuItem>
+          {this.renderEnglishList()}
+          <MenuItem divider />
+          <MenuItem header>
+            <LocaleFormattedMessage id="setting.translations.other" defaultMessage="Other Languages" />
+          </MenuItem>
+          {this.renderLanguagesList()}
+        </DropdownButton>
+      </ButtonToolbar>
     );
   }
 }

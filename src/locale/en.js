@@ -2,10 +2,12 @@
 export default {
   messages: {
     local: 'english',
+    'local.siteLocale': 'Site Language',
     'local.changeLocal': 'Choose the language you want the site to display with',
     'local.navtiveName': 'English',
     'local.selectLabel': 'Language',
-    'setting.title': 'Options',
+    'setting.options': 'Options',
+    'setting.title': 'Quran',
     'setting.surahs': 'Surahs',
     'setting.verses': 'Go to verse',
     'setting.reciters': 'Reciters',
@@ -65,6 +67,7 @@ export default {
     'nav.usefulSites': 'Useful sites',
     'nav.otherLinks': 'Other links',
     'nav.contactUs': 'Contact us',
+    'nav.help': 'Help & feedback',
     'nav.aboutQuranProject': 'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.', // eslint-disable-line max-len
     'nav.mobile': 'Mobile',
     'nav.navigate': 'Navigate',

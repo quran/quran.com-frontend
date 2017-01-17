@@ -144,7 +144,6 @@ const Footer = () => (
             </p>
 
             <div className={styles.list}>
-              <LocaleSwitcher />
               <p className="monserrat">
                 <LocaleFormattedMessage
                   id="nav.aboutQuranProject"

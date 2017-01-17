@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('./style.scss');
 
@@ -197,11 +196,6 @@ export default class ReciterDropdown extends Component {
     className: PropTypes.string
   };
 
-  static defaultProps = {
-    className: 'col-md-3'
-  };
-
-
   renderMenu() {
     const { audio, onOptionChange } = this.props;
 
@@ -217,15 +211,19 @@ export default class ReciterDropdown extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, audio } = this.props;
 
     return (
-      <DropdownButton
-        className={`${className} ${style.dropdown}`}
-        title={<LocaleFormattedMessage id="setting.reciters" defaultMessage="Reciters" />}
-      >
-        {this.renderMenu()}
-      </DropdownButton>
+      <ButtonToolbar>
+        <DropdownButton
+          block
+          id="reciter-dropdown"
+          className={`${className} ${style.dropdown}`}
+          title={slugs.find(slug => slug.id === audio).name.english}
+        >
+          {this.renderMenu()}
+        </DropdownButton>
+      </ButtonToolbar>
     );
   }
 }

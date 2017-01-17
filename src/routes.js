@@ -4,6 +4,7 @@ import IndexRoute from 'react-router/lib/IndexRoute';
 import Route from 'react-router/lib/Route';
 import Redirect from 'react-router/lib/Redirect';
 import GlobalNavSurah from 'components/GlobalNav/Surah';
+import GlobalSidebarSurah from 'components/GlobalSidebar/Surah';
 
 import { isLoaded as isAuthLoaded, load as loadAuth, hasAccessToken } from 'redux/actions/auth';
 
@@ -65,7 +66,11 @@ export default (store) => {
 
       <Route
         path="/:surahId(/:range)"
-        getComponents={(nextState, cb) => System.import('./containers/Surah').then(module => cb(null, { main: module, nav: GlobalNavSurah })).catch(err => console.trace(err))}
+        getComponents={(nextState, cb) =>
+          System.import('./containers/Surah')
+          .then(module => cb(null, { main: module, nav: GlobalNavSurah, sidebar: GlobalSidebarSurah }))
+          .catch(err => console.trace(err))
+        }
         onEnter={checkValidSurah}
       />
     </Route>
