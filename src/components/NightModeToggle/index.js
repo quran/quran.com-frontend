@@ -1,9 +1,6 @@
 /* global document */
 import React, { Component } from 'react';
 
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import SwitchToggle from 'components/SwitchToggle';
-
 import bindTooltip from 'utils/bindTooltip';
 
 class NightModeToggle extends Component {
@@ -23,15 +20,17 @@ class NightModeToggle extends Component {
 
   render() {
     return (
-      <div>
-        <LocaleFormattedMessage id="setting.nightMode" defaultMessage="Night Mode" />
-        <SwitchToggle
-          checked={this.state.isNightMode}
-          onToggle={this.toggleNightMode}
-          id="night-mode-toggle"
-          flat
-        />
-      </div>
+      <li className={this.state.isNightMode && 'active'}>
+        <a
+          tabIndex="-1"
+          className="pointer"
+          onClick={this.toggleNightMode}
+        >
+          <i
+            className="ss-icon ss-lightbulb"
+          />
+        </a>
+      </li>
     );
   }
 }
