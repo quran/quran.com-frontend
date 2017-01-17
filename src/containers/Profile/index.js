@@ -9,7 +9,6 @@ import Image from 'react-bootstrap/lib/Image';
 import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
 
-import QuranNav from 'components/QuranNav';
 import { bookmarkType, userType } from 'types';
 
 const styles = require('./style.scss');
@@ -26,7 +25,6 @@ class Profile extends Component { // eslint-disable-line
     return (
       <div className="min-container">
         <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
-        <QuranNav />
         <div className={styles.header} />
         <Grid>
           <div className="row">

@@ -8,6 +8,8 @@ const styles = require('containers/Home/style.scss');
 
 const LastVisit = (props) => {
   debug('component:Index', 'LastVisit');
+  if (!props.surah) return false;
+
   return (
     <div>
       <h4 className={`text-muted ${styles.title}`}>
