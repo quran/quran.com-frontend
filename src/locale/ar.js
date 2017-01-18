@@ -2,9 +2,11 @@
 export default {
   messages: {
     local: 'arabic',
+    'local.siteLocale': 'اختر لغة الموقع',
     'local.changeLocal': 'اختر اللغة التي تود عرض الموقع بها',
     'local.navtiveName': 'العربية',
     'local.selectLabel': 'اللغة',
+    'setting.options': 'خيارات',
     'setting.title': 'خيارات',
     'setting.surahs': 'السورة',
     'setting.verses': 'الذهاب إلى الآية',
@@ -65,6 +67,7 @@ export default {
     'nav.usefulSites': 'مواقع مفيدة',
     'nav.otherLinks': 'روابط اخرى',
     'nav.contactUs': 'اتصل بنا',
+    'nav.help': 'مساعدة وتعليقات',
     'nav.aboutQuranProject': 'Quran.com المعروف أيضا باسم القرآن الكريم، قناة القرآن الكريم، القرآن الكريم، القرآن الكريم) هو مشروع خيري)',  // eslint-disable-line max-len
     'nav.mobile': 'التليفون المحمول',
     'nav.navigate': 'انتقل',

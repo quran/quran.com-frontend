@@ -9,28 +9,20 @@ import { push } from 'react-router-redux';
 
 // bootstrap
 import Col from 'react-bootstrap/lib/Col';
-import Navbar from 'react-bootstrap/lib/Navbar';
 
 import Helmet from 'react-helmet';
-import Sidebar from 'components/Sidebar';
 
 // components
 import Loader from 'components/Loader';
 import LazyLoad from 'components/LazyLoad';
 import PageBreak from 'components/PageBreak';
 import Audioplayer from 'components/Audioplayer';
-import ContentDropdown from 'components/ContentDropdown';
-import ReciterDropdown from 'components/ReciterDropdown';
-import SurahsDropdown from 'components/SurahsDropdown';
-import VersesDropdown from 'components/VersesDropdown';
 import SurahInfo from 'components/SurahInfo';
 import Ayah from 'components/Ayah';
 import Line from 'components/Line';
-import SearchInput from 'components/SearchInput';
 import Bismillah from 'components/Bismillah';
 import TopOptions from 'components/TopOptions';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
 
 // utils
 import scroller from 'utils/scroller';
@@ -48,10 +40,6 @@ import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
 import { surahsConnect, surahInfoConnect, ayahsConnect } from './connect';
-
-import Header from './Header';
-
-const NavbarHeader = Navbar.Header;
 
 const style = require('./style.scss');
 
@@ -130,16 +118,6 @@ class Surah extends Component {
 
   hasAyahs() {
     return Object.keys(this.props.ayahs).length;
-  }
-
-  handleOptionChange = (payload) => {
-    const { surah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
-    const from = this.getFirst();
-    const to = this.getLast();
-
-    actions.options.setOption(payload);
-
-    return actions.ayah.load(surah.id, from, to, Object.assign({}, options, payload));
   }
 
   handleVerseDropdownClick = (ayahNum) => {
@@ -347,50 +325,8 @@ class Surah extends Component {
           audioActions={actions.audio}
           isPlaying={isPlaying}
         />
-      )
-
+      );
     });
-  }
-
-  renderSidebar() {
-    const { surah, surahs, ayahIds, options } = this.props;
-
-    return (
-      <div>
-        <Navbar static fluid>
-          <NavbarHeader>
-            <p className={`navbar-text ${style.sidebarTitle}`}>
-              <LocaleFormattedMessage id="setting.title" defaultMessage="Options" />
-            </p>
-          </NavbarHeader>
-        </Navbar>
-        <SearchInput
-          className="search-input"
-        />
-        <SurahsDropdown
-          surahs={surahs}
-          className={`${style.dropdown}`}
-        />
-        <VersesDropdown
-          ayat={surah.ayat}
-          loadedAyahs={ayahIds}
-          isReadingMode={options.isReadingMode}
-          onClick={this.handleVerseDropdownClick}
-          surah={surah}
-          className={`${style.dropdown}`}
-        />
-        <ReciterDropdown
-          onOptionChange={this.handleOptionChange}
-          options={options}
-          className={`${style.dropdown}`}
-        />
-        <ContentDropdown
-          onOptionChange={this.handleOptionChange}
-          options={options}
-          className={`${style.dropdown}`}
-        />
-      </div>
-    );
   }
 
   render() {
@@ -439,13 +375,6 @@ class Surah extends Component {
             }
           ]}
         />
-        <Header surah={surah} handleToggleSidebar={() => this.setState({ sidebarOpen: true })} />
-        <Sidebar
-          open={this.state.sidebarOpen}
-          onSetOpen={open => this.setState({ sidebarOpen: open })}
-        >
-          {this.renderSidebar()}
-        </Sidebar>
         <div className={`container-fluid ${style.container}`}>
           <div className="row">
             <SurahInfo
@@ -455,7 +384,7 @@ class Surah extends Component {
               onClose={this.handleSurahInfoToggle}
             />
             <Col md={10} mdOffset={1}>
-              <TopOptions options={options} actions={actions.options} surah={surah} />
+              <TopOptions surah={surah} />
               <Bismillah surah={surah} />
               {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
             </Col>

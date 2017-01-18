@@ -5,7 +5,6 @@ import Grid from 'react-bootstrap/lib/Grid';
 import Col from 'react-bootstrap/lib/Col';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import LocaleSwitcher from 'components/LocaleSwitcher';
 
 const styles = require('./style.scss');
 
@@ -144,7 +143,6 @@ const Footer = () => (
             </p>
 
             <div className={styles.list}>
-              <LocaleSwitcher />
               <p className="monserrat">
                 <LocaleFormattedMessage
                   id="nav.aboutQuranProject"
