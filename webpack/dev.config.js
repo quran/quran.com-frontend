@@ -1,7 +1,6 @@
 require('dotenv').load();
 const webpack = require('webpack');
 const path = require('path');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration')); // eslint-disable-line max-len, global-require
 
@@ -114,8 +113,7 @@ module.exports = {
     new webpack.EnvironmentPlugin([
       'NODE_ENV'
     ]),
-    webpackIsomorphicToolsPlugin.development(),
-    new BundleAnalyzerPlugin()
+    webpackIsomorphicToolsPlugin.development()
   ],
   stats: {
     colors: true,

@@ -2,10 +2,12 @@
 export default {
   messages: {
     local: 'english',
+    'local.siteLocale': 'Site Language',
     'local.changeLocal': 'Choose the language you want the site to display with',
     'local.navtiveName': 'English',
     'local.selectLabel': 'Language',
-    'setting.title': 'Options',
+    'setting.options': 'Options',
+    'setting.title': 'Quran',
     'setting.surahs': 'Surahs',
     'setting.verses': 'Go to verse',
     'setting.reciters': 'Reciters',
@@ -16,7 +18,7 @@ export default {
     'setting.fontSize': 'Font size',
     'setting.fontSize.arabic': 'Arabic',
     'setting.reading': 'Reading',
-    'setting.tooltip': 'tooltip',
+    'setting.tooltip': 'Tooltip content',
     'setting.tooltip.title': 'TOOLTIP DISPLAY',
     'setting.tooltip.translation': 'Translation',
     'setting.tooltip.transliteration': 'Transliteration',
@@ -28,7 +30,7 @@ export default {
     'ayah.bookmarked': 'Bookmarked',
     'ayah.bookmark': 'Bookmark',
 
-    'search.placeholder': 'Search',
+    'search.placeholder': 'Search "Noah"',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Sorry, there was an error with your search.',
     'search.noResult': 'No results found.',
@@ -65,8 +67,9 @@ export default {
     'nav.usefulSites': 'Useful sites',
     'nav.otherLinks': 'Other links',
     'nav.contactUs': 'Contact us',
+    'nav.help': 'Help & feedback',
     'nav.aboutQuranProject': 'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.', // eslint-disable-line max-len
-    'nav.mobile': 'Mobile',
+    'nav.mobile': 'Mobile Apps',
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
 

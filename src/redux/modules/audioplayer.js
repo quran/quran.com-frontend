@@ -269,19 +269,20 @@ export default function reducer(state = initialState, action = {}) {
       };
     }
     case PLAY_CURRENT_WORD: {
-      if (!action.word) return state;
+      if (!action.payload) return state;
 
-      const [surahId, ayahNum, word] = action.word.split(':');
+      const { word, position } = action.payload;
+      const [surahId, ayahNum] = word.ayahKey.split(':');
       const nextId = `${surahId}:${ayahNum}`;
       const currentFile = state.files[surahId][nextId];
 
-      if (!state.segments[surahId][nextId].words[word]) return state;
+      if (!state.segments[surahId][nextId].words[position]) return state;
 
-      const currentTime = state.segments[surahId][nextId].words[word].startTime;
-      const endTime = state.segments[surahId][nextId].words[word].endTime;
+      const currentTime = state.segments[surahId][nextId].words[position].startTime;
+      const endTime = state.segments[surahId][nextId].words[position].endTime;
       currentFile.currentTime = currentTime;
 
-      const int = setInterval(function() {
+      const int = setInterval(() => {
         if (currentFile.currentTime > endTime) {
           currentFile.pause();
           clearInterval(int);
@@ -289,7 +290,10 @@ export default function reducer(state = initialState, action = {}) {
       }, 10);
       currentFile.play();
 
-      return state;
+      return {
+        ...state,
+        currentWord: word
+      };
     }
     case SET_CURRENT_AYAH: {
       return {

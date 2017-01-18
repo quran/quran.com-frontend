@@ -11,8 +11,12 @@ export default class Line extends React.Component {
     line: PropTypes.arrayOf(wordType).isRequired,
     tooltip: PropTypes.string,
     currentAyah: PropTypes.string.isRequired,
-    audioActions: PropTypes.object.isRequired,
-    currentWord: PropTypes.any,
+    audioActions: PropTypes.shape({
+      pause: PropTypes.func.isRequired,
+      setAyah: PropTypes.func.isRequired,
+      play: PropTypes.func.isRequired,
+      setCurrentWord: PropTypes.func.isRequired,
+    }),
     isPlaying: PropTypes.bool
   };
 
@@ -29,11 +33,16 @@ export default class Line extends React.Component {
   renderText() {
     const { tooltip, currentAyah, audioActions, isPlaying, line } = this.props;
 
-    const text = line.map(word => {
-      return (
-        <Word word={word} currentAyah={currentAyah} tooltip={tooltip} isPlaying={isPlaying} audioActions={audioActions}/>
-      )
-    });
+    const text = line.map(word => (
+      <Word
+        word={word}
+        key={`${word.position}-${word.code}-${word.lineNum}`}
+        currentAyah={currentAyah}
+        tooltip={tooltip}
+        isPlaying={isPlaying}
+        audioActions={audioActions}
+      />
+    ));
 
     return (
       <span className={`${styles.line} text-center`}>
@@ -52,7 +61,7 @@ export default class Line extends React.Component {
 
     return (
       <div className={`row ${styles.font} text-justify text-arabic`}>
-        <div className="col-md-12 line-container"  name={`ayah:${line[0].ayahKey}`}>
+        <div className="col-md-12 line-container" name={`ayah:${line[0].ayahKey}`}>
           {this.renderText()}
         </div>
       </div>

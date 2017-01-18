@@ -86,7 +86,7 @@ class Search extends Component {
                   values={values}
                 />
               </Col>
-              <Col className="text-right">
+              <Col md={6} className="text-right">
                 <ReactPaginate
                   previousLabel={
                     <span aria-hidden="true">
@@ -98,15 +98,16 @@ class Search extends Component {
                       <i className="ss-icon ss-directright" />
                     </span>
                   }
-                  breakLabel={<li className="break"><a href="">...</a></li>}
+                  breakLabel={<a href="">...</a>}
                   pageNum={pageNum}
                   marginPagesDisplayed={2}
                   pageRangeDisplayed={5}
                   initialSelected={page - 1}
                   forceSelected={page - 1}
-                  clickCallback={this.handlePageChange}
+                  onPageChange={this.handlePageChange}
                   containerClassName="pagination"
                   subContainerClassName="pages pagination"
+                  pageLinkClassName="pointer:"
                   activeClass={style.active}
                 />
               </Col>

@@ -1,9 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { optionsType } from 'types';
 
 const style = require('./style.scss');
 
@@ -194,25 +192,17 @@ export const slugs = [
 export default class ReciterDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func,
-    options: optionsType,
+    audio: PropTypes.number,
     className: PropTypes.string
   };
 
-  static defaultProps = {
-    className: 'col-md-3'
-  };
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.options !== nextProps.options;
-  }
-
   renderMenu() {
-    const { options, onOptionChange } = this.props;
+    const { audio, onOptionChange } = this.props;
 
     return slugs.map(slug => (
       <MenuItem
         key={slug.name.english}
-        active={slug.id === options.audio}
+        active={slug.id === audio}
         onClick={() => onOptionChange({ audio: slug.id })}
       >
         {slug.name.english}
@@ -221,15 +211,19 @@ export default class ReciterDropdown extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, audio } = this.props;
 
     return (
-      <DropdownButton
-        className={`${className} ${style.dropdown}`}
-        title={<LocaleFormattedMessage id="setting.reciters" defaultMessage="Reciters" />}
-      >
-        {this.renderMenu()}
-      </DropdownButton>
+      <ButtonToolbar>
+        <DropdownButton
+          block
+          id="reciter-dropdown"
+          className={`${className} ${style.dropdown}`}
+          title={slugs.find(slug => slug.id === audio).name.english}
+        >
+          {this.renderMenu()}
+        </DropdownButton>
+      </ButtonToolbar>
     );
   }
 }

@@ -6,6 +6,8 @@ import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import SmartBanner from 'components/SmartBanner';
+import GlobalNav from 'components/GlobalNav';
+import GlobalSidebar from 'components/GlobalSidebar';
 import Col from 'react-bootstrap/lib/Col';
 
 import debug from 'helpers/debug';
@@ -22,22 +24,36 @@ const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
-
 class App extends Component {
   static propTypes = {
     media: PropTypes.shape({
       content: PropTypes.string
     }).isRequired,
     removeMedia: PropTypes.func.isRequired,
-    children: PropTypes.element
+    children: PropTypes.element,
+    main: PropTypes.element,
+    nav: PropTypes.element,
+    sidebar: PropTypes.element,
   };
 
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
 
+  state = {
+    sidebarOpen: false
+  }
+
   render() {
-    const { children, media, removeMedia } = this.props; // eslint-disable-line no-shadow
+    const {
+      main,
+      nav,
+      sidebar,
+      children,
+      media,
+      removeMedia, // eslint-disable-line no-shadow
+      ...props
+    } = this.props;
     debug('component:APPLICATION', 'Render');
 
     return (
@@ -58,7 +74,24 @@ class App extends Component {
             </Col>
           </div>
         </NoScript>
-        {children}
+        {
+          React.cloneElement(
+            nav || <GlobalNav isStatic {...props} />,
+            {
+              handleSidebarToggle: () => this.setState({ sidebarOpen: !this.state.sidebarOpen })
+            }
+          )
+        }
+        {
+          React.cloneElement(
+            sidebar || <GlobalSidebar />,
+            {
+              open: this.state.sidebarOpen,
+              handleOpen: open => this.setState({ sidebarOpen: open })
+            }
+          )
+        }
+        {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
         <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>

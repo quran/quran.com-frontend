@@ -27,7 +27,10 @@ const Home = (props) => {
       <div className={`container ${styles.list}`}>
         <div className="row">
           <div className="col-md-10 col-md-offset-1">
-            {lastVisit && <LastVisit surah={props.surahs[lastVisit.surahId]} ayah={lastVisit.ayahId}/>}
+            {
+              lastVisit &&
+              <LastVisit surah={props.surahs[lastVisit.surahId]} ayah={lastVisit.ayahId} />
+            }
             <QuickSurahs />
             <h4 className={`text-muted ${styles.title}`}>
               <LocaleFormattedMessage id="surah.index.heading" defaultMessage="SURAHS (CHAPTERS)" />

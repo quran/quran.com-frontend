@@ -1,29 +1,26 @@
 import React, { PropTypes } from 'react';
-
-const styles = require('../Ayah/style.scss');
-
+import bindTooltip from 'utils/bindTooltip';
 /* eslint-disable no-unused-vars */
 const CHAR_TYPE_WORD = 1;
 const CHAR_TYPE_END = 2;
 const CHAR_TYPE_PAUSE = 3;
 const CHAR_TYPE_RUB = 4;
 const CHAR_TYPE_SAJDAH = 5;
-/* eslint-enable no-unused-vars */
 
-export default class Line extends React.Component {
+export default class Word extends React.Component {
   static propTypes = {
-    word: PropTypes.object.isRequired,
+    word: PropTypes.object.isRequired, // eslint-disable-line
     tooltip: PropTypes.string,
-    audioActions: PropTypes.object.isRequired,
-    word: PropTypes.object.isRequired,
-    currentAyah: PropTypes.object.isRequired,
+    audioActions: PropTypes.object.isRequired, // eslint-disable-line
+    audioPosition: PropTypes.number,
+    currentAyah: PropTypes.string.isRequired,
     isPlaying: PropTypes.bool,
     isSearched: PropTypes.bool
   };
 
-  buildTooltip(word, tooltip){
+  buildTooltip = (word, tooltip) => {
     let title;
-    if (!word.wordId && word.charTypeId == CHAR_TYPE_END) {
+    if (!word.wordId && word.charTypeId === CHAR_TYPE_END) {
       title = `Verse ${word.ayahKey.split(':')[1]}`;
     } else {
       title = word[tooltip];
@@ -31,42 +28,42 @@ export default class Line extends React.Component {
     return title;
   }
 
-  handleWordClick(word){
-    const { currentAyah, audioActions, isPlaying, isSearched } = this.props;
-    if(isSearched) return;
+  handleWordClick = () => {
+    const { word, currentAyah, audioActions, audioPosition, isPlaying, isSearched } = this.props;
 
-    if(currentAyah == word.ayahKey && isPlaying) {
-      audioActions.setCurrentWord(word.dataset.key) ;
+    if (isSearched) {
+      return;
+    }
+
+    if ((currentAyah === word.ayahKey) && isPlaying) {
+      audioActions.setCurrentWord(word.code);
     } else {
       audioActions.pause();
-      audioActions.setAyah(word.dataset.ayah);
-      audioActions.playCurrentWord(word.dataset.key);
+      audioActions.setAyah(word.ayahKey);
+      audioActions.playCurrentWord({ word, position: audioPosition });
     }
   }
 
   render() {
-    const { tooltip, word, currentAyah, isPlaying } = this.props;
+    const { tooltip, word, currentAyah, isPlaying, audioPosition } = this.props;
 
     let id = null;
-    const  position = word.position - 1;
-    const highlight = currentAyah == word.ayahKey && isPlaying ? 'highlight' : '';
+    const highlight = currentAyah === word.ayahKey && isPlaying ? 'highlight' : '';
     const className = `${word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
 
     if (word.charTypeId === CHAR_TYPE_WORD) {
-      id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
+      id = `word-${word.ayahKey.replace(/:/, '-')}-${audioPosition}`;
     }
 
     return (
-      <b
+      <b // eslint-disable-line
+        { ...bindTooltip}
         key={word.code}
         id={id}
-        rel="tooltip"
-        onClick={(event) => this.handleWordClick(event.target)}
-        data-key={`${word.ayahKey}:${position}`}
-        data-ayah={word.ayahKey}
+        onClick={this.handleWordClick}
         className={`${className} pointer`}
         title={this.buildTooltip(word, tooltip)}
-        dangerouslySetInnerHTML={{__html: word.code}}
+        dangerouslySetInnerHTML={{ __html: word.code }}
       />
     );
   }
