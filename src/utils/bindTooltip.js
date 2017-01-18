@@ -15,14 +15,14 @@ const positionTooltip = (target, tooltip) => {
 
   let posTop = offsets.top - tooltip.offsetHeight - 10;
 
-  console.log(posLeft, posTop);
+
   if (posLeft < 0) {
     posLeft = (offsets.left + target.offsetWidth) / (2 - 20);
     tooltip.classList.add('left');
   } else {
     tooltip.classList.remove('left');
   }
-  console.log(posLeft, posTop, posLeft + tooltip.offsetWidth, window.innerWidth);
+
   if (posLeft + tooltip.offsetWidth > window.innerWidth) {
     posLeft = (
       (offsets.left - tooltip.offsetWidth) + target.offsetWidth
@@ -31,7 +31,7 @@ const positionTooltip = (target, tooltip) => {
   } else {
     tooltip.classList.remove('right');
   }
-  console.log(posLeft, posTop);
+
   if (posTop < 0) {
     posTop = offsets.top + target.offsetHeight + 15;
     tooltip.classList.add('top');

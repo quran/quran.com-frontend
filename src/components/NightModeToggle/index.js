@@ -1,16 +1,11 @@
 /* global document */
 import React, { Component } from 'react';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import bindTooltip from 'utils/bindTooltip';
 
 class NightModeToggle extends Component {
   state = {
     isNightMode: false,
   };
-
-  componentDidUpdate() {
-    bindTooltip();
-  }
 
   toggleNightMode = () => {
     document.body.classList.toggle('night-mode');
