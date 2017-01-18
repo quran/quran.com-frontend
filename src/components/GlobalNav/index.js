@@ -5,7 +5,6 @@ import Link from 'react-router/lib/Link';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import LocaleSwitcher from 'components/LocaleSwitcher';
 
 import debug from 'helpers/debug';
@@ -59,27 +58,6 @@ class GlobalNav extends Component {
 
     return rightControls || [
       <LocaleSwitcher />,
-      <li>
-        <a
-          href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help"
-          target="_blank"
-          rel="noopener noreferrer"
-          data-metrics-event-name="IndexHeader:Link:Developer"
-        >
-          <LocaleFormattedMessage
-            id="nav.developers"
-            defaultMessage="Developers"
-          />
-        </a>
-      </li>,
-      <li>
-        <a href="https://quran.zendesk.com/hc/en-us" data-metrics-event-name="IndexHeader:Link:Contact">
-          <LocaleFormattedMessage
-            id="nav.contactUs"
-            defaultMessage="Contact Us"
-          />
-        </a>
-      </li>,
       user ?
         <li>
           <Link to="/profile" data-metrics-event-name="IndexHeader:Link:Profile">
@@ -111,6 +89,7 @@ class GlobalNav extends Component {
           <li>
             <Link to="/"><i className="ss-icon ss-home" /></Link>
           </li>
+          <LocaleSwitcher className="visible-xs-inline-block" />
           {
             leftControls &&
             leftControls.map(((control, index) => React.cloneElement(control, { key: index })))

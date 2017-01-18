@@ -1,11 +1,15 @@
 /* global window */
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import cookie from 'react-cookie';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { locales, defaultLocale } from '../../config';
 
 export default class LocaleSwitcher extends Component {
+  static propTypes = {
+    className: PropTypes.string
+  };
+
   state = {
     currentLocale: defaultLocale,
   };
@@ -48,10 +52,13 @@ export default class LocaleSwitcher extends Component {
   }
 
   render() {
+    const { className } = this.props;
+
     return (
       <NavDropdown
         active={false}
         id="site-language-dropdown"
+        className={className}
         title={locales[this.state.currentLocale]}
       >
         {this.renderList()}

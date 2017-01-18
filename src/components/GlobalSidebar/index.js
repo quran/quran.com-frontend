@@ -53,7 +53,10 @@ class GlobalSidebar extends Component {
       >
         <Navbar static fluid>
           <NavbarHeader>
-            <p className="navbar-text">
+            <p // eslint-disable-line
+              className="navbar-text"
+              onClick={() => handleOpen(false)}
+            >
               <LocaleFormattedMessage id="setting.title" defaultMessage="Quran" />
             </p>
           </NavbarHeader>
@@ -92,6 +95,20 @@ class GlobalSidebar extends Component {
                 defaultMessage="Contribute"
               />
             </Link>
+          </li>
+          <li>
+            <a
+              href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-metrics-event-name="IndexHeader:Link:Developer"
+            >
+              <i className="ss-icon ss-laptop vertical-align-middle" />{' '}
+              <LocaleFormattedMessage
+                id="nav.developers"
+                defaultMessage="Developers"
+              />
+            </a>
           </li>
           <li>
             <a href="http://legacy.quran.com" data-metrics-event-name="Sidebar:Link:Legacy">

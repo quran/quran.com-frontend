@@ -35,21 +35,6 @@ a:hover{
   text-decoration: none;
 }
 
-.surah-body{
-  .left-side{
-    width: 16.6666666%;
-    height: 100vh;
-    float: left;
-    display: block;
-    position: fixed;
-    top: 0px;
-
-    @media (max-width: $screen-sm-max) {
-      display: none;
-    }
-  }
-}
-
 .form-control:focus{
   box-shadow: none;
   -webkit-box-shadow: none;
@@ -188,6 +173,10 @@ li em{
 
 // NOTE: This is for dropdown in navbar on mobile
 @media(max-width: $screen-sm){
+  .navbar-nav{
+    margin-bottom: 0px;
+    margin-top: 5px;
+  }
   .navbar-nav .open .dropdown-menu{
     position: absolute;;
     float: left;
