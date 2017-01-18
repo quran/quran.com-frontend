@@ -33,10 +33,10 @@ class GlobalSidebar extends Component {
     document.body.removeEventListener('click', this.onBodyClick.bind(this), true);
   }
 
-  onBodyClick = (event) => {
+  onBodyClick = () => {
     const { open, handleOpen } = this.props;
 
-    if (open && !this.container.contains(event.target)) {
+    if (open) {
       return handleOpen(false);
     }
 
@@ -48,7 +48,6 @@ class GlobalSidebar extends Component {
 
     return (
       <div
-        ref={(container) => { this.container = container; }}
         className={`${styles.container} sidebar ${open && styles.open}`}
       >
         <Navbar static fluid>
