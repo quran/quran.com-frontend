@@ -19,7 +19,14 @@ class GlobalNav extends Component {
     rightControls: PropTypes.arrayOf(PropTypes.element),
     handleSidebarToggle: PropTypes.func.isRequired,
     isStatic: PropTypes.bool.isRequired,
-    user: userType
+    user: userType,
+    location: PropTypes.shape({
+      action: PropTypes.string,
+      hash: PropTypes.string,
+      pathname: PropTypes.string,
+      search: PropTypes.string,
+      query: PropTypes.objectOf(PropTypes.string)
+    })
   };
 
   static defaultProps = {
@@ -51,6 +58,10 @@ class GlobalNav extends Component {
     }
 
     return false;
+  }
+
+  isHome() {
+    return this.props.location.pathname === '/';
   }
 
   renderRightControls() {
@@ -86,10 +97,16 @@ class GlobalNav extends Component {
           <span className="icon-bar" />
         </button>
         <Nav className={styles.nav}>
-          <li>
-            <Link to="/"><i className="ss-icon ss-home" /></Link>
-          </li>
-          <LocaleSwitcher className="visible-xs-inline-block" />
+          {
+            !this.isHome() &&
+            <li>
+              <Link to="/"><i className="ss-icon ss-home" /></Link>
+            </li>
+          }
+          {
+            this.isHome() &&
+            <LocaleSwitcher className="visible-xs-inline-block" />
+          }
           {
             leftControls &&
             leftControls.map(((control, index) => React.cloneElement(control, { key: index })))

@@ -51,7 +51,8 @@ class App extends Component {
       sidebar,
       children,
       media,
-      removeMedia // eslint-disable-line no-shadow
+      removeMedia, // eslint-disable-line no-shadow
+      ...props
     } = this.props;
     debug('component:APPLICATION', 'Render');
 
@@ -75,7 +76,7 @@ class App extends Component {
         </NoScript>
         {
           React.cloneElement(
-            nav || <GlobalNav isStatic />,
+            nav || <GlobalNav isStatic {...props} />,
             {
               handleSidebarToggle: () => this.setState({ sidebarOpen: !this.state.sidebarOpen })
             }
