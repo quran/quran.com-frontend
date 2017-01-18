@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 import cookie from 'react-cookie';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { locales, defaultLocale } from '../../config';
 
 export default class LocaleSwitcher extends Component {
@@ -53,7 +52,7 @@ export default class LocaleSwitcher extends Component {
       <NavDropdown
         active={false}
         id="site-language-dropdown"
-        title={<LocaleFormattedMessage id="local.siteLocale" defaultMessage="Site language " />}
+        title={locales[this.state.currentLocale]}
       >
         {this.renderList()}
       </NavDropdown>

@@ -1,22 +1,24 @@
 @import '../../styles/variables.scss';
 
-$width: 18%;
+$width: 280px;
 
 .container{
   position: fixed;
-  right: 110%;
+  left: $width * -1;
   top: 0px;
   bottom: 0px;
   background: #fff;
   z-index: 1031;
   box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.2);
+  visibility: hidden;
 
   background: #fff;
   width: $width;
-  transition: right 0.35s cubic-bezier(0.24,1,0.32,1);
+  transition: left 0.35s cubic-bezier(0.24,1,0.32,1), visibility 0.2s;
 
   &.open{
-    right: 100% - $width;
+    left: 0px;
+    visibility: visible;;
   }
 
   :global(.navbar-text){
@@ -24,10 +26,11 @@ $width: 18%;
   }
 
   @media(max-width: $screen-sm) {
-    width: 100% - $width;
+    width: $width;
+    left: -1 * $width;
 
     &.open{
-      right: $width;
+      left: 0px;
     }
 
     :global(.navbar-text){

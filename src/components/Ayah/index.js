@@ -9,8 +9,6 @@ import Word from 'components/Word';
 
 import debug from 'helpers/debug';
 
-import bindTooltip from 'utils/bindTooltip';
-
 const styles = require('./style.scss');
 
 export default class Ayah extends Component {
@@ -47,10 +45,6 @@ export default class Ayah extends Component {
     currentWord: null,
     isSearched: false
   };
-
-  componentDidMount() {
-    bindTooltip();
-  }
 
   shouldComponentUpdate(nextProps) {
     const conditions = [

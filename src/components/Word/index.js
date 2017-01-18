@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-
+import bindTooltip from 'utils/bindTooltip';
 /* eslint-disable no-unused-vars */
 const CHAR_TYPE_WORD = 1;
 const CHAR_TYPE_END = 2;
@@ -55,6 +55,7 @@ export default class Line extends React.Component {
 
     return (
       <b // eslint-disable-line
+        { ...bindTooltip}
         key={word.code}
         id={id}
         rel="tooltip"

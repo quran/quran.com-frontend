@@ -1,77 +1,73 @@
 /* global document, window */
 import getOffset from './getOffset';
 
-export default function bindTooltip() {
-  const targets = document.querySelectorAll('[rel=tooltip]');
-  let tip = false;
-  let tooltip = false;
+const positionTooltip = (target, tooltip) => {
+  if (window.innerWidth < tooltip.offsetWidth * 1.5) {
+    tooltip.style.maxWidth = window.innerWidth / 2; // eslint-disable-line
+  } else {
+    tooltip.style.maxWidth = 340; // eslint-disable-line
+  }
 
-  Array.from(targets).forEach((target) => {
-    target.addEventListener('mouseenter', () => {
-      tip = target.getAttribute('title');
-      tooltip = document.createElement('div');
-      tooltip.id = 'tooltip';
+  const offsets = getOffset(target);
 
-      if (tip && tip !== '') {
-        // target.removeAttribute('title');
-        tooltip.style.opacity = 0;
-        tooltip.innerHTML = tip;
-        document.body.appendChild(tooltip);
+  let posLeft = offsets.left + (target.offsetWidth / 2);
+  posLeft -= tooltip.offsetWidth / 2;
 
-        const initTooltip = () => {
-          if (window.innerWidth < tooltip.offsetWidth * 1.5) {
-            tooltip.style.maxWidth = window.innerWidth / 2;
-          } else {
-            tooltip.style.maxWidth = 340;
-          }
+  let posTop = offsets.top - tooltip.offsetHeight - 10;
 
-          let posLeft = getOffset(target).left + (target.offsetWidth / 2);
-          posLeft -= tooltip.offsetWidth / 2;
-          let posTop = getOffset(target).top - tooltip.offsetHeight - 10;
+  console.log(posLeft, posTop);
+  if (posLeft < 0) {
+    posLeft = (offsets.left + target.offsetWidth) / (2 - 20);
+    tooltip.classList.add('left');
+  } else {
+    tooltip.classList.remove('left');
+  }
+  console.log(posLeft, posTop, posLeft + tooltip.offsetWidth, window.innerWidth);
+  if (posLeft + tooltip.offsetWidth > window.innerWidth) {
+    posLeft = (
+      (offsets.left - tooltip.offsetWidth) + target.offsetWidth
+    ) / (2 + 20);
+    tooltip.classList.add('right');
+  } else {
+    tooltip.classList.remove('right');
+  }
+  console.log(posLeft, posTop);
+  if (posTop < 0) {
+    posTop = offsets.top + target.offsetHeight + 15;
+    tooltip.classList.add('top');
+  } else {
+    tooltip.classList.remove('top');
+  }
 
-          if (posLeft < 0) {
-            posLeft = (getOffset(target).left + target.offsetWidth) / (2 - 20);
-            tooltip.classList.add('left');
-          } else {
-            tooltip.classList.remove('left');
-          }
+  tooltip.style.left = `${posLeft}px`; // eslint-disable-line
+  tooltip.style.top = `${posTop}px`; // eslint-disable-line
+  tooltip.style.opacity = 1; // eslint-disable-line
+};
 
-          if (posLeft + tooltip.offsetWidth > window.innerWidth) {
-            posLeft = (
-              (getOffset(target).left - tooltip.offsetWidth) + target.offsetWidth
-            ) / (2 + 20);
-            tooltip.classList.add('right');
-          } else {
-            tooltip.classList.remove('right');
-          }
+export default {
+  onMouseEnter: (event) => {
+    const target = event.target;
+    const title = target.getAttribute('title');
+    const tooltip = document.createElement('div');
 
-          if (posTop < 0) {
-            posTop = getOffset(target).top + target.offsetHeight + 15;
-            tooltip.classList.add('top');
-          } else {
-            tooltip.classList.remove('top');
-          }
+    tooltip.id = `tooltip-${target.id}`;
+    tooltip.classList.add('tooltip');
 
-          tooltip.style.left = `${posLeft}px`;
-          tooltip.style.top = `${posTop}px`;
-          tooltip.style.opacity = 1;
-        };
+    if (!title) {
+      return false;
+    }
 
-        initTooltip();
+    tooltip.style.opacity = 0;
+    tooltip.innerHTML = title;
+    document.body.appendChild(tooltip);
+    return positionTooltip(target, tooltip);
+  },
+  onMouseLeave: (event) => {
+    const target = event.target;
+    const tooltip = document.getElementById(`tooltip-${target.id}`);
 
-        window.addEventListener('resize', initTooltip);
-
-        const removeTooltip = () => {
-          tooltip.style.opacity = 0;
-          if (document.querySelector('#tooltip')) {
-            document.body.removeChild(document.querySelector('#tooltip'));
-          }
-          // target.setAttribute('title', tip);
-        };
-
-        target.addEventListener('mouseleave', removeTooltip);
-        tooltip.addEventListener('click', removeTooltip);
-      }
-    });
-  });
-}
+    if (tooltip) {
+      document.body.removeChild(tooltip);
+    }
+  }
+};

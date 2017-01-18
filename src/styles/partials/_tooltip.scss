@@ -1,4 +1,4 @@
-#tooltip {
+.tooltip {
     text-align: center;
     color: #fff;
     font-family: Montserrat, sans-serif;
@@ -28,19 +28,19 @@
     }
 }
 
-#tooltip.top:after {
+.tooltip.top:after {
     border-top-color: transparent;
     border-bottom: 10px solid $tooltip-bg;
     top: -20px;
     bottom: auto;
 }
 
-#tooltip.left:after {
+.tooltip.left:after {
     left: 10px;
     margin: 0;
 }
 
-#tooltip.right:after {
+.tooltip.right:after {
     right: 10px;
     left: auto;
     margin: 0;
