@@ -143,8 +143,10 @@ export default class Ayah extends Component {
 
   renderText() {
     const { ayah, tooltip, currentAyah, isPlaying, audioActions, isSearched } = this.props;
+    // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
+    let wordAudioPosition = -1;
 
-    const text = ayah.words.map(word => (
+    const text = ayah.words.map(word => ( // eslint-disable-line
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -152,6 +154,7 @@ export default class Ayah extends Component {
         tooltip={tooltip}
         isPlaying={isPlaying}
         audioActions={audioActions}
+        audioPosition={word.wordId ? wordAudioPosition += 1 : null}
         isSearched={isSearched}
       />
     ));

@@ -34,10 +34,10 @@ export function setCurrentWord(word) {
   };
 }
 
-export function playCurrentWord(word) {
+export function playCurrentWord(payload) {
   return {
     type: PLAY_CURRENT_WORD,
-    word
+    payload
   };
 }
 

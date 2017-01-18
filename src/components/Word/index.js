@@ -12,6 +12,7 @@ export default class Word extends React.Component {
     word: PropTypes.object.isRequired, // eslint-disable-line
     tooltip: PropTypes.string,
     audioActions: PropTypes.object.isRequired, // eslint-disable-line
+    audioPosition: PropTypes.number,
     currentAyah: PropTypes.string.isRequired,
     isPlaying: PropTypes.bool,
     isSearched: PropTypes.bool
@@ -27,30 +28,31 @@ export default class Word extends React.Component {
     return title;
   }
 
-  handleWordClick = (word) => {
-    const { currentAyah, audioActions, isPlaying, isSearched } = this.props;
+  handleWordClick = () => {
+    const { word, currentAyah, audioActions, audioPosition, isPlaying, isSearched } = this.props;
+
     if (isSearched) {
       return;
     }
+
     if ((currentAyah === word.ayahKey) && isPlaying) {
-      audioActions.setCurrentWord(word.data.key);
+      audioActions.setCurrentWord(word.code);
     } else {
       audioActions.pause();
-      audioActions.setAyah(word.dataset.ayah);
-      audioActions.playCurrentWord(word.dataset.key);
+      audioActions.setAyah(word.ayahKey);
+      audioActions.playCurrentWord({ word, position: audioPosition });
     }
   }
 
   render() {
-    const { tooltip, word, currentAyah, isPlaying } = this.props;
+    const { tooltip, word, currentAyah, isPlaying, audioPosition } = this.props;
 
     let id = null;
-    const position = word.position - 1;
     const highlight = currentAyah === word.ayahKey && isPlaying ? 'highlight' : '';
     const className = `${word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
 
     if (word.charTypeId === CHAR_TYPE_WORD) {
-      id = `word-${word.ayahKey.replace(/:/, '-')}-${position}`;
+      id = `word-${word.ayahKey.replace(/:/, '-')}-${audioPosition}`;
     }
 
     return (
@@ -58,10 +60,7 @@ export default class Word extends React.Component {
         { ...bindTooltip}
         key={word.code}
         id={id}
-        rel="tooltip"
-        onClick={event => this.handleWordClick(event.target)}
-        data-key={`${word.ayahKey}:${position}`}
-        data-ayah={word.ayahKey}
+        onClick={this.handleWordClick}
         className={`${className} pointer`}
         title={this.buildTooltip(word, tooltip)}
         dangerouslySetInnerHTML={{ __html: word.code }}
