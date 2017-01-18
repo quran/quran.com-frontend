@@ -1,47 +1,47 @@
 .tooltip {
-    text-align: center;
-    color: #fff;
-    font-family: Montserrat, sans-serif;
-    background-color: $tooltip-bg;
-    position: absolute;
-    z-index: 10000;
-    padding: 10px;
-		border-radius: 5px;
-		-webkit-transition: 100ms ease;
-		-moz-transition: 50ms ease;
-		-o-transition: 50ms ease;
-		-ms-transition: 50ms ease;
-		transition: 50ms ease;
+  text-align: center;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  background-color: $tooltip-bg;
+  position: absolute;
+  z-index: 10000;
+  padding: 10px;
+	border-radius: 5px;
+	-webkit-transition: 100ms ease;
+	-moz-transition: 50ms ease;
+	-o-transition: 50ms ease;
+	-ms-transition: 50ms ease;
+	transition: 50ms ease;
 
-    /* triangle decoration */
-    &:after {
-        width: 0;
-        height: 0;
-        border-left: 10px solid transparent;
-        border-right: 10px solid transparent;
-        border-top: 10px solid $tooltip-bg;
-        content: '';
-        position: absolute;
-        left: 50%;
-        bottom: -9px;
-        margin-left: -10px;
-    }
+  /* triangle decoration */
+  &:after {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid $tooltip-bg;
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -9px;
+    margin-left: -10px;
+  }
 }
 
 .tooltip.top:after {
-    border-top-color: transparent;
-    border-bottom: 10px solid $tooltip-bg;
-    top: -20px;
-    bottom: auto;
+  border-top-color: transparent;
+  border-bottom: 10px solid $tooltip-bg;
+  top: -20px;
+  bottom: auto;
 }
 
 .tooltip.left:after {
-    left: 10px;
-    margin: 0;
+  left: 10px;
+  margin: 0;
 }
 
 .tooltip.right:after {
-    right: 10px;
-    left: auto;
-    margin: 0;
+  right: 10px;
+  left: auto;
+  margin: 0;
 }

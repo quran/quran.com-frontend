@@ -69,7 +69,7 @@ export default {
     'nav.contactUs': 'Contact us',
     'nav.help': 'Help & feedback',
     'nav.aboutQuranProject': 'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.', // eslint-disable-line max-len
-    'nav.mobile': 'Mobile',
+    'nav.mobile': 'Mobile Apps',
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
 

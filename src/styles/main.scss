@@ -1,20 +1,15 @@
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
-@import 'mixins/center';
-@import 'components/SurahNav';
 @import 'components/MasterHeader';
 @import 'components/SmartBanner';
 @import 'fonts/fonts';
 
 @import 'partials/navbar-brand';
 @import 'partials/search-input';
-@import 'partials/surah-title';
 @import 'partials/dropdown';
 @import 'partials/index-header';
-@import 'partials/modal';
 @import 'partials/tooltip';
 @import 'partials/highlight';
-@import 'partials/local-switcher';
 @import 'nightmode';
 @import 'partials/no-script';
 
@@ -187,6 +182,9 @@ li em{
   font-family: 'Nafees';
 }
 
+.modal-backdrop{
+  bottom: 0;
+}
 
 // NOTE: This is for dropdown in navbar on mobile
 @media(max-width: $screen-sm){

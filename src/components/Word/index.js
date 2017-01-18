@@ -7,12 +7,12 @@ const CHAR_TYPE_PAUSE = 3;
 const CHAR_TYPE_RUB = 4;
 const CHAR_TYPE_SAJDAH = 5;
 
-export default class Line extends React.Component {
+export default class Word extends React.Component {
   static propTypes = {
     word: PropTypes.object.isRequired, // eslint-disable-line
     tooltip: PropTypes.string,
     audioActions: PropTypes.object.isRequired, // eslint-disable-line
-    currentAyah: PropTypes.object.isRequired, // eslint-disable-line
+    currentAyah: PropTypes.string.isRequired,
     isPlaying: PropTypes.bool,
     isSearched: PropTypes.bool
   };

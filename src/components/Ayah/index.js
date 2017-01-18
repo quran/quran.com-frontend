@@ -180,7 +180,7 @@ export default class Ayah extends Component {
           onClick={() => this.handlePlay(ayah.ayahKey)}
           className="text-muted"
         >
-          <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'}`} />
+          <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`} />{' '}
           <LocaleFormattedMessage
             id={playing ? 'actions.pause' : 'actions.play'}
             defaultMessage={playing ? 'Pause' : 'Play'}
@@ -216,7 +216,8 @@ export default class Ayah extends Component {
           onClick={() => bookmarkActions.removeBookmark(ayah.ayahKey)}
           className="text-muted"
         >
-          <strong><i className="ss-icon ss-bookmark" />
+          <strong>
+            <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
             <LocaleFormattedMessage
               id="ayah.bookmarked"
               defaultMessage="Bookmarked"
@@ -232,7 +233,7 @@ export default class Ayah extends Component {
         onClick={() => bookmarkActions.addBookmark(ayah.ayahKey)}
         className="text-muted"
       >
-        <i className="ss-icon ss-bookmark" />
+        <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
         <LocaleFormattedMessage
           id="ayah.bookmark"
           defaultMessage="Bookmark"
