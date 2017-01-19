@@ -1,28 +1,10 @@
-import AES from 'crypto-js/aes';
-import Utf8 from 'crypto-js/enc-utf8';
-
-import debug from 'helpers/debug';
-
 export const buildSegments = (segments) => {
-  let parsedSegments = null;
-  debug('helper:buildSegments', 'init');
-
-  try {
-    parsedSegments = JSON.parse(
-      AES.decrypt(segments, process.env.SEGMENTS_KEY).toString(Utf8)
-    );
-  } catch (e) {
-    parsedSegments = [];
-  }
-
-  debug('helper:buildSegments', 'finish');
-
   const words = {};
-  const intervals = parsedSegments.map(segment => {
-    const startTime = segment[0];
-    const endTime = segment[0] + segment[1];
-    const duration = segment[1];
-    const wordIndex = segment[2];
+  const intervals = segments.map((segment) => {
+    const startTime = segment[2];
+    const endTime = segment[3];
+    const duration = segment[3] - segment[2];
+    const wordIndex = segment[0];
     const mappedVal = {
       startTime: startTime / 1000,
       endTime: endTime / 1000,
@@ -39,19 +21,14 @@ export const buildSegments = (segments) => {
   return { words, intervals };
 };
 
-
 export const extractSegments = (ayahs) => {
   const segments = {};
 
-  Object.values(ayahs).forEach((ayah, index) => {
+  Object.values(ayahs).forEach((ayah) => {
     if (ayah.audio) {
-      if (ayah.audio.encryptedSegments) {
-        segments[ayah.ayahKey] = ayah.audio.encryptedSegments;
+      if (ayah.audio.segments) {
+        segments[ayah.ayahKey] = buildSegments(ayah.audio.segments);
       }
-    }
-
-    if (index === 0 && segments[ayah.ayahKey]) {
-      segments[ayah.ayahKey] = buildSegments(segments[ayah.ayahKey]); // prebuild the first one
     }
   });
 

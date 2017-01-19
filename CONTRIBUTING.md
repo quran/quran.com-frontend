@@ -75,15 +75,8 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 
 6. Now [open a pull request] with a clear title and description.
 
-## Sever-side integration
-Unless you have the backend API running locally, you will need to update the `API_URL`, in `development.env` file, from `localhost` to `api.quran.com`. Leave the port number same.
-
-To start the app, run `npm run dev` which will run both the server and the client (webpack) to compile upon edits. Go to http://localhost:8001 in your browser, not 8000 (that is just the express server).
-
-If you experience an issue, check the [contributing] guidelines.
 
 [upstream]: https://help.github.com/articles/syncing-a-fork/
-[contributing]: https://guides.github.com/activities/contributing-to-open-source/
 [already been reported]: https://github.com/quran/quran.com-frontend/issues
 [fork this project]:     https://github.com/quran/quran.com-frontend/fork
 [open a pull request]:   https://help.github.com/articles/using-pull-requests/

@@ -2,106 +2,126 @@
 import React, { Component, PropTypes } from 'react';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
-import Link from 'react-router/lib/Link';
+import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
-
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
+import Modal from 'react-bootstrap/lib/Modal';
+import SmartBanner from 'components/SmartBanner';
+import GlobalNav from 'components/GlobalNav';
+import GlobalSidebar from 'components/GlobalSidebar';
 import Col from 'react-bootstrap/lib/Col';
 
-import debug from '../../helpers/debug';
-import config from '../../config';
-import metricsConfig from '../../helpers/metrics';
-
+import debug from 'helpers/debug';
+import config from 'config';
+import metricsConfig from 'helpers/metrics';
+import Footer from 'components/Footer';
+import NoScript from 'components/NoScript';
 import FontStyles from 'components/FontStyles';
+import { removeMedia } from 'redux/actions/media';
 
-const styles = require('./style.scss');
+import authConnect from './connect';
+
+const ModalHeader = Modal.Header;
+const ModalTitle = Modal.Title;
+const ModalBody = Modal.Body;
 
 class App extends Component {
   static propTypes = {
-    surahs: PropTypes.object,
-    children: PropTypes.any
+    media: PropTypes.shape({
+      content: PropTypes.string
+    }).isRequired,
+    removeMedia: PropTypes.func.isRequired,
+    children: PropTypes.element,
+    main: PropTypes.element,
+    nav: PropTypes.element,
+    sidebar: PropTypes.element,
   };
 
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
 
+  state = {
+    sidebarOpen: false
+  }
+
   render() {
-    const { children } = this.props;
+    const {
+      main,
+      nav,
+      sidebar,
+      children,
+      media,
+      removeMedia, // eslint-disable-line no-shadow
+      ...props
+    } = this.props;
     debug('component:APPLICATION', 'Render');
 
     return (
       <div>
         <Helmet {...config.app.head} />
         <FontStyles />
-        {children}
-        <footer className={styles.footer}>
-          <Grid fluid>
-            <Row>
-              <Col md={2} mdOffset={3} xs={4} xsOffset={1} className={styles.about}>
-                <ul className={`source-sans ${styles.list}`}>
-                  <li><a href="/about">About</a></li>
-                  <li><a href="/contact">Contact</a></li>
-                  <li>
-                    <a href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help" target="_blank" data-metrics-event-name="Footer:Link:Developer">
-                      Developers
-                    </a>
-                  </li>
-                </ul>
-              </Col>
-              <Col md={2} xs={5} className={styles.links}>
-                <ul className={`source-sans ${styles.list}`}>
-                  <li><a target="_blank" href="http://sunnah.com/" data-metrics-event-name="Footer:Link:Sunnah">Sunnah.com</a></li>
-                  <li><a target="_blank" href="http://salah.com/" data-metrics-event-name="Footer:Link:Salah">Salah.com</a></li>
-                  <li><a target="_blank" href="http://quranicaudio.com/" data-metrics-event-name="Footer:Link:QuranicAudio">QuranicAudio.com</a></li>
-                  <li>
-                    <a target="_blank" href="http://corpus.quran.com/wordbyword.jsp" data-metrics-event-name="Footer:Link:Corpus">
-                      Corpus: Word by Word
-                    </a>
-                  </li>
-                </ul>
-              </Col>
-              <Col md={2} className={`text-right ${styles.links}`}>
-                <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>
-                <p className="monserrat">
-                  Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran){' '}
-                  is a pro bono project.
-                </p>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={10} mdOffset={1} className="text-center">
-                <ul className={`list-inline ${styles.seo}`}>
-                  <li><a href="/sitemap.xml">Sitemap</a></li>
-                  <li>
-                    <Link
-                      to="/36"
-                      data-metrics-event-name="Footer:Link:Click"
-                      data-metrics-surah-id="36"
-                    >
-                      Surah Yasin, Yaseen (يس)
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/2/255"
-                      data-metrics-event-name="Footer:Link:Click"
-                      data-metrics-surah-id="2/255"
-                    >
-                      Ayat Al-Kursi (آية الكرسي)
-                    </Link>
-                  </li>
-                </ul>
-              </Col>
-            </Row>
-          </Grid>
-        </footer>
+        <NoScript>
+          <div className="row noscript-warning">
+            <Col md={12}>
+              <p>
+                Looks like either your browser does not support Javascript or its disabled.
+                Quran.com workes best with JavaScript enabled.
+                For more instruction on how to enable javascript
+                <a href="http://www.enable-javascript.com/">
+                  Click here
+                </a>
+              </p>
+            </Col>
+          </div>
+        </NoScript>
+        {
+          React.cloneElement(
+            nav || <GlobalNav isStatic {...props} />,
+            {
+              handleSidebarToggle: () => this.setState({ sidebarOpen: !this.state.sidebarOpen })
+            }
+          )
+        }
+        {
+          React.cloneElement(
+            sidebar || <GlobalSidebar />,
+            {
+              open: this.state.sidebarOpen,
+              handleOpen: open => this.setState({ sidebarOpen: open })
+            }
+          )
+        }
+        {children || main}
+        <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
+        <Footer />
+        <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>
+          <ModalHeader closeButton>
+            <ModalTitle className="montserrat">
+              {media.content && media.content.resource.name}
+            </ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <div className="embed-responsive embed-responsive-16by9">
+              {
+                media.content &&
+                  <iframe
+                    className="embed-responsive-item"
+                    src={media.content.url}
+                    allowFullScreen
+                  />
+              }
+            </div>
+          </ModalBody>
+        </Modal>
       </div>
     );
   }
 }
 
 const metricsApp = metrics(metricsConfig)(App);
+const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 
-export default connect(state => ({surahs: state.surahs.entities }))(metricsApp);
+export default connect(
+  state => ({ media: state.media }),
+  { removeMedia }
+)(AsyncApp);

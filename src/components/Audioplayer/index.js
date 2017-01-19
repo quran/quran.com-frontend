@@ -1,39 +1,49 @@
+/* global document */
+// TODO: This file is too too large.
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
 
-// Redux
-import * as AudioActions from '../../redux/actions/audioplayer';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-// Components
+// Helpers
+import debug from 'helpers/debug';
+import scroller from 'utils/scroller';
+
+import { surahType, segmentType } from 'types';
+
+// Redux
+import * as AudioActions from 'redux/actions/audioplayer';
+
 import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
 import RepeatDropdown from './RepeatDropdown';
-
-// Helpers
-import debug from '../../helpers/debug';
-import scroller from '../../utils/scroller';
 
 const style = require('./style.scss');
 
 export class Audioplayer extends Component {
   static propTypes = {
     className: PropTypes.string,
-    surah: PropTypes.object.isRequired,
+    surah: surahType,
     onLoadAyahs: PropTypes.func.isRequired,
-    segments: PropTypes.object,
-    files: PropTypes.object,
+    segments: PropTypes.objectOf(segmentType),
+    // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
+    files: PropTypes.object, // eslint-disable-line
     currentAyah: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
     isLoadedOnClient: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
     play: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
-    next: PropTypes.func.isRequired,
-    previous: PropTypes.func.isRequired,
+    next: PropTypes.func.isRequired, // eslint-disable-line
+    previous: PropTypes.func.isRequired, // eslint-disable-line
     update: PropTypes.func.isRequired,
-    repeat: PropTypes.object.isRequired,
+    repeat: PropTypes.shape({
+      from: PropTypes.number,
+      to: PropTypes.number,
+      time: PropTypes.number,
+    }).isRequired,
     shouldScroll: PropTypes.bool.isRequired,
     setRepeat: PropTypes.func.isRequired,
     setAyah: PropTypes.func.isRequired,
@@ -41,11 +51,8 @@ export class Audioplayer extends Component {
     isPlaying: PropTypes.bool,
     currentTime: PropTypes.number,
     duration: PropTypes.number,
-    currentFile: PropTypes.object
-  };
-
-  static defaultProps = {
-    className: 'col-md-3'
+    // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
+    currentFile: PropTypes.any // eslint-disable-line
   };
 
   componentDidMount() {
@@ -67,6 +74,11 @@ export class Audioplayer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // Make sure we have a current ayah to mount it to Audio
+    if (!this.props.currentAyah && !nextProps.currentFile) {
+      return false;
+    }
+
     // When you go directly to the surah page, /2, the files are not loaded yet
     if (this.props.isLoadedOnClient !== nextProps.isLoadedOnClient) {
       return this.handleAddFileListeners(nextProps.currentFile);
@@ -162,7 +174,7 @@ export class Audioplayer extends Component {
     const ayahIds = Object.keys(files);
     const index = ayahIds.findIndex(id => id === currentAyah) + 1;
 
-    for (let id = index; id <= index + 2; id++) {
+    for (let id = index; id <= index + 2; id += 1) {
       if (ayahIds[id]) {
         const ayahKey = ayahIds[id];
 
@@ -251,7 +263,7 @@ export class Audioplayer extends Component {
 
   handleAddFileListeners(file) {
     const { update, currentTime } = this.props; // eslint-disable-line no-shadow
-    console.log('component:Audioplayer', `Attaching listeners to ${file.src}`);
+    debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
 
     // Preload file
     file.setAttribute('preload', 'auto');
@@ -297,19 +309,15 @@ export class Audioplayer extends Component {
       file.ontimeupdate = null; // eslint-disable-line no-param-reassign
     };
 
-    const onProgress = () => {
-    };
-
     file.onloadeddata = onLoadeddata;  // eslint-disable-line no-param-reassign
     file.onpause = onPause; // eslint-disable-line no-param-reassign
     file.onplay = onPlay; // eslint-disable-line no-param-reassign
     file.onended = onEnded; // eslint-disable-line no-param-reassign
-    file.onprogress = onProgress; // eslint-disable-line no-param-reassign
 
     return file;
   }
 
-  handleRemoveFileListeneres(file) {
+  handleRemoveFileListeneres = (file) => {
     file.pause();
     file.currentTime = 0; // eslint-disable-line no-param-reassign
     file.onloadeddata = null; // eslint-disable-line no-param-reassign
@@ -333,15 +341,13 @@ export class Audioplayer extends Component {
   renderPlayStopButtons() {
     const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
 
-    let icon = <i className="ss-icon ss-play" />;
-
-    if (isPlaying) {
-      icon = <i className="ss-icon ss-pause" />;
-    }
-
     return (
-      <a className={`pointer ${style.buttons}`} onClick={isPlaying ? pause : this.play}>
-        {icon}
+      <a
+        tabIndex="-1"
+        className={`pointer text-center ${style.playingButton} ${style.buttons}`}
+        onClick={isPlaying ? pause : this.play}
+      >
+        <i className={`ss-icon ${isPlaying ? 'ss-pause' : 'ss-play'}`} />
       </a>
     );
   }
@@ -353,6 +359,7 @@ export class Audioplayer extends Component {
 
     return (
       <a
+        tabIndex="-1"
         className={`pointer ${style.buttons} ${!index ? style.disabled : ''}`}
         onClick={() => index && this.handleAyahChange('previous')}
       >
@@ -368,6 +375,7 @@ export class Audioplayer extends Component {
 
     return (
       <a
+        tabIndex="-1"
         className={`pointer ${style.buttons} ${isEnd ? style.disabled : ''}`}
         onClick={() => !isEnd && this.handleAyahChange()}
       >
@@ -381,43 +389,69 @@ export class Audioplayer extends Component {
 
     const {
       className,
-      currentFile,
       segments,
       isLoading,
       currentAyah,
       currentTime,
       duration,
       surah,
+      isPlaying,
       isLoadedOnClient,
       repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
       setRepeat // eslint-disable-line no-shadow
     } = this.props;
 
-    if (isLoading) {
+    if (isLoading || !currentAyah) {
       return (
         <li className={`${style.container} ${className}`}>
-          <div>Loading...</div>
+          <div>
+            <LocaleFormattedMessage
+              id="app.loading"
+              defaultMessage="Loading..."
+            />
+          </div>
         </li>
       );
     }
 
     return (
-      <div className={`${style.padding_left} ${style.container} ${className}`}>
-        <ul className={style.list}>
-          <li className={style.verse}>
-            Playing: {currentAyah.split(':')[1]}
+      <div className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}>
+        <div className={style.wrapper}>
+          {isLoadedOnClient ?
+            <Track
+              progress={(currentTime / duration) * 100}
+              onTrackChange={this.handleTrackChange}
+            /> : null}
+          {
+            isLoadedOnClient &&
+            segments &&
+            segments[currentAyah] &&
+            segments[currentAyah] &&
+              <Segments
+                segments={segments[currentAyah]}
+                currentAyah={currentAyah}
+                currentTime={currentTime}
+              />
+          }
+        </div>
+        <ul className={`list-inline ${style.controls}`}>
+          <li className={style.controlItem}>
+            <LocaleFormattedMessage
+              id="player.currentAyah"
+              defaultMessage="Ayah"
+            />: {currentAyah.split(':')[1]}
           </li>
-          <li>
+          <li className={style.controlItem}>
             {this.renderPreviousButton()}
           </li>
-          <li>
+          <li className={style.controlItem}>
             {this.renderPlayStopButtons()}
           </li>
-          <li>
+          <li className={style.controlItem}>
             {this.renderNextButton()}
           </li>
-          <li>
+          <li className={style.controlItem}>
             <RepeatDropdown
               repeat={repeat}
               setRepeat={setRepeat}
@@ -425,24 +459,10 @@ export class Audioplayer extends Component {
               surah={surah}
             />
           </li>
-          <li>
+          <li className={style.controlItem}>
             <ScrollButton shouldScroll={shouldScroll} onScrollToggle={this.handleScrollToggle} />
           </li>
         </ul>
-        <div className={style.wrapper}>
-          {isLoadedOnClient ?
-            <Track
-              progress={currentTime / duration * 100}
-              onTrackChange={this.handleTrackChange}
-            /> : null}
-          {isLoadedOnClient && segments[currentAyah] && typeof segments[currentAyah] !== 'string' ?
-            <Segments
-              audio={currentFile}
-              segments={segments[currentAyah]}
-              currentAyah={currentAyah}
-              currentTime={currentTime}
-            /> : null}
-        </div>
       </div>
     );
   }

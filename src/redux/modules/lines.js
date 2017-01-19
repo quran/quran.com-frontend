@@ -3,9 +3,9 @@ import {
   LOAD as AYAHS_LOAD,
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
   LOAD_FAIL as AYAHS_LOAD_FAIL,
-  } from '../constants/ayahs.js';
+  } from 'redux/constants/ayahs.js';
 
-import { SET_CURRENT as SURAHS_SET_CURRENT } from '../constants/surahs.js';
+import { SET_CURRENT as SURAHS_SET_CURRENT } from 'redux/constants/surahs.js';
 
 const initialState = {
   lines: {}
@@ -27,14 +27,14 @@ export default function reducer(state = initialState, action = {}) {
     case AYAHS_LOAD_SUCCESS:
       const ayahs = action.result.entities.ayahs;
       const stateLines = state.lines;
-      const lines = {...stateLines};
+      const lines = { ...stateLines };
 
-      action.result.result.forEach(ayahId => {
+      action.result.result.forEach((ayahId) => {
         const ayah = ayahs[ayahId];
 
-        ayah.words.forEach(word => {
+        ayah.words.forEach((word) => {
           if (lines[`${word.pageNum}-${word.lineNum}`]) {
-            const isInArray = lines[`${word.pageNum}-${word.lineNum}`].find(item => {
+            const isInArray = lines[`${word.pageNum}-${word.lineNum}`].find((item) => {
               const itemChecksum = `${item.lineNum}${item.code}${item.ayahKey}${item.position}`;
               const dataChecksum = `${word.lineNum}${word.code}${word.ayahKey}${item.position}`;
 
@@ -58,7 +58,6 @@ export default function reducer(state = initialState, action = {}) {
         lines
       };
     case AYAHS_LOAD_FAIL:
-      console.log(action);
       return state;
     default:
       return state;

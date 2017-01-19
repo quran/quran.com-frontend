@@ -1,14 +1,13 @@
+import * as audioplayerConstant from 'redux/constants/audioplayer.js';
+import * as ayahsConstants from 'redux/constants/ayahs.js';
+import * as surahsConstants from 'redux/constants/surahs.js';
+
 import * as audioplayerActions from './audioplayer.js';
 import * as ayahsActions from './ayahs.js';
 import * as surahsActions from './surahs.js';
-import * as audioplayerConstant from '../constants/audioplayer.js';
-import * as ayahsConstants from '../constants/ayahs.js';
-import * as surahsConstants from '../constants/surahs.js';
 
-
-describe("action tests", () => {
-
-  it("audioplayer actions", () => {
+describe('action tests', () => {
+  it('audioplayer actions', () => {
     expect(audioplayerActions.setUserAgent('abc').type).to.equal(audioplayerConstant.SET_USER_AGENT);
     expect(audioplayerActions.setCurrentFile('fil').type).to.equal(audioplayerConstant.SET_CURRENT_FILE);
     expect(audioplayerActions.setCurrentWord('word').type).to.equal(audioplayerConstant.SET_CURRENT_WORD);
@@ -22,7 +21,7 @@ describe("action tests", () => {
     expect(audioplayerActions.update('abc').type).to.equal(audioplayerConstant.UPDATE);
   });
 
-  it("ayahs actions", () => {
+  it('ayahs actions', () => {
     expect(ayahsActions.load(1, 2, 4).types.length).to.equal(3);
     expect(ayahsActions.clearCurrent().type).to.equal(ayahsConstants.CLEAR_CURRENT);
     expect(ayahsActions.clearCurrentWord(1).type).to.equal(ayahsConstants.CLEAR_CURRENT_WORD);
@@ -30,14 +29,10 @@ describe("action tests", () => {
     expect(ayahsActions.setCurrentWord(1).type).to.equal(ayahsConstants.SET_CURRENT_WORD);
   });
 
-  it("surahs actions", () => {
+  it('surahs actions', () => {
     expect(surahsActions.loadAll().types.length).to.equal(3);
     expect(surahsActions.load(1).types.length).to.equal(3);
     expect(surahsActions.loadInfo('url').types.length).to.equal(3);
     expect(surahsActions.setCurrent(1).type).to.equal(surahsConstants.SET_CURRENT);
   });
-
-
-
-
 });

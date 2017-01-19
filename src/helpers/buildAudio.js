@@ -1,3 +1,4 @@
+/* global Audio */
 export function buildAudioForAyah(audio) {
   const scopedAudio = new Audio();
   let segments = null;
@@ -19,9 +20,9 @@ export function buildAudioForAyah(audio) {
 }
 
 export function buildAudioFromHash(ayahsObject = {}) {
-  const audioFromHash = {files: {}, segments: {}};
+  const audioFromHash = { files: {}, segments: {} };
 
-  Object.keys(ayahsObject).forEach(ayahId => {
+  Object.keys(ayahsObject).forEach((ayahId) => {
     const ayah = ayahsObject[ayahId];
     const audioForAyah = buildAudioForAyah(ayah.audio);
 
@@ -34,7 +35,7 @@ export function buildAudioFromHash(ayahsObject = {}) {
 
 
 export default function buildAudio(ayahs) {
-  if (!~~ayahs.length) {
+  if (!ayahs.length) {
     return false;
   }
 

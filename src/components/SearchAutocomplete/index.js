@@ -1,70 +1,73 @@
+// TODO: Should be handled by redux and not component states.
 import React, { Component, PropTypes } from 'react';
-import ApiClient from '../../helpers/ApiClient';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
+import { surahType } from 'types';
 
-const client = new ApiClient();
+import { suggest } from 'redux/actions/suggest';
 
 const styles = require('./style.scss');
 
+const ayahRegex = /^(\d+)(?::(\d+))?$/;
+
 class SearchAutocomplete extends Component {
   static propTypes = {
-    surahs: PropTypes.object.isRequired,
+    surahs: PropTypes.objectOf(surahType).isRequired,
     value: PropTypes.string,
-    input: PropTypes.any,
+    // TODO: This should not be doing html stuff. Should use react onKeydown.
+    input: PropTypes.any, // eslint-disable-line
     push: PropTypes.func.isRequired,
-    lang: PropTypes.string
+    suggest: PropTypes.func.isRequired,
+    suggestions: PropTypes.arrayOf(PropTypes.shape({
+      ayah: PropTypes.string,
+      href: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired
+    })),
+    lang: PropTypes.string,
+    delay: PropTypes.number,
   };
 
-  constructor(...args) {
-    super(...args);
-
-    this.cached = {};
-    this.timer = null;
-    this.delay = 200;
+  static defaultProps = {
+    delay: 200
   }
-
-  state = {
-    ayat: [],
-    surahs: []
-  };
 
   componentDidMount() {
     this.props.input.addEventListener('keydown', this.handleInputKeyDown.bind(this));
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.timer) {
-      clearTimeout(this.timer);
-    }
+    if (this.props.value !== nextProps.value) {
+      if (this.timer) {
+        clearTimeout(this.timer);
+      }
 
-    this.timer = setTimeout(() => {
-      this.suggest(nextProps.value);
-    }, this.delay);
+      this.timer = setTimeout(() => {
+        this.suggest(nextProps.value);
+      }, this.props.delay);
+    }
 
     return false;
   }
 
-  suggest(value) {
-    this.handleSurahSuggestions(value);
+  getSuggestions() {
+    let suggestions = this.getSurahSuggestions(this.props.value);
 
-    if (value.length === 0 && this.state.surahs.length > 0) {
-      this.setState({surahs: []});
+    if (this.props.suggestions) {
+      suggestions = suggestions.concat(this.props.suggestions);
     }
 
-    if (value.length >= 3) {
-      this.handleAyahSuggestions(value);
-    } else if (this.state.ayat.length > 0) {
-      this.setState({ayat: []});
-    }
+    return suggestions;
   }
 
-  handleSurahSuggestions(value) {
+  getSurahSuggestions = (value) => {
     const matches = [];
-    const ayahRgx = /^(\d+)(?::(\d+))?$/;
 
-    if (ayahRgx.test(value)) {
-      const captures = value.match(ayahRgx);
+    if (!value) return matches;
+
+    const isAyahKeySearch = ayahRegex.test(value);
+
+    if (isAyahKeySearch) {
+      const captures = value.match(ayahRegex);
       const surahId = captures[1];
       const ayahNum = captures[2];
       const surah = this.props.surahs[surahId];
@@ -72,7 +75,7 @@ class SearchAutocomplete extends Component {
     } else if (value.length >= 2) {
       const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
-      Object.keys(this.props.surahs).forEach(surahId => {
+      Object.keys(this.props.surahs).forEach((surahId) => {
         const surah = this.props.surahs[surahId];
         if (RegExp(escaped, 'i').test(surah.name.simple.replace(/['-]/g, ''))) {
           matches.push([surah.name.simple, surah.id]);
@@ -82,35 +85,21 @@ class SearchAutocomplete extends Component {
       });
     }
 
-    return this.setState({
-      surahs: matches.map((match) => ({
-        text: `<b>${match[0]}</b>`,
-        href: `/${match[1]}`
-      })).slice(0, 5)
-    });
+    return matches.map(match => ({
+      text: `<b>${match[0]}</b>`,
+      href: `/${match[1]}`
+    })).slice(0, 5);
   }
 
-  handleAyahSuggestions(value) {
+  suggest = (query) => {
     const { lang } = this.props;
 
-    if (!this.cached[lang]) {
-      this.cached[lang] = {};
-    }
+    if (!query || ayahRegex.test(query)) return false;
 
-    if (this.cached[lang][value]) {
-      this.setState({ ayat: this.cached[lang][value] });
-    } else {
-      client.get('/v2/suggest', {params: {q: value, l: lang}}).then((res) => {
-        this.cached[lang][value] = res;
-
-        if (this.props.value.trim() === value) {
-          this.setState({ ayat: res });
-        }
-      });
-    }
+    return this.props.suggest(query, lang);
   }
 
-  handleInputKeyDown(event) {
+  handleInputKeyDown = (event) => {
     if (!(event.keyCode === 9 || event.keyCode === 40 || event.keyCode === 27)) {
       return;
     }
@@ -148,7 +137,6 @@ class SearchAutocomplete extends Component {
       case 9: // tab
         return;
       case 13: // enter
-        console.log(this.props);
         this.props.push(item.href); // change url
         break;
       case 27: // escape
@@ -174,37 +162,42 @@ class SearchAutocomplete extends Component {
     event.preventDefault();
   }
 
-  renderList(key) {
-    return this.state[key].map((item) => (
-      <li key={item.href} tabIndex="0" onKeyDown={(event) => this.handleItemKeyDown(event, item)}>
+  renderList() {
+    if (!this.getSuggestions().length) {
+      return false;
+    }
+
+    return this.getSuggestions().map(item => (
+      <li // eslint-disable-line
+        key={item.href}
+        tabIndex="-1"
+        onKeyDown={event => this.handleItemKeyDown(event, item)}
+      >
         <div className={styles.link}>
           <a href={item.href} tabIndex="-1">{item.href}</a>
         </div>
         <div className={styles.text}>
-          <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{__html: item.text}} />
+          <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{ __html: item.text }} />
         </div>
       </li>
     ));
   }
 
   render() {
-    const { surahs, ayat } = this.state;
-
     return (
-      <div className={`${styles.autocomplete} ${ayat.length || surahs.length ? '' : 'hidden'}`}>
+      <div className={`${styles.autocomplete} ${!this.getSuggestions().length && 'hidden'}`}>
         <ul role="menu" className={styles.list} ref={(ref) => { this.menu = ref; }}>
-          {this.renderList('surahs')}
-          {this.renderList('ayat')}
+          {this.renderList()}
         </ul>
       </div>
     );
   }
 }
 
-
-function mapStateToProps(state) {
+function mapStateToProps(state, ownProps) {
   const surahs = state.surahs.entities;
   const surahId = state.surahs.current;
+  const suggestions = state.suggestResults.results[ownProps.value];
   let lang = 'en';
 
   if (state.ayahs && state.ayahs.entities && state.ayahs.entities[surahId]) {
@@ -222,8 +215,9 @@ function mapStateToProps(state) {
 
   return {
     surahs,
+    suggestions,
     lang
   };
 }
 
-export default connect(mapStateToProps, {push})(SearchAutocomplete);
+export default connect(mapStateToProps, { push, suggest })(SearchAutocomplete);

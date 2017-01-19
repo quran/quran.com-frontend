@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('./style.scss');
 
@@ -447,38 +450,30 @@ export const slugs = [
 export default class ContentDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func.isRequired,
-    options: PropTypes.object.isRequired,
+    content: PropTypes.arrayOf(PropTypes.number).isRequired,
     className: PropTypes.string
   };
-
-  static defaultProps = {
-    className: 'col-md-3'
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.options !== nextProps.options;
-  }
 
   handleRemoveContent = () => {
     const { onOptionChange } = this.props;
 
-    onOptionChange({content: []});
+    onOptionChange({ content: [] });
   }
 
   handleOptionSelected(id) {
-    const { onOptionChange, options: { content } } = this.props;
+    const { onOptionChange, content } = this.props;
 
     if (content.find(option => option === id)) {
-      onOptionChange({content: content.filter(option => option !== id)});
+      onOptionChange({ content: content.filter(option => option !== id) });
     } else {
-      onOptionChange({content: [...content, id]});
+      onOptionChange({ content: [...content, id] });
     }
   }
 
   renderItems(items) {
-    const { options: { content } } = this.props;
+    const { content } = this.props;
 
-    return items.map(slug => {
+    return items.map((slug) => {
       const checked = content.find(option => option === slug.id);
 
       return (
@@ -512,33 +507,34 @@ export default class ContentDropdown extends Component {
   }
 
   render() {
-    const { className, options: { content } } = this.props;
+    const { className, content } = this.props;
+    const title = slugs.filter(slug => content.includes(slug.id)).map(slug => slug.name).join(', ');
 
     return (
-      <div className={`dropdown ${className} ${style.dropdown}`}>
-        <button
-          className="btn btn-link no-outline"
+      <ButtonToolbar>
+        <DropdownButton
+          block
           id="content-dropdown"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
+          className={`dropdown ${className} ${style.dropdown}`}
+          title={title}
         >
-          Translations
-          <span className="caret" />
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
           {
             content.length &&
-              <MenuItem eventKey={1} onClick={this.handleRemoveContent}>Remove all</MenuItem>
+              <MenuItem onClick={this.handleRemoveContent}>
+                <LocaleFormattedMessage id="setting.translations.removeAll" defaultMessage="Remove all" />
+              </MenuItem>
           }
-          <MenuItem header>English</MenuItem>
+          <MenuItem header>
+            <LocaleFormattedMessage id="setting.translations.english" defaultMessage="English" />
+          </MenuItem>
           {this.renderEnglishList()}
           <MenuItem divider />
-          <MenuItem header>Other Languages</MenuItem>
+          <MenuItem header>
+            <LocaleFormattedMessage id="setting.translations.other" defaultMessage="Other Languages" />
+          </MenuItem>
           {this.renderLanguagesList()}
-        </ul>
-      </div>
+        </DropdownButton>
+      </ButtonToolbar>
     );
   }
 }

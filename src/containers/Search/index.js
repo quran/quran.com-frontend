@@ -6,17 +6,22 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
+import { FormattedHTMLMessage } from 'react-intl';
 
 // Bootstrap
 import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-import Header from './Header';
-import Ayah from '../../components/Ayah';
-import CoreLoader from '../../components/Loader';
+import Ayah from 'components/Ayah';
+import Loader from 'components/Loader';
 
-import { search } from '../../redux/actions/search.js';
+import { search } from 'redux/actions/search.js';
+
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
+import { ayahType, optionsType } from 'types';
+
+import Header from './Header';
 
 const style = require('./style.scss');
 
@@ -28,12 +33,15 @@ class Search extends Component {
     page: PropTypes.number,
     size: PropTypes.number,
     from: PropTypes.number,
-    took: PropTypes.object,
     query: PropTypes.string,
-    results: PropTypes.array,
-    ayahs: PropTypes.object,
+    results: PropTypes.array, // eslint-disable-line
+    ayahs: PropTypes.objectOf(ayahType),
     push: PropTypes.func.isRequired,
-    options: PropTypes.object
+    options: optionsType
+  };
+
+  static defaultProps = {
+    results: []
   };
 
   static contextTypes = {
@@ -47,12 +55,12 @@ class Search extends Component {
     if (page !== selectedPage) {
       this.context.metrics.track(
         'Search',
-        {action: 'paginate', label: `${query} - ${selectedPage}`}
+        { action: 'paginate', label: `${query} - ${selectedPage}` }
       );
 
       return push({
         pathname: '/search',
-        query: {p: selectedPage, q: query}
+        query: { p: selectedPage, q: query }
       });
     }
 
@@ -61,6 +69,8 @@ class Search extends Component {
 
   renderStatsBar() {
     const { total, size, page, from, query } = this.props;
+    const values = { from: 2, to: (from + size) - 1, total: 10, query };
+
 
     if (total) {
       const pageNum = Math.ceil(total / size);
@@ -68,14 +78,15 @@ class Search extends Component {
       return (
         <div className={style.header}>
           <Grid>
-            <Row>
-              <Col md={6} className="text-uppercase">
-                {from}-{from + size - 1} OF
-                <span className={style.colored}> {total} </span>
-                SEARCH RESULTS FOR:
-                <span className={style.colored}> {query}</span>
+            <div className="row">
+              <Col md={6} className="text-uppercase search-status">
+                <FormattedHTMLMessage
+                  id="search.resultHeading"
+                  defaultMessage="{from}-{to} OF {total} SEARCH RESULTS FOR: {query}"
+                  values={values}
+                />
               </Col>
-              <Col className="text-right">
+              <Col md={6} className="text-right">
                 <ReactPaginate
                   previousLabel={
                     <span aria-hidden="true">
@@ -87,19 +98,20 @@ class Search extends Component {
                       <i className="ss-icon ss-directright" />
                     </span>
                   }
-                  breakLabel={<li className="break"><a href="">...</a></li>}
+                  breakLabel={<a href="">...</a>}
                   pageNum={pageNum}
                   marginPagesDisplayed={2}
                   pageRangeDisplayed={5}
                   initialSelected={page - 1}
                   forceSelected={page - 1}
-                  clickCallback={this.handlePageChange}
-                  containerClassName={"pagination"}
-                  subContainerClassName={"pages pagination"}
+                  onPageChange={this.handlePageChange}
+                  containerClassName="pagination"
+                  subContainerClassName="pages pagination"
+                  pageLinkClassName="pointer:"
                   activeClass={style.active}
                 />
               </Col>
-            </Row>
+            </div>
           </Grid>
         </div>
       );
@@ -109,26 +121,36 @@ class Search extends Component {
   }
 
   renderBody() {
-    const { isErrored, isLoading, total, results, ayahs } = this.props;
+    const { isErrored, isLoading, results, options, ayahs } = this.props;
 
     if (isErrored) {
       return (
-        <h3 className="text-center" style={{padding: '15%'}}>
-          Sorry, there was an error with your search.
+        <h3 className="text-center" style={{ padding: '15%' }}>
+          <LocaleFormattedMessage id="search.error" defaultMessage="Sorry, there was an error with your search." />
         </h3>
       );
     }
 
-    if (!total) {
-      return <h3 className="text-center" style={{padding: '15%'}}>No results found.</h3>;
+    if (isLoading) {
+      return <div style={{ padding: '15%' }}><Loader /></div>;
     }
 
-    if (isLoading) {
-      return <div style={{padding: '15%'}}><CoreLoader /></div>;
+    if (!results.length) {
+      return (
+        <h3 className="text-center" style={{ padding: '15%' }}>
+          <LocaleFormattedMessage id="search.noResult" defaultMessage="No results found." />
+        </h3>
+      );
     }
 
     return results.map(result => (
-      <Ayah ayah={ayahs[result.ayah]} match={result.match} key={result.ayah} isSearched />
+      <Ayah
+        ayah={ayahs[result.ayah]}
+        match={result.match}
+        key={result.ayah}
+        tooltip={options.tooltip}
+        isSearched
+      />
     ));
   }
 
@@ -147,11 +169,11 @@ class Search extends Component {
         <Header />
         {this.renderStatsBar()}
         <div className="container surah-list">
-          <Row>
+          <div className="row">
             <Col md={12}>
               {this.renderBody()}
             </Col>
-          </Row>
+          </div>
         </div>
       </div>
     );
@@ -159,8 +181,13 @@ class Search extends Component {
 }
 
 const AsyncSearch = asyncConnect([{
-  promise({ store: { dispatch }, location: { query } }) {
-    return dispatch(search(query));
+  promise({ store: { dispatch }, location }) {
+    if (__CLIENT__) {
+      dispatch(search(location.query));
+      return false;
+    }
+
+    return dispatch(search(location.query));
   }
 }])(Search);
 
@@ -180,4 +207,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, {push})(AsyncSearch);
+export default connect(mapStateToProps, { push })(AsyncSearch);

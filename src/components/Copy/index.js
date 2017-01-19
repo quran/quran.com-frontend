@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import copyToClipboard from 'copy-to-clipboard';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 export default class Copy extends Component {
   static propTypes = {
@@ -12,9 +13,9 @@ export default class Copy extends Component {
 
   handleCopy = () => {
     copyToClipboard(this.props.text);
-    this.setState({isCopied: true});
+    this.setState({ isCopied: true });
 
-    setTimeout(() => this.setState({isCopied: false}), 1000);
+    setTimeout(() => this.setState({ isCopied: false }), 1000);
   }
 
   render() {
@@ -22,11 +23,16 @@ export default class Copy extends Component {
 
     return (
       <a
+        tabIndex="-1"
         onClick={this.handleCopy}
         className={!isCopied && 'text-muted'}
         data-metrics-event-name="Ayah:Copy"
       >
-        <i className="ss-icon ss-attach" /> {isCopied ? 'Copied!' : 'Copy'}
+        <i className="ss-icon ss-attach vertical-align-middle" />{' '}
+        <LocaleFormattedMessage
+          id={isCopied ? 'actions.copied' : 'actions.copy'}
+          defaultMessage={isCopied ? 'Copied!' : 'Copy'}
+        />
       </a>
     );
   }

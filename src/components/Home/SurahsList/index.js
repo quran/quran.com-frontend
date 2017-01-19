@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react';
-import debug from '../../../helpers/debug';
+import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
+
+import { surahType } from 'types';
+
 const styles = require('./style.scss');
 
 const SurahsList = (props) => {
@@ -8,7 +11,7 @@ const SurahsList = (props) => {
 
   return (
     <ul className="col-md-4 list-unstyled">
-      {props.surahs.map((surah) => (
+      {props.surahs.map(surah => (
         <li className={`${styles.item}`} key={surah.id}>
           <Link to={`/${surah.id}`} className={`${styles.link} row`}>
             <div className="col-xs-2 text-muted">
@@ -29,7 +32,7 @@ const SurahsList = (props) => {
 };
 
 SurahsList.propTypes = {
-  surahs: PropTypes.array.isRequired
+  surahs: PropTypes.arrayOf(surahType).isRequired
 };
 
 export default SurahsList;

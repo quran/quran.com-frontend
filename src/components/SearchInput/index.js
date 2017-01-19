@@ -1,18 +1,18 @@
 import React, { Component, PropTypes } from 'react';
-import ReactDOM from 'react-dom';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
+import { intlShape, injectIntl } from 'react-intl';
 
-import SearchAutocomplete from '../SearchAutocomplete';
+import SearchAutocomplete from 'components/SearchAutocomplete';
 
-import debug from '../../helpers/debug';
+import debug from 'helpers/debug';
 
-@connect(null, { push })
-export default class SearchInput extends Component {
+class SearchInput extends Component {
   static propTypes = {
     push: PropTypes.func.isRequired,
-    className: PropTypes.string
+    className: PropTypes.string,
+    intl: intlShape.isRequired
   };
 
   static contextTypes = {
@@ -30,7 +30,7 @@ export default class SearchInput extends Component {
     const splitSearch = /[\.,\:,\,,\\,//]/g; // eslint-disable-line no-useless-escape
 
     if (event.key === 'Enter' || event.keyCode === 13 || event.type === 'click') {
-      const inputEl = ReactDOM.findDOMNode(this).querySelector('input');
+      const inputEl = this.input;
       const searching = inputEl.value.trim();
       let ayah;
       let surah;
@@ -91,22 +91,21 @@ export default class SearchInput extends Component {
 
   render() {
     const { showAutocomplete } = this.state;
-    const { className } = this.props;
+    const { className, intl } = this.props;
+    const placeholder = intl.formatMessage({ id: 'search.placeholder', defaultMessage: 'Search' });
 
     debug('component:SearchInput', 'Render');
 
     return (
       <div className={`right-inner-addon searchinput ${className}`}>
-        <i className="ss-icon ss-search" onClick={this.search} />
+        <a tabIndex="-1" onClick={this.search}><i className="ss-icon ss-search" /></a>
         <input
           type="search"
-          placeholder="Search"
-          ref="search"
-          onFocus={() => this.setState({showAutocomplete: true})}
+          placeholder={placeholder}
+          ref={(input) => { this.input = input; }}
+          onFocus={() => this.setState({ showAutocomplete: true })}
+          // onBlur={() => this.setState({ showAutocomplete: false })}
           onKeyUp={this.search}
-          ref={(ref) => {
-            this.input = ref;
-          }}
         />
         {
           showAutocomplete &&
@@ -116,3 +115,5 @@ export default class SearchInput extends Component {
     );
   }
 }
+
+export default injectIntl(connect(null, { push })(SearchInput));

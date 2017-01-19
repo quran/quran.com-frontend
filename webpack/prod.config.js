@@ -1,13 +1,13 @@
-require('dotenv').load();
-
 const path = require('path');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const webpack = require('webpack');
+const CompressionPlugin = require('compression-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 const strip = require('strip-loader');
 
 const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration')); // eslint-disable-line max-len, global-require
+
 const relativeAssetsPath = '../static/dist';
 const assetsPath = path.join(__dirname, relativeAssetsPath);
 
@@ -21,7 +21,7 @@ module.exports = {
 
   },
   context: path.resolve(__dirname, '../src'),
-  devtool: 'cheap-source-map',
+  devtool: 'cheap-module-source-map',
   debug: false,
   target: 'web',
   cache: false,
@@ -43,7 +43,7 @@ module.exports = {
   module: {
     loaders: [
       { test: /\.css$/, loader: 'style!css' },
-      { test: /\.json$/, loader: 'json'},
+      { test: /\.json$/, loader: 'json' },
       {
         test: /\.js$/,
         exclude: /node_modules/,
@@ -52,14 +52,16 @@ module.exports = {
           {
             loader: 'babel',
             query: {
-              presets: ['react', ['es2015', {modules: false}], 'stage-0'],
+              babelrc: false,
+              presets: ['react', 'es2015', 'stage-0'],
               plugins: [
                 'transform-runtime',
                 'add-module-exports',
                 'transform-decorators-legacy',
                 'transform-react-display-name',
                 'transform-react-inline-elements',
-                'transform-react-constant-elements'
+                'transform-react-constant-elements',
+                'transform-react-remove-prop-types'
               ]
             }
           }
@@ -117,6 +119,7 @@ module.exports = {
       'process.env.SEGMENTS_KEY': JSON.stringify(process.env.SEGMENTS_KEY),
       'process.env.SENTRY_KEY_CLIENT': JSON.stringify(process.env.SENTRY_KEY_CLIENT),
       'process.env.SENTRY_KEY_SERVER': JSON.stringify(process.env.SENTRY_KEY_SERVER),
+      'process.env.FACEBOOK_APP_ID': JSON.stringify(process.env.FACEBOOK_APP_ID),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       __SERVER__: false,
       __CLIENT__: true,
@@ -140,6 +143,13 @@ module.exports = {
       test: /\.css$/, // optionally pass test, include and exclude, default affects all loaders
       minimize: true,
       debug: false
+    }),
+    new CompressionPlugin({
+      asset: '[path].gz[query]',
+      algorithm: 'gzip',
+      test: /\.js$|\.css$|\.html$/,
+      threshold: 10240,
+      minRatio: 0
     }),
     webpackIsomorphicToolsPlugin
   ]

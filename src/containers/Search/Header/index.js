@@ -1,5 +1,5 @@
 import React from 'react';
-import SearchInput from '../../../components/SearchInput';
+import SearchInput from 'components/SearchInput';
 import Link from 'react-router/lib/Link';
 
 const logo = require('../../../../static/images/logo-lg-w.png');
@@ -12,7 +12,7 @@ export default () => (
           <Link to="/">
             <img src={logo} className="logo" alt="logo" />
           </Link>
-          <h4 className="title">THE NOBLE QUR'AN</h4>
+          <h4 className="title">THE NOBLE QURAN</h4>
           <SearchInput />
         </div>
       </div>

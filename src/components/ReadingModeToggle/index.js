@@ -1,21 +1,23 @@
 import React, { PropTypes } from 'react';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-import SwitchToggle from '../SwitchToggle';
-
-const ReadingModeToggle = ({ onReadingModeToggle, isToggled }) => (
-  <div>
-    Reading:{' '}
-    <SwitchToggle
-      checked={isToggled}
-      onToggle={onReadingModeToggle}
-      id="reading-mode-toggle"
-      flat
-    />
-  </div>
+const ReadingModeToggle = ({ onToggle, isToggled }) => (
+  <li className={isToggled && 'active'}>
+    <a
+      tabIndex="-1"
+      className="pointer"
+      onClick={() => onToggle({ isReadingMode: !isToggled })}
+    >
+      <i
+        className="ss-icon ss-openbook vertical-align-middle"
+      />
+      {' '}<LocaleFormattedMessage id="settings.reading" defaultMessage="Reading" className="visible-xs-inline-block" />
+    </a>
+  </li>
 );
 
 ReadingModeToggle.propTypes = {
-  onReadingModeToggle: PropTypes.func.isRequired,
+  onToggle: PropTypes.func.isRequired,
   isToggled: PropTypes.bool.isRequired
 };
 

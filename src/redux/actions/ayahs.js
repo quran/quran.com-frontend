@@ -1,6 +1,5 @@
-import { ayahsSchema } from '../schemas';
-
-import { arrayOf } from 'normalizr';
+import cookie from 'react-cookie';
+import { ayahsSchema } from 'redux/schemas';
 
 import {
   LOAD,
@@ -10,7 +9,7 @@ import {
   SET_CURRENT_AYAH,
   SET_CURRENT_WORD,
   CLEAR_CURRENT_WORD
-  } from '../constants/ayahs.js';
+  } from 'redux/constants/ayahs.js';
 
 // For safe measure
 const defaultOptions = {
@@ -22,10 +21,12 @@ const defaultOptions = {
 export function load(id, from, to, options = defaultOptions) {
   const { audio, quran, content } = options;
 
+  cookie.save('lastVisit', JSON.stringify({ surahId: id, ayahId: from }));
+
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    schema: arrayOf(ayahsSchema),
-    promise: (client) => client.get(`/v2/surahs/${id}/ayahs`, {
+    schema: [ayahsSchema],
+    promise: client => client.get(`/v2/surahs/${id}/ayahs`, {
       params: {
         from,
         to,

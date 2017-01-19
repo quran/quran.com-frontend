@@ -12,6 +12,7 @@ import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
 import useScroll from 'react-router-scroll';
 import { ReduxAsyncConnect } from 'redux-connect';
 import { syncHistoryWithStore } from 'react-router-redux';
+import { IntlProvider } from 'react-intl';
 
 import debug from 'debug';
 
@@ -19,6 +20,7 @@ import config from './config';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import routes from './routes';
+import getLocalMessages from './helpers/setLocal';
 
 const client = new ApiClient();
 const store = createStore(browserHistory, client, window.reduxData);
@@ -27,7 +29,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 try {
   Raven.config(config.sentryClient).install();
 } catch (error) {
-  console.log(error);
+  debug('client', error);
 }
 
 window.quranDebug = debug;
@@ -38,17 +40,19 @@ window.clearCookies = () => {
   reactCookie.remove('content');
   reactCookie.remove('audio');
   reactCookie.remove('isFirstTime');
+  reactCookie.remove('currentLocale');
+  reactCookie.remove('smartbanner-closed');
+  reactCookie.remove('smartbanner-installed');
 };
 
-match({ history, routes: routes() }, (error, redirectLocation, renderProps) => {
+match({ history, routes: routes(store) }, (error, redirectLocation, renderProps) => {
   const component = (
     <Router
       {...renderProps}
-      render={(props) => (
+      render={props => (
         <ReduxAsyncConnect
           {...props}
-          helpers={{client}}
-          filter={item => !item.deferred}
+          helpers={{ client }}
           render={applyRouterMiddleware(useScroll())}
         />
       )}
@@ -60,9 +64,11 @@ match({ history, routes: routes() }, (error, redirectLocation, renderProps) => {
   debug('client', 'React Rendering');
 
   ReactDOM.render(
-    <Provider store={store} key="provider">
-      {component}
-    </Provider>, mountNode, () => {
+    <IntlProvider locale="en" messages={getLocalMessages()}>
+      <Provider store={store} key="provider">
+        {component}
+      </Provider>
+    </IntlProvider>, mountNode, () => {
       debug('client', 'React Rendered');
     }
   );

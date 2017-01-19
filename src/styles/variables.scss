@@ -24,21 +24,28 @@ $tooltip-bg: $brand-primary;
 $tooltip-opacity: 1;
 $tooltip-max-width: 400px;
 
-
 $text-muted: #d1d0d0;
+$text-color: #939598;
 
-$navbar-height: 240px * $proportion-factor;
-$navbar-default-bg: $beige;
+$navbar-height: 50px;
+$navbar-margin-bottom: 0px;
+$navbar-default-bg: #fff;
 $navbar-default-link-active-bg: transparent;
-$navbar-default-border: transparent;
+$navbar-default-link-active-color: $brand-primary;
+$navbar-default-border: rgba(0,0,0,0.12);
+
+$navbar-inverse-bg: $brand-primary;
+$navbar-inverse-link-color: #fff;
+$navbar-inverse-link-active-bg: transparent;
+$navbar-inverse-border: transparent;
+
 $navbar-collapse-width: 1000px;
 $navbar-scroll-up-height: 90px;
 
-$dropdown-bg: darken($olive, 5%);
-$dropdown-link-color: #fff;
+// $dropdown-bg: darken($olive, 5%);
+$dropdown-link-color: $text-color;
 
 $input-border-focus: $light-green;
-$text-color: #939598;
 
 $label-default-bg: lighten($text-muted, 13%);
 

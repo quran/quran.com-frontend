@@ -1,19 +1,17 @@
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
-@import 'mixins/center';
-@import 'components/SurahNav';
 @import 'components/MasterHeader';
+@import 'components/SmartBanner';
 @import 'fonts/fonts';
 
 @import 'partials/navbar-brand';
 @import 'partials/search-input';
-@import 'partials/surah-title';
 @import 'partials/dropdown';
 @import 'partials/index-header';
-@import 'partials/modal';
 @import 'partials/tooltip';
 @import 'partials/highlight';
-
+@import 'nightmode';
+@import 'partials/no-script';
 
 html,body{
   height: 100%;
@@ -25,23 +23,16 @@ html,body{
   }
 }
 
-a:hover{
-  text-decoration: none;
+.min-container{
+  min-height: 80vh;
 }
 
-.surah-body{
-  .left-side{
-    width: 16.6666666%;
-    height: 100vh;
-    float: left;
-    display: block;
-    position: fixed;
-    top: 0px;
+.highlight {
+  background-color: #F5FBF7;
+}
 
-    @media (max-width: $screen-sm-max) {
-      display: none;
-    }
-  }
+a:hover{
+  text-decoration: none;
 }
 
 .form-control:focus{
@@ -122,6 +113,9 @@ li em{
 .pointer{
   cursor: pointer;
 }
+.vertical-align-middle{
+  vertical-align: middle;
+}
 .no-outline{
   outline: none !important;
 
@@ -132,6 +126,12 @@ li em{
 .text-color{
   color: $text-color;
 }
+.text-black{
+  color: #333;
+}
+.text-black-light{
+  color: #777;
+}
 
 .ss-icon.text-align{
   vertical-align: middle;
@@ -139,13 +139,54 @@ li em{
 }
 
 .dropdown{
+  .btn-link{
+    color: inherit;
+  }
+
   .btn-link:hover, .btn-link:focus{
     text-decoration: none;
   }
+}
 
-  &.open{
-    .btn-link{
-      color: $cream;
-    }
+.navbar-toggle{
+  display: inline-block !important;
+  float: left;
+  margin-right: 0px;
+}
+
+.ayah-name-svg{
+  width: 35%;
+  display: inherit;
+  position: absolute;
+  top: 0px;
+  transform: translateY(-40%);
+}
+
+.urdu, .punjabi{
+  direction: rtl;
+  font-family: 'Nafees';
+}
+
+.modal-backdrop{
+  bottom: 0;
+}
+
+// NOTE: This is for dropdown in navbar on mobile
+@media(max-width: $screen-sm){
+  .navbar-nav{
+    margin-bottom: 0px;
+    margin-top: 5px;
+  }
+  .navbar-nav .open .dropdown-menu{
+    position: absolute;;
+    float: left;
+    width: auto;
+    margin-top: 0px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  }
+  .navbar-nav .open .dropdown-menu > li > a, .navbar-nav .open .dropdown-menu .dropdown-header{
+    padding: 5px 15px;
   }
 }

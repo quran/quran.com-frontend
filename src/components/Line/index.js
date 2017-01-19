@@ -1,49 +1,48 @@
 import React, { PropTypes } from 'react';
-import debug from '../../helpers/debug';
+import debug from 'helpers/debug';
+
+import { wordType } from 'types';
+import Word from 'components/Word';
 
 const styles = require('../Ayah/style.scss');
 
 export default class Line extends React.Component {
   static propTypes = {
-    line: PropTypes.array.isRequired,
-    tooltip: PropTypes.string
+    line: PropTypes.arrayOf(wordType).isRequired,
+    tooltip: PropTypes.string,
+    currentAyah: PropTypes.string.isRequired,
+    audioActions: PropTypes.shape({
+      pause: PropTypes.func.isRequired,
+      setAyah: PropTypes.func.isRequired,
+      play: PropTypes.func.isRequired,
+      setCurrentWord: PropTypes.func.isRequired,
+    }),
+    isPlaying: PropTypes.bool
   };
 
+  shouldComponentUpdate(nextProps) {
+    const conditions = [
+      this.props.currentAyah !== nextProps.currentAyah,
+      this.props.line !== nextProps.line,
+      this.props.isPlaying !== nextProps.isPlaying
+    ];
+
+    return conditions.some(condition => condition);
+  }
+
   renderText() {
-    const { line, tooltip } = this.props;
+    const { tooltip, currentAyah, audioActions, isPlaying, line } = this.props;
 
-    if (!line[0].code) { // TODO shouldn't be possible, remove this clause
-      return false;
-    }
-
-    let text = line.map(word => {
-      if (word.translation) {
-        let tooltipContent = word[tooltip];
-
-        return (
-          <b
-            key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-            className={`${word.className} ${styles.Tooltip}`}
-            data-ayah={word.ayahKey}
-            data-line={word.lineNun}
-            data-page={word.pageNum}
-            data-position={word.position}
-            aria-label={tooltipContent}
-            dangerouslySetInnerHTML={{__html: word.code}}
-          />
-        );
-      }
-
-      return (
-        <b
-          className={`${word.className} pointer`}
-          key={`${word.pageNum}${word.lineNum}${word.position}${word.code}`}
-          data-line={word.lineNum}
-          data-page={word.pageNum}
-          dangerouslySetInnerHTML={{__html: word.code}}
-        />
-      );
-    });
+    const text = line.map(word => (
+      <Word
+        word={word}
+        key={`${word.position}-${word.code}-${word.lineNum}`}
+        currentAyah={currentAyah}
+        tooltip={tooltip}
+        isPlaying={isPlaying}
+        audioActions={audioActions}
+      />
+    ));
 
     return (
       <span className={`${styles.line} text-center`}>
@@ -62,7 +61,7 @@ export default class Line extends React.Component {
 
     return (
       <div className={`row ${styles.font} text-justify text-arabic`}>
-        <div className="col-md-12 line-container">
+        <div className="col-md-12 line-container" name={`ayah:${line[0].ayahKey}`}>
           {this.renderText()}
         </div>
       </div>

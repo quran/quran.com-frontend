@@ -1,21 +1,21 @@
 @import '../../styles/variables.scss';
 
-:local .dropdown{
-  @media (max-width: 1150px) {
-    min-width: initial;
+.dropdown{
+  & + :global(.dropdown-menu){
+    @media (max-width: 1150px) {
+      min-width: initial;
 
-    :global(i + span){
-      display: none;
+      :global(i + span){
+        display: none;
+      }
     }
-  }
 
-  @media (max-width: 1000px) {
-    :global(i + span){
-      display: initial;
+    @media (max-width: 1000px) {
+      :global(i + span){
+        display: initial;
+      }
     }
-  }
 
-  :global(ul){
     height: 315px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -27,27 +27,11 @@
   }
 }
 
-:global(.in) {
-  .item{
-    .label{
-      &:after, &:before{
-        color: $olive !important;
-        border-color: $olive !important;
-      }
-    }
-  }
-}
-
 .item{
   $checkbox-left: 20px;
   $checkbox-top: 9px;
   $checkbox-height: 12px;
   $checkbox-width: 12px;
-
-  .label{
-    color: lighten($cream, 15%);
-    font-weight: 300;
-  }
 
   .checkbox:not(:checked),
   .checkbox:checked {
@@ -72,7 +56,7 @@
     top: $checkbox-top;
     width: $checkbox-width;
     height: $checkbox-height;
-    border: 1px solid lighten($cream, 15%);
+    border: 1px solid $text-color;
     background: transparent;
   }
   /* checked mark aspect */
@@ -83,7 +67,7 @@
     top: $checkbox-top - 1;
     left: $checkbox-left + 2px;
     font-size: 10px;
-    color: lighten($cream, 15%);;
+    color: $text-color;
     transition: all .2s;
   }
   /* checked mark aspect changes */

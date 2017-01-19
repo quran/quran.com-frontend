@@ -2,7 +2,6 @@ import React from 'react';
 import Helmet from 'react-helmet';
 
 import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
 
@@ -23,7 +22,7 @@ export default () => (
         })
       }
     />
-    <Row>
+    <div className="row">
       <Col md={5}>
         <h1 className={styles.title}>
           <strong>Quran</strong><br />
@@ -37,7 +36,7 @@ export default () => (
             favorite reciters.
           </small>
         </h3>
-        <Row style={{paddingTop: 15}}>
+        <div className="row" style={{ paddingTop: 15 }}>
           <Col md={6}>
             <Button
               bsStyle="primary"
@@ -50,7 +49,7 @@ export default () => (
                 src={apple}
                 alt="App Store"
                 height="28px"
-                style={{paddingRight: 10, marginTop: -6}}
+                style={{ paddingRight: 10, marginTop: -6 }}
               />
               Download
             </Button>
@@ -62,15 +61,15 @@ export default () => (
               href="https://play.google.com/store/apps/details?id=com.quran.labs.androidquran&hl=en"
               block
             >
-              <img src={play} alt="Play Store" height="24px" style={{paddingRight: 10}} />
+              <img src={play} alt="Play Store" height="24px" style={{ paddingRight: 10 }} />
               Download
             </Button>
           </Col>
-        </Row>
+        </div>
       </Col>
       <Col md={7}>
         <img src={phones} width="100%" alt="Apps" />
       </Col>
-    </Row>
+    </div>
   </Grid>
 );

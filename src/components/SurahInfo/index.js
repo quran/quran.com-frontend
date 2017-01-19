@@ -1,20 +1,26 @@
 import React, { PropTypes } from 'react';
 
-import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import { surahType } from 'types';
+import Loader from 'components/Loader';
 
 const style = require('./style.scss');
 
 const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
-  const html = require(`./htmls/${surah.id}.html.js`); // eslint-disable-line global-require
+  // So we don't need to load images and files unless needed
+  if (!isShowingSurahInfo) return <noscript />;
+  if (!surah.info) {
+    return <Loader />;
+  }
 
   return (
-    <Col xs={12} className={`${style.container} ${isShowingSurahInfo ? style.show : ''}`}>
-      <div
+    <Col xs={12} className={`${style.container} surah-info ${style.show}`}>
+      <button
+        tabIndex="-1"
         className={`${style.close} ss-delete`}
-        onClick={() => onClose({isShowingSurahInfo: !isShowingSurahInfo})}
+        onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
       />
-      <Row className={style.row}>
+      <div className={`${style.row} row`}>
         <Col
           md={3}
           xs={6}
@@ -29,16 +35,16 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
           </dl>
         </Col>
         <Col md={8} className={`${style.info} times-new`}>
-          <div dangerouslySetInnerHTML={{__html: html}} />
+          <div dangerouslySetInnerHTML={{ __html: surah.info.description }} />
           <div>
             <p>
               <em>
-                Source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Quran
+                Source: {surah.info.contentSource}
               </em>
             </p>
           </div>
         </Col>
-      </Row>
+      </div>
     </Col>
   );
 };
@@ -46,7 +52,7 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
 SurahInfo.propTypes = {
   onClose: PropTypes.func,
   isShowingSurahInfo: PropTypes.bool,
-  surah: PropTypes.object
+  surah: surahType
 };
 
 export default SurahInfo;

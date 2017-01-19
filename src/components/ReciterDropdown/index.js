@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 const style = require('./style.scss');
@@ -190,26 +192,18 @@ export const slugs = [
 export default class ReciterDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func,
-    options: PropTypes.object,
+    audio: PropTypes.number,
     className: PropTypes.string
   };
 
-  static defaultProps = {
-    className: 'col-md-3'
-  };
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.options !== nextProps.options;
-  }
-
   renderMenu() {
-    const { options, onOptionChange } = this.props;
+    const { audio, onOptionChange } = this.props;
 
     return slugs.map(slug => (
       <MenuItem
         key={slug.name.english}
-        active={slug.id === options.audio}
-        onClick={() => onOptionChange({audio: slug.id})}
+        active={slug.id === audio}
+        onClick={() => onOptionChange({ audio: slug.id })}
       >
         {slug.name.english}
       </MenuItem>
@@ -217,25 +211,19 @@ export default class ReciterDropdown extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { className, audio } = this.props;
 
     return (
-      <div className={`dropdown ${className} ${style.dropdown}`}>
-        <button
-          className="btn btn-link no-outline"
-          id="reciters-dropdown"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
+      <ButtonToolbar>
+        <DropdownButton
+          block
+          id="reciter-dropdown"
+          className={`${className} ${style.dropdown}`}
+          title={slugs.find(slug => slug.id === audio).name.english}
         >
-          Reciters
-          <span className="caret" />
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
           {this.renderMenu()}
-        </ul>
-      </div>
+        </DropdownButton>
+      </ButtonToolbar>
     );
   }
 }

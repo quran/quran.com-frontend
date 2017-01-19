@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 
 import Segments from './index';
 
-let makeComponent, component;
+let component;
 
 describe('<Segments />', () => {
   describe('when are an empty object', () => {
@@ -15,7 +15,7 @@ describe('<Segments />', () => {
     });
 
     it('should not have add any styles', () => {
-      expect(component.props()).to.eql({segments: {}});
+      expect(component.props()).to.eql({ segments: {} });
     });
 
     it('should return noscript', () => {
@@ -27,7 +27,7 @@ describe('<Segments />', () => {
     beforeEach(() => {
       component = mount(
         <Segments
-          segments={{words: {0: {startTime: 0, endTime: 1}, 1: {startTime: 1, endTime: 2}}}}
+          segments={{ words: { 0: { startTime: 0, endTime: 1 }, 1: { startTime: 1, endTime: 2 } } }}
           currentTime={1.5}
           currentAyah="1:1"
         />
@@ -51,7 +51,18 @@ describe('<Segments />', () => {
     beforeEach(() => {
       component = mount(
         <Segments
-          segments={{words: {0: {startTime: 0, endTime: 1}, 1: {startTime: 2, endTime: 3}}}}
+          segments={{
+            words: {
+              0: {
+                startTime: 0,
+                endTime: 1
+              },
+              1: {
+                startTime: 2,
+                endTime: 3
+              }
+            }
+          }}
           currentTime={1.5}
           currentAyah="1:1"
         />

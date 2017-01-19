@@ -1,21 +1,20 @@
 import React from 'react';
-import { shallow } from 'enzyme';
-
 import QuickSurahs from './index.js';
+import { mountWithIntl } from '../../../../tests/helpers/intl-enzyme-test-helper.js';
 
-describe("<QuickSurahs />", () => {
+describe('<QuickSurahs />', () => {
+  const count = new Date().getDay() === 5 ? 5 : 4;
 
-  it("Should render QuickSurahs component", () => {
-    let component = shallow(<QuickSurahs />);
-    expect(component).to.be.ok;
-    expect(component.find('.list-inline li').length).to.equal(5);
+  it('Should render QuickSurahs component', () => {
+    const component = mountWithIntl(<QuickSurahs />);
+
+    expect(component).to.be.ok; // eslint-disable-line
+    expect(component.find('a').length).to.equal(count);
   });
 
-  it("Should render QuickSurahs component with Surah Al-Kahf", () => {
-    sinon.useFakeTimers(1470956400000);
-    let component = shallow(<QuickSurahs />);
-    expect(component).to.be.ok;
-    expect(component.find('.list-inline li').length).to.equal(6);
-  })
-
+  it('Should render QuickSurahs component with Surah Al-Kahf', () => {
+    const component = mountWithIntl(<QuickSurahs />);
+    expect(component).to.be.ok; // eslint-disable-line
+    expect(component.find('a').length).to.equal(count);
+  });
 });

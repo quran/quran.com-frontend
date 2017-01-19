@@ -41,6 +41,7 @@ module.exports = {
           {
             loader: 'babel',
             query: {
+              babelrc: false,
               plugins: [
                 'transform-runtime',
                 'add-module-exports',
@@ -48,7 +49,7 @@ module.exports = {
                 'transform-react-display-name',
                 'typecheck',
               ],
-              presets: ['react', ['es2015', {modules: false}], 'stage-0', 'react-hmre'],
+              presets: ['react', 'es2015', 'stage-0', 'react-hmre'],
               cacheDirectory: true
             }
           }
@@ -99,6 +100,8 @@ module.exports = {
     new webpack.DefinePlugin({
       'process.env.BROWSER': true,
       'process.env.API_URL': JSON.stringify(process.env.API_URL),
+      'process.env.ONE_QURAN_URL': JSON.stringify(process.env.ONE_QURAN_URL),
+      'process.env.FACEBOOK_APP_ID': JSON.stringify(process.env.FACEBOOK_APP_ID),
       'process.env.SEGMENTS_KEY': JSON.stringify(process.env.SEGMENTS_KEY),
       'process.env.SENTRY_KEY_CLIENT': JSON.stringify(process.env.SENTRY_KEY_CLIENT),
       'process.env.SENTRY_KEY_SERVER': JSON.stringify(process.env.SENTRY_KEY_SERVER),

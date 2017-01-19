@@ -1,6 +1,10 @@
 import React from 'react';
-import debug from '../../../helpers/debug';
+import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
+
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
+const styles = require('containers/Home/style.scss');
 
 export default () => {
   debug('component:Index', 'QuickSurahs');
@@ -8,12 +12,12 @@ export default () => {
   const isFriday = new Date().getDay() === 5;
 
   return (
-    <span className="pull-right">
-      <ul className="list-inline">
-        <li>Quick links:</li>
+    <div className="">
+      <h4 className={`text-muted ${styles.title} ${styles.items}`}>
+        <LocaleFormattedMessage id="surah.index.quickLinks" defaultMessage="Quick links" />
         {
           isFriday &&
-            <li>
+            <span>
               <Link
                 to="/18"
                 data-metrics-event-name="QuickLinks:Click"
@@ -21,38 +25,37 @@ export default () => {
               >
                 Surah Al-Kahf
               </Link>
-              {' '}|
-            </li>
+            </span>
         }
-        <li>
+        <span>
           <Link
             to="/36"
             data-metrics-event-name="QuickLinks:Click"
             data-metrics-surah-id="36"
           >
             Surah Yasin (Yaseen)
-          </Link>{' '}|
-        </li>
-        <li>
+          </Link>
+        </span>
+        <span>
           <Link
             to="/55"
             data-metrics-event-name="QuickLinks:Click"
             data-metrics-surah-id="55"
           >
             Surah Ar-Rahman
-          </Link>{' '}|
-        </li>
+          </Link>
+        </span>
 
-        <li>
+        <span>
           <Link
             to="/67"
             data-metrics-event-name="QuickLinks:Click"
             data-metrics-surah-id="67"
           >
             Surah Al Mulk
-          </Link>{' '}|
-        </li>
-        <li>
+          </Link>
+        </span>
+        <span>
           <Link
             to="/2/255"
             data-metrics-event-name="QuickLinks:Click"
@@ -60,7 +63,8 @@ export default () => {
           >
             Ayat Al-Kursi
           </Link>
-        </li>
-      </ul>
-    </span>);
+        </span>
+      </h4>
+    </div>
+  );
 };

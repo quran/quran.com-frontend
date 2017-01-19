@@ -1,17 +1,17 @@
-import { ayahsSchema } from '../schemas';
-import { arrayOf } from 'normalizr';
+import { ayahsSchema } from 'redux/schemas';
 
 import {
   SEARCH,
   SEARCH_SUCCESS,
   SEARCH_FAIL
-  } from '../constants/search.js';
+  } from 'redux/constants/search.js';
 
 export function search(params) {
   return {
     types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
-    schema: {results: arrayOf({ayah: ayahsSchema})},
-    promise: (client) => client.get('/v2/search', { params }),
+    schema: { results: [{ ayah: ayahsSchema }] },
+    // TODO: We are doing this because of a weird obj.hasOwnProperty method missing on `params`
+    promise: client => client.get('/v2/search', { params: { q: params.q, p: params.p } }),
     params
   };
 }

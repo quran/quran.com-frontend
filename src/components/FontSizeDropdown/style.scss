@@ -1,6 +1,6 @@
 @import '../../styles/variables.scss';
 
-:local .popover{
+.popover{
   :global(.popover-title){
     font-family: $font-montserrat;
     text-transform: uppercase;
@@ -15,4 +15,10 @@
       font-size: 0.8em;
     }
   }
+}
+
+.link{
+  position: relative;
+  display: block;
+  cursor: pointer;
 }

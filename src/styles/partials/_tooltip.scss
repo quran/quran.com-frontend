@@ -1,43 +1,47 @@
-.Tooltip {
-  position: relative;
+.tooltip {
+  text-align: center;
+  color: #fff;
+  font-family: Montserrat, sans-serif;
+  background-color: $tooltip-bg;
+  position: absolute;
+  z-index: 10000;
+  padding: 10px;
+	border-radius: 5px;
+	-webkit-transition: 100ms ease;
+	-moz-transition: 50ms ease;
+	-o-transition: 50ms ease;
+	-ms-transition: 50ms ease;
+	transition: 50ms ease;
 
+  /* triangle decoration */
   &:after {
-    content: attr(aria-label);
-    direction: ltr;
-    padding: .625rem .9375rem;
-    position: absolute;
-    bottom: 100%;
-    left: 50%;
-    transform: translate(-50%, 0);
-    font-family: Montserrat, sans-serif;
-    font-weight: 300;
-    font-size: 1.25rem;
-    line-height: 1.2;
-    background-color: $tooltip-bg;
-    color: #fff;
-    border-radius: 3px;
-    opacity: 0;
-  }
-
-  // The arrow
-  &:before {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid $tooltip-bg;
     content: '';
     position: absolute;
     left: 50%;
-    transform: translate(-50%, 0);
-    width: 0;
-    height: 0;
-    border-left: .75rem solid transparent;
-    border-right: .75rem solid transparent;
-    border-top: .75rem solid $tooltip-bg;
-    opacity: 0;
+    bottom: -9px;
+    margin-left: -10px;
   }
+}
 
+.tooltip.top:after {
+  border-top-color: transparent;
+  border-bottom: 10px solid $tooltip-bg;
+  top: -20px;
+  bottom: auto;
+}
 
-  &:hover {
-    &:after,
-    &:before {
-      opacity: 1;
-    }
-  }
+.tooltip.left:after {
+  left: 10px;
+  margin: 0;
+}
+
+.tooltip.right:after {
+  right: 10px;
+  left: auto;
+  margin: 0;
 }

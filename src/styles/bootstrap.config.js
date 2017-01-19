@@ -10,20 +10,18 @@ module.exports = {
     "button": false,
     "carousel": false,
     "collapse": false,
-    "dropdown": true,
-    "modal": true,
-    "tooltip": true,
-    "popover": true,
+    "dropdown": false,
+    "modal": false,
+    "tooltip": false,
+    "popover": false,
     "scrollspy": false,
     "tab": false,
     "affix": false
   },
   "styles": {
     "mixins": true,
-
     "normalize": true,
     "print": false,
-
     "scaffolding": true,
     "type": true,
     "code": true,
@@ -31,7 +29,6 @@ module.exports = {
     "tables": true,
     "forms": true,
     "buttons": true,
-
     "component-animations": true,
     "glyphicons": false,
     "dropdowns": true,
@@ -49,9 +46,10 @@ module.exports = {
     "alerts": false,
     "progress-bars": false,
     "media": false,
-    "list-group": false,
+    "list-group": true,
     "panels": true,
     "wells": false,
+    "responsive-embed": true,
     "close": true,
 
     "modals": true,

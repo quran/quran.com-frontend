@@ -3,21 +3,19 @@ import { shallow } from 'enzyme';
 
 import TopOptions from './index.js';
 import getSurahs from '../../../tests/fixtures/getSurahs.js';
-//used components
-import InformationToggle from 'components/InformationToggle';
-import FontSizeDropdown from 'components/FontSizeDropdown';
-import TooltipDropdown from 'components/TooltipDropdown';
-import ReadingModeToggle from 'components/ReadingModeToggle';
-import Share from 'components/Share';
+// used components
+import InformationToggle from 'components/InformationToggle'; // eslint-disable-line
+import FontSizeDropdown from 'components/FontSizeDropdown'; // eslint-disable-line
+import TooltipDropdown from 'components/TooltipDropdown'; // eslint-disable-line
+import ReadingModeToggle from 'components/ReadingModeToggle'; // eslint-disable-line
+import Share from 'components/Share'; // eslint-disable-line
 
-describe("<TopOptions />", () => {
-
-  it("Should render QuickSurahs component", () => {
-
+describe('<TopOptions />', () => {
+  it('Should render QuickSurahs component', () => {
     const options = {
       isReadingMode: false,
       isShowingSurahInfo: false,
-      tooltip:"translation",
+      tooltip: 'translation',
       fontSize: {}
     };
 
@@ -28,17 +26,15 @@ describe("<TopOptions />", () => {
       }
     };
 
-    const component = shallow(<TopOptions
-                                        options={options}
-                                        actions={actions}
-                                        surah={getSurahs[5]} />);
+    const component = shallow(
+      <TopOptions
+        options={options}
+        actions={actions}
+        surah={getSurahs[5]}
+      />
+    );
 
-    expect(component).to.be.ok;
+    expect(component).to.be.ok; // eslint-disable-line
     expect(component.find(Share).length).to.eql(1);
-    expect(component.find(InformationToggle).length).to.eql(1);
-    expect(component.find(FontSizeDropdown).length).to.eql(1);
-    expect(component.find(TooltipDropdown).length).to.eql(1);
-    expect(component.find(ReadingModeToggle).length).to.eql(1);
   });
-
 });

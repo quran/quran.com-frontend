@@ -4,6 +4,9 @@ ENV NODE_ENV production
 ENV API_URL http://api.quran.com:3000
 ENV SENTRY_KEY_CLIENT https://44c105328ae544ae9928f9eb74b40061@app.getsentry.com/80639
 ENV SENTRY_KEY_SERVER https://44c105328ae544ae9928f9eb74b40061:41ca814d33124e04ab450104c3938cb1@app.getsentry.com/80639
+# It's okay because it's only the APP ID
+ENV FACEBOOK_APP_ID 1557596491207315
+ENV ONE_QURAN_URL https://one.quran.com
 ENV PORT 8000
 ENV NODE_PATH "./src"
 
@@ -26,6 +29,7 @@ RUN cp -a /tmp/node_modules /quran
 
 WORKDIR /quran
 ADD . /quran/
+
 RUN npm run build:client
 RUN npm run build:server
 
