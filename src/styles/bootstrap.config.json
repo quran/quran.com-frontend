@@ -1,9 +1,11 @@
-/* eslint-disable */
-module.exports = {
+{
+  "bootstrapVersion": 3,
+  "extractStyles": false,
+  "styleLoaders": ["style-loader", "css-loader", "sass-loader"],
   "verbose": false,
   "debug": false,
-  "preBootstrapCustomizations": "./src/styles/variables.scss",
-  "mainSass": "./src/styles/main.scss",
+  "preBootstrapCustomizations": "./variables.scss",
+  "appStyles": "./main.scss",
   "scripts": {
     "transition": false,
     "alert": false,
@@ -60,4 +62,4 @@ module.exports = {
     "utilities": true,
     "responsive-utilities": true
   }
-};
+}

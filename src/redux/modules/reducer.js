@@ -13,7 +13,7 @@ import fontFaces from './fontFaces';
 import auth from './auth';
 import bookmarks from './bookmarks';
 import media from './media';
-
+console.log(surahs);
 export default combineReducers({
   routing: routerReducer,
   reduxAsyncConnect,

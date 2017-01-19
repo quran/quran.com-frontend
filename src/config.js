@@ -10,7 +10,7 @@ const environment = {
 const title = 'Al-Qur\'an al-Kareem - القرآن الكريم';
 const description = 'The Quran translated into many languages in a simple and easy interface.';
 
-module.exports = Object.assign({
+const config = {
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
   api: process.env.API_URL,
@@ -116,5 +116,9 @@ module.exports = Object.assign({
         }
       ]
     }
-  }
-}, environment);
+  },
+  ...environment
+};
+
+
+export default config;
