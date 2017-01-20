@@ -144,7 +144,7 @@ const Footer = () => (
               </p>
 
               <p className="monserrat">
-                &copy; 2016 Quran.com <LocaleFormattedMessage id="nav.rightsReserved" defaultMessage="All Rights Reserved" />
+                &copy; 2016 Quran.com. <LocaleFormattedMessage id="nav.rightsReserved" defaultMessage="All Rights Reserved" />.
               </p>
             </div>
           </Col>
