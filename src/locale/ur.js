@@ -61,7 +61,7 @@ export default {
     'actions.play': 'چلاو',
     'actions.pause': 'روک دیں',
 
-    'nav.settings', 'اختیارات',
+    'nav.settings': 'اختیارات',
     'nav.contribute': 'تعاون کریں',
     'nav.aboutUs': 'ہمارے متعلق',
     'nav.developers': 'ڈویلپرز',
@@ -70,9 +70,15 @@ export default {
     'nav.contactUs': 'ہم سے رابطہ',
     'nav.help': 'مدد اور تاثرات',
     'nav.aboutQuranProject': 'قرآن کریم ایک فلاں عامہ (عوامی بہبود کے لئے) منصوبہ ہے',
+    'nav.rightsReserved': 'جملہ حقوق محفوظ ہیں',
     'nav.mobile': 'موبائل',
     'nav.navigate': 'تشریف لے جائیں',
     'nav.legacySite': 'پرانی سائٹ',
+
+    'settings.reciters': 'قراء',
+    'settings.translations': 'ترجمہ',
+    'settings.tooltip': 'اوزاری ٹوٹکا مواد',
+
 
     'login.message': 'Quran.com کرنے کیلئے سائن ان سب کو اپنے بک مارکس، نوٹوں اور سرگرمیوں کو ذخیرہ کرنے.'
   }

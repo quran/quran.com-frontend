@@ -70,9 +70,15 @@ export default {
     'nav.contactUs': 'اتصل بنا',
     'nav.help': 'مساعدة وتعليقات',
     'nav.aboutQuranProject': 'Quran.com المعروف أيضا باسم القرآن الكريم، قناة القرآن الكريم، القرآن الكريم، القرآن الكريم) هو مشروع خيري)',  // eslint-disable-line max-len
+    'nav.rightsReserved': 'كل الحقوق محفوظة',
     'nav.mobile': 'التليفون المحمول',
     'nav.navigate': 'انتقل',
     'nav.legacySite': 'الموقع القديم',
+
+    'settings.reciters': 'القراء',
+    'settings.translations': 'ترجمة',
+    'settings.tooltip': 'المحتوى تلميح الأدوات',
+
 
     'login.message': 'تسجيل الدخول إلى Quran.com لتخزين كل ما تبذلونه من العناوين والملاحظات والأنشطة.'
   }

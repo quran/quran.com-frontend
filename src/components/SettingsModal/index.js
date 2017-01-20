@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Modal from 'react-bootstrap/lib/Modal';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import ReciterDropdown from 'components/ReciterDropdown';
 import ContentDropdown from 'components/ContentDropdown';
 import TooltipDropdown from 'components/TooltipDropdown';
@@ -37,26 +38,32 @@ const SettingsModal = ({
     <Modal show={open} onHide={handleHide}>
       <ModalHeader closeButton>
         <ModalTitle className="montserrat">
-          Settings
+          <LocaleFormattedMessage id="nav.settings" defaultMessage="Settings" />
         </ModalTitle>
       </ModalHeader>
       <ModalBody>
         <div className="form-group">
-          <h5 className="text-black">Reciters</h5>
+          <h5 className="text-black">
+            <LocaleFormattedMessage id="settings.reciters" defaultMessage="Reciters" />
+          </h5>
           <ReciterDropdown
             onOptionChange={handleOptionChange}
             audio={options.audio}
           />
         </div>
         <div className="form-group">
-          <h5 className="text-black">Translations</h5>
+          <h5 className="text-black">
+            <LocaleFormattedMessage id="settings.translations" defaultMessage="Translations" />
+          </h5>
           <ContentDropdown
             onOptionChange={handleOptionChange}
             content={options.content}
           />
         </div>
         <div className="form-group">
-          <h5 className="text-black">Tooltip Content</h5>
+          <h5 className="text-black">
+            <LocaleFormattedMessage id="settings.tooltip" defaultMessage="Tooltip Content" />
+          </h5>
           <TooltipDropdown
             tooltip={options.tooltip}
             onOptionChange={setOption}

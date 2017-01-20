@@ -70,9 +70,14 @@ export default {
     'nav.contactUs': 'Contact us',
     'nav.help': 'Help & feedback',
     'nav.aboutQuranProject': 'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.', // eslint-disable-line max-len
+    'nav.rightsReserved': 'All Rights Reserved',
     'nav.mobile': 'Mobile Apps',
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
+
+    'settings.reciters': 'Reciters',
+    'settings.translations': 'Translations',
+    'settings.tooltip': 'Tooltip Content',
 
     'login.message': 'Sign in to Quran.com to store all your bookmarks, notes and activities.'
   }
