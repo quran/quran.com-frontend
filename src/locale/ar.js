@@ -75,7 +75,6 @@ export default {
     'nav.navigate': 'انتقل',
     'nav.legacySite': 'الموقع القديم',
 
-
     'login.message': 'تسجيل الدخول إلى Quran.com لتخزين كل ما تبذلونه من العناوين والملاحظات والأنشطة.'
   }
 };

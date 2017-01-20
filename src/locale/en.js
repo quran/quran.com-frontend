@@ -75,10 +75,6 @@ export default {
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
 
-    'setting.reciters': 'Reciters',
-    'setting.translations': 'Translations',
-    'setting.tooltip.title': 'Tooltip Content',
-
     'login.message': 'Sign in to Quran.com to store all your bookmarks, notes and activities.'
   }
 };
