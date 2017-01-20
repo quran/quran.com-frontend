@@ -10,7 +10,7 @@ export default {
     'setting.title': 'اختیارات',
     'setting.surahs': 'سورة',
     'setting.verses': 'آیت منتخب کریں',
-    'setting.reciters': 'قاری منتخب کریں',
+    'setting.reciters.title': 'قاری منتخب کریں',
     'setting.translations.title': 'ترجمے',
     'setting.translations.removeAll': 'سب کو ہٹا دیں',
     'setting.translations.english': 'انگریزی',

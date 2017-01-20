@@ -10,7 +10,7 @@ export default {
     'setting.title': 'خيارات',
     'setting.surahs': 'السورة',
     'setting.verses': 'الذهاب إلى الآية',
-    'setting.reciters': 'القراء',
+    'setting.reciters.title': 'القراء',
     'setting.translations.title': 'الترجمات',
     'setting.translations.removeAll': 'حذف الكل',
     'setting.translations.english': 'الإنجليزية',
