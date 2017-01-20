@@ -7,9 +7,6 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
-// bootstrap
-import Col from 'react-bootstrap/lib/Col';
-
 import Helmet from 'react-helmet';
 
 // components
@@ -383,14 +380,14 @@ class Surah extends Component {
               isShowingSurahInfo={options.isShowingSurahInfo}
               onClose={this.handleSurahInfoToggle}
             />
-            <Col md={10} mdOffset={1}>
+            <div className="col-md-10 col-md-offset-1">
               <TopOptions surah={surah} />
               <Bismillah surah={surah} />
               {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
-            </Col>
-            <Col md={10} mdOffset={1}>
+            </div>
+            <div className="col-md-10 col-md-offset-1">
               {this.renderPagination()}
-            </Col>
+            </div>
           </div>
         </div>
         <Audioplayer

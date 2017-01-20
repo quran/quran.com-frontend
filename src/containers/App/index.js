@@ -8,7 +8,6 @@ import Modal from 'react-bootstrap/lib/Modal';
 import SmartBanner from 'components/SmartBanner';
 import GlobalNav from 'components/GlobalNav';
 import GlobalSidebar from 'components/GlobalSidebar';
-import Col from 'react-bootstrap/lib/Col';
 
 import debug from 'helpers/debug';
 import config from 'config';
@@ -62,7 +61,7 @@ class App extends Component {
         <FontStyles />
         <NoScript>
           <div className="row noscript-warning">
-            <Col md={12}>
+            <div className="col-md-12">
               <p>
                 Looks like either your browser does not support Javascript or its disabled.
                 Quran.com workes best with JavaScript enabled.
@@ -71,7 +70,7 @@ class App extends Component {
                   Click here
                 </a>
               </p>
-            </Col>
+            </div>
           </div>
         </NoScript>
         {

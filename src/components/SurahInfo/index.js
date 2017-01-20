@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 
-import Col from 'react-bootstrap/lib/Col';
 import { surahType } from 'types';
 import Loader from 'components/Loader';
 
@@ -14,27 +13,25 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
   }
 
   return (
-    <Col xs={12} className={`${style.container} surah-info ${style.show}`}>
+    <div className={`col-xs-12 ${style.container} surah-info ${style.show}`}>
       <button
         tabIndex="-1"
         className={`${style.close} ss-delete`}
         onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
       />
       <div className={`${style.row} row`}>
-        <Col
-          md={3}
-          xs={6}
-          className={`${style.bg} ${style[surah.revelation.place]}`}
+        <div
+          className={`col-md-6 col-xs-6 ${style.bg} ${style[surah.revelation.place]}`}
         />
-        <Col md={1} xs={6} className={style.list}>
+        <div className={`${style.list} col-md-1 col-xs-6`}>
           <dl>
             <dt>VERSES</dt>
             <dd className="text-uppercase">{surah.ayat}</dd>
             <dt>PAGES</dt>
             <dd className="text-uppercase">{surah.page.join('-')}</dd>
           </dl>
-        </Col>
-        <Col md={8} className={`${style.info} times-new`}>
+        </div>
+        <div className={`${style.info} times-new col-md-8`}>
           <div dangerouslySetInnerHTML={{ __html: surah.info.description }} />
           <div>
             <p>
@@ -43,9 +40,9 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
               </em>
             </p>
           </div>
-        </Col>
+        </div>
       </div>
-    </Col>
+    </div>
   );
 };
 

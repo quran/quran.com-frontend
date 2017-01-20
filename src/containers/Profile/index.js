@@ -3,8 +3,6 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 
-import Grid from 'react-bootstrap/lib/Grid';
-import Col from 'react-bootstrap/lib/Col';
 import Image from 'react-bootstrap/lib/Image';
 import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
@@ -26,17 +24,17 @@ class Profile extends Component { // eslint-disable-line
       <div className="min-container">
         <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
         <div className={styles.header} />
-        <Grid>
+        <div className="container">
           <div className="row">
-            <Col md={12} className="text-center">
+            <div className="col-md-12 text-center">
               <Image src={`${user.image}?type=large`} circle className={styles.image} />
               <h2>
                 {user.name}
               </h2>
-            </Col>
+            </div>
           </div>
           <div className="row">
-            <Col md={6} mdOffset={3}>
+            <div className="col-md-6 col-md-offset-3">
               <Tabs bsStyle="pills" defaultActiveKey={1} className={styles.tabs} id="tabs">
                 <Tab eventKey={1} title="Bookmarks">
                   <ul className="list-group">
@@ -53,9 +51,9 @@ class Profile extends Component { // eslint-disable-line
                   Notes...
                 </Tab>
               </Tabs>
-            </Col>
+            </div>
           </div>
-        </Grid>
+        </div>
       </div>
     );
   }

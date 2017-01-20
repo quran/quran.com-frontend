@@ -10,6 +10,7 @@ const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-
 
 const relativeAssetsPath = '../static/dist';
 const assetsPath = path.join(__dirname, relativeAssetsPath);
+const root = path.resolve(__dirname, '..');
 
 module.exports = {
   output: {
@@ -22,11 +23,10 @@ module.exports = {
   },
   context: path.resolve(__dirname, '../src'),
   devtool: 'cheap-module-source-map',
-  debug: false,
   target: 'web',
   cache: false,
   entry: [
-    'bootstrap-sass!./styles/bootstrap.config.prod.js',
+    `bootstrap-loader/lib/bootstrap.loader?extractStyles&configFilePath=${root}/src/styles/bootstrap.config.json!bootstrap-loader/no-op.js`,
     './client.js',
   ],
   stats: {
@@ -34,29 +34,29 @@ module.exports = {
     reasons: false
   },
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['.js'],
     modules: [
       'src',
       'node_modules'
     ]
   },
   module: {
-    loaders: [
+    rules: [
       { test: /\.css$/, loader: 'style!css' },
       { test: /\.json$/, loader: 'json' },
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: [
+        use: [
           strip.loader('debug'),
           {
-            loader: 'babel',
-            query: {
+            loader: 'babel-loader',
+            options: {
               babelrc: false,
-              presets: ['react', 'es2015', 'stage-0'],
+              presets: [['es2015', { modules: false }], 'stage-2', 'react'],
               plugins: [
                 'transform-runtime',
-                'add-module-exports',
+                // 'add-module-exports',
                 'transform-decorators-legacy',
                 'transform-react-display-name',
                 'transform-react-inline-elements',
@@ -70,49 +70,72 @@ module.exports = {
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style',
-          loader: 'css?modules&importLoaders=2&sourceMap!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
+          fallbackLoader: 'style-loader',
+          loader: [
+            {
+              loader: 'css-loader',
+              options: {
+                modules: true,
+                importLoaders: 2,
+                sourceMap: true,
+                minimize: true
+              }
+            },
+            {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: 'inline',
+                plugins() {
+                  return [
+                    require('precss'), // eslint-disable-line
+                    require('autoprefixer'), // eslint-disable-line
+                    require('cssnano'), // eslint-disable-line
+                  ];
+                }
+              }
+            },
+            'sass-loader?sourceMap&sourceMapContents'
+          ]
         })
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file?name=fonts/[name].[ext]'
+        loader: 'file-loader?name=fonts/[name].[ext]'
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
+        loader: 'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('images'),
-        loader: 'url?name=images/[name].[ext]&limit=10240'
+        loader: 'url-loader?name=images/[name].[ext]&limit=10240'
       }
     ]
   },
   plugins: [
     new CleanPlugin([relativeAssetsPath]),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
       'windows.jQuery': 'jquery'
     }),
-    new ExtractTextPlugin({ filename: '[name]-[hash].css', allChunks: true }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': true,
       'process.env.API_URL': JSON.stringify(process.env.API_URL),
@@ -131,7 +154,6 @@ module.exports = {
     ]),
 
     // Optimizations
-    new webpack.optimize.DedupePlugin(),
     new webpack.optimize.AggressiveMergingPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
@@ -139,10 +161,11 @@ module.exports = {
       },
       minimize: true
     }),
+    new ExtractTextPlugin({ filename: '[name]-[hash].css', allChunks: true }),
     new webpack.LoaderOptionsPlugin({
       test: /\.css$/, // optionally pass test, include and exclude, default affects all loaders
       minimize: true,
-      debug: false
+      debug: true
     }),
     new CompressionPlugin({
       asset: '[path].gz[query]',
@@ -150,6 +173,9 @@ module.exports = {
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor', 'manifest'] // Specify the common bundle's name.
     }),
     webpackIsomorphicToolsPlugin
   ]
