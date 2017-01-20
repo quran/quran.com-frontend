@@ -61,6 +61,7 @@ export default {
     'actions.play': 'چلاو',
     'actions.pause': 'روک دیں',
 
+    'nav.settings': 'اختیارات',
     'nav.contribute': 'تعاون کریں',
     'nav.aboutUs': 'ہمارے متعلق',
     'nav.developers': 'ڈویلپرز',

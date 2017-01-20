@@ -38,7 +38,7 @@ const SettingsModal = ({
     <Modal show={open} onHide={handleHide}>
       <ModalHeader closeButton>
         <ModalTitle className="montserrat">
-          <LocaleFormattedMessage id="setting.title" defaultMessage="Settings" />
+          <LocaleFormattedMessage id="nav.settings" defaultMessage="Settings" />
         </ModalTitle>
       </ModalHeader>
       <ModalBody>
