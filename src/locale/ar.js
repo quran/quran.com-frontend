@@ -75,10 +75,6 @@ export default {
     'nav.navigate': 'انتقل',
     'nav.legacySite': 'الموقع القديم',
 
-    'setting.reciters': 'القراء',
-    'setting.translations': 'ترجمة',
-    'setting.tooltip.title': 'المحتوى تلميح الأدوات',
-
 
     'login.message': 'تسجيل الدخول إلى Quran.com لتخزين كل ما تبذلونه من العناوين والملاحظات والأنشطة.'
   }

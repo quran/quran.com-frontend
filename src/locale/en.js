@@ -10,7 +10,7 @@ export default {
     'setting.title': 'Quran',
     'setting.surahs': 'Surahs',
     'setting.verses': 'Go to verse',
-    'setting.reciters': 'Reciters',
+    'setting.reciters.title': 'Reciters',
     'setting.translations.title': 'Translations',
     'setting.translations.removeAll': 'Remove all',
     'setting.translations.english': 'English',
