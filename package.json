@@ -56,6 +56,7 @@
     "bootstrap-sass": "3.3.7",
     "bundle-loader": "0.5.4",
     "cache-manager": "1.5.0",
+    "caniuse-db": "1.0.30000613",
     "clean-webpack-plugin": "0.1.10",
     "compression": "1.6.2",
     "compression-webpack-plugin": "0.3.2",

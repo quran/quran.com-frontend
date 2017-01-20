@@ -26,7 +26,7 @@ module.exports = {
   target: 'web',
   cache: false,
   entry: [
-    `bootstrap-loader/lib/bootstrap.loader?extractStyles&configFilePath=${root}/src/styles/bootstrap.config.json!bootstrap-loader/no-op.js`,
+    `bootstrap-loader/lib/bootstrap.loader?extractStyles&configFilePath=${root}/src/styles/bootstrap.config.prod.json!bootstrap-loader/no-op.js`,
     './client.js',
   ],
   stats: {
@@ -71,31 +71,34 @@ module.exports = {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: [
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true,
-                importLoaders: 2,
-                sourceMap: true,
-                minimize: true
-              }
-            },
-            {
-              loader: 'postcss-loader',
-              options: {
-                sourceMap: 'inline',
-                plugins() {
-                  return [
-                    require('precss'), // eslint-disable-line
-                    require('autoprefixer'), // eslint-disable-line
-                    require('cssnano'), // eslint-disable-line
-                  ];
-                }
-              }
-            },
-            'sass-loader?sourceMap&sourceMapContents'
-          ]
+        //   loader: [
+        //     {
+        //       loader: 'css-loader',
+        //       options: {
+        //         modules: true,
+        //         importLoaders: 2,
+        //         sourceMap: true,
+        //         minimize: true,
+        //         localIdentName: '[path][name]__[local]--[hash:base64:5]'
+        //       }
+        //     },
+        //     {
+        //       loader: 'postcss-loader',
+        //       options: {
+        //         sourceMap: 'inline',
+        //         plugins() {
+        //           return [
+        //             require('precss'), // eslint-disable-line
+        //             require('autoprefixer'), // eslint-disable-line
+        //             require('cssnano'), // eslint-disable-line
+        //           ];
+        //         }
+        //       }
+        //     },
+        //     'sass-loader?sourceMap&sourceMapContents'
+        //   ]
+          loader: 'css-loader?minimize&modules&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
+
         })
       },
       {
@@ -144,6 +147,9 @@ module.exports = {
       'process.env.SENTRY_KEY_SERVER': JSON.stringify(process.env.SENTRY_KEY_SERVER),
       'process.env.FACEBOOK_APP_ID': JSON.stringify(process.env.FACEBOOK_APP_ID),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env': {
+        NODE_ENV: JSON.stringify('production') // for reach
+      },
       __SERVER__: false,
       __CLIENT__: true,
       __DEVELOPMENT__: false,
@@ -152,6 +158,7 @@ module.exports = {
     new webpack.EnvironmentPlugin([
       'NODE_ENV'
     ]),
+    new ExtractTextPlugin({ filename: '[name]-[hash].css', allChunks: true }),
 
     // Optimizations
     new webpack.optimize.AggressiveMergingPlugin(),
@@ -161,7 +168,7 @@ module.exports = {
       },
       minimize: true
     }),
-    new ExtractTextPlugin({ filename: '[name]-[hash].css', allChunks: true }),
+
     new webpack.LoaderOptionsPlugin({
       test: /\.css$/, // optionally pass test, include and exclude, default affects all loaders
       minimize: true,
@@ -173,9 +180,6 @@ module.exports = {
       test: /\.js$|\.css$|\.html$/,
       threshold: 10240,
       minRatio: 0
-    }),
-    new webpack.optimize.CommonsChunkPlugin({
-      names: ['vendor', 'manifest'] // Specify the common bundle's name.
     }),
     webpackIsomorphicToolsPlugin
   ]
