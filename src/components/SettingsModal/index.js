@@ -44,7 +44,7 @@ const SettingsModal = ({
       <ModalBody>
         <div className="form-group">
           <h5 className="text-black">
-            <LocaleFormattedMessage id="setting.reciters.title" defaultMessage="Reciters" />
+            <LocaleFormattedMessage id="setting.title" defaultMessage="Reciters" />
           </h5>
           <ReciterDropdown
             onOptionChange={handleOptionChange}
