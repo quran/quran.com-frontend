@@ -64,7 +64,8 @@ class GlobalSidebar extends Component {
           {children}
           <li>
             <a tabIndex="-1" className="pointer" onClick={() => this.setState({ settingsModalOpen: true }, handleOpen(false))}>
-              <i className="ss-icon ss-settings vertical-align-middle" />{' '}<LocaleFormattedMessage id="setting.settings" defaultMessage="Settings" />
+              <i className="ss-icon ss-settings vertical-align-middle" />{' '}
+              <LocaleFormattedMessage id="setting.settings" defaultMessage="Settings" />
             </a>
           </li>
           <li>
