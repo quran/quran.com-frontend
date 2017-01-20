@@ -44,7 +44,7 @@ const SettingsModal = ({
       <ModalBody>
         <div className="form-group">
           <h5 className="text-black">
-            <LocaleFormattedMessage id="settings.reciters" defaultMessage="Reciters" />
+            <LocaleFormattedMessage id="setting.reciters" defaultMessage="Reciters" />
           </h5>
           <ReciterDropdown
             onOptionChange={handleOptionChange}
@@ -53,7 +53,7 @@ const SettingsModal = ({
         </div>
         <div className="form-group">
           <h5 className="text-black">
-            <LocaleFormattedMessage id="settings.translations" defaultMessage="Translations" />
+            <LocaleFormattedMessage id="setting.translations" defaultMessage="Translations" />
           </h5>
           <ContentDropdown
             onOptionChange={handleOptionChange}
@@ -62,7 +62,7 @@ const SettingsModal = ({
         </div>
         <div className="form-group">
           <h5 className="text-black">
-            <LocaleFormattedMessage id="settings.tooltip" defaultMessage="Tooltip Content" />
+            <LocaleFormattedMessage id="setting.tooltip.title" defaultMessage="Tooltip Content" />
           </h5>
           <TooltipDropdown
             tooltip={options.tooltip}
