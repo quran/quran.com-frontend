@@ -56,7 +56,7 @@ class GlobalSidebar extends Component {
               className="navbar-text"
               onClick={() => handleOpen(false)}
             >
-              <LocaleFormattedMessage id="setting.title" defaultMessage="Quran" />
+              <LocaleFormattedMessage id="nav.title" defaultMessage="Quran" />
             </p>
           </NavbarHeader>
         </Navbar>
@@ -64,7 +64,8 @@ class GlobalSidebar extends Component {
           {children}
           <li>
             <a tabIndex="-1" className="pointer" onClick={() => this.setState({ settingsModalOpen: true }, handleOpen(false))}>
-              <i className="ss-icon ss-settings vertical-align-middle" />{' '}Settings
+              <i className="ss-icon ss-settings vertical-align-middle" />{' '}
+              <LocaleFormattedMessage id="nav.settings" defaultMessage="Settings" />
             </a>
           </li>
           <li>

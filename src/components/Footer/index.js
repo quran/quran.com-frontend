@@ -135,13 +135,6 @@ const Footer = () => (
           </Col>
 
           <Col md={4} sm={12} xs={12} className={styles.links}>
-            <p className={styles.header}>
-              <LocaleFormattedMessage
-                id="local.selectLabel"
-                defaultMessage="Site Language"
-              />
-            </p>
-
             <div className={styles.list}>
               <p className="monserrat">
                 <LocaleFormattedMessage
@@ -150,7 +143,9 @@ const Footer = () => (
                 />
               </p>
 
-              <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>
+              <p className="monserrat">
+                &copy; 2016 Quran.com. <LocaleFormattedMessage id="nav.rightsReserved" defaultMessage="All Rights Reserved" />.
+              </p>
             </div>
           </Col>
         </div>
