@@ -38,13 +38,13 @@ const SettingsModal = ({
     <Modal show={open} onHide={handleHide}>
       <ModalHeader closeButton>
         <ModalTitle className="montserrat">
-          <LocaleFormattedMessage id="nav.settings" defaultMessage="Settings" />
+          <LocaleFormattedMessage id="setting.title" defaultMessage="Settings" />
         </ModalTitle>
       </ModalHeader>
       <ModalBody>
         <div className="form-group">
           <h5 className="text-black">
-            <LocaleFormattedMessage id="setting.title" defaultMessage="Reciters" />
+            <LocaleFormattedMessage id="setting.reciters.title" defaultMessage="Reciters" />
           </h5>
           <ReciterDropdown
             onOptionChange={handleOptionChange}
