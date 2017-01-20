@@ -61,6 +61,7 @@ export default {
     'actions.play': 'Play',
     'actions.pause': 'Pause',
 
+    'nav.settings': 'Settings',
     'nav.contribute': 'Contribute',
     'nav.aboutUs': 'About us',
     'nav.developers': 'Developers',
