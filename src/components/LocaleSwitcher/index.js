@@ -3,7 +3,9 @@ import React, { PropTypes, Component } from 'react';
 import cookie from 'react-cookie';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import { locales, defaultLocale } from '../../config';
+import config from '../../config';
+
+const { locales, defaultLocale } = config;
 
 export default class LocaleSwitcher extends Component {
   static propTypes = {

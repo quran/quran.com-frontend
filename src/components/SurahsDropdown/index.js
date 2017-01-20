@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 
-import Col from 'react-bootstrap/lib/Col';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
@@ -27,19 +26,19 @@ export default class SurahsDropdown extends Component {
       <LinkContainer to={`/${surah.id}`} activeClass="active" key={`surah-${index}`}>
         <MenuItem>
           <div className="row">
-            <Col xs={2} md={2}>
+            <div className="col-xs-2">
               <span className="surah-num">
                 {surah.id}
               </span>
-            </Col>
-            <Col xs={7} md={7}>
+            </div>
+            <div className="col-xs-2">
               <span className="suran-name">{surah.name.simple}</span>
               <br />
               <span className="surah-meaning">{surah.name.english}</span>
-            </Col>
-            <Col xs={3} md={3} className={`text-right ${styles.arabicName}`}>
+            </div>
+            <div className={`col-xs-3 text-right ${styles.arabicName}`}>
               {surah.name.arabic}
-            </Col>
+            </div>
           </div>
         </MenuItem>
       </LinkContainer>

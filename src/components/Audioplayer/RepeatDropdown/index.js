@@ -4,7 +4,6 @@ import Popover from 'react-bootstrap/lib/Popover';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import Col from 'react-bootstrap/lib/Col';
 import { intlShape, injectIntl } from 'react-intl';
 
 import SwitchToggle from 'components/SwitchToggle';
@@ -62,7 +61,7 @@ class RepeatButton extends Component {
     const array = Array(surah.ayat).join().split(',');
 
     return (
-      <Col md={12} style={{ paddingTop: 15 }}>
+      <div className="col-md-12" style={{ paddingTop: 15 }}>
         <ul className="list-inline" style={{ marginBottom: 0 }}>
           <li>
             <LocaleFormattedMessage
@@ -110,7 +109,7 @@ class RepeatButton extends Component {
             </FormControl>
           </li>
         </ul>
-      </Col>
+      </div>
     );
   }
 
@@ -119,7 +118,7 @@ class RepeatButton extends Component {
     const array = Array(surah.ayat).join().split(',');
 
     return (
-      <Col md={12} style={{ paddingTop: 15 }}>
+      <div className="col-md-12" style={{ paddingTop: 15 }}>
         <LocaleFormattedMessage
           id="player.currentAyah"
           defaultMessage="Ayah"
@@ -141,7 +140,7 @@ class RepeatButton extends Component {
             ))
           }
         </FormControl>
-      </Col>
+      </div>
     );
   }
 
@@ -150,7 +149,7 @@ class RepeatButton extends Component {
 
     return (
       <div className={`${!repeat.from && style.disabled} row`}>
-        <Col md={12}>
+        <div className="col-md-12">
           <Nav
             bsStyle="pills"
             activeKey={repeat.from === repeat.to ? 1 : 2}
@@ -169,7 +168,7 @@ class RepeatButton extends Component {
               />
             </NavItem>
           </Nav>
-        </Col>
+        </div>
       </div>
     );
   }
@@ -190,7 +189,7 @@ class RepeatButton extends Component {
 
     return (
       <div className={`${!repeat.from && style.disabled} row`}>
-        <Col md={12} style={{ paddingTop: 15 }}>
+        <div className="col-md-12" style={{ paddingTop: 15 }}>
           <LocaleFormattedMessage
             id="player.repeat.title"
             defaultMessage="Repeat"
@@ -216,7 +215,7 @@ class RepeatButton extends Component {
               ))
             }
           </FormControl>
-        </Col>
+        </div>
       </div>
     );
   }
@@ -230,7 +229,7 @@ class RepeatButton extends Component {
         className={style.popover}
         title={
           <div className="row">
-            <Col md={12} className="text-center">
+            <div className="col-md-12 text-center">
               <LocaleFormattedMessage
                 id="player.repeat.title"
                 defaultMessage="TOGGLE REPEAT"
@@ -241,7 +240,7 @@ class RepeatButton extends Component {
                 id="repeat-toggle"
                 flat
               />
-            </Col>
+            </div>
           </div>
         }
       >

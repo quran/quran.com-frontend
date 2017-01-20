@@ -8,10 +8,6 @@ import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
 import { FormattedHTMLMessage } from 'react-intl';
 
-// Bootstrap
-import Grid from 'react-bootstrap/lib/Grid';
-import Col from 'react-bootstrap/lib/Col';
-
 import Ayah from 'components/Ayah';
 import Loader from 'components/Loader';
 
@@ -77,16 +73,16 @@ class Search extends Component {
 
       return (
         <div className={style.header}>
-          <Grid>
+          <div className="container">
             <div className="row">
-              <Col md={6} className="text-uppercase search-status">
+              <div className="col-md-6 text-uppercase search-status">
                 <FormattedHTMLMessage
                   id="search.resultHeading"
                   defaultMessage="{from}-{to} OF {total} SEARCH RESULTS FOR: {query}"
                   values={values}
                 />
-              </Col>
-              <Col md={6} className="text-right">
+              </div>
+              <div className="col-md-6 text-right">
                 <ReactPaginate
                   previousLabel={
                     <span aria-hidden="true">
@@ -110,9 +106,9 @@ class Search extends Component {
                   pageLinkClassName="pointer:"
                   activeClass={style.active}
                 />
-              </Col>
+              </div>
             </div>
-          </Grid>
+          </div>
         </div>
       );
     }
@@ -170,9 +166,9 @@ class Search extends Component {
         {this.renderStatsBar()}
         <div className="container surah-list">
           <div className="row">
-            <Col md={12}>
+            <div className="col-md-12">
               {this.renderBody()}
-            </Col>
+            </div>
           </div>
         </div>
       </div>

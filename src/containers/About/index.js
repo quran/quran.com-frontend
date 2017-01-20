@@ -2,16 +2,13 @@ import React from 'react';
 import IndexHeader from 'components/IndexHeader';
 import Helmet from 'react-helmet';
 
-import Grid from 'react-bootstrap/lib/Grid';
-import Col from 'react-bootstrap/lib/Col';
-
 export default () => (
   <div>
     <Helmet title="About Quran.com" />
     <IndexHeader noSearch />
-    <Grid className="about-text" fluid>
+    <div className="about-text container-fluid">
       <div className="row">
-        <Col md={8} mdOffset={2}>
+        <div className="col-md-8 col-md-offset-2">
           <h4 className="source-sans">
             The Noble Quran is the central
             religious text of Islam. Muslims believe the Qur’an is the
@@ -23,10 +20,10 @@ export default () => (
             be embraced as such. For more information about the Noble
             Quran, you may visit its <a href="https://en.wikipedia.org/wiki/Quran">Wikipedia article.</a>
           </h4>
-        </Col>
+        </div>
       </div>
       <div className="row">
-        <Col md={8} mdOffset={2}>
+        <div className="col-md-8 col-md-offset-2">
           <h3>MECCAN SURAHS</h3>
           <h4 className="source-sans">
             The Meccan suras are the chronologically earlier chapters
@@ -36,10 +33,10 @@ export default () => (
             Medina (Hijra). The Medinan suras are those revelations that
             occurred after the move to the city of that name.
           </h4>
-        </Col>
+        </div>
       </div>
       <div className="row">
-        <Col md={8} mdOffset={2}>
+        <div className="col-md-8 col-md-offset-2">
           <h3>MEDINAN SURAHS</h3>
           <h4 className="source-sans">
             The Medinan suras or Medinan chapters of the Quran are the
@@ -49,10 +46,10 @@ export default () => (
             larger and more developed, as opposed to their minority position
             in Mecca.
           </h4>
-        </Col>
+        </div>
       </div>
       <div className="row">
-        <Col md={8} mdOffset={2}>
+        <div className="col-md-8 col-md-offset-2">
           <h3>BROWSING SURAHS ON THIS WEBSITE</h3>
           <h4 className="source-sans">
             We have redesigned the website with a user friendly approach in
@@ -63,10 +60,10 @@ export default () => (
             suggestions on how we can make the website a better experience
             please do not hesitate to <a href="https://quran.zendesk.com/hc/en-us">contact us</a>.
           </h4>
-        </Col>
+        </div>
       </div>
       <div className="row credits">
-        <Col md={8} mdOffset={2}>
+        <div className="col-md-8 col-md-offset-2">
           <h3><strong>CREDITS</strong></h3>
           <h4>
             This website was created by a few volunteers and was made
@@ -82,8 +79,8 @@ export default () => (
             word timing files.
             If you have any questions, you may visit the <a href="/contact">Contact</a> page.
           </h4>
-        </Col>
+        </div>
       </div>
-    </Grid>
+    </div>
   </div>
 );

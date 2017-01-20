@@ -1,8 +1,5 @@
 import React from 'react';
 import Helmet from 'react-helmet';
-
-import Grid from 'react-bootstrap/lib/Grid';
-import Col from 'react-bootstrap/lib/Col';
 import Button from 'react-bootstrap/lib/Button';
 
 import makeHeadTags from 'helpers/makeHeadTags';
@@ -13,7 +10,7 @@ const play = require('../../../static/images/play-store.svg');
 const phones = require('../../../static/images/mockup-desktop@2x.png');
 
 export default () => (
-  <Grid className={`${styles.container} montserrat`}>
+  <div className={`${styles.container} montserrat container`}>
     <Helmet
       {
         ...makeHeadTags({
@@ -23,7 +20,7 @@ export default () => (
       }
     />
     <div className="row">
-      <Col md={5}>
+      <div className="col-md-5">
         <h1 className={styles.title}>
           <strong>Quran</strong><br />
           by quran.com القرآن
@@ -37,7 +34,7 @@ export default () => (
           </small>
         </h3>
         <div className="row" style={{ paddingTop: 15 }}>
-          <Col md={6}>
+          <div className="col-md-6">
             <Button
               bsStyle="primary"
               bsSize="lg"
@@ -53,8 +50,8 @@ export default () => (
               />
               Download
             </Button>
-          </Col>
-          <Col md={6}>
+          </div>
+          <div className="col-md-6">
             <Button
               bsSize="lg"
               className={styles.button}
@@ -64,12 +61,12 @@ export default () => (
               <img src={play} alt="Play Store" height="24px" style={{ paddingRight: 10 }} />
               Download
             </Button>
-          </Col>
+          </div>
         </div>
-      </Col>
-      <Col md={7}>
+      </div>
+      <div className="col-md-7">
         <img src={phones} width="100%" alt="Apps" />
-      </Col>
+      </div>
     </div>
-  </Grid>
+  </div>
 );
