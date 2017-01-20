@@ -56,7 +56,7 @@ class GlobalSidebar extends Component {
               className="navbar-text"
               onClick={() => handleOpen(false)}
             >
-              <LocaleFormattedMessage id="setting.title" defaultMessage="Quran" />
+              <LocaleFormattedMessage id="nav.title" defaultMessage="Quran" />
             </p>
           </NavbarHeader>
         </Navbar>

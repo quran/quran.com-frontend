@@ -6,7 +6,6 @@ export default {
     'local.changeLocal': 'جس زبان میں سایٹ دیکہنا چاہتے ہیں اس زبان کا انتخاب کریں',
     'local.navtiveName': 'اردو',
     'local.selectLabel': 'زبان',
-    'setting.options': 'اختیارات',
     'setting.title': 'اختیارات',
     'setting.surahs': 'سورة',
     'setting.verses': 'آیت منتخب کریں',
@@ -61,6 +60,7 @@ export default {
     'actions.play': 'چلاو',
     'actions.pause': 'روک دیں',
 
+    'nav.title': 'قرآن',
     'nav.settings': 'اختیارات',
     'nav.contribute': 'تعاون کریں',
     'nav.aboutUs': 'ہمارے متعلق',

@@ -6,7 +6,6 @@ export default {
     'local.changeLocal': 'اختر اللغة التي تود عرض الموقع بها',
     'local.navtiveName': 'العربية',
     'local.selectLabel': 'اللغة',
-    'setting.options': 'خيارات',
     'setting.title': 'خيارات',
     'setting.surahs': 'السورة',
     'setting.verses': 'الذهاب إلى الآية',
@@ -61,6 +60,7 @@ export default {
     'actions.play': 'لعب',
     'actions.pause': 'وقفة',
 
+    'nav.title': 'القرآن',
     'nav.settings': 'خيارات',
     'nav.contribute': 'يساهم',
     'nav.aboutUs': 'معلومات عنا',

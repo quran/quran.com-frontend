@@ -6,8 +6,7 @@ export default {
     'local.changeLocal': 'Choose the language you want the site to display with',
     'local.navtiveName': 'English',
     'local.selectLabel': 'Language',
-    'setting.options': 'Options',
-    'setting.title': 'Quran',
+    'setting.title': 'Settings',
     'setting.surahs': 'Surahs',
     'setting.verses': 'Go to verse',
     'setting.reciters.title': 'Reciters',
@@ -61,6 +60,7 @@ export default {
     'actions.play': 'Play',
     'actions.pause': 'Pause',
 
+    'nav.title': 'Quran',
     'nav.settings': 'Settings',
     'nav.contribute': 'Contribute',
     'nav.aboutUs': 'About us',
