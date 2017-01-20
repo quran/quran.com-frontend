@@ -79,6 +79,9 @@ const Html = ({ store, component, assets }) => {
         {Object.keys(assets.javascript).map((script, i) =>
           <script src={assets.javascript[script]} key={i} />
         )}
+        {
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" />
+        }
       </body>
     </html>
   );
