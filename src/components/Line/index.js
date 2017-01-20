@@ -20,15 +20,18 @@ export default class Line extends React.Component {
     isPlaying: PropTypes.bool
   };
 
-  shouldComponentUpdate(nextProps) {
-    const conditions = [
-      this.props.currentAyah !== nextProps.currentAyah,
-      this.props.line !== nextProps.line,
-      this.props.isPlaying !== nextProps.isPlaying
-    ];
-
-    return conditions.some(condition => condition);
-  }
+  // NOTE: this is commented out as it caused problems with 55:31 with missing text.
+  // shouldComponentUpdate(nextProps) {
+  //   const conditions = [
+  //     this.props.currentAyah !== nextProps.currentAyah,
+  //     this.props.line !== nextProps.line,
+  //     this.props.isPlaying !== nextProps.isPlaying
+  //   ];
+  //
+  //   console.log(conditions, conditions.some(condition => condition));
+  //
+  //   return conditions.some(condition => condition);
+  // }
 
   renderText() {
     const { tooltip, currentAyah, audioActions, isPlaying, line } = this.props;

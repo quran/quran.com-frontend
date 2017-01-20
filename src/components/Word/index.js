@@ -52,7 +52,7 @@ export default class Word extends React.Component {
     const className = `${word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
 
     if (word.charTypeId === CHAR_TYPE_WORD) {
-      id = `word-${word.ayahKey.replace(/:/, '-')}-${audioPosition}`;
+      id = `word-${word.ayahKey.replace(/:/, '-')}-${audioPosition || word.position}`;
     }
 
     return (
