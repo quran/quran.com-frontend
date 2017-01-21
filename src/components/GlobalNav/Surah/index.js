@@ -1,10 +1,12 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import Link from 'react-router/lib/Link';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 
 import { surahType, optionsType } from 'types';
 import * as OptionsActions from 'redux/actions/options.js';
 
+import SearchInput from 'components/SearchInput';
 import SurahsDropdown from 'components/SurahsDropdown';
 import ReadingModeToggle from 'components/ReadingModeToggle';
 import NightModeToggle from 'components/NightModeToggle';
@@ -39,7 +41,15 @@ const GlobalNavSurah = ({ surah, surahs, setOption, options, ...props }) => (
           onToggle={setOption}
         />
         <NightModeToggle />
-      </NavDropdown>
+      </NavDropdown>,
+      <div className="navbar-form navbar-left hidden-xs hidden-sm">
+        <SearchInput className="search-input" />
+      </div>,
+      <li className="visible-xs-inline-block visible-sm-inline-block">
+        <Link to="/search">
+          <i className="ss-icon ss-search" style={{ verticalAlign: 'sub' }} />
+        </Link>
+      </li>
     ]}
     rightControls={[
       <FontSizeDropdown

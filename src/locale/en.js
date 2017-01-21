@@ -18,7 +18,7 @@ export default {
     'setting.fontSize.arabic': 'Arabic',
     'setting.reading': 'Reading',
     'setting.tooltip': 'Tooltip content',
-    'setting.tooltip.title': 'TOOLTIP DISPLAY',
+    'setting.tooltip.title': 'Tooltip display',
     'setting.tooltip.translation': 'Translation',
     'setting.tooltip.transliteration': 'Transliteration',
     'setting.nightMode': 'Night Mode',
@@ -32,6 +32,7 @@ export default {
     'search.placeholder': 'Search "Noah"',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Sorry, there was an error with your search.',
+    'search.nothing': 'No search query.',
     'search.noResult': 'No results found.',
 
     'surah.next': 'NEXT',
