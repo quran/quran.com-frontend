@@ -163,6 +163,9 @@ export class Audioplayer extends Component {
   }
 
   play = () => {
+    const { currentAyah } = this.props; 
+    history.pushState('', '', `/${currentAyah.replace(':', '/')}`);
+    
     this.handleScrollTo();
 
     this.props.play();
