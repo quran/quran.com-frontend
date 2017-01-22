@@ -9,9 +9,6 @@ import surahType from 'types/surahType';
 
 const Header = Navbar.Header;
 
-// const ornamentLeft = require('../../../../static/images/ornament-left.png');
-// const ornamentRight = require('../../../../static/images/ornament-right.png');
-
 const styles = require('./style.scss');
 
 const SurahHeader = ({ surah, handleToggleSidebar }) => {

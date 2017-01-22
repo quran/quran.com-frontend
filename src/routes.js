@@ -1,4 +1,4 @@
-/* eslint-disable max-len */
+/* eslint-disable max-len, no-console */
 import React from 'react';
 import IndexRoute from 'react-router/lib/IndexRoute';
 import Route from 'react-router/lib/Route';
@@ -39,25 +39,25 @@ export default (store) => {
   return (
     <Route path="/" component={App} onEnter={shouldAuth}>
       <IndexRoute components={Home} />
-      <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
-      <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module))} />
+      <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/about" getComponent={(nextState, cb) => System.import('./containers/About').then(module => cb(null, module))} />
+      <Route path="/about" getComponent={(nextState, cb) => System.import('./containers/About').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/contact" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
-      <Route path="/contactus" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module))} />
+      <Route path="/contact" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/contactus" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/mobile" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
-      <Route path="/apps" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module))} />
+      <Route path="/mobile" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/apps" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/error/:errorKey" getComponent={(nextState, cb) => System.import('./containers/Error').then(module => cb(null, module))} />
+      <Route path="/error/:errorKey" getComponent={(nextState, cb) => System.import('./containers/Error').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module))} />
+      <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/login" getComponent={(nextState, cb) => System.import('./containers/Login').then(module => cb(null, module))} />
+      <Route path="/login" getComponent={(nextState, cb) => System.import('./containers/Login').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
       <Route onEnter={requireLogin}>
-        <Route path="/profile" getComponent={(nextState, cb) => System.import('./containers/Profile').then(module => cb(null, module))} />
+        <Route path="/profile" getComponent={(nextState, cb) => System.import('./containers/Profile').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
       </Route>
 
       <Redirect from="/:surahId:(:range)" to="/:surahId(/:range)" />
@@ -70,9 +70,9 @@ export default (store) => {
             System.import('./components/GlobalNav/Surah'),
             System.import('./components/GlobalSidebar/Surah'),
           ])
-          .then((module, GlobalNavSurah, GlobalSidebarSurah) => cb(
+          .then(modules => cb(
             null,
-            { main: module, nav: GlobalNavSurah, sidebar: GlobalSidebarSurah }
+            { main: modules[0].default, nav: modules[1].default, sidebar: modules[2].default }
           ))
           .catch(err => console.trace(err))
         }

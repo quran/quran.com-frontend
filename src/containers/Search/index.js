@@ -33,6 +33,10 @@ class Search extends Component {
     results: PropTypes.array, // eslint-disable-line
     ayahs: PropTypes.objectOf(ayahType),
     push: PropTypes.func.isRequired,
+    location: PropTypes.shape({
+      q: PropTypes.string,
+      p: PropTypes.string
+    }),
     options: optionsType
   };
 
@@ -117,7 +121,15 @@ class Search extends Component {
   }
 
   renderBody() {
-    const { isErrored, isLoading, results, options, ayahs } = this.props;
+    const { location, isErrored, isLoading, results, options, ayahs } = this.props;
+
+    if (!location.q) {
+      return (
+        <h3 className="text-center" style={{ padding: '15%' }}>
+          <LocaleFormattedMessage id="search.nothing" defaultMessage="No search query." />
+        </h3>
+      );
+    }
 
     if (isErrored) {
       return (
