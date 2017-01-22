@@ -32,6 +32,7 @@ export default {
     'search.placeholder': 'بحث',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'آسف، كان هناك خطأ مع بحثك.',
+    'search.nothing': 'لا استعلام البحث',
     'search.noResult': 'لا توجد نتائج.ا',
 
     'surah.next': 'تالية سورة',

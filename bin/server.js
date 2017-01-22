@@ -34,5 +34,5 @@ if (__DEVELOPMENT__) {
 global.webpack_isomorphic_tools = new webpackIsomorphicTools(require('../webpack/isomorphic-tools-configuration'))
 .development(process.env.NODE_ENV === 'development')
 .server(rootDir, function() {
-  require('../src/server.js')();
+  require('../src/server.js').default();
 });
