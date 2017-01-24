@@ -52,6 +52,7 @@ class Surah extends Component {
     bookmarks: PropTypes.object.isRequired, // eslint-disable-line
     isLoading: PropTypes.bool.isRequired,
     isLoaded: PropTypes.bool.isRequired,
+    isSingleAyah: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     options: PropTypes.object.isRequired, // eslint-disable-line
     params: PropTypes.shape({
@@ -142,21 +143,14 @@ class Surah extends Component {
     const { ayahIds, surah, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     const range = [this.getFirst(), this.getLast()];
 
-    let size = 10;
-
-    if (((range[1] - range[0]) + 1) < 10) {
-      size = (range[1] - range[0]) + 1;
-    }
-
+    const size = 10;
     const from = range[1];
     const to = (from + size);
 
     if (!isEndOfSurah && !ayahIds.has(to)) {
       actions.ayah.load(surah.id, from, to, options).then(() => {
         this.setState({ lazyLoading: false });
-        if (callback) {
-          callback();
-        }
+        return callback && callback();
       });
     }
 
@@ -214,7 +208,22 @@ class Surah extends Component {
   }
 
   renderPagination() {
-    const { isLoading, isEndOfSurah, surah } = this.props;
+    const { isSingleAyah, isLoading, isEndOfSurah, surah } = this.props;
+
+    // If single ayah, eh. /2/30
+    if (isSingleAyah) {
+      const to = this.getFirst() + 10 > surah.ayat ? surah.ayat : this.getFirst() + 10;
+
+      return (
+        <ul className="pager">
+          <li className="text-center">
+            <Link to={`/${surah.id}/${this.getFirst()}-${to}`}>
+              <LocaleFormattedMessage id="surah.index.continue" defaultMessage="Continue" />
+            </Link>
+          </li>
+        </ul>
+      );
+    }
 
     return (
       <LazyLoad
@@ -264,6 +273,7 @@ class Surah extends Component {
 
   renderAyahs() {
     const {
+      surah,
       ayahs,
       actions,
       options,
@@ -276,6 +286,7 @@ class Surah extends Component {
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
+        surah={surah}
         currentAyah={currentAyah}
         isCurrentAyah={isPlaying && ayah.ayahKey === currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
@@ -412,11 +423,14 @@ function mapStateToProps(state, ownProps) {
   const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
   const ayahIds = new Set(ayahArray);
   const lastAyahInArray = ayahArray.slice(-1)[0];
+  const isSingleAyah = !ownProps.params.range.includes('-');
+
 
   return {
     surah,
     ayahs,
     ayahIds,
+    isSingleAyah,
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
     currentAyah: state.audioplayer.currentAyah,
