@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 
-import { ayahType, matchType } from 'types';
+import { ayahType, matchType, surahType } from 'types';
+import Share from 'components/Share';
 import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
@@ -15,6 +16,7 @@ export default class Ayah extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
     ayah: ayahType.isRequired,
+    surah: surahType.isRequired,
     bookmarked: PropTypes.bool, // TODO: Add this for search
     bookmarkActions: PropTypes.shape({
       isLoaded: PropTypes.func.isRequired,
@@ -277,12 +279,15 @@ export default class Ayah extends Component {
   }
 
   renderControls() {
+    const { surah, ayah } = this.props;
+
     return (
       <div className={`col-md-1 col-sm-1 ${styles.controls}`}>
         {this.renderAyahBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderBookmark()}
+        <Share surah={surah} ayahKey={ayah.ayahKey} />
       </div>
     );
   }

@@ -11,7 +11,7 @@ export default function createStore(history, client, data) {
   let finalCreateStore;
   if (__DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__) {
     const { persistState } = require('redux-devtools');
-    const DevTools = require('../containers/DevTools');
+    const DevTools = require('../containers/DevTools').default;
 
     finalCreateStore = compose(
       applyMiddleware(...middleware),

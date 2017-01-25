@@ -55,7 +55,7 @@ export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {
     } else {
       // Single ayah. For example /2/30
       from = range;
-      to = parseInt(range, 10) + ayahRangeSize;
+      to = range;
     }
 
     if (isNaN(from) || isNaN(to)) {

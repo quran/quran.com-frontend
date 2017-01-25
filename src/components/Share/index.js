@@ -1,5 +1,4 @@
-/* global window */
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
 import { ShareButtons, generateShareIcon } from 'react-share';
 import { surahType } from 'types';
 
@@ -9,38 +8,38 @@ const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 const FacebookIcon = generateShareIcon('facebook');
 const TwitterIcon = generateShareIcon('twitter');
 
-export default class Share extends Component {
-  static propTypes = {
-    surah: surahType.isRequired
-  };
+const Share = ({ surah, ayahKey }) => {
+  // Fallback to Surah Id
+  const path = ayahKey ? ayahKey.replace(':', '/') : surah.id;
+  const shareUrl = `https://quran.com/${path}`;
+  const title = ayahKey ? `Surah ${surah.name.simple} [${ayahKey}]` : `Surah ${surah.name.simple}`;
+  const iconProps = ayahKey ? { iconBgStyle: { fill: '#d1d0d0' } } : {};
 
-  onClickPopup = (url, title) => {
-    window.open(url, title, 'width=670,height=540,scrollbars=no,toolbar=0');
-  }
+  return (
+    <div className={`${styles.shareContainer}`}>
+      <FacebookShareButton
+        url={shareUrl}
+        title={title}
+        windowWidth={670}
+        windowHeight={540}
+        className={`${styles.iconContainer}`}
+      >
+        <FacebookIcon size={24} round {...iconProps} />
+      </FacebookShareButton>
+      <TwitterShareButton
+        url={shareUrl}
+        title={title}
+        className={`${styles.iconContainer}`}
+      >
+        <TwitterIcon size={24} round {...iconProps} />
+      </TwitterShareButton>
+    </div>
+  );
+};
 
-  render() {
-    const { surahId, name } = this.props.surah;
-    const surahUrl = `https://quran.com/${surahId}`;
+Share.propTypes = {
+  ayahKey: PropTypes.string,
+  surah: surahType.isRequired
+};
 
-    return (
-      <div className={`${styles.shareContainer} hidden-xs`}>
-        <FacebookShareButton
-          url={surahUrl}
-          title="Facebook"
-          windowWidth={670}
-          windowHeight={540}
-          className={`${styles.iconContainer}`}
-        >
-          <FacebookIcon size={24} round />
-        </FacebookShareButton>
-        <TwitterShareButton
-          url={surahUrl}
-          title={`Surat ${name.simple}`}
-          className={`${styles.iconContainer}`}
-        >
-          <TwitterIcon size={24} round />
-        </TwitterShareButton>
-      </div>
-    );
-  }
-}
+export default Share;
