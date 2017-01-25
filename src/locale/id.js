@@ -1,24 +1,24 @@
 // jscs:disable disallowQuotedKeysInObjects
 export default {
   messages: {
-    local: 'indonesia',
-    'local.siteLocale': 'Bahasa situs',
+    local: 'indonesian',
+    'local.siteLocale': 'Bahasa Situs',
     'local.changeLocal': 'Pilih bahasa yang diinginkan untuk tampilan situs',
-    'local.navtiveName': 'Bahasa Indonesia',
+    'local.navtiveName': 'Indonesia',
     'local.selectLabel': 'Bahasa',
     'setting.title': 'Pengaturan',
     'setting.surahs': 'Surat',
     'setting.verses': 'Pergi ke ayat',
     'setting.reciters.title': 'Qari\'',
     'setting.translations.title': 'Terjemahan',
-    'setting.translations.removeAll': 'Hapus semua',
+    'setting.translations.removeAll': 'Buang semua',
     'setting.translations.english': 'Bahasa Inggris',
     'setting.translations.other': 'Bahasa Lainnya',
-    'setting.fontSize': 'Ukuran font',
-    'setting.fontSize.arabic': 'Tulisan Arab',
+    'setting.fontSize': 'Ukuran huruf',
+    'setting.fontSize.arabic': 'Arab',
     'setting.reading': 'Membaca',
-    'setting.tooltip': 'Konten tooltip',
-    'setting.tooltip.title': 'TAMPILAN TOOLTIP',
+    'setting.tooltip': 'Isi tooltip',
+    'setting.tooltip.title': 'Tampilan Tooltip',
     'setting.tooltip.translation': 'Terjemahan',
     'setting.tooltip.transliteration': 'Transliterasi',
     'setting.nightMode': 'Mode Malam',
@@ -30,9 +30,10 @@ export default {
     'ayah.bookmark': 'Tandai',
 
     'search.placeholder': 'Cari "Nuh"',
-    'search.resultHeading': '{from}-{to} DARI <span> {total} </span> HASIL PENCARIAN DARI: <span>{query}</span>', // eslint-disable-line max-len
+    'search.resultHeading': '{from}-{to} DARI <span> {total} </span> HASIL PENCARIAN ATAS: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Maaf, terdapat kesalahan dalam pencarian Anda.',
-    'search.noResult': 'Tidak ada hasil yang ditemukan',
+    'search.nothing': 'Tidak ada kata yang dicari.',
+    'search.noResult': 'Tidak ada hasil yang ditemukan.',
 
     'surah.next': 'BERIKUTNYA',
     'surah.previous': 'SEBELUMNYA',
@@ -45,24 +46,24 @@ export default {
     'player.currentAyah': 'Ayat',
     'player.nextAyah': 'Ayat Berikutnya',
     'player.previousAyah': 'Ayat Sebelumnya',
-    'player.repeat.title': 'NYALAKAN/MATIKAN PENGULANGAN',
+    'player.repeat.title': 'PENGULANGAN',
     'player.repeat.single': 'Satu ayat',
     'player.repeat.range': 'Rentang',
     'player.repeat.rangeStart': 'Dari',
     'player.repeat.rangeEnd': 'Hingga',
     'player.repeat.times': 'Kali',
-    'player.repeat.loop': 'loop',
+    'player.repeat.loop': 'tak berhenti',
     'player.scrollButtonTip': 'Gulirkan secara otomatis ke ayat yang sedang diputar pada saat transisi...', // eslint-disable-line max-len
 
     'app.loading': 'Memuat ...',
     'actions.copy': 'Salin',
     'actions.copied': 'Tersalin!',
     'actions.play': 'Putar',
-    'actions.pause': 'Pause',
+    'actions.pause': 'Jeda',
 
     'nav.title': 'Quran',
     'nav.settings': 'Pengaturan',
-    'nav.contribute': 'Berkontribusi',
+    'nav.contribute': 'Ambil Bagian',
     'nav.aboutUs': 'Tentang kami',
     'nav.developers': 'Pengembang',
     'nav.usefulSites': 'Situs-situs yang berguna',
@@ -70,11 +71,11 @@ export default {
     'nav.contactUs': 'Hubungi kami',
     'nav.help': 'Bantuan & umpan balik',
     'nav.aboutQuranProject': 'Quran.com (juga dikenal sebagai The Noble Quran, Al Quran, Holy Quran, Koran) adalah sebuah proyek pro bono.', // eslint-disable-line max-len
-    'nav.rightsReserved': 'All Rights Reserved',
-    'nav.mobile': 'Mobile Apps',
-    'nav.navigate': 'Navigasi',
-    'nav.legacySite': 'Legacy Quran.com',
+    'nav.rightsReserved': 'Hak Cipta Terpelihara',
+    'nav.mobile': 'Aplikasi Ponsel',
+    'nav.navigate': 'Telusuri',
+    'nav.legacySite': 'Quran.com versi lama',
 
-    'login.message': 'Log masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.'
+    'login.message': 'Masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.'
   }
 };
