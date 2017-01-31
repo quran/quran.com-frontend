@@ -45,7 +45,7 @@ export default class LocaleSwitcher extends Component {
       <MenuItem
         key={key}
         className={key === this.state.currentLocale && 'active'} // NOTE: if you use key `active` it will make all dropdown active
-        onClick={() => this.handleLocaleClick(key)}
+        onClick={e => this.handleLocaleClick(key, e)}
         href={`?local=${key}`}
       >
         {locales[key]}

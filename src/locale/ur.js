@@ -31,7 +31,7 @@ export default {
 
     'search.placeholder': 'تلاش کر یں',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
-    'search.error': 'معذرت، آپ کی تلاش کے ساتھ ایک خرابی پیش آگئی.',
+    'search.error': 'معذرت، آپ کی تلاش کے ساتھ ایک خرابی پیش آگئی ہے',
     'search.nothing': 'تلاش کے لئے کچھ لکھئے',
     'search.noResult': 'کوئی نتیجہ نہیں ملا',
 
