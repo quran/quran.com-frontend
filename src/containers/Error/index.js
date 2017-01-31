@@ -15,8 +15,7 @@ const ErrorPage = ({ params }) => (
       <div className="row">
         <div className="col-md-8 col-md-offset-2">
           <h4 className="source-sans">
-            {error[params.errorKey]}. Please go to the
-            <a href="/">home page</a> and select a Surah/Ayah
+            {error[params.errorKey]}. Please go to the <a href="/">home page</a> and select a Surah/Ayah
           </h4>
         </div>
       </div>
