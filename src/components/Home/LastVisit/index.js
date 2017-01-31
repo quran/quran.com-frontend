@@ -16,7 +16,7 @@ const LastVisit = (props) => {
         <LocaleFormattedMessage id="surah.index.continue" defaultMessage="Continue" />{' '}
         <Link to={`/${props.surah.id}/${props.ayah}`}>
           <span>
-            {props.surah.name.simple} ({props.surah.id}:{props.ayah})
+            {props.surah.nameSimple} ({props.surah.id}:{props.ayah})
           </span>
         </Link>
       </h4>
