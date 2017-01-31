@@ -2,14 +2,13 @@ import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 
-import { ayahType, matchType } from 'types';
+import { ayahType, matchType, surahType } from 'types';
+import Share from 'components/Share';
 import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
 
 import debug from 'helpers/debug';
-
-import bindTooltip from 'utils/bindTooltip';
 
 const styles = require('./style.scss');
 
@@ -17,6 +16,7 @@ export default class Ayah extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
     ayah: ayahType.isRequired,
+    surah: surahType.isRequired,
     bookmarked: PropTypes.bool, // TODO: Add this for search
     bookmarkActions: PropTypes.shape({
       isLoaded: PropTypes.func.isRequired,
@@ -47,10 +47,6 @@ export default class Ayah extends Component {
     currentWord: null,
     isSearched: false
   };
-
-  componentDidMount() {
-    bindTooltip();
-  }
 
   shouldComponentUpdate(nextProps) {
     const conditions = [
@@ -99,7 +95,7 @@ export default class Ayah extends Component {
           <h4 className="montserrat">{content.name || content.resource.name}</h4>
           <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
             <small
-              dangerouslySetInnerHTML={{__html: content.text}}
+              dangerouslySetInnerHTML={{ __html: content.text }}
               className={`${lang || 'times-new'}`}
             />
           </h2>
@@ -148,20 +144,22 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, tooltip, currentAyah, isPlaying,  audioActions, isSearched} = this.props;
+    const { ayah, tooltip, currentAyah, isPlaying, audioActions, isSearched } = this.props;
+    // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
+    let wordAudioPosition = -1;
 
-    const text = ayah.words.map(word => {
-      return(
-        <Word
-          word={word}
-          currentAyah={currentAyah}
-          tooltip={tooltip}
-          isPlaying={isPlaying}
-          audioActions={audioActions}
-          isSearched={isSearched}
-        />
-      )
-    });
+    const text = ayah.words.map(word => ( // eslint-disable-line
+      <Word
+        word={word}
+        key={`${word.position}-${word.code}-${word.lineNum}`}
+        currentAyah={currentAyah}
+        tooltip={tooltip}
+        isPlaying={isPlaying}
+        audioActions={audioActions}
+        audioPosition={word.wordId ? wordAudioPosition += 1 : null}
+        isSearched={isSearched}
+      />
+    ));
 
     const textOptimized = ayah.words.map(word => {
       return(
@@ -209,7 +207,7 @@ export default class Ayah extends Component {
           onClick={() => this.handlePlay(ayah.ayahKey)}
           className="text-muted"
         >
-          <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'}`} />
+          <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`} />{' '}
           <LocaleFormattedMessage
             id={playing ? 'actions.pause' : 'actions.play'}
             defaultMessage={playing ? 'Pause' : 'Play'}
@@ -245,7 +243,8 @@ export default class Ayah extends Component {
           onClick={() => bookmarkActions.removeBookmark(ayah.ayahKey)}
           className="text-muted"
         >
-          <strong><i className="ss-icon ss-bookmark" />
+          <strong>
+            <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
             <LocaleFormattedMessage
               id="ayah.bookmarked"
               defaultMessage="Bookmarked"
@@ -261,7 +260,7 @@ export default class Ayah extends Component {
         onClick={() => bookmarkActions.addBookmark(ayah.ayahKey)}
         className="text-muted"
       >
-        <i className="ss-icon ss-bookmark" />
+        <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
         <LocaleFormattedMessage
           id="ayah.bookmark"
           defaultMessage="Bookmark"
@@ -302,12 +301,15 @@ export default class Ayah extends Component {
   }
 
   renderControls() {
+    const { surah, ayah } = this.props;
+
     return (
       <div className={`col-md-1 col-sm-1 ${styles.controls}`}>
         {this.renderAyahBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderBookmark()}
+        <Share surah={surah} ayahKey={ayah.ayahKey} />
       </div>
     );
   }

@@ -1,9 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { optionsType } from 'types';
 
 const style = require('./style.scss');
 
@@ -450,17 +450,9 @@ export const slugs = [
 export default class ContentDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func.isRequired,
-    options: optionsType.isRequired,
+    content: PropTypes.arrayOf(PropTypes.number).isRequired,
     className: PropTypes.string
   };
-
-  static defaultProps = {
-    className: 'col-md-3'
-  }
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.options !== nextProps.options;
-  }
 
   handleRemoveContent = () => {
     const { onOptionChange } = this.props;
@@ -469,7 +461,7 @@ export default class ContentDropdown extends Component {
   }
 
   handleOptionSelected(id) {
-    const { onOptionChange, options: { content } } = this.props;
+    const { onOptionChange, content } = this.props;
 
     if (content.find(option => option === id)) {
       onOptionChange({ content: content.filter(option => option !== id) });
@@ -479,7 +471,7 @@ export default class ContentDropdown extends Component {
   }
 
   renderItems(items) {
-    const { options: { content } } = this.props;
+    const { content } = this.props;
 
     return items.map((slug) => {
       const checked = content.find(option => option === slug.id);
@@ -515,29 +507,34 @@ export default class ContentDropdown extends Component {
   }
 
   render() {
-    const { className, options: { content } } = this.props;
+    const { className, content } = this.props;
+    const title = slugs.filter(slug => content.includes(slug.id)).map(slug => slug.name).join(', ');
 
     return (
-      <DropdownButton
-        className={`dropdown ${className} ${style.dropdown}`}
-        title={<LocaleFormattedMessage id="setting.translations.title" defaultMessage="Translations" />}
-      >
-        {
-          content.length &&
-            <MenuItem onClick={this.handleRemoveContent}>
-              <LocaleFormattedMessage id="setting.translations.removeAll" defaultMessage="Remove all" />
-            </MenuItem>
-        }
-        <MenuItem header>
-          <LocaleFormattedMessage id="setting.translations.english" defaultMessage="English" />
-        </MenuItem>
-        {this.renderEnglishList()}
-        <MenuItem divider />
-        <MenuItem header>
-          <LocaleFormattedMessage id="setting.translations.other" defaultMessage="Other Languages" />
-        </MenuItem>
-        {this.renderLanguagesList()}
-      </DropdownButton>
+      <ButtonToolbar>
+        <DropdownButton
+          block
+          id="content-dropdown"
+          className={`dropdown ${className} ${style.dropdown}`}
+          title={title}
+        >
+          {
+            content.length &&
+              <MenuItem onClick={this.handleRemoveContent}>
+                <LocaleFormattedMessage id="setting.translations.removeAll" defaultMessage="Remove all" />
+              </MenuItem>
+          }
+          <MenuItem header>
+            <LocaleFormattedMessage id="setting.translations.english" defaultMessage="English" />
+          </MenuItem>
+          {this.renderEnglishList()}
+          <MenuItem divider />
+          <MenuItem header>
+            <LocaleFormattedMessage id="setting.translations.other" defaultMessage="Other Languages" />
+          </MenuItem>
+          {this.renderLanguagesList()}
+        </DropdownButton>
+      </ButtonToolbar>
     );
   }
 }

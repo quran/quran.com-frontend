@@ -7,30 +7,19 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
-// bootstrap
-import Col from 'react-bootstrap/lib/Col';
-import Navbar from 'react-bootstrap/lib/Navbar';
-
 import Helmet from 'react-helmet';
-import Sidebar from 'components/Sidebar';
 
 // components
 import Loader from 'components/Loader';
 import LazyLoad from 'components/LazyLoad';
 import PageBreak from 'components/PageBreak';
 import Audioplayer from 'components/Audioplayer';
-import ContentDropdown from 'components/ContentDropdown';
-import ReciterDropdown from 'components/ReciterDropdown';
-import SurahsDropdown from 'components/SurahsDropdown';
-import VersesDropdown from 'components/VersesDropdown';
 import SurahInfo from 'components/SurahInfo';
 import Ayah from 'components/Ayah';
 import Line from 'components/Line';
-import SearchInput from 'components/SearchInput';
 import Bismillah from 'components/Bismillah';
 import TopOptions from 'components/TopOptions';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
 
 // utils
 import scroller from 'utils/scroller';
@@ -49,10 +38,6 @@ import * as MediaActions from 'redux/actions/media.js';
 
 import { surahsConnect, surahInfoConnect, ayahsConnect } from './connect';
 
-import Header from './Header';
-
-const NavbarHeader = Navbar.Header;
-
 const style = require('./style.scss');
 
 class Surah extends Component {
@@ -67,6 +52,7 @@ class Surah extends Component {
     bookmarks: PropTypes.object.isRequired, // eslint-disable-line
     isLoading: PropTypes.bool.isRequired,
     isLoaded: PropTypes.bool.isRequired,
+    isSingleAyah: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     options: PropTypes.object.isRequired, // eslint-disable-line
     params: PropTypes.shape({
@@ -132,16 +118,6 @@ class Surah extends Component {
     return Object.keys(this.props.ayahs).length;
   }
 
-  handleOptionChange = (payload) => {
-    const { surah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
-    const from = this.getFirst();
-    const to = this.getLast();
-
-    actions.options.setOption(payload);
-
-    return actions.ayah.load(surah.id, from, to, Object.assign({}, options, payload));
-  }
-
   handleVerseDropdownClick = (ayahNum) => {
     const { ayahIds, surah, actions } = this.props; // eslint-disable-line no-shadow
 
@@ -167,21 +143,14 @@ class Surah extends Component {
     const { ayahIds, surah, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     const range = [this.getFirst(), this.getLast()];
 
-    let size = 10;
-
-    if (((range[1] - range[0]) + 1) < 10) {
-      size = (range[1] - range[0]) + 1;
-    }
-
+    const size = 10;
     const from = range[1];
     const to = (from + size);
 
     if (!isEndOfSurah && !ayahIds.has(to)) {
       actions.ayah.load(surah.id, from, to, options).then(() => {
         this.setState({ lazyLoading: false });
-        if (callback) {
-          callback();
-        }
+        return callback && callback();
       });
     }
 
@@ -239,7 +208,22 @@ class Surah extends Component {
   }
 
   renderPagination() {
-    const { isLoading, isEndOfSurah, surah } = this.props;
+    const { isSingleAyah, isLoading, isEndOfSurah, surah } = this.props;
+
+    // If single ayah, eh. /2/30
+    if (isSingleAyah) {
+      const to = this.getFirst() + 10 > surah.ayat ? surah.ayat : this.getFirst() + 10;
+
+      return (
+        <ul className="pager">
+          <li className="text-center">
+            <Link to={`/${surah.id}/${this.getFirst()}-${to}`}>
+              <LocaleFormattedMessage id="surah.index.continue" defaultMessage="Continue" />
+            </Link>
+          </li>
+        </ul>
+      );
+    }
 
     return (
       <LazyLoad
@@ -289,6 +273,7 @@ class Surah extends Component {
 
   renderAyahs() {
     const {
+      surah,
       ayahs,
       actions,
       options,
@@ -301,6 +286,7 @@ class Surah extends Component {
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
+        surah={surah}
         currentAyah={currentAyah}
         isCurrentAyah={isPlaying && ayah.ayahKey === currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
@@ -347,50 +333,8 @@ class Surah extends Component {
           audioActions={actions.audio}
           isPlaying={isPlaying}
         />
-      )
-
+      );
     });
-  }
-
-  renderSidebar() {
-    const { surah, surahs, ayahIds, options } = this.props;
-
-    return (
-      <div>
-        <Navbar static fluid>
-          <NavbarHeader>
-            <p className={`navbar-text ${style.sidebarTitle}`}>
-              <LocaleFormattedMessage id="setting.title" defaultMessage="Options" />
-            </p>
-          </NavbarHeader>
-        </Navbar>
-        <SearchInput
-          className="search-input"
-        />
-        <SurahsDropdown
-          surahs={surahs}
-          className={`${style.dropdown}`}
-        />
-        <VersesDropdown
-          ayat={surah.ayat}
-          loadedAyahs={ayahIds}
-          isReadingMode={options.isReadingMode}
-          onClick={this.handleVerseDropdownClick}
-          surah={surah}
-          className={`${style.dropdown}`}
-        />
-        <ReciterDropdown
-          onOptionChange={this.handleOptionChange}
-          options={options}
-          className={`${style.dropdown}`}
-        />
-        <ContentDropdown
-          onOptionChange={this.handleOptionChange}
-          options={options}
-          className={`${style.dropdown}`}
-        />
-      </div>
-    );
   }
 
   render() {
@@ -434,13 +378,6 @@ class Surah extends Component {
             }
           ]}
         />
-        <Header surah={surah} handleToggleSidebar={() => this.setState({ sidebarOpen: true })} />
-        <Sidebar
-          open={this.state.sidebarOpen}
-          onSetOpen={open => this.setState({ sidebarOpen: open })}
-        >
-          {this.renderSidebar()}
-        </Sidebar>
         <div className={`container-fluid ${style.container}`}>
           <div className="row">
             <SurahInfo
@@ -449,14 +386,14 @@ class Surah extends Component {
               isShowingSurahInfo={options.isShowingSurahInfo}
               onClose={this.handleSurahInfoToggle}
             />
-            <Col md={10} mdOffset={1}>
-              <TopOptions options={options} actions={actions.options} surah={surah} />
+            <div className="col-md-10 col-md-offset-1">
+              <TopOptions surah={surah} />
               <Bismillah surah={surah} />
               {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
-            </Col>
-            <Col md={10} mdOffset={1}>
+            </div>
+            <div className="col-md-10 col-md-offset-1">
               {this.renderPagination()}
-            </Col>
+            </div>
           </div>
         </div>
         <Audioplayer
@@ -481,11 +418,14 @@ function mapStateToProps(state, ownProps) {
   const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
   const ayahIds = new Set(ayahArray);
   const lastAyahInArray = ayahArray.slice(-1)[0];
+  const isSingleAyah = !ownProps.params.range.includes('-');
+
 
   return {
     surah,
     ayahs,
     ayahIds,
+    isSingleAyah,
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
     currentAyah: state.audioplayer.currentAyah,

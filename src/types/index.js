@@ -1,8 +1,8 @@
-export ayahType from './ayahType';
-export surahType from './surahType';
-export userType from './userType';
-export optionsType from './optionsType';
-export bookmarkType from './bookmarkType';
-export segmentType from './segmentType';
-export wordType from './wordType';
-export matchType from './matchType';
+export { default as ayahType } from './ayahType';
+export { default as surahType } from './surahType';
+export { default as userType } from './userType';
+export { default as optionsType } from './optionsType';
+export { default as bookmarkType } from './bookmarkType';
+export { default as segmentType } from './segmentType';
+export { default as wordType } from './wordType';
+export { default as matchType } from './matchType';

@@ -12,7 +12,7 @@ describe('<ContentDropdown />', () => {
     onOptionChange = sinon.stub();
     wrapper = mountWithIntl(
       <ContentDropdown
-        options={{ content: [defaultOption] }}
+        content={[defaultOption]}
         onOptionChange={onOptionChange}
       />
     );

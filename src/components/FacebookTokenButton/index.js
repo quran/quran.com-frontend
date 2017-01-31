@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
-
+import { generateShareIcon } from 'react-share';
 import { save } from 'redux/actions/auth';
 import { push } from 'react-router-redux';
 
 const styles = require('./style.scss');
+
+const FacebookIcon = generateShareIcon('facebook');
 
 const FacebookTokenButton = ({ save, push }) => { // eslint-disable-line
   let popup = null;
@@ -26,7 +28,8 @@ const FacebookTokenButton = ({ save, push }) => { // eslint-disable-line
 
   return (
     <button onClick={handleClick} className={`${styles.button} btn btn-default btn-block btn-lg`}>
-      <i className="fa fa-facebook" /> Continue with Facebook
+      <FacebookIcon size={24} iconBgStyle={{ fill: 'transparent' }} logoFillColor="white" />{' '}
+      Continue with Facebook
     </button>
   );
 };

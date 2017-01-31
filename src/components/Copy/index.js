@@ -28,7 +28,7 @@ export default class Copy extends Component {
         className={!isCopied && 'text-muted'}
         data-metrics-event-name="Ayah:Copy"
       >
-        <i className="ss-icon ss-attach" />
+        <i className="ss-icon ss-attach vertical-align-middle" />{' '}
         <LocaleFormattedMessage
           id={isCopied ? 'actions.copied' : 'actions.copy'}
           defaultMessage={isCopied ? 'Copied!' : 'Copy'}

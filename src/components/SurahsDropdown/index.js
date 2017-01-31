@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 
-import Col from 'react-bootstrap/lib/Col';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -13,11 +12,7 @@ const styles = require('./style.scss');
 export default class SurahsDropdown extends Component {
   static propTypes = {
     surahs: PropTypes.objectOf(surahType).isRequired,
-    className: PropTypes.string
-  };
-
-  static defaultProps = {
-    className: 'col-md-3'
+    title: PropTypes.string,
   };
 
   shouldComponentUpdate(nextProps) {
@@ -31,19 +26,19 @@ export default class SurahsDropdown extends Component {
       <LinkContainer to={`/${surah.id}`} activeClass="active" key={`surah-${index}`}>
         <MenuItem>
           <div className="row">
-            <Col xs={2} md={2}>
+            <div className="col-xs-2">
               <span className="surah-num">
                 {surah.id}
               </span>
-            </Col>
-            <Col xs={7} md={7}>
+            </div>
+            <div className="col-xs-2">
               <span className="suran-name">{surah.name.simple}</span>
               <br />
               <span className="surah-meaning">{surah.name.english}</span>
-            </Col>
-            <Col xs={3} md={3} className={`text-right ${styles.arabicName}`}>
+            </div>
+            <div className={`col-xs-3 text-right ${styles.arabicName}`}>
               {surah.name.arabic}
-            </Col>
+            </div>
           </div>
         </MenuItem>
       </LinkContainer>
@@ -51,17 +46,17 @@ export default class SurahsDropdown extends Component {
   }
 
   render() {
-    const { className } = this.props;
+    const { title } = this.props;
 
     return (
-      <DropdownButton
+      <NavDropdown
         link
-        className={`${className} ${styles.dropdown}`}
+        className={styles.dropdown}
         id="surahs-dropdown"
-        title={<LocaleFormattedMessage id="setting.surahs" defaultMessage="Surahs" />}
+        title={title || <LocaleFormattedMessage id="setting.surahs" defaultMessage="Surahs" />}
       >
         {this.renderList()}
-      </DropdownButton>
+      </NavDropdown>
     );
   }
 }

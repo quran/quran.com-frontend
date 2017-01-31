@@ -2,13 +2,14 @@
 export default {
   messages: {
     local: 'arabic',
+    'local.siteLocale': 'اختر لغة الموقع',
     'local.changeLocal': 'اختر اللغة التي تود عرض الموقع بها',
     'local.navtiveName': 'العربية',
     'local.selectLabel': 'اللغة',
     'setting.title': 'خيارات',
     'setting.surahs': 'السورة',
     'setting.verses': 'الذهاب إلى الآية',
-    'setting.reciters': 'القراء',
+    'setting.reciters.title': 'القراء',
     'setting.translations.title': 'الترجمات',
     'setting.translations.removeAll': 'حذف الكل',
     'setting.translations.english': 'الإنجليزية',
@@ -31,6 +32,7 @@ export default {
     'search.placeholder': 'بحث',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'آسف، كان هناك خطأ مع بحثك.',
+    'search.nothing': 'لا استعلام البحث',
     'search.noResult': 'لا توجد نتائج.ا',
 
     'surah.next': 'تالية سورة',
@@ -59,13 +61,17 @@ export default {
     'actions.play': 'لعب',
     'actions.pause': 'وقفة',
 
+    'nav.title': 'القرآن',
+    'nav.settings': 'خيارات',
     'nav.contribute': 'يساهم',
     'nav.aboutUs': 'معلومات عنا',
     'nav.developers': 'المطورين',
     'nav.usefulSites': 'مواقع مفيدة',
     'nav.otherLinks': 'روابط اخرى',
     'nav.contactUs': 'اتصل بنا',
+    'nav.help': 'مساعدة وتعليقات',
     'nav.aboutQuranProject': 'Quran.com المعروف أيضا باسم القرآن الكريم، قناة القرآن الكريم، القرآن الكريم، القرآن الكريم) هو مشروع خيري)',  // eslint-disable-line max-len
+    'nav.rightsReserved': 'كل الحقوق محفوظة',
     'nav.mobile': 'التليفون المحمول',
     'nav.navigate': 'انتقل',
     'nav.legacySite': 'الموقع القديم',

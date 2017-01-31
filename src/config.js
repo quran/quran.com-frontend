@@ -10,7 +10,7 @@ const environment = {
 const title = 'Al-Qur\'an al-Kareem - القرآن الكريم';
 const description = 'The Quran translated into many languages in a simple and easy interface.';
 
-module.exports = Object.assign({
+const config = {
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
   api: process.env.API_URL,
@@ -19,7 +19,7 @@ module.exports = Object.assign({
   sentryServer: process.env.SENTRY_KEY_SERVER,
   facebookAppId: process.env.FACEBOOK_APP_ID,
   // Supported locales
-  locales: { en: 'English', ar: 'العربية', ur: 'اردو' },
+  locales: { en: 'English', ar: 'العربية', ur: 'اردو', id: 'Bahasa Indonesia' },
   defaultLocale: 'en',
   app: {
     head: {
@@ -84,13 +84,12 @@ module.exports = Object.assign({
         { rel: 'apple-touch-icon', sizes: '152x152', href: '/apple-touch-icon-152x152.png' },
         { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon-180x180.png' },
         { rel: 'preconnect', href: 'https://quran-1f14.kxcdn.com', crossOrigin: '' },
-        { rel: 'preconnect', href: 'https://assets-1f14.kxcdn.com', crossOrigin: '' },
-        { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css' }
+        { rel: 'preconnect', href: 'https://assets-1f14.kxcdn.com', crossOrigin: '' }
       ],
       /* SEO: https://developers.google.com/structured-data/slsb-overview#markup_examples */
       /* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */
       script: [
-        { src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en' },
+        { src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en', async: '', defer: '' },
         {
           type: 'application/ld+json',
           innerHTML: `{
@@ -117,5 +116,9 @@ module.exports = Object.assign({
         }
       ]
     }
-  }
-}, environment);
+  },
+  ...environment
+};
+
+
+export default config;

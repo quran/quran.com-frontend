@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
-import Col from 'react-bootstrap/lib/Col';
 import Navbar from 'react-bootstrap/lib/Navbar';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -9,9 +8,6 @@ import debug from 'helpers/debug';
 import surahType from 'types/surahType';
 
 const Header = Navbar.Header;
-
-// const ornamentLeft = require('../../../../static/images/ornament-left.png');
-// const ornamentRight = require('../../../../static/images/ornament-right.png');
 
 const styles = require('./style.scss');
 
@@ -22,15 +18,15 @@ const SurahHeader = ({ surah, handleToggleSidebar }) => {
     <Navbar className="montserrat surah" fixedTop fluid>
       <Header>
         <div className="row">
-          <Col xs={3} md={1}>
+          <div className="col-xs-3 col-md-1">
             <button type="button" className="navbar-toggle collapsed" onClick={handleToggleSidebar}>
               <span className="sr-only">Toggle navigation</span>
               <span className="icon-bar" />
               <span className="icon-bar" />
               <span className="icon-bar" />
             </button>
-          </Col>
-          <Col xs={6} md={10}>
+          </div>
+          <div className="col-xs-6 col-md-10">
             <ul className={`list-inline ${styles.container} text-center`}>
               <li className={styles.verticalAlign}>
                 {
@@ -74,9 +70,8 @@ const SurahHeader = ({ surah, handleToggleSidebar }) => {
                 }
               </li>
             </ul>
-          </Col>
+          </div>
         </div>
-
       </Header>
     </Navbar>
   );

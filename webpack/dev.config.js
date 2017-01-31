@@ -4,80 +4,91 @@ const path = require('path');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration')); // eslint-disable-line max-len, global-require
 
+const root = path.resolve(__dirname, '..');
+
 module.exports = {
-  context: path.resolve(__dirname, '..'),
+  context: root,
   resolve: {
-    extensions: ['', '.js'],
+    extensions: ['.js'],
     modules: [
       'src',
       'node_modules'
     ]
   },
   entry: [
-    'webpack-hot-middleware/client?path=http://localhost:8001/__webpack_hmr',
+    'react-hot-loader/patch',
+    // 'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr',
+    'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
-    'bootstrap-sass!./src/styles/bootstrap.config.js',
+    `bootstrap-loader/lib/bootstrap.loader?configFilePath=${root}/src/styles/bootstrap.config.json!bootstrap-loader/no-op.js`,
     './src/client.js'
   ],
+  devServer: {
+    hot: true,
+    quiet: true,
+    noInfo: true,
+    inline: true,
+    lazy: false,
+    // enable HMR on the server
+
+    contentBase: path.resolve('./build'),
+    // match the output path
+
+    publicPath: 'http://localhost:8080/public/'
+    // match the output `publicPath`
+  },
   output: {
     path: path.resolve('./build'),
-    publicPath: 'http://localhost:8001/public/',
+    publicPath: 'http://localhost:8080/public/',
     filename: 'main.js'
   },
   module: {
-    preLoaders: [
-      // {
-      //   test: /\.js$/,
-      //   loader: 'eslint',
-      //   exclude: /node_modules|bootstrap\.config/
-      // }
-    ],
-    loaders: [
-      { test: /\.json$/, loader: 'json'},
+    rules: [
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        loaders: [
+        use: [
           {
-            loader: 'babel',
-            query: {
+            loader: 'babel-loader',
+            options: {
               babelrc: false,
               plugins: [
                 'transform-runtime',
-                'add-module-exports',
+                // 'add-module-exports',
                 'transform-decorators-legacy',
                 'transform-react-display-name',
                 'typecheck',
+                'react-hot-loader/babel'
               ],
-              presets: ['react', 'es2015', 'stage-0', 'react-hmre'],
-              cacheDirectory: true
+              presets: [['es2015', { modules: false }], 'stage-2', 'react'],
+              // cacheDirectory: true
             }
           }
         ]
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file?name=fonts/[name].[ext]'
+        loader: 'file-loader?name=fonts/[name].[ext]'
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
+        loader: 'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('images'),
@@ -85,13 +96,36 @@ module.exports = {
       },
       {
         test: /\.scss$/,
-        loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' // eslint-disable-line max-len
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              modules: true,
+              importLoaders: 2,
+              sourceMap: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins() {
+                return [
+                  require('precss'), // eslint-disable-line
+                  require('autoprefixer') // eslint-disable-line
+                ];
+              }
+            }
+          },
+          'sass-loader?outputStyle=expanded&sourceMap'
+        ]
       }
     ]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -113,6 +147,7 @@ module.exports = {
     new webpack.EnvironmentPlugin([
       'NODE_ENV'
     ]),
+    new webpack.NamedModulesPlugin(),
     webpackIsomorphicToolsPlugin.development()
   ],
   stats: {
@@ -120,8 +155,6 @@ module.exports = {
     reasons: true
   },
   devtool: 'source-map',
-  keepalive: true,
-  debug: true,
   cache: true,
   node: {
     setImmediate: false,

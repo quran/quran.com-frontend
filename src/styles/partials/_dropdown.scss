@@ -6,16 +6,6 @@
   .dropdown-icon.ss-icon:before{
     content:"▾";
   }
-
-
-
-  @media (max-width: $screen-xs-max) {
-    background: $olive;
-    color: $cream;
-    a{
-      color: $cream;
-    }
-  }
 }
 
 .dropdown-menu{

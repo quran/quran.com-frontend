@@ -28,9 +28,11 @@ $text-muted: #d1d0d0;
 $text-color: #939598;
 
 $navbar-height: 50px;
-$navbar-default-bg: $beige;
+$navbar-margin-bottom: 0px;
+$navbar-default-bg: #fff;
 $navbar-default-link-active-bg: transparent;
-$navbar-default-border: transparent;
+$navbar-default-link-active-color: $brand-primary;
+$navbar-default-border: rgba(0,0,0,0.12);
 
 $navbar-inverse-bg: $brand-primary;
 $navbar-inverse-link-color: #fff;
@@ -59,7 +61,6 @@ $tracker-height-hundred-boolean: false;
 
 $font-family-sans-serif: 'Montserrat', sans-serif;
 $font-montserrat: $font-family-sans-serif;
-$font-awesome: 'FontAwesome', serif;
 $icon-font-path: "bootstrap-sass/assets/fonts";
 
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";

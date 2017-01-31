@@ -1,20 +1,15 @@
 $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 
-@import 'mixins/center';
-@import 'components/SurahNav';
 @import 'components/MasterHeader';
 @import 'components/SmartBanner';
 @import 'fonts/fonts';
 
 @import 'partials/navbar-brand';
 @import 'partials/search-input';
-@import 'partials/surah-title';
 @import 'partials/dropdown';
 @import 'partials/index-header';
-@import 'partials/modal';
 @import 'partials/tooltip';
 @import 'partials/highlight';
-@import 'partials/local-switcher';
 @import 'nightmode';
 @import 'partials/no-script';
 @import 'partials/surah_icon_names';
@@ -39,21 +34,6 @@ html,body{
 
 a:hover{
   text-decoration: none;
-}
-
-.surah-body{
-  .left-side{
-    width: 16.6666666%;
-    height: 100vh;
-    float: left;
-    display: block;
-    position: fixed;
-    top: 0px;
-
-    @media (max-width: $screen-sm-max) {
-      display: none;
-    }
-  }
 }
 
 .form-control:focus{
@@ -134,6 +114,9 @@ li em{
 .pointer{
   cursor: pointer;
 }
+.vertical-align-middle{
+  vertical-align: middle;
+}
 .no-outline{
   outline: none !important;
 
@@ -143,6 +126,12 @@ li em{
 }
 .text-color{
   color: $text-color;
+}
+.text-black{
+  color: #333;
+}
+.text-black-light{
+  color: #777;
 }
 
 .ss-icon.text-align{
@@ -163,7 +152,6 @@ li em{
 .navbar-toggle{
   display: inline-block !important;
   float: left;
-  margin-left: 15px;
   margin-right: 0px;
 }
 
@@ -180,8 +168,32 @@ li em{
   font-family: 'Nafees';
 }
 
-.text-tashkeel{
+.text-tashkeel {
   float: right;
   text-align: right;
   direction: rtl;
+}
+
+.modal-backdrop{
+  bottom: 0;
+}
+
+// NOTE: This is for dropdown in navbar on mobile
+@media(max-width: $screen-sm){
+  .navbar-nav{
+    margin-bottom: 0px;
+    margin-top: 5px;
+  }
+  .navbar-nav .open .dropdown-menu{
+    position: absolute;;
+    float: left;
+    width: auto;
+    margin-top: 0px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  }
+  .navbar-nav .open .dropdown-menu > li > a, .navbar-nav .open .dropdown-menu .dropdown-header{
+    padding: 5px 15px;
+  }
 }

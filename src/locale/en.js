@@ -2,13 +2,14 @@
 export default {
   messages: {
     local: 'english',
+    'local.siteLocale': 'Site Language',
     'local.changeLocal': 'Choose the language you want the site to display with',
     'local.navtiveName': 'English',
     'local.selectLabel': 'Language',
-    'setting.title': 'Options',
+    'setting.title': 'Settings',
     'setting.surahs': 'Surahs',
     'setting.verses': 'Go to verse',
-    'setting.reciters': 'Reciters',
+    'setting.reciters.title': 'Reciters',
     'setting.translations.title': 'Translations',
     'setting.translations.removeAll': 'Remove all',
     'setting.translations.english': 'English',
@@ -16,8 +17,8 @@ export default {
     'setting.fontSize': 'Font size',
     'setting.fontSize.arabic': 'Arabic',
     'setting.reading': 'Reading',
-    'setting.tooltip': 'tooltip',
-    'setting.tooltip.title': 'TOOLTIP DISPLAY',
+    'setting.tooltip': 'Tooltip content',
+    'setting.tooltip.title': 'Tooltip display',
     'setting.tooltip.translation': 'Translation',
     'setting.tooltip.transliteration': 'Transliteration',
     'setting.nightMode': 'Night Mode',
@@ -28,9 +29,10 @@ export default {
     'ayah.bookmarked': 'Bookmarked',
     'ayah.bookmark': 'Bookmark',
 
-    'search.placeholder': 'Search',
+    'search.placeholder': 'Search "Noah"',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Sorry, there was an error with your search.',
+    'search.nothing': 'No search query.',
     'search.noResult': 'No results found.',
 
     'surah.next': 'NEXT',
@@ -59,14 +61,18 @@ export default {
     'actions.play': 'Play',
     'actions.pause': 'Pause',
 
+    'nav.title': 'Quran',
+    'nav.settings': 'Settings',
     'nav.contribute': 'Contribute',
     'nav.aboutUs': 'About us',
     'nav.developers': 'Developers',
     'nav.usefulSites': 'Useful sites',
     'nav.otherLinks': 'Other links',
     'nav.contactUs': 'Contact us',
+    'nav.help': 'Help & feedback',
     'nav.aboutQuranProject': 'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.', // eslint-disable-line max-len
-    'nav.mobile': 'Mobile',
+    'nav.rightsReserved': 'All Rights Reserved',
+    'nav.mobile': 'Mobile Apps',
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
 

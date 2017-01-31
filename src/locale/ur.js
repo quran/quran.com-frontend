@@ -2,13 +2,14 @@
 export default {
   messages: {
     local: 'urdu',
+    'local.siteLocale': 'سائٹ کی زبان',
     'local.changeLocal': 'جس زبان میں سایٹ دیکہنا چاہتے ہیں اس زبان کا انتخاب کریں',
     'local.navtiveName': 'اردو',
     'local.selectLabel': 'زبان',
     'setting.title': 'اختیارات',
     'setting.surahs': 'سورة',
     'setting.verses': 'آیت منتخب کریں',
-    'setting.reciters': 'قاری منتخب کریں',
+    'setting.reciters.title': 'قاری منتخب کریں',
     'setting.translations.title': 'ترجمے',
     'setting.translations.removeAll': 'سب کو ہٹا دیں',
     'setting.translations.english': 'انگریزی',
@@ -30,7 +31,8 @@ export default {
 
     'search.placeholder': 'تلاش کر یں',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
-    'search.error': 'معذرت، آپ کی تلاش کے ساتھ ایک خرابی پیش آگئی.',
+    'search.error': 'معذرت، آپ کی تلاش کے ساتھ ایک خرابی پیش آگئی ہے',
+    'search.nothing': 'تلاش کے لئے کچھ لکھئے',
     'search.noResult': 'کوئی نتیجہ نہیں ملا',
 
     'surah.next': 'اگلی سورت',
@@ -59,13 +61,17 @@ export default {
     'actions.play': 'چلاو',
     'actions.pause': 'روک دیں',
 
+    'nav.title': 'قرآن',
+    'nav.settings': 'اختیارات',
     'nav.contribute': 'تعاون کریں',
     'nav.aboutUs': 'ہمارے متعلق',
     'nav.developers': 'ڈویلپرز',
     'nav.usefulSites': 'مفید سائٹس',
     'nav.otherLinks': 'دیگر لنکس',
     'nav.contactUs': 'ہم سے رابطہ',
+    'nav.help': 'مدد اور تاثرات',
     'nav.aboutQuranProject': 'قرآن کریم ایک فلاں عامہ (عوامی بہبود کے لئے) منصوبہ ہے',
+    'nav.rightsReserved': 'جملہ حقوق محفوظ ہیں',
     'nav.mobile': 'موبائل',
     'nav.navigate': 'تشریف لے جائیں',
     'nav.legacySite': 'پرانی سائٹ',

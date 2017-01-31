@@ -1,66 +1,24 @@
-import React, { PropTypes } from 'react';
-import Col from 'react-bootstrap/lib/Col';
+import React from 'react';
 
-import InformationToggle from 'components/InformationToggle';
-import FontSizeDropdown from 'components/FontSizeDropdown';
-import TooltipDropdown from 'components/TooltipDropdown';
-import ReadingModeToggle from 'components/ReadingModeToggle';
-import NightModeToggle from 'components/NightModeToggle';
 import Title from 'containers/Surah/Title';
 import Share from 'components/Share';
-import { surahType, optionsType } from 'types';
+import { surahType } from 'types';
 
-const TopOptions = ({ options, surah, actions }) => (
+const TopOptions = ({ surah }) => (
   <div className="row">
-    <Col md={4} className="hidden-xs hidden-sm">
+    <div className="col-md-4 hidden-xs hidden-sm">
       <Title surah={surah} />
-    </Col>
-    <Col md={8} className="text-right">
+    </div>
+    <div className="col-md-8 text-right">
       <ul className="list-inline">
-        <li>
-          <InformationToggle
-            onToggle={actions.setOption}
-            isShowingSurahInfo={options.isShowingSurahInfo}
-          />
-        </li>
-        <li>|</li>
-        <li>
-          <FontSizeDropdown
-            options={options}
-            onOptionChange={actions.setOption}
-          />
-        </li>
-        <li>|</li>
-        <li>
-          <TooltipDropdown
-            options={options}
-            onOptionChange={actions.setOption}
-          />
-        </li>
-        <li>|</li>
-        <li>
-          <ReadingModeToggle
-            isToggled={options.isReadingMode}
-            onReadingModeToggle={actions.toggleReadingMode}
-          />
-        </li>
-        <li>|</li>
-        <li>
-          <NightModeToggle />
-        </li>
         <li><Share surah={surah} /></li>
       </ul>
-    </Col>
+    </div>
   </div>
 );
 
 TopOptions.propTypes = {
-  options: optionsType.isRequired,
-  surah: surahType.isRequired,
-  actions: PropTypes.shape({
-    toggleReadingMode: PropTypes.func.isRequired,
-    setOption: PropTypes.func.isRequired,
-  }).isRequired
+  surah: surahType.isRequired
 };
 
 export default TopOptions;

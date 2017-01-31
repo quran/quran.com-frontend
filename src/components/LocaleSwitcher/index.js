@@ -1,10 +1,17 @@
 /* global window */
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import cookie from 'react-cookie';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { locales, defaultLocale } from '../../config';
+import NavDropdown from 'react-bootstrap/lib/NavDropdown';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
+import config from '../../config';
+
+const { locales, defaultLocale } = config;
 
 export default class LocaleSwitcher extends Component {
+  static propTypes = {
+    className: PropTypes.string
+  };
+
   state = {
     currentLocale: defaultLocale,
   };
@@ -31,36 +38,33 @@ export default class LocaleSwitcher extends Component {
     window.location.reload();
   }
 
-  renderLocaleLink = (locale) => {
-    let className = 'local-switch-link';
-    if (locale === this.state.currentLocale) {
-      className = `btn ${className} ${className}-active`;
-    }
+  renderList() {
+    const keys = Object.keys(locales);
 
-    return (
-      <a
-        key={locale}
-        className={className}
-        onClick={() => this.handleLocaleClick(locale)}
-        href={`?local=${locale}`}
+    return keys.map(key => (
+      <MenuItem
+        key={key}
+        className={key === this.state.currentLocale && 'active'} // NOTE: if you use key `active` it will make all dropdown active
+        onClick={e => this.handleLocaleClick(key, e)}
+        href={`?local=${key}`}
       >
-        {locales[locale]}
-      </a>
-    );
+        {locales[key]}
+      </MenuItem>
+    ));
   }
 
   render() {
-    const keys = Object.keys(locales);
+    const { className } = this.props;
 
     return (
-      <div className="local-switcher">
-        <p>
-          <LocaleFormattedMessage id="local.changeLocal" defaultMessage="Choose language " />
-        </p>
-
-        {keys.map(this.renderLocaleLink, this)}
-      </div>
+      <NavDropdown
+        active={false}
+        id="site-language-dropdown"
+        className={className}
+        title={locales[this.state.currentLocale]}
+      >
+        {this.renderList()}
+      </NavDropdown>
     );
   }
-
 }
