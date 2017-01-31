@@ -20,7 +20,7 @@ export function loadAll() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: [surahsSchema],
-    promise: client => client.get('/v3/chapters', {params: contentLanguage()})
+    promise: client => client.get('/api/v3/chapters', {params: contentLanguage()})
   };
 }
 
@@ -28,13 +28,13 @@ export function load(id) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: [surahsSchema],
-    promise: client => client.get(`/v3/chapters/${id}`, {params: contentLanguage()})
+    promise: client => client.get(`/api/v3/chapters/${id}`, {params: contentLanguage()})
   };
 }
 
 export const loadInfo = id => ({
   types: [LOAD_INFO, LOAD_INFO_SUCCESS, LOAD_INFO_FAIL],
-  promise: client => client.get(`/v3/chapters/${id}/info`, {params: contentLanguage()}),
+  promise: client => client.get(`/api/v3/chapters/${id}/info`, {params: contentLanguage()}),
   id
 });
 
