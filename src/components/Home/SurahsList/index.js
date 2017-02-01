@@ -20,7 +20,7 @@ const SurahsList = (props) => {
             <div className="col-xs-7">
               {chapter.nameSimple}
               <br />
-              <span className={`text-uppercase ${styles.english}`}>{chapter.translatedNames.name}</span>
+              <span className={`text-uppercase ${styles.english}`}>{chapter.translatedName.name}</span>
             </div>
             <div className={`col-xs-3 text-right ${styles.arabic}`}>
               {chapter.nameArabic}

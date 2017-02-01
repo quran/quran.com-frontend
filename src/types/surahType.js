@@ -1,7 +1,7 @@
 import { PropTypes } from 'react';
 
 export default PropTypes.shape({
-  surahId: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
   ayat: PropTypes.number.isRequired,
   bismillahPre: PropTypes.bool.isRequired,
   revelationOrder: PropTypes.number.isRequired,

@@ -4,7 +4,7 @@ import { shallow } from 'enzyme';
 import Title from './index';
 
 let wrapper;
-const surah = {
+const chapter = {
   id: 1,
   name: {
     arabic: 'الفاتحة',
@@ -14,23 +14,23 @@ const surah = {
   }
 };
 
-const renderComponent = data => shallow(<Title surah={data} />);
+const renderComponent = data => shallow(<Title chapter={data} />);
 
 describe('<Title />', () => {
   it('should render', () => {
-    wrapper = renderComponent(surah);
+    wrapper = renderComponent(chapter);
     expect(wrapper).to.be.ok; // eslint-disable-line
   });
 
-  it('should not show previous surah if on the first surah', () => {
-    wrapper = renderComponent(surah);
+  it('should not show previous chapter if on the first chapter', () => {
+    wrapper = renderComponent(chapter);
     const previous = wrapper.find('.previous-chapter').length;
     expect(previous).to.equal(0);
   });
 
-  it('should not show next surah if on the last surah', () => {
+  it('should not show next chapter if on the last chapter', () => {
     chapter.chapterNumber = 114;
-    wrapper = renderComponent(surah);
+    wrapper = renderComponent(chapter);
     const next = wrapper.find('.next-chapter').length;
     expect(next).to.equal(0);
   });

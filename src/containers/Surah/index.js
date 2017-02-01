@@ -212,7 +212,9 @@ class Surah extends Component {
 
     // If single ayah, eh. /2/30
     if (isSingleAyah) {
-      const to = this.getFirst() + 10 > chapter.versesCount ? chapter.versesCount : this.getFirst() + 10;
+      const to = this.getFirst() + 10 > chapter.versesCount ?
+        chapter.versesCount :
+        this.getFirst() + 10;
 
       return (
         <ul className="pager">
