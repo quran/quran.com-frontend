@@ -26,7 +26,7 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
         <div className={`${style.list} col-md-1 col-xs-6`}>
           <dl>
             <dt>VERSES</dt>
-            <dd className="text-uppercase">{surah.ayat}</dd>
+            <dd className="text-uppercase">{surah.versesCount}</dd>
             <dt>PAGES</dt>
             <dd className="text-uppercase">{surah.page.join('-')}</dd>
           </dl>

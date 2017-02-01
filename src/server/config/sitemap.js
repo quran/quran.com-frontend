@@ -13,20 +13,20 @@ export default (server) => {
           const ayahId = index + 1;
 
           urls.push({
-            url: `/${surah.id}/${ayahId}`,
+            url: `/${chapter.chapterNumber}/${ayahId}`,
             changefreq: 'weekly',
             priority: 1
           });
 
           urls.push({
-            url: `/${surah.id}/${ayahId}-${ayahId + 9}`,
+            url: `/${chapter.chapterNumber}/${ayahId}-${ayahId + 9}`,
             changefreq: 'weekly',
             priority: 1
           });
         });
 
         urls.push({
-          url: `/${surah.id}`,
+          url: `/${chapter.chapterNumber}`,
           changefreq: 'weekly',
           priority: 1
         });

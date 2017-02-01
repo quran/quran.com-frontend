@@ -5,7 +5,7 @@ import {
   LOAD_FAIL as AYAHS_LOAD_FAIL,
   } from 'redux/constants/ayahs.js';
 
-import { SET_CURRENT as SURAHS_SET_CURRENT } from 'redux/constants/surahs.js';
+import { SET_CURRENT as SURAHS_SET_CURRENT } from 'redux/constants/chapters.js';
 
 const initialState = {
   lines: {}

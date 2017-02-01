@@ -3,7 +3,7 @@ import {
   loadAll,
   loadInfo,
   setCurrent as setCurrentSurah
-  } from 'redux/actions/surahs.js';
+} from 'redux/actions/chapters.js';
 
 import {
   clearCurrent,

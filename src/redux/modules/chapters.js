@@ -4,7 +4,7 @@ import {
   LOAD_INFO,
   LOAD_INFO_SUCCESS,
   SET_CURRENT
-} from 'redux/constants/surahs.js';
+} from 'redux/constants/chapters.js';
 
 const initialState = {
   errored: false,
@@ -24,14 +24,14 @@ export default function reducer(state = initialState, action = {}) {
       };
     case LOAD_SUCCESS: {
       const entities = state.entities;
-      const { surahs } = action.result.entities;
+      const { chapters } = action.result.entities;
       return {
         ...state,
         loaded: true,
         errored: false,
         entities: {
           ...entities,
-          ...surahs
+          ...chapters
         }
       };
     }

@@ -74,12 +74,12 @@ class App extends Component {
           </div>
         </NoScript>
         {
-          React.cloneElement(
+          /* React.cloneElement(
             nav || <GlobalNav isStatic {...props} />,
             {
               handleSidebarToggle: () => this.setState({ sidebarOpen: !this.state.sidebarOpen })
             }
-          )
+          ) */
         }
         {
           React.cloneElement(

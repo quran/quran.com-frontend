@@ -23,12 +23,12 @@ export default class SurahsDropdown extends Component {
     const { surahs } = this.props;
 
     return Object.values(surahs).map((surah, index) => (
-      <LinkContainer to={`/${surah.id}`} activeClass="active" key={`surah-${index}`}>
+      <LinkContainer to={`/${chapter.chapterNumber}`} activeClass="active" key={`surah-${index}`}>
         <MenuItem>
           <div className="row">
             <div className="col-xs-2">
               <span className="surah-num">
-                {surah.id}
+                {chapter.chapterNumber}
               </span>
             </div>
             <div className="col-xs-2">

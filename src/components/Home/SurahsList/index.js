@@ -11,19 +11,19 @@ const SurahsList = (props) => {
 
   return (
     <ul className="col-md-4 list-unstyled">
-      {props.surahs.map(surah => (
-        <li className={`${styles.item}`} key={surah.id}>
-          <Link to={`/${surah.id}`} className={`${styles.link} row`}>
+      {props.chapters.map(chapter => (
+        <li className={`${styles.item}`} key={chapter.id}>
+          <Link to={`/${chapter.id}`} className={`${styles.link} row`}>
             <div className="col-xs-2 text-muted">
-              {surah.id}
+              {chapter.chapterNumber}
             </div>
             <div className="col-xs-7">
-              {surah.name.simple}
+              {chapter.nameSimple}
               <br />
-              <span className={`text-uppercase ${styles.english}`}>{surah.name.english}</span>
+              <span className={`text-uppercase ${styles.english}`}>{chapter.translatedNames.name}</span>
             </div>
             <div className={`col-xs-3 text-right ${styles.arabic}`}>
-              {surah.name.arabic}
+              {chapter.nameArabic}
             </div>
           </Link>
         </li>
@@ -32,7 +32,7 @@ const SurahsList = (props) => {
 };
 
 SurahsList.propTypes = {
-  surahs: PropTypes.arrayOf(surahType).isRequired
+  chapters: PropTypes.arrayOf(surahType).isRequired
 };
 
 export default SurahsList;

@@ -42,8 +42,8 @@ const style = require('./style.scss');
 
 class Surah extends Component {
   static propTypes = {
-    surah: surahType.isRequired,
-    surahs: PropTypes.objectOf(surahType).isRequired,
+    chapter: surahType.isRequired,
+    chapters: PropTypes.objectOf(surahType).isRequired,
     actions: PropTypes.object.isRequired, // eslint-disable-line
     lines: PropTypes.object.isRequired, // eslint-disable-line
     isEndOfSurah: PropTypes.bool.isRequired,
@@ -68,12 +68,12 @@ class Surah extends Component {
   };
 
   componentWillMount() {
-    const { params, surah, actions } = this.props; // eslint-disable-line no-shadow
+    const { params, chapter, actions } = this.props; // eslint-disable-line no-shadow
 
     if (params.range && params.range.includes('-')) {
       const start = parseInt(params.range.split('-')[0], 10);
 
-      if (start > surah.ayat || isNaN(start)) {
+      if (start > chapter.versesCount || isNaN(start)) {
         return actions.push.push('/error/invalid-ayah-range');
       }
 
@@ -87,10 +87,10 @@ class Surah extends Component {
     const conditions = [
       this.state.lazyLoading !== nextState.lazyLoading,
       this.state.sidebarOpen !== nextState.sidebarOpen,
-      this.props.surah !== nextProps.surah,
+      this.props.chapter !== nextProps.chapter,
       this.props.isEndOfSurah !== nextProps.isEndOfSurah,
       this.props.ayahIds.length !== nextProps.ayahIds.length,
-      this.props.surahs !== nextProps.surahs,
+      this.props.chapters !== nextProps.chapters,
       this.props.bookmarks !== nextProps.bookmarks,
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
@@ -119,9 +119,9 @@ class Surah extends Component {
   }
 
   handleVerseDropdownClick = (ayahNum) => {
-    const { ayahIds, surah, actions } = this.props; // eslint-disable-line no-shadow
+    const { ayahIds, chapter, actions } = this.props; // eslint-disable-line no-shadow
 
-    actions.ayah.setCurrentAyah(`${surah.id}:${ayahNum}`);
+    actions.ayah.setCurrentAyah(`${chapter.chapterNumber}:${ayahNum}`);
 
     if (ayahIds.has(ayahNum)) {
       return false;
@@ -130,17 +130,17 @@ class Surah extends Component {
     if (ayahNum > (this.getLast() + 10) || ayahNum < this.getFirst()) {
       // This is beyond lazy loading next page.
       if (actions.push) {
-        return actions.push.push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
+        return actions.push.push(`/${chapter.chapterNumber}/${ayahNum}-${ayahNum + 10}`);
       }
     }
 
     return this.handleLazyLoadAyahs(() => setTimeout(() =>
-      scroller.scrollTo(`ayah:${surah.id}:${ayahNum}`),
+      scroller.scrollTo(`ayah:${chapter.chapterNumber}:${ayahNum}`),
     1000)); // then scroll to it
   }
 
   handleLazyLoadAyahs = (callback) => {
-    const { ayahIds, surah, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
+    const { ayahIds, chapter, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     const range = [this.getFirst(), this.getLast()];
 
     const size = 10;
@@ -148,7 +148,7 @@ class Surah extends Component {
     const to = (from + size);
 
     if (!isEndOfSurah && !ayahIds.has(to)) {
-      actions.ayah.load(surah.id, from, to, options).then(() => {
+      actions.ayah.load(chapter.chapterNumber, from, to, options).then(() => {
         this.setState({ lazyLoading: false });
         return callback && callback();
       });
@@ -164,24 +164,24 @@ class Surah extends Component {
   }
 
   title() {
-    const { params, surah } = this.props;
+    const { params, chapter } = this.props;
 
     if (params.range) {
-      return `Surah ${surah.name.simple} [${surah.id}:${params.range}]`;
+      return `Surah ${chapter.name.simple} [${chapter.chapterNumber}:${params.range}]`;
     }
 
-    return `Surah ${surah.name.simple} [${surah.id}]`;
+    return `Surah ${chapter.name.simple} [${chapter.chapterNumber}]`;
   }
 
   description() {
-    const { params, ayahs, surah } = this.props;
+    const { params, ayahs, chapter } = this.props;
 
     if (params.range) {
       if (params.range.includes('-')) {
         const [from, to] = params.range.split('-').map(num => parseInt(num, 10));
         const array = Array(to - from).fill(from);
         const translations = array.map((fromAyah, index) => {
-          const ayah = ayahs[`${surah.id}:${fromAyah + index}`];
+          const ayah = ayahs[`${chapter.chapterNumber}:${fromAyah + index}`];
 
           if (ayah && ayah.content && ayah.content[0]) {
             return ayah.content[0].text;
@@ -192,33 +192,33 @@ class Surah extends Component {
 
         const content = translations.join(' - ').slice(0, 250);
 
-        return `Surat ${surah.name.simple} [verse ${params.range}] - ${content}`;
+        return `Surat ${chapter.name.simple} [verse ${params.range}] - ${content}`;
       }
 
-      const ayah = ayahs[`${surah.id}:${params.range}`];
+      const ayah = ayahs[`${chapter.chapterNumber}:${params.range}`];
 
       if (ayah && ayah.content && ayah.content[0]) {
-        return `Surat ${surah.name.simple} [verse ${params.range}] - ${ayah.content[0].text}`;
+        return `Surat ${chapter.name.simple} [verse ${params.range}] - ${ayah.content[0].text}`;
       }
 
-      return `Surat ${surah.name.simple} [verse ${params.range}]`;
+      return `Surat ${chapter.name.simple} [verse ${params.range}]`;
     }
 
-    return `${surah.info ? surah.info.shortDescription : ''} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${chapter.info ? chapter.info.shortDescription : ''} This Surah has ${chapter.versesCount} ayahs and resides between pages ${chapter.page[0]} to ${chapter.page[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderPagination() {
-    const { isSingleAyah, isLoading, isEndOfSurah, surah } = this.props;
+    const { isSingleAyah, isLoading, isEndOfSurah, chapter } = this.props;
 
     // If single ayah, eh. /2/30
     if (isSingleAyah) {
-      const to = this.getFirst() + 10 > surah.ayat ? surah.ayat : this.getFirst() + 10;
+      const to = this.getFirst() + 10 > chapter.versesCount ? chapter.versesCount : this.getFirst() + 10;
 
       return (
         <ul className="pager">
           <li className="text-center">
-            <Link to={`/${surah.id}/${this.getFirst()}-${to}`}>
-              <LocaleFormattedMessage id="surah.index.continue" defaultMessage="Continue" />
+            <Link to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}`}>
+              <LocaleFormattedMessage id="chapter.index.continue" defaultMessage="Continue" />
             </Link>
           </li>
         </ul>
@@ -233,31 +233,31 @@ class Surah extends Component {
         endComponent={
           <ul className="pager">
             {
-              surah.id > 1 &&
+              chapter.chapterNumber > 1 &&
                 <li className="previous">
-                  <Link to={`/${(surah.id * 1) - 1}`}>
+                  <Link to={`/${(chapter.chapterNumber * 1) - 1}`}>
                     &larr;
                     <LocaleFormattedMessage
-                      id="surah.previous"
+                      id="chapter.previous"
                       defaultMessage="Previous Surah"
                     />
                   </Link>
                 </li>
             }
             <li className="text-center">
-              <Link to={`/${surah.id}`}>
+              <Link to={`/${chapter.chapterNumber}`}>
                 <LocaleFormattedMessage
-                  id="surah.goToBeginning"
+                  id="chapter.goToBeginning"
                   defaultMessage="Beginning of Surah"
                 />
               </Link>
             </li>
             {
-              surah.id < 114 &&
+              chapter.chapterNumber < 114 &&
                 <li className="next">
-                  <Link to={`/${(surah.id * 1) + 1}`}>
+                  <Link to={`/${(chapter.chapterNumber * 1) + 1}`}>
                     <LocaleFormattedMessage
-                      id="surah.next"
+                      id="chapter.next"
                       defaultMessage="Next Surah"
                     />
                     &rarr;
@@ -273,7 +273,7 @@ class Surah extends Component {
 
   renderAyahs() {
     const {
-      surah,
+      chapter,
       ayahs,
       actions,
       options,
@@ -286,7 +286,7 @@ class Surah extends Component {
     return Object.values(ayahs).map(ayah => (
       <Ayah
         ayah={ayah}
-        surah={surah}
+        chapter={chapter}
         currentAyah={currentAyah}
         isCurrentAyah={isPlaying && ayah.ayahKey === currentAyah}
         bookmarked={!!bookmarks[ayah.ayahKey]}
@@ -338,13 +338,13 @@ class Surah extends Component {
   }
 
   render() {
-    const { surah, options, actions } = this.props; // eslint-disable-line no-shadow
+    const { chapter, options, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
     if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}><Loader /></div>;
 
     return (
-      <div className="surah-body">
+      <div className="chapter-body">
         <Helmet
           {...makeHeadTags({
             title: this.title(),
@@ -366,8 +366,8 @@ class Surah extends Component {
                 "@type": "ListItem",
                 "position": 2,
                 "item": {
-                  "@id": "https://quran.com/${surah.id}",
-                  "name": "${surah.name.simple}"
+                  "@id": "https://quran.com/${chapter.chapterNumber}",
+                  "name": "${chapter.name.simple}"
                 }
               }]
             }`
@@ -386,14 +386,14 @@ class Surah extends Component {
         <div className={`container-fluid ${style.container}`}>
           <div className="row">
             <SurahInfo
-              surah={surah}
+              chapter={chapter}
               loadInfo={actions.loadInfo}
               isShowingSurahInfo={options.isShowingSurahInfo}
               onClose={this.handleSurahInfoToggle}
             />
             <div className="col-md-10 col-md-offset-1">
-              <TopOptions surah={surah} />
-              <Bismillah surah={surah} />
+              <TopOptions chapter={chapter} />
+              <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
             </div>
             <div className="col-md-10 col-md-offset-1">
@@ -402,7 +402,7 @@ class Surah extends Component {
           </div>
         </div>
         <Audioplayer
-          surah={surah}
+          chapter={chapter}
           onLoadAyahs={this.handleLazyLoadAyahs}
         />
       </div>
@@ -418,7 +418,7 @@ const AsyncSurah = asyncConnect([
 
 function mapStateToProps(state, ownProps) {
   const surahId = parseInt(ownProps.params.surahId, 10);
-  const surah: Object = state.surahs.entities[surahId];
+  const chapter: Object = state.chapters.entities[surahId];
   const ayahs: Object = state.ayahs.entities[surahId];
   const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
   const ayahIds = new Set(ayahArray);
@@ -427,7 +427,7 @@ function mapStateToProps(state, ownProps) {
 
 
   return {
-    surah,
+    chapter,
     ayahs,
     ayahIds,
     isSingleAyah,
@@ -436,8 +436,8 @@ function mapStateToProps(state, ownProps) {
     currentAyah: state.audioplayer.currentAyah,
     isAuthenticated: state.auth.loaded,
     currentWord: state.ayahs.currentWord,
-    isEndOfSurah: lastAyahInArray === surah.ayat,
-    surahs: state.surahs.entities,
+    isEndOfSurah: lastAyahInArray === chapter.versesCount,
+    chapters: state.chapters.entities,
     bookmarks: state.bookmarks.entities,
     isLoading: state.ayahs.loading,
     isLoaded: state.ayahs.loaded,

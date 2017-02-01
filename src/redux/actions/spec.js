@@ -1,10 +1,10 @@
 import * as audioplayerConstant from 'redux/constants/audioplayer.js';
 import * as ayahsConstants from 'redux/constants/ayahs.js';
-import * as surahsConstants from 'redux/constants/surahs.js';
+import * as surahsConstants from 'redux/constants/chapters.js';
 
 import * as audioplayerActions from './audioplayer.js';
 import * as ayahsActions from './ayahs.js';
-import * as surahsActions from './surahs.js';
+import * as surahsActions from './chapters.js';
 
 describe('action tests', () => {
   it('audioplayer actions', () => {

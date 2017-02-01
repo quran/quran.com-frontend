@@ -25,7 +25,7 @@ const style = require('./style.scss');
 export class Audioplayer extends Component {
   static propTypes = {
     className: PropTypes.string,
-    surah: surahType,
+    chapter: surahType,
     onLoadAyahs: PropTypes.func.isRequired,
     segments: PropTypes.objectOf(segmentType),
     // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
@@ -56,14 +56,14 @@ export class Audioplayer extends Component {
   };
 
   componentDidMount() {
-    const { isLoadedOnClient, buildOnClient, surah, currentFile } = this.props; // eslint-disable-line no-shadow, max-len
+    const { isLoadedOnClient, buildOnClient, chapter, currentFile } = this.props; // eslint-disable-line no-shadow, max-len
 
     debug('component:Audioplayer', 'componentDidMount');
 
     if (!isLoadedOnClient && __CLIENT__) {
       debug('component:Audioplayer', 'componentDidMount on client');
 
-      return buildOnClient(surah.id);
+      return buildOnClient(chapter.chapterNumber);
     }
 
     if (currentFile) {
@@ -79,7 +79,7 @@ export class Audioplayer extends Component {
       return false;
     }
 
-    // When you go directly to the surah page, /2, the files are not loaded yet
+    // When you go directly to the chapter page, /2, the files are not loaded yet
     if (this.props.isLoadedOnClient !== nextProps.isLoadedOnClient) {
       return this.handleAddFileListeners(nextProps.currentFile);
     }
@@ -117,13 +117,13 @@ export class Audioplayer extends Component {
   }
 
   getNext() {
-    const { currentAyah, surah, files, onLoadAyahs } = this.props;
+    const { currentAyah, chapter, files, onLoadAyahs } = this.props;
     const ayahIds = Object.keys(files);
     const ayahNum = currentAyah.split(':')[1];
     const index = ayahIds.findIndex(id => id === currentAyah);
 
-    if (surah.ayat === ayahNum + 1) {
-      // We are at the end of the surah!
+    if (chapter.versesCount === ayahNum + 1) {
+      // We are at the end of the chapter!
       return false;
     }
 
@@ -192,7 +192,7 @@ export class Audioplayer extends Component {
       setRepeat, // eslint-disable-line no-shadow
       setAyah // eslint-disable-line no-shadow
     } = this.props;
-    const [surah, ayah] = currentAyah.split(':').map(val => parseInt(val, 10));
+    const [chapter, ayah] = currentAyah.split(':').map(val => parseInt(val, 10));
 
     file.pause();
 
@@ -235,7 +235,7 @@ export class Audioplayer extends Component {
         }
 
         setRepeat({ ...repeat, times: repeat.times - 1 });
-        setAyah(`${surah}:${repeat.from}`);
+        setAyah(`${chapter}:${repeat.from}`);
 
         return this.play();
       }
@@ -369,9 +369,9 @@ export class Audioplayer extends Component {
   }
 
   renderNextButton() {
-    const { surah, currentAyah } = this.props;
-    if (!surah) return false;
-    const isEnd = surah.ayat === parseInt(currentAyah.split(':')[1], 10);
+    const { chapter, currentAyah } = this.props;
+    if (!chapter) return false;
+    const isEnd = chapter.versesCount === parseInt(currentAyah.split(':')[1], 10);
 
     return (
       <a
@@ -394,7 +394,7 @@ export class Audioplayer extends Component {
       currentAyah,
       currentTime,
       duration,
-      surah,
+      chapter,
       isPlaying,
       isLoadedOnClient,
       repeat, // eslint-disable-line no-shadow
@@ -456,7 +456,7 @@ export class Audioplayer extends Component {
               repeat={repeat}
               setRepeat={setRepeat}
               current={parseInt(currentAyah.split(':')[1], 10)}
-              surah={surah}
+              chapter={chapter}
             />
           </li>
           <li className={style.controlItem}>
@@ -469,8 +469,8 @@ export class Audioplayer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  files: state.audioplayer.files[ownProps.surah.id],
-  segments: state.audioplayer.segments[ownProps.surah.id],
+  files: state.audioplayer.files[ownProps.chapter.chapterNumber],
+  segments: state.audioplayer.segments[ownProps.chapter.chapterNumber],
   currentFile: state.audioplayer.currentFile,
   currentAyah: state.audioplayer.currentAyah,
   surahId: state.audioplayer.surahId,
