@@ -11,33 +11,33 @@ const styles = require('./style.scss');
 
 export default class SurahsDropdown extends Component {
   static propTypes = {
-    surahs: PropTypes.objectOf(surahType).isRequired,
+    chapters: PropTypes.objectOf(surahType).isRequired,
     title: PropTypes.string,
   };
 
   shouldComponentUpdate(nextProps) {
-    return this.props.surahs !== nextProps.surahs;
+    return this.props.chapters !== nextProps.chapters;
   }
 
   renderList() {
-    const { surahs } = this.props;
+    const { chapters } = this.props;
 
-    return Object.values(surahs).map((surah, index) => (
-      <LinkContainer to={`/${chapter.chapterNumber}`} activeClass="active" key={`surah-${index}`}>
+    return Object.values(chapters).map((chapter, index) => (
+      <LinkContainer to={`/${chapter.chapterNumber}`} activeClass="active" key={`chapter-${index}`}>
         <MenuItem>
           <div className="row">
             <div className="col-xs-2">
-              <span className="surah-num">
+              <span className="chapter-num">
                 {chapter.chapterNumber}
               </span>
             </div>
             <div className="col-xs-2">
-              <span className="suran-name">{surah.name.simple}</span>
+              <span className="suran-name">{chapter.nameSimple}</span>
               <br />
-              <span className="surah-meaning">{surah.name.english}</span>
+              <span className="chapter-meaning">{chapter.nameEnglish}</span>
             </div>
             <div className={`col-xs-3 text-right ${styles.arabicName}`}>
-              {surah.name.arabic}
+              {chapter.nameArabic}
             </div>
           </div>
         </MenuItem>
@@ -52,8 +52,8 @@ export default class SurahsDropdown extends Component {
       <NavDropdown
         link
         className={styles.dropdown}
-        id="surahs-dropdown"
-        title={title || <LocaleFormattedMessage id="setting.surahs" defaultMessage="Surahs" />}
+        id="chapters-dropdown"
+        title={title || <LocaleFormattedMessage id="setting.chapters" defaultMessage="Surahs" />}
       >
         {this.renderList()}
       </NavDropdown>

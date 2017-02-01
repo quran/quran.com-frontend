@@ -8,11 +8,11 @@ const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 const FacebookIcon = generateShareIcon('facebook');
 const TwitterIcon = generateShareIcon('twitter');
 
-const Share = ({ surah, ayahKey }) => {
+const Share = ({ chapter, ayahKey }) => {
   // Fallback to Surah Id
   const path = ayahKey ? ayahKey.replace(':', '/') : chapter.chapterNumber;
   const shareUrl = `https://quran.com/${path}`;
-  const title = ayahKey ? `Surah ${surah.name.simple} [${ayahKey}]` : `Surah ${surah.name.simple}`;
+  const title = ayahKey ? `Surah ${chapter.nameSimple} [${ayahKey}]` : `Surah ${chapter.nameSimple}`;
   const iconProps = ayahKey ? { iconBgStyle: { fill: '#d1d0d0' } } : {};
 
   return (
@@ -39,7 +39,7 @@ const Share = ({ surah, ayahKey }) => {
 
 Share.propTypes = {
   ayahKey: PropTypes.string,
-  surah: surahType.isRequired
+  chapter: surahType.isRequired
 };
 
 export default Share;
