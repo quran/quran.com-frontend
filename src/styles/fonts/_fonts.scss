@@ -112,10 +112,35 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'me_quran';
+  src: url('../../static/fonts/quran/me_quran_volt_newmet.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'pdms';
+  src: url('../../static/fonts/quran/_PDMS_Saleem_QuranFont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'al_qalam';
+  src: url('../../static/fonts/quran/al_qalam.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .bismillah{
   font-family: 'bismillah';
   font-size: 60px !important;
   color: #000; padding: 25px 0px;
+}
+
+.ar{
+  font-family: me_quran;
 }
 
 /* This triggers a redraw in IE to Fix IE8's :before content rendering. */

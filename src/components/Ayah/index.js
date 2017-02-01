@@ -190,7 +190,7 @@ export default class Ayah extends Component {
           dir="rtl"
           lang="ar"
           className={`text-tashkeel text-p${ayah.pageNum}`}
-          dangerouslySetInnerHTML={{ __html: ayah.textTashkeel }}
+          dangerouslySetInnerHTML={{ __html: ayah.textMadani }}
         />
       </h1>
     );

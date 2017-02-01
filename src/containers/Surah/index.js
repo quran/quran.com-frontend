@@ -288,15 +288,15 @@ class Surah extends Component {
         ayah={ayah}
         surah={surah}
         currentAyah={currentAyah}
-        isCurrentAyah={isPlaying && ayah.ayahKey === currentAyah}
-        bookmarked={!!bookmarks[ayah.ayahKey]}
+        isCurrentAyah={isPlaying && ayah.verseKey === currentAyah}
+        bookmarked={!!bookmarks[ayah.verseKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
         audioActions={actions.audio}
         mediaActions={actions.media}
         isPlaying={isPlaying}
         isAuthenticated={isAuthenticated}
-        key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
+        key={`${ayah.chapterId}-${ayah.verseNumber}-ayah`}
       />
     ));
   }

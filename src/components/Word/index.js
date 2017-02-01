@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import bindTooltip from 'utils/bindTooltip';
 /* eslint-disable no-unused-vars */
 const CHAR_TYPE_WORD = 1;
-const CHAR_TYPE_END = 2;
+const CHAR_TYPE_END = 'end';
 const CHAR_TYPE_PAUSE = 3;
 const CHAR_TYPE_RUB = 4;
 const CHAR_TYPE_SAJDAH = 5;
@@ -21,10 +21,10 @@ export default class Word extends React.Component {
 
   buildTooltip = (word, tooltip) => {
     let title;
-    if (!word.wordId && word.charTypeId === CHAR_TYPE_END) {
-      title = `Verse ${word.ayahKey.split(':')[1]}`;
+    if (!word.wordId && word.charType === CHAR_TYPE_END) {
+      title = `Verse ${word.verseKey.split(':')[1]}`;
     } else {
-      title = word[tooltip];
+      title = word[tooltip] && word[tooltip].text;
     }
     return title;
   }
@@ -36,11 +36,11 @@ export default class Word extends React.Component {
       return;
     }
 
-    if ((currentAyah === word.ayahKey) && isPlaying) {
+    if ((currentAyah === word.verseKey) && isPlaying) {
       audioActions.setCurrentWord(word.code);
     } else {
       audioActions.pause();
-      audioActions.setAyah(word.ayahKey);
+      audioActions.setAyah(word.verseKey);
       audioActions.playCurrentWord({ word, position: audioPosition });
     }
   }
@@ -48,10 +48,10 @@ export default class Word extends React.Component {
   renderCode(word) {
     const { useNewFonts } = this.props;
 
-    if (useNewFonts && word.charTypeId == CHAR_TYPE_END) {
-      console.info(`&#xa${("000" + word.ayahKey.split(':')[1]).slice(-3)};`);
+    if (useNewFonts && word.charType == CHAR_TYPE_END) {
+      console.info(`&#xa${("000" + word.verseKey.split(':')[1]).slice(-3)};`);
 
-      return `&#xa${("000" + word.ayahKey.split(':')[1]).slice(-3)};`;
+      return `&#xa${("000" + word.verseKey.split(':')[1]).slice(-3)};`;
     } else {
       return word.code;
     }
@@ -62,11 +62,11 @@ export default class Word extends React.Component {
 
     let id = null;
     const  position = word.position - 1;
-    const highlight = currentAyah == word.ayahKey && isPlaying ? 'highlight' : '';
-    let font = `${useNewFonts ? word.charTypeId == CHAR_TYPE_END ? 'opt-ayah-number' : 'opt'+word.className : word.className}`;
+    const highlight = currentAyah == word.verseKey && isPlaying ? 'highlight' : '';
+    let font = `${useNewFonts ? word.charType == CHAR_TYPE_END ? 'opt-ayah-number' : 'opt'+word.className : word.className}`;
     const className = `${font} ${highlight} ${word.highlight ? word.highlight : ''}`;
     if (word.charTypeId === CHAR_TYPE_WORD) {
-      id = `word-${word.ayahKey.replace(/:/, '-')}-${word.position}`;
+      id = `word-${word.verseKey.replace(/:/, '-')}-${word.position}`;
     }
 
     return (
