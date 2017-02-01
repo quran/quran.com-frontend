@@ -12,7 +12,7 @@ const ayahRegex = /^(\d+)(?::(\d+))?$/;
 
 class SearchAutocomplete extends Component {
   static propTypes = {
-    surahs: PropTypes.objectOf(surahType).isRequired,
+    chapters: PropTypes.objectOf(surahType).isRequired,
     value: PropTypes.string,
     // TODO: This should not be doing html stuff. Should use react onKeydown.
     input: PropTypes.any, // eslint-disable-line
@@ -68,19 +68,19 @@ class SearchAutocomplete extends Component {
 
     if (isAyahKeySearch) {
       const captures = value.match(ayahRegex);
-      const surahId = captures[1];
+      const chapterId = captures[1];
       const ayahNum = captures[2];
-      const surah = this.props.surahs[surahId];
-      matches.push([surah.name.simple, surah.id + (ayahNum ? `/${ayahNum}` : '')]);
+      const chapter = this.props.chapters[chapterId];
+      matches.push([chapter.name.simple, chapter.chapterNumber + (ayahNum ? `/${ayahNum}` : '')]);
     } else if (value.length >= 2) {
       const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
-      Object.keys(this.props.surahs).forEach((surahId) => {
-        const surah = this.props.surahs[surahId];
-        if (RegExp(escaped, 'i').test(surah.name.simple.replace(/['-]/g, ''))) {
-          matches.push([surah.name.simple, surah.id]);
-        } else if (RegExp(escaped, 'i').test(surah.name.arabic)) {
-          matches.push([surah.name.arabic, surah.id]);
+      Object.keys(this.props.chapters).forEach((chapterId) => {
+        const chapter = this.props.chapters[chapterId];
+        if (RegExp(escaped, 'i').test(chapter.name.simple.replace(/['-]/g, ''))) {
+          matches.push([chapter.nameSimple, chapter.chapterNumber]);
+        } else if (RegExp(escaped, 'i').test(chapter.nameArabic)) {
+          matches.push([chapter.nameArabic, chapter.chapterNumber]);
         }
       });
     }
@@ -195,13 +195,13 @@ class SearchAutocomplete extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const surahs = state.surahs.entities;
-  const surahId = state.surahs.current;
+  const chapters = state.chapters.entities;
+  const chapterId = state.chapters.current;
   const suggestions = state.suggestResults.results[ownProps.value];
   let lang = 'en';
 
-  if (state.ayahs && state.ayahs.entities && state.ayahs.entities[surahId]) {
-    const ayahs = state.ayahs.entities[surahId];
+  if (state.ayahs && state.ayahs.entities && state.ayahs.entities[chapterId]) {
+    const ayahs = state.ayahs.entities[chapterId];
     const ayahKey = Object.keys(ayahs)[0];
 
     if (ayahKey) {
@@ -214,7 +214,7 @@ function mapStateToProps(state, ownProps) {
   }
 
   return {
-    surahs,
+    chapters,
     suggestions,
     lang
   };

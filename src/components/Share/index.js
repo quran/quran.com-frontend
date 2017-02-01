@@ -10,7 +10,7 @@ const TwitterIcon = generateShareIcon('twitter');
 
 const Share = ({ surah, ayahKey }) => {
   // Fallback to Surah Id
-  const path = ayahKey ? ayahKey.replace(':', '/') : surah.id;
+  const path = ayahKey ? ayahKey.replace(':', '/') : chapter.chapterNumber;
   const shareUrl = `https://quran.com/${path}`;
   const title = ayahKey ? `Surah ${surah.name.simple} [${ayahKey}]` : `Surah ${surah.name.simple}`;
   const iconProps = ayahKey ? { iconBgStyle: { fill: '#d1d0d0' } } : {};

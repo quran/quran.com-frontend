@@ -30,7 +30,7 @@ const SettingsModal = ({
     if (surah) {
       const first = [...ayahIds][0];
       const last = [...ayahIds][[...ayahIds].length - 1];
-      load(surah.id, first, last, { ...options, ...payload });
+      load(chapter.chapterNumber, first, last, { ...options, ...payload });
     }
   };
 

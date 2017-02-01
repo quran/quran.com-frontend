@@ -11,7 +11,7 @@ const zeroPad = (num, places) => {
 };
 
 const Title = ({ surah }) => {
-  const title = require(`../../../../static/images/titles/${zeroPad(surah.id, 3)}.svg`); // eslint-disable-line
+  const title = require(`../../../../static/images/titles/${zeroPad(chapter.chapterNumber, 3)}.svg`); // eslint-disable-line
 
   if (!surah) return <noscript />;
 

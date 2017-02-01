@@ -29,7 +29,7 @@ describe('<Title />', () => {
   });
 
   it('should not show next surah if on the last surah', () => {
-    surah.id = 114;
+    chapter.chapterNumber = 114;
     wrapper = renderComponent(surah);
     const next = wrapper.find('.next-chapter').length;
     expect(next).to.equal(0);

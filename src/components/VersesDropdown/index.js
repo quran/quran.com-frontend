@@ -31,7 +31,7 @@ export default class VersesDropdown extends Component {
         <li key={index}>
           <Link
             onClick={() => onClick(ayahNum)}
-            to={`ayah:${surah.id}:${ayahNum}`}
+            to={`ayah:${chapter.chapterNumber}:${ayahNum}`}
             smooth
             spy
             offset={-120}

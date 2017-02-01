@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 
-import surahs from './surahs';
+import chapters from './chapters';
 import ayahs from './ayahs';
 import audioplayer from './audioplayer';
 import lines from './lines';
@@ -20,7 +20,7 @@ export default combineReducers({
   auth,
   bookmarks,
   media,
-  surahs,
+  chapters,
   ayahs,
   audioplayer,
   fontFaces,
