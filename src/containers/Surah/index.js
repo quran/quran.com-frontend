@@ -167,10 +167,10 @@ class Surah extends Component {
     const { params, surah } = this.props;
 
     if (params.range) {
-      return `Surah ${surah.name.simple} [${surah.id}:${params.range}]`;
+      return `Surah ${surah.nameSimple} [${surah.id}:${params.range}]`;
     }
 
-    return `Surah ${surah.name.simple} [${surah.id}]`;
+    return `Surah ${surah.nameSimple} [${surah.id}]`;
   }
 
   description() {
@@ -192,19 +192,19 @@ class Surah extends Component {
 
         const content = translations.join(' - ').slice(0, 250);
 
-        return `Surat ${surah.name.simple} [verse ${params.range}] - ${content}`;
+        return `Surat ${surah.namesimple} [verse ${params.range}] - ${content}`;
       }
 
       const ayah = ayahs[`${surah.id}:${params.range}`];
 
       if (ayah && ayah.content && ayah.content[0]) {
-        return `Surat ${surah.name.simple} [verse ${params.range}] - ${ayah.content[0].text}`;
+        return `Surat ${surah.nameSimple} [verse ${params.range}] - ${ayah.content[0].text}`;
       }
 
-      return `Surat ${surah.name.simple} [verse ${params.range}]`;
+      return `Surat ${surah.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${surah.info ? surah.info.shortDescription : ''} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${surah.info ? surah.info.shortDescription : ''} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.pages[0]} to ${surah.pages[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderPagination() {
@@ -367,7 +367,7 @@ class Surah extends Component {
                 "position": 2,
                 "item": {
                   "@id": "https://quran.com/${surah.id}",
-                  "name": "${surah.name.simple}"
+                  "name": "${surah.nameSimple}"
                 }
               }]
             }`
@@ -418,8 +418,7 @@ function mapStateToProps(state, ownProps) {
   const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
   const ayahIds = new Set(ayahArray);
   const lastAyahInArray = ayahArray.slice(-1)[0];
-  const isSingleAyah = !ownProps.params.range.includes('-');
-
+  const isSingleAyah = ownProps.params.range && !ownProps.params.range.includes('-');
 
   return {
     surah,

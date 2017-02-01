@@ -12,7 +12,7 @@ const Share = ({ surah, ayahKey }) => {
   // Fallback to Surah Id
   const path = ayahKey ? ayahKey.replace(':', '/') : surah.id;
   const shareUrl = `https://quran.com/${path}`;
-  const title = ayahKey ? `Surah ${surah.name.simple} [${ayahKey}]` : `Surah ${surah.name.simple}`;
+  const title = ayahKey ? `Surah ${surah.nameSimple} [${ayahKey}]` : `Surah ${surah.nameSimple}`;
   const iconProps = ayahKey ? { iconBgStyle: { fill: '#d1d0d0' } } : {};
 
   return (

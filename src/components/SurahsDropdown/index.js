@@ -31,13 +31,11 @@ export default class SurahsDropdown extends Component {
                 {surah.id}
               </span>
             </div>
+
             <div className="col-xs-2">
-              <span className="suran-name">{surah.name.simple}</span>
+              <span className="suran-name">{surah.nameArabic}</span>
               <br />
-              <span className="surah-meaning">{surah.name.english}</span>
-            </div>
-            <div className={`col-xs-3 text-right ${styles.arabicName}`}>
-              {surah.name.arabic}
+              <span className="surah-meaning">{surah.translatedName.name}</span>
             </div>
           </div>
         </MenuItem>

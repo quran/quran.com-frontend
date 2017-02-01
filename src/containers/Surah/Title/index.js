@@ -20,7 +20,7 @@ const Title = ({ surah }) => {
       <img
         src={title}
         className={styles.title}
-        alt={`${surah.name.simple} (${surah.name.english}) - سورة ${surah.name.arabic}`}
+        alt={`${surah.translatedName.name} (${surah.nameSimple}) - سورة ${surah.nameArabic}`}
       />
     </Isvg>
   );

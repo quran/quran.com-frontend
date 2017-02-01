@@ -88,7 +88,6 @@ class GlobalNav extends Component {
         className={`montserrat ${this.state.scrolled && styles.scrolled}`}
         fixedTop={!isStatic}
         fluid
-        static={isStatic}
       >
         <button type="button" className="navbar-toggle collapsed" onClick={handleSidebarToggle}>
           <span className="sr-only">Toggle navigation</span>

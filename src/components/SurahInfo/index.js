@@ -21,22 +21,22 @@ const SurahInfo = ({ surah, isShowingSurahInfo, onClose }) => {
       />
       <div className={`${style.row} row`}>
         <div
-          className={`col-md-6 col-xs-6 ${style.bg} ${style[surah.revelation.place]}`}
+          className={`col-md-3 col-xs-6 ${style.bg} ${style[surah.revelationPlace]}`}
         />
         <div className={`${style.list} col-md-1 col-xs-6`}>
           <dl>
             <dt>VERSES</dt>
-            <dd className="text-uppercase">{surah.ayat}</dd>
+            <dd className="text-uppercase">{surah.versesCount}</dd>
             <dt>PAGES</dt>
-            <dd className="text-uppercase">{surah.page.join('-')}</dd>
+            <dd className="text-uppercase">{surah.pages.join('-')}</dd>
           </dl>
         </div>
-        <div className={`${style.info} times-new col-md-8`}>
-          <div dangerouslySetInnerHTML={{ __html: surah.info.description }} />
+        <div className={`${style.info} ${surah.info.languageName} times-new col-md-8`}>
+          <div dangerouslySetInnerHTML={{ __html: surah.info.text }} />
           <div>
             <p>
               <em>
-                Source: {surah.info.contentSource}
+                Source: {surah.info.source}
               </em>
             </p>
           </div>

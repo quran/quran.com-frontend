@@ -7,7 +7,7 @@ export default (server) => {
     const client = new ApiClient(req);
     const urls = [];
 
-    client.get('/api/v2/surahs').then((surahs) => {
+    client.get('/api/v3/chapters').then((surahs) => {
       surahs.forEach((surah) => {
         Array(surah.ayat).fill().forEach((_, index) => {
           const ayahId = index + 1;
