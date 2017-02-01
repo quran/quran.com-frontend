@@ -3,7 +3,7 @@ export default {
   messages: {
     local: 'english',
     'local.siteLocale': 'Site Language',
-    'local.changeLocal': 'Choose the language you want the site to display with',
+    'local.changeLocal': 'Choose the language you want the site to display in',
     'local.navtiveName': 'English',
     'local.selectLabel': 'Language',
     'setting.title': 'Settings',
@@ -25,7 +25,7 @@ export default {
     'setting.nightMode.dayTip': 'Switch to day mode',
     'setting.nightMode.nightTip': 'Switch to night mode',
 
-    'ayah.media.lectureFrom': 'Watch lecture of {from}',
+    'ayah.media.lectureFrom': 'Watch {from} lecture',
     'ayah.bookmarked': 'Bookmarked',
     'ayah.bookmark': 'Bookmark',
 
@@ -53,9 +53,9 @@ export default {
     'player.repeat.rangeEnd': 'To',
     'player.repeat.times': 'Times',
     'player.repeat.loop': 'loop',
-    'player.scrollButtonTip': 'Automatically scrolls to the currently playing ayah on transitions...', // eslint-disable-line max-len
+    'player.scrollButtonTip': 'Automatically scrolls to the currently playing ayah', // eslint-disable-line max-len
 
-    'app.loading': 'Loading ...',
+    'app.loading': 'Loading...',
     'actions.copy': 'Copy',
     'actions.copied': 'Copied!',
     'actions.play': 'Play',
@@ -76,6 +76,6 @@ export default {
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
 
-    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes and activities.'
+    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.'
   }
 };
