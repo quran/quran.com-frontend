@@ -6,7 +6,7 @@ import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import SmartBanner from 'components/SmartBanner';
-// import GlobalNav from 'components/GlobalNav';
+import GlobalNav from 'components/GlobalNav';
 import GlobalSidebar from 'components/GlobalSidebar';
 
 import debug from 'helpers/debug';
@@ -31,7 +31,7 @@ class App extends Component {
     removeMedia: PropTypes.func.isRequired,
     children: PropTypes.element,
     main: PropTypes.element,
-    // nav: PropTypes.element,
+    nav: PropTypes.element,
     sidebar: PropTypes.element,
   };
 
@@ -46,12 +46,12 @@ class App extends Component {
   render() {
     const {
       main,
-      // nav,
+      nav,
       sidebar,
       children,
       media,
       removeMedia, // eslint-disable-line no-shadow
-      // ...props
+      ...props
     } = this.props;
     debug('component:APPLICATION', 'Render');
 
@@ -74,12 +74,12 @@ class App extends Component {
           </div>
         </NoScript>
         {
-          /* React.cloneElement(
+          React.cloneElement(
             nav || <GlobalNav isStatic {...props} />,
             {
               handleSidebarToggle: () => this.setState({ sidebarOpen: !this.state.sidebarOpen })
             }
-          ) */
+          )
         }
         {
           React.cloneElement(
