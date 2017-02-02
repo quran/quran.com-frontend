@@ -55,7 +55,7 @@ class GlobalSidebar extends Component {
             <p // eslint-disable-line
               className="navbar-text"
               onClick={() => handleOpen(false)}
-            ><Link to="/"><i className="ss-icon ss-home back-to-home" /><LocaleFormattedMessage id="nav.title" defaultMessage="Quran" /></Link>
+            ><Link to="/"><i className={`ss-icon ss-home ${styles.backToHome}`} /><LocaleFormattedMessage id="nav.title" defaultMessage="Quran" /></Link>
             </p>
           </NavbarHeader>
         </Navbar>
