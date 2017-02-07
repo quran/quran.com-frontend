@@ -25,7 +25,7 @@ export default {
     'setting.nightMode.dayTip': 'Switch to day mode',
     'setting.nightMode.nightTip': 'Switch to night mode',
 
-    'ayah.media.lectureFrom': 'Watch {from} lecture',
+    'ayah.media.lectureFrom': 'Watch video commentary from {from}',
     'ayah.bookmarked': 'Bookmarked',
     'ayah.bookmark': 'Bookmark',
 
