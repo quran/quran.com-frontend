@@ -104,11 +104,16 @@ class RepeatButton extends Component {
               onChange={event => setRepeat({ ...repeat, to: parseInt(event.target.value, 10) })}
             >
               {
-                array.map((ayah, index) => (
-                  <option key={index} value={repeat.from ? index + 1 + repeat.from : index + 1}>
-                    {repeat.from ? index + 1 + repeat.from : index + 1}
-                  </option>
-                ))
+                array.reduce((options, ayah, index) => {
+                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= surah.ayat) {
+                    options.push(
+                      <option key={index} value={index + 1}>
+                        {index + 1}
+                      </option>
+                    );
+                  }
+                  return options;
+                }, [])
               }
             </FormControl>
           </li>
