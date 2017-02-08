@@ -60,9 +60,23 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'p1-compressed';
+  src: url('../../static/fonts/p1/p1.eot?#iefix') format('embedded-opentype'),
+  url('../../static/fonts/p1/p1.woff') format('woff'),
+  url('../../static/fonts/p1/p1.ttf') format('truetype'),
+  url('../../static/fonts/p1/p1.svg#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* This triggers a redraw in IE to Fix IE8's :before content rendering. */
 html:hover [class^="ss-"] {
   -ms-zoom: 1;
+}
+
+.p1-optimized{
+  font-family: p1-compressed;
 }
 
 .ss-icon, .ss-icon.ss-standard,
