@@ -72,11 +72,15 @@ class RepeatButton extends Component {
             <FormControl
               componentClass="select"
               value={repeat.from}
-              onChange={event => setRepeat({
-                ...repeat,
-                from: parseInt(event.target.value, 10),
-                to: parseInt(event.target.value, 10) + 3
-              })}
+              onChange={(event) => {
+                let to = parseInt(event.target.value, 10) + 3;
+                to = to < surah.ayat ? to : surah.ayat;
+                setRepeat({
+                  ...repeat,
+                  from: parseInt(event.target.value, 10),
+                  to
+                });
+              }}
             >
               {
                 array.map((ayah, index) => (
