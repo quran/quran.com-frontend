@@ -46,10 +46,16 @@
     }
 
   }
+  .link{
+    display: inline-block;
+    width: 30%;
+    margin-top: 35px;
+  }
   .logo{
     padding-top: 10px;
     padding-bottom: 10px;
-    width: 30%;
+    height: auto;
+    width: 100%;
   }
   .title{
     color: lighten($brand-primary, 30%);

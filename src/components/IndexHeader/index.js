@@ -29,7 +29,7 @@ export default class IndexHeader extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
-              <Link to="/" data-metrics-event-name="IndexHeader:Link:Index">
+              <Link to="/" className="link" data-metrics-event-name="IndexHeader:Link:Index">
                 <img src={logo} className="logo" alt="logo" />
               </Link>
               <h4 className="title">THE NOBLE QUR&#x27;AN</h4>
