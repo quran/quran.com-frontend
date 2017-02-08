@@ -83,11 +83,16 @@ class RepeatButton extends Component {
               }}
             >
               {
-                array.map((ayah, index) => (
-                  <option key={index} value={index + 1}>
-                    {index + 1}
-                  </option>
-                ))
+                array.reduce((options, ayah, index) => {
+                  if (index + 1 < surah.ayat) { // Exclude last verse
+                    options.push(
+                      <option key={index} value={index + 1}>
+                        {index + 1}
+                      </option>
+                    );
+                  }
+                  return options;
+                }, [])
               }
             </FormControl>
           </li>
