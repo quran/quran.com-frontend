@@ -76,13 +76,13 @@ class SmartBanner extends Component {
     const mixins = {
       ios: {
         icon: 'app-banner-ios.jpg',
-        appMeta: 'google-play-app',
+        appMeta: 'apple-itunes-app',
         getStoreLink: () =>
           `https://itunes.apple.com/${this.props.appStoreLanguage}/app/id`,
       },
       android: {
         icon: 'app-banner-android.png',
-        appMeta: 'apple-itunes-app',
+        appMeta: 'google-play-app',
         getStoreLink: () =>
           'http://play.google.com/store/apps/details?id=',
       }
