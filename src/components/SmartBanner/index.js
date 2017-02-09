@@ -101,11 +101,11 @@ class SmartBanner extends Component {
     return /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];
   }
 
-  hide() {
+  hide = () => {
     window.document.querySelector('html').classList.remove('smartbanner-show');
   }
 
-  show() {
+  show = () => {
     window.document.querySelector('html').classList.add('smartbanner-show');
   }
 
