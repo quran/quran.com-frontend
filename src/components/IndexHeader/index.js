@@ -5,6 +5,7 @@ import SearchInput from 'components/SearchInput';
 import debug from 'helpers/debug';
 
 const logo = require('../../../static/images/logo-lg-w.png');
+const styles = require('./style.scss');
 
 export default class IndexHeader extends Component {
   static propTypes = {
@@ -29,10 +30,10 @@ export default class IndexHeader extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
-              <Link to="/" className="link" data-metrics-event-name="IndexHeader:Link:Index">
-                <img src={logo} className="logo" alt="logo" />
+              <Link to="/" className={styles.link} data-metrics-event-name="IndexHeader:Link:Index">
+                <img src={logo} className={styles.logo} alt="logo" />
               </Link>
-              <h4 className="title">THE NOBLE QUR&#x27;AN</h4>
+              <h4 className={styles.title}>THE NOBLE QUR&#x27;AN</h4>
               {this.renderSearch()}
             </div>
           </div>
