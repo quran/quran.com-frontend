@@ -101,11 +101,11 @@ class SmartBanner extends Component {
     return /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];
   }
 
-  hide = () => {
+  hide() {
     window.document.querySelector('html').classList.remove('smartbanner-show');
   }
 
-  show = () => {
+  show() {
     window.document.querySelector('html').classList.add('smartbanner-show');
   }
 
@@ -178,7 +178,7 @@ class SmartBanner extends Component {
           <a
             tabIndex="-1"
             className="smartbanner-close"
-            onClick={this.close}
+            onClick={() => this.close()}
             data-metrics-event-name="SmartBanner:close"
           >
             <i className="fa fa-times-circle" />
@@ -190,7 +190,7 @@ class SmartBanner extends Component {
             <span>{inStore}</span>
           </div>
 
-          <a href={link} onClick={this.install} className="smartbanner-button" data-metrics-event-name="SmartBanner:InstallAapp">
+          <a href={link} onClick={() => this.install()} className="smartbanner-button" data-metrics-event-name="SmartBanner:InstallAapp">
             <span className="smartbanner-button-text">{this.props.button}</span>
           </a>
         </div>
