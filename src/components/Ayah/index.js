@@ -43,6 +43,7 @@ export default class Ayah extends Component {
     currentAyah: PropTypes.string
   };
 
+
   static defaultProps = {
     currentWord: null,
     isSearched: false
@@ -198,11 +199,11 @@ export default class Ayah extends Component {
   }
 
   renderCopyLink() {
-    const { isSearched, ayah: { textTashkeel } } = this.props;
+    const { isSearched, ayah } = this.props;
 
     if (!isSearched) {
       return (
-        <Copy text={textTashkeel} />
+        <Copy text={ayah.textTashkeel} surah={ayah.surahId} ayah={ayah.ayahNum} />
       );
     }
 
