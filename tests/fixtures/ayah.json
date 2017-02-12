@@ -1,7 +1,7 @@
 {
-  "ayahKey": "2:1",
+  "verseKey": "2:1",
   "ayahIndex": 8,
-  "surahId": 2,
+  "chapterId": 2,
   "ayahNum": 1,
   "pageNum": 2,
   "juzNum": 1,
@@ -12,7 +12,7 @@
   "sajdah": null,
   "words": [
     {
-      "ayahKey": "2:1",
+      "verseKey": "2:1",
       "resourceId": 1,
       "position": 1,
       "wordId": 30,
@@ -20,7 +20,7 @@
       "lineNum": 3,
       "codeDec": 64337,
       "codeHex": "fb51",
-      "charTypeId": 1,
+      "charType": 1,
       "className": "p2",
       "code": "&#xfb51",
       "tokenId": 16542,
@@ -28,7 +28,7 @@
       "transliteration": "alif-lam-meem"
     },
     {
-      "ayahKey": "2:1",
+      "verseKey": "2:1",
       "resourceId": 1,
       "position": 2,
       "wordId": null,
@@ -36,7 +36,7 @@
       "lineNum": 3,
       "codeDec": 64338,
       "codeHex": "fb52",
-      "charTypeId": 2,
+      "charType": 2,
       "className": "p2",
       "code": "&#xfb52"
     }

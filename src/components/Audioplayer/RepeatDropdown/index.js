@@ -15,7 +15,7 @@ const style = require('../style.scss');
 
 class RepeatButton extends Component {
   static propTypes = {
-    surah: surahType,
+    chapter: surahType,
     repeat: PropTypes.shape({
       from: PropTypes.number,
       to: PropTypes.number,
@@ -57,8 +57,8 @@ class RepeatButton extends Component {
   }
 
   renderRangeAyahs() {
-    const { surah, repeat, setRepeat } = this.props;
-    const array = Array(surah.versesCount).join().split(',');
+    const { chapter, repeat, setRepeat } = this.props;
+    const array = Array(chapter.versesCount).join().split(',');
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
@@ -128,13 +128,13 @@ class RepeatButton extends Component {
   }
 
   renderSingleAyah() {
-    const { repeat, setRepeat, surah } = this.props;
-    const array = Array(surah.versesCount).join().split(',');
+    const { repeat, setRepeat, chapter } = this.props;
+    const array = Array(chapter.versesCount).join().split(',');
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
         <LocaleFormattedMessage
-          id="player.currentAyah"
+          id="player.currentVerse"
           defaultMessage="Ayah"
         />{' '}: <br />
         <FormControl

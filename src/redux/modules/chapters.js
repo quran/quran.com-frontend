@@ -49,7 +49,7 @@ export default function reducer(state = initialState, action = {}) {
           ...state.entities,
           [action.id]: {
             ...state.entities[action.id],
-            info: action.result
+            info: action.result.chapterInfo
           }
         }
       };

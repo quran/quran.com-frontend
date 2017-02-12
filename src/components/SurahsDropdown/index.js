@@ -26,17 +26,17 @@ export default class SurahsDropdown extends Component {
       <LinkContainer to={`/${chapter.chapterNumber}`} activeClass="active" key={`chapter-${index}`}>
         <MenuItem>
           <div className="row">
-            <div className="col-xs-2">
+            <div className="col-xs-2 col-md-2">
               <span className="chapter-num">
                 {chapter.chapterNumber}
               </span>
             </div>
-            <div className="col-xs-2">
+            <div className="col-xs-7 col-md-7">
               <span className="suran-name">{chapter.nameSimple}</span>
               <br />
-              <span className="chapter-meaning">{chapter.nameEnglish}</span>
+              <span className="chapter-meaning">{chapter.translatedName.name}</span>
             </div>
-            <div className={`col-xs-3 text-right ${styles.arabicName}`}>
+            <div className={`col-xs-3  col-md-3 text-right ${styles.arabicName}`}>
               {chapter.nameArabic}
             </div>
           </div>

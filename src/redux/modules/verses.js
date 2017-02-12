@@ -3,16 +3,16 @@ import {
   LOAD_SUCCESS,
   LOAD_FAIL,
   CLEAR_CURRENT,
-  SET_CURRENT_AYAH,
+  SET_CURRENT_VERSE,
   SET_CURRENT_WORD,
   CLEAR_CURRENT_WORD
-  } from 'redux/constants/ayahs.js';
+} from 'redux/constants/verses.js';
 
 export {
   LOAD,
   LOAD_SUCCESS,
   CLEAR_CURRENT,
-  SET_CURRENT_AYAH,
+  SET_CURRENT_VERSE,
 };
 
 const initialState = {
@@ -27,7 +27,7 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case SET_CURRENT_AYAH: {
+    case SET_CURRENT_VERSE: {
       return {
         ...state,
         current: action.id,
@@ -35,15 +35,15 @@ export default function reducer(state = initialState, action = {}) {
       };
     }
     case SET_CURRENT_WORD: {
-      let currentAyah = state.current;
-      if (action.id && currentAyah) {
-        if (!(new RegExp(`^${currentAyah}:`)).test(action.id)) {
-          currentAyah = action.id.match(/^\d+:\d+/g)[0];
+      let currentVerse = state.current;
+      if (action.id && currentVerse) {
+        if (!(new RegExp(`^${currentVerse}:`)).test(action.id)) {
+          currentVerse = action.id.match(/^\d+:\d+/g)[0];
         }
       }
       return {
         ...state,
-        current: currentAyah,
+        current: currentVerse,
         currentWord: action.id
       };
     }
@@ -84,10 +84,10 @@ export default function reducer(state = initialState, action = {}) {
         errored: false,
         entities: {
           ...stateEntities,
-          [action.surahId]: Object.assign(
+          [action.chapterId]: Object.assign(
             {},
-            state.entities[action.surahId],
-            action.result.entities.ayahs
+            state.entities[action.chapterId],
+            action.result.entities.verses
           )
         },
         result: Object.assign({}, state.result, action.result.result)

@@ -30,7 +30,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         entities: {
           ...state.entities,
-          [action.ayahKey]: action.result
+          [action.verseKey]: action.result
         }
       };
     }
@@ -40,7 +40,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         entities: {
           ...state.entities,
-          [action.ayahKey]: null
+          [action.verseKey]: null
         }
       };
     }

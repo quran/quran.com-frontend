@@ -53,24 +53,24 @@ export function pause() {
   };
 }
 
-export function next(currentAyah) {
+export function next(currentVerse) {
   return {
     type: NEXT,
-    currentAyah
+    currentVerse
   };
 }
 
-export function setAyah(currentAyah) {
+export function setAyah(currentVerse) {
   return {
     type: SET_AYAH,
-    currentAyah
+    currentVerse
   };
 }
 
-export function previous(currentAyah) {
+export function previous(currentVerse) {
   return {
     type: PREVIOUS,
-    currentAyah
+    currentVerse
   };
 }
 
@@ -87,10 +87,10 @@ export function toggleScroll() {
   };
 }
 
-export function buildOnClient(surahId) {
+export function buildOnClient(chapterId) {
   return {
     type: BUILD_ON_CLIENT,
-    surahId
+    chapterId
   };
 }
 

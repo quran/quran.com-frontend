@@ -7,7 +7,7 @@ export default {
     'local.navtiveName': 'Indonesia',
     'local.selectLabel': 'Bahasa',
     'setting.title': 'Pengaturan',
-    'setting.surahs': 'Surat',
+    'setting.chapters': 'Surat',
     'setting.verses': 'Pergi ke ayat',
     'setting.reciters.title': 'Qari\'',
     'setting.translations.title': 'Terjemahan',
@@ -43,7 +43,7 @@ export default {
     'surah.index.quickLinks': 'Tautan cepat',
     'surah.goToBeginning': 'Awal Surat',
 
-    'player.currentAyah': 'Ayat',
+    'player.currentVerse': 'Ayat',
     'player.nextAyah': 'Ayat Berikutnya',
     'player.previousAyah': 'Ayat Sebelumnya',
     'player.repeat.title': 'PENGULANGAN',

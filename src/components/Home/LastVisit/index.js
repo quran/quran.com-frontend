@@ -14,9 +14,9 @@ const LastVisit = (props) => {
     <div>
       <h4 className={`text-muted ${styles.title}`}>
         <LocaleFormattedMessage id="chapter.index.continue" defaultMessage="Continue" />{' '}
-        <Link to={`/${props.chapter.chapterNumber}/${props.ayah}`}>
+        <Link to={`/${props.chapter.chapterNumber}/${props.verse}`}>
           <span>
-            {props.chapter.nameSimple} ({props.chapter.chapterNumber}:{props.ayah})
+            {props.chapter.nameSimple} ({props.chapter.chapterNumber}:{props.verse})
           </span>
         </Link>
       </h4>
@@ -26,7 +26,7 @@ const LastVisit = (props) => {
 
 LastVisit.propTypes = {
   chapter: surahType.isRequired,
-  ayah: PropTypes.number.isRequired
+  verse: PropTypes.number.isRequired
 };
 
 export default LastVisit;

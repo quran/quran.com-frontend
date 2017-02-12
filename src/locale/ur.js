@@ -7,7 +7,7 @@ export default {
     'local.navtiveName': 'اردو',
     'local.selectLabel': 'زبان',
     'setting.title': 'اختیارات',
-    'setting.surahs': 'سورة',
+    'setting.chapters': 'سورة',
     'setting.verses': 'آیت منتخب کریں',
     'setting.reciters.title': 'قاری منتخب کریں',
     'setting.translations.title': 'ترجمے',
@@ -43,7 +43,7 @@ export default {
     'surah.index.quickLinks': 'فوری لنک',
     'surah.goToBeginning': 'سورہ کے شروع میں جائیں',
 
-    'player.currentAyah': 'آیت',
+    'player.currentVerse': 'آیت',
     'player.nextAyah': 'اگلی آیت',
     'player.previousAyah': 'پچھلی آیت',
     'player.repeat.title': ' دہرائیں',

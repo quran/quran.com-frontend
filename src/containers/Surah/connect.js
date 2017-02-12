@@ -8,17 +8,17 @@ import {
 import {
   clearCurrent,
   load as loadAyahs
-  } from 'redux/actions/ayahs.js';
+  } from 'redux/actions/verses.js';
 
 import { debug, isLoaded } from 'helpers';
 
 const ayahRangeSize = 30;
 
-export const surahsConnect = ({ store: { getState, dispatch } }) => {
-  debug('component:Surah:surahsConnect', 'Init');
+export const chaptersConnect = ({ store: { getState, dispatch } }) => {
+  debug('component:Surah:chaptersConnect', 'Init');
 
   if (!isAllLoaded(getState())) {
-    debug('component:Surah:surahsConnect', 'Surahs not loaded');
+    debug('component:Surah:chaptersConnect', 'Surahs not loaded');
 
     if (__CLIENT__) {
       dispatch(loadAll());
@@ -31,7 +31,7 @@ export const surahsConnect = ({ store: { getState, dispatch } }) => {
   return true;
 };
 
-export const surahInfoConnect = ({ store: { dispatch }, params }) => {
+export const chapterInfoConnect = ({ store: { dispatch }, params }) => {
   if (__CLIENT__) {
     dispatch(loadInfo(params.chapterId));
     return true;
@@ -40,8 +40,8 @@ export const surahInfoConnect = ({ store: { dispatch }, params }) => {
   return dispatch(loadInfo(params.chapterId));
 };
 
-export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {
-  debug('component:Surah:ayahsConnect', 'Init');
+export const versesConnect = ({ store: { dispatch, getState }, params }) => {
+  debug('component:Surah:versesConnect', 'Init');
 
   const range = params.range;
   const chapterId = parseInt(params.chapterId, 10);
@@ -75,7 +75,7 @@ export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {
   }
 
   if (!isLoaded(getState(), chapterId, from, to)) {
-    debug('component:Surah:ayahsConnect', 'Not loaded');
+    debug('component:Surah:versesConnect', 'Not loaded');
 
     dispatch(clearCurrent(chapterId)); // In the case where you go to same surah but later ayahs.
 

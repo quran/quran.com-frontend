@@ -29,7 +29,7 @@ const Home = (props) => {
           <div className="col-md-10 col-md-offset-1">
             {
               lastVisit &&
-              <LastVisit chapter={props.chapters[lastVisit.surahId]} ayah={lastVisit.ayahId} />
+              <LastVisit chapter={props.chapters[lastVisit.chapterId]} verse={lastVisit.verseId} />
             }
             <QuickSurahs />
             <h4 className={`text-muted ${styles.title}`}>

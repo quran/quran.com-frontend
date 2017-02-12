@@ -3,7 +3,7 @@ import {
   LOAD as AYAHS_LOAD,
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
   LOAD_FAIL as AYAHS_LOAD_FAIL,
-  } from 'redux/constants/ayahs.js';
+  } from 'redux/constants/verses.js';
 
 import { SET_CURRENT as SURAHS_SET_CURRENT } from 'redux/constants/chapters.js';
 
@@ -25,18 +25,18 @@ export default function reducer(state = initialState, action = {}) {
         loading: true
       };
     case AYAHS_LOAD_SUCCESS:
-      const ayahs = action.result.entities.ayahs;
+      const ayahs = action.result.entities.verses;
       const stateLines = state.lines;
       const lines = { ...stateLines };
 
-      action.result.result.forEach((ayahId) => {
+      action.result.result.verses.forEach((ayahId) => {
         const ayah = ayahs[ayahId];
 
         ayah.words.forEach((word) => {
           if (lines[`${word.pageNum}-${word.lineNum}`]) {
             const isInArray = lines[`${word.pageNum}-${word.lineNum}`].find((item) => {
-              const itemChecksum = `${item.lineNum}${item.code}${item.ayahKey}${item.position}`;
-              const dataChecksum = `${word.lineNum}${word.code}${word.ayahKey}${item.position}`;
+              const itemChecksum = `${item.lineNum}${item.code}${item.verseKey}${item.position}`;
+              const dataChecksum = `${word.lineNum}${word.code}${word.verseKey}${item.position}`;
 
               return itemChecksum === dataChecksum;
             });

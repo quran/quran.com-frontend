@@ -18,11 +18,11 @@ import GlobalNav from '../index';
 
 const styles = require('../style.scss');
 
-const GlobalNavSurah = ({ surah, surahs, setOption, options, ...props }) => (
+const GlobalNavSurah = ({ chapter, chapters, setOption, options, ...props }) => (
   <GlobalNav
     {...props}
     leftControls={[
-      <SurahsDropdown title={surah.name.simple} surahs={surahs} />,
+      <SurahsDropdown title={chapter.nameSimple} chapters={chapters} />,
       <NavDropdown
         id="hidden-dropdown"
         className={`visible-xs-inline-block ${styles.optionsDropdown}`}
@@ -70,19 +70,19 @@ const GlobalNavSurah = ({ surah, surahs, setOption, options, ...props }) => (
 );
 
 GlobalNavSurah.propTypes = {
-  surah: surahType.isRequired,
-  surahs: PropTypes.objectOf(surahType).isRequired,
+  chapter: surahType.isRequired,
+  chapters: PropTypes.objectOf(surahType).isRequired,
   options: optionsType.isRequired,
   setOption: PropTypes.func.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {
-  const surahId = parseInt(ownProps.params.surahId, 10);
-  const surah: Object = state.surahs.entities[surahId];
+  const chapterId = parseInt(ownProps.params.chapterId, 10);
+  const chapter: Object = state.chapters.entities[chapterId];
 
   return {
-    surah,
-    surahs: state.surahs.entities,
+    chapter,
+    chapters: state.chapters.entities,
     options: state.options
   };
 }

@@ -64,9 +64,9 @@ class SearchAutocomplete extends Component {
 
     if (!value) return matches;
 
-    const isAyahKeySearch = ayahRegex.test(value);
+    const isverseKeySearch = ayahRegex.test(value);
 
-    if (isAyahKeySearch) {
+    if (isverseKeySearch) {
       const captures = value.match(ayahRegex);
       const chapterId = captures[1];
       const ayahNum = captures[2];
@@ -200,12 +200,12 @@ function mapStateToProps(state, ownProps) {
   const suggestions = state.suggestResults.results[ownProps.value];
   let lang = 'en';
 
-  if (state.ayahs && state.ayahs.entities && state.ayahs.entities[chapterId]) {
-    const ayahs = state.ayahs.entities[chapterId];
-    const ayahKey = Object.keys(ayahs)[0];
+  if (state.verses && state.verses.entities && state.verses.entities[chapterId]) {
+    const ayahs = state.verses.entities[chapterId];
+    const verseKey = Object.keys(ayahs)[0];
 
-    if (ayahKey) {
-      const ayah = ayahs[ayahKey];
+    if (verseKey) {
+      const ayah = ayahs[verseKey];
 
       if (ayah.content && ayah.content[0] && ayah.content[0].lang) {
         lang = ayah.content[0].lang;

@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
 
-import { ayahType, matchType, surahType } from 'types';
+import { verseType, matchType, surahType } from 'types';
 import Share from 'components/Share';
 import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -12,11 +12,11 @@ import debug from 'helpers/debug';
 
 const styles = require('./style.scss');
 
-export default class Ayah extends Component {
+export default class Verse extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
-    ayah: ayahType.isRequired,
-    surah: surahType.isRequired,
+    verse: verseType.isRequired,
+    chapter: surahType.isRequired,
     bookmarked: PropTypes.bool, // TODO: Add this for search
     bookmarkActions: PropTypes.shape({
       isLoaded: PropTypes.func.isRequired,
@@ -39,8 +39,8 @@ export default class Ayah extends Component {
     isAuthenticated: PropTypes.bool,
     tooltip: PropTypes.string,
     currentWord: PropTypes.number, // gets passed in an integer, null by default
-    isCurrentAyah: PropTypes.bool,
-    currentAyah: PropTypes.string
+    iscurrentVerse: PropTypes.bool,
+    currentVerse: PropTypes.string
   };
 
   static defaultProps = {
@@ -50,11 +50,11 @@ export default class Ayah extends Component {
 
   shouldComponentUpdate(nextProps) {
     const conditions = [
-      this.props.ayah !== nextProps.ayah,
+      this.props.verse !== nextProps.verse,
       this.props.bookmarked !== nextProps.bookmarked,
       this.props.tooltip !== nextProps.tooltip,
       this.props.currentWord !== nextProps.currentWord,
-      this.props.isCurrentAyah !== nextProps.isCurrentAyah
+      this.props.iscurrentVerse !== nextProps.iscurrentVerse
     ];
 
     if (this.props.match) {
@@ -64,7 +64,7 @@ export default class Ayah extends Component {
     return conditions.some(condition => condition);
   }
 
-  handlePlay(ayah) {
+  handlePlay(verse) {
     const { isPlaying, audioActions } = this.props;
     const { pause, setAyah, play } = audioActions;
 
@@ -72,14 +72,14 @@ export default class Ayah extends Component {
       pause();
     }
 
-    setAyah(ayah);
+    setAyah(verse);
     play();
   }
 
   renderTranslations() {
-    const { ayah, match } = this.props;
+    const { verse, match } = this.props;
 
-    const array = match || ayah.content || [];
+    const array = match || verse.content || [];
 
     return array.map((content, index) => {
       const arabic = new RegExp(/[\u0600-\u06FF]/);
@@ -105,14 +105,14 @@ export default class Ayah extends Component {
   }
 
   renderMedia() {
-    const { ayah, mediaActions, isSearched } = this.props;
+    const { verse, mediaActions, isSearched } = this.props;
 
-    if (isSearched || !ayah.mediaContent) return false;
+    if (isSearched || !verse.mediaContent) return false;
 
     return (
       <div>
         {
-          ayah.mediaContent.map((content, index) => (
+          verse.mediaContent.map((content, index) => (
             <div
               className={`${styles.translation} translation`}
               key={index}
@@ -126,10 +126,10 @@ export default class Ayah extends Component {
                     data-metrics-event-name="Media Click"
                     data-metrics-media-content-url={content.url}
                     data-metrics-media-content-id={content.id}
-                    data-metrics-media-content-ayah-key={ayah.ayahKey}
+                    data-metrics-media-content-verse-key={verse.verseKey}
                   >
                     <LocaleFormattedMessage
-                      id="ayah.media.lectureFrom"
+                      id="verse.media.lectureFrom"
                       defaultMessage="Watch lecture by {from}"
                       values={{ from: content.resource.name }}
                     />
@@ -144,15 +144,15 @@ export default class Ayah extends Component {
   }
 
   renderText() {
-    const { ayah, tooltip, currentAyah, isPlaying, audioActions, isSearched } = this.props;
+    const { verse, tooltip, currentVerse, isPlaying, audioActions, isSearched } = this.props;
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
 
-    const text = ayah.words.map(word => ( // eslint-disable-line
+    const text = verse.words.map(word => ( // eslint-disable-line
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
-        currentAyah={currentAyah}
+        currentVerse={currentVerse}
         tooltip={tooltip}
         isPlaying={isPlaying}
         audioActions={audioActions}
@@ -167,22 +167,22 @@ export default class Ayah extends Component {
         <p
           dir="rtl"
           lang="ar"
-          className={`text-tashkeel text-p${ayah.pageNum}`}
-          dangerouslySetInnerHTML={{ __html: ayah.textTashkeel }}
+          className={`text-tashkeel text-p${verse.pageNumber}`}
+          dangerouslySetInnerHTML={{ __html: verse.textMadani }}
         />
       </h1>
     );
   }
 
   renderPlayLink() {
-    const { isSearched, ayah, currentAyah, isPlaying } = this.props;
-    const playing = ayah.ayahKey === currentAyah && isPlaying;
+    const { isSearched, verse, currentVerse, isPlaying } = this.props;
+    const playing = verse.verseKey === currentVerse && isPlaying;
 
     if (!isSearched) {
       return (
         <a
           tabIndex="-1"
-          onClick={() => this.handlePlay(ayah.ayahKey)}
+          onClick={() => this.handlePlay(verse.verseKey)}
           className="text-muted"
         >
           <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`} />{' '}
@@ -198,11 +198,11 @@ export default class Ayah extends Component {
   }
 
   renderCopyLink() {
-    const { isSearched, ayah: { textTashkeel } } = this.props;
+    const { isSearched, verse: { textMadani } } = this.props;
 
     if (!isSearched) {
       return (
-        <Copy text={textTashkeel} />
+        <Copy text={textMadani} />
       );
     }
 
@@ -210,7 +210,7 @@ export default class Ayah extends Component {
   }
 
   renderBookmark() {
-    const { ayah, bookmarked, isAuthenticated, bookmarkActions, isSearched } = this.props;
+    const { verse, bookmarked, isAuthenticated, bookmarkActions, isSearched } = this.props;
 
     if (isSearched || !isAuthenticated) return false;
 
@@ -218,13 +218,13 @@ export default class Ayah extends Component {
       return (
         <a
           tabIndex="-1"
-          onClick={() => bookmarkActions.removeBookmark(ayah.ayahKey)}
+          onClick={() => bookmarkActions.removeBookmark(verse.verseKey)}
           className="text-muted"
         >
           <strong>
             <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
             <LocaleFormattedMessage
-              id="ayah.bookmarked"
+              id="verse.bookmarked"
               defaultMessage="Bookmarked"
             />
           </strong>
@@ -235,12 +235,12 @@ export default class Ayah extends Component {
     return (
       <a
         tabIndex="-1"
-        onClick={() => bookmarkActions.addBookmark(ayah.ayahKey)}
+        onClick={() => bookmarkActions.addBookmark(verse.verseKey)}
         className="text-muted"
       >
         <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
         <LocaleFormattedMessage
-          id="ayah.bookmark"
+          id="verse.bookmark"
           defaultMessage="Bookmark"
         />
       </a>
@@ -252,7 +252,7 @@ export default class Ayah extends Component {
     const content = (
       <h4>
         <span className={`label label-default ${styles.label}`}>
-          {this.props.ayah.surahId}:{this.props.ayah.ayahNum}
+          {this.props.verse.chapterId}:{this.props.verse.ayahNum}
         </span>
       </h4>
     );
@@ -260,8 +260,8 @@ export default class Ayah extends Component {
     if (isSearched) {
       return (
         <Link
-          to={`/${this.props.ayah.surahId}/${this.props.ayah.ayahNum}`}
-          data-metrics-event-name="Ayah:Searched:Link"
+          to={`/${this.props.verse.chapterId}/${this.props.verse.ayahNum}`}
+          data-metrics-event-name="Verse:Searched:Link"
         >
           {content}
         </Link>
@@ -270,8 +270,8 @@ export default class Ayah extends Component {
 
     return (
       <Link
-        to={`/${this.props.ayah.surahId}:${this.props.ayah.ayahNum}`}
-        data-metrics-event-name="Ayah:Link"
+        to={`/${this.props.verse.chapterId}:${this.props.verse.ayahNum}`}
+        data-metrics-event-name="Verse:Link"
       >
         {content}
       </Link>
@@ -279,7 +279,7 @@ export default class Ayah extends Component {
   }
 
   renderControls() {
-    const { surah, ayah } = this.props;
+    const { chapter, verse } = this.props;
 
     return (
       <div className={`col-md-1 col-sm-1 ${styles.controls}`}>
@@ -287,19 +287,19 @@ export default class Ayah extends Component {
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderBookmark()}
-        <Share surah={surah} ayahKey={ayah.ayahKey} />
+        <Share chapter={chapter} verseKey={verse.verseKey} />
       </div>
     );
   }
 
   render() {
-    const { ayah, isCurrentAyah } = this.props;
-    debug('component:Ayah', `Render ${this.props.ayah.ayahNum}`);
+    const { verse, iscurrentVerse } = this.props;
+    debug('component:Verse', `Render ${this.props.verse.ayahNum}`);
 
     return (
       <Element
-        name={`ayah:${ayah.ayahKey}`}
-        className={`row ${isCurrentAyah && 'highlight'} ${styles.container}`}
+        name={`verse:${verse.verseKey}`}
+        className={`row ${iscurrentVerse && 'highlight'} ${styles.container}`}
       >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">
