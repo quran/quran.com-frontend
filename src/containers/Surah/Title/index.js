@@ -10,24 +10,24 @@ const zeroPad = (num, places) => {
   return Array(+(zero > 0 && zero)).join('0') + num;
 };
 
-const Title = ({ surah }) => {
+const Title = ({ chapter }) => {
   const title = require(`../../../../static/images/titles/${zeroPad(chapter.chapterNumber, 3)}.svg`); // eslint-disable-line
 
-  if (!surah) return <noscript />;
+  if (!chapter) return <noscript />;
 
   return (
     <Isvg src={title}>
       <img
         src={title}
         className={styles.title}
-        alt={`${surah.name.simple} (${surah.name.english}) - سورة ${surah.name.arabic}`}
+        alt={`${chapter.nameSimple} (${chapter.translatedName.name}) - سورة ${chapter.nameArabic}`}
       />
     </Isvg>
   );
 };
 
 Title.propTypes = {
-  surah: surahType.isRequired
+  chapter: surahType.isRequired
 };
 
 export default Title;

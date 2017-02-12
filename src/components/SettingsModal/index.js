@@ -8,7 +8,7 @@ import ContentDropdown from 'components/ContentDropdown';
 import TooltipDropdown from 'components/TooltipDropdown';
 
 import { setOption } from 'redux/actions/options.js';
-import { load } from 'redux/actions/ayahs.js';
+import { load } from 'redux/actions/verses.js';
 import { optionsType, surahType } from 'types';
 
 const ModalHeader = Modal.Header;

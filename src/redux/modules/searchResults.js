@@ -34,7 +34,7 @@ export default function reducer(state = initialState, action = {}) {
         took: action.result.result.took,
         query: action.result.result.query,
         results: action.result.result.results,
-        entities: Object.assign({}, state.entities, action.result.entities.ayahs)
+        entities: Object.assign({}, state.entities, action.result.entities.verses)
       };
     case SEARCH_FAIL:
       return {

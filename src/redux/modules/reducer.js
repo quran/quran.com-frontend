@@ -3,7 +3,7 @@ import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 
 import chapters from './chapters';
-import ayahs from './ayahs';
+import verses from './verses';
 import audioplayer from './audioplayer';
 import lines from './lines';
 import options from './options';
@@ -21,7 +21,7 @@ export default combineReducers({
   bookmarks,
   media,
   chapters,
-  ayahs,
+  verses,
   audioplayer,
   fontFaces,
   lines,

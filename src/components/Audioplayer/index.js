@@ -30,7 +30,7 @@ export class Audioplayer extends Component {
     segments: PropTypes.objectOf(segmentType),
     // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
     files: PropTypes.object, // eslint-disable-line
-    currentAyah: PropTypes.string,
+    currentVerse: PropTypes.string,
     buildOnClient: PropTypes.func.isRequired,
     isLoadedOnClient: PropTypes.bool.isRequired,
     isLoading: PropTypes.bool.isRequired,
@@ -75,7 +75,7 @@ export class Audioplayer extends Component {
 
   componentWillReceiveProps(nextProps) {
     // Make sure we have a current ayah to mount it to Audio
-    if (!this.props.currentAyah && !nextProps.currentFile) {
+    if (!this.props.currentVerse && !nextProps.currentFile) {
       return false;
     }
 
@@ -84,7 +84,7 @@ export class Audioplayer extends Component {
       return this.handleAddFileListeners(nextProps.currentFile);
     }
 
-    if (this.props.currentAyah !== nextProps.currentAyah) {
+    if (this.props.currentVerse !== nextProps.currentVerse) {
       this.handleAddFileListeners(nextProps.currentFile);
 
       if (this.props.currentFile) {
@@ -109,18 +109,18 @@ export class Audioplayer extends Component {
   }
 
   getPrevious() {
-    const { currentAyah, files } = this.props;
+    const { currentVerse, files } = this.props;
     const ayahIds = Object.keys(files);
-    const index = ayahIds.findIndex(id => id === currentAyah);
+    const index = ayahIds.findIndex(id => id === currentVerse);
 
     return ayahIds[index - 1];
   }
 
   getNext() {
-    const { currentAyah, chapter, files, onLoadAyahs } = this.props;
+    const { currentVerse, chapter, files, onLoadAyahs } = this.props;
     const ayahIds = Object.keys(files);
-    const ayahNum = currentAyah.split(':')[1];
-    const index = ayahIds.findIndex(id => id === currentAyah);
+    const ayahNum = currentVerse.split(':')[1];
+    const index = ayahIds.findIndex(id => id === currentVerse);
 
     if (chapter.versesCount === ayahNum + 1) {
       // We are at the end of the chapter!
@@ -136,16 +136,16 @@ export class Audioplayer extends Component {
   }
 
   handleAyahChange = (direction = 'next') => {
-    const { isPlaying, play, pause, currentAyah } = this.props; // eslint-disable-line no-shadow, max-len
+    const { isPlaying, play, pause, currentVerse } = this.props; // eslint-disable-line no-shadow, max-len
     const previouslyPlaying = isPlaying;
 
     if (isPlaying) pause();
 
     if (!this[camelize(`get_${direction}`)]()) return pause();
 
-    this.props[direction](currentAyah);
+    this.props[direction](currentVerse);
 
-    this.handleScrollTo(currentAyah);
+    this.handleScrollTo(currentVerse);
 
     this.preloadNext();
 
@@ -154,7 +154,7 @@ export class Audioplayer extends Component {
     return false;
   }
 
-  handleScrollTo = (ayahNum = this.props.currentAyah) => {
+  handleScrollTo = (ayahNum = this.props.currentVerse) => {
     const { shouldScroll } = this.props;
 
     if (shouldScroll) {
@@ -170,16 +170,16 @@ export class Audioplayer extends Component {
   }
 
   preloadNext() {
-    const { currentAyah, files } = this.props;
+    const { currentVerse, files } = this.props;
     const ayahIds = Object.keys(files);
-    const index = ayahIds.findIndex(id => id === currentAyah) + 1;
+    const index = ayahIds.findIndex(id => id === currentVerse) + 1;
 
     for (let id = index; id <= index + 2; id += 1) {
       if (ayahIds[id]) {
-        const ayahKey = ayahIds[id];
+        const verseKey = ayahIds[id];
 
-        if (files[ayahKey]) {
-          files[ayahKey].setAttribute('preload', 'auto');
+        if (files[verseKey]) {
+          files[verseKey].setAttribute('preload', 'auto');
         }
       }
     }
@@ -188,11 +188,11 @@ export class Audioplayer extends Component {
   handleRepeat = (file) => {
     const {
       repeat,
-      currentAyah,
+      currentVerse,
       setRepeat, // eslint-disable-line no-shadow
       setAyah // eslint-disable-line no-shadow
     } = this.props;
-    const [chapter, ayah] = currentAyah.split(':').map(val => parseInt(val, 10));
+    const [chapter, ayah] = currentVerse.split(':').map(val => parseInt(val, 10));
 
     file.pause();
 
@@ -247,14 +247,14 @@ export class Audioplayer extends Component {
   handleScrollToggle = (event) => {
     event.preventDefault();
 
-    const { shouldScroll, currentAyah } = this.props;
+    const { shouldScroll, currentVerse } = this.props;
 
     if (!shouldScroll) { // we use the inverse (!) here because we're toggling, so false is true
-      const elem = document.getElementsByName(`ayah:${currentAyah}`)[0];
+      const elem = document.getElementsByName(`ayah:${currentVerse}`)[0];
       if (elem && elem.getBoundingClientRect().top < 0) { // if the ayah is above our scroll offset
-        scroller.scrollTo(`ayah:${currentAyah}`, -150);
+        scroller.scrollTo(`ayah:${currentVerse}`, -150);
       } else {
-        scroller.scrollTo(`ayah:${currentAyah}`, -80);
+        scroller.scrollTo(`ayah:${currentVerse}`, -80);
       }
     }
 
@@ -353,9 +353,9 @@ export class Audioplayer extends Component {
   }
 
   renderPreviousButton() {
-    const { currentAyah, files } = this.props;
+    const { currentVerse, files } = this.props;
     if (!files) return false;
-    const index = Object.keys(files).findIndex(id => id === currentAyah);
+    const index = Object.keys(files).findIndex(id => id === currentVerse);
 
     return (
       <a
@@ -369,9 +369,9 @@ export class Audioplayer extends Component {
   }
 
   renderNextButton() {
-    const { chapter, currentAyah } = this.props;
+    const { chapter, currentVerse } = this.props;
     if (!chapter) return false;
-    const isEnd = chapter.versesCount === parseInt(currentAyah.split(':')[1], 10);
+    const isEnd = chapter.versesCount === parseInt(currentVerse.split(':')[1], 10);
 
     return (
       <a
@@ -391,7 +391,7 @@ export class Audioplayer extends Component {
       className,
       segments,
       isLoading,
-      currentAyah,
+      currentVerse,
       currentTime,
       duration,
       chapter,
@@ -402,7 +402,7 @@ export class Audioplayer extends Component {
       setRepeat // eslint-disable-line no-shadow
     } = this.props;
 
-    if (isLoading || !currentAyah) {
+    if (isLoading || !currentVerse) {
       return (
         <li className={`${style.container} ${className}`}>
           <div>
@@ -426,11 +426,11 @@ export class Audioplayer extends Component {
           {
             isLoadedOnClient &&
             segments &&
-            segments[currentAyah] &&
-            segments[currentAyah] &&
+            segments[currentVerse] &&
+            segments[currentVerse] &&
               <Segments
-                segments={segments[currentAyah]}
-                currentAyah={currentAyah}
+                segments={segments[currentVerse]}
+                currentVerse={currentVerse}
                 currentTime={currentTime}
               />
           }
@@ -438,9 +438,9 @@ export class Audioplayer extends Component {
         <ul className={`list-inline ${style.controls}`}>
           <li className={style.controlItem}>
             <LocaleFormattedMessage
-              id="player.currentAyah"
+              id="player.currentVerse"
               defaultMessage="Ayah"
-            />: {currentAyah.split(':')[1]}
+            />: {currentVerse.split(':')[1]}
           </li>
           <li className={style.controlItem}>
             {this.renderPreviousButton()}
@@ -455,7 +455,7 @@ export class Audioplayer extends Component {
             <RepeatDropdown
               repeat={repeat}
               setRepeat={setRepeat}
-              current={parseInt(currentAyah.split(':')[1], 10)}
+              current={parseInt(currentVerse.split(':')[1], 10)}
               chapter={chapter}
             />
           </li>
@@ -472,8 +472,8 @@ const mapStateToProps = (state, ownProps) => ({
   files: state.audioplayer.files[ownProps.chapter.chapterNumber],
   segments: state.audioplayer.segments[ownProps.chapter.chapterNumber],
   currentFile: state.audioplayer.currentFile,
-  currentAyah: state.audioplayer.currentAyah,
-  surahId: state.audioplayer.surahId,
+  currentVerse: state.audioplayer.currentVerse,
+  chapterId: state.audioplayer.chapterId,
   isPlaying: state.audioplayer.isPlaying,
   isLoadedOnClient: state.audioplayer.isLoadedOnClient,
   isLoading: state.audioplayer.isLoading,

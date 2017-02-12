@@ -1,8 +1,8 @@
-export function isLoaded(globalState, surahId, from, to) {
+export function isLoaded(globalState, chapterId, from, to) {
   return (
-  globalState.ayahs.entities[surahId] &&
-  globalState.ayahs.entities[surahId][`${surahId}:${from}`] &&
-  globalState.ayahs.entities[surahId][`${surahId}:${to}`]
+  globalState.verses.entities[chapterId] &&
+  globalState.verses.entities[chapterId][`${chapterId}:${from}`] &&
+  globalState.verses.entities[chapterId][`${chapterId}:${to}`]
   );
 }
 export { default as debug } from './debug';
