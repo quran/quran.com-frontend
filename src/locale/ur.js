@@ -70,7 +70,7 @@ export default {
     'nav.otherLinks': 'دیگر لنکس',
     'nav.contactUs': 'ہم سے رابطہ',
     'nav.help': 'مدد اور تاثرات',
-    'nav.aboutQuranProject': 'قرآن کریم ایک فلاں عامہ (عوامی بہبود کے لئے) منصوبہ ہے',
+    'nav.aboutQuranProject': 'قرآن کریم ایک فلاح عامہ (عوامی بہبود کے لئے) منصوبہ ہے',
     'nav.rightsReserved': 'جملہ حقوق محفوظ ہیں',
     'nav.mobile': 'موبائل',
     'nav.navigate': 'تشریف لے جائیں',
