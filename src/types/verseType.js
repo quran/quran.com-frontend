@@ -10,10 +10,10 @@ export default PropTypes.shape({
   rubNumber: PropTypes.number.isRequired,
   verseKey: PropTypes.string.isRequired,
   sajdah: PropTypes.bool,
+  sajdahNumber: PropTypes.number,
   words: PropTypes.arrayOf(wordType).isRequired,
-  textTashkeel: PropTypes.string.isRequired,
   textMadani: PropTypes.string.isRequired,
   textSimple: PropTypes.string.isRequired,
-  content: PropTypes.array, // NOTE: In search, it is not required.
+  translations: PropTypes.array, // NOTE: In search, it is not required.
   audio: PropTypes.object // NOTE: In search, it is not required.
 });
