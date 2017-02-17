@@ -272,7 +272,7 @@ export default function reducer(state = initialState, action = {}) {
       if (!action.payload) return state;
 
       const { word, position } = action.payload;
-      const [surahId, ayahNum] = word.ayahKey.split(':');
+      const [surahId, ayahNum] = word.verseKey.split(':');
       const nextId = `${surahId}:${ayahNum}`;
       const currentFile = state.files[surahId][nextId];
 

@@ -52,7 +52,7 @@ class Surah extends Component {
     bookmarks: PropTypes.object.isRequired, // eslint-disable-line
     isLoading: PropTypes.bool.isRequired,
     isLoaded: PropTypes.bool.isRequired,
-    isSingleAyah: PropTypes.bool.isRequired,
+    isSingleAyah: PropTypes.bool,
     isAuthenticated: PropTypes.bool.isRequired,
     options: PropTypes.object.isRequired, // eslint-disable-line
     params: PropTypes.shape({

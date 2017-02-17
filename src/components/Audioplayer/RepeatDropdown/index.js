@@ -58,7 +58,7 @@ class RepeatButton extends Component {
 
   renderRangeAyahs() {
     const { surah, repeat, setRepeat } = this.props;
-    const array = Array(surah.ayat).join().split(',');
+    const array = Array(surah.versesCount).join().split(',');
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
@@ -115,7 +115,7 @@ class RepeatButton extends Component {
 
   renderSingleAyah() {
     const { repeat, setRepeat, surah } = this.props;
-    const array = Array(surah.ayat).join().split(',');
+    const array = Array(surah.versesCount).join().split(',');
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>

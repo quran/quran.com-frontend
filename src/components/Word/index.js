@@ -72,7 +72,6 @@ export default class Word extends React.Component {
     return (
       <b // eslint-disable-line
         { ...bindTooltip}
-        key={word.code}
         id={id}
         onClick={this.handleWordClick}
         className={`${className} pointer`}
