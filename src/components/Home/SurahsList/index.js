@@ -18,13 +18,7 @@ const SurahsList = (props) => {
               {chapter.chapterNumber}
             </div>
             <div className="col-xs-7">
-              سورة {chapter.nameArabic}
-
-              {/*
               {chapter.nameSimple}
-              <br />
-              <span className={`text-uppercase ${styles.english}`}>{chapter.translatedName.name}</span>
-              */}
             </div>
 
             <div className={`col-xs-3 text-left ${styles.arabic}`}>
