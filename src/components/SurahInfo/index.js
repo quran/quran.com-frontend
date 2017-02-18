@@ -31,7 +31,7 @@ const SurahInfo = ({ chapter, isShowingSurahInfo, onClose }) => {
             <dd className="text-uppercase">{chapter.pages.join('-')}</dd>
           </dl>
         </div>
-        <div className={`${style.info} times-new col-md-8`}>
+        <div className={`${style.info} ${chapter.info.languageName} times-new col-md-8`}>
           <div dangerouslySetInnerHTML={{ __html: chapter.info.text }} />
           <div>
             <p>
