@@ -11,9 +11,8 @@ export default PropTypes.shape({
   verseKey: PropTypes.string.isRequired,
   sajdah: PropTypes.bool,
   words: PropTypes.arrayOf(wordType).isRequired,
-  textTashkeel: PropTypes.string.isRequired,
   textMadani: PropTypes.string.isRequired,
   textSimple: PropTypes.string.isRequired,
-  content: PropTypes.array, // NOTE: In search, it is not required.
+  translations: PropTypes.array, // NOTE: In search, it is not required.
   audio: PropTypes.object // NOTE: In search, it is not required.
 });

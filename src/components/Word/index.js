@@ -19,8 +19,13 @@ export default class Word extends React.Component {
   };
 
   buildTooltip = (word, tooltip) => {
-    let title;
-    if (!word.wordId && word.charType === CHAR_TYPE_END) {
+    let title='';
+
+    if (word.charType === CHAR_TYPE_PAUSE) {
+      return title;
+    }
+
+    if (word.charType === CHAR_TYPE_END) {
       title = `Verse ${word.verseKey.split(':')[1]}`;
     } else {
       title = word[tooltip].text;

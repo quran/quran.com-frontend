@@ -74,7 +74,7 @@ class RepeatButton extends Component {
               value={repeat.from}
               onChange={(event) => {
                 let to = parseInt(event.target.value, 10) + 3;
-                to = to < surah.ayat ? to : surah.ayat;
+                to = to < chapter.versesCount ? to : chapter.versesCount;
                 setRepeat({
                   ...repeat,
                   from: parseInt(event.target.value, 10),
@@ -84,7 +84,7 @@ class RepeatButton extends Component {
             >
               {
                 array.reduce((options, ayah, index) => {
-                  if (index + 1 < surah.ayat) { // Exclude last verse
+                  if (index + 1 < chapter.versesCount) { // Exclude last verse
                     options.push(
                       <option key={index} value={index + 1}>
                         {index + 1}
@@ -110,7 +110,7 @@ class RepeatButton extends Component {
             >
               {
                 array.reduce((options, ayah, index) => {
-                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= surah.ayat) {
+                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= chapter.versesCount) {
                     options.push(
                       <option key={index} value={index + 1}>
                         {index + 1}
