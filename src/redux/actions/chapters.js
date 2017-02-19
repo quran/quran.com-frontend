@@ -8,19 +8,19 @@ import {
   LOAD_INFO_FAIL,
   SET_CURRENT } from 'redux/constants/chapters.js';
 
-//TODO: experiment changes to test different content locale
-import config from '../../config';
+// TODO: experiment changes to test different content locale
 import cookie from 'react-cookie';
+import config from '../../config';
 
 function contentLanguage() {
-  return {language: cookie.load('currentLocale') || config.defaultLocale}
+  return { language: cookie.load('currentLocale') || config.defaultLocale };
 }
 
 export function loadAll() {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: { chapters: [chaptersSchema] },
-    promise: client => client.get('/api/v3/chapters', {params: contentLanguage()})
+    promise: client => client.get('/api/v3/chapters', { params: contentLanguage() })
   };
 }
 
