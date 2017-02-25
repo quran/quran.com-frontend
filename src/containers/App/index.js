@@ -14,7 +14,6 @@ import config from 'config';
 import metricsConfig from 'helpers/metrics';
 import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
-import FontStyles from 'components/FontStyles';
 import { removeMedia } from 'redux/actions/media';
 
 import authConnect from './connect';
@@ -58,7 +57,6 @@ class App extends Component {
     return (
       <div>
         <Helmet {...config.app.head} />
-        <FontStyles />
         <NoScript>
           <div className="row noscript-warning">
             <div className="col-md-12">

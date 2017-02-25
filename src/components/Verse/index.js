@@ -167,7 +167,7 @@ export default class Verse extends Component {
         <p
           dir="rtl"
           lang="ar"
-          className={`text-tashkeel text-p${verse.pageNumber}`}
+          className={`text-tashkeel hidden text-p${verse.pageNumber}`}
           dangerouslySetInnerHTML={{ __html: verse.textMadani }}
         />
       </h1>
@@ -249,29 +249,20 @@ export default class Verse extends Component {
 
   renderAyahBadge() {
     const { isSearched } = this.props;
+    const metric = isSearched ? "Verse:Searched:Link" : "Verse:Link";
+
     const content = (
       <h4>
         <span className={`label label-default ${styles.label}`}>
-          {this.props.verse.chapterId}:{this.props.verse.ayahNum}
+          {this.props.verse.verseKey}
         </span>
       </h4>
     );
 
-    if (isSearched) {
-      return (
-        <Link
-          to={`/${this.props.verse.chapterId}/${this.props.verse.ayahNum}`}
-          data-metrics-event-name="Verse:Searched:Link"
-        >
-          {content}
-        </Link>
-      );
-    }
-
     return (
       <Link
-        to={`/${this.props.verse.chapterId}:${this.props.verse.ayahNum}`}
-        data-metrics-event-name="Verse:Link"
+        to={`/${this.props.verse.chapterId}/${this.props.verse.verseNumber}`}
+        data-metrics-event-name={metric}
       >
         {content}
       </Link>
@@ -294,7 +285,7 @@ export default class Verse extends Component {
 
   render() {
     const { verse, iscurrentVerse } = this.props;
-    debug('component:Verse', `Render ${this.props.verse.ayahNum}`);
+    debug('component:Verse', `Render ${this.props.verse.verseKey}`);
 
     return (
       <Element
