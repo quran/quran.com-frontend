@@ -35,6 +35,7 @@ import * as AyahActions from 'redux/actions/verses.js';
 import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
+import * as FootNoteActions from 'redux/actions/footNote.js';
 
 import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
 
@@ -47,7 +48,7 @@ class Surah extends Component {
     actions: PropTypes.object.isRequired, // eslint-disable-line
     lines: PropTypes.object.isRequired, // eslint-disable-line
     isEndOfSurah: PropTypes.bool.isRequired,
-    verseIds: PropTypes.instanceOf(Set),
+    verseIds: PropTypes.instanceOf(Array),
     currentVerse: PropTypes.string,
     bookmarks: PropTypes.object.isRequired, // eslint-disable-line
     isLoading: PropTypes.bool.isRequired,
@@ -123,7 +124,7 @@ class Surah extends Component {
 
     actions.verse.setcurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
 
-    if (verseIds.has(verseNum)) {
+    if (verseIds.indexOf(verseNum) > 0) {
       return false;
     }
 
@@ -147,7 +148,7 @@ class Surah extends Component {
     const from = range[1];
     const to = (from + size);
 
-    if (!isEndOfSurah && !verseIds.has(to)) {
+    if (!isEndOfSurah && !verseIds.indexOf(to) > 0) {
       actions.verse.load(chapter.chapterNumber, from, to, options).then(() => {
         this.setState({ lazyLoading: false });
         return callback && callback();
@@ -417,11 +418,9 @@ function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
   const verses: Object = state.verses.entities[chapterId];
-  const verseArray = verses ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10)) : [];
-  const verseIds = new Set(verseArray);
-  const lastAyahInArray = verseArray.slice(-1)[0];
+  const verseIds = verses ? Object.keys(verses).map(key => parseInt(verses[key].verseNumber, 10)) : [];
+  const lastAyahInArray = verseIds.slice(-1)[0];
   const isSingleAyah = !!ownProps.params.range && !ownProps.params.range.includes('-');
-
 
   return {
     chapter,

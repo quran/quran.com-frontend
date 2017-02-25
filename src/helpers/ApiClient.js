@@ -8,7 +8,7 @@ import config from 'config';
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 function contentLanguage() {
-  return 'bn' || cookie.load('currentLocale') || config.defaultLocale;
+  return cookie.load('currentLocale') || config.defaultLocale;
 }
 
 function formatUrl(path) {

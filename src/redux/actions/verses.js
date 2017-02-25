@@ -32,7 +32,7 @@ export function load(id, from, to, options = defaultOptions) {
         to,
         recitation: audio,
         quran,
-        translations: content
+        translations: [95,  97]
       }
     }),
     chapterId: id
