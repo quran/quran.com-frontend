@@ -73,7 +73,7 @@ export default {
     'nav.aboutQuranProject': 'Quran.com (Kur\'an-ı Kerim) bir pro bono projesidir.', // eslint-disable-line max-len
     'nav.rightsReserved': 'Tüm Hakları Saklıdır',
     'nav.mobile': 'Mobil Uygulamalar',
-    'nav.navigate': 'Gezin', //there is no exact translation for Navigate in Turkish
+    'nav.navigate': 'Gezin', // there is no exact translation for Navigate in Turkish
     'nav.legacySite': 'Eski site Quran.com',
 
     'login.message': 'Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com\'a giriş yapın.'
