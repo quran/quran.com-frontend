@@ -423,7 +423,7 @@ function mapStateToProps(state, ownProps) {
   const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
   const ayahIds = new Set(ayahArray);
   const lastAyahInArray = ayahArray.slice(-1)[0];
-  const isSingleAyah = !ownProps.params.range.includes('-');
+  const isSingleAyah = ownProps.params.range && !ownProps.params.range.includes('-');
 
 
   return {

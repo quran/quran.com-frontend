@@ -302,6 +302,9 @@ export class Audioplayer extends Component {
     };
 
     const onPlay = () => {
+      const { currentAyah } = this.props;
+      history.pushState('', '', `/${currentAyah.replace(':', '/')}`);
+
       file.ontimeupdate = onTimeupdate; // eslint-disable-line no-param-reassign
     };
 
