@@ -16,7 +16,7 @@ export default {
     'setting.translations.other': 'Diğer Diller',
     'setting.fontSize': 'Yazı tipi boyutu',
     'setting.fontSize.arabic': 'Arapça',
-    'setting.reading': 'Okuma',
+    'setting.reading': 'Okuma modu',
     'setting.tooltip': 'İpucu içeriği',
     'setting.tooltip.title': 'İpucu görüntüleme',
     'setting.tooltip.translation': 'Çeviri',
@@ -29,7 +29,7 @@ export default {
     'ayah.bookmarked': 'Yer işareti eklendi',
     'ayah.bookmark': 'Yer işareti',
 
-    'search.placeholder': 'Arama "Nuh"',
+    'search.placeholder': 'Arama yap "Nuh"',
     'search.resultHeading': '{from}-{to} / <span> {total} </span> ARAMA SONUÇLARI: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Maalesef aramanız ile ilgili bir hata oluştu.',
     'search.nothing': 'Arama sorgusu yok.',
@@ -63,18 +63,18 @@ export default {
 
     'nav.title': 'Kuran',
     'nav.settings': 'Ayarlar',
-    'nav.contribute': 'Katkıda bulun',
+    'nav.contribute': 'Katkıda Bulun',
     'nav.aboutUs': 'Hakkımızda',
     'nav.developers': 'Geliştiriciler',
     'nav.usefulSites': 'Faydalı siteler',
     'nav.otherLinks': 'Diğer bağlantılar',
     'nav.contactUs': 'Bize ulaşın',
-    'nav.help': 'Yardım & geri bildirim',
+    'nav.help': 'Yardım & Geri Bildirim',
     'nav.aboutQuranProject': 'Quran.com (Kur\'an-ı Kerim) bir pro bono projesidir.', // eslint-disable-line max-len
     'nav.rightsReserved': 'Tüm Hakları Saklıdır',
     'nav.mobile': 'Mobil Uygulamalar',
-    'nav.navigate': 'Gezin', // there is no exact translation for Navigate in Turkish
-    'nav.legacySite': 'Eski site Quran.com',
+    'nav.navigate': 'Bağlantılar', // there is no exact translation for Navigate in Turkish
+    'nav.legacySite': 'Eski Siteye Git Quran.com',
 
     'login.message': 'Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com\'a giriş yapın.'
   }
