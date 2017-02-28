@@ -9,11 +9,14 @@ const methods = ['get', 'post', 'put', 'patch', 'del'];
 
 function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? `/${path}` : path;
+  console.info("adjust path ======>"+adjustedPath);
 
   if (__SERVER__) {
     if (adjustedPath.startsWith('/onequran')) {
       return config.oneQuran + adjustedPath.replace('/onequran', '');
     }
+
+    console.info("final" + `${config.api}${adjustedPath}`);
 
     return `${config.api}${adjustedPath}`;
   }
@@ -22,7 +25,8 @@ function formatUrl(path) {
     return adjustedPath;
   }
 
-  return `/api${adjustedPath}`;
+  console.info("client final"+`${adjustedPath}`);
+  return `api${adjustedPath}`;
 }
 
 export default class {

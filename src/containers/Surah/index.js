@@ -52,7 +52,7 @@ class Surah extends Component {
     bookmarks: PropTypes.object.isRequired, // eslint-disable-line
     isLoading: PropTypes.bool.isRequired,
     isLoaded: PropTypes.bool.isRequired,
-    isSingleAyah: PropTypes.bool.isRequired,
+    isSingleAyah: PropTypes.bool,
     isAuthenticated: PropTypes.bool.isRequired,
     options: PropTypes.object.isRequired, // eslint-disable-line
     params: PropTypes.shape({
@@ -167,10 +167,10 @@ class Surah extends Component {
     const { params, surah } = this.props;
 
     if (params.range) {
-      return `Surah ${surah.name.simple} [${surah.id}:${params.range}]`;
+      return `Surah ${surah.nameSimple} [${surah.id}:${params.range}]`;
     }
 
-    return `Surah ${surah.name.simple} [${surah.id}]`;
+    return `Surah ${surah.nameSimple} [${surah.id}]`;
   }
 
   description() {
@@ -192,19 +192,19 @@ class Surah extends Component {
 
         const content = translations.join(' - ').slice(0, 250);
 
-        return `Surat ${surah.name.simple} [verse ${params.range}] - ${content}`;
+        return `Surat ${surah.namesimple} [verse ${params.range}] - ${content}`;
       }
 
       const ayah = ayahs[`${surah.id}:${params.range}`];
 
       if (ayah && ayah.content && ayah.content[0]) {
-        return `Surat ${surah.name.simple} [verse ${params.range}] - ${ayah.content[0].text}`;
+        return `Surat ${surah.nameSimple} [verse ${params.range}] - ${ayah.content[0].text}`;
       }
 
-      return `Surat ${surah.name.simple} [verse ${params.range}]`;
+      return `Surat ${surah.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${surah.info ? surah.info.shortDescription : ''} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.page[0]} to ${surah.page[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${surah.info ? surah.info.shortDescription : ''} This Surah has ${surah.ayat} ayahs and resides between pages ${surah.pages[0]} to ${surah.pages[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderPagination() {
@@ -288,15 +288,15 @@ class Surah extends Component {
         ayah={ayah}
         surah={surah}
         currentAyah={currentAyah}
-        isCurrentAyah={isPlaying && ayah.ayahKey === currentAyah}
-        bookmarked={!!bookmarks[ayah.ayahKey]}
+        isCurrentAyah={isPlaying && ayah.verseKey === currentAyah}
+        bookmarked={!!bookmarks[ayah.verseKey]}
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
         audioActions={actions.audio}
         mediaActions={actions.media}
         isPlaying={isPlaying}
         isAuthenticated={isAuthenticated}
-        key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
+        key={`${ayah.chapterId}-${ayah.verseNumber}-ayah`}
       />
     ));
   }
@@ -367,7 +367,7 @@ class Surah extends Component {
                 "position": 2,
                 "item": {
                   "@id": "https://quran.com/${surah.id}",
-                  "name": "${surah.name.simple}"
+                  "name": "${surah.nameSimple}"
                 }
               }]
             }`
@@ -375,11 +375,6 @@ class Surah extends Component {
           style={[
             {
               cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
-            },
-            {
-              cssText: `@font-face {font-family: 'bismillah';
-                src: url('//quran-1f14.kxcdn.com/fonts/ttf/bismillah.ttf') format('truetype')}
-                .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}` // eslint-disable-line max-len
             }
           ]}
         />
@@ -423,8 +418,7 @@ function mapStateToProps(state, ownProps) {
   const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
   const ayahIds = new Set(ayahArray);
   const lastAyahInArray = ayahArray.slice(-1)[0];
-  const isSingleAyah = !ownProps.params.range.includes('-');
-
+  const isSingleAyah = ownProps.params.range && !ownProps.params.range.includes('-');
 
   return {
     surah,

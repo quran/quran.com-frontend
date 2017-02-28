@@ -22,7 +22,7 @@ const GlobalNavSurah = ({ surah, surahs, setOption, options, ...props }) => (
   <GlobalNav
     {...props}
     leftControls={[
-      <SurahsDropdown title={surah.name.simple} surahs={surahs} />,
+      <SurahsDropdown title={surah.nameArabic} surahs={surahs} />,
       <NavDropdown
         id="hidden-dropdown"
         className={`visible-xs-inline-block ${styles.optionsDropdown}`}

@@ -12,6 +12,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import 'partials/highlight';
 @import 'nightmode';
 @import 'partials/no-script';
+@import 'partials/surah_icon_names';
 
 html,body{
   height: 100%;
@@ -167,6 +168,12 @@ li em{
   font-family: 'Nafees';
 }
 
+.text-tashkeel {
+  float: right;
+  text-align: right;
+  direction: rtl;
+}
+
 .modal-backdrop{
   bottom: 0;
 }
@@ -189,4 +196,8 @@ li em{
   .navbar-nav .open .dropdown-menu > li > a, .navbar-nav .open .dropdown-menu .dropdown-header{
     padding: 5px 15px;
   }
+}
+
+.line-break{
+font-size: 10px;
 }

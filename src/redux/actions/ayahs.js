@@ -13,27 +13,32 @@ import {
 
 // For safe measure
 const defaultOptions = {
-  audio: 8,
-  quran: 1,
-  content: [19]
+  recitation: 8,
+  translations: [71]
 };
 
+function prepareParams(from, audio, content) {
+  return { language: cookie.load('currentLocale') || config.defaultLocale,
+           page: from,
+           recitation: audio,
+           translations: content
+         };
+}
+
 export function load(id, from, to, options = defaultOptions) {
-  const { audio, quran, content } = options;
+  const { audio, content } = options;
 
   cookie.save('lastVisit', JSON.stringify({ surahId: id, ayahId: from }));
 
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: [ayahsSchema],
-    promise: client => client.get(`/v2/surahs/${id}/ayahs`, {
-      params: {
+    promise: client => client.get(`/api/v3/chapters/${id}/verses`, {
+      params: prepareParams(
         from,
-        to,
         audio,
-        quran,
         content
-      }
+      )
     }),
     surahId: id
   };

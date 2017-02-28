@@ -14,7 +14,7 @@ import support from './support';
 
 const proxyApi = httpProxy.createProxyServer({
   target: process.env.API_URL,
-  secure: true
+  secure: false
 });
 
 const proxyOneQuran = httpProxy.createProxyServer({

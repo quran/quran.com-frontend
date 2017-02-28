@@ -9,9 +9,10 @@ export const fontFaceStyle = fontClassName => (
   .${fontClassName} {display: none;}`
 );
 
+
 export const fontFaceStyleLoaded = fontClassName => (
   `.${fontClassName} {display: block;}
-  .text-${fontClassName} {display: none;}`
+  .text-${fontClassName} {display: block;}`
 );
 
 export function createFontFacesArray(ayahs) {

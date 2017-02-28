@@ -126,7 +126,7 @@ export default class Ayah extends Component {
                     data-metrics-event-name="Media Click"
                     data-metrics-media-content-url={content.url}
                     data-metrics-media-content-id={content.id}
-                    data-metrics-media-content-ayah-key={ayah.ayahKey}
+                    data-metrics-media-content-ayah-key={ayah.verseKey}
                   >
                     <LocaleFormattedMessage
                       id="ayah.media.lectureFrom"
@@ -151,24 +151,44 @@ export default class Ayah extends Component {
     const text = ayah.words.map(word => ( // eslint-disable-line
       <Word
         word={word}
-        key={`${word.position}-${word.code}-${word.lineNum}`}
         currentAyah={currentAyah}
         tooltip={tooltip}
         isPlaying={isPlaying}
         audioActions={audioActions}
-        audioPosition={word.wordId ? wordAudioPosition += 1 : null}
         isSearched={isSearched}
       />
     ));
 
+    const textOptimized = ayah.words.map(word => {
+      return(
+        <Word
+          word={word}
+          currentAyah={currentAyah}
+          tooltip={tooltip}
+          isPlaying={isPlaying}
+          audioActions={audioActions}
+          isSearched={isSearched}
+          useNewFonts={true}
+        />
+      )
+    });
+
+
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
         {text}
+        <br/>
+        <small className="line-break">New fonts</small>
+        <br/>
+        {textOptimized}
+        <br/>
+        <small className="line-break">Text tashkeel</small>
+        <br/>
         <p
           dir="rtl"
           lang="ar"
-          className={`text-tashkeel text-p${ayah.pageNum}`}
-          dangerouslySetInnerHTML={{ __html: ayah.textTashkeel }}
+          className={`text-tashkeel text-p${ayah.pageNumber}`}
+          dangerouslySetInnerHTML={{ __html: ayah.textMadani }}
         />
       </h1>
     );
@@ -176,13 +196,13 @@ export default class Ayah extends Component {
 
   renderPlayLink() {
     const { isSearched, ayah, currentAyah, isPlaying } = this.props;
-    const playing = ayah.ayahKey === currentAyah && isPlaying;
+    const playing = ayah.verseKey === currentAyah && isPlaying;
 
     if (!isSearched) {
       return (
         <a
           tabIndex="-1"
-          onClick={() => this.handlePlay(ayah.ayahKey)}
+          onClick={() => this.handlePlay(ayah.verseKey)}
           className="text-muted"
         >
           <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`} />{' '}
@@ -198,11 +218,11 @@ export default class Ayah extends Component {
   }
 
   renderCopyLink() {
-    const { isSearched, ayah: { textTashkeel } } = this.props;
+    const { isSearched, ayah: { textMadani } } = this.props;
 
     if (!isSearched) {
       return (
-        <Copy text={textTashkeel} />
+        <Copy text={textMadani} />
       );
     }
 
@@ -218,7 +238,7 @@ export default class Ayah extends Component {
       return (
         <a
           tabIndex="-1"
-          onClick={() => bookmarkActions.removeBookmark(ayah.ayahKey)}
+          onClick={() => bookmarkActions.removeBookmark(ayah.verseKey)}
           className="text-muted"
         >
           <strong>
@@ -235,7 +255,7 @@ export default class Ayah extends Component {
     return (
       <a
         tabIndex="-1"
-        onClick={() => bookmarkActions.addBookmark(ayah.ayahKey)}
+        onClick={() => bookmarkActions.addBookmark(ayah.verseKey)}
         className="text-muted"
       >
         <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
@@ -252,7 +272,7 @@ export default class Ayah extends Component {
     const content = (
       <h4>
         <span className={`label label-default ${styles.label}`}>
-          {this.props.ayah.surahId}:{this.props.ayah.ayahNum}
+          {this.props.ayah.verseKey}
         </span>
       </h4>
     );
@@ -260,7 +280,7 @@ export default class Ayah extends Component {
     if (isSearched) {
       return (
         <Link
-          to={`/${this.props.ayah.surahId}/${this.props.ayah.ayahNum}`}
+          to={`/${this.props.ayah.chapterId}/${this.props.ayah.verseNumber}`}
           data-metrics-event-name="Ayah:Searched:Link"
         >
           {content}
@@ -270,7 +290,7 @@ export default class Ayah extends Component {
 
     return (
       <Link
-        to={`/${this.props.ayah.surahId}:${this.props.ayah.ayahNum}`}
+        to={`/${this.props.ayah.chapterId}/${this.props.ayah.verseNumber}`}
         data-metrics-event-name="Ayah:Link"
       >
         {content}
@@ -287,7 +307,7 @@ export default class Ayah extends Component {
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderBookmark()}
-        <Share surah={surah} ayahKey={ayah.ayahKey} />
+        <Share surah={surah} ayahKey={ayah.verseKey} />
       </div>
     );
   }
@@ -298,7 +318,7 @@ export default class Ayah extends Component {
 
     return (
       <Element
-        name={`ayah:${ayah.ayahKey}`}
+        name={`ayah:${ayah.verseKey}`}
         className={`row ${isCurrentAyah && 'highlight'} ${styles.container}`}
       >
         {this.renderControls()}

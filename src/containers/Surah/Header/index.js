@@ -50,7 +50,7 @@ const SurahHeader = ({ surah, handleToggleSidebar }) => {
                 {
                   surah &&
                     <p className="navbar-text text-uppercase surah-name">
-                      {surah.name.simple} <span className="hidden-xs">({surah.name.english}) - سورة {surah.name.arabic}</span>
+                      {surah.nameSimple} <span className="hidden-xs">({surah.translatedName.name}) - سورة {surah.nameArabic}</span>
                     </p>
                 }
               </li>

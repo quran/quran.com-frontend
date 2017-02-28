@@ -72,7 +72,7 @@ export const slugs = [
     is_available: 1,
     cardinality: '1_ayah',
     slug: 'sahih_international',
-    id: 19,
+    id: 71,
     type: 'translation'
   },
   {
