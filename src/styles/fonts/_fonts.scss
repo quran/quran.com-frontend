@@ -5,8 +5,21 @@
     font-weight: normal;
     font-style: normal;
   }
+
+  @font-face {
+    font-family: text#{$page};
+    src: url('../../static/fonts/embed_ttf/tp#{$page}.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
   .p#{$page} {
     font-family: p#{$page};
+  }
+
+  .text-p#{$page} {
+    font-family: text#{$page};
+    float: right;
   }
 }
 

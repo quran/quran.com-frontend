@@ -158,7 +158,7 @@ export default class Verse extends Component {
         <p
           dir="rtl"
           lang="ar"
-          className={`text-tashkeel hidden text-p${verse.pageNumber}`}
+          className={`text-tashkeel text-p${verse.pageNumber}`}
           dangerouslySetInnerHTML={{ __html: verse.textMadani }}
         />
       </h1>
