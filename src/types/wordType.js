@@ -1,18 +1,20 @@
 import { PropTypes } from 'react';
 
 export default PropTypes.shape({
-  arabic: PropTypes.string,
-  ayahKey: PropTypes.string.isRequired,
-  charTypeId: PropTypes.number.isRequired,
+  verseKey: PropTypes.string.isRequired,
+  charType: PropTypes.string.isRequired,
   className: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
-  codeDec: PropTypes.number.isRequired,
-  codeHex: PropTypes.string.isRequired,
-  lineNum: PropTypes.number.isRequired,
-  pageNum: PropTypes.number.isRequired,
+  lineNumber: PropTypes.number.isRequired,
+  pageNumber: PropTypes.number.isRequired,
   position: PropTypes.number.isRequired,
-  resourceId: PropTypes.number.isRequired,
-  translation: PropTypes.string,
-  transliteration: PropTypes.string,
+  translation: PropTypes.shape({
+    languageName: PropTypes.string,
+    text: PropTypes.string
+  }),
+  transliteration: PropTypes.shape({
+    languageName: PropTypes.string,
+    text: PropTypes.string
+  }),
   wordId: PropTypes.number,
 });

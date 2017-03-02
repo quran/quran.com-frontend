@@ -1,21 +1,13 @@
 import { PropTypes } from 'react';
 
 export default PropTypes.shape({
-  surahId: PropTypes.number.isRequired,
-  ayat: PropTypes.number.isRequired,
+  id: PropTypes.number.isRequired,
+  versesCount: PropTypes.number.isRequired,
   bismillahPre: PropTypes.bool.isRequired,
   revelationOrder: PropTypes.number.isRequired,
   revelationPlace: PropTypes.string.isRequired,
-  page: PropTypes.array.isRequired,
-  name: PropTypes.shape({
-    complex: PropTypes.string.isRequired,
-    simple: PropTypes.string.isRequired,
-    english: PropTypes.string.isRequired,
-    arabic: PropTypes.string.isRequired,
-  }).isRequired,
-  revelation: PropTypes.shape({
-    order: PropTypes.number,
-    place: PropTypes.string
-  }).isRequired,
-  id: PropTypes.number.isRequired,
+  pages: PropTypes.arrayOf(PropTypes.number).isRequired,
+  nameComplex: PropTypes.string.isRequired,
+  nameSimple: PropTypes.string.isRequired,
+  nameArabic: PropTypes.string.isRequired,
 });

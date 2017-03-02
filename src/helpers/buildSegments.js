@@ -21,13 +21,13 @@ export const buildSegments = (segments) => {
   return { words, intervals };
 };
 
-export const extractSegments = (ayahs) => {
+export const extractSegments = (verses) => {
   const segments = {};
 
-  Object.values(ayahs).forEach((ayah) => {
-    if (ayah.audio) {
-      if (ayah.audio.segments) {
-        segments[ayah.ayahKey] = buildSegments(ayah.audio.segments);
+  Object.values(verses).forEach((verse) => {
+    if (verse.audio) {
+      if (verse.audio.segments) {
+        segments[verse.verseKey] = buildSegments(verse.audio.segments);
       }
     }
   });

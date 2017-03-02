@@ -30,7 +30,7 @@ describe('<TopOptions />', () => {
       <TopOptions
         options={options}
         actions={actions}
-        surah={getSurahs[5]}
+        chapter={getSurahs[5]}
       />
     );
 

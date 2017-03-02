@@ -3,22 +3,22 @@ import {
   loadAll,
   loadInfo,
   setCurrent as setCurrentSurah
-  } from 'redux/actions/surahs.js';
+} from 'redux/actions/chapters.js';
 
 import {
   clearCurrent,
   load as loadAyahs
-  } from 'redux/actions/ayahs.js';
+  } from 'redux/actions/verses.js';
 
 import { debug, isLoaded } from 'helpers';
 
 const ayahRangeSize = 30;
 
-export const surahsConnect = ({ store: { getState, dispatch } }) => {
-  debug('component:Surah:surahsConnect', 'Init');
+export const chaptersConnect = ({ store: { getState, dispatch } }) => {
+  debug('component:Surah:chaptersConnect', 'Init');
 
   if (!isAllLoaded(getState())) {
-    debug('component:Surah:surahsConnect', 'Surahs not loaded');
+    debug('component:Surah:chaptersConnect', 'Surahs not loaded');
 
     if (__CLIENT__) {
       dispatch(loadAll());
@@ -31,20 +31,20 @@ export const surahsConnect = ({ store: { getState, dispatch } }) => {
   return true;
 };
 
-export const surahInfoConnect = ({ store: { dispatch }, params }) => {
+export const chapterInfoConnect = ({ store: { dispatch }, params }) => {
   if (__CLIENT__) {
-    dispatch(loadInfo(params.surahId));
+    dispatch(loadInfo(params.chapterId));
     return true;
   }
 
-  return dispatch(loadInfo(params.surahId));
+  return dispatch(loadInfo(params.chapterId));
 };
 
-export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {
-  debug('component:Surah:ayahsConnect', 'Init');
+export const versesConnect = ({ store: { dispatch, getState }, params }) => {
+  debug('component:Surah:versesConnect', 'Init');
 
   const range = params.range;
-  const surahId = parseInt(params.surahId, 10);
+  const chapterId = parseInt(params.chapterId, 10);
 
   let from;
   let to;
@@ -70,21 +70,21 @@ export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {
   from = parseInt(from, 10);
   to = parseInt(to, 10);
 
-  if (surahId !== getState().surahs.current) {
-    dispatch(setCurrentSurah(surahId));
+  if (chapterId !== getState().chapters.current) {
+    dispatch(setCurrentSurah(chapterId));
   }
 
-  if (!isLoaded(getState(), surahId, from, to)) {
-    debug('component:Surah:ayahsConnect', 'Not loaded');
+  if (!isLoaded(getState(), chapterId, from, to)) {
+    debug('component:Surah:versesConnect', 'Not loaded');
 
-    dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
+    dispatch(clearCurrent(chapterId)); // In the case where you go to same surah but later ayahs.
 
     if (__CLIENT__) {
-      dispatch(loadAyahs(surahId, from, to, getState().options));
+      dispatch(loadAyahs(chapterId, from, to, getState().options));
       return true;
     }
 
-    return dispatch(loadAyahs(surahId, from, to, getState().options));
+    return dispatch(loadAyahs(chapterId, from, to, getState().options));
   }
 
   return true;

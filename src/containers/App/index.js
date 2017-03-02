@@ -14,7 +14,6 @@ import config from 'config';
 import metricsConfig from 'helpers/metrics';
 import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
-import FontStyles from 'components/FontStyles';
 import { removeMedia } from 'redux/actions/media';
 
 import authConnect from './connect';
@@ -26,7 +25,7 @@ const ModalBody = Modal.Body;
 class App extends Component {
   static propTypes = {
     media: PropTypes.shape({
-      content: PropTypes.string
+      content: PropTypes.object
     }).isRequired,
     removeMedia: PropTypes.func.isRequired,
     children: PropTypes.element,
@@ -58,7 +57,6 @@ class App extends Component {
     return (
       <div>
         <Helmet {...config.app.head} />
-        <FontStyles />
         <NoScript>
           <div className="row noscript-warning">
             <div className="col-md-12">
@@ -93,23 +91,17 @@ class App extends Component {
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
-        <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>
+
+        <Modal bsSize="large" show={media && media.content} onHide={removeMedia}>
           <ModalHeader closeButton>
             <ModalTitle className="montserrat">
-              {media.content && media.content.resource.name}
+              {media.content && media.content.authorName}
             </ModalTitle>
           </ModalHeader>
           <ModalBody>
-            <div className="embed-responsive embed-responsive-16by9">
-              {
-                media.content &&
-                  <iframe
-                    className="embed-responsive-item"
-                    src={media.content.url}
-                    allowFullScreen
-                  />
-              }
-            </div>
+            <div className="embed-responsive embed-responsive-16by9"
+                 dangerouslySetInnerHTML={{ __html: media.content && media.content.embedText }}
+            />
           </ModalBody>
         </Modal>
       </div>
@@ -121,6 +113,6 @@ const metricsApp = metrics(metricsConfig)(App);
 const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 
 export default connect(
-  state => ({ media: state.media }),
+ state => ({ media: state.media }),
   { removeMedia }
 )(AsyncApp);

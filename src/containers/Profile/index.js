@@ -40,8 +40,8 @@ class Profile extends Component { // eslint-disable-line
                   <ul className="list-group">
                     {
                       Object.values(bookmarks).map(bookmark => (
-                        <Link to={bookmark.ayahKey.split(':').join('/')} className="list-group-item">
-                          {bookmark.ayahKey}
+                        <Link to={bookmark.verseKey.split(':').join('/')} className="list-group-item">
+                          {bookmark.verseKey}
                         </Link>
                       ))
                     }

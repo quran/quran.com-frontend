@@ -7,7 +7,7 @@ export default {
     'local.navtiveName': 'العربية',
     'local.selectLabel': 'اللغة',
     'setting.title': 'خيارات',
-    'setting.surahs': 'السورة',
+    'setting.chapters': 'السورة',
     'setting.verses': 'الذهاب إلى الآية',
     'setting.reciters.title': 'القراء',
     'setting.translations.title': 'الترجمات',
@@ -43,7 +43,7 @@ export default {
     'surah.index.quickLinks': 'روابط سريعة',
     'surah.goToBeginning': 'ابتداء من سورة',
 
-    'player.currentAyah': 'آية',
+    'player.currentVerse': 'آية',
     'player.nextAyah': 'آية القادمة',
     'player.previousAyah': 'آية السابقة',
     'player.repeat.title': 'تكرار التبديل',
