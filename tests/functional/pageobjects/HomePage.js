@@ -26,8 +26,8 @@ export default class HomePage extends BasePage {
 
   clickOntheSurahByNumber(number) {
     const surahs = browser.elements('.row .col-xs-7 span');
-    const surahID = surahs.value[number].ELEMENT;
-    browser.elementIdClick(surahID);
+    const chapterId = surahs.value[number].ELEMENT;
+    browser.elementIdClick(chapterId);
     return browser.getUrl();
   }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { surahType } from 'types';
 
-const Bismillah = ({ surah }) => {
-  if (surah && surah.bismillahPre) {
+const Bismillah = ({ chapter }) => {
+  if (chapter && chapter.bismillahPre) {
     return (
       <div
         className="bismillah text-center word-font"
@@ -17,7 +17,7 @@ const Bismillah = ({ surah }) => {
 };
 
 Bismillah.propTypes = {
-  surah: surahType.isRequired
+  chapter: surahType.isRequired
 };
 
 export default Bismillah;

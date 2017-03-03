@@ -28,8 +28,6 @@ export const slugs = [
   {
     language: 'ar',
     name: 'ابن كثير',
-    description: null,
-    is_available: 1,
     cardinality: 'n_ayah',
     slug: 'resource_id_14',
     id: 13,
@@ -38,8 +36,6 @@ export const slugs = [
   {
     language: 'en',
     name: 'Dr. Ghali',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'dr_ghali',
     id: 16,
@@ -48,8 +44,6 @@ export const slugs = [
   {
     language: 'en',
     name: 'Muhsin Khan',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'muhsin_khan',
     id: 17,
@@ -58,8 +52,6 @@ export const slugs = [
   {
     language: 'en',
     name: 'Pickthall',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'pickthall',
     id: 18,
@@ -68,8 +60,6 @@ export const slugs = [
   {
     language: 'en',
     name: 'Sahih International',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'sahih_international',
     id: 19,
@@ -78,8 +68,6 @@ export const slugs = [
   {
     language: 'en',
     name: 'Shakir',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'shakir',
     id: 20,
@@ -88,8 +76,6 @@ export const slugs = [
   {
     language: 'en',
     name: 'Yusuf Ali',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'yusuf_ali',
     id: 21,
@@ -98,8 +84,6 @@ export const slugs = [
   {
     language: 'az',
     name: 'Azerbaijani',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'azerbaijani',
     id: 22,
@@ -108,8 +92,6 @@ export const slugs = [
   {
     language: 'bn',
     name: 'Bangla',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'bangla',
     id: 23,
@@ -118,8 +100,6 @@ export const slugs = [
   {
     language: 'bs',
     name: 'Bosnian',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'bosnian',
     id: 24,
@@ -128,8 +108,6 @@ export const slugs = [
   {
     language: 'cs',
     name: 'Czech',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'czech',
     id: 25,
@@ -138,8 +116,6 @@ export const slugs = [
   {
     language: 'de',
     name: 'German',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'german',
     id: 26,
@@ -148,8 +124,6 @@ export const slugs = [
   {
     language: 'es',
     name: 'Spanish',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'spanish',
     id: 27,
@@ -158,8 +132,6 @@ export const slugs = [
   {
     language: 'fa',
     name: 'Farsi',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'farsi',
     id: 28,
@@ -168,8 +140,6 @@ export const slugs = [
   {
     language: 'fi',
     name: 'Finnish',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'finnish',
     id: 29,
@@ -178,8 +148,6 @@ export const slugs = [
   {
     language: 'fr',
     name: 'French',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'french',
     id: 30,
@@ -188,8 +156,6 @@ export const slugs = [
   {
     language: 'ha',
     name: 'Hausa',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'hausa',
     id: 31,
@@ -198,8 +164,6 @@ export const slugs = [
   {
     language: 'id',
     name: 'Indonesian',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'indonesian',
     id: 32,
@@ -208,8 +172,6 @@ export const slugs = [
   {
     language: 'it',
     name: 'Italian',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'italian',
     id: 33,
@@ -218,8 +180,6 @@ export const slugs = [
   {
     language: 'ja',
     name: 'Japanese',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'japanese',
     id: 34,
@@ -228,8 +188,6 @@ export const slugs = [
   {
     language: 'ko',
     name: 'Korean',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'korean',
     id: 35,
@@ -238,8 +196,6 @@ export const slugs = [
   {
     language: 'ml',
     name: 'Malayalam',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'malayalam',
     id: 36,
@@ -248,8 +204,6 @@ export const slugs = [
   {
     language: 'mrn',
     name: 'Maranao',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'maranao',
     id: 37,
@@ -258,8 +212,6 @@ export const slugs = [
   {
     language: 'ms',
     name: 'Malay',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'malay',
     id: 38,
@@ -268,8 +220,6 @@ export const slugs = [
   {
     language: 'nl',
     name: 'Dutch',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'dutch',
     id: 39,
@@ -278,8 +228,6 @@ export const slugs = [
   {
     language: 'no',
     name: 'Norwegian',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'norwegian',
     id: 40,
@@ -288,8 +236,6 @@ export const slugs = [
   {
     language: 'pl',
     name: 'Polish',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'polish',
     id: 41,
@@ -298,8 +244,6 @@ export const slugs = [
   {
     language: 'pt',
     name: 'Portuguese',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'portuguese',
     id: 42,
@@ -308,8 +252,6 @@ export const slugs = [
   {
     language: 'ro',
     name: 'Romanian',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'romanian',
     id: 43,
@@ -318,8 +260,6 @@ export const slugs = [
   {
     language: 'ru',
     name: 'Russian',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'russian',
     id: 44,
@@ -328,8 +268,6 @@ export const slugs = [
   {
     language: 'so',
     name: 'Somali',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'somali',
     id: 45,
@@ -338,8 +276,6 @@ export const slugs = [
   {
     language: 'sq',
     name: 'Albanian',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'albanian',
     id: 46,
@@ -348,8 +284,6 @@ export const slugs = [
   {
     language: 'sv',
     name: 'Swedish',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'swedish',
     id: 47,
@@ -358,8 +292,6 @@ export const slugs = [
   {
     language: 'sw',
     name: 'Swahili',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'swahili',
     id: 48,
@@ -368,8 +300,6 @@ export const slugs = [
   {
     language: 'ta',
     name: 'Tamil',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'tamil',
     id: 49,
@@ -378,8 +308,6 @@ export const slugs = [
   {
     language: 'th',
     name: 'Thai',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'thai',
     id: 50,
@@ -388,8 +316,6 @@ export const slugs = [
   {
     language: 'tr',
     name: 'Turkish',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'turkish',
     id: 51,
@@ -398,8 +324,6 @@ export const slugs = [
   {
     language: 'tt',
     name: 'Tatar',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'tatar',
     id: 52,
@@ -408,8 +332,6 @@ export const slugs = [
   {
     language: 'ur',
     name: 'Urdu',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'urdu',
     id: 53,
@@ -418,8 +340,6 @@ export const slugs = [
   {
     language: 'uz',
     name: 'Uzbek',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'uzbek',
     id: 54,
@@ -428,8 +348,6 @@ export const slugs = [
   {
     language: 'zh',
     name: 'Chinese',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'chinese',
     id: 55,
@@ -438,8 +356,6 @@ export const slugs = [
   {
     language: 'en',
     name: 'Transliteration',
-    description: null,
-    is_available: 1,
     cardinality: '1_ayah',
     slug: 'transliteration',
     id: 56,

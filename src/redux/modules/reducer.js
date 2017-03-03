@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 
-import surahs from './surahs';
-import ayahs from './ayahs';
+import chapters from './chapters';
+import verses from './verses';
 import audioplayer from './audioplayer';
 import lines from './lines';
 import options from './options';
@@ -20,8 +20,8 @@ export default combineReducers({
   auth,
   bookmarks,
   media,
-  surahs,
-  ayahs,
+  chapters,
+  verses,
   audioplayer,
   fontFaces,
   lines,
