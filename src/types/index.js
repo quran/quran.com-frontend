@@ -6,3 +6,4 @@ export { default as bookmarkType } from './bookmarkType';
 export { default as segmentType } from './segmentType';
 export { default as wordType } from './wordType';
 export { default as matchType } from './matchType';
+export { default as recitationType } from './recitationType';
