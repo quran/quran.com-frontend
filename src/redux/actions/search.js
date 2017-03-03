@@ -11,7 +11,7 @@ export function search(params) {
     types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
     schema: { results: [{ ayah: versesSchema }] },
     // TODO: We are doing this because of a weird obj.hasOwnProperty method missing on `params`
-    promise: client => client.get('/v2/search', { params: { q: params.q, p: params.p } }),
+    promise: client => client.get('/api/v3/search', { params: { q: params.q, p: params.p } }),
     params
   };
 }
