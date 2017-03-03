@@ -7,7 +7,7 @@ export default {
     'local.navtiveName': 'English',
     'local.selectLabel': 'Language',
     'setting.title': 'Settings',
-    'setting.surahs': 'Surahs',
+    'setting.chapters': 'Surahs',
     'setting.verses': 'Go to verse',
     'setting.reciters.title': 'Reciters',
     'setting.translations.title': 'Translations',
@@ -43,7 +43,7 @@ export default {
     'surah.index.quickLinks': 'Quick links',
     'surah.goToBeginning': 'Beginning of Surah',
 
-    'player.currentAyah': 'Ayah',
+    'player.currentVerse': 'Ayah',
     'player.nextAyah': 'Next Ayah',
     'player.previousAyah': 'Previous Ayah',
     'player.repeat.title': 'TOGGLE REPEAT',

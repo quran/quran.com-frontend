@@ -1,4 +1,4 @@
-export { default as ayahType } from './ayahType';
+export { default as verseType } from './verseType';
 export { default as surahType } from './surahType';
 export { default as userType } from './userType';
 export { default as optionsType } from './optionsType';

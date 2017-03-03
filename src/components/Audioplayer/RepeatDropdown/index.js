@@ -15,7 +15,7 @@ const style = require('../style.scss');
 
 class RepeatButton extends Component {
   static propTypes = {
-    surah: surahType,
+    chapter: surahType,
     repeat: PropTypes.shape({
       from: PropTypes.number,
       to: PropTypes.number,
@@ -57,8 +57,8 @@ class RepeatButton extends Component {
   }
 
   renderRangeAyahs() {
-    const { surah, repeat, setRepeat } = this.props;
-    const array = Array(surah.ayat).join().split(',');
+    const { chapter, repeat, setRepeat } = this.props;
+    const array = Array(chapter.versesCount).join().split(',');
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
@@ -74,7 +74,7 @@ class RepeatButton extends Component {
               value={repeat.from}
               onChange={(event) => {
                 let to = parseInt(event.target.value, 10) + 3;
-                to = to < surah.ayat ? to : surah.ayat;
+                to = to < chapter.ayat ? to : chapter.ayat;
                 setRepeat({
                   ...repeat,
                   from: parseInt(event.target.value, 10),
@@ -84,7 +84,7 @@ class RepeatButton extends Component {
             >
               {
                 array.reduce((options, ayah, index) => {
-                  if (index + 1 < surah.ayat) { // Exclude last verse
+                  if (index + 1 < chapter.ayat) { // Exclude last verse
                     options.push(
                       <option key={index} value={index + 1}>
                         {index + 1}
@@ -110,7 +110,7 @@ class RepeatButton extends Component {
             >
               {
                 array.reduce((options, ayah, index) => {
-                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= surah.ayat) {
+                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= chapter.ayat) {
                     options.push(
                       <option key={index} value={index + 1}>
                         {index + 1}
@@ -128,13 +128,13 @@ class RepeatButton extends Component {
   }
 
   renderSingleAyah() {
-    const { repeat, setRepeat, surah } = this.props;
-    const array = Array(surah.ayat).join().split(',');
+    const { repeat, setRepeat, chapter } = this.props;
+    const array = Array(chapter.versesCount).join().split(',');
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
         <LocaleFormattedMessage
-          id="player.currentAyah"
+          id="player.currentVerse"
           defaultMessage="Ayah"
         />{' '}: <br />
         <FormControl
