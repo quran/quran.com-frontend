@@ -1,4 +1,4 @@
-import { LOAD_SUCCESS } from 'redux/constants/ayahs.js';
+import { LOAD_SUCCESS } from 'redux/constants/verses.js';
 import { SEARCH_SUCCESS } from 'redux/constants/search.js';
 import LOAD from 'redux/constants/fontFace.js';
 
@@ -6,14 +6,14 @@ export default function reducer(state = {}, action = {}) {
   switch (action.type) {
     case LOAD_SUCCESS:
     case SEARCH_SUCCESS: {
-      const ayahs = action.result.entities.ayahs;
+      const verses = action.result.entities.verses;
       const classNames = {};
 
-      Object.keys(ayahs).forEach((ayahId) => {
-        const ayah = ayahs[ayahId];
+      Object.keys(verses).forEach((ayahId) => {
+        const verse = verses[ayahId];
 
-        if (!state[`p${ayah.pageNum}`]) {
-          classNames[`p${ayah.pageNum}`] = false;
+        if (!state[`p${verse.pageNumber}`]) {
+          classNames[`p${verse.pageNumber}`] = false;
         }
       });
 

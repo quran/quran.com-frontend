@@ -60,10 +60,10 @@ export default (store) => {
         <Route path="/profile" getComponent={(nextState, cb) => System.import('./containers/Profile').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
       </Route>
 
-      <Redirect from="/:surahId:(:range)" to="/:surahId(/:range)" />
+      <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
 
       <Route
-        path="/:surahId(/:range)"
+        path="/:chapterId(/:range)"
         getComponents={(nextState, cb) =>
           Promise.all([
             System.import('./containers/Surah'),

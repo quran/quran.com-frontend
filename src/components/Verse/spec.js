@@ -16,7 +16,7 @@ describe('<Ayah />', () => {
   });
 
   it('should have correct ayah number', () => {
-    expect(wrapper.find('.label').text()).to.eql(ayah.ayahKey);
+    expect(wrapper.find('.label').text()).to.eql(ayah.verseKey);
   });
 
   it('should contain translations', () => {

@@ -29,7 +29,7 @@ describe('<Segments />', () => {
         <Segments
           segments={{ words: { 0: { startTime: 0, endTime: 1 }, 1: { startTime: 1, endTime: 2 } } }}
           currentTime={1.5}
-          currentAyah="1:1"
+          currentVerse="1:1"
         />
       );
     });
@@ -64,7 +64,7 @@ describe('<Segments />', () => {
             }
           }}
           currentTime={1.5}
-          currentAyah="1:1"
+          currentVerse="1:1"
         />
       );
     });

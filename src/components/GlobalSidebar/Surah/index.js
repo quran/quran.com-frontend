@@ -4,25 +4,25 @@ import { connect } from 'react-redux';
 import { surahType } from 'types';
 import GlobalSidebar from '../index.js';
 
-const GlobalSidebarSurah = ({ ...props, surah, ayahIds }) => (
-  <GlobalSidebar {...props} settingsModalProps={{ surah, ayahIds }} />
+const GlobalSidebarSurah = ({ ...props, chapter, versesIds }) => (
+  <GlobalSidebar {...props} settingsModalProps={{ chapter, versesIds }} />
 );
 
 GlobalSidebarSurah.propTypes = {
-  surah: surahType,
-  ayahIds: PropTypes.instanceOf(Set)
+  chapter: surahType,
+  versesIds: PropTypes.instanceOf(Set)
 };
 
 function mapStateToProps(state, ownProps) {
-  const surahId = parseInt(ownProps.params.surahId, 10);
-  const surah: Object = state.surahs.entities[surahId];
-  const ayahs: Object = state.ayahs.entities[surahId];
+  const chapterId = parseInt(ownProps.params.chapterId, 10);
+  const chapter: Object = state.chapters.entities[chapterId];
+  const ayahs: Object = state.verses.entities[chapterId];
   const ayahArray = ayahs ? Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)) : [];
-  const ayahIds = new Set(ayahArray);
+  const versesIds = new Set(ayahArray);
 
   return {
-    surah,
-    ayahIds
+    chapter,
+    versesIds
   };
 }
 
