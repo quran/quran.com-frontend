@@ -20,10 +20,13 @@ export default class Word extends React.Component {
 
   buildTooltip = (word, tooltip) => {
     let title;
-    if (!word.wordId && word.charType === CHAR_TYPE_END) {
+
+    if (word.charType === CHAR_TYPE_END) {
       title = `Verse ${word.verseKey.split(':')[1]}`;
-    } else {
+    } else if(word.charType === CHAR_TYPE_WORD) {
       title = word[tooltip].text;
+    } else{
+      title = ''
     }
     return title;
   }
