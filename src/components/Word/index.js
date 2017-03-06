@@ -28,7 +28,14 @@ export default class Word extends React.Component {
     return title;
   }
 
-  handleWordClick = () => {
+  handleWordPlay = () => {
+    const { word } = this.props;
+    const audio = new Audio(word.audio.url); // eslint-disable-line
+
+    audio.play();
+  }
+
+  handleSegmentPlay = () => {
     const { word, currentVerse, audioActions, audioPosition, isPlaying, isSearched } = this.props;
 
     if (isSearched) {
@@ -60,7 +67,8 @@ export default class Word extends React.Component {
         { ...bindTooltip}
         key={word.code}
         id={id}
-        onClick={this.handleWordClick}
+        onDoubleClick={this.handleSegmentPlay}
+        onClick={this.handleWordPlay}
         className={`${className} pointer`}
         title={this.buildTooltip(word, tooltip)}
         dangerouslySetInnerHTML={{ __html: word.code }}
