@@ -7,7 +7,7 @@ const style = require('../style.scss');
 
 const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
   const tooltip = (
-    <Tooltip id="scroll-button-tooltip">
+    <Tooltip id="scroll-button-tooltip" placement="bottom">
       <LocaleFormattedMessage
         id="player.scrollButtonTip"
         defaultMessage="Automatically scrolls to the currently playing ayah on transitions..."

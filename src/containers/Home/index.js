@@ -33,7 +33,7 @@ const Home = (props) => {
             }
             <QuickSurahs />
             <h4 className={`text-muted ${styles.title}`}>
-              <LocaleFormattedMessage id="chapter.index.heading" defaultMessage="SURAHS (CHAPTERS)" />
+              <LocaleFormattedMessage id="surah.index.heading" defaultMessage="SURAHS (CHAPTERS)" />
             </h4>
             <div className="row">
               <SurahsList chapters={Object.values(props.chapters).slice(0, 38)} />
