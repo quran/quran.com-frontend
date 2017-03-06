@@ -9,7 +9,6 @@ export default PropTypes.shape({
   lineNumber: PropTypes.number.isRequired,
   pageNumber: PropTypes.number.isRequired,
   position: PropTypes.number.isRequired,
-  resourceId: PropTypes.number.isRequired,
   translation: PropTypes.shape({
     languageName: PropTypes.string,
     text: PropTypes.string
