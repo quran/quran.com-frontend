@@ -5,8 +5,7 @@ const initialState = {
   isReadingMode: false,
   isShowingSurahInfo: false,
   audio: 8,
-  quran: 1,
-  content: [19],
+  content: [20],
   tooltip: 'translation',
   fontSize: {
     arabic: 3.5,
