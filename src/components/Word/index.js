@@ -23,10 +23,10 @@ export default class Word extends React.Component {
 
     if (word.charType === CHAR_TYPE_END) {
       title = `Verse ${word.verseKey.split(':')[1]}`;
-    } else if(word.charType === CHAR_TYPE_WORD) {
+    } else if (word.charType === CHAR_TYPE_WORD) {
       title = word[tooltip].text;
-    } else{
-      title = ''
+    } else {
+      title = '';
     }
     return title;
   }
