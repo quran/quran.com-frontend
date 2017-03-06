@@ -21,7 +21,7 @@ const SurahsList = (props) => {
               {chapter.nameSimple}
             </div>
             <div className={`col-xs-3 text-left ${styles.arabic}`}>
-              <span className={`icon-surah${chapter.id}`}></span>
+              <span className={`icon-surah${chapter.id}`} />
             </div>
 
             <div className={`col-md-12 col-md-push-2 ${styles.translated_name}`}>
