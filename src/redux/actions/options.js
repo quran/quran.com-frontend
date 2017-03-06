@@ -1,5 +1,10 @@
 import cookie from 'react-cookie';
-import { SET_OPTION } from 'redux/constants/options.js';
+import {
+  SET_OPTION,
+  LOAD_RECITERS,
+  LOAD_RECITERS_SUCCESS,
+  LOAD_RECITERS_FAIL
+} from 'redux/constants/options.js';
 
 export function isReadingMode(globalState) {
   return globalState.options.isReadingMode;
@@ -7,6 +12,7 @@ export function isReadingMode(globalState) {
 
 export function setOption(payload) {
   const options = cookie.load('options') || {}; // protect against first timers.
+
   Object.keys(payload).forEach((option) => { options[option] = payload[option]; });
   cookie.save('options', JSON.stringify(options));
 
@@ -15,3 +21,8 @@ export function setOption(payload) {
     payload
   };
 }
+
+export const loadRecitations = () => ({
+  types: [LOAD_RECITERS, LOAD_RECITERS_SUCCESS, LOAD_RECITERS_FAIL],
+  promise: client => client.get('/api/v3/options/recitations')
+});
