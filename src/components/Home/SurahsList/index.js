@@ -19,11 +19,15 @@ const SurahsList = (props) => {
             </div>
             <div className="col-xs-7">
               {chapter.nameSimple}
-              <br />
-              <span className={`text-uppercase ${styles.english}`}>{chapter.translatedName.name}</span>
             </div>
-            <div className={`col-xs-3 text-right ${styles.arabic}`}>
-              {chapter.nameArabic}
+            <div className={`col-xs-3 text-left ${styles.arabic}`}>
+              <span className={`icon-surah${chapter.id}`} />
+            </div>
+
+            <div className={`col-md-12 col-md-push-2 ${styles.translated_name}`}>
+              <span className={`text-uppercase ${chapter.translatedName.languageName}`}>
+                {chapter.translatedName.name}
+              </span>
             </div>
           </Link>
         </li>
