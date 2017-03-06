@@ -132,7 +132,7 @@ const Footer = () => (
             </div>
             <div className={`${styles.links} col-md-4 col-sm-12 col-xs-12`}>
               <p className="monserrat">
-                <LocaleFormattedMessage id="nav.nav.aboutQuranProject" defaultMessage="QURAN.COM (ALSO KNOWN AS THE NOBLE QURAN, AL QURAN, HOLY QURAN, KORAN) IS A PRO BONO PROJECT." />.
+                <LocaleFormattedMessage id="nav.aboutQuranProject" defaultMessage="QURAN.COM (ALSO KNOWN AS THE NOBLE QURAN, AL QURAN, HOLY QURAN, KORAN) IS A PRO BONO PROJECT." />.
               </p>
               <p className="monserrat">
                 &copy; 2016 Quran.com. <LocaleFormattedMessage id="nav.rightsReserved" defaultMessage="All Rights Reserved" />.
