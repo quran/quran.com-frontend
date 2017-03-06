@@ -28,7 +28,7 @@ export default class Word extends React.Component {
     if (word.charType === CHAR_TYPE_END) {
       title = `Verse ${word.verseKey.split(':')[1]}`;
     } else {
-      title = word[tooltip] ? word[tooltip].text : '';
+      title = word[tooltip].text;
     }
     return title;
   }
@@ -68,7 +68,7 @@ export default class Word extends React.Component {
         onClick={this.handleWordClick}
         className={`${className} pointer`}
         title={this.buildTooltip(word, tooltip)}
-        dangerouslySetInnerHTML={{ __html: word.codeV3 }}
+        dangerouslySetInnerHTML={{ __html: word.code }}
       />
     );
   }

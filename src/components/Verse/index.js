@@ -6,7 +6,6 @@ import { verseType, matchType, surahType } from 'types';
 import Share from 'components/Share';
 import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import Translation from 'components/Translation';
 import Word from 'components/Word';
 
 import debug from 'helpers/debug';
@@ -35,9 +34,6 @@ export default class Verse extends Component {
       play: PropTypes.func.isRequired,
       setCurrentWord: PropTypes.func.isRequired,
     }), // not required because in search it is not.
-    footNoteActions: PropTypes.shape({
-      load: PropTypes.func.isRequired,
-    }),
     match: PropTypes.arrayOf(matchType),
     isPlaying: PropTypes.bool,
     isAuthenticated: PropTypes.bool,
@@ -81,16 +77,29 @@ export default class Verse extends Component {
   }
 
   renderTranslations() {
-    const { verse, footNoteActions, match } = this.props;
+    const { verse, match } = this.props;
 
-    const array = match || verse.translations || [];
+    const array = match || verse.content || [];
 
-    return array.map((translation, index) => {
-      return(
-        <Translation
-          translation={translation}
-          footNoteActions={footNoteActions}
-        />
+    return array.map((content, index) => {
+      const arabic = new RegExp(/[\u0600-\u06FF]/);
+      const character = content.text;
+      const isArabic = arabic.test(character);
+      const lang = (content.name || content.resource.name).replace(/\s+/g, '-').toLowerCase();
+
+      return (
+        <div
+          className={`${styles.translation} ${isArabic && 'arabic'} translation`}
+          key={index}
+        >
+          <h4 className="montserrat">{content.name || content.resource.name}</h4>
+          <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
+            <small
+              dangerouslySetInnerHTML={{ __html: content.text }}
+              className={`${lang || 'times-new'}`}
+            />
+          </h2>
+        </div>
       );
     });
   }
@@ -98,12 +107,12 @@ export default class Verse extends Component {
   renderMedia() {
     const { verse, mediaActions, isSearched } = this.props;
 
-    if (isSearched || !verse.mediaContents) return false;
+    if (isSearched || !verse.mediaContent) return false;
 
     return (
       <div>
         {
-          verse.mediaContents.map((content, index) => (
+          verse.mediaContent.map((content, index) => (
             <div
               className={`${styles.translation} translation`}
               key={index}
@@ -122,7 +131,7 @@ export default class Verse extends Component {
                     <LocaleFormattedMessage
                       id="verse.media.lectureFrom"
                       defaultMessage="Watch lecture by {from}"
-                      values={{ from: content.authorName }}
+                      values={{ from: content.resource.name }}
                     />
                   </a>
                 </small>
@@ -158,7 +167,7 @@ export default class Verse extends Component {
         <p
           dir="rtl"
           lang="ar"
-          className={`text-tashkeel hidden text-p${verse.pageNumber}`}
+          className={`text-tashkeel text-p${verse.pageNumber}`}
           dangerouslySetInnerHTML={{ __html: verse.textMadani }}
         />
       </h1>
@@ -240,20 +249,29 @@ export default class Verse extends Component {
 
   renderAyahBadge() {
     const { isSearched } = this.props;
-    const metric = isSearched ? "Verse:Searched:Link" : "Verse:Link";
-
     const content = (
       <h4>
         <span className={`label label-default ${styles.label}`}>
-          {this.props.verse.verseKey}
+          {this.props.verse.chapterId}:{this.props.verse.ayahNum}
         </span>
       </h4>
     );
 
+    if (isSearched) {
+      return (
+        <Link
+          to={`/${this.props.verse.chapterId}/${this.props.verse.ayahNum}`}
+          data-metrics-event-name="Verse:Searched:Link"
+        >
+          {content}
+        </Link>
+      );
+    }
+
     return (
       <Link
-        to={`/${this.props.verse.chapterId}/${this.props.verse.verseNumber}`}
-        data-metrics-event-name={metric}
+        to={`/${this.props.verse.chapterId}:${this.props.verse.ayahNum}`}
+        data-metrics-event-name="Verse:Link"
       >
         {content}
       </Link>
@@ -276,7 +294,7 @@ export default class Verse extends Component {
 
   render() {
     const { verse, iscurrentVerse } = this.props;
-    debug('component:Verse', `Render ${this.props.verse.verseKey}`);
+    debug('component:Verse', `Render ${this.props.verse.ayahNum}`);
 
     return (
       <Element

@@ -35,7 +35,6 @@ import * as AyahActions from 'redux/actions/verses.js';
 import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
-import * as FootNoteActions from 'redux/actions/footNote.js';
 
 import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
 
@@ -48,7 +47,7 @@ class Surah extends Component {
     actions: PropTypes.object.isRequired, // eslint-disable-line
     lines: PropTypes.object.isRequired, // eslint-disable-line
     isEndOfSurah: PropTypes.bool.isRequired,
-    verseIds: PropTypes.instanceOf(Array),
+    verseIds: PropTypes.instanceOf(Set),
     currentVerse: PropTypes.string,
     bookmarks: PropTypes.object.isRequired, // eslint-disable-line
     isLoading: PropTypes.bool.isRequired,
@@ -124,7 +123,7 @@ class Surah extends Component {
 
     actions.verse.setcurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
 
-    if (verseIds.indexOf(verseNum) > 0) {
+    if (verseIds.has(verseNum)) {
       return false;
     }
 
@@ -148,7 +147,7 @@ class Surah extends Component {
     const from = range[1];
     const to = (from + size);
 
-    if (!isEndOfSurah && !verseIds.indexOf(to) > 0) {
+    if (!isEndOfSurah && !verseIds.has(to)) {
       actions.verse.load(chapter.chapterNumber, from, to, options).then(() => {
         this.setState({ lazyLoading: false });
         return callback && callback();
@@ -378,6 +377,11 @@ class Surah extends Component {
           style={[
             {
               cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+            },
+            {
+              cssText: `@font-face {font-family: 'bismillah';
+                src: url('//quran-1f14.kxcdn.com/fonts/ttf/bismillah.ttf') format('truetype')}
+                .bismillah{font-family: 'bismillah'; font-size: 36px !important; color: #000; padding: 25px 0px;}` // eslint-disable-line max-len
             }
           ]}
         />
@@ -418,9 +422,11 @@ function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
   const verses: Object = state.verses.entities[chapterId];
-  const verseIds = verses ? Object.keys(verses).map(key => parseInt(verses[key].verseNumber, 10)) : [];
-  const lastAyahInArray = verseIds.slice(-1)[0];
+  const verseArray = verses ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10)) : [];
+  const verseIds = new Set(verseArray);
+  const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah = !!ownProps.params.range && !ownProps.params.range.includes('-');
+
 
   return {
     chapter,
