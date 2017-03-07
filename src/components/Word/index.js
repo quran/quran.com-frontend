@@ -33,15 +33,18 @@ export default class Word extends React.Component {
 
   handleWordPlay = () => {
     const { word } = this.props;
-    const audio = new Audio(word.audio.url); // eslint-disable-line
 
-    audio.play();
+    if (word.audio) {
+      const audio = new Audio(word.audio.url); // eslint-disable-line
+
+      audio.play();
+    }
   }
 
   handleSegmentPlay = () => {
     const { word, currentVerse, audioActions, audioPosition, isPlaying, isSearched } = this.props;
 
-    if (isSearched) {
+    if (isSearched || !word.audio) {
       return;
     }
 

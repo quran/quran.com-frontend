@@ -100,7 +100,8 @@ class App extends Component {
             </ModalTitle>
           </ModalHeader>
           <ModalBody>
-            <div className="embed-responsive embed-responsive-16by9"
+            <div
+              className="embed-responsive embed-responsive-16by9"
               dangerouslySetInnerHTML={{ __html: media.content && media.content.embedText }}
             />
           </ModalBody>
