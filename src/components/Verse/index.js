@@ -72,7 +72,7 @@ export default class Verse extends Component {
       pause();
     }
 
-    setAyah(verse);
+    setAyah(verse.verseKey);
     play();
   }
 
@@ -107,12 +107,12 @@ export default class Verse extends Component {
   renderMedia() {
     const { verse, mediaActions, isSearched } = this.props;
 
-    if (isSearched || !verse.mediaContent) return false;
+    if (isSearched || !verse.mediaContents) return false;
 
     return (
       <div>
         {
-          verse.mediaContent.map((content, index) => (
+          verse.mediaContents.map((content, index) => (
             <div
               className={`${styles.translation} translation`}
               key={index}
@@ -131,7 +131,7 @@ export default class Verse extends Component {
                     <LocaleFormattedMessage
                       id="verse.media.lectureFrom"
                       defaultMessage="Watch lecture by {from}"
-                      values={{ from: content.resource.name }}
+                      values={{ from: content.authorName }}
                     />
                   </a>
                 </small>
@@ -182,7 +182,7 @@ export default class Verse extends Component {
       return (
         <a
           tabIndex="-1"
-          onClick={() => this.handlePlay(verse.verseKey)}
+          onClick={() => this.handlePlay(verse)}
           className="text-muted"
         >
           <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`} />{' '}
