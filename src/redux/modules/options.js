@@ -9,8 +9,7 @@ const initialState = {
   isShowingSurahInfo: false,
   loadingRecitations: false,
   audio: 8,
-  quran: 1,
-  content: [19],
+  translations: [20],
   tooltip: 'translation',
   options: {
     recitations: []

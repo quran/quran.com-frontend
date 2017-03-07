@@ -1,5 +1,6 @@
 import { PropTypes } from 'react';
 import wordType from './wordType';
+import translationType from './translationType';
 
 export default PropTypes.shape({
   id: PropTypes.number.isRequired,
@@ -13,6 +14,6 @@ export default PropTypes.shape({
   words: PropTypes.arrayOf(wordType).isRequired,
   textMadani: PropTypes.string.isRequired,
   textSimple: PropTypes.string.isRequired,
-  content: PropTypes.array, // NOTE: In search, it is not required.
+  translations: PropTypes.arrayOf(translationType), // NOTE: In search, it is not required.
   audio: PropTypes.object // NOTE: In search, it is not required.
 });

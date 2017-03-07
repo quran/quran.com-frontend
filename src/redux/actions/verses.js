@@ -14,12 +14,11 @@ import {
 // For safe measure
 const defaultOptions = {
   audio: 8,
-  quran: 1,
-  content: [19]
+  translations: [20]
 };
 
 export function load(id, from, to, options = defaultOptions) {
-  const { audio, quran, content } = options;
+  const { audio, translations } = options;
 
   cookie.save('lastVisit', JSON.stringify({ chapterId: id, verseId: from }));
 
@@ -31,8 +30,7 @@ export function load(id, from, to, options = defaultOptions) {
         from,
         to,
         recitation: audio,
-        quran,
-        translations: content
+        translations: translations
       }
     }),
     chapterId: id

@@ -7,6 +7,7 @@ import Share from 'components/Share';
 import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
+import Translation from 'components/Translation';
 
 import debug from 'helpers/debug';
 
@@ -79,27 +80,11 @@ export default class Verse extends Component {
   renderTranslations() {
     const { verse, match } = this.props;
 
-    const array = match || verse.content || [];
+    const array = match || verse.translations || [];
 
-    return array.map((content, index) => {
-      const arabic = new RegExp(/[\u0600-\u06FF]/);
-      const character = content.text;
-      const isArabic = arabic.test(character);
-      const lang = (content.name || content.resource.name).replace(/\s+/g, '-').toLowerCase();
-
-      return (
-        <div
-          className={`${styles.translation} ${isArabic && 'arabic'} translation`}
-          key={index}
-        >
-          <h4 className="montserrat">{content.name || content.resource.name}</h4>
-          <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
-            <small
-              dangerouslySetInnerHTML={{ __html: content.text }}
-              className={`${lang || 'times-new'}`}
-            />
-          </h2>
-        </div>
+    return array.map((translation, index) => {
+      return(
+        <Translation translation={translation} />
       );
     });
   }
