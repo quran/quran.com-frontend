@@ -7,6 +7,7 @@ import Share from 'components/Share';
 import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
+import Translation from 'components/Translation';
 
 import debug from 'helpers/debug';
 
@@ -72,47 +73,29 @@ export default class Verse extends Component {
       pause();
     }
 
-    setAyah(verse);
+    setAyah(verse.verseKey);
     play();
   }
 
   renderTranslations() {
     const { verse, match } = this.props;
 
-    const array = match || verse.content || [];
+    const array = match || verse.translations || [];
 
-    return array.map((content, index) => {
-      const arabic = new RegExp(/[\u0600-\u06FF]/);
-      const character = content.text;
-      const isArabic = arabic.test(character);
-      const lang = (content.name || content.resource.name).replace(/\s+/g, '-').toLowerCase();
-
-      return (
-        <div
-          className={`${styles.translation} ${isArabic && 'arabic'} translation`}
-          key={index}
-        >
-          <h4 className="montserrat">{content.name || content.resource.name}</h4>
-          <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
-            <small
-              dangerouslySetInnerHTML={{ __html: content.text }}
-              className={`${lang || 'times-new'}`}
-            />
-          </h2>
-        </div>
-      );
-    });
+    return array.map((translation, index) => (
+      <Translation translation={translation} index={index} />
+    ));
   }
 
   renderMedia() {
     const { verse, mediaActions, isSearched } = this.props;
 
-    if (isSearched || !verse.mediaContent) return false;
+    if (isSearched || !verse.mediaContents) return false;
 
     return (
       <div>
         {
-          verse.mediaContent.map((content, index) => (
+          verse.mediaContents.map((content, index) => (
             <div
               className={`${styles.translation} translation`}
               key={index}
@@ -131,7 +114,7 @@ export default class Verse extends Component {
                     <LocaleFormattedMessage
                       id="verse.media.lectureFrom"
                       defaultMessage="Watch lecture by {from}"
-                      values={{ from: content.resource.name }}
+                      values={{ from: content.authorName }}
                     />
                   </a>
                 </small>
@@ -182,7 +165,7 @@ export default class Verse extends Component {
       return (
         <a
           tabIndex="-1"
-          onClick={() => this.handlePlay(verse.verseKey)}
+          onClick={() => this.handlePlay(verse)}
           className="text-muted"
         >
           <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`} />{' '}
@@ -249,29 +232,26 @@ export default class Verse extends Component {
 
   renderAyahBadge() {
     const { isSearched } = this.props;
+    let metric;
+
     const content = (
       <h4>
         <span className={`label label-default ${styles.label}`}>
-          {this.props.verse.chapterId}:{this.props.verse.ayahNum}
+          {this.props.verse.verseKey}
         </span>
       </h4>
     );
 
     if (isSearched) {
-      return (
-        <Link
-          to={`/${this.props.verse.chapterId}/${this.props.verse.ayahNum}`}
-          data-metrics-event-name="Verse:Searched:Link"
-        >
-          {content}
-        </Link>
-      );
+      metric = 'Verse:Searched:Link';
+    } else {
+      metric = 'Verse:Link';
     }
 
     return (
       <Link
-        to={`/${this.props.verse.chapterId}:${this.props.verse.ayahNum}`}
-        data-metrics-event-name="Verse:Link"
+        to={`/${this.props.verse.chapterId}/${this.props.verse.verseNumber}`}
+        data-metrics-event-name={metric}
       >
         {content}
       </Link>

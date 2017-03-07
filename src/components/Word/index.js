@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import bindTooltip from 'utils/bindTooltip';
 /* eslint-disable no-unused-vars */
 const CHAR_TYPE_WORD = 'word';
@@ -7,7 +7,7 @@ const CHAR_TYPE_PAUSE = 'pause';
 const CHAR_TYPE_RUB = 'rub';
 const CHAR_TYPE_SAJDAH = 'sajdah';
 
-export default class Word extends React.Component {
+export default class Word extends Component {
   static propTypes = {
     word: PropTypes.object.isRequired, // eslint-disable-line
     tooltip: PropTypes.string,
@@ -33,15 +33,18 @@ export default class Word extends React.Component {
 
   handleWordPlay = () => {
     const { word } = this.props;
-    const audio = new Audio(word.audio.url); // eslint-disable-line
 
-    audio.play();
+    if (word.audio) {
+      const audio = new Audio(word.audio.url); // eslint-disable-line
+
+      audio.play();
+    }
   }
 
   handleSegmentPlay = () => {
     const { word, currentVerse, audioActions, audioPosition, isPlaying, isSearched } = this.props;
 
-    if (isSearched) {
+    if (isSearched || !word.audio) {
       return;
     }
 
