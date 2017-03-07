@@ -30,7 +30,7 @@ export function load(id, from, to, options = defaultOptions) {
         from,
         to,
         recitation: audio,
-        translations: translations
+        translations
       }
     }),
     chapterId: id

@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import bindTooltip from 'utils/bindTooltip';
 /* eslint-disable no-unused-vars */
 const CHAR_TYPE_WORD = 'word';
@@ -7,7 +7,7 @@ const CHAR_TYPE_PAUSE = 'pause';
 const CHAR_TYPE_RUB = 'rub';
 const CHAR_TYPE_SAJDAH = 'sajdah';
 
-export default class Word extends React.Component {
+export default class Word extends Component {
   static propTypes = {
     word: PropTypes.object.isRequired, // eslint-disable-line
     tooltip: PropTypes.string,

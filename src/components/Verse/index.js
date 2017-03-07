@@ -82,11 +82,9 @@ export default class Verse extends Component {
 
     const array = match || verse.translations || [];
 
-    return array.map((translation, index) => {
-      return(
-        <Translation translation={translation} />
-      );
-    });
+    return array.map((translation, index) => (
+      <Translation translation={translation} index={index} />
+    ));
   }
 
   renderMedia() {
