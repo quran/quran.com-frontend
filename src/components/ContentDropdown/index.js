@@ -5,7 +5,7 @@ import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { loadTranslations } from 'redux/actions/options';
-import { translationType } from 'types';
+import { contentType } from 'types';
 
 const style = require('./style.scss');
 
@@ -30,7 +30,7 @@ class ContentDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func.isRequired,
     content: PropTypes.arrayOf(PropTypes.number).isRequired,
-    translations: PropTypes.arrayOf(translationType),
+    translations: PropTypes.arrayOf(contentType),
     loadTranslations: PropTypes.func.isRequired,
     className: PropTypes.string
   };
