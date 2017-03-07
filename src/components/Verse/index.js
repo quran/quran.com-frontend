@@ -131,7 +131,7 @@ export default class Verse extends Component {
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
 
-    const text = verse.words.map(word => ( // eslint-disable-line
+    const textCode = verse.words.map(word => ( // eslint-disable-line
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -141,18 +141,43 @@ export default class Verse extends Component {
         audioActions={audioActions}
         audioPosition={word.wordId ? wordAudioPosition += 1 : null}
         isSearched={isSearched}
+        useTextFont={false}
+      />
+    ));
+
+    const textText = verse.words.map(word => ( // eslint-disable-line
+      <Word
+        word={word}
+        key={`${word.position}-${word.code}-${word.lineNum}`}
+        currentVerse={currentVerse}
+        tooltip={tooltip}
+        isPlaying={isPlaying}
+        audioActions={audioActions}
+        audioPosition={word.wordId ? wordAudioPosition += 1 : null}
+        isSearched={isSearched}
+        useTextFont={true}
       />
     ));
 
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
-        {text}
-        <p
-          dir="rtl"
-          lang="ar"
-          className={`text-tashkeel text-p${verse.pageNumber}`}
-          dangerouslySetInnerHTML={{ __html: verse.textMadani }}
-        />
+        <p>
+          <small>WORD CODE</small>
+          <br/>
+          {textCode}
+        </p>
+
+        <p>
+          <small>WORD TEXT</small>
+          <br/>
+          {textText}
+        </p>
+
+        <p className={`text-p${verse.pageNumber}`}>
+          <small>VERSE TEXT</small>
+          <br/>
+          {verse.textMadani}
+        </p>
       </h1>
     );
   }

@@ -58,7 +58,6 @@ class App extends Component {
     return (
       <div>
         <Helmet {...config.app.head} />
-        <FontStyles />
         <NoScript>
           <div className="row noscript-warning">
             <div className="col-md-12">
