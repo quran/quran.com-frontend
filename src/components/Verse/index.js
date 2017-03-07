@@ -249,29 +249,26 @@ export default class Verse extends Component {
 
   renderAyahBadge() {
     const { isSearched } = this.props;
+    let metric;
+
     const content = (
       <h4>
         <span className={`label label-default ${styles.label}`}>
-          {this.props.verse.chapterId}:{this.props.verse.ayahNum}
+          {this.props.verse.verseKey}
         </span>
       </h4>
     );
 
     if (isSearched) {
-      return (
-        <Link
-          to={`/${this.props.verse.chapterId}/${this.props.verse.ayahNum}`}
-          data-metrics-event-name="Verse:Searched:Link"
-        >
-          {content}
-        </Link>
-      );
+      metric = 'Verse:Searched:Link';
+    } else {
+      metric = 'Verse:Link';
     }
 
     return (
       <Link
-        to={`/${this.props.verse.chapterId}:${this.props.verse.ayahNum}`}
-        data-metrics-event-name="Verse:Link"
+        to={`/${this.props.verse.chapterId}/${this.props.verse.verseNumber}`}
+        data-metrics-event-name={metric}
       >
         {content}
       </Link>
