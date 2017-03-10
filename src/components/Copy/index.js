@@ -5,8 +5,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 export default class Copy extends Component {
   static propTypes = {
     text: PropTypes.string.isRequired,
-    surah: PropTypes.string.isRequired,
-    ayah: PropTypes.string.isRequired
+    verseKey: PropTypes.string.isRequired,
   }
 
   state = {
@@ -14,7 +13,7 @@ export default class Copy extends Component {
   };
 
   handleCopy = () => {
-    copyToClipboard(`${this.props.text} - ${this.props.surah}:${this.props.ayah}`);
+    copyToClipboard(`${this.props.text} - ${this.props.verseKey}`);
     this.setState({ isCopied: true });
 
     setTimeout(() => this.setState({ isCopied: false }), 1000);

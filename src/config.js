@@ -19,7 +19,7 @@ const config = {
   sentryServer: process.env.SENTRY_KEY_SERVER,
   facebookAppId: process.env.FACEBOOK_APP_ID,
   // Supported locales
-  locales: { en: 'English', ar: 'العربية', ur: 'اردو', id: 'Bahasa Indonesia' },
+  locales: { en: 'English', ar: 'العربية', ur: 'اردو', id: 'Bahasa Indonesia', tr: 'Türkçe' },
   defaultLocale: 'en',
   app: {
     head: {
@@ -33,7 +33,7 @@ const config = {
         { name: 'Charset', content: 'UTF-8' },
         { name: 'Distribution', content: 'Global' },
         { name: 'Rating', content: 'General' },
-        { name: 'viewport', content: 'width=device-width, user-scalable=no, initial-scale=1' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' },
         { name: 'google-site-verification', content: 'ehFz7FvmL7V9MzP40F8_kLABhCzqGzMDMrCnUP44Too' },
         { name: 'theme-color', content: '#004f54' },
         { property: 'og:site_name', content: title },

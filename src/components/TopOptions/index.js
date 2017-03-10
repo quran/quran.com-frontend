@@ -4,21 +4,21 @@ import Title from 'containers/Surah/Title';
 import Share from 'components/Share';
 import { surahType } from 'types';
 
-const TopOptions = ({ surah }) => (
+const TopOptions = ({ chapter }) => (
   <div className="row">
     <div className="col-md-4 hidden-xs hidden-sm">
-      <Title surah={surah} />
+      <Title chapter={chapter} />
     </div>
     <div className="col-md-8 text-right">
       <ul className="list-inline">
-        <li><Share surah={surah} /></li>
+        <li><Share chapter={chapter} /></li>
       </ul>
     </div>
   </div>
 );
 
 TopOptions.propTypes = {
-  surah: surahType.isRequired
+  chapter: surahType.isRequired
 };
 
 export default TopOptions;

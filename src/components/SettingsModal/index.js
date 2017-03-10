@@ -8,7 +8,7 @@ import ContentDropdown from 'components/ContentDropdown';
 import TooltipDropdown from 'components/TooltipDropdown';
 
 import { setOption } from 'redux/actions/options.js';
-import { load } from 'redux/actions/ayahs.js';
+import { load } from 'redux/actions/verses.js';
 import { optionsType, surahType } from 'types';
 
 const ModalHeader = Modal.Header;
@@ -16,7 +16,7 @@ const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
 const SettingsModal = ({
-  surah,
+  chapter,
   ayahIds,
   open,
   handleHide,
@@ -27,10 +27,10 @@ const SettingsModal = ({
   const handleOptionChange = (payload) => {
     setOption(payload);
 
-    if (surah) {
+    if (chapter) {
       const first = [...ayahIds][0];
       const last = [...ayahIds][[...ayahIds].length - 1];
-      load(surah.id, first, last, { ...options, ...payload });
+      load(chapter.chapterNumber, first, last, { ...options, ...payload });
     }
   };
 
@@ -75,7 +75,7 @@ const SettingsModal = ({
 };
 
 SettingsModal.propTypes = {
-  surah: surahType,
+  chapter: surahType,
   ayahIds: PropTypes.instanceOf(Set),
   open: PropTypes.bool,
   handleHide: PropTypes.func.isRequired,

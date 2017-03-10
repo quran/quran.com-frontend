@@ -14,11 +14,11 @@ export const fontFaceStyleLoaded = fontClassName => (
   .text-${fontClassName} {display: none;}`
 );
 
-export function createFontFacesArray(ayahs) {
+export function createFontFacesArray(verses) {
   const fontFaces = [];
   const fontFacesArray = [];
 
-  ayahs.forEach((ayah) => {
+  verses.forEach((ayah) => {
     const font = ayah.words[0].className;
 
     if (fontFaces.indexOf(font) === -1) {

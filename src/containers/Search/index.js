@@ -8,14 +8,14 @@ import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
 import { FormattedHTMLMessage } from 'react-intl';
 
-import Ayah from 'components/Ayah';
+import Verse from 'components/Verse';
 import Loader from 'components/Loader';
 
 import { search } from 'redux/actions/search.js';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-import { ayahType, optionsType } from 'types';
+import { verseType, optionsType } from 'types';
 
 import Header from './Header';
 
@@ -31,7 +31,7 @@ class Search extends Component {
     from: PropTypes.number,
     query: PropTypes.string,
     results: PropTypes.array, // eslint-disable-line
-    ayahs: PropTypes.objectOf(ayahType),
+    verses: PropTypes.objectOf(verseType),
     push: PropTypes.func.isRequired,
     location: PropTypes.shape({
       q: PropTypes.string,
@@ -121,7 +121,7 @@ class Search extends Component {
   }
 
   renderBody() {
-    const { location, isErrored, isLoading, results, options, ayahs } = this.props;
+    const { location, isErrored, isLoading, results, options, verses } = this.props;
 
     if (!location.q) {
       return (
@@ -152,10 +152,10 @@ class Search extends Component {
     }
 
     return results.map(result => (
-      <Ayah
-        ayah={ayahs[result.ayah]}
+      <Verse
+        verse={verses[result.verse]}
         match={result.match}
-        key={result.ayah}
+        key={result.verse}
         tooltip={options.tooltip}
         isSearched
       />
@@ -210,7 +210,7 @@ function mapStateToProps(state) {
     took: state.searchResults.took,
     query: state.searchResults.query,
     results: state.searchResults.results,
-    ayahs: state.searchResults.entities,
+    verses: state.searchResults.entities,
     options: state.options
   };
 }

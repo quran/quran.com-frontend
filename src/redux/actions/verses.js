@@ -1,41 +1,39 @@
 import cookie from 'react-cookie';
-import { ayahsSchema } from 'redux/schemas';
+import { versesSchema } from 'redux/schemas';
 
 import {
   LOAD,
   LOAD_SUCCESS,
   LOAD_FAIL,
   CLEAR_CURRENT,
-  SET_CURRENT_AYAH,
+  SET_CURRENT_VERSE,
   SET_CURRENT_WORD,
   CLEAR_CURRENT_WORD
-  } from 'redux/constants/ayahs.js';
+} from 'redux/constants/verses.js';
 
 // For safe measure
 const defaultOptions = {
   audio: 8,
-  quran: 1,
-  content: [19]
+  translations: [20]
 };
 
 export function load(id, from, to, options = defaultOptions) {
-  const { audio, quran, content } = options;
+  const { audio, translations } = options;
 
-  cookie.save('lastVisit', JSON.stringify({ surahId: id, ayahId: from }));
+  cookie.save('lastVisit', JSON.stringify({ chapterId: id, verseId: from }));
 
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    schema: [ayahsSchema],
-    promise: client => client.get(`/v2/surahs/${id}/ayahs`, {
+    schema: { verses: [versesSchema] },
+    promise: client => client.get(`/api/v3/chapters/${id}/verses`, {
       params: {
         from,
         to,
-        audio,
-        quran,
-        content
+        recitation: audio,
+        translations
       }
     }),
-    surahId: id
+    chapterId: id
   };
 }
 
@@ -52,9 +50,9 @@ export function clearCurrentWord() {
   };
 }
 
-export function setCurrentAyah(id) {
+export function setcurrentVerse(id) {
   return {
-    type: SET_CURRENT_AYAH,
+    type: SET_CURRENT_VERSE,
     id
   };
 }
