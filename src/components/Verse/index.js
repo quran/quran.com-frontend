@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
+import useragent from 'express-useragent';
 
 import { verseType, matchType, surahType } from 'types';
 import Share from 'components/Share';
@@ -12,10 +13,12 @@ import Translation from 'components/Translation';
 import debug from 'helpers/debug';
 
 const styles = require('./style.scss');
+const userAgent = useragent.parse(window.navigator.userAgent);
 
 export default class Verse extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
+    userAgent: PropTypes.func,
     verse: verseType.isRequired,
     chapter: surahType.isRequired,
     bookmarked: PropTypes.bool, // TODO: Add this for search
@@ -130,8 +133,9 @@ export default class Verse extends Component {
     const { verse, tooltip, currentVerse, isPlaying, audioActions, isSearched } = this.props;
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
+    const renderText = userAgent.isChrome || useragent.isOpera || useragent.isBot;
 
-    const textCode = verse.words.map(word => ( // eslint-disable-line
+    const text = verse.words.map(word => ( // eslint-disable-line
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -141,42 +145,14 @@ export default class Verse extends Component {
         audioActions={audioActions}
         audioPosition={word.wordId ? wordAudioPosition += 1 : null}
         isSearched={isSearched}
-        useTextFont={false}
-      />
-    ));
-
-    const textText = verse.words.map(word => ( // eslint-disable-line
-      <Word
-        word={word}
-        key={`${word.position}-${word.code}-${word.lineNum}`}
-        currentVerse={currentVerse}
-        tooltip={tooltip}
-        isPlaying={isPlaying}
-        audioActions={audioActions}
-        audioPosition={word.wordId ? wordAudioPosition += 1 : null}
-        isSearched={isSearched}
-        useTextFont={true}
+        useTextFont={renderText}
       />
     ));
 
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
         <p>
-          <small>WORD CODE</small>
-          <br/>
-          {textCode}
-        </p>
-
-        <p>
-          <small>WORD TEXT</small>
-          <br/>
-          {textText}
-        </p>
-
-        <p className={`text-p${verse.pageNumber}`}>
-          <small>VERSE TEXT</small>
-          <br/>
-          {verse.textMadani}
+          {text}
         </p>
       </h1>
     );

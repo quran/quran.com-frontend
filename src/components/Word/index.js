@@ -62,11 +62,18 @@ export default class Word extends Component {
     const { tooltip, word, currentVerse, isPlaying, audioPosition, useTextFont } = this.props;
 
     let id = null;
+    let text;
     const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
-    const className = `${useTextFont ? 'text-' : ''}${word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    const className = `${useTextFont ? 'text-' : ''}${word.className} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
 
     if (word.charType === CHAR_TYPE_WORD) {
       id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition || word.position}`;
+    }
+
+    if (!useTextFont || word.charType == CHAR_TYPE_PAUSE) {
+      text = word.codeV3;
+    } else {
+      text = word.charType === CHAR_TYPE_END ? String(word.verseKey.split(':')[1]).padLeft(3, 0) : word.textMadani;
     }
 
     return (
@@ -78,7 +85,7 @@ export default class Word extends Component {
         onClick={this.handleWordPlay}
         className={`${className} pointer`}
         title={this.buildTooltip(word, tooltip)}
-        dangerouslySetInnerHTML={{ __html: useTextFont ? word.textMadani : word.code }}
+        dangerouslySetInnerHTML={{ __html: text }}
       />
     );
   }
