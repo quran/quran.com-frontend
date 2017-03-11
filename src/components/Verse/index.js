@@ -42,7 +42,7 @@ class Verse extends Component {
     currentWord: PropTypes.number, // gets passed in an integer, null by default
     iscurrentVerse: PropTypes.bool,
     currentVerse: PropTypes.string,
-    userAgent: PropTypes.object
+    userAgent: PropTypes.func
   };
 
   static defaultProps = {
@@ -128,11 +128,11 @@ class Verse extends Component {
   }
 
   renderText() {
-    const { verse, tooltip, currentVerse, isPlaying, audioActions, isSearched, userAgent } = this.props;
+    const { verse, tooltip, currentVerse, isPlaying, audioActions, isSearched, userAgent } = this.props; // eslint-disable-line max-len
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
-    const renderText = userAgent.isChrome || useragent.isOpera || useragent.isBot;
-   
+    const renderText = userAgent.isChrome || userAgent.isOpera || userAgent.isBot;
+
     const text = verse.words.map(word => ( // eslint-disable-line
       <Word
         word={word}

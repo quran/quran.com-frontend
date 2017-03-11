@@ -63,19 +63,17 @@ export default class Word extends Component {
   render() {
     const { tooltip, word, currentVerse, isPlaying, audioPosition, useTextFont } = this.props;
 
-    let id = null;
     let text;
     const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
     const className = `${useTextFont ? 'text-' : ''}${word.charType === CHAR_TYPE_WORD ? word.className : 'p0'} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition || word.position}`;
 
-    if (word.charType === CHAR_TYPE_WORD) {
-      id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition || word.position}`;
-    }
-
-    if (!useTextFont || word.charType === CHAR_TYPE_PAUSE) {
+    if (word.charType === CHAR_TYPE_END) {
+      text = zeroPad(word.verseKey.split(':')[1], 3, 0);
+    } else if (!useTextFont || word.charType === CHAR_TYPE_PAUSE) {
       text = word.codeV3;
     } else {
-      text = word.charType === CHAR_TYPE_END ? zeroPad(word.verseKey.split(':')[1], 3, 0) : word.textMadani;
+      text = word.textMadani;
     }
 
     return (
