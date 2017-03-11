@@ -1,7 +1,8 @@
 import {
   SET_OPTION,
   LOAD_RECITERS,
-  LOAD_RECITERS_SUCCESS
+  LOAD_RECITERS_SUCCESS,
+  SET_USER_AGENT
 } from 'redux/constants/options.js';
 
 const initialState = {
@@ -11,6 +12,7 @@ const initialState = {
   audio: 8,
   translations: [20],
   tooltip: 'translation',
+  userAgent: null,
   options: {
     recitations: []
   },
@@ -43,6 +45,13 @@ export default function reducer(state = initialState, action = {}) {
           ...state.options,
           recitations: action.result.recitations
         }
+      };
+    }
+    case SET_USER_AGENT: {
+      const { userAgent } = action;
+      return {
+        ...state,
+        userAgent
       };
     }
     default:

@@ -1,4 +1,3 @@
-export const SET_USER_AGENT = '@@quran/audioplayer/SET_USER_AGENT';
 export const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
 export const SET_CURRENT_WORD = '@@quran/audioplayer/SET_CURRENT_WORD';
 export const PLAY_CURRENT_WORD = '@@quran/audioplayer/PLAY_CURRENT_WORD';

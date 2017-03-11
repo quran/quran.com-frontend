@@ -3,7 +3,8 @@ import {
   SET_OPTION,
   LOAD_RECITERS,
   LOAD_RECITERS_SUCCESS,
-  LOAD_RECITERS_FAIL
+  LOAD_RECITERS_FAIL,
+  SET_USER_AGENT
 } from 'redux/constants/options.js';
 
 export function isReadingMode(globalState) {
@@ -26,3 +27,10 @@ export const loadRecitations = () => ({
   types: [LOAD_RECITERS, LOAD_RECITERS_SUCCESS, LOAD_RECITERS_FAIL],
   promise: client => client.get('/api/v3/options/recitations')
 });
+
+export function setUserAgent(userAgent) {
+  return {
+    type: SET_USER_AGENT,
+    userAgent
+  };
+}

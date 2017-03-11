@@ -14,7 +14,6 @@ import config from 'config';
 import metricsConfig from 'helpers/metrics';
 import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
-import FontStyles from 'components/FontStyles';
 import { removeMedia } from 'redux/actions/media';
 
 import authConnect from './connect';

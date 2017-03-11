@@ -21,8 +21,7 @@ import debug from './helpers/debug';
 
 import Html from './helpers/Html';
 
-import { setUserAgent } from './redux/actions/audioplayer.js';
-import { setOption } from './redux/actions/options.js';
+import { setOption, setUserAgent } from './redux/actions/options.js';
 import getLocalMessages from './helpers/setLocal';
 
 const pretty = new PrettyError();

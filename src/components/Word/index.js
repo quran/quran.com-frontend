@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import bindTooltip from 'utils/bindTooltip';
+import { zeroPad } from 'helpers/StringHelpers';
+
 /* eslint-disable no-unused-vars */
 const CHAR_TYPE_WORD = 'word';
 const CHAR_TYPE_END = 'end';
@@ -64,16 +66,16 @@ export default class Word extends Component {
     let id = null;
     let text;
     const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
-    const className = `${useTextFont ? 'text-' : ''}${word.className} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    const className = `${useTextFont ? 'text-' : ''}${word.charType === CHAR_TYPE_WORD ? word.className : 'p0'} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
 
     if (word.charType === CHAR_TYPE_WORD) {
       id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition || word.position}`;
     }
 
-    if (!useTextFont || word.charType == CHAR_TYPE_PAUSE) {
+    if (!useTextFont || word.charType === CHAR_TYPE_PAUSE) {
       text = word.codeV3;
     } else {
-      text = word.charType === CHAR_TYPE_END ? String(word.verseKey.split(':')[1]).padLeft(3, 0) : word.textMadani;
+      text = word.charType === CHAR_TYPE_END ? zeroPad(word.verseKey.split(':')[1], 3, 0) : word.textMadani;
     }
 
     return (

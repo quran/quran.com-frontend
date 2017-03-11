@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
 import { Element } from 'react-scroll';
-import useragent from 'express-useragent';
+import { connect } from 'react-redux';
 
 import { verseType, matchType, surahType } from 'types';
 import Share from 'components/Share';
@@ -9,16 +9,13 @@ import Copy from 'components/Copy';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
 import Translation from 'components/Translation';
-
 import debug from 'helpers/debug';
 
 const styles = require('./style.scss');
-const userAgent = useragent.parse(window.navigator.userAgent);
 
-export default class Verse extends Component {
+class Verse extends Component {
   static propTypes = {
     isSearched: PropTypes.bool,
-    userAgent: PropTypes.func,
     verse: verseType.isRequired,
     chapter: surahType.isRequired,
     bookmarked: PropTypes.bool, // TODO: Add this for search
@@ -44,7 +41,8 @@ export default class Verse extends Component {
     tooltip: PropTypes.string,
     currentWord: PropTypes.number, // gets passed in an integer, null by default
     iscurrentVerse: PropTypes.bool,
-    currentVerse: PropTypes.string
+    currentVerse: PropTypes.string,
+    userAgent: PropTypes.object
   };
 
   static defaultProps = {
@@ -130,11 +128,11 @@ export default class Verse extends Component {
   }
 
   renderText() {
-    const { verse, tooltip, currentVerse, isPlaying, audioActions, isSearched } = this.props;
+    const { verse, tooltip, currentVerse, isPlaying, audioActions, isSearched, userAgent } = this.props;
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
     const renderText = userAgent.isChrome || useragent.isOpera || useragent.isBot;
-
+   
     const text = verse.words.map(word => ( // eslint-disable-line
       <Word
         word={word}
@@ -292,3 +290,7 @@ export default class Verse extends Component {
     );
   }
 }
+
+export default connect(state => ({
+  userAgent: state.options.userAgent
+}))(Verse);
