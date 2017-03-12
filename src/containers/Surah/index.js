@@ -10,7 +10,7 @@ import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 
 // components
-import Loader from 'components/Loader';
+import Loader from 'quran-components/lib/Loader';
 import LazyLoad from 'components/LazyLoad';
 import PageBreak from 'components/PageBreak';
 import Audioplayer from 'components/Audioplayer';
@@ -37,6 +37,8 @@ import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
 import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
+
+const LoaderStyle = { width: '10em', height: '10em' };
 
 const style = require('./style.scss');
 
@@ -268,7 +270,7 @@ class Surah extends Component {
             }
           </ul>
         }
-        loadingComponent={<Loader />}
+        loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
       />
     );
   }
@@ -343,7 +345,7 @@ class Surah extends Component {
     const { chapter, options, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}><Loader /></div>;
+    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}><Loader isActive style={LoaderStyle} /></div>;
 
     return (
       <div className="chapter-body">

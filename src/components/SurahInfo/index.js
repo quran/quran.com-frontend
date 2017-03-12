@@ -1,7 +1,8 @@
 import React, { PropTypes } from 'react';
 
 import { surahType } from 'types';
-import Loader from 'components/Loader';
+import Loader from 'quran-components/lib/Loader';
+
 
 const style = require('./style.scss');
 
@@ -9,7 +10,7 @@ const SurahInfo = ({ chapter, isShowingSurahInfo, onClose }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
   if (!chapter.info) {
-    return <Loader />;
+    return <Loader isActive />;
   }
 
   return (

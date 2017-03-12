@@ -9,7 +9,7 @@ import ReactPaginate from 'react-paginate';
 import { FormattedHTMLMessage } from 'react-intl';
 
 import Verse from 'components/Verse';
-import Loader from 'components/Loader';
+import Loader from 'quran-components/lib/Loader';
 
 import { search } from 'redux/actions/search.js';
 
@@ -140,7 +140,7 @@ class Search extends Component {
     }
 
     if (isLoading) {
-      return <div style={{ padding: '15%' }}><Loader /></div>;
+      return <Loader isActive={isLoading} />;
     }
 
     if (!results.length) {
