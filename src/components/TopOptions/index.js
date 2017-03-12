@@ -1,5 +1,5 @@
 import React from 'react';
-import { SurahTitle as Title } from 'quran-components';
+import Title from 'quran-components/lib/SurahTitle';
 import Share from 'components/Share';
 import { surahType } from 'types';
 
