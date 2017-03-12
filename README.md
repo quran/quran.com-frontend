@@ -1,4 +1,4 @@
-# Quran.com [![SLACk](http://i.imgur.com/Lk5HsBo.png)](https://quranslack.herokuapp.com)
+# Quran.com [![SLACK](http://i.imgur.com/Lk5HsBo.png)](https://quranslack.herokuapp.com)
 
 This project is the frontend for Quran.com. It is built using
 [Reactjs] + [Redux] + [Expressjs] + [Webpack]. It is isomorphic (javascript shared
