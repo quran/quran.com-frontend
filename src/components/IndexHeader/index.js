@@ -3,6 +3,7 @@ import Link from 'react-router/lib/Link';
 
 import SearchInput from 'components/SearchInput';
 import debug from 'helpers/debug';
+import Jumbotron from 'quran-components/lib/Jumbotron';
 
 const logo = require('../../../static/images/logo-lg-w.png');
 const styles = require('./style.scss');
@@ -26,7 +27,7 @@ export default class IndexHeader extends Component {
     debug('component:IndexHeader', 'Render');
 
     return (
-      <div className="index-header" style={{ backgroundColor: '#2CA4AB' }}>
+      <Jumbotron>
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
@@ -38,7 +39,8 @@ export default class IndexHeader extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </Jumbotron>
+
     );
   }
 }

@@ -1,13 +1,14 @@
 import React from 'react';
-
-import Title from 'containers/Surah/Title';
+import { SurahTitle as Title } from 'quran-components';
 import Share from 'components/Share';
 import { surahType } from 'types';
+
+const styles = require('./style.scss');
 
 const TopOptions = ({ chapter }) => (
   <div className="row">
     <div className="col-md-4 hidden-xs hidden-sm">
-      <Title chapter={chapter} />
+      <span><Title chapterNumber={chapter.id} className={styles.title} color={'#2CA4AB'} /></span>
     </div>
     <div className="col-md-8 text-right">
       <ul className="list-inline">
