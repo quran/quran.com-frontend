@@ -19,7 +19,7 @@ export default {
     // If an item is larger than the screen, don't scroll to the top of it if it's already filling
     // the screen.
     if ((scrollOffset < scrollTop) !==
-        (scrollOffset + nodeRect.height > scrollTop + viewportHeight)) {
+        (scrollOffset + nodeRect.height > scrollTop + viewportHeight + offset)) {
       window.scrollTo(0, scrollOffset);
     }
   }
