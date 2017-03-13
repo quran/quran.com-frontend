@@ -29,6 +29,11 @@
 
 .p0, .text-p0{
   font-family: quran-common;
+
+  &.end{
+    padding: 0;
+    text-align: left;
+  }
 }
 
 @font-face {
