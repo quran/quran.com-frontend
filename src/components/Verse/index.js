@@ -45,6 +45,7 @@ class Verse extends Component {
     userAgent: PropTypes.func
   };
 
+
   static defaultProps = {
     currentWord: null,
     isSearched: false
@@ -180,11 +181,11 @@ class Verse extends Component {
   }
 
   renderCopyLink() {
-    const { isSearched, verse: { textMadani } } = this.props;
+    const { isSearched, verse } = this.props;
 
     if (!isSearched) {
       return (
-        <Copy text={textMadani} />
+        <Copy text={verse.textMadani} verseKey={verse.verseKey} />
       );
     }
 
