@@ -64,6 +64,7 @@ export default class Word extends Component {
     const { tooltip, word, currentVerse, isPlaying, audioPosition, useTextFont } = this.props;
 
     let text;
+    let spacer;
     const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
     const className = `${useTextFont ? 'text-' : ''}${word.charType === CHAR_TYPE_WORD ? word.className : 'p0'} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
     const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition || word.position}`;
@@ -76,17 +77,24 @@ export default class Word extends Component {
       text = word.textMadani;
     }
 
+    if (word.charType === CHAR_TYPE_WORD) {
+      spacer = '&nbsp;';
+    }
+
     return (
-      <b // eslint-disable-line
-        { ...bindTooltip}
-        key={word.code}
-        id={id}
-        onDoubleClick={this.handleSegmentPlay}
-        onClick={this.handleWordPlay}
-        className={`${className} pointer`}
-        title={this.buildTooltip(word, tooltip)}
-        dangerouslySetInnerHTML={{ __html: text }}
-      />
+      <span>
+        <b // eslint-disable-line
+          { ...bindTooltip}
+          key={word.code}
+          id={id}
+          onDoubleClick={this.handleSegmentPlay}
+          onClick={this.handleWordPlay}
+          className={`${className} pointer`}
+          title={this.buildTooltip(word, tooltip)}
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
+        <small dangerouslySetInnerHTML={{ __html: spacer }} />
+      </span>
     );
   }
 
