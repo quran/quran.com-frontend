@@ -2,19 +2,23 @@ import {
   SET_OPTION,
   LOAD_RECITERS,
   LOAD_RECITERS_SUCCESS,
-  SET_USER_AGENT
+  SET_USER_AGENT,
+  LOAD_TRANSLATIONS,
+  LOAD_TRANSLATIONS_SUCCESS
 } from 'redux/constants/options.js';
 
 const initialState = {
   isReadingMode: false,
   isShowingSurahInfo: false,
   loadingRecitations: false,
+  loadingTranslations: false,
   audio: 8,
   translations: [20],
   tooltip: 'translation',
   userAgent: null,
   options: {
-    recitations: []
+    recitations: [],
+    translations: []
   },
   fontSize: {
     arabic: 3.5,
@@ -52,6 +56,22 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         userAgent
+      };
+    }
+    case LOAD_TRANSLATIONS: {
+      return {
+        ...state,
+        loadingTranslations: true
+      };
+    }
+    case LOAD_TRANSLATIONS_SUCCESS: {
+      return {
+        ...state,
+        loadingTranslations: false,
+        options: {
+          ...state.options,
+          translations: action.result.translations
+        }
       };
     }
     default:

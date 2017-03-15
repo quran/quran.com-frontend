@@ -4,7 +4,10 @@ import {
   LOAD_RECITERS,
   LOAD_RECITERS_SUCCESS,
   LOAD_RECITERS_FAIL,
-  SET_USER_AGENT
+  SET_USER_AGENT,
+  LOAD_TRANSLATIONS,
+  LOAD_TRANSLATIONS_SUCCESS,
+  LOAD_TRANSLATIONS_FAIL
 } from 'redux/constants/options.js';
 
 export function isReadingMode(globalState) {
@@ -34,3 +37,8 @@ export function setUserAgent(userAgent) {
     userAgent
   };
 }
+
+export const loadTranslations = () => ({
+  types: [LOAD_TRANSLATIONS, LOAD_TRANSLATIONS_SUCCESS, LOAD_TRANSLATIONS_FAIL],
+  promise: client => client.get('/api/v3/options/translations')
+});
