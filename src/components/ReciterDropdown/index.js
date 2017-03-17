@@ -22,7 +22,11 @@ class ReciterDropdown extends Component {
   };
 
   componentDidMount() {
-    return this.props.loadRecitations();
+    if (!this.props.recitations.length) {
+      return this.props.loadRecitations();
+    }
+
+    return false;
   }
 
   renderMenu() {
