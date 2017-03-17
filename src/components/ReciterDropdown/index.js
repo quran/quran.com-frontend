@@ -4,7 +4,7 @@ import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 
-import Loader from 'components/Loader';
+import Loader from 'quran-components/lib/Loader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import { loadRecitations } from 'redux/actions/options';
@@ -57,7 +57,7 @@ class ReciterDropdown extends Component {
           className={`${className} ${style.dropdown}`}
           title={title}
         >
-          {recitations.length ? this.renderMenu() : <Loader />}
+          {recitations.length ? this.renderMenu() : <Loader isActive />}
         </DropdownButton>
       </ButtonToolbar>
     );
