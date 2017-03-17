@@ -9,7 +9,7 @@ import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import cookie from 'react-cookie';
-import raven from 'raven';
+import Raven from 'raven';
 import errorhandler from 'errorhandler';
 
 import config from 'config';
@@ -27,11 +27,16 @@ import getLocalMessages from './helpers/setLocal';
 
 const pretty = new PrettyError();
 const server = express();
+Raven.config(config.sentryServer, {
+  captureUnhandledRejections: true,
+  autoBreadcrumbs: true
+}).install();
+
 
 expressConfig(server);
 
-// Use varnish for the static routes, which will cache too
-server.use(raven.middleware.express.requestHandler(config.sentryServer));
+
+server.use(Raven.requestHandler());
 
 server.use((req, res, next) => {
   cookie.plugToRequest(req, res);
@@ -100,7 +105,7 @@ server.use((req, res, next) => {
   return false;
 });
 
-server.use(raven.middleware.express.errorHandler(config.sentryServer));
+server.use(Raven.errorHandler());
 
 if (process.env.NODE_ENV === 'development') {
   // only use in development
