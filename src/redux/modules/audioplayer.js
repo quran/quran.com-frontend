@@ -4,7 +4,6 @@ import { buildSegments, extractSegments } from 'helpers/buildSegments';
 import debug from 'helpers/debug';
 
 import {
-  SET_USER_AGENT,
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
   PLAY_CURRENT_WORD,
@@ -30,7 +29,6 @@ export { NEXT, SET_AYAH };
 
 const initialState = {
   files: {},
-  userAgent: null,
   currentFile: null,
   currentVerse: null,
   currentWord: null,
@@ -141,13 +139,6 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         ...payload
-      };
-    }
-    case SET_USER_AGENT: {
-      const { userAgent } = action;
-      return {
-        ...state,
-        userAgent
       };
     }
     case PLAY: {
