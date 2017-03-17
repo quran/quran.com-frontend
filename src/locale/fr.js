@@ -77,6 +77,6 @@ export default {
     'nav.legacySite': 'Version précédente de Quran.com',
 
     'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. '
-   }
+  }
 };
 
