@@ -141,11 +141,12 @@ export class Audioplayer extends Component {
 
     if (isPlaying) pause();
 
-    if (!this[camelize(`get_${direction}`)]()) return pause();
+    const nextVerse = this[camelize(`get_${direction}`)]();
+    if (!nextVerse) return pause();
 
     this.props[direction](currentVerse);
 
-    this.handleScrollTo(currentVerse);
+    this.handleScrollTo(nextVerse);
 
     this.preloadNext();
 
@@ -154,11 +155,15 @@ export class Audioplayer extends Component {
     return false;
   }
 
-  handleScrollTo = (ayahNum = this.props.currentVerse) => {
+  scrollToVerse = (ayahNum = this.props.currentVerse) => {
+    scroller.scrollTo(`verse:${ayahNum}`, -45);
+  }
+
+  handleScrollTo = (ayahNum) => {
     const { shouldScroll } = this.props;
 
     if (shouldScroll) {
-      scroller.scrollTo(`ayah:${ayahNum}`, -150);
+      this.scrollToVerse(ayahNum);
     }
   }
 
@@ -250,12 +255,7 @@ export class Audioplayer extends Component {
     const { shouldScroll, currentVerse } = this.props;
 
     if (!shouldScroll) { // we use the inverse (!) here because we're toggling, so false is true
-      const elem = document.getElementsByName(`ayah:${currentVerse}`)[0];
-      if (elem && elem.getBoundingClientRect().top < 0) { // if the ayah is above our scroll offset
-        scroller.scrollTo(`ayah:${currentVerse}`, -150);
-      } else {
-        scroller.scrollTo(`ayah:${currentVerse}`, -80);
-      }
+      this.scrollToVerse(currentVerse);
     }
 
     this.props.toggleScroll();
