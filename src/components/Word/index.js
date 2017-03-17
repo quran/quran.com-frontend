@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import bindTooltip from 'utils/bindTooltip';
+import { zeroPad } from 'helpers/StringHelpers';
+
 /* eslint-disable no-unused-vars */
 const CHAR_TYPE_WORD = 'word';
 const CHAR_TYPE_END = 'end';
@@ -15,7 +17,8 @@ export default class Word extends Component {
     audioPosition: PropTypes.number,
     currentVerse: PropTypes.string.isRequired,
     isPlaying: PropTypes.bool,
-    isSearched: PropTypes.bool
+    isSearched: PropTypes.bool,
+    useTextFont: PropTypes.bool // tmp change to compare text and code based rendering
   };
 
   buildTooltip = (word, tooltip) => {
@@ -58,27 +61,40 @@ export default class Word extends Component {
   }
 
   render() {
-    const { tooltip, word, currentVerse, isPlaying, audioPosition } = this.props;
+    const { tooltip, word, currentVerse, isPlaying, audioPosition, useTextFont } = this.props;
 
-    let id = null;
+    let text;
+    let spacer;
     const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
-    const className = `${word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    const className = `${useTextFont ? 'text-' : ''}${word.charType === CHAR_TYPE_WORD ? word.className : 'p0'} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition || word.position}`;
+
+    if (word.charType === CHAR_TYPE_END) {
+      text = zeroPad(word.verseKey.split(':')[1], 3, 0);
+    } else if (!useTextFont || word.charType === CHAR_TYPE_PAUSE) {
+      text = word.codeV3;
+    } else {
+      text = word.textMadani;
+    }
 
     if (word.charType === CHAR_TYPE_WORD) {
-      id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition || word.position}`;
+      spacer = '&nbsp;';
     }
 
     return (
-      <b // eslint-disable-line
-        { ...bindTooltip}
-        key={word.code}
-        id={id}
-        onDoubleClick={this.handleSegmentPlay}
-        onClick={this.handleWordPlay}
-        className={`${className} pointer`}
-        title={this.buildTooltip(word, tooltip)}
-        dangerouslySetInnerHTML={{ __html: word.code }}
-      />
+      <span>
+        <b // eslint-disable-line
+          { ...bindTooltip}
+          key={word.code}
+          id={id}
+          onDoubleClick={this.handleSegmentPlay}
+          onClick={this.handleWordPlay}
+          className={`${className} pointer`}
+          title={this.buildTooltip(word, tooltip)}
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
+        <small dangerouslySetInnerHTML={{ __html: spacer }} />
+      </span>
     );
   }
 

@@ -1,5 +1,4 @@
 import {
-  SET_USER_AGENT,
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
   PLAY_CURRENT_WORD,
@@ -12,13 +11,6 @@ import {
   TOGGLE_SCROLL,
   BUILD_ON_CLIENT,
   UPDATE } from 'redux/constants/audioplayer.js';
-
-export function setUserAgent(userAgent) {
-  return {
-    type: SET_USER_AGENT,
-    userAgent
-  };
-}
 
 export function setCurrentFile(file) {
   return {
