@@ -8,3 +8,4 @@ export { default as wordType } from './wordType';
 export { default as matchType } from './matchType';
 export { default as recitationType } from './recitationType';
 export { default as translationType } from './translationType';
+export { default as contentType } from './contentType';
