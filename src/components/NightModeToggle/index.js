@@ -1,21 +1,38 @@
 /* global document */
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 class NightModeToggle extends Component {
-  state = {
-    isNightMode: false,
-  };
+  static propTypes = {
+    isNightMode: PropTypes.bool.isRequired,
+    onToggle: PropTypes.func.isRequired
+  }
+
+  componentDidMount() {
+    const { isNightMode } = this.props;
+
+    if (isNightMode) {
+      document.body.classList.add('night-mode');
+    }
+  }
 
   toggleNightMode = () => {
-    document.body.classList.toggle('night-mode');
+    const { isNightMode, onToggle } = this.props;
 
-    this.setState({ isNightMode: !this.state.isNightMode });
+    if (isNightMode) {
+      document.body.classList.remove('night-mode');
+    } else {
+      document.body.classList.add('night-mode');
+    }
+
+    onToggle({ isNightMode: !isNightMode });
   }
 
   render() {
+    const { isNightMode } = this.props;
+
     return (
-      <li className={this.state.isNightMode && 'active'}>
+      <li className={isNightMode && 'active'}>
         <a
           tabIndex="-1"
           className="pointer"
