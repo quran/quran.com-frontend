@@ -8,6 +8,14 @@ class NightModeToggle extends Component {
     onToggle: PropTypes.func.isRequired
   }
 
+  componentDidMount() {
+    const { isNightMode } = this.props;
+
+    if (isNightMode) {
+      document.body.classList.add('night-mode');
+    }
+  }
+
   toggleNightMode = () => {
     const { isNightMode, onToggle } = this.props;
 
@@ -22,10 +30,6 @@ class NightModeToggle extends Component {
 
   render() {
     const { isNightMode } = this.props;
-
-    if (__CLIENT__ && isNightMode) {
-      document.body.classList.add('night-mode');
-    }
 
     return (
       <li className={isNightMode && 'active'}>
