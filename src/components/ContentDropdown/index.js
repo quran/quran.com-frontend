@@ -29,14 +29,14 @@ const compareAlphabetically = property =>
 class ContentDropdown extends Component {
   static propTypes = {
     onOptionChange: PropTypes.func.isRequired,
-    content: PropTypes.arrayOf(PropTypes.number).isRequired,
-    translations: PropTypes.arrayOf(contentType),
+    translations: PropTypes.arrayOf(PropTypes.number).isRequired,
+    translationOptions: PropTypes.arrayOf(contentType),
     loadTranslations: PropTypes.func.isRequired,
     className: PropTypes.string
   };
 
   componentDidMount() {
-    if (!this.props.translations.length) {
+    if (!this.props.translationOptions.length) {
       return this.props.loadTranslations();
     }
 
@@ -44,9 +44,9 @@ class ContentDropdown extends Component {
   }
 
   getTitle() {
-    const { translations, content } = this.props;
+    const { translationOptions, translations } = this.props;
 
-    return translations.filter(slug => content.includes(slug.id)).map((slug) => {
+    return translationOptions.filter(slug => translations.includes(slug.id)).map((slug) => {
       if (slug.languageName === 'English') return slug.authorName;
 
       return slug.languageName;
@@ -56,24 +56,24 @@ class ContentDropdown extends Component {
   handleRemoveContent = () => {
     const { onOptionChange } = this.props;
 
-    onOptionChange({ content: [] });
+    onOptionChange({ translations: [] });
   }
 
   handleOptionSelected(id) {
-    const { onOptionChange, content } = this.props;
+    const { onOptionChange, translations } = this.props;
 
-    if (content.find(option => option === id)) {
-      onOptionChange({ content: content.filter(option => option !== id) });
+    if (translations.find(option => option === id)) {
+      onOptionChange({ translations: translations.filter(option => option !== id) });
     } else {
-      onOptionChange({ content: [...content, id] });
+      onOptionChange({ translations: [...translations, id] });
     }
   }
 
   renderItems(items, key) {
-    const { content } = this.props;
+    const { translations } = this.props;
 
     return items.map((translation) => {
-      const checked = content.find(option => option === translation.id);
+      const checked = translations.find(option => option === translation.id);
 
       return (
         <li key={translation.id} className={style.item}>
@@ -94,7 +94,7 @@ class ContentDropdown extends Component {
   }
 
   renderEnglishList() {
-    const list = this.props.translations
+    const list = this.props.translationOptions
     .filter(translation => translation.languageName === 'English')
     .sort(compareAlphabetically('authorName'));
 
@@ -102,7 +102,7 @@ class ContentDropdown extends Component {
   }
 
   renderLanguagesList() {
-    const list = this.props.translations
+    const list = this.props.translationOptions
     .filter(translation => translation.languageName !== 'English')
     .sort(compareAlphabetically('languageName'));
 
@@ -110,7 +110,7 @@ class ContentDropdown extends Component {
   }
 
   render() {
-    const { className, content } = this.props;
+    const { className, translations } = this.props;
 
     return (
       <ButtonToolbar>
@@ -121,7 +121,7 @@ class ContentDropdown extends Component {
           title={this.getTitle()}
         >
           {
-            content.length &&
+            translations && translations.length &&
               <MenuItem onClick={this.handleRemoveContent}>
                 <LocaleFormattedMessage id="setting.translations.removeAll" defaultMessage="Remove all" />
               </MenuItem>
@@ -142,6 +142,7 @@ class ContentDropdown extends Component {
 }
 
 export default connect(state => ({
-  translations: state.options.options.translations,
-  loadingTranslations: state.options.loadingTranslations
+  translationOptions: state.options.options.translations,
+  loadingTranslations: state.options.loadingTranslations,
+  translations: state.options.translations
 }), { loadTranslations })(ContentDropdown);

@@ -48,7 +48,6 @@ const SettingsModal = ({
           </h5>
           <ReciterDropdown
             onOptionChange={handleOptionChange}
-            audio={options.audio}
           />
         </div>
         <div className="form-group">
@@ -57,7 +56,6 @@ const SettingsModal = ({
           </h5>
           <ContentDropdown
             onOptionChange={handleOptionChange}
-            content={options.content}
           />
         </div>
         <div className="form-group">
