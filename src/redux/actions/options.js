@@ -14,6 +14,10 @@ export function isReadingMode(globalState) {
   return globalState.options.isReadingMode;
 }
 
+export function isNightMode(globalState) {
+  return globalState.options.isNightMode;
+}
+
 export function setOption(payload) {
   const options = cookie.load('options') || {}; // protect against first timers.
 

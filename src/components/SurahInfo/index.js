@@ -3,7 +3,6 @@ import React, { PropTypes } from 'react';
 import { surahType } from 'types';
 import Loader from 'quran-components/lib/Loader';
 
-
 const style = require('./style.scss');
 
 const SurahInfo = ({ chapter, isShowingSurahInfo, onClose }) => {

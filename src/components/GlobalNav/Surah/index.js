@@ -40,7 +40,10 @@ const GlobalNavSurah = ({ chapter, chapters, setOption, options, ...props }) => 
           isToggled={options.isReadingMode}
           onToggle={setOption}
         />
-        <NightModeToggle />
+        <NightModeToggle
+          isNightMode={options.isNightMode}
+          onToggle={setOption}
+        />
       </NavDropdown>,
       <div className="navbar-form navbar-left hidden-xs hidden-sm">
         <SearchInput className="search-input" />
@@ -64,7 +67,10 @@ const GlobalNavSurah = ({ chapter, chapters, setOption, options, ...props }) => 
         isToggled={options.isReadingMode}
         onToggle={setOption}
       />,
-      <NightModeToggle />
+      <NightModeToggle
+        isNightMode={options.isNightMode}
+        onToggle={setOption}
+      />
     ]}
   />
 );

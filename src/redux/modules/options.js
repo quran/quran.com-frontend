@@ -9,6 +9,7 @@ import {
 
 const initialState = {
   isReadingMode: false,
+  isNightMode: false,
   isShowingSurahInfo: false,
   loadingRecitations: false,
   loadingTranslations: false,
