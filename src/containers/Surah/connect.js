@@ -7,12 +7,40 @@ import {
 
 import {
   clearCurrent,
-  load as loadAyahs
+  load as loadAyahs,
+  isLoaded
   } from 'redux/actions/verses.js';
 
-import { debug, isLoaded } from 'helpers';
+import { debug } from 'helpers';
 
-const ayahRangeSize = 30;
+const determinePage = (range) => {
+  let from;
+  let to;
+
+  if (range) {
+    if (range.includes('-')) {
+      [from, to] = range.split('-').map(value => parseInt(value, 10));
+
+      if (isNaN(from) || isNaN(to)) return {};
+
+      return {
+        offset: from - 1,
+        limit: to - from
+      };
+    }
+
+    const offset = parseInt(range, 10);
+
+    if (isNaN(offset)) return {};
+
+    return {
+      offset: offset - 1,
+      limit: 1
+    };
+  }
+
+  return {};
+};
 
 export const chaptersConnect = ({ store: { getState, dispatch } }) => {
   debug('component:Surah:chaptersConnect', 'Init');
@@ -43,48 +71,24 @@ export const chapterInfoConnect = ({ store: { dispatch }, params }) => {
 export const versesConnect = ({ store: { dispatch, getState }, params }) => {
   debug('component:Surah:versesConnect', 'Init');
 
-  const range = params.range;
   const chapterId = parseInt(params.chapterId, 10);
-
-  let from;
-  let to;
-
-  if (range) {
-    if (range.includes('-')) {
-      [from, to] = range.split('-');
-    } else {
-      // Single ayah. For example /2/30
-      from = range;
-      to = range;
-    }
-
-    if (isNaN(from) || isNaN(to)) {
-      // Something wrong happened like /2/SOMETHING
-      // going to rescue by giving beginning of surah.
-      [from, to] = [1, ayahRangeSize];
-    }
-  } else {
-    [from, to] = [1, ayahRangeSize];
-  }
-
-  from = parseInt(from, 10);
-  to = parseInt(to, 10);
+  const paging = determinePage(params.range);
 
   if (chapterId !== getState().chapters.current) {
     dispatch(setCurrentSurah(chapterId));
   }
 
-  if (!isLoaded(getState(), chapterId, from, to)) {
+  if (!isLoaded(getState(), chapterId, paging)) {
     debug('component:Surah:versesConnect', 'Not loaded');
 
     dispatch(clearCurrent(chapterId)); // In the case where you go to same surah but later ayahs.
 
     if (__CLIENT__) {
-      dispatch(loadAyahs(chapterId, from, to, getState().options));
+      dispatch(loadAyahs(chapterId, paging, getState().options));
       return true;
     }
 
-    return dispatch(loadAyahs(chapterId, from, to, getState().options));
+    return dispatch(loadAyahs(chapterId, paging, getState().options));
   }
 
   return true;
