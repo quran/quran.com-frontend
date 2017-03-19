@@ -85,7 +85,7 @@ class Verse extends Component {
     const array = match || verse.translations || [];
 
     return array.map((translation, index) => (
-      <Translation translation={translation} index={index} />
+      <Translation translation={translation} index={index} key={index} />
     ));
   }
 
@@ -274,7 +274,7 @@ class Verse extends Component {
 
   render() {
     const { verse, iscurrentVerse } = this.props;
-    debug('component:Verse', `Render ${this.props.verse.ayahNum}`);
+    debug('component:Verse', `Render ${this.props.verse.verseKey}`);
 
     return (
       <Element

@@ -148,9 +148,10 @@ class Surah extends Component {
     const size = 10;
     const from = range[1];
     const to = (from + size);
+    const paging = { offset: from, limit: to - from };
 
     if (!isEndOfSurah && !verseIds.has(to)) {
-      actions.verse.load(chapter.chapterNumber, from, to, options).then(() => {
+      actions.verse.load(chapter.chapterNumber, paging, options).then(() => {
         this.setState({ lazyLoading: false });
         return callback && callback();
       });

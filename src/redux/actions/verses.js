@@ -1,4 +1,3 @@
-import cookie from 'react-cookie';
 import { versesSchema } from 'redux/schemas';
 
 import {
@@ -11,24 +10,27 @@ import {
   CLEAR_CURRENT_WORD
 } from 'redux/constants/verses.js';
 
-// For safe measure
+// NOTE: For safe measure
 const defaultOptions = {
   audio: 8,
   translations: [20]
 };
 
-export function load(id, from, to, options = defaultOptions) {
+// NOTE: From the API!
+const perPage = 10;
+
+export function load(id, paging, options = defaultOptions) {
   const { audio, translations } = options;
 
-  cookie.save('lastVisit', JSON.stringify({ chapterId: id, verseId: from }));
+  // TODO: move this to module/verses
+  // cookie.save('lastVisit', JSON.stringify({ chapterId: id, verseId: from }));
 
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: { verses: [versesSchema] },
     promise: client => client.get(`/api/v3/chapters/${id}/verses`, {
       params: {
-        from,
-        to,
+        ...paging,
         recitation: audio,
         translations
       }
@@ -62,4 +64,12 @@ export function setCurrentWord(id) {
     type: SET_CURRENT_WORD,
     id
   };
+}
+
+export function isLoaded(globalState, chapterId, paging) {
+  return (
+    globalState.verses.entities[chapterId] &&
+    globalState.verses.entities[chapterId][`${chapterId}:${paging.offset || 1}`] &&
+    globalState.verses.entities[chapterId][`${chapterId}:${paging.offset + paging.limit || perPage}`]
+  );
 }
