@@ -36,9 +36,9 @@ export default class {
       new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
 
-        params = params || {};
+        params = params || {}; // eslint-disable-line no-param-reassign
 
-        params['language'] = contentLanguage();
+        params.language = contentLanguage(); // eslint-disable-line no-param-reassign
 
         request.query(qs.stringify(decamelizeKeys(params), {
           arrayFormat: arrayFormat || 'brackets'
