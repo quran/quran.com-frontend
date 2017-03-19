@@ -7,6 +7,10 @@ import config from 'config';
 
 const methods = ['get', 'post', 'put', 'patch', 'del'];
 
+function contentLanguage() {
+  return cookie.load('currentLocale') || config.defaultLocale;
+}
+
 function formatUrl(path) {
   const adjustedPath = path[0] !== '/' ? `/${path}` : path;
 
@@ -32,11 +36,13 @@ export default class {
       new Promise((resolve, reject) => {
         const request = superagent[method](formatUrl(path));
 
-        if (params) {
-          request.query(qs.stringify(decamelizeKeys(params), {
-            arrayFormat: arrayFormat || 'brackets'
-          }));
-        }
+        params = params || {};
+
+        params['language'] = contentLanguage();
+
+        request.query(qs.stringify(decamelizeKeys(params), {
+          arrayFormat: arrayFormat || 'brackets'
+        }));
 
         if (cookie.load('auth')) {
           const headers = cookie.load('auth');
