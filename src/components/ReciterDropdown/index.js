@@ -66,5 +66,6 @@ class ReciterDropdown extends Component {
 
 export default connect(state => ({
   recitations: state.options.options.recitations,
-  loadingRecitations: state.options.loadingRecitations
+  loadingRecitations: state.options.loadingRecitations,
+  audio: state.options.audio
 }), { loadRecitations })(ReciterDropdown);
