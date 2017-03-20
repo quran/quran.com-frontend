@@ -1,11 +1,10 @@
 import { LOAD_SUCCESS } from 'redux/constants/verses.js';
-import { SEARCH_SUCCESS } from 'redux/constants/search.js';
+// import { SEARCH_SUCCESS } from 'redux/constants/search.js';
 import LOAD from 'redux/constants/fontFace.js';
 
 export default function reducer(state = {}, action = {}) {
   switch (action.type) {
-    case LOAD_SUCCESS:
-    case SEARCH_SUCCESS: {
+    case LOAD_SUCCESS: {
       const verses = action.result.entities.verses;
       const classNames = {};
 

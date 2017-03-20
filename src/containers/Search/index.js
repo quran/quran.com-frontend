@@ -17,7 +17,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import { verseType, optionsType } from 'types';
 
-import Header from './Header';
+import Header from 'components/IndexHeader';
 
 const style = require('./style.scss');
 
@@ -123,7 +123,7 @@ class Search extends Component {
   renderBody() {
     const { location, isErrored, isLoading, results, options, verses } = this.props;
 
-    if (!location.q) {
+    if (!location.query.q) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
           <LocaleFormattedMessage id="search.nothing" defaultMessage="No search query." />
@@ -153,9 +153,8 @@ class Search extends Component {
 
     return results.map(result => (
       <Verse
-        verse={verses[result.verse]}
-        match={result.match}
-        key={result.verse}
+        verse={verses[result]}
+        key={result}
         tooltip={options.tooltip}
         isSearched
       />

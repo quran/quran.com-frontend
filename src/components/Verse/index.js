@@ -267,7 +267,10 @@ class Verse extends Component {
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderBookmark()}
-        <Share chapter={chapter} verseKey={verse.verseKey} />
+        {
+          chapter &&
+          <Share chapter={chapter} verseKey={verse.verseKey} />
+        }
       </div>
     );
   }
