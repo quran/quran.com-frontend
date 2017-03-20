@@ -39,25 +39,25 @@ export default (store) => {
   return (
     <Route path="/" component={App} onEnter={shouldAuth}>
       <IndexRoute components={Home} />
-      <Route path="/donations" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
-      <Route path="/contributions" getComponent={(nextState, cb) => System.import('./containers/Donations').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/donations" getComponent={(nextState, cb) => import('./containers/Donations').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/contributions" getComponent={(nextState, cb) => import('./containers/Donations').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/about" getComponent={(nextState, cb) => System.import('./containers/About').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/about" getComponent={(nextState, cb) => import('./containers/About').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/contact" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
-      <Route path="/contactus" getComponent={(nextState, cb) => System.import('./containers/Contact').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/contact" getComponent={(nextState, cb) => import('./containers/Contact').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/contactus" getComponent={(nextState, cb) => import('./containers/Contact').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/mobile" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
-      <Route path="/apps" getComponent={(nextState, cb) => System.import('./containers/MobileLanding').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/mobile" getComponent={(nextState, cb) => import('./containers/MobileLanding').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/apps" getComponent={(nextState, cb) => import('./containers/MobileLanding').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/error/:errorKey" getComponent={(nextState, cb) => System.import('./containers/Error').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/error/:errorKey" getComponent={(nextState, cb) => import('./containers/Error').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/search" getComponent={(nextState, cb) => System.import('./containers/Search').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/search" getComponent={(nextState, cb) => import('./containers/Search').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
-      <Route path="/login" getComponent={(nextState, cb) => System.import('./containers/Login').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route path="/login" getComponent={(nextState, cb) => import('./containers/Login').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
 
       <Route onEnter={requireLogin}>
-        <Route path="/profile" getComponent={(nextState, cb) => System.import('./containers/Profile').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+        <Route path="/profile" getComponent={(nextState, cb) => import('./containers/Profile').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
       </Route>
 
       <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
@@ -66,9 +66,9 @@ export default (store) => {
         path="/:chapterId(/:range)"
         getComponents={(nextState, cb) =>
           Promise.all([
-            System.import('./containers/Surah'),
-            System.import('./components/GlobalNav/Surah'),
-            System.import('./components/GlobalSidebar/Surah'),
+            import('./containers/Surah'),
+            import('./components/GlobalNav/Surah'),
+            import('./components/GlobalSidebar/Surah'),
           ])
           .then(modules => cb(
             null,

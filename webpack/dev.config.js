@@ -58,7 +58,8 @@ module.exports = {
                 'transform-decorators-legacy',
                 'transform-react-display-name',
                 'typecheck',
-                'react-hot-loader/babel'
+                'react-hot-loader/babel',
+                'syntax-dynamic-import'
               ],
               presets: [['es2015', { modules: false }], 'stage-2', 'react'],
               // cacheDirectory: true

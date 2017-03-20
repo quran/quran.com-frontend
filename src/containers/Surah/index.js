@@ -8,17 +8,14 @@ import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
 import Helmet from 'react-helmet';
+import Loadable from 'react-loadable';
 
 // components
 import Loader from 'quran-components/lib/Loader';
 import LazyLoad from 'components/LazyLoad';
-import PageBreak from 'components/PageBreak';
-import Audioplayer from 'components/Audioplayer';
-import SurahInfo from 'components/SurahInfo';
 import Verse from 'components/Verse';
-import Line from 'components/Line';
+import ComponentLoader from 'components/ComponentLoader';
 import Bismillah from 'components/Bismillah';
-import TopOptions from 'components/TopOptions';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 // utils
@@ -41,6 +38,24 @@ import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
 const LoaderStyle = { width: '10em', height: '10em' };
 
 const style = require('./style.scss');
+
+const PageView = Loadable({
+  loader: () => import('components/PageView'),
+  LoadingComponent: ComponentLoader
+});
+
+const Audioplayer = Loadable({
+  loader: () => import('components/Audioplayer'),
+  LoadingComponent: ComponentLoader
+});
+const SurahInfo = Loadable({
+  loader: () => import('components/SurahInfo'),
+  LoadingComponent: ComponentLoader
+});
+const TopOptions = Loadable({
+  loader: () => import('components/TopOptions'),
+  LoadingComponent: ComponentLoader
+});
 
 class Surah extends Component {
   static propTypes = {
@@ -310,36 +325,16 @@ class Surah extends Component {
     const { lines, options, currentVerse, isPlaying, actions } = this.props;
     const keys = Object.keys(lines);
 
-    return keys.map((lineNum, index) => {
-      const nextNum = keys[index + 1];
-      const pageNum = lineNum.split('-')[0];
-      const line = lines[lineNum];
-
-      if (index + 1 !== keys.length && pageNum !== nextNum.split('-')[0]) {
-        return [
-          <Line
-            line={line}
-            key={lineNum}
-            currentVerse={currentVerse}
-            tooltip={options.tooltip}
-            audioActions={actions.audio}
-            isPlaying={isPlaying}
-          />,
-          <PageBreak pageNum={parseInt(pageNum, 10) + 1} />
-        ];
-      }
-
-      return (
-        <Line
-          line={line}
-          key={lineNum}
-          currentVerse={currentVerse}
-          tooltip={options.tooltip}
-          audioActions={actions.audio}
-          isPlaying={isPlaying}
-        />
-      );
-    });
+    return (
+      <PageView
+        lines={lines}
+        keys={keys}
+        options={options}
+        currentVerse={currentVerse}
+        audioActions={actions.audio}
+        isPlaying={isPlaying}
+      />
+    );
   }
 
   render() {

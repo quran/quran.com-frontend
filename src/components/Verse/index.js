@@ -1,17 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
-import { Element } from 'react-scroll';
+import Element from 'react-scroll/lib/components/Element';
 import { connect } from 'react-redux';
+import Loadable from 'react-loadable';
 
 import { verseType, matchType, surahType } from 'types';
-import Share from 'components/Share';
-import Copy from 'components/Copy';
+import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
 import Translation from 'components/Translation';
 import debug from 'helpers/debug';
 
 const styles = require('./style.scss');
+
+const Copy = Loadable({
+  loader: () => import('components/Copy'),
+  LoadingComponent: ComponentLoader
+});
+
+const Share = Loadable({
+  loader: () => import('components/Share'),
+  LoadingComponent: ComponentLoader
+});
 
 class Verse extends Component {
   static propTypes = {
