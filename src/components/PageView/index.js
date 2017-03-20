@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 
 import Line from 'components/Line';
 import PageBreak from 'components/PageBreak';
@@ -38,6 +38,16 @@ const PageView = ({ lines, keys, currentVerse, options, isPlaying, audioActions 
   return (
     <div>{elements}</div>
   );
+};
+
+PageView.propTypes = {
+  keys: PropTypes.array, // eslint-disable-line
+  lines: PropTypes.object.isRequired, // eslint-disable-line
+  audioActions: PropTypes.object.isRequired, // eslint-disable-line
+  currentVerse: PropTypes.string,
+  bookmarks: PropTypes.object.isRequired, // eslint-disable-line
+  options: PropTypes.object.isRequired, // eslint-disable-line
+  isPlaying: PropTypes.bool
 };
 
 export default PageView;
