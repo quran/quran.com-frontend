@@ -69,7 +69,7 @@ class ContentDropdown extends Component {
     }
   }
 
-  renderItems(items, key) {
+  renderItems(items, render) {
     const { translations } = this.props;
 
     return items.map((translation) => {
@@ -86,7 +86,7 @@ class ContentDropdown extends Component {
           />
 
           <label htmlFor={translation.id + translation.languageName} className={style.label}>
-            {translation[key]}
+            {render(translation)}
           </label>
         </li>
       );
@@ -98,7 +98,7 @@ class ContentDropdown extends Component {
     .filter(translation => translation.languageName === 'English')
     .sort(compareAlphabetically('authorName'));
 
-    return this.renderItems(list, 'authorName');
+    return this.renderItems(list, translation => translation.authorName);
   }
 
   renderLanguagesList() {
@@ -106,7 +106,7 @@ class ContentDropdown extends Component {
     .filter(translation => translation.languageName !== 'English')
     .sort(compareAlphabetically('languageName'));
 
-    return this.renderItems(list, 'languageName');
+    return this.renderItems(list, translation => `${translation.languageName} - ${translation.authorName}`);
   }
 
   render() {
