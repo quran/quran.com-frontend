@@ -3,6 +3,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
+import Loadable from 'react-loadable';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
@@ -15,12 +16,17 @@ import { surahType, segmentType } from 'types';
 // Redux
 import * as AudioActions from 'redux/actions/audioplayer';
 
+import ComponentLoader from 'components/ComponentLoader';
 import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
-import RepeatDropdown from './RepeatDropdown';
 
 const style = require('./style.scss');
+
+const RepeatDropdown = Loadable({
+  loader: () => import('./RepeatDropdown'),
+  LoadingComponent: ComponentLoader
+});
 
 export class Audioplayer extends Component {
   static propTypes = {

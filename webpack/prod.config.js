@@ -61,7 +61,8 @@ module.exports = {
                 'transform-react-display-name',
                 'transform-react-inline-elements',
                 'transform-react-constant-elements',
-                'transform-react-remove-prop-types'
+                'transform-react-remove-prop-types',
+                'syntax-dynamic-import'
               ]
             }
           }
