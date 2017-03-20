@@ -93,7 +93,7 @@ export default class Word extends Component {
           title={this.buildTooltip(word, tooltip)}
           dangerouslySetInnerHTML={{ __html: text }}
         />
-        <small dangerouslySetInnerHTML={{ __html: spacer }} />
+        <small dangerouslySetInnerHTML={{ __html: spacer }} style={{ letterSpacing: -15 }} />
       </span>
     );
   }
