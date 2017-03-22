@@ -42,6 +42,7 @@ const Html = ({ store, component, assets }) => {
             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
             ga('create', 'UA-8496014-1', 'auto');
+            ga('require', 'GTM-PNMFTW3');
             `
           }}
           charSet="UTF-8"
