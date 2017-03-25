@@ -57,12 +57,6 @@ const TopOptions = Loadable({
   LoadingComponent: ComponentLoader
 });
 
-const NoAyatFound = (
-  <div className="text-center">
-    <h2><LocaleFormattedMessage id="chapter.index.ayatNotFound" defaultMessage="Ayat not found." /></h2>
-  </div>
-);
-
 class Surah extends Component {
   static propTypes = {
     chapter: surahType.isRequired,
@@ -231,6 +225,17 @@ class Surah extends Component {
     return `${chapter.info ? chapter.info.shortDescription : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
+  renderNoAyah() {
+    const { isLoading } = this.props;
+
+    const noAyah = (<div className="text-center">
+      <h2><LocaleFormattedMessage id="chapter.index.ayatNotFound" defaultMessage="Ayat not found." /></h2>
+    </div>
+    );
+
+    return isLoading ? <Loader isActive style={LoaderStyle} /> : noAyah;
+  }
+
   renderPagination() {
     const { isSingleAyah, isLoading, isEndOfSurah, chapter } = this.props;
 
@@ -347,7 +352,7 @@ class Surah extends Component {
     const { chapter, options, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}>{NoAyatFound}</div>;
+    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}>{this.renderNoAyah()}</div>;
 
     return (
       <div className="chapter-body">
