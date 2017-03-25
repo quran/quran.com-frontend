@@ -57,6 +57,12 @@ const TopOptions = Loadable({
   LoadingComponent: ComponentLoader
 });
 
+const NoAyatFound = (
+  <div className="text-center">
+    <h2><LocaleFormattedMessage id="chapter.index.ayatNotFound" defaultMessage="Ayat not found." /></h2>
+  </div>
+);
+
 class Surah extends Component {
   static propTypes = {
     chapter: surahType.isRequired,
@@ -341,7 +347,7 @@ class Surah extends Component {
     const { chapter, options, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}><Loader isActive style={LoaderStyle} /></div>;
+    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}>{NoAyatFound}</div>;
 
     return (
       <div className="chapter-body">

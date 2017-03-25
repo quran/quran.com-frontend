@@ -9,13 +9,15 @@ export default function reducer(state = {}, action = {}) {
       const verses = action.result.entities.verses;
       const classNames = {};
 
-      Object.keys(verses).forEach((ayahId) => {
-        const verse = verses[ayahId];
+      if (verses !== undefined) {
+        Object.keys(verses).forEach((ayahId) => {
+          const verse = verses[ayahId];
 
-        if (!state[`p${verse.pageNumber}`]) {
-          classNames[`p${verse.pageNumber}`] = false;
-        }
-      });
+          if (!state[`p${verse.pageNumber}`]) {
+            classNames[`p${verse.pageNumber}`] = false;
+          }
+        });
+      }
 
       return {
         ...state,
