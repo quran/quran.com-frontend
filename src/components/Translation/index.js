@@ -18,7 +18,7 @@ export default class Translation extends Component {
 
     return (
       <div id={index} className={`${styles.translation} ${isArabic && 'arabic'} translation`}>
-        <h4 className="montserrat">{translation.resourceName}</h4>
+        <h4 className="montserrat">{translation.resourceName || translation.author}</h4>
         <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
           <small
             dangerouslySetInnerHTML={{ __html: translation.text }}

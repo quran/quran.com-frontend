@@ -27,12 +27,11 @@ export default function reducer(state = initialState, action = {}) {
         loaded: true,
         loading: false,
         errored: false,
-        total: action.result.result.total,
-        page: action.result.result.page,
-        size: action.result.result.size,
-        from: action.result.result.from,
-        took: action.result.result.took,
-        query: action.result.result.query,
+        total: action.result.total,
+        page: action.result.page,
+        size: action.result.result.results.length,
+        took: action.result.took,
+        query: action.result.query,
         results: action.result.result.results,
         entities: Object.assign({}, state.entities, action.result.entities.verses)
       };
