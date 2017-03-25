@@ -78,11 +78,15 @@ class Verse extends Component {
   }
 
   handlePlay(verse) {
-    const { isPlaying, audioActions } = this.props;
+    const { isPlaying, audioActions, iscurrentVerse } = this.props;
     const { pause, setAyah, play } = audioActions;
 
     if (isPlaying) {
       pause();
+    }
+
+    if (iscurrentVerse) {
+      return;
     }
 
     setAyah(verse.verseKey);
