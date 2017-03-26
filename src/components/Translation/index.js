@@ -1,15 +1,45 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 
 import { translationType } from 'types';
+import { loadFootNote } from 'redux/actions/footNote';
 
 const styles = require('./style.scss');
 
-export default class Translation extends Component {
+class Translation extends Component {
   static propTypes = {
     translation: translationType.isRequired,
-    index: PropTypes.number
+    index: PropTypes.number,
+    loadFootNote: PropTypes.func.isRequired,
   };
+
+  componentDidMount() {
+    const { index } = this.props;
+
+    if (__CLIENT__) {
+     var trans = document.getElementById(`trans${index}`).children[1];
+     trans.addEventListener('click', this.fetchFootNote, true);
+    }
+  }
+
+  componentWillUnmount() {
+    const { index } = this.props;
+
+    if (__CLIENT__) {
+      var trans = document.getElementById(`trans${index}`).children[1];
+      trans.removeEventListener('click', this.fetchFootNote, true);
+    }
+  }
+
+  fetchFootNote = (event) => {
+    const { loadFootNote } = this.props;
+
+    if(event.target.nodeName == 'SUP' && event.target.attributes.foot_note) {
+      event.preventDefault();
+      loadFootNote(event.target.attributes.foot_note.value);
+    }
+  }
 
   render() {
     const { translation, index } = this.props;
@@ -17,7 +47,7 @@ export default class Translation extends Component {
     const isArabic = lang === 'arabic';
 
     return (
-      <div id={index} className={`${styles.translation} ${isArabic && 'arabic'} translation`}>
+      <div id={`trans${index}`} className={`${styles.translation} ${isArabic && 'arabic'} translation`}>
         <h4 className="montserrat">{translation.resourceName}</h4>
         <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
           <small
@@ -29,3 +59,5 @@ export default class Translation extends Component {
     );
   }
 }
+
+export default connect(state => ({}), { loadFootNote })(Translation);

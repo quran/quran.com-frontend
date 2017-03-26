@@ -15,6 +15,11 @@ import metricsConfig from 'helpers/metrics';
 import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
+import { removeFootNote } from 'redux/actions/footNote';
+
+import Loader from 'quran-components/lib/Loader';
+
+import { footNoteType } from 'types';
 
 import authConnect from './connect';
 
@@ -28,10 +33,13 @@ class App extends Component {
       content: PropTypes.object
     }).isRequired,
     removeMedia: PropTypes.func.isRequired,
+    removeFootNote: PropTypes.func.isRequired,
     children: PropTypes.element,
     main: PropTypes.element,
     nav: PropTypes.element,
     sidebar: PropTypes.element,
+    footNote: footNoteType,
+    loadingFootNote: PropTypes.bool
   };
 
   static contextTypes = {
@@ -49,10 +57,20 @@ class App extends Component {
       sidebar,
       children,
       media,
+      footNote,
+      loadingFootNote,
       removeMedia, // eslint-disable-line no-shadow
+      removeFootNote,
       ...props
     } = this.props;
     debug('component:APPLICATION', 'Render');
+    let footNoteText;
+    if(footNote) {
+      footNoteText = footNote.text;
+    } else {
+      footNoteText = <Loader isActive={loadingFootNote} />;
+    }
+
 
     return (
       <div>
@@ -91,6 +109,7 @@ class App extends Component {
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
+
         <Modal bsSize="large" show={media && media.content} onHide={removeMedia}>
           <ModalHeader closeButton>
             <ModalTitle className="montserrat">
@@ -104,6 +123,20 @@ class App extends Component {
             />
           </ModalBody>
         </Modal>
+
+        <Modal bsSize="large" show={!!footNote || loadingFootNote} onHide={removeFootNote}>
+          <ModalHeader closeButton>
+            <ModalTitle className="montserrat">
+              Foot note
+            </ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <div
+              className={`${footNote && footNote.languageName}`}
+              dangerouslySetInnerHTML={{ __html: footNoteText }}
+            />
+          </ModalBody>
+        </Modal>
       </div>
     );
   }
@@ -113,6 +146,10 @@ const metricsApp = metrics(metricsConfig)(App);
 const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 
 export default connect(
-  state => ({ media: state.media }),
-  { removeMedia }
+  state => ({
+    media: state.media,
+    footNote: state.footNote.footNote,
+    loadingFootNote: state.footNote.loadingFootNote
+  }),
+  { removeMedia, removeFootNote }
 )(AsyncApp);
