@@ -229,7 +229,7 @@ class Surah extends Component {
     const { isLoading } = this.props;
 
     const noAyah = (<div className="text-center">
-      <h2><LocaleFormattedMessage id="chapter.index.ayatNotFound" defaultMessage="Ayah not found." /></h2>
+      <h2><LocaleFormattedMessage id="chapter.index.ayahNotFound" defaultMessage="Ayah not found." /></h2>
     </div>
     );
 

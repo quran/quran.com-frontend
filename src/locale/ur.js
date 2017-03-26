@@ -78,6 +78,6 @@ export default {
 
     'login.message': 'Quran.com کرنے کیلئے سائن ان سب کو اپنے بک مارکس، نوٹوں اور سرگرمیوں کو ذخیرہ کرنے.',
 
-    'chapter.index.ayatNotFound': 'آیت نہیں ملا'
+    'chapter.index.ayahNotFound': 'آیت نہیں ملا'
   }
 };

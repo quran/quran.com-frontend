@@ -78,7 +78,7 @@ export default {
 
     'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. ',
 
-    'chapter.index.ayatNotFound': 'Verset introuvable'
+    'chapter.index.ayahNotFound': 'Verset introuvable'
   }
 };
 

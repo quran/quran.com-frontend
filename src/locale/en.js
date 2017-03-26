@@ -78,6 +78,6 @@ export default {
 
     'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.',
 
-    'chapter.index.ayatNotFound': 'Ayah not found'
+    'chapter.index.ayahNotFound': 'Ayah not found'
   }
 };

@@ -78,6 +78,6 @@ export default {
 
     'login.message': 'Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com\'a giriş yapın.',
 
-    'chapter.index.ayatNotFound': 'Ayet bulunamadı'
+    'chapter.index.ayahNotFound': 'Ayet bulunamadı'
   }
 };

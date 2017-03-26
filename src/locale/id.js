@@ -78,6 +78,6 @@ export default {
 
     'login.message': 'Masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.',
 
-    'chapter.index.ayatNotFound': 'Ayat tidak ditemukan'
+    'chapter.index.ayahNotFound': 'Ayat tidak ditemukan'
   }
 };
