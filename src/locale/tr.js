@@ -76,6 +76,8 @@ export default {
     'nav.navigate': 'Bağlantılar', // there is no exact translation for Navigate in Turkish
     'nav.legacySite': 'Eski Siteye Git Quran.com',
 
-    'login.message': 'Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com\'a giriş yapın.'
+    'login.message': 'Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com\'a giriş yapın.',
+
+    'chapter.index.ayatNotFound': 'Ayet bulunamadı'
   }
 };

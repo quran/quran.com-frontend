@@ -76,6 +76,8 @@ export default {
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
 
-    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.'
+    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.',
+
+    'chapter.index.ayatNotFound': 'Ayah not found'
   }
 };

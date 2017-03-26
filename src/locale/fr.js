@@ -76,7 +76,9 @@ export default {
     'nav.navigate': 'Naviguer',
     'nav.legacySite': 'Version précédente de Quran.com',
 
-    'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. '
+    'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. ',
+
+    'chapter.index.ayatNotFound': 'Verset introuvable'
   }
 };
 
