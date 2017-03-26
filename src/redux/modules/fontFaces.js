@@ -9,7 +9,7 @@ export default function reducer(state = {}, action = {}) {
       const verses = action.result.entities.verses;
       const classNames = {};
 
-      if (verses !== undefined) {
+      if (verses) {
         Object.keys(verses).forEach((ayahId) => {
           const verse = verses[ayahId];
 

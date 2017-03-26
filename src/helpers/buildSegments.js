@@ -24,7 +24,7 @@ export const buildSegments = (segments) => {
 export const extractSegments = (verses) => {
   const segments = {};
 
-  if (verses !== undefined) {
+  if (verses) {
     Object.values(verses).forEach((verse) => {
       if (verse.audio) {
         if (verse.audio.segments) {
