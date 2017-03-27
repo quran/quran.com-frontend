@@ -78,6 +78,6 @@ export default {
 
     'login.message': 'تسجيل الدخول إلى Quran.com لتخزين كل ما تبذلونه من العناوين والملاحظات والأنشطة.',
 
-    'chapter.index.ayahNotFound': 'لم يتم العثور على الآية'
+    'ayah.notFound': 'لم يتم العثور على الآية'
   }
 };
