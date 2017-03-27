@@ -16,26 +16,28 @@ class Translation extends Component {
 
   componentDidMount() {
     const { index } = this.props;
+    let trans;
 
     if (__CLIENT__) {
-     var trans = document.getElementById(`trans${index}`).children[1];
-     trans.addEventListener('click', this.fetchFootNote, true);
+      trans = document.getElementById(`trans${index}`).children[1]; // eslint-disable-line no-undef
+      trans.addEventListener('click', this.fetchFootNote, true);
     }
   }
 
   componentWillUnmount() {
     const { index } = this.props;
+    let trans;
 
     if (__CLIENT__) {
-      var trans = document.getElementById(`trans${index}`).children[1];
+      trans = document.getElementById(`trans${index}`).children[1]; // eslint-disable-line no-undef
       trans.removeEventListener('click', this.fetchFootNote, true);
     }
   }
 
   fetchFootNote = (event) => {
-    const { loadFootNote } = this.props;
+    const { loadFootNote } = this.props; // eslint-disable-line no-shadow
 
-    if(event.target.nodeName == 'SUP' && event.target.attributes.foot_note) {
+    if (event.target.nodeName === 'SUP' && event.target.attributes.foot_note) {
       event.preventDefault();
       loadFootNote(event.target.attributes.foot_note.value);
     }
@@ -60,4 +62,6 @@ class Translation extends Component {
   }
 }
 
-export default connect(state => ({}), { loadFootNote })(Translation);
+export default connect(state => ({}),  // eslint-disable-line no-unused-vars
+  { loadFootNote }
+)(Translation);

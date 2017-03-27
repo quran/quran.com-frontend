@@ -60,17 +60,17 @@ class App extends Component {
       footNote,
       loadingFootNote,
       removeMedia, // eslint-disable-line no-shadow
-      removeFootNote,
+      removeFootNote, // eslint-disable-line no-shadow
       ...props
     } = this.props;
     debug('component:APPLICATION', 'Render');
     let footNoteText;
-    if(footNote) {
+
+    if (footNote) {
       footNoteText = footNote.text;
     } else {
       footNoteText = <Loader isActive={loadingFootNote} />;
     }
-
 
     return (
       <div>

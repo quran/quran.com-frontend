@@ -97,7 +97,7 @@ class Verse extends Component {
     const { verse, match } = this.props;
     const array = match || verse.translations || [];
 
-    return array.map((translation) => (
+    return array.map(translation => (
       <Translation translation={translation} index={translation.id} key={translation.id} />
     ));
   }
