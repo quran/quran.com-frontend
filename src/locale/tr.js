@@ -28,6 +28,7 @@ export default {
     'ayah.media.lectureFrom': 'Video anlatımı izle {from}',
     'ayah.bookmarked': 'Yer işareti eklendi',
     'ayah.bookmark': 'Yer işareti',
+    'ayah.notFound': 'Ayet bulunamadı',
 
     'search.placeholder': 'Arama yap "Nuh"',
     'search.resultHeading': '{from}-{to} / <span> {total} </span> ARAMA SONUÇLARI: <span>{query}</span>', // eslint-disable-line max-len
@@ -76,8 +77,6 @@ export default {
     'nav.navigate': 'Bağlantılar', // there is no exact translation for Navigate in Turkish
     'nav.legacySite': 'Eski Siteye Git Quran.com',
 
-    'login.message': 'Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com\'a giriş yapın.',
-
-    'chapter.index.ayahNotFound': 'Ayet bulunamadı'
+    'login.message': 'Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com\'a giriş yapın.'
   }
 };

@@ -28,6 +28,7 @@ export default {
     'ayah.media.lectureFrom': 'Regarder les commentaires de la vidéo depuis {from}',
     'ayah.bookmarked': 'Favoris ajouté',
     'ayah.bookmark': 'Favoris',
+    'ayah.notFound': 'Verset introuvable',
 
     'search.placeholder': 'Chercher "Noah"',
     'search.resultHeading': '{from}-{to} DE <span> {total} </span> RESULTATS DE LA RECHERCHE POUR : <span>{query}</span>', // eslint-disable-line max-len
@@ -76,9 +77,7 @@ export default {
     'nav.navigate': 'Naviguer',
     'nav.legacySite': 'Version précédente de Quran.com',
 
-    'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. ',
-
-    'chapter.index.ayahNotFound': 'Verset introuvable'
+    'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. '
   }
 };
 

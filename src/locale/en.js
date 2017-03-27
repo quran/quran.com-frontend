@@ -28,6 +28,7 @@ export default {
     'ayah.media.lectureFrom': 'Watch video commentary from {from}',
     'ayah.bookmarked': 'Bookmarked',
     'ayah.bookmark': 'Bookmark',
+    'ayah.notFound': 'Ayah not found',
 
     'search.placeholder': 'Search "Noah"',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
@@ -76,8 +77,6 @@ export default {
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
 
-    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.',
-
-    'chapter.index.ayahNotFound': 'Ayah not found'
+    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.'
   }
 };

@@ -28,6 +28,7 @@ export default {
     'ayah.media.lectureFrom': 'کے لیکچر دیکھے  {from}',
     'ayah.bookmarked': 'حوالہ ہے',
     'ayah.bookmark': 'حوالہ',
+    'ayah.notFound': 'آیت نہیں ملا',
 
     'search.placeholder': 'تلاش کر یں',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
@@ -76,8 +77,6 @@ export default {
     'nav.navigate': 'تشریف لے جائیں',
     'nav.legacySite': 'پرانی سائٹ',
 
-    'login.message': 'Quran.com کرنے کیلئے سائن ان سب کو اپنے بک مارکس، نوٹوں اور سرگرمیوں کو ذخیرہ کرنے.',
-
-    'chapter.index.ayahNotFound': 'آیت نہیں ملا'
+    'login.message': 'Quran.com کرنے کیلئے سائن ان سب کو اپنے بک مارکس، نوٹوں اور سرگرمیوں کو ذخیرہ کرنے.'
   }
 };

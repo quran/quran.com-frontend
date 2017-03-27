@@ -28,6 +28,7 @@ export default {
     'ayah.media.lectureFrom': 'Lihat kuliah dari {from}',
     'ayah.bookmarked': 'Ditandai',
     'ayah.bookmark': 'Tandai',
+    'ayah.notFound': 'Ayat tidak ditemukan',
 
     'search.placeholder': 'Cari "Nuh"',
     'search.resultHeading': '{from}-{to} DARI <span> {total} </span> HASIL PENCARIAN ATAS: <span>{query}</span>', // eslint-disable-line max-len
@@ -76,8 +77,6 @@ export default {
     'nav.navigate': 'Telusuri',
     'nav.legacySite': 'Quran.com versi lama',
 
-    'login.message': 'Masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.',
-
-    'chapter.index.ayahNotFound': 'Ayat tidak ditemukan'
+    'login.message': 'Masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.'
   }
 };
