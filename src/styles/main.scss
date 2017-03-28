@@ -167,6 +167,12 @@ li em{
 .urdu, .punjabi{
   direction: rtl;
   font-family: 'Nafees';
+  text-align: right;
+  line-height: 30px;
+
+  #arabic{
+    font-family: initial;
+  }
 }
 
 .modal-backdrop{

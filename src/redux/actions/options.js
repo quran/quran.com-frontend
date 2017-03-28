@@ -30,11 +30,6 @@ export function setOption(payload) {
   };
 }
 
-export const loadRecitations = () => ({
-  types: [LOAD_RECITERS, LOAD_RECITERS_SUCCESS, LOAD_RECITERS_FAIL],
-  promise: client => client.get('/api/v3/options/recitations')
-});
-
 export function setUserAgent(userAgent) {
   return {
     type: SET_USER_AGENT,
@@ -45,4 +40,9 @@ export function setUserAgent(userAgent) {
 export const loadTranslations = () => ({
   types: [LOAD_TRANSLATIONS, LOAD_TRANSLATIONS_SUCCESS, LOAD_TRANSLATIONS_FAIL],
   promise: client => client.get('/api/v3/options/translations')
+});
+
+export const loadRecitations = () => ({
+  types: [LOAD_RECITERS, LOAD_RECITERS_SUCCESS, LOAD_RECITERS_FAIL],
+  promise: client => client.get('/api/v3/options/recitations')
 });

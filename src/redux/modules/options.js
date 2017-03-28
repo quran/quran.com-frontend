@@ -5,7 +5,7 @@ import {
   SET_USER_AGENT,
   LOAD_TRANSLATIONS,
   LOAD_TRANSLATIONS_SUCCESS
-} from 'redux/constants/options.js';
+ } from 'redux/constants/options.js';
 
 const initialState = {
   isReadingMode: false,
@@ -17,6 +17,8 @@ const initialState = {
   translations: [20],
   tooltip: 'translation',
   userAgent: null,
+  footNote: null,
+  loadingFootNote: false,
   options: {
     recitations: [],
     translations: []
