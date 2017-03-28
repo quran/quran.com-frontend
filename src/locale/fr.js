@@ -28,6 +28,7 @@ export default {
     'ayah.media.lectureFrom': 'Regarder les commentaires de la vidéo depuis {from}',
     'ayah.bookmarked': 'Favoris ajouté',
     'ayah.bookmark': 'Favoris',
+    'ayah.notFound': 'Verset introuvable',
 
     'search.placeholder': 'Chercher "Noah"',
     'search.resultHeading': '{from}-{to} DE <span> {total} </span> RESULTATS DE LA RECHERCHE POUR : <span>{query}</span>', // eslint-disable-line max-len

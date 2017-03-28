@@ -24,13 +24,15 @@ export const buildSegments = (segments) => {
 export const extractSegments = (verses) => {
   const segments = {};
 
-  Object.values(verses).forEach((verse) => {
-    if (verse.audio) {
-      if (verse.audio.segments) {
-        segments[verse.verseKey] = buildSegments(verse.audio.segments);
+  if (verses) {
+    Object.values(verses).forEach((verse) => {
+      if (verse.audio) {
+        if (verse.audio.segments) {
+          segments[verse.verseKey] = buildSegments(verse.audio.segments);
+        }
       }
-    }
-  });
+    });
+  }
 
   return segments;
 };

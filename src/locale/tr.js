@@ -28,6 +28,7 @@ export default {
     'ayah.media.lectureFrom': 'Video anlatımı izle {from}',
     'ayah.bookmarked': 'Yer işareti eklendi',
     'ayah.bookmark': 'Yer işareti',
+    'ayah.notFound': 'Ayet bulunamadı',
 
     'search.placeholder': 'Arama yap "Nuh"',
     'search.resultHeading': '{from}-{to} / <span> {total} </span> ARAMA SONUÇLARI: <span>{query}</span>', // eslint-disable-line max-len

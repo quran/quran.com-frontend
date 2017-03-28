@@ -28,6 +28,7 @@ export default {
     'ayah.media.lectureFrom': 'Lihat kuliah dari {from}',
     'ayah.bookmarked': 'Ditandai',
     'ayah.bookmark': 'Tandai',
+    'ayah.notFound': 'Ayat tidak ditemukan',
 
     'search.placeholder': 'Cari "Nuh"',
     'search.resultHeading': '{from}-{to} DARI <span> {total} </span> HASIL PENCARIAN ATAS: <span>{query}</span>', // eslint-disable-line max-len

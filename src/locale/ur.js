@@ -28,6 +28,7 @@ export default {
     'ayah.media.lectureFrom': 'کے لیکچر دیکھے  {from}',
     'ayah.bookmarked': 'حوالہ ہے',
     'ayah.bookmark': 'حوالہ',
+    'ayah.notFound': 'آیت نہیں ملا',
 
     'search.placeholder': 'تلاش کر یں',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
