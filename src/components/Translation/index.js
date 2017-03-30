@@ -29,8 +29,8 @@ class Translation extends Component {
     let trans;
 
     if (__CLIENT__) {
-      trans = document.getElementById(`trans${index}`).children[1]; // eslint-disable-line no-undef
-      trans.removeEventListener('click', this.fetchFootNote, true);
+      // trans = document.getElementById(`trans${index}`).children[1]; // eslint-disable-line no-undef
+      // trans.removeEventListener('click', this.fetchFootNote, true);
     }
   }
 

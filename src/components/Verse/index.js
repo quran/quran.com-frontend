@@ -244,13 +244,13 @@ class Verse extends Component {
   }
 
   renderAyahBadge() {
-    const { isSearched } = this.props;
+    const { isSearched, verse } = this.props;
     let metric;
 
     const content = (
       <h4>
         <span className={`label label-default ${styles.label}`}>
-          {this.props.verse.verseKey}
+          {verse.verseKey}
         </span>
       </h4>
     );
@@ -263,7 +263,7 @@ class Verse extends Component {
 
     return (
       <Link
-        to={`/${this.props.verse.chapterId}/${this.props.verse.verseNumber}`}
+        to={`/${verse.chapterId}/${verse.verseNumber}`}
         data-metrics-event-name={metric}
       >
         {content}
@@ -271,8 +271,16 @@ class Verse extends Component {
     );
   }
 
+  renderShare() {
+    const { isSearched, verse, chapter } = this.props;
+
+    if (isSearched) return false;
+
+    return <Share chapter={chapter} verseKey={verse.verseKey} />
+  }
+
   renderControls() {
-    const { chapter, verse } = this.props;
+    const { verse } = this.props;
 
     return (
       <div className={`col-md-1 col-sm-1 ${styles.controls}`}>
@@ -280,14 +288,14 @@ class Verse extends Component {
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderBookmark()}
-        <Share chapter={chapter} verseKey={verse.verseKey} />
+        {this.renderShare()}
       </div>
     );
   }
 
   render() {
     const { verse, iscurrentVerse } = this.props;
-    debug('component:Verse', `Render ${this.props.verse.verseKey}`);
+    debug('component:Verse', `Render ${verse.verseKey}`);
 
     return (
       <Element
