@@ -25,13 +25,14 @@ class Translation extends Component {
   }
 
   componentWillUnmount() {
-    const { index } = this.props;
-    let trans;
+    // TODO: this is breaking for search! Need to figure out why
+    // const { index } = this.props;
+    // let trans;
 
-    if (__CLIENT__) {
-      // trans = document.getElementById(`trans${index}`).children[1]; // eslint-disable-line no-undef
+    // if (__CLIENT__) {
+      // trans = document.getElementById(`trans${index}`).children[1]; // eslint-disable-line
       // trans.removeEventListener('click', this.fetchFootNote, true);
-    }
+    // }
   }
 
   fetchFootNote = (event) => {

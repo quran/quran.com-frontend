@@ -29,9 +29,9 @@ class Search extends Component {
     currentPage: PropTypes.number,
     perPage: PropTypes.number,
     query: PropTypes.string,
-    results: PropTypes.array, // eslint-disable-line
+    results: PropTypes.arrayOf(verseType), // eslint-disable-line
     push: PropTypes.func.isRequired,
-    location: PropTypes.shape({
+    location: PropTypes.shape({ // eslint-disable-line
       q: PropTypes.string,
       p: PropTypes.string
     }),
@@ -47,10 +47,10 @@ class Search extends Component {
   };
 
   handlePageChange = (payload) => {
-    const { push, query, page } = this.props; // eslint-disable-line no-shadow
+    const { push, query, currentPage } = this.props; // eslint-disable-line no-shadow
     const selectedPage = payload.selected + 1;
 
-    if (page !== selectedPage) {
+    if (currentPage !== selectedPage) {
       this.context.metrics.track(
         'Search',
         { action: 'paginate', label: `${query} - ${selectedPage}` }
@@ -67,9 +67,9 @@ class Search extends Component {
 
   renderStatsBar() {
     const { totalCount, totalPages, currentPage, query, perPage } = this.props;
-    const from = Math.max(...[(currentPage - 1)*perPage, 1]);
+    const from = Math.max(...[(currentPage - 1) * perPage, 1]);
     const to = Math.min(...[currentPage * perPage, totalCount]);
-    const values = { from: from, to: to, total: totalCount, query: query };
+    const values = { from, to, query, total: totalCount };
 
     if (totalPages) {
       return (
