@@ -7,7 +7,6 @@ import {
 const initialState = {
   errored: false,
   loaded: false,
-  entities: {},
   results: []
 };
 
@@ -27,14 +26,13 @@ export default function reducer(state = initialState, action = {}) {
         loaded: true,
         loading: false,
         errored: false,
-        total: action.result.result.total,
-        page: action.result.result.page,
-        size: action.result.result.size,
-        from: action.result.result.from,
+        totalCount: action.result.result.totalCount,
+        totalPages: action.result.result.totalPages,
+        currentPage: action.result.result.currentPage,
+        perPage: action.result.result.perPage,
         took: action.result.result.took,
         query: action.result.result.query,
-        results: action.result.result.results,
-        entities: Object.assign({}, state.entities, action.result.entities.verses)
+        results: action.result.result.results
       };
     case SEARCH_FAIL:
       return {

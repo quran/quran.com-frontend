@@ -7,6 +7,7 @@ import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
 import { FormattedHTMLMessage } from 'react-intl';
+import IndexHeader from 'components/IndexHeader';
 
 import Verse from 'components/Verse';
 import Loader from 'quran-components/lib/Loader';
@@ -17,23 +18,20 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import { verseType, optionsType } from 'types';
 
-import Header from './Header';
-
 const style = require('./style.scss');
 
 class Search extends Component {
   static propTypes = {
     isErrored: PropTypes.bool,
     isLoading: PropTypes.bool,
-    total: PropTypes.number,
-    page: PropTypes.number,
-    size: PropTypes.number,
-    from: PropTypes.number,
+    totalCount: PropTypes.number,
+    totalPages: PropTypes.number,
+    currentPage: PropTypes.number,
+    perPage: PropTypes.number,
     query: PropTypes.string,
-    results: PropTypes.array, // eslint-disable-line
-    verses: PropTypes.objectOf(verseType),
+    results: PropTypes.arrayOf(verseType), // eslint-disable-line
     push: PropTypes.func.isRequired,
-    location: PropTypes.shape({
+    location: PropTypes.shape({ // eslint-disable-line
       q: PropTypes.string,
       p: PropTypes.string
     }),
@@ -49,10 +47,10 @@ class Search extends Component {
   };
 
   handlePageChange = (payload) => {
-    const { push, query, page } = this.props; // eslint-disable-line no-shadow
+    const { push, query, currentPage } = this.props; // eslint-disable-line no-shadow
     const selectedPage = payload.selected + 1;
 
-    if (page !== selectedPage) {
+    if (currentPage !== selectedPage) {
       this.context.metrics.track(
         'Search',
         { action: 'paginate', label: `${query} - ${selectedPage}` }
@@ -68,13 +66,12 @@ class Search extends Component {
   }
 
   renderStatsBar() {
-    const { total, size, page, from, query } = this.props;
-    const values = { from: 2, to: (from + size) - 1, total: 10, query };
+    const { totalCount, totalPages, currentPage, query, perPage } = this.props;
+    const from = Math.max(...[(currentPage - 1) * perPage, 1]);
+    const to = Math.min(...[currentPage * perPage, totalCount]);
+    const values = { from, to, query, total: totalCount };
 
-
-    if (total) {
-      const pageNum = Math.ceil(total / size);
-
+    if (totalPages) {
       return (
         <div className={style.header}>
           <div className="container">
@@ -99,16 +96,17 @@ class Search extends Component {
                     </span>
                   }
                   breakLabel={<a href="">...</a>}
-                  pageNum={pageNum}
+                  pageNum={currentPage}
                   marginPagesDisplayed={2}
                   pageRangeDisplayed={5}
-                  initialSelected={page - 1}
-                  forceSelected={page - 1}
+                  initialSelected={currentPage}
+                  forceSelected={currentPage}
                   onPageChange={this.handlePageChange}
                   containerClassName="pagination"
                   subContainerClassName="pages pagination"
-                  pageLinkClassName="pointer:"
+                  pageLinkClassName="pointer"
                   activeClass={style.active}
+                  pageCount={totalPages}
                 />
               </div>
             </div>
@@ -121,9 +119,9 @@ class Search extends Component {
   }
 
   renderBody() {
-    const { location, isErrored, isLoading, results, options, verses } = this.props;
+    const { isErrored, isLoading, results, options, query } = this.props;
 
-    if (!location.q) {
+    if (!query) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
           <LocaleFormattedMessage id="search.nothing" defaultMessage="No search query." />
@@ -153,9 +151,9 @@ class Search extends Component {
 
     return results.map(result => (
       <Verse
-        verse={verses[result.verse]}
+        verse={result}
         match={result.match}
-        key={result.verse}
+        key={result.verseKey}
         tooltip={options.tooltip}
         isSearched
       />
@@ -174,7 +172,7 @@ class Search extends Component {
             .text-translation{font-size: ${options.fontSize.translation}rem;}`
           }]}
         />
-        <Header />
+        <IndexHeader />
         {this.renderStatsBar()}
         <div className="container surah-list">
           <div className="row">
@@ -191,11 +189,11 @@ class Search extends Component {
 const AsyncSearch = asyncConnect([{
   promise({ store: { dispatch }, location }) {
     if (__CLIENT__) {
-      dispatch(search(location.query));
+      dispatch(search(location.query || location.q));
       return false;
     }
 
-    return dispatch(search(location.query));
+    return dispatch(search(location.query || location.q));
   }
 }])(Search);
 
@@ -203,14 +201,13 @@ function mapStateToProps(state) {
   return {
     isErrored: state.searchResults.errored,
     isLoading: state.searchResults.loading,
-    total: state.searchResults.total,
-    page: state.searchResults.page,
-    size: state.searchResults.size,
-    from: state.searchResults.from,
+    totalCount: state.searchResults.totalCount,
+    currentPage: state.searchResults.currentPage,
+    totalPages: state.searchResults.totalPages,
+    perPage: state.searchResults.perPage,
     took: state.searchResults.took,
     query: state.searchResults.query,
     results: state.searchResults.results,
-    verses: state.searchResults.entities,
     options: state.options
   };
 }
