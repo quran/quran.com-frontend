@@ -7,28 +7,39 @@ export default (server) => {
     const client = new ApiClient(req);
     const urls = [];
 
-    client.get('/api/v3/chapters').then((response) => {
+    client.get('/api/v3/options/translations').then((response) => {
+      const translations = response.translations;
+
+      client.get('/api/v3/chapters').then((response) => {
       response.chapters.forEach((chapter) => {
         Array(chapter.versesCount).fill().forEach((_, index) => {
           const ayahId = index + 1;
 
           urls.push({
-            url: `/${chapter.chapterNumber}/${ayahId}`,
+            url: `/${chapter.id}/${ayahId}`,
             changefreq: 'weekly',
             priority: 1
           });
 
           urls.push({
-            url: `/${chapter.chapterNumber}/${ayahId}-${ayahId + 9}`,
+            url: `/${chapter.id}/${ayahId}-${ayahId + 9}`,
             changefreq: 'weekly',
             priority: 1
           });
         });
 
         urls.push({
-          url: `/${chapter.chapterNumber}`,
+          url: `/${chapter.id}`,
           changefreq: 'weekly',
           priority: 1
+        });
+
+        translations.forEach((translation) => {
+          urls.push({
+            url: `/${chapter.id}?translations=${translation.id}`,
+            changefreq: 'weekly',
+            priority: 1
+          });
         });
       });
 
@@ -50,6 +61,7 @@ export default (server) => {
 
       res.header('Content-Type', 'application/xml');
       res.send(xml.toString());
-    }).catch(err => console.trace(err)); // eslint-disable-line
+    })
+  }).catch(err => console.trace(err)); // eslint-disable-line
   });
 };
