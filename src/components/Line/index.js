@@ -17,7 +17,8 @@ export default class Line extends React.Component {
       play: PropTypes.func.isRequired,
       setCurrentWord: PropTypes.func.isRequired,
     }),
-    isPlaying: PropTypes.bool
+    isPlaying: PropTypes.bool,
+    useTextFont: PropTypes.bool
   };
 
   // NOTE: this is commented out as it caused problems with 55:31 with missing text.
@@ -34,7 +35,7 @@ export default class Line extends React.Component {
   // }
 
   renderText() {
-    const { tooltip, currentVerse, audioActions, isPlaying, line } = this.props;
+    const { tooltip, currentVerse, audioActions, isPlaying, line, useTextFont } = this.props;
 
     const text = line.map(word => (
       <Word
@@ -44,6 +45,7 @@ export default class Line extends React.Component {
         tooltip={tooltip}
         isPlaying={isPlaying}
         audioActions={audioActions}
+        useTextFont={useTextFont}
       />
     ));
 
