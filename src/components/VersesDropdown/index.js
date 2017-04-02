@@ -1,75 +1,55 @@
 import React, { Component, PropTypes } from 'react';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import NavDropdown from 'react-bootstrap/lib/NavDropdown';
+import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
+
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { Link } from 'react-scroll';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { surahType } from 'types';
 
-const style = require('./style.scss');
+const styles = require('./style.scss');
 
 export default class VersesDropdown extends Component {
   static propTypes = {
-    ayat: PropTypes.number.isRequired,
-    loadedAyahs: PropTypes.instanceOf(Set).isRequired,
     chapter: surahType.isRequired, // Set
     onClick: PropTypes.func.isRequired,
-    isReadingMode: PropTypes.bool,
-    className: PropTypes.string
+    currentVerse: PropTypes.string,
   };
 
-  static defaultProps = {
-    className: 'col-md-3'
-  };
+  renderList() {
+    const { chapter, currentVerse } = this.props;
+    const array = Array(chapter.versesCount).join().split(',');
 
-  renderItem = (ayah, index) => {
-    const { chapter, loadedAyahs, isReadingMode, onClick } = this.props;
-    const ayahNum = index + 1;
-
-    if (loadedAyahs.has(ayahNum) && !isReadingMode) {
-      return (
-        <li key={index}>
-          <Link
-            onClick={() => onClick(ayahNum)}
-            to={`ayah:${chapter.chapterNumber}:${ayahNum}`}
-            smooth
-            spy
-            offset={-120}
-            activeClass="active"
-            duration={500}
-            className="pointer"
-          >
-            {ayahNum}
-          </Link>
-        </li>
-      );
-    }
-
-    return <MenuItem key={index} onClick={() => onClick(ayahNum)}>{ayahNum}</MenuItem>;
-  }
-
-  renderMenu() {
-    const { ayat } = this.props;
-    const array = Array(ayat).join().split(',');
-
-    return array.map((ayah, index) => this.renderItem(ayah, index));
+    return array.map((verse, index) => (
+      <LinkContainer to={`/${chapter.chapterNumber}/${index + 1}`} activeClass="active" key={`verse-${index + 1}`}>
+        <MenuItem>
+          <div className="row">
+            <div className="col-xs-2 col-md-2">
+              <span className="verse-num">
+                {index + 1}
+              </span>
+            </div>
+          </div>
+        </MenuItem>
+      </LinkContainer>
+    ));
   }
 
   render() {
-    const { className } = this.props;
-
     const title = (
       <LocaleFormattedMessage id={'setting.verses'} defaultMessage={'Go to verse'} />
     );
 
     return (
-      <DropdownButton
-        className={`dropdown ${className} ${style.dropdown}`}
-        title={title}
+      <NavDropdown
+        link
+        className={styles.dropdown}
         id="verses-dropdown"
+        title={title}
       >
-        {this.renderMenu()}
-      </DropdownButton>
+        {this.renderList()}
+      </NavDropdown>
     );
   }
 }

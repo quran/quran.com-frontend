@@ -8,11 +8,11 @@ import * as OptionsActions from 'redux/actions/options.js';
 
 import SearchInput from 'components/SearchInput';
 import SurahsDropdown from 'components/SurahsDropdown';
+import VersesDropdown from 'components/VersesDropdown';
 import ReadingModeToggle from 'components/ReadingModeToggle';
 import NightModeToggle from 'components/NightModeToggle';
 import FontSizeDropdown from 'components/FontSizeDropdown';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-// TODO: import VersesDropdown from 'components/VersesDropdown';
 import InformationToggle from 'components/InformationToggle';
 import GlobalNav from '../index';
 
@@ -23,6 +23,7 @@ const GlobalNavSurah = ({ chapter, chapters, setOption, options, ...props }) => 
     {...props}
     leftControls={[
       <SurahsDropdown title={chapter.nameSimple} chapters={chapters} />,
+      <VersesDropdown chapter={chapter}/>,
       <NavDropdown
         id="hidden-dropdown"
         className={`visible-xs-inline-block ${styles.optionsDropdown}`}
