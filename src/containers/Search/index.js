@@ -121,6 +121,10 @@ class Search extends Component {
   renderBody() {
     const { isErrored, isLoading, results, options, query } = this.props;
 
+    if (isLoading) {
+      return <Loader isActive={isLoading} />;
+    }
+    
     if (!query) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
@@ -135,10 +139,6 @@ class Search extends Component {
           <LocaleFormattedMessage id="search.error" defaultMessage="Sorry, there was an error with your search." />
         </h3>
       );
-    }
-
-    if (isLoading) {
-      return <Loader isActive={isLoading} />;
     }
 
     if (!results.length) {
