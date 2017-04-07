@@ -328,6 +328,8 @@ class Surah extends Component {
         isPlaying={isPlaying}
         isAuthenticated={isAuthenticated}
         key={`${verse.chapterId}-${verse.id}-verse`}
+        userAgent={options.userAgent}
+        audio={options.audio}
       />
     ));
   }
