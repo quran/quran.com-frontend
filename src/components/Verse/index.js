@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
 
 import { verseType, matchType, surahType } from 'types';
-import { load as loadAudio } from 'redux/actions/audioFiles';
+import { load as loadAudio } from 'redux/actions/audioplayer';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
@@ -64,6 +64,7 @@ class Verse extends Component {
     isSearched: false
   };
 
+  // TODO: Should this belong here?
   componentDidMount() {
     const { verse, audio } = this.props;
 
@@ -73,6 +74,20 @@ class Verse extends Component {
       verseKey: verse.verseKey,
       audio
     });
+  }
+
+  // TODO: Should this belong here?
+  componentWillReceiveProps(nextProps) {
+    if (this.props.audio !== nextProps.audio) {
+      const { verse, audio } = nextProps;
+
+      this.props.loadAudio({
+        chapterId: verse.chapterId,
+        verseId: verse.id,
+        verseKey: verse.verseKey,
+        audio
+      });
+    }
   }
 
   shouldComponentUpdate(nextProps) {

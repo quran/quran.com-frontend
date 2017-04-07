@@ -351,7 +351,7 @@ class Surah extends Component {
   }
 
   render() {
-    const { chapter, options, actions } = this.props; // eslint-disable-line no-shadow
+    const { chapter, verses, options, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
     if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}>{this.renderNoAyah()}</div>;
@@ -411,6 +411,7 @@ class Surah extends Component {
         </div>
         <Audioplayer
           chapter={chapter}
+          startVerse={Object.values(verses)[0]}
           onLoadAyahs={this.handleLazyLoadAyahs}
         />
       </div>
