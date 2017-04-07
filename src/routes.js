@@ -83,9 +83,9 @@ export default (store) => {
         path="/:chapterId(/:range)/(:translations)"
         getComponents={(nextState, cb) =>
           Promise.all([
-          import('./containers/Surah'),
-          import('./components/GlobalNav/Surah'),
-          import('./components/GlobalSidebar/Surah'),
+            import('./containers/Surah'),
+            import('./components/GlobalNav/Surah'),
+            import('./components/GlobalSidebar/Surah'),
           ])
           .then(modules => cb(
           null,

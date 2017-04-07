@@ -86,11 +86,11 @@ export const versesConnect = ({ store: { dispatch, getState }, params, location 
     dispatch(clearCurrent(chapterId)); // In the case where you go to same surah but later ayahs.
 
     if (__CLIENT__) {
-      dispatch(loadAyahs(chapterId, paging, {translations, recitation}, getState().options));
+      dispatch(loadAyahs(chapterId, paging, { translations, recitation }, getState().options));
       return true;
     }
 
-    return dispatch(loadAyahs(chapterId, paging, {translations, recitation}, getState().options));
+    return dispatch(loadAyahs(chapterId, paging, { translations, recitation }, getState().options));
   }
 
   return true;

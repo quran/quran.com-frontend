@@ -23,7 +23,7 @@ const GlobalNavSurah = ({ chapter, chapters, setOption, options, ...props }) => 
     {...props}
     leftControls={[
       <SurahsDropdown title={chapter.nameSimple} chapters={chapters} />,
-      <VersesDropdown chapter={chapter}/>,
+      <VersesDropdown chapter={chapter} />,
       <NavDropdown
         id="hidden-dropdown"
         className={`visible-xs-inline-block ${styles.optionsDropdown}`}

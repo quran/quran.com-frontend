@@ -1,9 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import { Link } from 'react-scroll';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { surahType } from 'types';
@@ -12,13 +11,11 @@ const styles = require('./style.scss');
 
 export default class VersesDropdown extends Component {
   static propTypes = {
-    chapter: surahType.isRequired, // Set
-    onClick: PropTypes.func.isRequired,
-    currentVerse: PropTypes.string,
+    chapter: surahType.isRequired // Set
   };
 
   renderList() {
-    const { chapter, currentVerse } = this.props;
+    const { chapter } = this.props;
     const array = Array(chapter.versesCount).join().split(',');
 
     return array.map((verse, index) => (

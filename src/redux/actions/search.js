@@ -1,5 +1,3 @@
-import { versesSchema } from 'redux/schemas';
-
 import {
   SEARCH,
   SEARCH_SUCCESS,

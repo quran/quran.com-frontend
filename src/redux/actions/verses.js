@@ -18,18 +18,16 @@ const defaultOptions = {
 
 function prepareParams(params, options) {
   // NOTE: first priority to options in URL, second to options and lastly fallback to defaultOptions
+  const recitation = params.recitation || options.audio || defaultOptions.audio;
   let translations;
-  let recitation;
 
-  if (!!params.translations) {
-    translations = params.translations.split(',')
-   } else {
+  if (params.translations && params.translations.length) {
+    translations = params.translations.split(',');
+  } else {
     translations = options.translations || defaultOptions.translations;
   }
 
-  recitation = params.recitation || options.audio || defaultOptions.audio;
-
-  return {translations, recitation };
+  return { translations, recitation };
 }
 
 // NOTE: From the API!
