@@ -29,7 +29,8 @@ class Search extends Component {
     currentPage: PropTypes.number,
     perPage: PropTypes.number,
     query: PropTypes.string,
-    results: PropTypes.arrayOf(verseType), // eslint-disable-line
+    results: PropTypes.arrayOf(PropTypes.string),
+    entities: PropTypes.arrayOf(verseType),
     push: PropTypes.func.isRequired,
     location: PropTypes.shape({ // eslint-disable-line
       q: PropTypes.string,
@@ -119,9 +120,9 @@ class Search extends Component {
   }
 
   renderBody() {
-    const { isErrored, isLoading, results, options, query } = this.props;
+    const { isErrored, isLoading, results, entities, options, location: { query } } = this.props;
 
-    if (!query) {
+    if (!query || !query.q) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
           <LocaleFormattedMessage id="search.nothing" defaultMessage="No search query." />
@@ -151,9 +152,9 @@ class Search extends Component {
 
     return results.map(result => (
       <Verse
-        verse={result}
-        match={result.match}
-        key={result.verseKey}
+        verse={entities[result]}
+        match={entities[result].match}
+        key={entities[result].verseKey}
         tooltip={options.tooltip}
         isSearched
       />
@@ -208,6 +209,7 @@ function mapStateToProps(state) {
     took: state.searchResults.took,
     query: state.searchResults.query,
     results: state.searchResults.results,
+    entities: state.searchResults.entities,
     options: state.options
   };
 }

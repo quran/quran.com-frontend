@@ -32,7 +32,8 @@ export default function reducer(state = initialState, action = {}) {
         perPage: action.result.result.perPage,
         took: action.result.result.took,
         query: action.result.result.query,
-        results: action.result.result.results
+        results: action.result.result.results,
+        entities: action.result.entities.verses
       };
     case SEARCH_FAIL:
       return {
