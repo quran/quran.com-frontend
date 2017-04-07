@@ -36,13 +36,12 @@ export default (server) => {
 
         translations.forEach((translation) => {
           urls.push({
-            url: `/${chapter.id}?translations=${translation.id}`,
+            url: `/${chapter.id}/1-7/${translation.slug}`,
             changefreq: 'weekly',
             priority: 1
           });
         });
       });
-
 
       const xml = sitemap.createSitemap({
         hostname: 'https://quran.com',

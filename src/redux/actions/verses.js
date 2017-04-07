@@ -16,11 +16,27 @@ const defaultOptions = {
   translations: [20]
 };
 
+function prepareParams(params, options) {
+  // NOTE: first priority to options in URL, second to options and lastly fallback to defaultOptions
+  let translations;
+  let recitation;
+
+  if (!!params.translations) {
+    translations = params.translations.split(',')
+   } else {
+    translations = options.translations || defaultOptions.translations;
+  }
+
+  recitation = params.recitation || options.audio || defaultOptions.audio;
+
+  return {translations, recitation };
+}
+
 // NOTE: From the API!
 const perPage = 10;
 
-export function load(id, paging, options = defaultOptions) {
-  const { audio, translations } = options;
+export function load(id, paging, params, options = defaultOptions) {
+  const apiOptions = prepareParams(params, options);
 
   // TODO: move this to module/verses
   // cookie.save('lastVisit', JSON.stringify({ chapterId: id, verseId: from }));
@@ -31,8 +47,8 @@ export function load(id, paging, options = defaultOptions) {
     promise: client => client.get(`/api/v3/chapters/${id}/verses`, {
       params: {
         ...paging,
-        recitation: audio,
-        translations
+        recitation: apiOptions.recitation,
+        translations: apiOptions.translations
       }
     }),
     chapterId: id

@@ -68,11 +68,13 @@ export const chapterInfoConnect = ({ store: { dispatch }, params }) => {
   return dispatch(loadInfo(params.chapterId));
 };
 
-export const versesConnect = ({ store: { dispatch, getState }, params }) => {
+export const versesConnect = ({ store: { dispatch, getState }, params, location }) => {
   debug('component:Surah:versesConnect', 'Init');
 
   const chapterId = parseInt(params.chapterId, 10);
   const paging = determinePage(params.range);
+  const translations = params.translations || location.query.translations;
+  const recitation = location.query.recitation;
 
   if (chapterId !== getState().chapters.current) {
     dispatch(setCurrentSurah(chapterId));
@@ -84,11 +86,11 @@ export const versesConnect = ({ store: { dispatch, getState }, params }) => {
     dispatch(clearCurrent(chapterId)); // In the case where you go to same surah but later ayahs.
 
     if (__CLIENT__) {
-      dispatch(loadAyahs(chapterId, paging, getState().options));
+      dispatch(loadAyahs(chapterId, paging, {translations, recitation}, getState().options));
       return true;
     }
 
-    return dispatch(loadAyahs(chapterId, paging, getState().options));
+    return dispatch(loadAyahs(chapterId, paging, {translations, recitation}, getState().options));
   }
 
   return true;

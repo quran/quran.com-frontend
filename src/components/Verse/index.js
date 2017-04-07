@@ -145,7 +145,7 @@ class Verse extends Component {
     const { verse, tooltip, currentVerse, isPlaying, audioActions, isSearched, userAgent } = this.props; // eslint-disable-line max-len
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
-    const renderText = userAgent.isChrome || userAgent.isOpera || userAgent.isBot;
+    const renderText = userAgent.isChrome || userAgent.isOpera || userAgent.isBot || userAgent.isEdge;
 
     const text = verse.words.map(word => ( // eslint-disable-line
       <Word

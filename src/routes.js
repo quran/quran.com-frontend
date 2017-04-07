@@ -78,6 +78,23 @@ export default (store) => {
         }
         onEnter={checkValidSurah}
       />
+
+      <Route
+        path="/:chapterId(/:range)/(:translations)"
+        getComponents={(nextState, cb) =>
+          Promise.all([
+          import('./containers/Surah'),
+          import('./components/GlobalNav/Surah'),
+          import('./components/GlobalSidebar/Surah'),
+          ])
+          .then(modules => cb(
+          null,
+        { main: modules[0].default, nav: modules[1].default, sidebar: modules[2].default }
+          ))
+          .catch(err => console.trace(err))
+        }
+        onEnter={checkValidSurah}
+      />
     </Route>
   );
 };

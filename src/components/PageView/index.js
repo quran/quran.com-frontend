@@ -9,7 +9,7 @@ const PageView = ({ lines, keys, currentVerse, options, isPlaying, audioActions,
     const nextNum = keys[index + 1];
     const pageNum = lineNum.split('-')[0];
     const line = lines[lineNum];
-    const renderText = userAgent.isChrome || userAgent.isOpera || userAgent.isBot;
+    const renderText = userAgent.isChrome || userAgent.isOpera || userAgent.isBot || userAgent.isEdge;
 
     if (index + 1 !== keys.length && pageNum !== nextNum.split('-')[0]) {
       return [
