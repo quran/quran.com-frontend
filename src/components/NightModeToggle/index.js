@@ -30,8 +30,6 @@ class NightModeToggle extends Component {
   }
 
   render() {
-    const { isNightMode } = this.props;
-
     return (
       <MenuItem
         icon={<i className="ss-icon ss-lightbulb vertical-align-middle" />}

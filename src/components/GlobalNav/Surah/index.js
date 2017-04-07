@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import Link from 'react-router/lib/Link';
 import Drawer from 'quran-components/lib/Drawer';
-import Menu, { MenuItem } from 'quran-components/lib/Menu';
+import Menu from 'quran-components/lib/Menu';
 
 import { surahType, optionsType } from 'types';
 import * as OptionsActions from 'redux/actions/options.js';
@@ -22,6 +22,8 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { load } from 'redux/actions/verses.js';
 
 import GlobalNav from '../index';
+
+const styles = require('../style.scss');
 
 class GlobalNavSurah extends Component {
   static propTypes = {
@@ -54,10 +56,14 @@ class GlobalNavSurah extends Component {
     this.setState({ drawerOpen: open });
   }
 
-  renderDrawerToggle() {
+  renderDrawerToggle(visibleXs) {
     return (
       <li>
-        <a tabIndex="-1" className="pointer" onClick={() => this.handleDrawerToggle(true)}>
+        <a
+          tabIndex="-1"
+          className={`pointer ${visibleXs && 'visible-xs visible-sm'}`}
+          onClick={() => this.handleDrawerToggle(true)}
+        >
           <i className="ss-icon ss-settings text-align" />
           <LocaleFormattedMessage id="setting.title" defaultMessage="Settings" />
         </a>
@@ -80,10 +86,8 @@ class GlobalNavSurah extends Component {
             <Link to="/search">
               <i className="ss-icon ss-search" style={{ verticalAlign: 'sub' }} />
             </Link>
-          </li>
-        ]}
-        rightControls={[
-          this.renderDrawerToggle(),
+          </li>,
+          this.renderDrawerToggle(true),
           <Drawer
             right
             drawerClickClose={false}
@@ -91,6 +95,9 @@ class GlobalNavSurah extends Component {
             handleOpen={this.handleDrawerToggle}
             toggle={<noscript />}
           >
+            <div style={{ padding: 15 }}>
+              <h4>Settings</h4>
+            </div>
             <Menu>
               <InformationToggle
                 onToggle={setOption}
@@ -104,33 +111,34 @@ class GlobalNavSurah extends Component {
                 isNightMode={options.isNightMode}
                 onToggle={setOption}
               />
-              <MenuItem divider />
-              <FontSizeDropdown
-                fontSize={options.fontSize}
-                onOptionChange={setOption}
+              <hr />
+              <ReciterDropdown
+                onOptionChange={this.handleOptionChange}
               />
-              <MenuItem divider />
-              <div style={{ paddingLeft: 15, paddingRight: 15 }}>
-                <LocaleFormattedMessage id="setting.reciters.title" defaultMessage="Reciters" />
-                <ReciterDropdown
-                  onOptionChange={this.handleOptionChange}
-                />
-                <br />
-                <LocaleFormattedMessage id="setting.translations.title" defaultMessage="Translations" />
-                <ContentDropdown
-                  onOptionChange={this.handleOptionChange}
-                />
-              </div>
-              <MenuItem divider />
-              <div style={{ paddingLeft: 15, paddingRight: 15 }}>
+              <ContentDropdown
+                onOptionChange={this.handleOptionChange}
+              />
+              <hr />
+              <div className={styles.title}>
                 <LocaleFormattedMessage id="setting.tooltip.title" defaultMessage="Tooltip Content" />
               </div>
               <TooltipDropdown
                 tooltip={options.tooltip}
                 onOptionChange={setOption}
               />
+              <hr />
+              <div className={styles.title}>
+                <LocaleFormattedMessage id="setting.fontSize" defaultMessage="Font Size" />
+              </div>
+              <FontSizeDropdown
+                fontSize={options.fontSize}
+                onOptionChange={setOption}
+              />
             </Menu>
           </Drawer>
+        ]}
+        rightControls={[
+          this.renderDrawerToggle()
         ]}
       />
     );

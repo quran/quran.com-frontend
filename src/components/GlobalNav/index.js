@@ -112,7 +112,7 @@ class GlobalNav extends Component {
             leftControls.map(((control, index) => React.cloneElement(control, { key: index })))
           }
         </Nav>
-        <Nav pullRight>
+        <Nav pullRight className="hidden-xs hidden-sm">
           {
             this.renderRightControls()
             .map(((control, index) => React.cloneElement(control, { key: index })))
