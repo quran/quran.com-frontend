@@ -1,6 +1,7 @@
 /* global document */
 import React, { Component, PropTypes } from 'react';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import { MenuItem } from 'quran-components/lib/Menu';
 
 class NightModeToggle extends Component {
   static propTypes = {
@@ -32,18 +33,12 @@ class NightModeToggle extends Component {
     const { isNightMode } = this.props;
 
     return (
-      <li className={isNightMode && 'active'}>
-        <a
-          tabIndex="-1"
-          className="pointer"
-          onClick={this.toggleNightMode}
-        >
-          <i
-            className="ss-icon ss-lightbulb vertical-align-middle"
-          />
-          {' '}<LocaleFormattedMessage id="settings.nightMode" defaultMessage="Night Mode" className="visible-xs-inline-block" />
-        </a>
-      </li>
+      <MenuItem
+        icon={<i className="ss-icon ss-lightbulb vertical-align-middle" />}
+        onClick={this.toggleNightMode}
+      >
+        <LocaleFormattedMessage id="settings.nightMode" defaultMessage="Night Mode" />
+      </MenuItem>
     );
   }
 }
