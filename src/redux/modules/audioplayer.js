@@ -1,7 +1,6 @@
 /* eslint-disable no-case-declarations */
-import { buildAudioFromHash } from 'helpers/buildAudio';
-import { buildSegments, extractSegments } from 'helpers/buildSegments';
-import debug from 'helpers/debug';
+import { buildAudioForAyah } from 'helpers/buildAudio';
+import { buildSegments } from 'helpers/buildSegments';
 
 import {
   SET_CURRENT_FILE,
@@ -14,12 +13,13 @@ import {
   PREVIOUS,
   SET_REPEAT,
   TOGGLE_SCROLL,
-  BUILD_ON_CLIENT,
-  UPDATE
+  UPDATE,
+  // LOAD,
+  LOAD_SUCCESS,
+  // LOAD_FAIL
   } from 'redux/constants/audioplayer.js';
 
 import {
-  LOAD_SUCCESS as VERSES_LOAD_SUCCESS,
   LOAD as VERSES_LOAD,
   CLEAR_CURRENT as VERSES_CLEAR_CURRENT,
   SET_CURRENT_VERSE
@@ -47,30 +47,6 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case BUILD_ON_CLIENT: {
-      debug('reducer:audioplayer', 'BUILD_ON_CLIENT init');
-      const audioFromHash = buildAudioFromHash(state.files[action.chapterId], state.userAgent);
-
-      debug('reducer:audioplayer', 'BUILD_ON_CLIENT return');
-
-      const stateFiles = state.files;
-      const filesById = stateFiles[action.chapterId];
-      const filesFromHash = audioFromHash.files;
-
-      return {
-        ...state,
-        isLoadedOnClient: true,
-        files: {
-          ...stateFiles,
-          [action.chapterId]: {
-            ...filesById,
-            ...filesFromHash
-          }
-        },
-        currentFile: Object.values(audioFromHash.files)[0],
-        currentVerse: Object.keys(audioFromHash.files)[0]
-      };
-    }
     case VERSES_CLEAR_CURRENT: {
       const stateFilesCurrent = state.files;
 
@@ -88,49 +64,27 @@ export default function reducer(state = initialState, action = {}) {
         isLoading: false
       };
     }
-    case VERSES_LOAD_SUCCESS: {
-      debug('reducer:audioplayer', 'VERSES_LOAD_SUCCESS init');
+    case LOAD_SUCCESS: {
+      const data = buildAudioForAyah(action.result.audioFile);
 
-      const verses = action.result.entities.verses;
-      const audioFromHash = __CLIENT__ ? buildAudioFromHash(verses, state.userAgent) : verses;
-      const files = Object.assign(
-        {},
-        state.files[action.chapterId],
-        __CLIENT__ ? audioFromHash.files : audioFromHash
-      );
-
-      const currentVerse = state.currentVerse ? state.currentVerse : Object.keys(files)[0];
-
-      let currentFile;
-      if (state.currentFile && state.currentFile === Object.values(files)[0]) {
-        // If the same file is being used, for example in lazy loading, then keep same file
-        currentFile = state.currentFile;
-      } else if (state.currentVerse || currentVerse) {
-        // If the user changes the reciter, we want to maintain the file where
-        // the user last left off
-        currentFile = files[state.currentVerse || currentVerse];
-      } else {
-        // Otherwise, just choose the first file
-        currentFile = Object.values(files)[0];
-      }
-
-      const stateFiles = state.files;
-      const stateSegments = state.segments;
-
-      debug('reducer:audioplayer', 'VERSES_LOAD_SUCCESS return');
       return {
         ...state,
-        currentVerse,
-        currentFile,
-        chapterId: action.chapterId,
-        isLoadedOnClient: __CLIENT__,
+        loaded: true,
+        loading: false,
+        errored: false,
         files: {
-          ...stateFiles,
-          [action.chapterId]: files
+          ...state.files,
+          [action.chapterId]: {
+            ...state.files[action.chapterId],
+            [action.verseKey]: data.audio
+          }
         },
         segments: {
-          ...stateSegments,
-          [action.chapterId]: extractSegments(action.result.entities.verses)
+          ...state.segments,
+          [action.chapterId]: {
+            ...state.segments[action.chapterId],
+            [action.verseKey]: buildSegments(data.segments)
+          }
         }
       };
     }
@@ -142,27 +96,16 @@ export default function reducer(state = initialState, action = {}) {
       };
     }
     case PLAY: {
-      if (state.currentFile) {
-        state.currentFile.play();
-        return {
-          ...state,
-          isPlaying: true
-        };
-      }
-
-      return state;
+      return {
+        ...state,
+        isPlaying: true
+      };
     }
     case PAUSE: {
-      if (state.currentFile) {
-        state.currentFile.pause();
-
-        return {
-          ...state,
-          isPlaying: false
-        };
-      }
-
-      return state;
+      return {
+        ...state,
+        isPlaying: false
+      };
     }
     case NEXT: {
       const [chapterId, ayahNum] = action.currentVerse.split(':');

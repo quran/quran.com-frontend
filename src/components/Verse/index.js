@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
 
 import { verseType, matchType, surahType } from 'types';
+import { load as loadAudio } from 'redux/actions/audioplayer';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
@@ -52,7 +53,9 @@ class Verse extends Component {
     currentWord: PropTypes.number, // gets passed in an integer, null by default
     iscurrentVerse: PropTypes.bool,
     currentVerse: PropTypes.string,
-    userAgent: PropTypes.func
+    userAgent: PropTypes.func,
+    audio: PropTypes.number.isRequired,
+    loadAudio: PropTypes.func.isRequired
   };
 
 
@@ -60,6 +63,32 @@ class Verse extends Component {
     currentWord: null,
     isSearched: false
   };
+
+  // TODO: Should this belong here?
+  componentDidMount() {
+    const { verse, audio } = this.props;
+
+    this.props.loadAudio({
+      chapterId: verse.chapterId,
+      verseId: verse.id,
+      verseKey: verse.verseKey,
+      audio
+    });
+  }
+
+  // TODO: Should this belong here?
+  componentWillReceiveProps(nextProps) {
+    if (this.props.audio !== nextProps.audio) {
+      const { verse, audio } = nextProps;
+
+      this.props.loadAudio({
+        chapterId: verse.chapterId,
+        verseId: verse.id,
+        verseKey: verse.verseKey,
+        audio
+      });
+    }
+  }
 
   shouldComponentUpdate(nextProps) {
     const conditions = [
@@ -311,6 +340,4 @@ class Verse extends Component {
   }
 }
 
-export default connect(state => ({
-  userAgent: state.options.userAgent
-}))(Verse);
+export default connect(() => ({}), { loadAudio })(Verse);
