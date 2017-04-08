@@ -5,7 +5,9 @@ import { asyncConnect } from 'redux-connect';
 
 import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
+import Button from 'quran-components/lib/Button';
 import ComponentLoader from 'components/ComponentLoader';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { chapterType } from 'types';
 import makeHeadTags from 'helpers/makeHeadTags';
 
@@ -50,6 +52,11 @@ const ChapterInfo = ({ chapter }) => (
       chapter={chapter}
       isShowingSurahInfo
     />
+    <div className="text-center">
+      <Button href={`/${chapter.id}`}>
+        <LocaleFormattedMessage id="surah.read" defaultMessage="Read full Surah" />
+      </Button>
+    </div>
   </div>
 );
 

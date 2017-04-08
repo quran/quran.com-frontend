@@ -43,6 +43,7 @@ export default {
     'surah.index.continue': 'Continuer',
     'surah.index.quickLinks': 'Liens rapides',
     'surah.goToBeginning': 'Début de la Sourate',
+    'surah.read': 'Lire la sourate complète',
 
     'player.currentVerse': 'Verset',
     'player.nextAyah': 'Prochain Verset',
@@ -80,4 +81,3 @@ export default {
     'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. '
   }
 };
-

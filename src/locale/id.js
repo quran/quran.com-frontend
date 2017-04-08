@@ -43,6 +43,7 @@ export default {
     'surah.index.continue': 'Lanjutkan',
     'surah.index.quickLinks': 'Tautan cepat',
     'surah.goToBeginning': 'Awal Surat',
+    'surah.read': 'Baca lengkap Surah',
 
     'player.currentVerse': 'Ayat',
     'player.nextAyah': 'Ayat Berikutnya',

@@ -43,6 +43,7 @@ export default {
     'surah.index.continue': 'جاری رہے',
     'surah.index.quickLinks': 'فوری لنک',
     'surah.goToBeginning': 'سورہ کے شروع میں جائیں',
+    'surah.read': 'مکمل سورت پڑھیں',
 
     'player.currentVerse': 'آیت',
     'player.nextAyah': 'اگلی آیت',
