@@ -12,7 +12,7 @@ const Share = ({ chapter, verse }) => {
   // Fallback to Surah Id
   let path;
   if (verse) {
-    const translations = verse.translations.map(translation => translation.resourceId).join(',');
+    const translations = (verse.translations || []).map(translation => translation.resourceId).join(',');
     path = `${verse.chapterId}/${verse.verseNumber}?translations=${translations}`;
   } else {
     path = chapter.chapterNumber;

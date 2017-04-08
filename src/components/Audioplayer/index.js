@@ -11,7 +11,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import debug from 'helpers/debug';
 import scroller from 'utils/scroller';
 
-import { surahType, segmentType } from 'types';
+import { surahType, segmentType, verseType } from 'types';
 
 // Redux
 import * as AudioActions from 'redux/actions/audioplayer';
@@ -58,7 +58,8 @@ export class Audioplayer extends Component {
     currentTime: PropTypes.number,
     duration: PropTypes.number,
     // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
-    currentFile: PropTypes.any // eslint-disable-line
+    currentFile: PropTypes.any, // eslint-disable-line
+    startVerse: verseType // eslint-disable-line
   };
 
   componentDidMount() {
@@ -98,6 +99,20 @@ export class Audioplayer extends Component {
       }
 
       return false;
+    }
+
+    return false;
+  }
+
+  componentDidUpdate() {
+    const { currentFile, isPlaying } = this.props;
+
+    if (!currentFile) return false;
+
+    if (isPlaying) {
+      currentFile.play();
+    } else {
+      currentFile.pause();
     }
 
     return false;
@@ -398,6 +413,7 @@ export class Audioplayer extends Component {
       segments,
       isLoading,
       currentVerse,
+      currentFile,
       currentTime,
       duration,
       chapter,
@@ -408,7 +424,7 @@ export class Audioplayer extends Component {
       setRepeat // eslint-disable-line no-shadow
     } = this.props;
 
-    if (isLoading || !currentVerse) {
+    if (isLoading || !currentFile) {
       return (
         <li className={`${style.container} ${className}`}>
           <div>
@@ -474,19 +490,24 @@ export class Audioplayer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
-  files: state.audioplayer.files[ownProps.chapter.chapterNumber],
-  segments: state.audioplayer.segments[ownProps.chapter.chapterNumber],
-  currentFile: state.audioplayer.currentFile,
-  currentVerse: state.audioplayer.currentVerse,
-  chapterId: state.audioplayer.chapterId,
-  isPlaying: state.audioplayer.isPlaying,
-  isLoadedOnClient: state.audioplayer.isLoadedOnClient,
-  isLoading: state.audioplayer.isLoading,
-  repeat: state.audioplayer.repeat,
-  shouldScroll: state.audioplayer.shouldScroll,
-  duration: state.audioplayer.duration,
-  currentTime: state.audioplayer.currentTime,
-});
+const mapStateToProps = (state, ownProps) => {
+  const currentVerse = state.audioplayer.currentVerse || ownProps.startVerse.verseKey;
+  const files = state.audioplayer.files[ownProps.chapter.id];
+
+  return {
+    files,
+    currentVerse,
+    segments: state.audioplayer.segments[ownProps.chapter.id],
+    currentFile: files[currentVerse],
+    chapterId: ownProps.chapter.id,
+    isPlaying: state.audioplayer.isPlaying,
+    isLoadedOnClient: state.audioplayer.isLoadedOnClient,
+    isLoading: state.audioplayer.isLoading,
+    repeat: state.audioplayer.repeat,
+    shouldScroll: state.audioplayer.shouldScroll,
+    duration: state.audioplayer.duration,
+    currentTime: state.audioplayer.currentTime,
+  };
+};
 
 export default connect(mapStateToProps, AudioActions)(Audioplayer);

@@ -240,7 +240,7 @@ class Surah extends Component {
 
   renderPagination() {
     const { isSingleAyah, isLoading, isEndOfSurah, chapter, verses, currentVerse } = this.props;
-    const translations = verses[currentVerse].translations.map(translation => translation.resourceId).join(',');
+    const translations = (verses[currentVerse].translations || []).map(translation => translation.resourceId).join(',');
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
@@ -331,6 +331,8 @@ class Surah extends Component {
         isPlaying={isPlaying}
         isAuthenticated={isAuthenticated}
         key={`${verse.chapterId}-${verse.id}-verse`}
+        userAgent={options.userAgent}
+        audio={options.audio}
       />
     ));
   }
@@ -352,7 +354,7 @@ class Surah extends Component {
   }
 
   render() {
-    const { chapter, options, actions } = this.props; // eslint-disable-line no-shadow
+    const { chapter, verses, options, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
     if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}>{this.renderNoAyah()}</div>;
@@ -412,6 +414,7 @@ class Surah extends Component {
         </div>
         <Audioplayer
           chapter={chapter}
+          startVerse={Object.values(verses)[0]}
           onLoadAyahs={this.handleLazyLoadAyahs}
         />
       </div>
@@ -433,7 +436,7 @@ function mapStateToProps(state, ownProps) {
   const verseIds = new Set(verseArray);
   const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah = !!ownProps.params.range && !ownProps.params.range.includes('-');
-
+  const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
     chapter,
@@ -442,7 +445,7 @@ function mapStateToProps(state, ownProps) {
     isSingleAyah,
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
-    currentVerse: state.audioplayer.currentVerse,
+    currentVerse: currentVerse,
     isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
     isEndOfSurah: lastAyahInArray === chapter.versesCount,

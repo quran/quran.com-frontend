@@ -12,13 +12,11 @@ import {
 
 // NOTE: For safe measure
 const defaultOptions = {
-  audio: 8,
   translations: [20]
 };
 
 function prepareParams(params, options) {
   // NOTE: first priority to options in URL, second to options and lastly fallback to defaultOptions
-  const recitation = params.recitation || options.audio || defaultOptions.audio;
   let translations;
 
   if (params.translations && params.translations.length) {
@@ -27,7 +25,7 @@ function prepareParams(params, options) {
     translations = options.translations || defaultOptions.translations;
   }
 
-  return { translations, recitation };
+  return { translations };
 }
 
 // NOTE: From the API!
@@ -45,8 +43,7 @@ export function load(id, paging, params, options = defaultOptions) {
     promise: client => client.get(`/api/v3/chapters/${id}/verses`, {
       params: {
         ...paging,
-        recitation: apiOptions.recitation,
-        translations: apiOptions.translations
+        ...apiOptions
       }
     }),
     chapterId: id

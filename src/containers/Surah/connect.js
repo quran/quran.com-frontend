@@ -7,7 +7,7 @@ import {
 
 import {
   clearCurrent,
-  load as loadAyahs,
+  load as loadVerses,
   isLoaded
   } from 'redux/actions/verses.js';
 
@@ -86,11 +86,11 @@ export const versesConnect = ({ store: { dispatch, getState }, params, location 
     dispatch(clearCurrent(chapterId)); // In the case where you go to same surah but later ayahs.
 
     if (__CLIENT__) {
-      dispatch(loadAyahs(chapterId, paging, { translations, recitation }, getState().options));
+      dispatch(loadVerses(chapterId, paging, { translations, recitation }, getState().options));
       return true;
     }
 
-    return dispatch(loadAyahs(chapterId, paging, { translations, recitation }, getState().options));
+    return dispatch(loadVerses(chapterId, paging, { translations, recitation }, getState().options));
   }
 
   return true;

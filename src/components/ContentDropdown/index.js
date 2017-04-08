@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { loadTranslations } from 'redux/actions/options';
 import { contentType } from 'types';
+import Menu, { MenuItem } from 'quran-components/lib/Menu';
+import Checkbox from 'quran-components/lib/Checkbox';
+import Loader from 'quran-components/lib/Loader';
+import Icon from 'quran-components/lib/Icon';
 
 const style = require('./style.scss');
 
@@ -31,8 +32,7 @@ class ContentDropdown extends Component {
     onOptionChange: PropTypes.func.isRequired,
     translations: PropTypes.arrayOf(PropTypes.number).isRequired,
     translationOptions: PropTypes.arrayOf(contentType),
-    loadTranslations: PropTypes.func.isRequired,
-    className: PropTypes.string
+    loadTranslations: PropTypes.func.isRequired
   };
 
   componentDidMount() {
@@ -41,16 +41,6 @@ class ContentDropdown extends Component {
     }
 
     return false;
-  }
-
-  getTitle() {
-    const { translationOptions, translations } = this.props;
-
-    return translationOptions.filter(slug => translations.includes(slug.id)).map((slug) => {
-      if (slug.languageName === 'English') return slug.authorName;
-
-      return slug.languageName;
-    }).join(', ');
   }
 
   handleRemoveContent = () => {
@@ -76,19 +66,16 @@ class ContentDropdown extends Component {
       const checked = translations.find(option => option === translation.id);
 
       return (
-        <li key={translation.id} className={style.item}>
-          <input
-            type="checkbox"
-            className={style.checkbox}
+        <MenuItem key={translation.id} className={style.item}>
+          <Checkbox
             id={translation.id + translation.languageName}
-            onChange={() => this.handleOptionSelected(translation.id)}
+            name="translation"
             checked={checked}
-          />
-
-          <label htmlFor={translation.id + translation.languageName} className={style.label}>
+            handleChange={() => this.handleOptionSelected(translation.id)}
+          >
             {render(translation)}
-          </label>
-        </li>
+          </Checkbox>
+        </MenuItem>
       );
     });
   }
@@ -110,33 +97,34 @@ class ContentDropdown extends Component {
   }
 
   render() {
-    const { className, translations } = this.props;
+    const { translations, translationOptions } = this.props;
 
     return (
-      <ButtonToolbar>
-        <DropdownButton
-          block
-          id="content-dropdown"
-          className={`dropdown ${className} ${style.dropdown}`}
-          title={this.getTitle()}
-        >
-          {
-            translations && translations.length &&
-              <MenuItem onClick={this.handleRemoveContent}>
-                <LocaleFormattedMessage id="setting.translations.removeAll" defaultMessage="Remove all" />
+      <MenuItem
+        icon={<Icon type="list" />}
+        menu={
+          translationOptions.length ?
+            <Menu>
+              {
+                translations && translations.length &&
+                  <MenuItem onClick={this.handleRemoveContent}>
+                    <LocaleFormattedMessage id="setting.translations.removeAll" defaultMessage="Remove all" />
+                  </MenuItem>
+              }
+              <MenuItem divider>
+                <LocaleFormattedMessage id="setting.translations.english" defaultMessage="English" />
               </MenuItem>
-          }
-          <MenuItem header>
-            <LocaleFormattedMessage id="setting.translations.english" defaultMessage="English" />
-          </MenuItem>
-          {this.renderEnglishList()}
-          <MenuItem divider />
-          <MenuItem header>
-            <LocaleFormattedMessage id="setting.translations.other" defaultMessage="Other Languages" />
-          </MenuItem>
-          {this.renderLanguagesList()}
-        </DropdownButton>
-      </ButtonToolbar>
+              {this.renderEnglishList()}
+              <MenuItem divider>
+                <LocaleFormattedMessage id="setting.translations.other" defaultMessage="Other Languages" />
+              </MenuItem>
+              {this.renderLanguagesList()}
+            </Menu> :
+            <Loader isActive />
+        }
+      >
+        <LocaleFormattedMessage id="setting.translations.title" defaultMessage="Translations" />
+      </MenuItem>
     );
   }
 }

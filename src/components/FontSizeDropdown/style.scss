@@ -1,24 +1,20 @@
 @import '../../styles/variables.scss';
 
-.popover{
-  :global(.popover-title){
-    font-family: $font-montserrat;
-    text-transform: uppercase;
-    color: $cream;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    font-size: 0.75em;
-  }
+.list{
+  display: table;
+  width: 100%;
+  padding: 15px 0px;
+}
 
-  :global(.popover-content){
-    :global(a){
-      font-size: 0.8em;
-    }
-  }
+.item{
+  list-style-type: none;
+  display: table-cell;
+  width: 33%;
 }
 
 .link{
   position: relative;
   display: block;
   cursor: pointer;
+  color: #777;
 }

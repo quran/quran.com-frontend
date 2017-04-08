@@ -67,12 +67,11 @@ export default (store) => {
         getComponents={(nextState, cb) =>
           Promise.all([
             import('./containers/Surah'),
-            import('./components/GlobalNav/Surah'),
-            import('./components/GlobalSidebar/Surah'),
+            import('./components/GlobalNav/Surah')
           ])
           .then(modules => cb(
             null,
-            { main: modules[0].default, nav: modules[1].default, sidebar: modules[2].default }
+            { main: modules[0].default, nav: modules[1].default }
           ))
           .catch(err => console.trace(err))
         }
@@ -84,12 +83,11 @@ export default (store) => {
         getComponents={(nextState, cb) =>
           Promise.all([
             import('./containers/Surah'),
-            import('./components/GlobalNav/Surah'),
-            import('./components/GlobalSidebar/Surah'),
+            import('./components/GlobalNav/Surah')
           ])
           .then(modules => cb(
           null,
-        { main: modules[0].default, nav: modules[1].default, sidebar: modules[2].default }
+        { main: modules[0].default, nav: modules[1].default }
           ))
           .catch(err => console.trace(err))
         }
