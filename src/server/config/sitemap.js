@@ -36,6 +36,30 @@ export default (server) => {
           changefreq: 'weekly',
           priority: 1
         });
+
+        urls.push({
+          url: `/${chapter.chapterNumber}/info/ur`,
+          changefreq: 'weekly',
+          priority: 1
+        });
+
+        urls.push({
+          url: `/${chapter.chapterNumber}/info/ml`,
+          changefreq: 'weekly',
+          priority: 1
+        });
+
+        urls.push({
+          url: `/${chapter.chapterNumber}/info/ta`,
+          changefreq: 'weekly',
+          priority: 1
+        });
+
+        urls.push({
+          url: `/${chapter.chapterNumber}/info/en`,
+          changefreq: 'weekly',
+          priority: 1
+        });
       });
 
 
