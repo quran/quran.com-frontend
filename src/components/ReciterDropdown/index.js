@@ -35,7 +35,9 @@ class ReciterDropdown extends Component {
       >
         <Radio
           checked={slug.id === audio}
-          id={slug.id} name="reciter" handleChange={() => onOptionChange({ audio: slug.id })}
+          id={slug.id}
+          name="reciter"
+          handleChange={() => onOptionChange({ audio: slug.id })}
         >
           {slug.reciterNameEng} {slug.style ? `(${slug.style})` : ''}
         </Radio>

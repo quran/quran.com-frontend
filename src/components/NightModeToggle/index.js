@@ -35,7 +35,7 @@ class NightModeToggle extends Component {
         icon={<i className="ss-icon ss-lightbulb vertical-align-middle" />}
         onClick={this.toggleNightMode}
       >
-        <LocaleFormattedMessage id="settings.nightMode" defaultMessage="Night Mode" />
+        <LocaleFormattedMessage id="setting.nightMode" defaultMessage="Night Mode" />
       </MenuItem>
     );
   }

@@ -7,7 +7,7 @@ const ReadingModeToggle = ({ onToggle, isToggled }) => (
     icon={<i className="ss-icon ss-openbook vertical-align-middle" />}
     onClick={() => onToggle({ isReadingMode: !isToggled })}
   >
-    <LocaleFormattedMessage id="settings.reading" defaultMessage="Reading" />
+    <LocaleFormattedMessage id="setting.reading" defaultMessage="Reading" />
   </MenuItem>
 );
 

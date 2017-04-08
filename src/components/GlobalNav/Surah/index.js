@@ -96,7 +96,7 @@ class GlobalNavSurah extends Component {
             toggle={<noscript />}
           >
             <div style={{ padding: 15 }}>
-              <h4>Settings</h4>
+              <h4><LocaleFormattedMessage id="setting.title" defaultMessage="Settings" /></h4>
             </div>
             <Menu>
               <InformationToggle
@@ -118,10 +118,6 @@ class GlobalNavSurah extends Component {
               <ContentDropdown
                 onOptionChange={this.handleOptionChange}
               />
-              <hr />
-              <div className={styles.title}>
-                <LocaleFormattedMessage id="setting.tooltip.title" defaultMessage="Tooltip Content" />
-              </div>
               <TooltipDropdown
                 tooltip={options.tooltip}
                 onOptionChange={setOption}
