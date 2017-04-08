@@ -66,9 +66,9 @@ class Verse extends Component {
 
   // TODO: Should this belong here?
   componentDidMount() {
-    const { verse, audio } = this.props;
+    const { verse, audio, isSearched } = this.props;
 
-    this.props.loadAudio({
+    !isSearched && this.props.loadAudio({
       chapterId: verse.chapterId,
       verseId: verse.id,
       verseKey: verse.verseKey,
