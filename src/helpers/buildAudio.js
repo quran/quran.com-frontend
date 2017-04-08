@@ -4,15 +4,10 @@ export function buildAudioForAyah(audio) {
   let segments = null;
 
   scopedAudio.preload = 'none';
+
   if (audio.url) {
     scopedAudio.src = audio.url;
-    segments = audio.encryptedSegments;
-    return { audio: scopedAudio, segments };
-  }
-
-  if (audio.mp3) {
-    scopedAudio.src = audio.mp3.url;
-    segments = audio.mp3.encryptedSegments;
+    segments = audio.segments;
     return { audio: scopedAudio, segments };
   }
 

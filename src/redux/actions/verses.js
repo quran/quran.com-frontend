@@ -12,7 +12,6 @@ import {
 
 // NOTE: For safe measure
 const defaultOptions = {
-  audio: 8,
   translations: [20]
 };
 
@@ -20,7 +19,7 @@ const defaultOptions = {
 const perPage = 10;
 
 export function load(id, paging, options = defaultOptions) {
-  const { audio, translations } = options;
+  const { translations } = options;
 
   // TODO: move this to module/verses
   // cookie.save('lastVisit', JSON.stringify({ chapterId: id, verseId: from }));
@@ -31,7 +30,6 @@ export function load(id, paging, options = defaultOptions) {
     promise: client => client.get(`/api/v3/chapters/${id}/verses`, {
       params: {
         ...paging,
-        recitation: audio,
         translations
       }
     }),
