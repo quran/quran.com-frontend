@@ -14,11 +14,14 @@ const SurahInfo = ({ chapter, isShowingSurahInfo, onClose }) => {
 
   return (
     <div className={`col-xs-12 ${style.container} chapter-info ${style.show}`}>
-      <button
-        tabIndex="-1"
-        className={`${style.close} ss-delete`}
-        onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
-      />
+      {
+        onClose &&
+        <button
+          tabIndex="-1"
+          className={`${style.close} ss-delete`}
+          onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
+        />
+      }
       <div className={`${style.row} row`}>
         <div
           className={`col-md-3 col-xs-6 ${style.bg} ${style[chapter.revelationPlace]}`}

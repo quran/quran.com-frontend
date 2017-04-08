@@ -60,6 +60,13 @@ export default (store) => {
         <Route path="/profile" getComponent={(nextState, cb) => import('./containers/Profile').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
       </Route>
 
+      <Route
+        path="/:chapterId/info"
+        getComponents={
+          (nextState, cb) => import('./containers/ChapterInfo').then(module => cb(null, module.default)).catch(err => console.trace(err))
+        }
+      />
+
       <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
 
       <Route

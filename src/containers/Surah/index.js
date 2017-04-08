@@ -222,7 +222,7 @@ class Surah extends Component {
       return `Surat ${chapter.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${chapter.info ? chapter.info.shortDescription : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${chapter.info ? chapter.info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderNoAyah() {

@@ -30,6 +30,12 @@ export default (server) => {
           changefreq: 'weekly',
           priority: 1
         });
+
+        urls.push({
+          url: `/${chapter.chapterNumber}/info`,
+          changefreq: 'weekly',
+          priority: 1
+        });
       });
 
 
