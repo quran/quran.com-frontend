@@ -13,20 +13,50 @@ export default (server) => {
           const ayahId = index + 1;
 
           urls.push({
-            url: `/${chapter.chapterNumber}/${ayahId}`,
+            url: `/${chapter.id}/${ayahId}`,
             changefreq: 'weekly',
             priority: 1
           });
 
           urls.push({
-            url: `/${chapter.chapterNumber}/${ayahId}-${ayahId + 9}`,
+            url: `/${chapter.id}/${ayahId}-${ayahId + 9}`,
             changefreq: 'weekly',
             priority: 1
           });
         });
 
         urls.push({
-          url: `/${chapter.chapterNumber}`,
+          url: `/${chapter.id}`,
+          changefreq: 'weekly',
+          priority: 1
+        });
+
+        urls.push({
+          url: `/${chapter.id}/info`,
+          changefreq: 'weekly',
+          priority: 1
+        });
+
+        urls.push({
+          url: `/${chapter.id}/info/ur`,
+          changefreq: 'weekly',
+          priority: 1
+        });
+
+        urls.push({
+          url: `/${chapter.id}/info/ml`,
+          changefreq: 'weekly',
+          priority: 1
+        });
+
+        urls.push({
+          url: `/${chapter.id}/info/ta`,
+          changefreq: 'weekly',
+          priority: 1
+        });
+
+        urls.push({
+          url: `/${chapter.id}/info/en`,
           changefreq: 'weekly',
           priority: 1
         });

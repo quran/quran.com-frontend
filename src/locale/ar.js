@@ -42,6 +42,7 @@ export default {
     'surah.index.continue': 'استءنف',
     'surah.index.quickLinks': 'روابط سريعة',
     'surah.goToBeginning': 'ابتداء من سورة',
+    'surah.read': 'قراءة سورة كاملة',
 
     'player.currentVerse': 'آية',
     'player.nextAyah': 'آية القادمة',

@@ -38,7 +38,7 @@ export default class {
 
         params = params || {}; // eslint-disable-line no-param-reassign
 
-        params.language = contentLanguage(); // eslint-disable-line no-param-reassign
+        params.language = params.language || contentLanguage(); // eslint-disable-line
 
         request.query(qs.stringify(decamelizeKeys(params), {
           arrayFormat: arrayFormat || 'brackets'
