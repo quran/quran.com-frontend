@@ -5,9 +5,10 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
-import SmartBanner from 'components/SmartBanner';
+import Loadable from 'react-loadable';
+
+import ComponentLoader from 'components/ComponentLoader';
 import GlobalNav from 'components/GlobalNav';
-import GlobalSidebar from 'components/GlobalSidebar';
 
 import debug from 'helpers/debug';
 import config from 'config';
@@ -26,6 +27,16 @@ import authConnect from './connect';
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
+
+const GlobalSidebar = Loadable({
+  loader: () => import('components/GlobalSidebar'),
+  LoadingComponent: ComponentLoader
+});
+
+const SmartBanner = Loadable({
+  loader: () => import('components/SmartBanner'),
+  LoadingComponent: ComponentLoader
+});
 
 class App extends Component {
   static propTypes = {
@@ -54,7 +65,6 @@ class App extends Component {
     const {
       main,
       nav,
-      sidebar,
       children,
       media,
       footNote,
@@ -97,15 +107,10 @@ class App extends Component {
             }
           )
         }
-        {
-          React.cloneElement(
-            sidebar || <GlobalSidebar />,
-            {
-              open: this.state.sidebarOpen,
-              handleOpen: open => this.setState({ sidebarOpen: open })
-            }
-          )
-        }
+        <GlobalSidebar
+          open={this.state.sidebarOpen}
+          handleOpen={open => this.setState({ sidebarOpen: open })}
+        />
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />

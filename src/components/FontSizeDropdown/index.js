@@ -1,8 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import Popover from 'react-bootstrap/lib/Popover';
-
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('./style.scss');
@@ -32,17 +29,10 @@ export default class FontSizeDropdown extends Component {
   }
 
   renderPopup() {
-    const title = (
-      <LocaleFormattedMessage
-        id="setting.fontSize"
-        defaultMessage="Font size"
-      />
-    );
-
     return (
-      <Popover id="FontSizeDropdown" title={title} className={style.popover}>
-        <div className="row">
-          <div className="col-xs-3">
+      <div>
+        <ul className={style.list}>
+          <li className={`text-center ${style.item}`}>
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('arabic', -1)}
@@ -50,11 +40,11 @@ export default class FontSizeDropdown extends Component {
             >
               <i className="ss-icon ss-hyphen" />
             </a>
-          </div>
-          <div className="col-xs-6 text-center">
+          </li>
+          <li className={`text-center ${style.item}`}>
             <LocaleFormattedMessage id="setting.fontSize.arabic" defaultMessage="Arabic" />
-          </div>
-          <div className="col-xs-3 text-center">
+          </li>
+          <li className={`text-center ${style.item}`}>
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('arabic', 1)}
@@ -62,11 +52,11 @@ export default class FontSizeDropdown extends Component {
             >
               <i className="ss-icon ss-plus" />
             </a>
-          </div>
-        </div>
+          </li>
+        </ul>
         <br />
-        <div className="row">
-          <div className="col-xs-3">
+        <ul className={style.list}>
+          <li className={`text-center ${style.item}`}>
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('translation', -1)}
@@ -74,11 +64,11 @@ export default class FontSizeDropdown extends Component {
             >
               <i className="ss-icon ss-hyphen" />
             </a>
-          </div>
-          <div className="col-xs-6 text-center">
+          </li>
+          <li className={`text-center ${style.item}`}>
             <LocaleFormattedMessage id="setting.translations.title" defaultMessage="Translations" />
-          </div>
-          <div className="col-xs-3 text-right">
+          </li>
+          <li className={`text-center ${style.item}`}>
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('translation', 1)}
@@ -86,24 +76,16 @@ export default class FontSizeDropdown extends Component {
             >
               <i className="ss-icon ss-plus" />
             </a>
-          </div>
-        </div>
-      </Popover>
+          </li>
+        </ul>
+      </div>
     );
   }
 
   render() {
     return (
       <li className={style.link}>
-        <OverlayTrigger trigger="click" placement="bottom" overlay={this.renderPopup()} rootClose>
-          <a
-            tabIndex="-1"
-            data-metrics-event-name="FontSizeDropdown"
-          >
-            <i className="ss-icon ss-font vertical-align-middle" />
-            {' '}<LocaleFormattedMessage id="setting.fontSize" defaultMessage="Font Size" className="visible-xs-inline-block" />
-          </a>
-        </OverlayTrigger>
+        {this.renderPopup()}
       </li>
     );
   }

@@ -1,19 +1,14 @@
 import React, { PropTypes } from 'react';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import { MenuItem } from 'quran-components/lib/Menu';
 
 const ReadingModeToggle = ({ onToggle, isToggled }) => (
-  <li className={isToggled && 'active'}>
-    <a
-      tabIndex="-1"
-      className="pointer"
-      onClick={() => onToggle({ isReadingMode: !isToggled })}
-    >
-      <i
-        className="ss-icon ss-openbook vertical-align-middle"
-      />
-      {' '}<LocaleFormattedMessage id="settings.reading" defaultMessage="Reading" className="visible-xs-inline-block" />
-    </a>
-  </li>
+  <MenuItem
+    icon={<i className="ss-icon ss-openbook vertical-align-middle" />}
+    onClick={() => onToggle({ isReadingMode: !isToggled })}
+  >
+    <LocaleFormattedMessage id="setting.reading" defaultMessage="Reading" />
+  </MenuItem>
 );
 
 ReadingModeToggle.propTypes = {
