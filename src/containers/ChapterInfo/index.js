@@ -8,7 +8,7 @@ import Loadable from 'react-loadable';
 import Button from 'quran-components/lib/Button';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { chapterType } from 'types';
+import { surahType, infoType } from 'types';
 import makeHeadTags from 'helpers/makeHeadTags';
 
 import { chaptersConnect, chapterInfoConnect } from '../Surah/connect';
@@ -18,12 +18,12 @@ const SurahInfo = Loadable({
   LoadingComponent: ComponentLoader
 });
 
-const ChapterInfo = ({ chapter }) => (
+const ChapterInfo = ({ chapter, info }) => (
   <div className="row" style={{ marginTop: 20 }}>
     <Helmet
       {...makeHeadTags({
         title: `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`,
-        description: `${chapter.info ? chapter.info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
+        description: `${info ? info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
       })}
       script={[{
         type: 'application/ld+json',
@@ -50,6 +50,7 @@ const ChapterInfo = ({ chapter }) => (
     />
     <SurahInfo
       chapter={chapter}
+      info={info}
       isShowingSurahInfo
     />
     <div className="text-center">
@@ -61,7 +62,8 @@ const ChapterInfo = ({ chapter }) => (
 );
 
 ChapterInfo.propTypes = {
-  chapter: chapterType
+  chapter: surahType,
+  info: infoType
 };
 
 const AsyncChapterInfo = asyncConnect([
@@ -74,7 +76,8 @@ function mapStateToProps(state, ownProps) {
   const chapter: Object = state.chapters.entities[chapterId];
 
   return {
-    chapter
+    chapter,
+    info: state.chapters.infos[chapterId]
   };
 }
 

@@ -25,7 +25,7 @@ import scroller from 'utils/scroller';
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
-import { surahType, verseType } from 'types';
+import { surahType, verseType, infoType } from 'types';
 
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/verses.js';
@@ -66,6 +66,7 @@ class Surah extends Component {
     isEndOfSurah: PropTypes.bool.isRequired,
     verseIds: PropTypes.instanceOf(Set),
     currentVerse: PropTypes.string,
+    info: infoType,
     bookmarks: PropTypes.object.isRequired, // eslint-disable-line
     isLoading: PropTypes.bool.isRequired,
     isLoaded: PropTypes.bool.isRequired,
@@ -192,7 +193,7 @@ class Surah extends Component {
   }
 
   description() {
-    const { params, verses, chapter } = this.props;
+    const { params, verses, chapter, info } = this.props;
 
     if (params.range) {
       if (params.range.includes('-')) {
@@ -222,7 +223,7 @@ class Surah extends Component {
       return `Surat ${chapter.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${chapter.info ? chapter.info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${info ? info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderNoAyah() {
@@ -351,7 +352,7 @@ class Surah extends Component {
   }
 
   render() {
-    const { chapter, verses, options, actions } = this.props; // eslint-disable-line no-shadow
+    const { chapter, verses, options, info, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
     if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}>{this.renderNoAyah()}</div>;
@@ -395,6 +396,7 @@ class Surah extends Component {
           <div className="row">
             <SurahInfo
               chapter={chapter}
+              info={info}
               loadInfo={actions.loadInfo}
               isShowingSurahInfo={options.isShowingSurahInfo}
               onClose={this.handleSurahInfoToggle}
@@ -440,6 +442,7 @@ function mapStateToProps(state, ownProps) {
     verses,
     verseIds,
     isSingleAyah,
+    info: state.chapters.infos[ownProps.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
     currentVerse: state.audioplayer.currentVerse,

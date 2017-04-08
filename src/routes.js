@@ -61,7 +61,7 @@ export default (store) => {
       </Route>
 
       <Route
-        path="/:chapterId/info"
+        path="/:chapterId/info(/:language)"
         getComponents={
           (nextState, cb) => import('./containers/ChapterInfo').then(module => cb(null, module.default)).catch(err => console.trace(err))
         }

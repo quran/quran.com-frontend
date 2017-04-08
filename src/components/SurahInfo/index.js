@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
 
-import { surahType } from 'types';
+import { surahType, infoType } from 'types';
 import Loader from 'quran-components/lib/Loader';
 
 const style = require('./style.scss');
 
-const SurahInfo = ({ chapter, isShowingSurahInfo, onClose }) => {
+const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
-  if (!chapter.info) {
+  if (!info) {
     return <Loader isActive />;
   }
 
@@ -34,12 +34,12 @@ const SurahInfo = ({ chapter, isShowingSurahInfo, onClose }) => {
             <dd className="text-uppercase">{chapter.pages.join('-')}</dd>
           </dl>
         </div>
-        <div className={`${style.info} ${chapter.info.languageName} times-new col-md-8`}>
-          <div dangerouslySetInnerHTML={{ __html: chapter.info.text }} />
+        <div className={`${style.info} ${info.languageName} times-new col-md-8`}>
+          <div dangerouslySetInnerHTML={{ __html: info.text }} />
           <div>
             <p>
               <em>
-                Source: {chapter.info.source}
+                Source: {info.source}
               </em>
             </p>
           </div>
@@ -52,7 +52,8 @@ const SurahInfo = ({ chapter, isShowingSurahInfo, onClose }) => {
 SurahInfo.propTypes = {
   onClose: PropTypes.func,
   isShowingSurahInfo: PropTypes.bool,
-  chapter: surahType
+  chapter: surahType,
+  info: infoType
 };
 
 export default SurahInfo;

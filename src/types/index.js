@@ -10,3 +10,4 @@ export { default as recitationType } from './recitationType';
 export { default as translationType } from './translationType';
 export { default as contentType } from './contentType';
 export { default as footNoteType } from './footNoteType';
+export { default as infoType } from './infoType';

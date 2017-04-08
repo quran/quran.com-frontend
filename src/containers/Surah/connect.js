@@ -2,7 +2,8 @@ import {
   isAllLoaded,
   loadAll,
   loadInfo,
-  setCurrent as setCurrentSurah
+  setCurrent as setCurrentSurah,
+  isInfoLoaded
 } from 'redux/actions/chapters.js';
 
 import {
@@ -44,28 +45,27 @@ const determinePage = (range) => {
 
 export const chaptersConnect = ({ store: { getState, dispatch } }) => {
   debug('component:Surah:chaptersConnect', 'Init');
+  if (isAllLoaded(getState())) return false;
 
-  if (!isAllLoaded(getState())) {
-    debug('component:Surah:chaptersConnect', 'Surahs not loaded');
+  debug('component:Surah:chaptersConnect', 'Surahs not loaded');
 
-    if (__CLIENT__) {
-      dispatch(loadAll());
-      return true;
-    }
-
-    return dispatch(loadAll());
-  }
-
-  return true;
-};
-
-export const chapterInfoConnect = ({ store: { dispatch }, params }) => {
   if (__CLIENT__) {
-    dispatch(loadInfo(params.chapterId));
+    dispatch(loadAll());
     return true;
   }
 
-  return dispatch(loadInfo(params.chapterId));
+  return dispatch(loadAll());
+};
+
+export const chapterInfoConnect = ({ store: { dispatch, getState }, params }) => {
+  if (isInfoLoaded(getState(), params.chapterId)) return false;
+
+  if (__CLIENT__) {
+    dispatch(loadInfo(params));
+    return true;
+  }
+
+  return dispatch(loadInfo(params));
 };
 
 export const versesConnect = ({ store: { dispatch, getState }, params }) => {
