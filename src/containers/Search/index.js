@@ -152,9 +152,9 @@ class Search extends Component {
 
     return results.map(result => (
       <Verse
-        verse={entities[result]}
-        match={entities[result].match}
-        key={entities[result].verseKey}
+        verse={result}
+        // match={entities[result].match}
+        key={result.verseKey}
         tooltip={options.tooltip}
         isSearched
       />
