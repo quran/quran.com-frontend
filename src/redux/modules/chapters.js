@@ -12,7 +12,8 @@ const initialState = {
   loading: false,
   infoLoading: false,
   current: null,
-  entities: {}
+  entities: {},
+  infos: {}
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -45,12 +46,9 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD_INFO_SUCCESS:
       return {
         ...state,
-        entities: {
+        infos: {
           ...state.entities,
-          [action.id]: {
-            ...state.entities[action.id],
-            info: action.result.chapterInfo
-          }
+          [action.id]: action.result.chapterInfo
         }
       };
     default:

@@ -43,6 +43,7 @@ export default {
     'surah.index.continue': 'Devam',
     'surah.index.quickLinks': 'Hızlı bağlantılar',
     'surah.goToBeginning': 'Sure Başlangıcı',
+    'surah.read': 'Tam suratı oku',
 
     'player.currentAyah': 'Ayet',
     'player.nextAyah': 'Sonraki Ayet',

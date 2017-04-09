@@ -25,10 +25,14 @@ export function load(id) {
   };
 }
 
-export const loadInfo = id => ({
+export const loadInfo = params => ({
   types: [LOAD_INFO, LOAD_INFO_SUCCESS, LOAD_INFO_FAIL],
-  promise: client => client.get(`/api/v3/chapters/${id}/info`),
-  id
+  promise: client => client.get(`/api/v3/chapters/${params.chapterId}/info`, {
+    params: {
+      language: params.language || 'en'
+    }
+  }),
+  id: params.chapterId
 });
 
 export const setCurrent = id => ({
@@ -42,4 +46,8 @@ export function isSingleLoaded(globalState, id) {
 
 export function isAllLoaded(globalState) {
   return Object.keys(globalState.chapters.entities).length === 114;
+}
+
+export function isInfoLoaded(globalState, id) {
+  return globalState.chapters.entities[id] && globalState.chapters.infos[id];
 }

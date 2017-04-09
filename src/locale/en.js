@@ -43,6 +43,7 @@ export default {
     'surah.index.continue': 'Continue',
     'surah.index.quickLinks': 'Quick links',
     'surah.goToBeginning': 'Beginning of Surah',
+    'surah.read': 'Read full Surah',
 
     'player.currentVerse': 'Ayah',
     'player.nextAyah': 'Next Ayah',
