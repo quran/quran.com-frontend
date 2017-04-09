@@ -4,7 +4,6 @@ import Link from 'react-router/lib/Link';
 import Element from 'react-scroll/lib/components/Element';
 import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
-
 import { verseType, matchType, surahType } from 'types';
 import { load as loadAudio } from 'redux/actions/audioplayer';
 import ComponentLoader from 'components/ComponentLoader';

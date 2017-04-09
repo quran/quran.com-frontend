@@ -12,11 +12,8 @@ import selector from './selector';
   }),
   { load }
 )
-export default class FontStyles extends Component {
-  static propTypes = {
-    fontFaces: PropTypes.objectOf(PropTypes.bool).isRequired,
-    load: PropTypes.func.isRequired
-  };
+
+class FontStyles extends Component {
 
   shouldComponentUpdate(nextProps) {
     return JSON.stringify(this.props.fontFaces) !== JSON.stringify(nextProps.fontFaces);
@@ -54,3 +51,10 @@ export default class FontStyles extends Component {
     );
   }
 }
+
+FontStyles.propTypes = {
+    fontFaces: PropTypes.objectOf(PropTypes.bool).isRequired,
+    load: PropTypes.func.isRequired
+};
+
+export default FontStyles;

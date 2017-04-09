@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
-
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -8,40 +7,15 @@ import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
 import { FormattedHTMLMessage } from 'react-intl';
 import IndexHeader from 'components/IndexHeader';
-
 import Verse from 'components/Verse';
 import Loader from 'quran-components/lib/Loader';
-
 import { search } from 'redux/actions/search.js';
-
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
 import { verseType, optionsType } from 'types';
 
 const style = require('./style.scss');
 
 class Search extends Component {
-  static propTypes = {
-    isErrored: PropTypes.bool,
-    isLoading: PropTypes.bool,
-    totalCount: PropTypes.number,
-    totalPages: PropTypes.number,
-    currentPage: PropTypes.number,
-    perPage: PropTypes.number,
-    query: PropTypes.string,
-    results: PropTypes.arrayOf(PropTypes.string),
-    entities: PropTypes.arrayOf(verseType),
-    push: PropTypes.func.isRequired,
-    location: PropTypes.shape({ // eslint-disable-line
-      q: PropTypes.string,
-      p: PropTypes.string
-    }),
-    options: optionsType
-  };
-
-  static defaultProps = {
-    results: []
-  };
 
   static contextTypes = {
     metrics: MetricsPropTypes.metrics
@@ -186,6 +160,28 @@ class Search extends Component {
     );
   }
 }
+
+Search.propTypes = {
+    isErrored: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    totalCount: PropTypes.number,
+    totalPages: PropTypes.number,
+    currentPage: PropTypes.number,
+    perPage: PropTypes.number,
+    query: PropTypes.string,
+    results: PropTypes.arrayOf(PropTypes.string),
+    entities: PropTypes.arrayOf(verseType),
+    push: PropTypes.func.isRequired,
+    location: PropTypes.shape({ // eslint-disable-line
+        q: PropTypes.string,
+        p: PropTypes.string
+    }),
+    options: optionsType
+};
+
+Search.defaultProps = {
+    results: []
+};
 
 const AsyncSearch = asyncConnect([{
   promise({ store: { dispatch }, location }) {

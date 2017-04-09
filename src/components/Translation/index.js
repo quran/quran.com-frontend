@@ -1,18 +1,12 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
-
-import { translationType } from 'types';
 import { loadFootNote } from 'redux/actions/footNote';
 
 const styles = require('./style.scss');
 
 class Translation extends Component {
-  static propTypes = {
-    translation: translationType.isRequired,
-    index: PropTypes.number,
-    loadFootNote: PropTypes.func.isRequired,
-  };
 
   componentDidMount() {
     const { index } = this.props;
@@ -62,6 +56,12 @@ class Translation extends Component {
     );
   }
 }
+
+Translation.propTypes = {
+    translation: customPropTypes.translationType.isRequired,
+    index: PropTypes.number,
+    loadFootNote: PropTypes.func.isRequired,
+};
 
 export default connect(state => ({}),  // eslint-disable-line no-unused-vars
   { loadFootNote }

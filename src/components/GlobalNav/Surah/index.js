@@ -1,12 +1,10 @@
 import React, { PropTypes, Component } from 'react';
+import * as customPropTypes from 'customPropTypes';
+import * as OptionsActions from 'redux/actions/options.js';
 import { connect } from 'react-redux';
 import Link from 'react-router/lib/Link';
 import Drawer from 'quran-components/lib/Drawer';
 import Menu from 'quran-components/lib/Menu';
-
-import { surahType, optionsType } from 'types';
-import * as OptionsActions from 'redux/actions/options.js';
-
 import SearchInput from 'components/SearchInput';
 import SurahsDropdown from 'components/SurahsDropdown';
 import ReadingModeToggle from 'components/ReadingModeToggle';
@@ -26,14 +24,6 @@ import GlobalNav from '../index';
 const styles = require('../style.scss');
 
 class GlobalNavSurah extends Component {
-  static propTypes = {
-    chapter: surahType.isRequired,
-    chapters: PropTypes.objectOf(surahType).isRequired,
-    options: optionsType.isRequired,
-    setOption: PropTypes.func.isRequired,
-    versesIds: PropTypes.instanceOf(Set),
-    load: PropTypes.func.isRequired
-  };
 
   state = {
     drawerOpen: false
@@ -155,5 +145,14 @@ function mapStateToProps(state, ownProps) {
     versesIds
   };
 }
+
+GlobalNavSurah.propTypes = {
+    chapter: customPropTypes.surahType.isRequired,
+    chapaters: customPropTypes.chapters.isRequired,
+    options: customPropTypes.optionsType.isRequired,
+    setOption: PropTypes.func.isRequired,
+    versesIds: PropTypes.instanceOf(Set),
+    load: PropTypes.func.isRequired
+};
 
 export default connect(mapStateToProps, { ...OptionsActions, load })(GlobalNavSurah);

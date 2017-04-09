@@ -4,21 +4,7 @@ import ReactDOM from 'react-dom';
 
 import debug from 'helpers/debug';
 
-export default class LazyLoad extends Component {
-  static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    isEnd: PropTypes.bool.isRequired,
-    onLazyLoad: PropTypes.func.isRequired,
-    loadingComponent: PropTypes.element,
-    endComponent: PropTypes.element,
-    offset: PropTypes.number
-  }
-
-  static defaultProps = {
-    loadingComponent: 'Loading...',
-    endComponent: 'End.',
-    offset: 1000
-  }
+class LazyLoad extends Component {
 
   componentDidMount() {
     if (__CLIENT__) {
@@ -57,3 +43,20 @@ export default class LazyLoad extends Component {
     return loadingComponent;
   }
 }
+
+LazyLoad.propTypes = {
+    isLoading: PropTypes.bool.isRequired,
+    isEnd: PropTypes.bool.isRequired,
+    onLazyLoad: PropTypes.func.isRequired,
+    loadingComponent: PropTypes.element,
+    endComponent: PropTypes.element,
+    offset: PropTypes.number
+};
+
+LazyLoad.defaultProps = {
+    loadingComponent: 'Loading...',
+    endComponent: 'End.',
+    offset: 1000
+};
+
+export default LazyLoad;

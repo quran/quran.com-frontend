@@ -4,10 +4,6 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { MenuItem } from 'quran-components/lib/Menu';
 
 class NightModeToggle extends Component {
-  static propTypes = {
-    isNightMode: PropTypes.bool.isRequired,
-    onToggle: PropTypes.func.isRequired
-  }
 
   componentDidMount() {
     const { isNightMode } = this.props;
@@ -40,5 +36,10 @@ class NightModeToggle extends Component {
     );
   }
 }
+
+NightModeToggle.propTypes = {
+    isNightMode: PropTypes.bool.isRequired,
+    onToggle: PropTypes.func.isRequired
+};
 
 export default NightModeToggle;

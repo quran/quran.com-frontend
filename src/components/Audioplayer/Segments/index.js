@@ -1,15 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import Helmet from 'react-helmet';
-import { segmentType } from 'types';
-
 import debug from 'helpers/debug';
 
-export default class Segments extends Component {
-  static propTypes = {
-    segments: PropTypes.objectOf(segmentType).isRequired,
-    currentVerse: PropTypes.string,
-    currentTime: PropTypes.number
-  };
+class Segments extends Component {
 
   shouldComponentUpdate(nextProps) {
     return [
@@ -53,3 +47,11 @@ export default class Segments extends Component {
     );
   }
 }
+
+Segments.propTypes = {
+    segments: customPropTypes.segments.isRequired,
+    currentVerse: PropTypes.string,
+    currentTime: PropTypes.number
+};
+
+export default Segments;

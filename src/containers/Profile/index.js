@@ -1,21 +1,15 @@
 import React, { Component } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-
 import Image from 'react-bootstrap/lib/Image';
 import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
 
-import { bookmarkType, userType } from 'types';
-
 const styles = require('./style.scss');
 
 class Profile extends Component { // eslint-disable-line
-  static propTypes = {
-    user: userType.isRequired,
-    bookmarks: bookmarkType.isRequired
-  };
 
   render() {
     const { user, bookmarks } = this.props;
@@ -58,6 +52,11 @@ class Profile extends Component { // eslint-disable-line
     );
   }
 }
+
+Profile.propTypes = {
+    user: customPropTypes.userType.isRequired,
+    bookmarks: customPropTypes.bookmarkType.isRequired
+};
 
 export default connect(
   state => ({

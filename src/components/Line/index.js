@@ -1,25 +1,11 @@
 import React, { PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
-
-import { wordType } from 'types';
 import Word from 'components/Word';
 
 const styles = require('../Verse/style.scss');
 
-export default class Line extends React.Component {
-  static propTypes = {
-    line: PropTypes.arrayOf(wordType).isRequired,
-    tooltip: PropTypes.string,
-    currentVerse: PropTypes.string.isRequired,
-    audioActions: PropTypes.shape({
-      pause: PropTypes.func.isRequired,
-      setAyah: PropTypes.func.isRequired,
-      play: PropTypes.func.isRequired,
-      setCurrentWord: PropTypes.func.isRequired,
-    }),
-    isPlaying: PropTypes.bool,
-    useTextFont: PropTypes.bool
-  };
+class Line extends React.Component {
 
   // NOTE: this is commented out as it caused problems with 55:31 with missing text.
   // shouldComponentUpdate(nextProps) {
@@ -73,3 +59,14 @@ export default class Line extends React.Component {
     );
   }
 }
+
+Line.propTypes = {
+    line: customPropTypes.line.isRequired,
+    tooltip: PropTypes.string,
+    currentVerse: PropTypes.string.isRequired,
+    audioActions: customPropTypes.audioActions,
+    isPlaying: PropTypes.bool,
+    useTextFont: PropTypes.bool
+};
+
+export default Line;

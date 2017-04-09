@@ -1,30 +1,18 @@
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import { intlShape, injectIntl } from 'react-intl';
-
 import SwitchToggle from 'components/SwitchToggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
 import surahType from 'types/surahType';
 
 const style = require('../style.scss');
 
 class RepeatButton extends Component {
-  static propTypes = {
-    chapter: surahType,
-    repeat: PropTypes.shape({
-      from: PropTypes.number,
-      to: PropTypes.number,
-      times: PropTypes.number
-    }).isRequired,
-    setRepeat: PropTypes.func.isRequired,
-    current: PropTypes.number.isRequired,
-    intl: intlShape.isRequired
-  };
 
   handleToggle = () => {
     const { repeat, setRepeat, current } = this.props;
@@ -280,5 +268,13 @@ class RepeatButton extends Component {
     );
   }
 }
+
+RepeatButton.propTypes = {
+    chapter: surahType,
+    repeat: customPropTypes.timeInterval,
+    setRepeat: PropTypes.func.isRequired,
+    current: PropTypes.number.isRequired,
+    intl: intlShape.isRequired
+};
 
 export default injectIntl(RepeatButton);

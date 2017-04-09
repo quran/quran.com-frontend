@@ -7,10 +7,7 @@ import config from '../../config';
 
 const { locales, defaultLocale } = config;
 
-export default class LocaleSwitcher extends Component {
-  static propTypes = {
-    className: PropTypes.string
-  };
+class LocaleSwitcher extends Component {
 
   state = {
     currentLocale: defaultLocale,
@@ -68,3 +65,9 @@ export default class LocaleSwitcher extends Component {
     );
   }
 }
+
+LocaleSwitcher.propTypes = {
+    className: PropTypes.string
+};
+
+export default LocaleSwitcher;

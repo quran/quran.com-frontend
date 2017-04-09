@@ -1,17 +1,10 @@
 import React, { Component, PropTypes } from 'react';
-
+import * as customPropTypes from 'customPropTypes';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('./style.scss');
 
-export default class FontSizeDropdown extends Component {
-  static propTypes = {
-    onOptionChange: PropTypes.func,
-    fontSize: PropTypes.shape({
-      arabic: PropTypes.number,
-      translation: PropTypes.number
-    }).isRequired
-  }
+class FontSizeDropdown extends Component {
 
   handleOptionSelected = (type, direction) => {
     const { onOptionChange, fontSize } = this.props;
@@ -90,3 +83,10 @@ export default class FontSizeDropdown extends Component {
     );
   }
 }
+
+FontSizeDropdown.propTypes = {
+    onOptionChange: PropTypes.func,
+    fontSize: customPropTypes.fontSize.isRequired
+};
+
+export default FontSizeDropdown;

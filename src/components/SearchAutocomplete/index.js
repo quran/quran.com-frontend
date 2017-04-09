@@ -1,35 +1,14 @@
 // TODO: Should be handled by redux and not component states.
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { surahType } from 'types';
-
 import { suggest } from 'redux/actions/suggest';
 
 const styles = require('./style.scss');
-
 const ayahRegex = /^(\d+)(?::(\d+))?$/;
 
 class SearchAutocomplete extends Component {
-  static propTypes = {
-    chapters: PropTypes.objectOf(surahType).isRequired,
-    value: PropTypes.string,
-    // TODO: This should not be doing html stuff. Should use react onKeydown.
-    input: PropTypes.any, // eslint-disable-line
-    push: PropTypes.func.isRequired,
-    suggest: PropTypes.func.isRequired,
-    suggestions: PropTypes.arrayOf(PropTypes.shape({
-      ayah: PropTypes.string,
-      href: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired
-    })),
-    lang: PropTypes.string,
-    delay: PropTypes.number,
-  };
-
-  static defaultProps = {
-    delay: 200
-  }
 
   componentDidMount() {
     this.props.input.addEventListener('keydown', this.handleInputKeyDown.bind(this));
@@ -219,5 +198,21 @@ function mapStateToProps(state, ownProps) {
     lang
   };
 }
+
+SearchAutocomplete.propTypes = {
+    chapters: customPropTypes.chapters.isRequired,
+    value: PropTypes.string,
+    // TODO: This should not be doing html stuff. Should use react onKeydown.
+    input: PropTypes.any, // eslint-disable-line
+    push: PropTypes.func.isRequired,
+    suggest: PropTypes.func.isRequired,
+    suggestions: customPropTypes.suggestions,
+    lang: PropTypes.string,
+    delay: PropTypes.number,
+};
+
+SearchAutocomplete.defaultProps = {
+    delay: 200
+};
 
 export default connect(mapStateToProps, { push, suggest })(SearchAutocomplete);

@@ -9,17 +9,7 @@ const CHAR_TYPE_PAUSE = 'pause';
 const CHAR_TYPE_RUB = 'rub';
 const CHAR_TYPE_SAJDAH = 'sajdah';
 
-export default class Word extends Component {
-  static propTypes = {
-    word: PropTypes.object.isRequired, // eslint-disable-line
-    tooltip: PropTypes.string,
-    audioActions: PropTypes.object.isRequired, // eslint-disable-line
-    audioPosition: PropTypes.number,
-    currentVerse: PropTypes.string.isRequired,
-    isPlaying: PropTypes.bool,
-    isSearched: PropTypes.bool,
-    useTextFont: PropTypes.bool // tmp change to compare text and code based rendering
-  };
+class Word extends Component {
 
   buildTooltip = (word, tooltip) => {
     let title;
@@ -97,5 +87,17 @@ export default class Word extends Component {
       </span>
     );
   }
-
 }
+
+Word.propTypes = {
+    word: PropTypes.object.isRequired, // eslint-disable-line
+    tooltip: PropTypes.string,
+    audioActions: PropTypes.object.isRequired, // eslint-disable-line
+    audioPosition: PropTypes.number,
+    currentVerse: PropTypes.string.isRequired,
+    isPlaying: PropTypes.bool,
+    isSearched: PropTypes.bool,
+    useTextFont: PropTypes.bool // tmp change to compare text and code based rendering
+};
+
+export default Word;

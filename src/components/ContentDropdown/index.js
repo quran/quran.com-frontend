@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { loadTranslations } from 'redux/actions/options';
-import { contentType } from 'types';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import Checkbox from 'quran-components/lib/Checkbox';
 import Loader from 'quran-components/lib/Loader';
@@ -28,12 +28,6 @@ const compareAlphabetically = property =>
 
 
 class ContentDropdown extends Component {
-  static propTypes = {
-    onOptionChange: PropTypes.func.isRequired,
-    translations: PropTypes.arrayOf(PropTypes.number).isRequired,
-    translationOptions: PropTypes.arrayOf(contentType),
-    loadTranslations: PropTypes.func.isRequired
-  };
 
   componentDidMount() {
     if (!this.props.translationOptions.length) {
@@ -128,6 +122,13 @@ class ContentDropdown extends Component {
     );
   }
 }
+
+ContentDropdown.propTypes = {
+    onOptionChange: PropTypes.func.isRequired,
+    translations: PropTypes.arrayOf(PropTypes.number).isRequired,
+    translationOptions: customPropTypes.translationOptions,
+    loadTranslations: PropTypes.func.isRequired
+};
 
 export default connect(state => ({
   translationOptions: state.options.options.translations,

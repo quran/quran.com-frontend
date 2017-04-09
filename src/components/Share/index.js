@@ -1,9 +1,8 @@
 import React, { PropTypes } from 'react';
 import { ShareButtons, generateShareIcon } from 'react-share';
-import { surahType } from 'types';
+import * as customPropTypes from 'customPropTypes';
 
 const styles = require('./style.scss');
-
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 const FacebookIcon = generateShareIcon('facebook');
 const TwitterIcon = generateShareIcon('twitter');
@@ -39,7 +38,7 @@ const Share = ({ chapter, verseKey }) => {
 
 Share.propTypes = {
   verseKey: PropTypes.string,
-  chapter: surahType.isRequired
+  chapter: customPropTypes.surahType.isRequired
 };
 
 export default Share;

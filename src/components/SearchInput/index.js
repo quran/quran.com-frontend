@@ -9,11 +9,6 @@ import SearchAutocomplete from 'components/SearchAutocomplete';
 import debug from 'helpers/debug';
 
 class SearchInput extends Component {
-  static propTypes = {
-    push: PropTypes.func.isRequired,
-    className: PropTypes.string,
-    intl: intlShape.isRequired
-  };
 
   static contextTypes = {
     metrics: MetricsPropTypes.metrics
@@ -115,5 +110,11 @@ class SearchInput extends Component {
     );
   }
 }
+
+SearchInput.propTypes = {
+    push: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    intl: intlShape.isRequired
+};
 
 export default injectIntl(connect(null, { push })(SearchInput));
