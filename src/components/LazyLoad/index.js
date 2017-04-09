@@ -45,18 +45,18 @@ class LazyLoad extends Component {
 }
 
 LazyLoad.propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    isEnd: PropTypes.bool.isRequired,
-    onLazyLoad: PropTypes.func.isRequired,
-    loadingComponent: PropTypes.element,
-    endComponent: PropTypes.element,
-    offset: PropTypes.number
+  isLoading: PropTypes.bool.isRequired,
+  isEnd: PropTypes.bool.isRequired,
+  onLazyLoad: PropTypes.func.isRequired,
+  loadingComponent: PropTypes.element,
+  endComponent: PropTypes.element,
+  offset: PropTypes.number
 };
 
 LazyLoad.defaultProps = {
-    loadingComponent: 'Loading...',
-    endComponent: 'End.',
-    offset: 1000
+  loadingComponent: 'Loading...',
+  endComponent: 'End.',
+  offset: 1000
 };
 
 export default LazyLoad;

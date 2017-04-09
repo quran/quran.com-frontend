@@ -3,6 +3,7 @@ import { ShareButtons, generateShareIcon } from 'react-share';
 import * as customPropTypes from 'customPropTypes';
 
 const styles = require('./style.scss');
+
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 const FacebookIcon = generateShareIcon('facebook');
 const TwitterIcon = generateShareIcon('twitter');

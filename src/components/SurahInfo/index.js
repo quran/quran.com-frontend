@@ -3,6 +3,7 @@ import * as customPropTypes from 'customPropTypes';
 import Loader from 'quran-components/lib/Loader';
 
 const style = require('./style.scss');
+
 const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;

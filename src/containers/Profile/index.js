@@ -54,8 +54,8 @@ class Profile extends Component { // eslint-disable-line
 }
 
 Profile.propTypes = {
-    user: customPropTypes.userType.isRequired,
-    bookmarks: customPropTypes.bookmarkType.isRequired
+  user: customPropTypes.userType.isRequired,
+  bookmarks: customPropTypes.bookmarkType.isRequired
 };
 
 export default connect(

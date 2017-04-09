@@ -49,9 +49,9 @@ class Segments extends Component {
 }
 
 Segments.propTypes = {
-    segments: customPropTypes.segments.isRequired,
-    currentVerse: PropTypes.string,
-    currentTime: PropTypes.number
+  segments: customPropTypes.segments.isRequired,
+  currentVerse: PropTypes.string,
+  currentTime: PropTypes.number
 };
 
 export default Segments;

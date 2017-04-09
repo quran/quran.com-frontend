@@ -35,9 +35,9 @@ class Copy extends Component {
   }
 }
 
-Copy.proptypes = {
-    text: PropTypes.string.isRequired,
-    verseKey: PropTypes.string.isRequired,
+Copy.propTypes = {
+  text: PropTypes.string.isRequired,
+  verseKey: PropTypes.string.isRequired,
 };
 
 export default Copy;

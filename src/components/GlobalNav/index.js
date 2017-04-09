@@ -107,16 +107,16 @@ class GlobalNav extends Component {
 
 GlobalNav.propTypes = {
   // handleToggleSidebar: PropTypes.func.isRequired,
-    leftControls: PropTypes.arrayOf(PropTypes.element),
-    rightControls: PropTypes.arrayOf(PropTypes.element),
-    handleSidebarToggle: PropTypes.func.isRequired,
-    isStatic: PropTypes.bool.isRequired,
-    user: userType,
-    location: customPropTypes.location
+  leftControls: PropTypes.arrayOf(PropTypes.element),
+  rightControls: PropTypes.arrayOf(PropTypes.element),
+  handleSidebarToggle: PropTypes.func.isRequired,
+  isStatic: PropTypes.bool.isRequired,
+  user: userType,
+  location: customPropTypes.location
 };
 
 GlobalNav.defaultProps = {
-    isStatic: false
+  isStatic: false
 };
 
 export default connect(

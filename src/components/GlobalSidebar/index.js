@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/lib/Navbar';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const styles = require('./style.scss');
+
 const NavbarHeader = Navbar.Header;
 
 class GlobalSidebar extends Component {
@@ -106,14 +107,14 @@ class GlobalSidebar extends Component {
 }
 
 GlobalSidebar.propTypes = {
-    open: PropTypes.bool.isRequired,
-    handleOpen: PropTypes.func,
-    settingsModalProps: PropTypes.object, // eslint-disable-line
-    children: PropTypes.node
+  open: PropTypes.bool.isRequired,
+  handleOpen: PropTypes.func,
+  settingsModalProps: PropTypes.object, // eslint-disable-line
+  children: PropTypes.node
 };
 
 GlobalSidebar.defaultProps = {
-    open: false
+  open: false
 };
 
 export default GlobalSidebar;

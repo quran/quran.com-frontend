@@ -38,8 +38,8 @@ class NightModeToggle extends Component {
 }
 
 NightModeToggle.propTypes = {
-    isNightMode: PropTypes.bool.isRequired,
-    onToggle: PropTypes.func.isRequired
+  isNightMode: PropTypes.bool.isRequired,
+  onToggle: PropTypes.func.isRequired
 };
 
 export default NightModeToggle;

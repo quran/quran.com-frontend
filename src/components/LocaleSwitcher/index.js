@@ -67,7 +67,7 @@ class LocaleSwitcher extends Component {
 }
 
 LocaleSwitcher.propTypes = {
-    className: PropTypes.string
+  className: PropTypes.string
 };
 
 export default LocaleSwitcher;

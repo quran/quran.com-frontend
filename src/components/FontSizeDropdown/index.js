@@ -85,8 +85,8 @@ class FontSizeDropdown extends Component {
 }
 
 FontSizeDropdown.propTypes = {
-    onOptionChange: PropTypes.func,
-    fontSize: customPropTypes.fontSize.isRequired
+  onOptionChange: PropTypes.func,
+  fontSize: customPropTypes.fontSize.isRequired
 };
 
 export default FontSizeDropdown;

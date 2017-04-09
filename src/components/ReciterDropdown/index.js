@@ -54,10 +54,10 @@ class ReciterDropdown extends Component {
 }
 
 ReciterDropdown.propTypes = {
-    onOptionChange: PropTypes.func,
-    audio: PropTypes.number,
-    loadRecitations: PropTypes.func.isRequired,
-    recitations: customPropTypes.recitations
+  onOptionChange: PropTypes.func,
+  audio: PropTypes.number,
+  loadRecitations: PropTypes.func.isRequired,
+  recitations: customPropTypes.recitations
 };
 
 export default connect(state => ({

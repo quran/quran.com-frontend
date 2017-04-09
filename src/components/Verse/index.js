@@ -4,7 +4,6 @@ import Link from 'react-router/lib/Link';
 import Element from 'react-scroll/lib/components/Element';
 import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
-import { verseType, matchType, surahType } from 'types';
 import { load as loadAudio } from 'redux/actions/audioplayer';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -303,28 +302,28 @@ class Verse extends Component {
 }
 
 Verse.propTypes = {
-    isSearched: PropTypes.bool,
-    verse: verseType.isRequired,
-    chapter: surahType.isRequired,
-    bookmarked: PropTypes.bool, // TODO: Add this for search
-    bookmarkActions: customPropTypes.bookmarkActions,
-    mediaActions: customPropTypes.mediaActions,
-    audioActions: customPropTypes.audioActions,
-    match: customPropTypes.match,
-    isPlaying: PropTypes.bool,
-    isAuthenticated: PropTypes.bool,
-    tooltip: PropTypes.string,
-    currentWord: PropTypes.number, // gets passed in an integer, null by default
-    iscurrentVerse: PropTypes.bool,
-    currentVerse: PropTypes.string,
-    userAgent: PropTypes.func,
-    audio: PropTypes.number.isRequired,
-    loadAudio: PropTypes.func.isRequired
+  isSearched: PropTypes.bool,
+  verse: customPropTypes.verseType.isRequired,
+  chapter: customPropTypes.surahType.isRequired,
+  bookmarked: PropTypes.bool, // TODO: Add this for search
+  bookmarkActions: customPropTypes.bookmarkActions,
+  mediaActions: customPropTypes.mediaActions,
+  audioActions: customPropTypes.audioActions,
+  match: customPropTypes.match,
+  isPlaying: PropTypes.bool,
+  isAuthenticated: PropTypes.bool,
+  tooltip: PropTypes.string,
+  currentWord: PropTypes.number, // gets passed in an integer, null by default
+  iscurrentVerse: PropTypes.bool,
+  currentVerse: PropTypes.string,
+  userAgent: PropTypes.func,
+  audio: PropTypes.number.isRequired,
+  loadAudio: PropTypes.func.isRequired
 };
 
 Verse.defaultProps = {
-    currentWord: null,
-    isSearched: false
+  currentWord: null,
+  isSearched: false
 };
 
 export default connect(() => ({}), { loadAudio })(Verse);

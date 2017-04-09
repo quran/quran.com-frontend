@@ -400,25 +400,25 @@ class Surah extends Component {
 }
 
 Surah.propTypes = {
-    chapter: customPropTypes.surahType.isRequired,
-    chapters: customPropTypes.chapters.isRequired,
-    actions: PropTypes.object.isRequired, // eslint-disable-line
-    lines: PropTypes.object.isRequired, // eslint-disable-line
-    isEndOfSurah: PropTypes.bool.isRequired,
-    verseIds: PropTypes.instanceOf(Set),
-    currentVerse: PropTypes.string,
-    info: customPropTypes.infoType,
-    bookmarks: PropTypes.object.isRequired, // eslint-disable-line
-    isLoading: PropTypes.bool.isRequired,
-    isLoaded: PropTypes.bool.isRequired,
-    isSingleAyah: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    options: PropTypes.object.isRequired, // eslint-disable-line
-    params: PropTypes.shape({
-        chapterId: PropTypes.string.isRequired
-    }).isRequired,
-    verses: customPropTypes.verses,
-    isPlaying: PropTypes.bool
+  chapter: customPropTypes.surahType.isRequired,
+  chapters: customPropTypes.chapters.isRequired,
+  actions: PropTypes.object.isRequired, // eslint-disable-line
+  lines: PropTypes.object.isRequired, // eslint-disable-line
+  isEndOfSurah: PropTypes.bool.isRequired,
+  verseIds: PropTypes.instanceOf(Set),
+  currentVerse: PropTypes.string,
+  info: customPropTypes.infoType,
+  bookmarks: PropTypes.object.isRequired, // eslint-disable-line
+  isLoading: PropTypes.bool.isRequired,
+  isLoaded: PropTypes.bool.isRequired,
+  isSingleAyah: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  options: PropTypes.object.isRequired, // eslint-disable-line
+  params: PropTypes.shape({
+    chapterId: PropTypes.string.isRequired
+  }).isRequired,
+  verses: customPropTypes.verses,
+  isPlaying: PropTypes.bool
 };
 
 const AsyncSurah = asyncConnect([

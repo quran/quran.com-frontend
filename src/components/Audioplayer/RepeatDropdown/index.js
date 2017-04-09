@@ -25,7 +25,7 @@ class RepeatButton extends Component {
       from: current,
       to: current
     });
-  }
+  };
 
   handleNavChange = (nav) => {
     const { setRepeat, current } = this.props;
@@ -270,11 +270,11 @@ class RepeatButton extends Component {
 }
 
 RepeatButton.propTypes = {
-    chapter: surahType,
-    repeat: customPropTypes.timeInterval,
-    setRepeat: PropTypes.func.isRequired,
-    current: PropTypes.number.isRequired,
-    intl: intlShape.isRequired
+  chapter: surahType,
+  repeat: customPropTypes.timeInterval,
+  setRepeat: PropTypes.func.isRequired,
+  current: PropTypes.number.isRequired,
+  intl: intlShape.isRequired
 };
 
 export default injectIntl(RepeatButton);

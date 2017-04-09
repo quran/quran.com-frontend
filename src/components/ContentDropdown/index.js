@@ -124,10 +124,10 @@ class ContentDropdown extends Component {
 }
 
 ContentDropdown.propTypes = {
-    onOptionChange: PropTypes.func.isRequired,
-    translations: PropTypes.arrayOf(PropTypes.number).isRequired,
-    translationOptions: customPropTypes.translationOptions,
-    loadTranslations: PropTypes.func.isRequired
+  onOptionChange: PropTypes.func.isRequired,
+  translations: PropTypes.arrayOf(PropTypes.number).isRequired,
+  translationOptions: customPropTypes.translationOptions,
+  loadTranslations: PropTypes.func.isRequired
 };
 
 export default connect(state => ({

@@ -134,15 +134,15 @@ const metricsApp = metrics(metricsConfig)(App);
 const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 
 App.propTypes = {
-    media: customPropTypes.media.isRequired,
-    removeMedia: PropTypes.func.isRequired,
-    removeFootNote: PropTypes.func.isRequired,
-    children: PropTypes.element,
-    main: PropTypes.element,
-    nav: PropTypes.element,
-    sidebar: PropTypes.element,
-    footNote: footNoteType,
-    loadingFootNote: PropTypes.bool
+  media: customPropTypes.media.isRequired,
+  removeMedia: PropTypes.func.isRequired,
+  removeFootNote: PropTypes.func.isRequired,
+  children: PropTypes.element,
+  main: PropTypes.element,
+  nav: PropTypes.element,
+  sidebar: PropTypes.element,
+  footNote: footNoteType,
+  loadingFootNote: PropTypes.bool
 };
 
 export default connect(

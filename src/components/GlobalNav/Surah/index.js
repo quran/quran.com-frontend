@@ -147,12 +147,12 @@ function mapStateToProps(state, ownProps) {
 }
 
 GlobalNavSurah.propTypes = {
-    chapter: customPropTypes.surahType.isRequired,
-    chapaters: customPropTypes.chapters.isRequired,
-    options: customPropTypes.optionsType.isRequired,
-    setOption: PropTypes.func.isRequired,
-    versesIds: PropTypes.instanceOf(Set),
-    load: PropTypes.func.isRequired
+  chapter: customPropTypes.surahType.isRequired,
+  chapters: customPropTypes.chapters.isRequired,
+  options: customPropTypes.optionsType.isRequired,
+  setOption: PropTypes.func.isRequired,
+  versesIds: PropTypes.instanceOf(Set),
+  load: PropTypes.func.isRequired
 };
 
 export default connect(mapStateToProps, { ...OptionsActions, load })(GlobalNavSurah);

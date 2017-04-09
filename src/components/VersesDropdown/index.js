@@ -4,7 +4,6 @@ import DropdownButton from 'react-bootstrap/lib/DropdownButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { Link } from 'react-scroll';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { surahType } from 'types';
 
 const style = require('./style.scss');
 
@@ -63,16 +62,16 @@ class VersesDropdown extends Component {
 }
 
 VersesDropdown.propTypes = {
-    ayat: PropTypes.number.isRequired,
-    loadedAyahs: PropTypes.instanceOf(Set).isRequired,
-    chapter: customPropTypes.surahType.isRequired, // Set
-    onClick: PropTypes.func.isRequired,
-    isReadingMode: PropTypes.bool,
-    className: PropTypes.string
+  ayat: PropTypes.number.isRequired,
+  loadedAyahs: PropTypes.instanceOf(Set).isRequired,
+  chapter: customPropTypes.surahType.isRequired, // Set
+  onClick: PropTypes.func.isRequired,
+  isReadingMode: PropTypes.bool,
+  className: PropTypes.string
 };
 
 VersesDropdown.defaultProps = {
-    className: 'col-md-3'
+  className: 'col-md-3'
 };
 
 export default VersesDropdown;

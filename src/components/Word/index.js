@@ -90,14 +90,14 @@ class Word extends Component {
 }
 
 Word.propTypes = {
-    word: PropTypes.object.isRequired, // eslint-disable-line
-    tooltip: PropTypes.string,
-    audioActions: PropTypes.object.isRequired, // eslint-disable-line
-    audioPosition: PropTypes.number,
-    currentVerse: PropTypes.string.isRequired,
-    isPlaying: PropTypes.bool,
-    isSearched: PropTypes.bool,
-    useTextFont: PropTypes.bool // tmp change to compare text and code based rendering
+  word: PropTypes.object.isRequired, // eslint-disable-line
+  tooltip: PropTypes.string,
+  audioActions: PropTypes.object.isRequired, // eslint-disable-line
+  audioPosition: PropTypes.number,
+  currentVerse: PropTypes.string.isRequired,
+  isPlaying: PropTypes.bool,
+  isSearched: PropTypes.bool,
+  useTextFont: PropTypes.bool // tmp change to compare text and code based rendering
 };
 
 export default Word;

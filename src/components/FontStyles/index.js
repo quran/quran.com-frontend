@@ -53,8 +53,8 @@ class FontStyles extends Component {
 }
 
 FontStyles.propTypes = {
-    fontFaces: PropTypes.objectOf(PropTypes.bool).isRequired,
-    load: PropTypes.func.isRequired
+  fontFaces: PropTypes.objectOf(PropTypes.bool).isRequired,
+  load: PropTypes.func.isRequired
 };
 
 export default FontStyles;

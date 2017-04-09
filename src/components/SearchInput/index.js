@@ -112,9 +112,9 @@ class SearchInput extends Component {
 }
 
 SearchInput.propTypes = {
-    push: PropTypes.func.isRequired,
-    className: PropTypes.string,
-    intl: intlShape.isRequired
+  push: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  intl: intlShape.isRequired
 };
 
 export default injectIntl(connect(null, { push })(SearchInput));

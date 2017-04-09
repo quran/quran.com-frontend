@@ -56,8 +56,8 @@ class SurahsDropdown extends Component {
 }
 
 SurahsDropdown.propTypes = {
-    chapters: customPropTypes.chapters.isRequired,
-    title: PropTypes.string,
+  chapters: customPropTypes.chapters.isRequired,
+  title: PropTypes.string,
 };
 
 export default SurahsDropdown;

@@ -42,7 +42,7 @@ class IndexHeader extends Component {
 }
 
 IndexHeader.propTypes = {
-    noSearch: PropTypes.bool
+  noSearch: PropTypes.bool
 };
 
 export default IndexHeader;

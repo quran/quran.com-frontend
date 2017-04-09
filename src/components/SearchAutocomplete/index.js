@@ -6,6 +6,7 @@ import { push } from 'react-router-redux';
 import { suggest } from 'redux/actions/suggest';
 
 const styles = require('./style.scss');
+
 const ayahRegex = /^(\d+)(?::(\d+))?$/;
 
 class SearchAutocomplete extends Component {
@@ -200,19 +201,19 @@ function mapStateToProps(state, ownProps) {
 }
 
 SearchAutocomplete.propTypes = {
-    chapters: customPropTypes.chapters.isRequired,
-    value: PropTypes.string,
-    // TODO: This should not be doing html stuff. Should use react onKeydown.
-    input: PropTypes.any, // eslint-disable-line
-    push: PropTypes.func.isRequired,
-    suggest: PropTypes.func.isRequired,
-    suggestions: customPropTypes.suggestions,
-    lang: PropTypes.string,
-    delay: PropTypes.number,
+  chapters: customPropTypes.chapters.isRequired,
+  value: PropTypes.string,
+  // TODO: This should not be doing html stuff. Should use react onKeydown.
+  input: PropTypes.any, // eslint-disable-line
+  push: PropTypes.func.isRequired,
+  suggest: PropTypes.func.isRequired,
+  suggestions: customPropTypes.suggestions,
+  lang: PropTypes.string,
+  delay: PropTypes.number,
 };
 
 SearchAutocomplete.defaultProps = {
-    delay: 200
+  delay: 200
 };
 
 export default connect(mapStateToProps, { push, suggest })(SearchAutocomplete);

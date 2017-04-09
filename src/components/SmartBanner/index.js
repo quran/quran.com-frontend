@@ -168,37 +168,37 @@ class SmartBanner extends Component {
 }
 
 SmartBanner.propTypes = {
-    daysHidden: PropTypes.number,
-    daysReminder: PropTypes.number,
-    appStoreLanguage: PropTypes.string,
-    button: PropTypes.string,
-    storeText: customPropTypes.storeText,
-    price: customPropTypes.storeText,
-    force: PropTypes.string,
-    title: PropTypes.string,
-    author: PropTypes.string,
+  daysHidden: PropTypes.number,
+  daysReminder: PropTypes.number,
+  appStoreLanguage: PropTypes.string,
+  button: PropTypes.string,
+  storeText: customPropTypes.storeText,
+  price: customPropTypes.storeText,
+  force: PropTypes.string,
+  title: PropTypes.string,
+  author: PropTypes.string,
 };
 
 SmartBanner.defaultProps = {
-    daysHidden: 15,
-    daysReminder: 90,
-    appStoreLanguage: 'us',
-    button: 'View',
-    storeText: {
-        ios: 'On the App Store',
-        android: 'In Google Play',
-        windows: 'In Windows Store',
-        kindle: 'In the Amazon Appstore',
-    },
-    price: {
-        ios: 'Free',
-        android: 'Free',
-        windows: 'Free',
-        kindle: 'Free',
-    },
-    force: '',
-    title: '',
-    author: '',
+  daysHidden: 15,
+  daysReminder: 90,
+  appStoreLanguage: 'us',
+  button: 'View',
+  storeText: {
+    ios: 'On the App Store',
+    android: 'In Google Play',
+    windows: 'In Windows Store',
+    kindle: 'In the Amazon Appstore',
+  },
+  price: {
+    ios: 'Free',
+    android: 'Free',
+    windows: 'Free',
+    kindle: 'Free',
+  },
+  force: '',
+  title: '',
+  author: '',
 };
 
 export default SmartBanner;

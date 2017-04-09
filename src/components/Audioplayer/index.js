@@ -477,32 +477,32 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 Audioplayer.propTypes = {
-    className: PropTypes.string,
-    chapter: customPropTypes.surahType,
-    onLoadAyahs: PropTypes.func.isRequired,
-    segments: customPropTypes.segments,
-    // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
-    files: PropTypes.object, // eslint-disable-line
-    currentVerse: PropTypes.string,
-    buildOnClient: PropTypes.func.isRequired,
-    isLoadedOnClient: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    play: PropTypes.func.isRequired,
-    pause: PropTypes.func.isRequired,
-    next: PropTypes.func.isRequired, // eslint-disable-line
-    previous: PropTypes.func.isRequired, // eslint-disable-line
-    update: PropTypes.func.isRequired,
-    repeat: customPropTypes.timeInterval.isRequired,
-    shouldScroll: PropTypes.bool.isRequired,
-    setRepeat: PropTypes.func.isRequired,
-    setAyah: PropTypes.func.isRequired,
-    toggleScroll: PropTypes.func.isRequired,
-    isPlaying: PropTypes.bool,
-    currentTime: PropTypes.number,
-    duration: PropTypes.number,
-    // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
-    currentFile: PropTypes.any, // eslint-disable-line
-    startVerse: customPropTypes.verseType // eslint-disable-line
+  className: PropTypes.string,
+  chapter: customPropTypes.surahType,
+  onLoadAyahs: PropTypes.func.isRequired,
+  segments: customPropTypes.segments,
+  // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
+  files: PropTypes.object, // eslint-disable-line
+  currentVerse: PropTypes.string,
+  buildOnClient: PropTypes.func.isRequired,
+  isLoadedOnClient: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  play: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired, // eslint-disable-line
+  previous: PropTypes.func.isRequired, // eslint-disable-line
+  update: PropTypes.func.isRequired,
+  repeat: customPropTypes.timeInterval.isRequired,
+  shouldScroll: PropTypes.bool.isRequired,
+  setRepeat: PropTypes.func.isRequired,
+  setAyah: PropTypes.func.isRequired,
+  toggleScroll: PropTypes.func.isRequired,
+  isPlaying: PropTypes.bool,
+  currentTime: PropTypes.number,
+  duration: PropTypes.number,
+  // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
+  currentFile: PropTypes.any, // eslint-disable-line
+  startVerse: customPropTypes.verseType // eslint-disable-line
 };
 
 export default connect(mapStateToProps, AudioActions)(Audioplayer);

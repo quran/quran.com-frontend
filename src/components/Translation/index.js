@@ -58,9 +58,9 @@ class Translation extends Component {
 }
 
 Translation.propTypes = {
-    translation: customPropTypes.translationType.isRequired,
-    index: PropTypes.number,
-    loadFootNote: PropTypes.func.isRequired,
+  translation: customPropTypes.translationType.isRequired,
+  index: PropTypes.number,
+  loadFootNote: PropTypes.func.isRequired,
 };
 
 export default connect(state => ({}),  // eslint-disable-line no-unused-vars

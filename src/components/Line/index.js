@@ -61,12 +61,12 @@ class Line extends React.Component {
 }
 
 Line.propTypes = {
-    line: customPropTypes.line.isRequired,
-    tooltip: PropTypes.string,
-    currentVerse: PropTypes.string.isRequired,
-    audioActions: customPropTypes.audioActions,
-    isPlaying: PropTypes.bool,
-    useTextFont: PropTypes.bool
+  line: customPropTypes.line.isRequired,
+  tooltip: PropTypes.string,
+  currentVerse: PropTypes.string.isRequired,
+  audioActions: customPropTypes.audioActions,
+  isPlaying: PropTypes.bool,
+  useTextFont: PropTypes.bool
 };
 
 export default Line;
