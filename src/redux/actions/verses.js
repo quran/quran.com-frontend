@@ -18,8 +18,21 @@ const defaultOptions = {
 // NOTE: From the API!
 const perPage = 10;
 
-export function load(id, paging, options = defaultOptions) {
-  const { translations } = options;
+function prepareParams(params, options) {
+  // NOTE: first priority to options in URL, second to options and lastly fallback to defaultOptions
+  let translations;
+
+  if (params.translations && params.translations.length) {
+    translations = params.translations.split(',');
+  } else {
+    translations = options.translations || defaultOptions.translations;
+  }
+
+ return { translations };
+}
+
+export function load(id, paging, params, options = defaultOptions) {
+  const apiOptions = prepareParams(params, options);
 
   // TODO: move this to module/verses
   // cookie.save('lastVisit', JSON.stringify({ chapterId: id, verseId: from }));
@@ -30,7 +43,7 @@ export function load(id, paging, options = defaultOptions) {
     promise: client => client.get(`/api/v3/chapters/${id}/verses`, {
       params: {
         ...paging,
-        translations
+        ...apiOptions
       }
     }),
     chapterId: id

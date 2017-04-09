@@ -216,7 +216,8 @@ class Surah extends Component {
   }
 
   renderPagination() {
-    const { isSingleAyah, isLoading, isEndOfSurah, chapter } = this.props;
+    const { isSingleAyah, isLoading, isEndOfSurah, chapter, verses, currentVerse } = this.props;
+    const translations = (verses[currentVerse].translations || []).map(translation => translation.resourceId).join(',');
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
@@ -227,7 +228,7 @@ class Surah extends Component {
       return (
         <ul className="pager">
           <li className="text-center">
-            <Link to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}`}>
+            <Link to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}?translations=${translations}`}>
               <LocaleFormattedMessage id="chapter.index.continue" defaultMessage="Continue" />
             </Link>
           </li>
@@ -245,7 +246,7 @@ class Surah extends Component {
             {
               chapter.chapterNumber > 1 &&
                 <li className="previous">
-                  <Link to={`/${(chapter.chapterNumber * 1) - 1}`}>
+                  <Link to={`/${(chapter.chapterNumber * 1) - 1}?translations=${translations}`}>
                     &larr;
                     <LocaleFormattedMessage
                       id="chapter.previous"
@@ -255,7 +256,7 @@ class Surah extends Component {
                 </li>
             }
             <li className="text-center">
-              <Link to={`/${chapter.chapterNumber}`}>
+              <Link to={`/${chapter.chapterNumber}?translations=${translations}`}>
                 <LocaleFormattedMessage
                   id="chapter.goToBeginning"
                   defaultMessage="Beginning of Surah"
@@ -265,7 +266,7 @@ class Surah extends Component {
             {
               chapter.chapterNumber < 114 &&
                 <li className="next">
-                  <Link to={`/${(chapter.chapterNumber * 1) + 1}`}>
+                  <Link to={`/${(chapter.chapterNumber * 1) + 1}?translations=${translations}`}>
                     <LocaleFormattedMessage
                       id="chapter.next"
                       defaultMessage="Next Surah"
@@ -435,17 +436,17 @@ function mapStateToProps(state, ownProps) {
   const verseIds = new Set(verseArray);
   const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah = !!ownProps.params.range && !ownProps.params.range.includes('-');
-
+  const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
     chapter,
     verses,
     verseIds,
     isSingleAyah,
+    currentVerse,
     info: state.chapters.infos[ownProps.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
-    currentVerse: state.audioplayer.currentVerse,
     isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
     isEndOfSurah: lastAyahInArray === chapter.versesCount,

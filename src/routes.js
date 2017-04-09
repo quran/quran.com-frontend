@@ -70,7 +70,7 @@ export default (store) => {
       <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
 
       <Route
-        path="/:chapterId(/:range)"
+        path="/:chapterId(/:range(/:translations))"
         getComponents={(nextState, cb) =>
           Promise.all([
             import('./containers/Surah'),

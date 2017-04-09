@@ -96,6 +96,10 @@ class Search extends Component {
   renderBody() {
     const { isErrored, isLoading, results, entities, options, location: { query } } = this.props;
 
+    if (isLoading) {
+      return <Loader isActive={isLoading} />;
+    }
+
     if (!query || !query.q) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
@@ -112,10 +116,6 @@ class Search extends Component {
       );
     }
 
-    if (isLoading) {
-      return <Loader isActive={isLoading} />;
-    }
-
     if (!results.length) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
@@ -126,9 +126,9 @@ class Search extends Component {
 
     return results.map(result => (
       <Verse
-        verse={entities[result]}
-        match={entities[result].match}
-        key={entities[result].verseKey}
+        verse={result}
+        // match={entities[result].match}
+        key={result.verseKey}
         tooltip={options.tooltip}
         isSearched
       />
