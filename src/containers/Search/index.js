@@ -13,9 +13,37 @@ import Loader from 'quran-components/lib/Loader';
 import { search } from 'redux/actions/search.js';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
+<<<<<<< HEAD
 const style = require('./style.scss');
 
 class Search extends Component {
+=======
+import { optionsType } from 'types';
+
+const style = require('./style.scss');
+
+class Search extends Component {
+  static propTypes = {
+    isErrored: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    totalCount: PropTypes.number,
+    totalPages: PropTypes.number,
+    currentPage: PropTypes.number,
+    perPage: PropTypes.number,
+    query: PropTypes.string,
+    results: PropTypes.arrayOf(PropTypes.string),
+    push: PropTypes.func.isRequired,
+    location: PropTypes.shape({ // eslint-disable-line
+      q: PropTypes.string,
+      p: PropTypes.string
+    }),
+    options: optionsType
+  };
+
+  static defaultProps = {
+    results: []
+  };
+>>>>>>> f060681... lint happy
 
   static contextTypes = {
     metrics: MetricsPropTypes.metrics
@@ -94,7 +122,7 @@ class Search extends Component {
   }
 
   renderBody() {
-    const { isErrored, isLoading, results, entities, options, location: { query } } = this.props;
+    const { isErrored, isLoading, results, options, location: { query } } = this.props;
 
     if (isLoading) {
       return <Loader isActive={isLoading} />;

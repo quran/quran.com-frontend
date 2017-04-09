@@ -17,20 +17,20 @@ export default (server) => {
 
             translations.forEach((translation) => {
               urls.push({
-                url: `/${chapter.id}/${ ayahId }/${ translation.slug || translation.id }`,
+                url: `/${chapter.id}/${ayahId}/${translation.slug || translation.id}`,
                 changefreq: 'weekly',
                 priority: 1
               });
             });
 
             urls.push({
-              url: `/${chapter.id}/${ ayahId }`,
+              url: `/${chapter.id}/${ayahId}`,
               changefreq: 'weekly',
               priority: 1
             });
 
             urls.push({
-              url: `/${chapter.id}/${ ayahId }-${ ayahId + 9 }`,
+              url: `/${chapter.id}/${ayahId}-${ayahId + 9}`,
               changefreq: 'weekly',
               priority: 1
             });
@@ -78,13 +78,12 @@ export default (server) => {
           cacheTime: 600000,  // 600 sec cache period
           urls: [
             ...urls,
-            {url: '/about', changefreq: 'monthly', priority: 0.3},
-            {url: '/contactus', changefreq: 'monthly', priority: 0.3},
-            {url: '/contact', changefreq: 'monthly', priority: 0.3},
-            {url: '/donations', changefreq: 'monthly', priority: 0.3},
-            {url: '/contributions', changefreq: 'monthly', priority: 0.3},
-
-            {url: '/search', changefreq: 'weekly', priority: 0.8}
+            { url: '/about', changefreq: 'monthly', priority: 0.3 },
+            { url: '/contactus', changefreq: 'monthly', priority: 0.3 },
+            { url: '/contact', changefreq: 'monthly', priority: 0.3 },
+            { url: '/donations', changefreq: 'monthly', priority: 0.3 },
+            { url: '/contributions', changefreq: 'monthly', priority: 0.3 },
+            { url: '/search', changefreq: 'weekly', priority: 0.8 }
           ]
         });
 

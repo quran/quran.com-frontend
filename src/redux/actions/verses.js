@@ -28,7 +28,7 @@ function prepareParams(params, options) {
     translations = options.translations || defaultOptions.translations;
   }
 
- return { translations };
+  return { translations };
 }
 
 export function load(id, paging, params, options = defaultOptions) {
