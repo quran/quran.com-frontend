@@ -25,7 +25,7 @@ describe('action tests', () => {
     expect(ayahsActions.load(1, 2, 4).types.length).to.equal(3);
     expect(ayahsActions.clearCurrent().type).to.equal(ayahsConstants.CLEAR_CURRENT);
     expect(ayahsActions.clearCurrentWord(1).type).to.equal(ayahsConstants.CLEAR_CURRENT_WORD);
-    expect(ayahsActions.setcurrentVerse(1).type).to.equal(ayahsConstants.SET_CURRENT_VERSE);
+    expect(ayahsActions.setCurrentVerse(1).type).to.equal(ayahsConstants.SET_CURRENT_VERSE);
     expect(ayahsActions.setCurrentWord(1).type).to.equal(ayahsConstants.SET_CURRENT_WORD);
   });
 

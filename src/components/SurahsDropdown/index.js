@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
@@ -8,7 +8,6 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 const styles = require('./style.scss');
 
 class SurahsDropdown extends Component {
-
   shouldComponentUpdate(nextProps) {
     return this.props.chapters !== nextProps.chapters;
   }
@@ -40,14 +39,14 @@ class SurahsDropdown extends Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { chapter } = this.props;
 
     return (
       <NavDropdown
         link
         className={styles.dropdown}
         id="chapters-dropdown"
-        title={title || <LocaleFormattedMessage id="setting.chapters" defaultMessage="Surahs" />}
+        title={chapter.nameSimple || <LocaleFormattedMessage id="setting.chapters" defaultMessage="Surahs" />}
       >
         {this.renderList()}
       </NavDropdown>
@@ -57,7 +56,7 @@ class SurahsDropdown extends Component {
 
 SurahsDropdown.propTypes = {
   chapters: customPropTypes.chapters.isRequired,
-  title: PropTypes.string,
+  chapter: customPropTypes.chapters.isRequired,
 };
 
 export default SurahsDropdown;
