@@ -66,3 +66,24 @@ $width: 280px;
     }
   }
 }
+
+.closeBtn {
+  border: none;
+  background: transparent;
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  padding: 5px;
+  cursor: pointer;
+  transition: color .1s ease-in-out, border .1s ease-in-out;
+  &:active {
+    border-radius: 4px;
+  }
+  &:active, &:hover {
+    i {
+      color: #333;
+    }
+  }
+}

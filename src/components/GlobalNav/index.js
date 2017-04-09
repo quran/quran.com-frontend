@@ -85,7 +85,7 @@ class GlobalNav extends Component {
 
     return (
       <Navbar
-        className={`montserrat ${this.state.scrolled && styles.scrolled}`}
+        className={`montserrat removeNavBorderStyles ${this.state.scrolled && styles.scrolled}`}
         fixedTop={!isStatic}
         fluid
         static={isStatic}

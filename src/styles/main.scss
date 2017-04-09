@@ -198,3 +198,10 @@ li em{
     padding: 5px 15px;
   }
 }
+
+// For nav elements that have border-radius and left/right border
+.removeNavBorderStyles {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+}
