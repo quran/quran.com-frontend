@@ -17,7 +17,7 @@ import ReciterDropdown from 'components/ReciterDropdown';
 import ContentDropdown from 'components/ContentDropdown';
 import TooltipDropdown from 'components/TooltipDropdown';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-// TODO: import VersesDropdown from 'components/VersesDropdown';
+import VersesDropdown from 'components/VersesDropdown';
 
 import { load } from 'redux/actions/verses.js';
 
@@ -79,6 +79,7 @@ class GlobalNavSurah extends Component {
         {...props}
         leftControls={[
           <SurahsDropdown title={chapter.nameSimple} chapters={chapters} />,
+          <VersesDropdown chapter={chapter} />,
           <div className="navbar-form navbar-left hidden-xs hidden-sm">
             <SearchInput className="search-input" />
           </div>,

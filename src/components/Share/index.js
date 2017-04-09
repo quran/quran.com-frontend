@@ -1,6 +1,6 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { ShareButtons, generateShareIcon } from 'react-share';
-import { surahType } from 'types';
+import { surahType, verseType } from 'types';
 
 const styles = require('./style.scss');
 
@@ -8,12 +8,19 @@ const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 const FacebookIcon = generateShareIcon('facebook');
 const TwitterIcon = generateShareIcon('twitter');
 
-const Share = ({ chapter, verseKey }) => {
+const Share = ({ chapter, verse }) => {
   // Fallback to Surah Id
-  const path = verseKey ? verseKey.replace(':', '/') : chapter.chapterNumber;
+  let path;
+  if (verse) {
+    const translations = (verse.translations || []).map(translation => translation.resourceId).join(',');
+    path = `${verse.chapterId}/${verse.verseNumber}?translations=${translations}`;
+  } else {
+    path = chapter.chapterNumber;
+  }
+
   const shareUrl = `https://quran.com/${path}`;
-  const title = verseKey ? `Surah ${chapter.nameSimple} [${verseKey}]` : `Surah ${chapter.nameSimple}`;
-  const iconProps = verseKey ? { iconBgStyle: { fill: '#d1d0d0' } } : {};
+  const title = verse ? `Surah ${chapter.nameSimple} [${verse.verseKey}]` : `Surah ${chapter.nameSimple}`;
+  const iconProps = verse ? { iconBgStyle: { fill: '#d1d0d0' } } : {};
 
   return (
     <div className={`${styles.shareContainer}`}>
@@ -38,7 +45,7 @@ const Share = ({ chapter, verseKey }) => {
 };
 
 Share.propTypes = {
-  verseKey: PropTypes.string,
+  verse: verseType,
   chapter: surahType.isRequired
 };
 
