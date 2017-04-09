@@ -8,7 +8,6 @@ import FormControl from 'react-bootstrap/lib/FormControl';
 import { intlShape, injectIntl } from 'react-intl';
 import SwitchToggle from 'components/SwitchToggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import surahType from 'types/surahType';
 
 const style = require('../style.scss');
 
@@ -270,7 +269,7 @@ class RepeatButton extends Component {
 }
 
 RepeatButton.propTypes = {
-  chapter: surahType,
+  chapter: customPropTypes.surahType,
   repeat: customPropTypes.timeInterval,
   setRepeat: PropTypes.func.isRequired,
   current: PropTypes.number.isRequired,

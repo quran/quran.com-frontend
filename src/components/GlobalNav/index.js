@@ -9,7 +9,6 @@ import Nav from 'react-bootstrap/lib/Nav';
 import LocaleSwitcher from 'components/LocaleSwitcher';
 
 import debug from 'helpers/debug';
-import { userType } from 'types';
 
 const styles = require('./style.scss');
 
@@ -111,7 +110,7 @@ GlobalNav.propTypes = {
   rightControls: PropTypes.arrayOf(PropTypes.element),
   handleSidebarToggle: PropTypes.func.isRequired,
   isStatic: PropTypes.bool.isRequired,
-  user: userType,
+  user: customPropTypes.userType,
   location: customPropTypes.location
 };
 

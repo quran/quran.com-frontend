@@ -17,7 +17,6 @@ import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
 import { removeFootNote } from 'redux/actions/footNote';
 import Loader from 'quran-components/lib/Loader';
-import { footNoteType } from 'types';
 import authConnect from './connect';
 
 const ModalHeader = Modal.Header;
@@ -141,7 +140,7 @@ App.propTypes = {
   main: PropTypes.element,
   nav: PropTypes.element,
   sidebar: PropTypes.element,
-  footNote: footNoteType,
+  footNote: customPropTypes.footNoteType,
   loadingFootNote: PropTypes.bool
 };
 
