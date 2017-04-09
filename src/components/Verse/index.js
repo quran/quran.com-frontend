@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
 import Element from 'react-scroll/lib/components/Element';
 import { connect } from 'react-redux';
@@ -25,44 +26,6 @@ const Share = Loadable({
 });
 
 class Verse extends Component {
-  static propTypes = {
-    isSearched: PropTypes.bool,
-    verse: verseType.isRequired,
-    chapter: surahType.isRequired,
-    bookmarked: PropTypes.bool, // TODO: Add this for search
-    bookmarkActions: PropTypes.shape({
-      isLoaded: PropTypes.func.isRequired,
-      load: PropTypes.func.isRequired,
-      addBookmark: PropTypes.func.isRequired,
-      removeBookmark: PropTypes.func.isRequired,
-    }),
-    mediaActions: PropTypes.shape({
-      setMedia: PropTypes.func.isRequired,
-      removeMedia: PropTypes.func.isRequired,
-    }),
-    audioActions: PropTypes.shape({
-      pause: PropTypes.func.isRequired,
-      setAyah: PropTypes.func.isRequired,
-      play: PropTypes.func.isRequired,
-      setCurrentWord: PropTypes.func.isRequired,
-    }), // not required because in search it is not.
-    match: PropTypes.arrayOf(matchType),
-    isPlaying: PropTypes.bool,
-    isAuthenticated: PropTypes.bool,
-    tooltip: PropTypes.string,
-    currentWord: PropTypes.number, // gets passed in an integer, null by default
-    iscurrentVerse: PropTypes.bool,
-    currentVerse: PropTypes.string,
-    userAgent: PropTypes.func,
-    audio: PropTypes.number.isRequired,
-    loadAudio: PropTypes.func.isRequired
-  };
-
-
-  static defaultProps = {
-    currentWord: null,
-    isSearched: false
-  };
 
   // TODO: Should this belong here?
   componentDidMount() {
@@ -339,5 +302,30 @@ class Verse extends Component {
     );
   }
 }
+
+Verse.propTypes = {
+    isSearched: PropTypes.bool,
+    verse: verseType.isRequired,
+    chapter: surahType.isRequired,
+    bookmarked: PropTypes.bool, // TODO: Add this for search
+    bookmarkActions: customPropTypes.bookmarkActions,
+    mediaActions: customPropTypes.mediaActions,
+    audioActions: customPropTypes.audioActions,
+    match: customPropTypes.match,
+    isPlaying: PropTypes.bool,
+    isAuthenticated: PropTypes.bool,
+    tooltip: PropTypes.string,
+    currentWord: PropTypes.number, // gets passed in an integer, null by default
+    iscurrentVerse: PropTypes.bool,
+    currentVerse: PropTypes.string,
+    userAgent: PropTypes.func,
+    audio: PropTypes.number.isRequired,
+    loadAudio: PropTypes.func.isRequired
+};
+
+Verse.defaultProps = {
+    currentWord: null,
+    isSearched: false
+};
 
 export default connect(() => ({}), { loadAudio })(Verse);
