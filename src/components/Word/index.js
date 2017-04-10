@@ -93,7 +93,7 @@ Word.propTypes = {
   tooltip: PropTypes.string,
   audioActions: PropTypes.object.isRequired, // eslint-disable-line
   audioPosition: PropTypes.number,
-  currentVerse: PropTypes.string.isRequired,
+  currentVerse: PropTypes.string,
   isPlaying: PropTypes.bool,
   isSearched: PropTypes.bool,
   useTextFont: PropTypes.bool // tmp change to compare text and code based rendering

@@ -315,7 +315,7 @@ Verse.propTypes = {
   currentWord: PropTypes.number, // gets passed in an integer, null by default
   iscurrentVerse: PropTypes.bool,
   currentVerse: PropTypes.string,
-  userAgent: PropTypes.func,
+  userAgent: PropTypes.object, // eslint-disable-line
   audio: PropTypes.number.isRequired,
   loadAudio: PropTypes.func.isRequired
 };
