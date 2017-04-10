@@ -170,7 +170,9 @@ GlobalNavSurah.propTypes = {
   options: customPropTypes.optionsType.isRequired,
   setOption: PropTypes.func.isRequired,
   versesIds: PropTypes.instanceOf(Set),
-  load: PropTypes.func.isRequired
+  load: PropTypes.func.isRequired,
+  setCurrentVerse: PropTypes.func.isRequired,
+  replace: PropTypes.func.isRequired
 };
 
 export default connect(
