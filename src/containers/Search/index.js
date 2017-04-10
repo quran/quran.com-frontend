@@ -130,6 +130,7 @@ class Search extends Component {
         match={entities[result].match}
         key={entities[result].verseKey}
         tooltip={options.tooltip}
+        userAgent={options.userAgent}
         isSearched
       />
     ));

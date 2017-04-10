@@ -29,9 +29,10 @@
       display: block;
       text-decoration: none;
       font-size: 12px;
+      cursor: pointer;
 
-      &:hover{
-        cursor: pointer;
+      &:focus{
+        color: $text-muted;
       }
     }
     .label{
@@ -142,4 +143,3 @@
   width: 100%;
   margin: 0px auto;
 }
-

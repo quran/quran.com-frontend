@@ -52,8 +52,8 @@ export class Audioplayer extends Component {
       return false;
     }
 
-    // When you go directly to the chapter page, /2, the files are not loaded yet
-    if (this.props.isLoadedOnClient !== nextProps.isLoadedOnClient) {
+    // First load
+    if (this.props.currentFile !== nextProps.currentFile) {
       return this.handleAddFileListeners(nextProps.currentFile);
     }
 
@@ -387,7 +387,6 @@ export class Audioplayer extends Component {
       duration,
       chapter,
       isPlaying,
-      isLoadedOnClient,
       repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
       setRepeat // eslint-disable-line no-shadow
@@ -409,15 +408,15 @@ export class Audioplayer extends Component {
     return (
       <div className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}>
         <div className={style.wrapper}>
-          {isLoadedOnClient ?
+          {
+            currentFile &&
             <Track
               progress={(currentTime / duration) * 100}
               onTrackChange={this.handleTrackChange}
-            /> : null}
+            />
+          }
           {
-            isLoadedOnClient &&
             segments &&
-            segments[currentVerse] &&
             segments[currentVerse] &&
               <Segments
                 segments={segments[currentVerse]}
