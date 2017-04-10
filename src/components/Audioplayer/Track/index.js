@@ -18,7 +18,7 @@ export default class Track extends Component {
     );
 
     return onTrackChange(fraction);
-  }
+  };
 
   render() {
     const { progress } = this.props;

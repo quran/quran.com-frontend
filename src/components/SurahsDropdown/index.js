@@ -1,19 +1,13 @@
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
-export default class SurahsDropdown extends Component {
-  static propTypes = {
-    chapters: PropTypes.objectOf(surahType).isRequired,
-    title: PropTypes.string,
-  };
+class SurahsDropdown extends Component {
 
   shouldComponentUpdate(nextProps) {
     return this.props.chapters !== nextProps.chapters;
@@ -60,3 +54,10 @@ export default class SurahsDropdown extends Component {
     );
   }
 }
+
+SurahsDropdown.propTypes = {
+  chapters: customPropTypes.chapters.isRequired,
+  title: PropTypes.string,
+};
+
+export default SurahsDropdown;

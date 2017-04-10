@@ -1,15 +1,13 @@
 import React, { PropTypes } from 'react';
+import * as customProptypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import Modal from 'react-bootstrap/lib/Modal';
-
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import ReciterDropdown from 'components/ReciterDropdown';
 import ContentDropdown from 'components/ContentDropdown';
 import TooltipDropdown from 'components/TooltipDropdown';
-
 import { setOption } from 'redux/actions/options.js';
 import { load } from 'redux/actions/verses.js';
-import { optionsType, surahType } from 'types';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
@@ -73,11 +71,11 @@ const SettingsModal = ({
 };
 
 SettingsModal.propTypes = {
-  chapter: surahType,
+  chapter: customProptypes.surahType,
   ayahIds: PropTypes.instanceOf(Set),
   open: PropTypes.bool,
   handleHide: PropTypes.func.isRequired,
-  options: optionsType,
+  options: customProptypes.optionsType,
   setOption: PropTypes.func.isRequired,
   load: PropTypes.func.isRequired,
 };

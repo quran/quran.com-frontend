@@ -9,20 +9,10 @@ const styles = require('./style.scss');
 const NavbarHeader = Navbar.Header;
 
 class GlobalSidebar extends Component {
-  static propTypes = {
-    open: PropTypes.bool.isRequired,
-    handleOpen: PropTypes.func,
-    settingsModalProps: PropTypes.object, // eslint-disable-line
-    children: PropTypes.node
-  };
-
-  static defaultProps = {
-    open: false
-  };
 
   state = {
     settingsModalOpen: false
-  }
+  };
 
   componentDidMount() {
     document.body.addEventListener('click', this.onBodyClick.bind(this), true);
@@ -115,5 +105,16 @@ class GlobalSidebar extends Component {
     );
   }
 }
+
+GlobalSidebar.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleOpen: PropTypes.func,
+  settingsModalProps: PropTypes.object, // eslint-disable-line
+  children: PropTypes.node
+};
+
+GlobalSidebar.defaultProps = {
+  open: false
+};
 
 export default GlobalSidebar;
