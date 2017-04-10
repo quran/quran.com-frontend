@@ -24,7 +24,6 @@ const Share = Loadable({
 });
 
 class Verse extends Component {
-
   // TODO: Should this belong here?
   componentDidMount() {
     const { verse, audio } = this.props;
@@ -145,7 +144,7 @@ class Verse extends Component {
         tooltip={tooltip}
         isPlaying={isPlaying}
         audioActions={audioActions}
-        audioPosition={word.wordId ? wordAudioPosition += 1 : null}
+        audioPosition={word.charType === 'word' ? wordAudioPosition += 1 : null}
         isSearched={isSearched}
         useTextFont={renderText}
       />
@@ -316,7 +315,7 @@ Verse.propTypes = {
   currentWord: PropTypes.number, // gets passed in an integer, null by default
   iscurrentVerse: PropTypes.bool,
   currentVerse: PropTypes.string,
-  userAgent: PropTypes.func,
+  userAgent: PropTypes.object, // eslint-disable-line
   audio: PropTypes.number.isRequired,
   loadAudio: PropTypes.func.isRequired
 };

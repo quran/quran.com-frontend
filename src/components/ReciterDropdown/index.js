@@ -27,11 +27,13 @@ class ReciterDropdown extends Component {
       >
         <Radio
           checked={slug.id === audio}
-          id={slug.id}
+          id={`slug-${slug.id}`}
           name="reciter"
           handleChange={() => onOptionChange({ audio: slug.id })}
         >
-          {slug.reciterNameEng} {slug.style ? `(${slug.style})` : ''}
+          <span>
+            {slug.reciterNameEng} {slug.style ? `(${slug.style})` : ''}
+          </span>
         </Radio>
       </MenuItem>
     ));
