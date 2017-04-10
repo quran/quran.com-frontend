@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 
 import Line from 'components/Line';
@@ -47,7 +48,7 @@ const PageView = ({ lines, keys, currentVerse, options, isPlaying, audioActions,
 PageView.propTypes = {
   keys: PropTypes.array, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line
-  audioActions: PropTypes.object.isRequired, // eslint-disable-line
+  audioActions: customPropTypes.audioActions.isRequired, // eslint-disable-line
   currentVerse: PropTypes.string,
   bookmarks: PropTypes.object.isRequired, // eslint-disable-line
   options: PropTypes.object.isRequired, // eslint-disable-line

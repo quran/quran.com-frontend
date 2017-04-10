@@ -1,8 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
-
-import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
@@ -36,7 +35,7 @@ const SurahsList = (props) => {
 };
 
 SurahsList.propTypes = {
-  chapters: PropTypes.arrayOf(surahType).isRequired
+  chapters: customPropTypes.chapters.isRequired
 };
 
 export default SurahsList;

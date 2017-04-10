@@ -1,15 +1,14 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import Loadable from 'react-loadable';
-
 import ComponentLoader from 'components/ComponentLoader';
 import GlobalNav from 'components/GlobalNav';
-
 import debug from 'helpers/debug';
 import config from 'config';
 import metricsConfig from 'helpers/metrics';
@@ -17,11 +16,7 @@ import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
 import { removeFootNote } from 'redux/actions/footNote';
-
 import Loader from 'quran-components/lib/Loader';
-
-import { footNoteType } from 'types';
-
 import authConnect from './connect';
 
 const ModalHeader = Modal.Header;
@@ -39,19 +34,6 @@ const SmartBanner = Loadable({
 });
 
 class App extends Component {
-  static propTypes = {
-    media: PropTypes.shape({
-      content: PropTypes.object
-    }).isRequired,
-    removeMedia: PropTypes.func.isRequired,
-    removeFootNote: PropTypes.func.isRequired,
-    children: PropTypes.element,
-    main: PropTypes.element,
-    nav: PropTypes.element,
-    sidebar: PropTypes.element,
-    footNote: footNoteType,
-    loadingFootNote: PropTypes.bool
-  };
 
   static contextTypes = {
     store: PropTypes.object.isRequired
@@ -149,6 +131,18 @@ class App extends Component {
 
 const metricsApp = metrics(metricsConfig)(App);
 const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
+
+App.propTypes = {
+  media: customPropTypes.media.isRequired,
+  removeMedia: PropTypes.func.isRequired,
+  removeFootNote: PropTypes.func.isRequired,
+  children: PropTypes.element,
+  main: PropTypes.element,
+  nav: PropTypes.element,
+  sidebar: PropTypes.element,
+  footNote: customPropTypes.footNoteType,
+  loadingFootNote: PropTypes.bool
+};
 
 export default connect(
   state => ({

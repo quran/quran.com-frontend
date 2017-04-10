@@ -2,11 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import copyToClipboard from 'copy-to-clipboard';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-export default class Copy extends Component {
-  static propTypes = {
-    text: PropTypes.string.isRequired,
-    verseKey: PropTypes.string.isRequired,
-  }
+class Copy extends Component {
 
   state = {
     isCopied: false
@@ -17,7 +13,7 @@ export default class Copy extends Component {
     this.setState({ isCopied: true });
 
     setTimeout(() => this.setState({ isCopied: false }), 1000);
-  }
+  };
 
   render() {
     const { isCopied } = this.state;
@@ -37,5 +33,11 @@ export default class Copy extends Component {
       </a>
     );
   }
-
 }
+
+Copy.propTypes = {
+  text: PropTypes.string.isRequired,
+  verseKey: PropTypes.string.isRequired,
+};
+
+export default Copy;

@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import * as customPropTypes from 'customPropTypes';
 import Helmet from 'react-helmet';
 import IndexHeader from 'components/IndexHeader';
 import cookie from 'react-cookie';
@@ -6,12 +7,10 @@ import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import debug from 'helpers/debug';
 import { isAllLoaded, loadAll } from 'redux/actions/chapters.js';
-
 import LastVisit from 'components/Home/LastVisit';
 import SurahsList from 'components/Home/SurahsList';
 import QuickSurahs from 'components/Home/QuickSurahs';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
@@ -48,7 +47,7 @@ const Home = (props) => {
 };
 
 Home.propTypes = {
-  chapters: PropTypes.objectOf(surahType).isRequired
+  chapters: customPropTypes.chapters.isRequired
 };
 
 const AsyncHome = asyncConnect([{

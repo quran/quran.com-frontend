@@ -1,5 +1,5 @@
+import * as customPropTypes from 'customPropTypes';
 import React from 'react';
-
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 
@@ -8,7 +8,6 @@ import Loadable from 'react-loadable';
 import Button from 'quran-components/lib/Button';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { surahType, infoType } from 'types';
 import makeHeadTags from 'helpers/makeHeadTags';
 
 import { chaptersConnect, chapterInfoConnect } from '../Surah/connect';
@@ -62,8 +61,8 @@ const ChapterInfo = ({ chapter, info }) => (
 );
 
 ChapterInfo.propTypes = {
-  chapter: surahType,
-  info: infoType
+  chapter: customPropTypes.surahType,
+  info: customPropTypes.infoType
 };
 
 const AsyncChapterInfo = asyncConnect([

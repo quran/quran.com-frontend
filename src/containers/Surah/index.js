@@ -1,5 +1,6 @@
 /* global window, document */
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
 // redux
 import { bindActionCreators } from 'redux';
@@ -24,8 +25,6 @@ import scroller from 'utils/scroller';
 // Helpers
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
-
-import { surahType, verseType, infoType } from 'types';
 
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/verses.js';
@@ -58,27 +57,6 @@ const TopOptions = Loadable({
 });
 
 class Surah extends Component {
-  static propTypes = {
-    chapter: surahType.isRequired,
-    chapters: PropTypes.objectOf(surahType).isRequired,
-    actions: PropTypes.object.isRequired, // eslint-disable-line
-    lines: PropTypes.object.isRequired, // eslint-disable-line
-    isEndOfSurah: PropTypes.bool.isRequired,
-    verseIds: PropTypes.instanceOf(Set),
-    currentVerse: PropTypes.string,
-    info: infoType,
-    bookmarks: PropTypes.object.isRequired, // eslint-disable-line
-    isLoading: PropTypes.bool.isRequired,
-    isLoaded: PropTypes.bool.isRequired,
-    isSingleAyah: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    options: PropTypes.object.isRequired, // eslint-disable-line
-    params: PropTypes.shape({
-      chapterId: PropTypes.string.isRequired
-    }).isRequired,
-    verses: PropTypes.objectOf(verseType),
-    isPlaying: PropTypes.bool
-  };
 
   state = {
     lazyLoading: false,
@@ -420,6 +398,28 @@ class Surah extends Component {
     );
   }
 }
+
+Surah.propTypes = {
+  chapter: customPropTypes.surahType.isRequired,
+  chapters: customPropTypes.chapters.isRequired,
+  actions: PropTypes.object.isRequired, // eslint-disable-line
+  lines: PropTypes.object.isRequired, // eslint-disable-line
+  isEndOfSurah: PropTypes.bool.isRequired,
+  verseIds: PropTypes.instanceOf(Set),
+  currentVerse: PropTypes.string,
+  info: customPropTypes.infoType,
+  bookmarks: PropTypes.object.isRequired, // eslint-disable-line
+  isLoading: PropTypes.bool.isRequired,
+  isLoaded: PropTypes.bool.isRequired,
+  isSingleAyah: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  options: PropTypes.object.isRequired, // eslint-disable-line
+  params: PropTypes.shape({
+    chapterId: PropTypes.string.isRequired
+  }).isRequired,
+  verses: customPropTypes.verses,
+  isPlaying: PropTypes.bool
+};
 
 const AsyncSurah = asyncConnect([
   { promise: chaptersConnect },
