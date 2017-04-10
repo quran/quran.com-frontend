@@ -249,6 +249,9 @@ export class Audioplayer extends Component {
   }
 
   handleAddFileListeners(file) {
+    // NOTE: if no file, just wait.
+    if (!file) return false;
+
     const { update, currentTime } = this.props; // eslint-disable-line no-shadow
     debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
 

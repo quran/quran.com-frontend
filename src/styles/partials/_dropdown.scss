@@ -36,13 +36,4 @@
     white-space: nowrap;
     margin-bottom: 0px;
   }
-
-  & > li > a {
-    &:hover,
-    &.active{
-      background: $beige;
-      color: $olive;
-      cursor: pointer;
-    }
-  }
 }

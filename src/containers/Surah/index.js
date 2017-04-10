@@ -19,9 +19,6 @@ import ComponentLoader from 'components/ComponentLoader';
 import Bismillah from 'components/Bismillah';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-// utils
-import scroller from 'utils/scroller';
-
 // Helpers
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
@@ -112,27 +109,6 @@ class Surah extends Component {
 
   hasAyahs() {
     return Object.keys(this.props.verses).length;
-  }
-
-  handleVerseDropdownClick = (verseNum) => {
-    const { verseIds, chapter, actions } = this.props; // eslint-disable-line no-shadow
-
-    actions.verse.setcurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
-
-    if (verseIds.has(verseNum)) {
-      return false;
-    }
-
-    if (verseNum > (this.getLast() + 10) || verseNum < this.getFirst()) {
-      // This is beyond lazy loading next page.
-      if (actions.push) {
-        return actions.push.push(`/${chapter.chapterNumber}/${verseNum}-${verseNum + 10}`);
-      }
-    }
-
-    return this.handleLazyLoadAyahs(() => setTimeout(() =>
-      scroller.scrollTo(`verse:${chapter.chapterNumber}:${verseNum}`),
-    1000)); // then scroll to it
   }
 
   handleLazyLoadAyahs = (callback) => {

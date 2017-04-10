@@ -50,7 +50,7 @@ export function clearCurrentWord() {
   };
 }
 
-export function setcurrentVerse(id) {
+export function setCurrentVerse(id) {
   return {
     type: SET_CURRENT_VERSE,
     id
