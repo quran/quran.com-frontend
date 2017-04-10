@@ -145,7 +145,7 @@ class Verse extends Component {
         tooltip={tooltip}
         isPlaying={isPlaying}
         audioActions={audioActions}
-        audioPosition={word.wordId ? wordAudioPosition += 1 : null}
+        audioPosition={word.charType === 'word' ? wordAudioPosition += 1 : null}
         isSearched={isSearched}
         useTextFont={renderText}
       />

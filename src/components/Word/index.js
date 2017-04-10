@@ -57,7 +57,7 @@ class Word extends Component {
     let spacer;
     const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
     const className = `${useTextFont ? 'text-' : ''}${word.charType === CHAR_TYPE_WORD ? word.className : 'p0'} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
-    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition || word.position}`;
+    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
 
     if (word.charType === CHAR_TYPE_END) {
       text = zeroPad(word.verseKey.split(':')[1], 3, 0);
