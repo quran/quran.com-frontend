@@ -24,7 +24,6 @@ const Share = Loadable({
 });
 
 class Verse extends Component {
-
   // TODO: Should this belong here?
   componentDidMount() {
     const { verse, audio } = this.props;

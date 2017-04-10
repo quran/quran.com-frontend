@@ -10,7 +10,6 @@ const CHAR_TYPE_RUB = 'rub';
 const CHAR_TYPE_SAJDAH = 'sajdah';
 
 class Word extends Component {
-
   buildTooltip = (word, tooltip) => {
     let title;
 

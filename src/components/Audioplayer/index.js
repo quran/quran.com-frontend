@@ -52,8 +52,8 @@ export class Audioplayer extends Component {
       return false;
     }
 
-    // When you go directly to the chapter page, /2, the files are not loaded yet
-    if (this.props.isLoadedOnClient !== nextProps.isLoadedOnClient) {
+    // First load
+    if (this.props.currentFile !== nextProps.currentFile) {
       return this.handleAddFileListeners(nextProps.currentFile);
     }
 
