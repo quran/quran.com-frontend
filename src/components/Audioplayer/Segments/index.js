@@ -4,7 +4,6 @@ import Helmet from 'react-helmet';
 import debug from 'helpers/debug';
 
 class Segments extends Component {
-
   shouldComponentUpdate(nextProps) {
     return [
       this.props.currentVerse !== nextProps.currentVerse,

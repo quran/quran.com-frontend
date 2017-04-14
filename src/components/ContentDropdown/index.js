@@ -64,10 +64,10 @@ class ContentDropdown extends Component {
           <Checkbox
             id={translation.id + translation.languageName}
             name="translation"
-            checked={checked}
+            checked={checked || false}
             handleChange={() => this.handleOptionSelected(translation.id)}
           >
-            {render(translation)}
+            <span>{render(translation)}</span>
           </Checkbox>
         </MenuItem>
       );

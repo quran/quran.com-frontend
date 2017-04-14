@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import * as OptionsActions from 'redux/actions/options.js';
 import { connect } from 'react-redux';
+import { replace } from 'react-router-redux';
 import Link from 'react-router/lib/Link';
 import Drawer from 'quran-components/lib/Drawer';
 import Menu from 'quran-components/lib/Menu';
@@ -15,16 +16,15 @@ import ReciterDropdown from 'components/ReciterDropdown';
 import ContentDropdown from 'components/ContentDropdown';
 import TooltipDropdown from 'components/TooltipDropdown';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-// TODO: import VersesDropdown from 'components/VersesDropdown';
+import VersesDropdown from 'components/VersesDropdown';
 
-import { load } from 'redux/actions/verses.js';
+import { load, setCurrentVerse } from 'redux/actions/verses.js';
 
 import GlobalNav from '../index';
 
 const styles = require('../style.scss');
 
 class GlobalNavSurah extends Component {
-
   state = {
     drawerOpen: false
   }
@@ -41,6 +41,18 @@ class GlobalNavSurah extends Component {
       this.props.load(chapter.chapterNumber, paging, { ...options, ...payload });
     }
   };
+
+  handleVerseDropdownClick = (verseNum) => {
+    const { versesIds, chapter } = this.props; // eslint-disable-line no-shadow
+
+    this.props.setCurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
+
+    if (versesIds.has(verseNum)) {
+      return false;
+    }
+
+    return this.props.replace(`/${chapter.chapterNumber}/${verseNum}-${verseNum + 10}`);
+  }
 
   handleDrawerToggle = (open) => {
     this.setState({ drawerOpen: open });
@@ -62,13 +74,19 @@ class GlobalNavSurah extends Component {
   }
 
   render() {
-    const { chapter, chapters, setOption, options, ...props } = this.props;
+    const { chapter, chapters, setOption, versesIds, options, ...props } = this.props;
 
     return (
       <GlobalNav
         {...props}
         leftControls={[
-          <SurahsDropdown title={chapter.nameSimple} chapters={chapters} />,
+          <SurahsDropdown chapter={chapter} chapters={chapters} />,
+          <VersesDropdown
+            chapter={chapter}
+            isReadingMode={options.isReadingMode}
+            loadedVerses={versesIds}
+            onClick={this.handleVerseDropdownClick}
+          />,
           <div className="navbar-form navbar-left hidden-xs hidden-sm">
             <SearchInput className="search-input" />
           </div>,
@@ -152,7 +170,12 @@ GlobalNavSurah.propTypes = {
   options: customPropTypes.optionsType.isRequired,
   setOption: PropTypes.func.isRequired,
   versesIds: PropTypes.instanceOf(Set),
-  load: PropTypes.func.isRequired
+  load: PropTypes.func.isRequired,
+  setCurrentVerse: PropTypes.func.isRequired,
+  replace: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, { ...OptionsActions, load })(GlobalNavSurah);
+export default connect(
+  mapStateToProps,
+  { ...OptionsActions, load, replace, setCurrentVerse }
+)(GlobalNavSurah);
