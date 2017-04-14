@@ -154,7 +154,7 @@ class SearchAutocomplete extends Component {
         onKeyDown={event => this.handleItemKeyDown(event, item)}
       >
         <div className={styles.link}>
-          <a href={item.href} tabIndex="-1">{item.href}</a>
+          <a href={item.href} tabIndex="-1">{item.ayah}</a>
         </div>
         <div className={styles.text}>
           <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{ __html: item.text }} />
