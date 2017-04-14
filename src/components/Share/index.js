@@ -46,7 +46,7 @@ const Share = ({ chapter, verse }) => {
 
 Share.propTypes = {
   chapter: customPropTypes.surahType.isRequired,
-  verse: customPropTypes.surahType.isRequired
+  verse: customPropTypes.surahType
 };
 
 export default Share;

@@ -61,6 +61,22 @@ export default (store) => {
       </Route>
 
       <Route
+        path="/:chapterId/:range/:translations"
+        getComponents={(nextState, cb) =>
+          Promise.all([
+            import('./containers/Surah'),
+            import('./components/GlobalNav/Surah')
+          ])
+          .then(modules => cb(
+          null,
+        { main: modules[0].default, nav: modules[1].default }
+          ))
+          .catch(err => console.trace(err))
+        }
+        onEnter={checkValidSurah}
+      />
+
+      <Route
         path="/:chapterId/info(/:language)"
         getComponents={
           (nextState, cb) => import('./containers/ChapterInfo').then(module => cb(null, module.default)).catch(err => console.trace(err))
@@ -70,7 +86,7 @@ export default (store) => {
       <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
 
       <Route
-        path="/:chapterId(/:range(/:translations))"
+        path="/:chapterId(/:range)"
         getComponents={(nextState, cb) =>
           Promise.all([
             import('./containers/Surah'),
