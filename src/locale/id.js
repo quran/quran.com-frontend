@@ -9,7 +9,7 @@ export default {
     'setting.title': 'Pengaturan',
     'setting.chapters': 'Surat',
     'setting.verses': 'Pergi ke ayat',
-    'setting.reciters.title': 'Qari\'',
+    'setting.reciters.title': "Qari'",
     'setting.translations.title': 'Terjemahan',
     'setting.translations.removeAll': 'Buang semua',
     'setting.translations.english': 'Bahasa Inggris',

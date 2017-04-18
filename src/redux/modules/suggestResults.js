@@ -25,7 +25,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         results: {
           ...state.results,
-          [action.query]: action.result,
+          [action.query]: action.result
         }
       };
     case SUGGEST_FAIL:

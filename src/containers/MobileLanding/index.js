@@ -12,12 +12,10 @@ const phones = require('../../../static/images/mockup-desktop@2x.png');
 export default () => (
   <div className={`${styles.container} montserrat container`}>
     <Helmet
-      {
-        ...makeHeadTags({
-          title: 'Quran Android and iOS apps by Quran.com',
-          description: 'From the makers of Quran.com comes Quran for iOS and Android, a beautiful, and ad-free mushaf apps' // eslint-disable-line max-len
-        })
-      }
+      {...makeHeadTags({
+        title: 'Quran Android and iOS apps by Quran.com',
+        description: 'From the makers of Quran.com comes Quran for iOS and Android, a beautiful, and ad-free mushaf apps' // eslint-disable-line max-len
+      })}
     />
     <div className="row">
       <div className="col-md-5">
@@ -29,7 +27,8 @@ export default () => (
           <small>
             From the makers of Quran.com comes Quran for iOS, a beautiful,{' '}
             and ad-free mushaf app.
-            It’s now easier to read the Quran on the go, memorize it and listen to your{' '}
+            It’s now easier to read the Quran on the go, memorize it and listen to your
+            {' '}
             favorite reciters.
           </small>
         </h3>
@@ -58,7 +57,12 @@ export default () => (
               href="https://play.google.com/store/apps/details?id=com.quran.labs.androidquran&hl=en"
               block
             >
-              <img src={play} alt="Play Store" height="24px" style={{ paddingRight: 10 }} />
+              <img
+                src={play}
+                alt="Play Store"
+                height="24px"
+                style={{ paddingRight: 10 }}
+              />
               Download
             </Button>
           </div>

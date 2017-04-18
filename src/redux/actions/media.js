@@ -1,7 +1,4 @@
-import {
-  SET_MEDIA,
-  REMOVE_MEDIA
-} from 'redux/constants/media';
+import { SET_MEDIA, REMOVE_MEDIA } from 'redux/constants/media';
 
 export const setMedia = content => ({
   type: SET_MEDIA,

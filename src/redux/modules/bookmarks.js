@@ -1,7 +1,7 @@
 import {
   LOAD_SUCCESS,
   ADD_BOOKMARK_SUCCESS,
-  REMOVE_BOOKMARK_SUCCESS,
+  REMOVE_BOOKMARK_SUCCESS
 } from 'redux/constants/bookmarks';
 
 const initialState = {

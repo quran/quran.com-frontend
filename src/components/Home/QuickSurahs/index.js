@@ -14,19 +14,20 @@ export default () => {
   return (
     <div className="">
       <h4 className={`text-muted ${styles.title} ${styles.items}`}>
-        <LocaleFormattedMessage id="surah.index.quickLinks" defaultMessage="Quick links" />
-        {
-          isFriday &&
-            <span>
-              <Link
-                to="/18"
-                data-metrics-event-name="QuickLinks:Click"
-                data-metrics-surah-id="18"
-              >
-                Surah Al-Kahf
-              </Link>
-            </span>
-        }
+        <LocaleFormattedMessage
+          id="surah.index.quickLinks"
+          defaultMessage="Quick links"
+        />
+        {isFriday &&
+          <span>
+            <Link
+              to="/18"
+              data-metrics-event-name="QuickLinks:Click"
+              data-metrics-surah-id="18"
+            >
+              Surah Al-Kahf
+            </Link>
+          </span>}
         <span>
           <Link
             to="/36"

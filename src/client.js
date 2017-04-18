@@ -45,31 +45,36 @@ window.clearCookies = () => {
   reactCookie.remove('smartbanner-installed');
 };
 
-match({ history, routes: routes(store) }, (error, redirectLocation, renderProps) => {
-  const component = (
-    <Router
-      {...renderProps}
-      render={props => (
-        <ReduxAsyncConnect
-          {...props}
-          helpers={{ client }}
-          render={applyRouterMiddleware(useScroll())}
-        />
-      )}
-    />
-  );
+match(
+  { history, routes: routes(store) },
+  (error, redirectLocation, renderProps) => {
+    const component = (
+      <Router
+        {...renderProps}
+        render={props => (
+          <ReduxAsyncConnect
+            {...props}
+            helpers={{ client }}
+            render={applyRouterMiddleware(useScroll())}
+          />
+        )}
+      />
+    );
 
-  const mountNode = document.getElementById('app');
+    const mountNode = document.getElementById('app');
 
-  debug('client', 'React Rendering');
+    debug('client', 'React Rendering');
 
-  ReactDOM.render(
-    <IntlProvider locale="en" messages={getLocalMessages()}>
-      <Provider store={store} key="provider">
-        {component}
-      </Provider>
-    </IntlProvider>, mountNode, () => {
-      debug('client', 'React Rendered');
-    }
-  );
-});
+    ReactDOM.render(
+      <IntlProvider locale="en" messages={getLocalMessages()}>
+        <Provider store={store} key="provider">
+          {component}
+        </Provider>
+      </IntlProvider>,
+      mountNode,
+      () => {
+        debug('client', 'React Rendered');
+      }
+    );
+  }
+);

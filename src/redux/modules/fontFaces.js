@@ -10,7 +10,7 @@ export default function reducer(state = {}, action = {}) {
       const classNames = {};
 
       if (verses) {
-        Object.keys(verses).forEach((ayahId) => {
+        Object.keys(verses).forEach(ayahId => {
           const verse = verses[ayahId];
 
           if (!state[`p${verse.pageNumber}`]) {

@@ -9,7 +9,6 @@ const styles = require('./style.scss');
 const NavbarHeader = Navbar.Header;
 
 class GlobalSidebar extends Component {
-
   state = {
     settingsModalOpen: false
   };
@@ -19,7 +18,11 @@ class GlobalSidebar extends Component {
   }
 
   componentWillUnmount() {
-    document.body.removeEventListener('click', this.onBodyClick.bind(this), true);
+    document.body.removeEventListener(
+      'click',
+      this.onBodyClick.bind(this),
+      true
+    );
   }
 
   onBodyClick = () => {
@@ -30,28 +33,33 @@ class GlobalSidebar extends Component {
     }
 
     return false;
-  }
+  };
 
   render() {
     const { open, handleOpen, children } = this.props;
 
     return (
-      <div
-        className={`${styles.container} sidebar ${open && styles.open}`}
-      >
+      <div className={`${styles.container} sidebar ${open && styles.open}`}>
         <Navbar static fluid>
           <NavbarHeader>
             <p // eslint-disable-line
               className="navbar-text"
               onClick={() => handleOpen(false)}
-            ><Link to="/"><i className={`ss-icon ss-home ${styles.backToHome}`} /><LocaleFormattedMessage id="nav.title" defaultMessage="Quran" /></Link>
+            >
+              <Link to="/">
+                <i className={`ss-icon ss-home ${styles.backToHome}`} />
+                <LocaleFormattedMessage id="nav.title" defaultMessage="Quran" />
+              </Link>
             </p>
           </NavbarHeader>
         </Navbar>
         <ul className={styles.list}>
           {children}
           <li>
-            <a href="https://quran.zendesk.com/hc/en-us" data-metrics-event-name="Sidebar:Link:Help">
+            <a
+              href="https://quran.zendesk.com/hc/en-us"
+              data-metrics-event-name="Sidebar:Link:Help"
+            >
               <i className="ss-icon ss-help vertical-align-middle" />{' '}
               <LocaleFormattedMessage
                 id="nav.help"
@@ -62,14 +70,14 @@ class GlobalSidebar extends Component {
           <li>
             <Link to="/apps" data-metrics-event-name="Sidebar:Link:Mobile">
               <i className="ss-icon ss-cell vertical-align-middle" />{' '}
-              <LocaleFormattedMessage
-                id="nav.mobile"
-                defaultMessage="Mobile"
-              />
+              <LocaleFormattedMessage id="nav.mobile" defaultMessage="Mobile" />
             </Link>
           </li>
           <li>
-            <Link to="/donations" data-metrics-event-name="Sidebar:Link:Contribute">
+            <Link
+              to="/donations"
+              data-metrics-event-name="Sidebar:Link:Contribute"
+            >
               <i className="ss-icon ss-dollarsign vertical-align-middle" />{' '}
               <LocaleFormattedMessage
                 id="nav.contribute"
@@ -92,7 +100,10 @@ class GlobalSidebar extends Component {
             </a>
           </li>
           <li>
-            <a href="http://legacy.quran.com" data-metrics-event-name="Sidebar:Link:Legacy">
+            <a
+              href="http://legacy.quran.com"
+              data-metrics-event-name="Sidebar:Link:Legacy"
+            >
               <i className="ss-icon ss-alert vertical-align-middle" />{' '}
               <LocaleFormattedMessage
                 id="nav.legacySite"

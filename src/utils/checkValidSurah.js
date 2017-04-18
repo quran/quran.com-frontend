@@ -7,7 +7,9 @@ export default function isValidSurah(nextState, replaceState) {
 
   if (nextState.params.range) {
     if (nextState.params.range.includes('-')) {
-      const [from, to] = nextState.params.range.split('-').map(num => parseInt(num, 10));
+      const [from, to] = nextState.params.range
+        .split('-')
+        .map(num => parseInt(num, 10));
 
       if (from > to) {
         replaceState(`/${chapterId}/${to}-${from}`);

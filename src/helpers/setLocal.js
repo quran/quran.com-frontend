@@ -2,7 +2,7 @@ import cookie from 'react-cookie';
 
 import config from '../config';
 
-export default (req) => {
+export default req => {
   let currentLocal;
   const expireDate = new Date();
   expireDate.setYear(expireDate.getFullYear() + 1);
@@ -10,8 +10,8 @@ export default (req) => {
 
   if (req && req.query.local) {
     currentLocal = req.query.local;
-  }
-  else { // eslint-disable-line
+  } else {
+    // eslint-disable-line
     currentLocal = cookie.load('currentLocale');
   }
 
@@ -21,7 +21,7 @@ export default (req) => {
 
   cookie.save('currentLocale', currentLocal, {
     path: '/',
-    expires: new Date(expireDate),
+    expires: new Date(expireDate)
   });
 
   const localeData = require('../locale/' + currentLocal + '.js'); // eslint-disable-line

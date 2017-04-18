@@ -49,7 +49,7 @@ proxyOneQuran.on('error', (error, req, res) => {
   res.end(JSON.stringify(json));
 });
 
-export default (server) => {
+export default server => {
   server.use(logger('dev'));
   // Must be first thing. See: https://github.com/nodejitsu/node-http-proxy/issues/180#issuecomment-3677221
   server.use('/onequran', (req, res) => {
@@ -67,9 +67,20 @@ export default (server) => {
   server.use(cors());
 
   // Static content
-  server.use(favicon(path.join((process.env.PWD || process.env.pm_cwd), '/static/favicon.ico')));
-  server.use(express.static(path.join(process.env.PWD || process.env.pm_cwd, '/static')));
-  server.use('/public', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/static/dist')));
+  server.use(
+    favicon(
+      path.join(process.env.PWD || process.env.pm_cwd, '/static/favicon.ico')
+    )
+  );
+  server.use(
+    express.static(path.join(process.env.PWD || process.env.pm_cwd, '/static'))
+  );
+  server.use(
+    '/public',
+    express.static(
+      path.join(process.env.PWD || process.env.pm_cwd, '/static/dist')
+    )
+  );
 
   sitemap(server);
   support(server);

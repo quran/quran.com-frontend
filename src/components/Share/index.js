@@ -12,7 +12,9 @@ const Share = ({ chapter, verseKey }) => {
   // Fallback to Surah Id
   const path = verseKey ? verseKey.replace(':', '/') : chapter.chapterNumber;
   const shareUrl = `https://quran.com/${path}`;
-  const title = verseKey ? `Surah ${chapter.nameSimple} [${verseKey}]` : `Surah ${chapter.nameSimple}`;
+  const title = verseKey
+    ? `Surah ${chapter.nameSimple} [${verseKey}]`
+    : `Surah ${chapter.nameSimple}`;
   const iconProps = verseKey ? { iconBgStyle: { fill: '#d1d0d0' } } : {};
 
   return (

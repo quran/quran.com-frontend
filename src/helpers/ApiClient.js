@@ -31,50 +31,52 @@ function formatUrl(path) {
 
 export default class {
   constructor(req) {
-    methods.forEach((method) => {
+    methods.forEach(method => {
       this[method] = (path, { params, data, arrayFormat } = {}) =>
-      new Promise((resolve, reject) => {
-        const request = superagent[method](formatUrl(path));
+        new Promise((resolve, reject) => {
+          const request = superagent[method](formatUrl(path));
 
-        params = params || {}; // eslint-disable-line no-param-reassign
+          params = params || {}; // eslint-disable-line no-param-reassign
 
-        params.language = params.language || contentLanguage(); // eslint-disable-line
+          params.language = params.language || contentLanguage(); // eslint-disable-line
 
-        request.query(qs.stringify(decamelizeKeys(params), {
-          arrayFormat: arrayFormat || 'brackets'
-        }));
+          request.query(
+            qs.stringify(decamelizeKeys(params), {
+              arrayFormat: arrayFormat || 'brackets'
+            })
+          );
 
-        if (cookie.load('auth')) {
-          const headers = cookie.load('auth');
-          Object.keys(headers).forEach(key => request.set(key, headers[key]));
-        }
-
-        if (__SERVER__ && req.get('cookie')) {
-          request.set('cookie', req.get('cookie'));
-        }
-
-        if (data) {
-          request.send(decamelizeKeys(data));
-        }
-
-        request.end((err, { header, body } = {}) => {
-          if (err) {
-            return reject(body || err);
+          if (cookie.load('auth')) {
+            const headers = cookie.load('auth');
+            Object.keys(headers).forEach(key => request.set(key, headers[key]));
           }
 
-          if (header['access-token']) {
-            cookie.save('auth', {
-              'access-token': header['access-token'],
-              client: header.client,
-              expiry: header.expiry,
-              uid: header.uid,
-              'token-type': 'Bearer'
-            });
+          if (__SERVER__ && req.get('cookie')) {
+            request.set('cookie', req.get('cookie'));
           }
 
-          return resolve(body);
+          if (data) {
+            request.send(decamelizeKeys(data));
+          }
+
+          request.end((err, { header, body } = {}) => {
+            if (err) {
+              return reject(body || err);
+            }
+
+            if (header['access-token']) {
+              cookie.save('auth', {
+                'access-token': header['access-token'],
+                client: header.client,
+                expiry: header.expiry,
+                uid: header.uid,
+                'token-type': 'Bearer'
+              });
+            }
+
+            return resolve(body);
+          });
         });
-      });
     });
   }
 }

@@ -10,11 +10,11 @@ import {
   clearCurrent,
   load as loadVerses,
   isLoaded
-  } from 'redux/actions/verses.js';
+} from 'redux/actions/verses.js';
 
 import { debug } from 'helpers';
 
-const determinePage = (range) => {
+const determinePage = range => {
   let from;
   let to;
 
@@ -57,7 +57,10 @@ export const chaptersConnect = ({ store: { getState, dispatch } }) => {
   return dispatch(loadAll());
 };
 
-export const chapterInfoConnect = ({ store: { dispatch, getState }, params }) => {
+export const chapterInfoConnect = ({
+  store: { dispatch, getState },
+  params
+}) => {
   if (isInfoLoaded(getState(), params.chapterId)) return false;
 
   if (__CLIENT__) {

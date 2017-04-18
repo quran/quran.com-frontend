@@ -31,9 +31,7 @@ Raven.config(config.sentryServer, {
   autoBreadcrumbs: true
 }).install();
 
-
 expressConfig(server);
-
 
 server.use(Raven.requestHandler());
 
@@ -49,14 +47,11 @@ server.use((req, res, next) => {
   }
 
   if (req.query.DISABLE_SSR) {
-    return res.status(200).send(`<!doctype html>\n${ReactDOM.renderToString(
-      <IntlProvider locale="en" messages={localMessages}>
-        <Html
-          store={store}
-          assets={webpack_isomorphic_tools.assets()}
-        />
-      </IntlProvider>
-    )}`);
+    return res.status(200).send(
+      `<!doctype html>\n${ReactDOM.renderToString(<IntlProvider locale="en" messages={localMessages}>
+          <Html store={store} assets={webpack_isomorphic_tools.assets()} />
+        </IntlProvider>)}`
+    );
   }
 
   store.dispatch(setUserAgent(req.useragent));
@@ -74,29 +69,29 @@ server.use((req, res, next) => {
         console.error('ROUTER ERROR:', pretty.render(error));
         res.status(500).send(error);
       } else if (renderProps) {
-        const status = renderProps.location.pathname.indexOf('/error') > -1 ? 404 : 200;
+        const status = renderProps.location.pathname.indexOf('/error') > -1
+          ? 404
+          : 200;
 
-        loadOnServer({ ...renderProps, store, helpers: { client } }).then(() => {
-          const component = (
-            <IntlProvider messages={localMessages} locale="en" >
-              <Provider store={store}>
-                <ReduxAsyncConnect {...renderProps} />
-              </Provider>
-            </IntlProvider>
-          );
+        loadOnServer({ ...renderProps, store, helpers: { client } })
+          .then(() => {
+            const component = (
+              <IntlProvider messages={localMessages} locale="en">
+                <Provider store={store}>
+                  <ReduxAsyncConnect {...renderProps} />
+                </Provider>
+              </IntlProvider>
+            );
 
-          res.type('html');
-          res.setHeader('Cache-Control', 'public, max-age=31557600');
-          res.status(status);
-          debug('Server', 'Sending markup');
-          res.send(`<!doctype html>\n${ReactDOM.renderToString(
-            <Html
-              component={component}
-              store={store}
-              assets={webpack_isomorphic_tools.assets()}
-            />
-          )}`);
-        }).catch(next);
+            res.type('html');
+            res.setHeader('Cache-Control', 'public, max-age=31557600');
+            res.status(status);
+            debug('Server', 'Sending markup');
+            res.send(
+              `<!doctype html>\n${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`
+            );
+          })
+          .catch(next);
       }
     }
   );
@@ -123,7 +118,11 @@ export default function serve(cb) {
     console.info(`==> 🌎  ENV=${process.env.NODE_ENV}`);
     console.info(`==> ✅  Server is listening at http://localhost:${port}`);
     console.info(`==> 🎯  API at ${process.env.API_URL}`);
-    Object.keys(config).forEach(key => config[key].constructor.name !== 'Object' && console.info(`==> ${key}`, config[key]));
+    Object.keys(config).forEach(
+      key =>
+        config[key].constructor.name !== 'Object' &&
+        console.info(`==> ${key}`, config[key])
+    );
 
     return cb && cb(this);
   });

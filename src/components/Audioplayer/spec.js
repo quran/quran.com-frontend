@@ -21,7 +21,7 @@ describe('<Audioplayer />', () => {
           currentTime: 100
         };
 
-        makeComponent = (repeat) => {
+        makeComponent = repeat => {
           component = shallow(
             <Audioplayer
               setRepeat={setRepeat}
@@ -85,7 +85,7 @@ describe('<Audioplayer />', () => {
           currentTime: 100
         };
 
-        makeComponent = (repeat) => {
+        makeComponent = repeat => {
           component = shallow(
             <Audioplayer
               setRepeat={setRepeat}

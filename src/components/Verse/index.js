@@ -89,7 +89,11 @@ class Verse extends Component {
     const array = match || verse.translations || [];
 
     return array.map(translation => (
-      <Translation translation={translation} index={translation.id} key={translation.id} />
+      <Translation
+        translation={translation}
+        index={translation.id}
+        key={translation.id}
+      />
     ));
   }
 
@@ -100,43 +104,47 @@ class Verse extends Component {
 
     return (
       <div>
-        {
-          verse.mediaContents.map((content, index) => (
-            <div
-              className={`${styles.translation} translation`}
-              key={index}
-            >
-              <h2 className="text-translation times-new">
-                <small>
-                  <a
-                    tabIndex="-1"
-                    className="pointer"
-                    onClick={() => mediaActions.setMedia(content)}
-                    data-metrics-event-name="Media Click"
-                    data-metrics-media-content-url={content.url}
-                    data-metrics-media-content-id={content.id}
-                    data-metrics-media-content-verse-key={verse.verseKey}
-                  >
-                    <LocaleFormattedMessage
-                      id="verse.media.lectureFrom"
-                      defaultMessage="Watch lecture by {from}"
-                      values={{ from: content.authorName }}
-                    />
-                  </a>
-                </small>
-              </h2>
-            </div>
-          ))
-        }
+        {verse.mediaContents.map((content, index) => (
+          <div className={`${styles.translation} translation`} key={index}>
+            <h2 className="text-translation times-new">
+              <small>
+                <a
+                  tabIndex="-1"
+                  className="pointer"
+                  onClick={() => mediaActions.setMedia(content)}
+                  data-metrics-event-name="Media Click"
+                  data-metrics-media-content-url={content.url}
+                  data-metrics-media-content-id={content.id}
+                  data-metrics-media-content-verse-key={verse.verseKey}
+                >
+                  <LocaleFormattedMessage
+                    id="verse.media.lectureFrom"
+                    defaultMessage="Watch lecture by {from}"
+                    values={{ from: content.authorName }}
+                  />
+                </a>
+              </small>
+            </h2>
+          </div>
+        ))}
       </div>
     );
   }
 
   renderText() {
-    const { verse, tooltip, currentVerse, isPlaying, audioActions, isSearched, userAgent } = this.props; // eslint-disable-line max-len
+    const {
+      verse,
+      tooltip,
+      currentVerse,
+      isPlaying,
+      audioActions,
+      isSearched,
+      userAgent
+    } = this.props; // eslint-disable-line max-len
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
-    const renderText = userAgent.isChrome || userAgent.isOpera || userAgent.isBot;
+    const renderText =
+      userAgent.isChrome || userAgent.isOpera || userAgent.isBot;
 
     const text = verse.words.map(word => ( // eslint-disable-line
       <Word
@@ -146,7 +154,9 @@ class Verse extends Component {
         tooltip={tooltip}
         isPlaying={isPlaying}
         audioActions={audioActions}
-        audioPosition={word.charType === 'word' ? wordAudioPosition += 1 : null}
+        audioPosition={
+          word.charType === 'word' ? (wordAudioPosition += 1) : null
+        }
         isSearched={isSearched}
         useTextFont={renderText}
       />
@@ -172,7 +182,10 @@ class Verse extends Component {
           onClick={() => this.handlePlay(verse)}
           className="text-muted"
         >
-          <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`} />{' '}
+          <i
+            className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`}
+          />
+          {' '}
           <LocaleFormattedMessage
             id={playing ? 'actions.pause' : 'actions.play'}
             defaultMessage={playing ? 'Pause' : 'Play'}
@@ -188,16 +201,20 @@ class Verse extends Component {
     const { isSearched, verse } = this.props;
 
     if (!isSearched) {
-      return (
-        <Copy text={verse.textMadani} verseKey={verse.verseKey} />
-      );
+      return <Copy text={verse.textMadani} verseKey={verse.verseKey} />;
     }
 
     return false;
   }
 
   renderBookmark() {
-    const { verse, bookmarked, isAuthenticated, bookmarkActions, isSearched } = this.props;
+    const {
+      verse,
+      bookmarked,
+      isAuthenticated,
+      bookmarkActions,
+      isSearched
+    } = this.props;
 
     if (isSearched || !isAuthenticated) return false;
 
@@ -226,10 +243,7 @@ class Verse extends Component {
         className="text-muted"
       >
         <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
-        <LocaleFormattedMessage
-          id="verse.bookmark"
-          defaultMessage="Bookmark"
-        />
+        <LocaleFormattedMessage id="verse.bookmark" defaultMessage="Bookmark" />
       </a>
     );
   }

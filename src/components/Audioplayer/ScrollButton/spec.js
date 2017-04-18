@@ -9,11 +9,14 @@ let onScrollToggle;
 
 describe('<ScrollButton />', () => {
   beforeEach(() => {
-    makeComponent = (shouldScroll) => {
+    makeComponent = shouldScroll => {
       onScrollToggle = sinon.stub();
 
       component = mount(
-        <ScrollButton shouldScroll={shouldScroll} onScrollToggle={onScrollToggle} />
+        <ScrollButton
+          shouldScroll={shouldScroll}
+          onScrollToggle={onScrollToggle}
+        />
       );
     };
   });
@@ -27,7 +30,9 @@ describe('<ScrollButton />', () => {
   it('should not indicate that shouldScroll', () => {
     makeComponent(false);
 
-    expect(component.find('a').first().props().className).not.to.contain('scroll');
+    expect(component.find('a').first().props().className).not.to.contain(
+      'scroll'
+    );
   });
 
   it('should call onScrollToggle when clicked', () => {

@@ -1,5 +1,7 @@
 import React from 'react';
-import { mountWithIntl } from '../../../../tests/helpers/intl-enzyme-test-helper.js';
+import {
+  mountWithIntl
+} from '../../../../tests/helpers/intl-enzyme-test-helper.js';
 
 import RepeatDropdown from './index';
 
@@ -10,7 +12,7 @@ const chapter = {
   ayat: 10
 };
 
-const makeComponent = (repeat) => {
+const makeComponent = repeat => {
   setRepeat = sinon.stub();
 
   component = mountWithIntl(
@@ -22,14 +24,18 @@ const makeComponent = (repeat) => {
     />
   );
 
-  overlay = mountWithIntl(component.find('OverlayTrigger').first().props().overlay);
+  overlay = mountWithIntl(
+    component.find('OverlayTrigger').first().props().overlay
+  );
 };
 
 describe('<RepeatDropdown />', () => {
   it('should not be repeating', () => {
     makeComponent({ times: Infinity });
 
-    expect(component.find('i').first().props().className).not.to.contain('repeat_');
+    expect(component.find('i').first().props().className).not.to.contain(
+      'repeat_'
+    );
   });
 
   it('should indicate repeating', () => {

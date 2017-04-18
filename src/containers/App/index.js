@@ -34,14 +34,13 @@ const SmartBanner = Loadable({
 });
 
 class App extends Component {
-
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
 
   state = {
     sidebarOpen: false
-  }
+  };
 
   render() {
     const {
@@ -81,14 +80,10 @@ class App extends Component {
             </div>
           </div>
         </NoScript>
-        {
-          React.cloneElement(
-            nav || <GlobalNav isStatic {...props} />,
-            {
-              handleSidebarToggle: () => this.setState({ sidebarOpen: !this.state.sidebarOpen })
-            }
-          )
-        }
+        {React.cloneElement(nav || <GlobalNav isStatic {...props} />, {
+          handleSidebarToggle: () =>
+            this.setState({ sidebarOpen: !this.state.sidebarOpen })
+        })}
         <GlobalSidebar
           open={this.state.sidebarOpen}
           handleOpen={open => this.setState({ sidebarOpen: open })}
@@ -97,7 +92,11 @@ class App extends Component {
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
 
-        <Modal bsSize="large" show={media && media.content} onHide={removeMedia}>
+        <Modal
+          bsSize="large"
+          show={media && media.content}
+          onHide={removeMedia}
+        >
           <ModalHeader closeButton>
             <ModalTitle className="montserrat">
               {media.content && media.content.authorName}
@@ -106,12 +105,18 @@ class App extends Component {
           <ModalBody>
             <div
               className="embed-responsive embed-responsive-16by9"
-              dangerouslySetInnerHTML={{ __html: media.content && media.content.embedText }}
+              dangerouslySetInnerHTML={{
+                __html: media.content && media.content.embedText
+              }}
             />
           </ModalBody>
         </Modal>
 
-        <Modal bsSize="large" show={!!footNote || loadingFootNote} onHide={removeFootNote}>
+        <Modal
+          bsSize="large"
+          show={!!footNote || loadingFootNote}
+          onHide={removeFootNote}
+        >
           <ModalHeader closeButton>
             <ModalTitle className="montserrat">
               Foot note

@@ -1,4 +1,3 @@
-
 /**
  * Based on: https://gist.github.com/mirague/c05f4da0d781a9b339b501f1d5d33c37/
  *
@@ -11,7 +10,6 @@
 import React from 'react';
 import { IntlProvider, intlShape } from 'react-intl';
 import { mount, shallow } from 'enzyme';
-
 
 // Create the IntlProvider to retrieve context for wrapping around.
 // NOTE: Phantomjs requires usage of `var`

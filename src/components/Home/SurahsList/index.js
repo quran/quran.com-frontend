@@ -5,7 +5,7 @@ import Link from 'react-router/lib/Link';
 
 const styles = require('./style.scss');
 
-const SurahsList = (props) => {
+const SurahsList = props => {
   debug('component:Index', 'SurahsList');
 
   return (
@@ -23,15 +23,20 @@ const SurahsList = (props) => {
               <span className={`icon-surah${chapter.id}`} />
             </div>
 
-            <div className={`col-md-12 col-xs-push-2 col-sm-push-2 col-md-push-2 col-lg-push-2 col-xl-push-2 ${styles.translated_name}`}>
-              <span className={`text-uppercase ${chapter.translatedName.languageName}`}>
+            <div
+              className={`col-md-12 col-xs-push-2 col-sm-push-2 col-md-push-2 col-lg-push-2 col-xl-push-2 ${styles.translated_name}`}
+            >
+              <span
+                className={`text-uppercase ${chapter.translatedName.languageName}`}
+              >
                 {chapter.translatedName.name}
               </span>
             </div>
           </Link>
         </li>
       ))}
-    </ul>);
+    </ul>
+  );
 };
 
 SurahsList.propTypes = {

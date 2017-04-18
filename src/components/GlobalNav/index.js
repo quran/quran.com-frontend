@@ -13,10 +13,9 @@ import debug from 'helpers/debug';
 const styles = require('./style.scss');
 
 class GlobalNav extends Component {
-
   state = {
     scrolled: false
-  }
+  };
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleNavbar, true);
@@ -39,7 +38,7 @@ class GlobalNav extends Component {
     }
 
     return false;
-  }
+  };
 
   isHome() {
     return this.props.location.pathname === '/';
@@ -48,16 +47,21 @@ class GlobalNav extends Component {
   renderRightControls() {
     const { user, rightControls } = this.props;
 
-    return rightControls || [
-      <LocaleSwitcher />,
-      user ?
-        <li>
-          <Link to="/profile" data-metrics-event-name="IndexHeader:Link:Profile">
-            {user.firstName || user.name}
-          </Link>
-        </li> :
-        <noscript />
-    ];
+    return (
+      rightControls || [
+        <LocaleSwitcher />,
+        user
+          ? <li>
+              <Link
+                to="/profile"
+                data-metrics-event-name="IndexHeader:Link:Profile"
+              >
+                {user.firstName || user.name}
+              </Link>
+            </li>
+          : <noscript />
+      ]
+    );
   }
 
   render() {
@@ -71,33 +75,32 @@ class GlobalNav extends Component {
         fluid
         static={isStatic}
       >
-        <button type="button" className="navbar-toggle collapsed" onClick={handleSidebarToggle}>
+        <button
+          type="button"
+          className="navbar-toggle collapsed"
+          onClick={handleSidebarToggle}
+        >
           <span className="sr-only">Toggle navigation</span>
           <span className="icon-bar" />
           <span className="icon-bar" />
           <span className="icon-bar" />
         </button>
         <Nav className={styles.nav}>
-          {
-            !this.isHome() &&
+          {!this.isHome() &&
             <li>
               <Link to="/"><i className="ss-icon ss-home" /></Link>
-            </li>
-          }
-          {
-            this.isHome() &&
-            <LocaleSwitcher className="visible-xs-inline-block" />
-          }
-          {
-            leftControls &&
-            leftControls.map(((control, index) => React.cloneElement(control, { key: index })))
-          }
+            </li>}
+          {this.isHome() &&
+            <LocaleSwitcher className="visible-xs-inline-block" />}
+          {leftControls &&
+            leftControls.map((control, index) =>
+              React.cloneElement(control, { key: index })
+            )}
         </Nav>
         <Nav pullRight className="hidden-xs hidden-sm">
-          {
-            this.renderRightControls()
-            .map(((control, index) => React.cloneElement(control, { key: index })))
-          }
+          {this.renderRightControls().map((control, index) =>
+            React.cloneElement(control, { key: index })
+          )}
         </Nav>
       </Navbar>
     );
@@ -118,8 +121,6 @@ GlobalNav.defaultProps = {
   isStatic: false
 };
 
-export default connect(
-  state => ({
-    user: state.auth.user
-  })
-)(GlobalNav);
+export default connect(state => ({
+  user: state.auth.user
+}))(GlobalNav);

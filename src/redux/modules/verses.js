@@ -8,12 +8,7 @@ import {
   CLEAR_CURRENT_WORD
 } from 'redux/constants/verses.js';
 
-export {
-  LOAD,
-  LOAD_SUCCESS,
-  CLEAR_CURRENT,
-  SET_CURRENT_VERSE,
-};
+export { LOAD, LOAD_SUCCESS, CLEAR_CURRENT, SET_CURRENT_VERSE };
 
 const initialState = {
   current: null,
@@ -37,7 +32,7 @@ export default function reducer(state = initialState, action = {}) {
     case SET_CURRENT_WORD: {
       let currentVerse = state.current;
       if (action.id && currentVerse) {
-        if (!(new RegExp(`^${currentVerse}:`)).test(action.id)) {
+        if (!new RegExp(`^${currentVerse}:`).test(action.id)) {
           currentVerse = action.id.match(/^\d+:\d+/g)[0];
         }
       }

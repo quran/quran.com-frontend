@@ -2,7 +2,7 @@ import { camelizeKeys } from 'humps';
 import { normalize } from 'normalizr';
 
 export default function clientMiddleware(client) {
-  return ({ dispatch, getState }) => next => (action) => {
+  return ({ dispatch, getState }) => next => action => {
     if (typeof action === 'function') {
       return action(dispatch, getState);
     }
@@ -15,23 +15,25 @@ export default function clientMiddleware(client) {
     const [REQUEST, SUCCESS, FAILURE] = types;
 
     next({ ...rest, type: REQUEST });
-    return promise(client).then(
-      (result) => {
-        let camelizedJson = camelizeKeys(result);
+    return promise(client)
+      .then(
+        result => {
+          let camelizedJson = camelizeKeys(result);
 
-        if (schema) {
-          camelizedJson = normalize(camelizedJson, schema);
+          if (schema) {
+            camelizedJson = normalize(camelizedJson, schema);
+          }
+
+          return next({ ...rest, result: camelizedJson, type: SUCCESS });
+        },
+        error => {
+          console.error('MIDDLEWARE ERROR:', error); // eslint-disable-line
+          return next({ ...rest, error, type: FAILURE });
         }
-
-        return next({ ...rest, result: camelizedJson, type: SUCCESS });
-      },
-      (error) => {
+      )
+      .catch(error => {
         console.error('MIDDLEWARE ERROR:', error); // eslint-disable-line
-        return next({ ...rest, error, type: FAILURE });
-      }
-    ).catch((error) => {
-      console.error('MIDDLEWARE ERROR:', error); // eslint-disable-line
-      next({ ...rest, error, type: FAILURE });
-    });
+        next({ ...rest, error, type: FAILURE });
+      });
   };
 }

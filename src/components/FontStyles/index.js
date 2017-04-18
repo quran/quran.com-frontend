@@ -12,11 +12,12 @@ import selector from './selector';
   }),
   { load }
 )
-
 class FontStyles extends Component {
-
   shouldComponentUpdate(nextProps) {
-    return JSON.stringify(this.props.fontFaces) !== JSON.stringify(nextProps.fontFaces);
+    return (
+      JSON.stringify(this.props.fontFaces) !==
+      JSON.stringify(nextProps.fontFaces)
+    );
   }
 
   render() {
@@ -26,27 +27,27 @@ class FontStyles extends Component {
     if (__CLIENT__) {
       const FontFaceObserver = require('fontfaceobserver'); // eslint-disable-line global-require
 
-      Object.keys(fontFaces).filter(className => !fontFaces[className]).forEach((className) => {
-        const font = new FontFaceObserver(className);
+      Object.keys(fontFaces)
+        .filter(className => !fontFaces[className])
+        .forEach(className => {
+          const font = new FontFaceObserver(className);
 
-        font.load().then(() => load(className), () => load(className));
-      });
+          font.load().then(() => load(className), () => load(className));
+        });
     }
 
     return (
       <div>
-        {
-          Object.keys(fontFaces).map(className => (
-            <style
-              key={className}
-              dangerouslySetInnerHTML={{
-                __html: fontFaces[className] ?
-                `${fontFaceStyle(className)} ${fontFaceStyleLoaded(className)}` :
-                fontFaceStyle(className)
-              }}
-            />
-          ))
-        }
+        {Object.keys(fontFaces).map(className => (
+          <style
+            key={className}
+            dangerouslySetInnerHTML={{
+              __html: fontFaces[className]
+                ? `${fontFaceStyle(className)} ${fontFaceStyleLoaded(className)}`
+                : fontFaceStyle(className)
+            }}
+          />
+        ))}
       </div>
     );
   }

@@ -18,7 +18,9 @@ export default () => (
             All translations of the original Arabic text
             are thus interpretations of the original meanings and should
             be embraced as such. For more information about the Noble
-            Quran, you may visit its <a href="https://en.wikipedia.org/wiki/Quran">Wikipedia article.</a>
+            Quran, you may visit its
+            {' '}
+            <a href="https://en.wikipedia.org/wiki/Quran">Wikipedia article.</a>
           </h4>
         </div>
       </div>
@@ -41,7 +43,7 @@ export default () => (
           <h4 className="source-sans">
             The Medinan suras or Medinan chapters of the Quran are the
             latest 24 suras that, according to Islamic tradition, were
-            revealed at Medina after Muhammad&apos;s hijra from Mecca. These
+            revealed at Medina after Muhammad's hijra from Mecca. These
             suras were revealed by Allah when the Muslim community was
             larger and more developed, as opposed to their minority position
             in Mecca.
@@ -58,7 +60,10 @@ export default () => (
             title or by page. In future iterations, we will be integrating
             more search and audio features inshaAllah. If you have any
             suggestions on how we can make the website a better experience
-            please do not hesitate to <a href="https://quran.zendesk.com/hc/en-us">contact us</a>.
+            please do not hesitate to
+            {' '}
+            <a href="https://quran.zendesk.com/hc/en-us">contact us</a>
+            .
           </h4>
         </div>
       </div>
@@ -71,13 +76,20 @@ export default () => (
             help of the open source Muslim community online. Data sources
             include <a href="http://www.tanzil.info">Tanzil</a>,
             <a href="http://www.qurancomplex.com"> QuranComplex</a>,
-            <a href="https://github.com/cpfair/quran-align">Colin Fair&apos;s work on audio segments</a>,
+            <a href="https://github.com/cpfair/quran-align">
+              Colin Fair's work on audio segments
+            </a>
+            ,
             <a href="http://www.zekr.org"> Zekr</a> and
             <a href="http://www.al-quran.info"> Online Quran Project</a>.
             Special thanks to the
             <a href="http://elmohafez.com"> Elmohafez team</a> for word by
             word timing files.
-            If you have any questions, you may visit the <a href="/contact">Contact</a> page.
+            If you have any questions, you may visit the
+            {' '}
+            <a href="/contact">Contact</a>
+            {' '}
+            page.
           </h4>
         </div>
       </div>

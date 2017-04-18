@@ -11,7 +11,7 @@ export const bookmarkType = PropTypes.shape({
   id: PropTypes.string.isRequired,
   verseKey: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  updatedAt: PropTypes.string.isRequired,
+  updatedAt: PropTypes.string.isRequired
 });
 
 export const contentType = PropTypes.shape({
@@ -47,7 +47,7 @@ export const audioActions = PropTypes.shape({
   pause: PropTypes.func.isRequired,
   setAyah: PropTypes.func.isRequired,
   play: PropTypes.func.isRequired,
-  setCurrentWord: PropTypes.func.isRequired,
+  setCurrentWord: PropTypes.func.isRequired
 });
 
 export const language = PropTypes.shape({
@@ -57,7 +57,7 @@ export const language = PropTypes.shape({
   esAnalyzerDefault: PropTypes.string,
   languageCode: PropTypes.string.isRequired,
   priority: PropTypes.number.isRequired,
-  unicode: PropTypes.string,
+  unicode: PropTypes.string
 });
 
 export const matchType = PropTypes.shape({
@@ -115,13 +115,13 @@ export const surahType = PropTypes.shape({
   pages: PropTypes.arrayOf(PropTypes.number).isRequired,
   nameComplex: PropTypes.string.isRequired,
   nameSimple: PropTypes.string.isRequired,
-  nameArabic: PropTypes.string.isRequired,
+  nameArabic: PropTypes.string.isRequired
 });
 
 export const timeInterval = PropTypes.shape({
   from: PropTypes.number,
   to: PropTypes.number,
-  time: PropTypes.number,
+  time: PropTypes.number
 });
 
 export const translationType = PropTypes.shape({
@@ -189,15 +189,12 @@ export const verses = PropTypes.objectOf(verseType);
 export const words = PropTypes.shape({
   startTime: PropTypes.number.isRequired,
   endTime: PropTypes.number.isRequired,
-  duration: PropTypes.number.isRequired,
+  duration: PropTypes.number.isRequired
 });
 
 export const segmentType = PropTypes.shape({
   words,
-  intervals: PropTypes.oneOfType([
-    PropTypes.array,
-    PropTypes.object
-  ]) // TODO: This should be done a better way.
+  intervals: PropTypes.oneOfType([PropTypes.array, PropTypes.object]) // TODO: This should be done a better way.
 });
 
 export const segments = PropTypes.objectOf(segmentType);
@@ -222,5 +219,5 @@ export const storeText = PropTypes.shape({
   ios: PropTypes.string.isRequired,
   android: PropTypes.string.isRequired,
   windows: PropTypes.string.isRequired,
-  kindle: PropTypes.string.isRequired,
+  kindle: PropTypes.string.isRequired
 });

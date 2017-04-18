@@ -71,7 +71,7 @@ export default {
     'nav.otherLinks': 'روابط اخرى',
     'nav.contactUs': 'اتصل بنا',
     'nav.help': 'مساعدة وتعليقات',
-    'nav.aboutQuranProject': 'Quran.com المعروف أيضا باسم القرآن الكريم، قناة القرآن الكريم، القرآن الكريم، القرآن الكريم) هو مشروع خيري)',  // eslint-disable-line max-len
+    'nav.aboutQuranProject': 'Quran.com المعروف أيضا باسم القرآن الكريم، قناة القرآن الكريم، القرآن الكريم، القرآن الكريم) هو مشروع خيري)', // eslint-disable-line max-len
     'nav.rightsReserved': 'كل الحقوق محفوظة',
     'nav.mobile': 'التليفون المحمول',
     'nav.navigate': 'انتقل',

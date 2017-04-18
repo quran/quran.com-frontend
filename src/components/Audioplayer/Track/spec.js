@@ -9,9 +9,7 @@ let onTrackChange;
 describe('<Track />', () => {
   beforeEach(() => {
     onTrackChange = sinon.stub();
-    component = mount(
-      <Track progress={50} onTrackChange={onTrackChange} />
-    );
+    component = mount(<Track progress={50} onTrackChange={onTrackChange} />);
   });
 
   it('should show the progress to be 50%', () => {
