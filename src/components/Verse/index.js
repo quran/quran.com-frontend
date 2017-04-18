@@ -26,19 +26,21 @@ const Share = Loadable({
 class Verse extends Component {
   // TODO: Should this belong here?
   componentDidMount() {
-    const { verse, audio } = this.props;
+    const { verse, audio, isSearched } = this.props;
 
-    this.props.loadAudio({
-      chapterId: verse.chapterId,
-      verseId: verse.id,
-      verseKey: verse.verseKey,
-      audio
-    });
+    if (!isSearched) {
+      this.props.loadAudio({
+        chapterId: verse.chapterId,
+        verseId: verse.id,
+        verseKey: verse.verseKey,
+        audio
+      });
+    }
   }
 
   // TODO: Should this belong here?
   componentWillReceiveProps(nextProps) {
-    if (this.props.audio !== nextProps.audio) {
+    if (!this.props.isSearched && this.props.audio !== nextProps.audio) {
       const { verse, audio } = nextProps;
 
       this.props.loadAudio({
