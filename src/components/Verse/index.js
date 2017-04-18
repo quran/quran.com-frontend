@@ -40,7 +40,7 @@ class Verse extends Component {
 
   // TODO: Should this belong here?
   componentWillReceiveProps(nextProps) {
-    if (this.props.audio !== nextProps.audio) {
+    if (!this.props.isSearched && this.props.audio !== nextProps.audio) {
       const { verse, audio } = nextProps;
 
       this.props.loadAudio({
