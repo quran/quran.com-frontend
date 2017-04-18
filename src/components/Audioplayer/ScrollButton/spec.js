@@ -9,7 +9,7 @@ let onScrollToggle;
 
 describe('<ScrollButton />', () => {
   beforeEach(() => {
-    makeComponent = shouldScroll => {
+    makeComponent = (shouldScroll) => {
       onScrollToggle = sinon.stub();
 
       component = mount(

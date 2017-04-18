@@ -49,7 +49,7 @@ proxyOneQuran.on('error', (error, req, res) => {
   res.end(JSON.stringify(json));
 });
 
-export default server => {
+export default (server) => {
   server.use(logger('dev'));
   // Must be first thing. See: https://github.com/nodejitsu/node-http-proxy/issues/180#issuecomment-3677221
   server.use('/onequran', (req, res) => {

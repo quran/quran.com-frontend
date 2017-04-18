@@ -150,7 +150,7 @@ export class Audioplayer extends Component {
     scroller.scrollTo(`verse:${ayahNum}`, -45);
   };
 
-  handleScrollTo = ayahNum => {
+  handleScrollTo = (ayahNum) => {
     const { shouldScroll } = this.props;
 
     if (shouldScroll) {
@@ -181,7 +181,7 @@ export class Audioplayer extends Component {
     }
   }
 
-  handleRepeat = file => {
+  handleRepeat = (file) => {
     const {
       repeat,
       currentVerse,
@@ -242,7 +242,7 @@ export class Audioplayer extends Component {
     return false;
   };
 
-  handleScrollToggle = event => {
+  handleScrollToggle = (event) => {
     event.preventDefault();
 
     const { shouldScroll, currentVerse } = this.props;
@@ -312,7 +312,7 @@ export class Audioplayer extends Component {
     return file;
   }
 
-  handleRemoveFileListeneres = file => {
+  handleRemoveFileListeneres = (file) => {
     file.pause();
     file.currentTime = 0; // eslint-disable-line no-param-reassign
     file.onloadeddata = null; // eslint-disable-line no-param-reassign
@@ -323,7 +323,7 @@ export class Audioplayer extends Component {
     file.onprogress = null; // eslint-disable-line no-param-reassign
   };
 
-  handleTrackChange = fraction => {
+  handleTrackChange = (fraction) => {
     const { currentFile, update } = this.props; // eslint-disable-line no-shadow
 
     update({

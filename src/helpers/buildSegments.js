@@ -1,6 +1,6 @@
-export const buildSegments = segments => {
+export const buildSegments = (segments) => {
   const words = {};
-  const intervals = segments.map(segment => {
+  const intervals = segments.map((segment) => {
     const startTime = segment[2];
     const endTime = segment[3];
     const duration = segment[3] - segment[2];
@@ -21,11 +21,11 @@ export const buildSegments = segments => {
   return { words, intervals };
 };
 
-export const extractSegments = verses => {
+export const extractSegments = (verses) => {
   const segments = {};
 
   if (verses) {
-    Object.values(verses).forEach(verse => {
+    Object.values(verses).forEach((verse) => {
       if (verse.audio) {
         if (verse.audio.segments) {
           segments[verse.verseKey] = buildSegments(verse.audio.segments);

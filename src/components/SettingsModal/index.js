@@ -22,7 +22,7 @@ const SettingsModal = ({
   setOption, // eslint-disable-line no-shadow
   load // eslint-disable-line no-shadow
 }) => {
-  const handleOptionChange = payload => {
+  const handleOptionChange = (payload) => {
     setOption(payload);
 
     if (chapter) {

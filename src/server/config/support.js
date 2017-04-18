@@ -1,6 +1,6 @@
 import superagent from 'superagent';
 
-export default server => {
+export default (server) => {
   server.post('/support', (req, res) => {
     superagent
       .post('https://quran.zendesk.com/api/v2/tickets.json')

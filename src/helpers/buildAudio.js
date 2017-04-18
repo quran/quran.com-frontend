@@ -17,7 +17,7 @@ export function buildAudioForAyah(audio) {
 export function buildAudioFromHash(ayahsObject = {}) {
   const audioFromHash = { files: {}, segments: {} };
 
-  Object.keys(ayahsObject).forEach(ayahId => {
+  Object.keys(ayahsObject).forEach((ayahId) => {
     const ayah = ayahsObject[ayahId];
     const audioForAyah = buildAudioForAyah(ayah.audio);
 

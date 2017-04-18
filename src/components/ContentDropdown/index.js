@@ -55,7 +55,7 @@ class ContentDropdown extends Component {
   renderItems(items, render) {
     const { translations } = this.props;
 
-    return items.map(translation => {
+    return items.map((translation) => {
       const checked = translations.find(option => option === translation.id);
 
       return (
@@ -101,7 +101,7 @@ class ContentDropdown extends Component {
         menu={
           translationOptions.length
             ? <Menu>
-                {translations &&
+              {translations &&
                   translations.length &&
                   <MenuItem onClick={this.handleRemoveContent}>
                     <LocaleFormattedMessage
@@ -109,21 +109,21 @@ class ContentDropdown extends Component {
                       defaultMessage="Remove all"
                     />
                   </MenuItem>}
-                <MenuItem divider>
-                  <LocaleFormattedMessage
-                    id="setting.translations.english"
-                    defaultMessage="English"
-                  />
-                </MenuItem>
-                {this.renderEnglishList()}
-                <MenuItem divider>
-                  <LocaleFormattedMessage
-                    id="setting.translations.other"
-                    defaultMessage="Other Languages"
-                  />
-                </MenuItem>
-                {this.renderLanguagesList()}
-              </Menu>
+              <MenuItem divider>
+                <LocaleFormattedMessage
+                  id="setting.translations.english"
+                  defaultMessage="English"
+                />
+              </MenuItem>
+              {this.renderEnglishList()}
+              <MenuItem divider>
+                <LocaleFormattedMessage
+                  id="setting.translations.other"
+                  defaultMessage="Other Languages"
+                />
+              </MenuItem>
+              {this.renderLanguagesList()}
+            </Menu>
             : <Loader isActive />
         }
       >

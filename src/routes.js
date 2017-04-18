@@ -14,7 +14,7 @@ import checkValidSurah from './utils/checkValidSurah';
 import App from './containers/App';
 import Home from './containers/Home';
 
-export default store => {
+export default (store) => {
   const requireLogin = (nextState, replace, cb) => {
     function checkAuth() {
       const { auth: { user } } = store.getState();

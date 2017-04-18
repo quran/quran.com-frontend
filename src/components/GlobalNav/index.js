@@ -52,13 +52,13 @@ class GlobalNav extends Component {
         <LocaleSwitcher />,
         user
           ? <li>
-              <Link
-                to="/profile"
-                data-metrics-event-name="IndexHeader:Link:Profile"
-              >
-                {user.firstName || user.name}
-              </Link>
-            </li>
+            <Link
+              to="/profile"
+              data-metrics-event-name="IndexHeader:Link:Profile"
+            >
+              {user.firstName || user.name}
+            </Link>
+          </li>
           : <noscript />
       ]
     );

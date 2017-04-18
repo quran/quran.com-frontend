@@ -5,7 +5,7 @@ import Link from 'react-router/lib/Link';
 
 const styles = require('./style.scss');
 
-const SurahsList = props => {
+const SurahsList = (props) => {
   debug('component:Index', 'SurahsList');
 
   return (

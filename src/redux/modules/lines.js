@@ -29,14 +29,14 @@ export default function reducer(state = initialState, action = {}) {
       const stateLines = state.lines;
       const lines = { ...stateLines };
 
-      action.result.result.verses.forEach(ayahId => {
+      action.result.result.verses.forEach((ayahId) => {
         const ayah = ayahs[ayahId];
 
-        ayah.words.forEach(word => {
+        ayah.words.forEach((word) => {
           if (lines[`${word.pageNum}-${word.lineNum}`]) {
             const isInArray = lines[
               `${word.pageNum}-${word.lineNum}`
-            ].find(item => {
+            ].find((item) => {
               const itemChecksum = `${item.lineNum}${item.code}${item.verseKey}${item.position}`;
               const dataChecksum = `${word.lineNum}${word.code}${word.verseKey}${item.position}`;
 

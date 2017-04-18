@@ -6,7 +6,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const styles = require('containers/Home/style.scss');
 
-const LastVisit = props => {
+const LastVisit = (props) => {
   debug('component:Index', 'LastVisit');
   if (!props.chapter) return false;
 

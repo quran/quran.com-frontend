@@ -29,10 +29,10 @@ const Html = ({ store, component, assets }) => {
         ))}
         {Object.keys(assets.styles).length === 0
           ? <style
-              dangerouslySetInnerHTML={{
-                __html: require('../../src/styles/bootstrap.config')
-              }}
-            />
+            dangerouslySetInnerHTML={{
+              __html: require('../../src/styles/bootstrap.config')
+            }}
+          />
           : null}
       </head>
       <body>

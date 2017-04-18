@@ -2,7 +2,7 @@ import cookie from 'react-cookie';
 
 import config from '../config';
 
-export default req => {
+export default (req) => {
   let currentLocal;
   const expireDate = new Date();
   expireDate.setYear(expireDate.getFullYear() + 1);

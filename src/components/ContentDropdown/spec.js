@@ -25,7 +25,7 @@ describe('<ContentDropdown />', () => {
   });
 
   it('should contain all the content options', () => {
-    slugs.filter(slug => slug.language !== 'ar').forEach(slug => {
+    slugs.filter(slug => slug.language !== 'ar').forEach((slug) => {
       expect(wrapper.text()).to.contain(slug.name);
     });
   });

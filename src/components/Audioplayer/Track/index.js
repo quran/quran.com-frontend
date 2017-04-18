@@ -9,7 +9,7 @@ export default class Track extends Component {
     onTrackChange: PropTypes.func.isRequired
   };
 
-  handleClick = event => {
+  handleClick = (event) => {
     const { onTrackChange } = this.props;
 
     const fraction =
@@ -23,7 +23,7 @@ export default class Track extends Component {
 
     return (
       <div
-        ref={container => {
+        ref={(container) => {
           this.container = container;
         }}
         className={styles.container}

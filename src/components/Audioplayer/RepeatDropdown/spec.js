@@ -12,7 +12,7 @@ const chapter = {
   ayat: 10
 };
 
-const makeComponent = repeat => {
+const makeComponent = (repeat) => {
   setRepeat = sinon.stub();
 
   component = mountWithIntl(

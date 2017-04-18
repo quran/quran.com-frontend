@@ -18,7 +18,7 @@ class Segments extends Component {
 
     if (!Object.keys(segments).length) return <noscript />;
 
-    Object.keys(segments.words).forEach(wordIndex => {
+    Object.keys(segments.words).forEach((wordIndex) => {
       const word = segments.words[wordIndex];
 
       if (currentTime >= word.startTime && currentTime < word.endTime) {

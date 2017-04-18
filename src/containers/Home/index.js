@@ -14,7 +14,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const styles = require('./style.scss');
 
-const Home = props => {
+const Home = (props) => {
   debug('component:Index', 'Render');
 
   const lastVisit = cookie.load('lastVisit') || null;

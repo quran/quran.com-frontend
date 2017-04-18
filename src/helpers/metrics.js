@@ -21,7 +21,7 @@ export default {
           });
         },
         user(user) {
-          return new Promise(resolve => {
+          return new Promise((resolve) => {
             resolve({
               user
             });
