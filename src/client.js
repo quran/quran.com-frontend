@@ -17,6 +17,7 @@ import { IntlProvider } from 'react-intl';
 import debug from 'debug';
 
 import config from './config';
+
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import routes from './routes';
