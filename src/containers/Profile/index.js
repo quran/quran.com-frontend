@@ -8,10 +8,8 @@ import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
 
 const styles = require('./style.scss');
-
+// eslint-disable-next-line
 class Profile extends Component {
-  // eslint-disable-line
-
   render() {
     const { user, bookmarks } = this.props;
 

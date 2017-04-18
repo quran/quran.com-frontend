@@ -22,5 +22,4 @@ Bismillah.propTypes = {
   chapter: customPropTypes.surahType.isRequired
 };
 
-
 export default Bismillah;

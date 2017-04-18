@@ -44,10 +44,12 @@ const Audioplayer = Loadable({
   loader: () => import('components/Audioplayer'),
   LoadingComponent: ComponentLoader
 });
+
 const SurahInfo = Loadable({
   loader: () => import('components/SurahInfo'),
   LoadingComponent: ComponentLoader
 });
+
 const TopOptions = Loadable({
   loader: () => import('components/TopOptions'),
   LoadingComponent: ComponentLoader
@@ -110,7 +112,7 @@ class Surah extends Component {
     return Object.keys(this.props.verses).length;
   }
 
-  handleLazyLoadAyahs = callback => {
+  handleLazyLoadAyahs = (callback) => {
     const { verseIds, chapter, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     const range = [this.getFirst(), this.getLast()];
 
@@ -129,7 +131,7 @@ class Surah extends Component {
     return false;
   };
 
-  handleSurahInfoToggle = payload => {
+  handleSurahInfoToggle = (payload) => {
     const { actions } = this.props; // eslint-disable-line no-shadow
 
     return actions.options.setOption(payload);
@@ -315,12 +317,13 @@ class Surah extends Component {
     const { chapter, verses, options, info, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!this.hasAyahs())
+    if (!this.hasAyahs()) {
       return (
         <div className={style.container} style={{ margin: '50px auto' }}>
           {this.renderNoAyah()}
         </div>
       );
+    }
 
     return (
       <div className="chapter-body">

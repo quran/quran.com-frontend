@@ -6,12 +6,6 @@ import load from 'redux/actions/fontFace.js';
 import debug from 'helpers/debug';
 import selector from './selector';
 
-@connect(
-  state => ({
-    fontFaces: selector(state)
-  }),
-  { load }
-)
 class FontStyles extends Component {
   shouldComponentUpdate(nextProps) {
     return (
@@ -29,7 +23,7 @@ class FontStyles extends Component {
 
       Object.keys(fontFaces)
         .filter(className => !fontFaces[className])
-        .forEach(className => {
+        .forEach((className) => {
           const font = new FontFaceObserver(className);
 
           font.load().then(() => load(className), () => load(className));
@@ -58,4 +52,9 @@ FontStyles.propTypes = {
   load: PropTypes.func.isRequired
 };
 
-export default FontStyles;
+export default connect(
+  state => ({
+    fontFaces: selector(state)
+  }),
+  { load }
+)(FontStyles);

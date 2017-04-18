@@ -22,7 +22,6 @@ import authConnect from './connect';
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
-
 const GlobalSidebar = Loadable({
   loader: () => import('components/GlobalSidebar'),
   LoadingComponent: ComponentLoader

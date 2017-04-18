@@ -27,8 +27,7 @@
   "lint-staged": {
     "*.js": [
       "npm run prettier",
-      "lint:fix",
-      "test:stylelint",
+      "npm run lint:fix",
       "git add"
     ]
   },

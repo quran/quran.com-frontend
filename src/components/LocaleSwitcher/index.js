@@ -15,9 +15,10 @@ class LocaleSwitcher extends Component {
   componentDidMount() {
     if (__CLIENT__) {
       // TODO: This should be passed in as a prop!
+      // eslint-disable-next-line
       this.setState({
         currentLocale: cookie.load('currentLocale') || defaultLocale
-      }); // eslint-disable-line
+      });
     }
   }
 

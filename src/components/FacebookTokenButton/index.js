@@ -7,9 +7,8 @@ import { push } from 'react-router-redux';
 const styles = require('./style.scss');
 
 const FacebookIcon = generateShareIcon('facebook');
-
+// eslint-disable-next-line
 const FacebookTokenButton = ({ save, push }) => {
-  // eslint-disable-line
   let popup = null;
   let interval = null;
 
@@ -25,12 +24,11 @@ const FacebookTokenButton = ({ save, push }) => {
 
     window.addEventListener(
       'message',
+      // eslint-disable-next-line
       event => {
-        // eslint-disable-line
         if (event.data.uid) {
           save(event.data);
           clearInterval(interval);
-
           return push('/');
         }
       },

@@ -31,7 +31,7 @@ class IndexHeader extends Component {
               >
                 <img src={logo} className={styles.logo} alt="logo" />
               </Link>
-              <h4 className={styles.title}>THE NOBLE QUR'AN</h4>
+              <h4 className={styles.title}>THE NOBLE {"QUR'AN"}</h4>
               {this.renderSearch()}
             </div>
           </div>

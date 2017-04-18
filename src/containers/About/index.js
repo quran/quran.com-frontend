@@ -43,7 +43,7 @@ export default () => (
           <h4 className="source-sans">
             The Medinan suras or Medinan chapters of the Quran are the
             latest 24 suras that, according to Islamic tradition, were
-            revealed at Medina after Muhammad's hijra from Mecca. These
+            revealed at Medina after {"Muhammad's"} hijra from Mecca. These
             suras were revealed by Allah when the Muslim community was
             larger and more developed, as opposed to their minority position
             in Mecca.
@@ -77,7 +77,7 @@ export default () => (
             include <a href="http://www.tanzil.info">Tanzil</a>,
             <a href="http://www.qurancomplex.com"> QuranComplex</a>,
             <a href="https://github.com/cpfair/quran-align">
-              Colin Fair's work on audio segments
+              {"Colin Fair's work on audio segments"}
             </a>
             ,
             <a href="http://www.zekr.org"> Zekr</a> and

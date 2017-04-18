@@ -194,7 +194,8 @@ export const words = PropTypes.shape({
 
 export const segmentType = PropTypes.shape({
   words,
-  intervals: PropTypes.oneOfType([PropTypes.array, PropTypes.object]) // TODO: This should be done a better way.
+  intervals: PropTypes.oneOfType([PropTypes.array, PropTypes.object]) // eslint-disable-line
+  // TODO: This should be done a better way.
 });
 
 export const segments = PropTypes.objectOf(segmentType);
