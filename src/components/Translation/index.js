@@ -7,7 +7,6 @@ import { loadFootNote } from 'redux/actions/footNote';
 const styles = require('./style.scss');
 
 class Translation extends Component {
-
   componentDidMount() {
     const { index } = this.props;
     let trans;
@@ -22,10 +21,9 @@ class Translation extends Component {
     // TODO: this is breaking for search! Need to figure out why
     // const { index } = this.props;
     // let trans;
-
     // if (__CLIENT__) {
-      // trans = document.getElementById(`trans${index}`).children[1]; // eslint-disable-line
-      // trans.removeEventListener('click', this.fetchFootNote, true);
+    // trans = document.getElementById(`trans${index}`).children[1]; // eslint-disable-line
+    // trans.removeEventListener('click', this.fetchFootNote, true);
     // }
   }
 
@@ -36,7 +34,7 @@ class Translation extends Component {
       event.preventDefault();
       loadFootNote(event.target.attributes.foot_note.value);
     }
-  }
+  };
 
   render() {
     const { translation, index } = this.props;
@@ -44,9 +42,14 @@ class Translation extends Component {
     const isArabic = lang === 'arabic';
 
     return (
-      <div id={`trans${index}`} className={`${styles.translation} ${isArabic && 'arabic'} translation`}>
+      <div
+        id={`trans${index}`}
+        className={`${styles.translation} ${isArabic && 'arabic'} translation`}
+      >
         <h4 className="montserrat">{translation.resourceName}</h4>
-        <h2 className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}>
+        <h2
+          className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}
+        >
           <small
             dangerouslySetInnerHTML={{ __html: translation.text }}
             className={`${lang || 'times-new'}`}
@@ -60,9 +63,10 @@ class Translation extends Component {
 Translation.propTypes = {
   translation: customPropTypes.translationType.isRequired,
   index: PropTypes.number,
-  loadFootNote: PropTypes.func.isRequired,
+  loadFootNote: PropTypes.func.isRequired
 };
 
-export default connect(state => ({}),  // eslint-disable-line no-unused-vars
+export default connect(
+  state => ({}), // eslint-disable-line no-unused-vars
   { loadFootNote }
 )(Translation);

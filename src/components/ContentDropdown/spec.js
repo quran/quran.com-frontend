@@ -1,5 +1,7 @@
 import React from 'react';
-import { mountWithIntl } from '../../../tests/helpers/intl-enzyme-test-helper.js';
+import {
+  mountWithIntl
+} from '../../../tests/helpers/intl-enzyme-test-helper.js';
 
 import ContentDropdown, { slugs } from './index';
 
@@ -29,7 +31,9 @@ describe('<ContentDropdown />', () => {
   });
 
   it('should show chosen content option', () => {
-    expect(wrapper.find(`#${defaultOption}en`).prop('checked')).to.equal(defaultOption);
+    expect(wrapper.find(`#${defaultOption}en`).prop('checked')).to.equal(
+      defaultOption
+    );
   });
 
   it('should add option when clicked', () => {
@@ -37,7 +41,9 @@ describe('<ContentDropdown />', () => {
     wrapper.find(`#${id}en`).simulate('change');
 
     expect(onOptionChange).to.have.been.called; // eslint-disable-line
-    expect(onOptionChange).to.have.been.calledWith({ content: [defaultOption, id] });
+    expect(onOptionChange).to.have.been.calledWith({
+      content: [defaultOption, id]
+    });
   });
 
   it('should remove option when clicked', () => {

@@ -15,7 +15,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loadingFootNote: true,
-        footNote: null,
+        footNote: null
       };
     }
     case LOAD_FOOT_NOTE_SUCCESS: {
@@ -29,7 +29,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         loadingFootNote: false,
-        footNote: null,
+        footNote: null
       };
     }
     default:

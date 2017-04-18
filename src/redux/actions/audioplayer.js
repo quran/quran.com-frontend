@@ -13,7 +13,8 @@ import {
   LOAD,
   LOAD_SUCCESS,
   LOAD_FAIL,
-  UPDATE } from 'redux/constants/audioplayer.js';
+  UPDATE
+} from 'redux/constants/audioplayer.js';
 
 export function setCurrentFile(file) {
   return {
@@ -96,14 +97,19 @@ export function update(payload) {
   };
 }
 
-export function load({ chapterId, verseId, verseKey, audio }) { // eslint-disable-line
+export function load({ chapterId, verseId, verseKey, audio }) {
+  // eslint-disable-line
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: client => client.get(`/api/v3/chapters/${chapterId}/verses/${verseId}/audio_files`, {
-      params: {
-        recitation: audio || 8 // NOTE: default, but should never be used
-      }
-    }),
+    promise: client =>
+      client.get(
+        `/api/v3/chapters/${chapterId}/verses/${verseId}/audio_files`,
+        {
+          params: {
+            recitation: audio || 8 // NOTE: default, but should never be used
+          }
+        }
+      ),
     verseKey,
     chapterId
   };

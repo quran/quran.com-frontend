@@ -10,9 +10,11 @@ const styles = require('./style.scss');
 const ayahRegex = /^(\d+)(?::(\d+))?$/;
 
 class SearchAutocomplete extends Component {
-
   componentDidMount() {
-    this.props.input.addEventListener('keydown', this.handleInputKeyDown.bind(this));
+    this.props.input.addEventListener(
+      'keydown',
+      this.handleInputKeyDown.bind(this)
+    );
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,13 +53,18 @@ class SearchAutocomplete extends Component {
       const chapterId = captures[1];
       const ayahNum = captures[2];
       const chapter = this.props.chapters[chapterId];
-      matches.push([chapter.nameSimple, chapter.chapterNumber + (ayahNum ? `/${ayahNum}` : '')]);
+      matches.push([
+        chapter.nameSimple,
+        chapter.chapterNumber + (ayahNum ? `/${ayahNum}` : '')
+      ]);
     } else if (value.length >= 2) {
       const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
       Object.keys(this.props.chapters).forEach((chapterId) => {
         const chapter = this.props.chapters[chapterId];
-        if (RegExp(escaped, 'i').test(chapter.nameSimple.replace(/['-]/g, ''))) {
+        if (
+          RegExp(escaped, 'i').test(chapter.nameSimple.replace(/['-]/g, ''))
+        ) {
           matches.push([chapter.nameSimple, chapter.chapterNumber]);
         } else if (RegExp(escaped, 'i').test(chapter.nameArabic)) {
           matches.push([chapter.nameArabic, chapter.chapterNumber]);
@@ -65,11 +72,13 @@ class SearchAutocomplete extends Component {
       });
     }
 
-    return matches.map(match => ({
-      text: `<b>${match[0]}</b>`,
-      href: `/${match[1]}`
-    })).slice(0, 5);
-  }
+    return matches
+      .map(match => ({
+        text: `<b>${match[0]}</b>`,
+        href: `/${match[1]}`
+      }))
+      .slice(0, 5);
+  };
 
   suggest = (query) => {
     const { lang } = this.props;
@@ -77,10 +86,12 @@ class SearchAutocomplete extends Component {
     if (!query || ayahRegex.test(query)) return false;
 
     return this.props.suggest(query, lang);
-  }
+  };
 
   handleInputKeyDown = (event) => {
-    if (!(event.keyCode === 9 || event.keyCode === 40 || event.keyCode === 27)) {
+    if (
+      !(event.keyCode === 9 || event.keyCode === 40 || event.keyCode === 27)
+    ) {
       return;
     }
 
@@ -104,7 +115,7 @@ class SearchAutocomplete extends Component {
         return;
     }
     event.preventDefault();
-  }
+  };
 
   handleItemKeyDown(event, item) {
     const items = this.menu.getElementsByTagName('li');
@@ -123,7 +134,8 @@ class SearchAutocomplete extends Component {
         // TODO if open closeMenu()
         break;
       case 38: // up
-        if (event.target === items[0]) { // we're on the first item, so focus the input
+        if (event.target === items[0]) {
+          // we're on the first item, so focus the input
           this.props.input.focus();
         } else {
           event.target.previousSibling.focus();
@@ -157,7 +169,11 @@ class SearchAutocomplete extends Component {
           <a href={item.href} tabIndex="-1">{item.ayah}</a>
         </div>
         <div className={styles.text}>
-          <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{ __html: item.text }} />
+          <a
+            href={item.href}
+            tabIndex="-1"
+            dangerouslySetInnerHTML={{ __html: item.text }}
+          />
         </div>
       </li>
     ));
@@ -165,8 +181,16 @@ class SearchAutocomplete extends Component {
 
   render() {
     return (
-      <div className={`${styles.autocomplete} ${!this.getSuggestions().length && 'hidden'}`}>
-        <ul role="menu" className={styles.list} ref={(ref) => { this.menu = ref; }}>
+      <div
+        className={`${styles.autocomplete} ${!this.getSuggestions().length && 'hidden'}`}
+      >
+        <ul
+          role="menu"
+          className={styles.list}
+          ref={(ref) => {
+            this.menu = ref;
+          }}
+        >
           {this.renderList()}
         </ul>
       </div>
@@ -180,7 +204,9 @@ function mapStateToProps(state, ownProps) {
   const suggestions = state.suggestResults.results[ownProps.value];
   let lang = 'en';
 
-  if (state.verses && state.verses.entities && state.verses.entities[chapterId]) {
+  if (
+    state.verses && state.verses.entities && state.verses.entities[chapterId]
+  ) {
     const ayahs = state.verses.entities[chapterId];
     const verseKey = Object.keys(ayahs)[0];
 
@@ -209,7 +235,7 @@ SearchAutocomplete.propTypes = {
   suggest: PropTypes.func.isRequired,
   suggestions: customPropTypes.suggestions,
   lang: PropTypes.string,
-  delay: PropTypes.number,
+  delay: PropTypes.number
 };
 
 SearchAutocomplete.defaultProps = {

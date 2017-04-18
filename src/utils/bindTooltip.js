@@ -10,11 +10,10 @@ const positionTooltip = (target, tooltip) => {
 
   const offsets = getOffset(target);
 
-  let posLeft = offsets.left + (target.offsetWidth / 2);
+  let posLeft = offsets.left + target.offsetWidth / 2;
   posLeft -= tooltip.offsetWidth / 2;
 
   let posTop = offsets.top - tooltip.offsetHeight - 10;
-
 
   if (posLeft < 0) {
     posLeft = (offsets.left + target.offsetWidth) / (2 - 20);
@@ -24,9 +23,8 @@ const positionTooltip = (target, tooltip) => {
   }
 
   if (posLeft + tooltip.offsetWidth > window.innerWidth) {
-    posLeft = (
-      (offsets.left - tooltip.offsetWidth) + target.offsetWidth
-    ) / (2 + 20);
+    posLeft =
+      (offsets.left - tooltip.offsetWidth + target.offsetWidth) / (2 + 20);
     tooltip.classList.add('right');
   } else {
     tooltip.classList.remove('right');

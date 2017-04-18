@@ -9,9 +9,7 @@ let component;
 describe('<Segments />', () => {
   describe('when are an empty object', () => {
     beforeEach(() => {
-      component = mount(
-        <Segments segments={{}} />
-      );
+      component = mount(<Segments segments={{}} />);
     });
 
     it('should not have add any styles', () => {
@@ -27,7 +25,12 @@ describe('<Segments />', () => {
     beforeEach(() => {
       component = mount(
         <Segments
-          segments={{ words: { 0: { startTime: 0, endTime: 1 }, 1: { startTime: 1, endTime: 2 } } }}
+          segments={{
+            words: {
+              0: { startTime: 0, endTime: 1 },
+              1: { startTime: 1, endTime: 2 }
+            }
+          }}
           currentTime={1.5}
           currentVerse="1:1"
         />
@@ -43,7 +46,9 @@ describe('<Segments />', () => {
     });
 
     it('should have style for the second word', () => {
-      expect(component.find(Helmet).first().props().style[0].cssText).to.contain('#word-1-1-1');
+      expect(
+        component.find(Helmet).first().props().style[0].cssText
+      ).to.contain('#word-1-1-1');
     });
   });
 

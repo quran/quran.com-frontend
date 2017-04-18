@@ -8,9 +8,8 @@ import Tabs from 'react-bootstrap/lib/Tabs';
 import Tab from 'react-bootstrap/lib/Tab';
 
 const styles = require('./style.scss');
-
-class Profile extends Component { // eslint-disable-line
-
+// eslint-disable-next-line
+class Profile extends Component {
   render() {
     const { user, bookmarks } = this.props;
 
@@ -21,7 +20,11 @@ class Profile extends Component { // eslint-disable-line
         <div className="container">
           <div className="row">
             <div className="col-md-12 text-center">
-              <Image src={`${user.image}?type=large`} circle className={styles.image} />
+              <Image
+                src={`${user.image}?type=large`}
+                circle
+                className={styles.image}
+              />
               <h2>
                 {user.name}
               </h2>
@@ -29,16 +32,22 @@ class Profile extends Component { // eslint-disable-line
           </div>
           <div className="row">
             <div className="col-md-6 col-md-offset-3">
-              <Tabs bsStyle="pills" defaultActiveKey={1} className={styles.tabs} id="tabs">
+              <Tabs
+                bsStyle="pills"
+                defaultActiveKey={1}
+                className={styles.tabs}
+                id="tabs"
+              >
                 <Tab eventKey={1} title="Bookmarks">
                   <ul className="list-group">
-                    {
-                      Object.values(bookmarks).map(bookmark => (
-                        <Link to={bookmark.verseKey.split(':').join('/')} className="list-group-item">
-                          {bookmark.verseKey}
-                        </Link>
-                      ))
-                    }
+                    {Object.values(bookmarks).map(bookmark => (
+                      <Link
+                        to={bookmark.verseKey.split(':').join('/')}
+                        className="list-group-item"
+                      >
+                        {bookmark.verseKey}
+                      </Link>
+                    ))}
                   </ul>
                 </Tab>
                 <Tab eventKey={2} title="Notes">
@@ -58,9 +67,7 @@ Profile.propTypes = {
   bookmarks: customPropTypes.bookmarkType.isRequired
 };
 
-export default connect(
-  state => ({
-    user: state.auth.user,
-    bookmarks: state.bookmarks.entities
-  })
-)(Profile);
+export default connect(state => ({
+  user: state.auth.user,
+  bookmarks: state.bookmarks.entities
+}))(Profile);

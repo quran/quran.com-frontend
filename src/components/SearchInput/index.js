@@ -9,7 +9,6 @@ import SearchAutocomplete from 'components/SearchAutocomplete';
 import debug from 'helpers/debug';
 
 class SearchInput extends Component {
-
   static contextTypes = {
     metrics: MetricsPropTypes.metrics
   };
@@ -24,7 +23,9 @@ class SearchInput extends Component {
     const shortcutSearch = /\d[\.,\:,\,,\\,//]/g; // eslint-disable-line no-useless-escape
     const splitSearch = /[\.,\:,\,,\\,//]/g; // eslint-disable-line no-useless-escape
 
-    if (event.key === 'Enter' || event.keyCode === 13 || event.type === 'click') {
+    if (
+      event.key === 'Enter' || event.keyCode === 13 || event.type === 'click'
+    ) {
       const inputEl = this.input;
       const searching = inputEl.value.trim();
       let ayah;
@@ -40,14 +41,8 @@ class SearchInput extends Component {
       const pattern = new RegExp(shortcutSearch);
 
       if (pattern.test(searching)) {
-        surah = parseInt(
-          searching.split(splitSearch)[0],
-          10
-        );
-        ayah = parseInt(
-          searching.split(splitSearch)[1],
-          10
-        );
+        surah = parseInt(searching.split(splitSearch)[0], 10);
+        ayah = parseInt(searching.split(splitSearch)[1], 10);
 
         if (isNaN(ayah)) {
           ayah = 1;
@@ -55,10 +50,10 @@ class SearchInput extends Component {
 
         this.context.metrics.track('Search', {
           action: 'surah',
-          label: `/${surah}/${ayah}-${(ayah + 10)}`
+          label: `/${surah}/${ayah}-${ayah + 10}`
         });
 
-        return this.props.push(`/${surah}/${ayah}-${(ayah + 10)}`);
+        return this.props.push(`/${surah}/${ayah}-${ayah + 10}`);
       }
 
       this.context.metrics.track('Search', {
@@ -82,30 +77,35 @@ class SearchInput extends Component {
     }
 
     return false;
-  }
+  };
 
   render() {
     const { showAutocomplete } = this.state;
     const { className, intl } = this.props;
-    const placeholder = intl.formatMessage({ id: 'search.placeholder', defaultMessage: 'Search' });
+    const placeholder = intl.formatMessage({
+      id: 'search.placeholder',
+      defaultMessage: 'Search'
+    });
 
     debug('component:SearchInput', 'Render');
 
     return (
       <div className={`right-inner-addon searchinput ${className}`}>
-        <a tabIndex="-1" onClick={this.search}><i className="ss-icon ss-search" /></a>
+        <a tabIndex="-1" onClick={this.search}>
+          <i className="ss-icon ss-search" />
+        </a>
         <input
           type="search"
           placeholder={placeholder}
-          ref={(input) => { this.input = input; }}
+          ref={(input) => {
+            this.input = input;
+          }}
           onFocus={() => this.setState({ showAutocomplete: true })}
           // onBlur={() => this.setState({ showAutocomplete: false })}
           onKeyUp={this.search}
         />
-        {
-          showAutocomplete &&
-            <SearchAutocomplete value={this.state.value} input={this.input} />
-        }
+        {showAutocomplete &&
+          <SearchAutocomplete value={this.state.value} input={this.input} />}
       </div>
     );
   }

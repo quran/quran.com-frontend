@@ -1,7 +1,4 @@
-import {
-  SET_MEDIA,
-  REMOVE_MEDIA
-} from 'redux/constants/media';
+import { SET_MEDIA, REMOVE_MEDIA } from 'redux/constants/media';
 
 const initialState = {
   content: null

@@ -27,7 +27,7 @@ const styles = require('../style.scss');
 class GlobalNavSurah extends Component {
   state = {
     drawerOpen: false
-  }
+  };
 
   handleOptionChange = (payload) => {
     const { chapter, setOption, options, versesIds } = this.props;
@@ -37,8 +37,11 @@ class GlobalNavSurah extends Component {
     if (chapter) {
       const from = [...versesIds][0];
       const to = [...versesIds][[...versesIds].length - 1];
-      const paging = { offset: from - 1, limit: (to - from) + 1 };
-      this.props.load(chapter.chapterNumber, paging, { ...options, ...payload });
+      const paging = { offset: from - 1, limit: to - from + 1 };
+      this.props.load(chapter.chapterNumber, paging, {
+        ...options,
+        ...payload
+      });
     }
   };
 
@@ -51,12 +54,14 @@ class GlobalNavSurah extends Component {
       return false;
     }
 
-    return this.props.replace(`/${chapter.chapterNumber}/${verseNum}-${verseNum + 10}`);
-  }
+    return this.props.replace(
+      `/${chapter.chapterNumber}/${verseNum}-${verseNum + 10}`
+    );
+  };
 
   handleDrawerToggle = (open) => {
     this.setState({ drawerOpen: open });
-  }
+  };
 
   renderDrawerToggle(visibleXs) {
     return (
@@ -67,14 +72,24 @@ class GlobalNavSurah extends Component {
           onClick={() => this.handleDrawerToggle(true)}
         >
           <i className="ss-icon ss-settings text-align" />
-          <LocaleFormattedMessage id="setting.title" defaultMessage="Settings" />
+          <LocaleFormattedMessage
+            id="setting.title"
+            defaultMessage="Settings"
+          />
         </a>
       </li>
     );
   }
 
   render() {
-    const { chapter, chapters, setOption, versesIds, options, ...props } = this.props;
+    const {
+      chapter,
+      chapters,
+      setOption,
+      versesIds,
+      options,
+      ...props
+    } = this.props;
 
     return (
       <GlobalNav
@@ -92,7 +107,10 @@ class GlobalNavSurah extends Component {
           </div>,
           <li className="visible-xs-inline-block visible-sm-inline-block">
             <Link to="/search">
-              <i className="ss-icon ss-search" style={{ verticalAlign: 'sub' }} />
+              <i
+                className="ss-icon ss-search"
+                style={{ verticalAlign: 'sub' }}
+              />
             </Link>
           </li>,
           this.renderDrawerToggle(true),
@@ -104,7 +122,12 @@ class GlobalNavSurah extends Component {
             toggle={<noscript />}
           >
             <div style={{ padding: 15 }}>
-              <h4><LocaleFormattedMessage id="setting.title" defaultMessage="Settings" /></h4>
+              <h4>
+                <LocaleFormattedMessage
+                  id="setting.title"
+                  defaultMessage="Settings"
+                />
+              </h4>
             </div>
             <Menu>
               <InformationToggle
@@ -120,19 +143,18 @@ class GlobalNavSurah extends Component {
                 onToggle={setOption}
               />
               <hr />
-              <ReciterDropdown
-                onOptionChange={this.handleOptionChange}
-              />
-              <ContentDropdown
-                onOptionChange={this.handleOptionChange}
-              />
+              <ReciterDropdown onOptionChange={this.handleOptionChange} />
+              <ContentDropdown onOptionChange={this.handleOptionChange} />
               <TooltipDropdown
                 tooltip={options.tooltip}
                 onOptionChange={setOption}
               />
               <hr />
               <div className={styles.title}>
-                <LocaleFormattedMessage id="setting.fontSize" defaultMessage="Font Size" />
+                <LocaleFormattedMessage
+                  id="setting.fontSize"
+                  defaultMessage="Font Size"
+                />
               </div>
               <FontSizeDropdown
                 fontSize={options.fontSize}
@@ -141,9 +163,7 @@ class GlobalNavSurah extends Component {
             </Menu>
           </Drawer>
         ]}
-        rightControls={[
-          this.renderDrawerToggle()
-        ]}
+        rightControls={[this.renderDrawerToggle()]}
       />
     );
   }
@@ -153,7 +173,9 @@ function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
   const verses: Object = state.verses.entities[chapterId];
-  const versesArray = verses ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10)) : [];
+  const versesArray = verses
+    ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
+    : [];
   const versesIds = new Set(versesArray);
 
   return {
@@ -175,7 +197,9 @@ GlobalNavSurah.propTypes = {
   replace: PropTypes.func.isRequired
 };
 
-export default connect(
-  mapStateToProps,
-  { ...OptionsActions, load, replace, setCurrentVerse }
-)(GlobalNavSurah);
+export default connect(mapStateToProps, {
+  ...OptionsActions,
+  load,
+  replace,
+  setCurrentVerse
+})(GlobalNavSurah);

@@ -8,7 +8,9 @@ let wrapper;
 
 describe('<Ayah />', () => {
   beforeEach(() => {
-    wrapper = shallow(<Ayah ayah={ayah} audioActions={{ setCurrentWord: () => {} }} />);
+    wrapper = shallow(
+      <Ayah ayah={ayah} audioActions={{ setCurrentWord: () => {} }} />
+    );
   });
 
   it('should render', () => {
@@ -20,6 +22,8 @@ describe('<Ayah />', () => {
   });
 
   it('should contain translations', () => {
-    expect(wrapper.find('.translation').text()).to.eql(ayah.content[0].resource.name);
+    expect(wrapper.find('.translation').text()).to.eql(
+      ayah.content[0].resource.name
+    );
   });
 });

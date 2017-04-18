@@ -5,9 +5,10 @@ import Icon from 'quran-components/lib/Icon';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const TooltipDropdown = ({ tooltip, onOptionChange }) => {
-  const handleOptionChange = type => onOptionChange({
-    tooltip: type
-  });
+  const handleOptionChange = type =>
+    onOptionChange({
+      tooltip: type
+    });
 
   const list = ['translation', 'transliteration'].map(type => (
     <MenuItem key={type}>
@@ -17,7 +18,10 @@ const TooltipDropdown = ({ tooltip, onOptionChange }) => {
         checked={type === tooltip}
         handleChange={() => handleOptionChange(type)}
       >
-        <LocaleFormattedMessage id={`setting.tooltip.${type}`} defaultMessage={type.toUpperCase()} />
+        <LocaleFormattedMessage
+          id={`setting.tooltip.${type}`}
+          defaultMessage={type.toUpperCase()}
+        />
       </Radio>
     </MenuItem>
   ));
@@ -31,14 +35,17 @@ const TooltipDropdown = ({ tooltip, onOptionChange }) => {
         </Menu>
       }
     >
-      <LocaleFormattedMessage id="setting.tooltip.title" defaultMessage="Tooltip Content" />
+      <LocaleFormattedMessage
+        id="setting.tooltip.title"
+        defaultMessage="Tooltip Content"
+      />
     </MenuItem>
   );
 };
 
 TooltipDropdown.propTypes = {
   onOptionChange: PropTypes.func,
-  tooltip: PropTypes.string.isRequired,
+  tooltip: PropTypes.string.isRequired
 };
 
 export default TooltipDropdown;

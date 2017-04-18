@@ -8,15 +8,17 @@ import config from '../../config';
 const { locales, defaultLocale } = config;
 
 class LocaleSwitcher extends Component {
-
   state = {
-    currentLocale: defaultLocale,
+    currentLocale: defaultLocale
   };
 
   componentDidMount() {
     if (__CLIENT__) {
       // TODO: This should be passed in as a prop!
-      this.setState({ currentLocale: cookie.load('currentLocale') || defaultLocale }); // eslint-disable-line
+      // eslint-disable-next-line
+      this.setState({
+        currentLocale: cookie.load('currentLocale') || defaultLocale
+      });
     }
   }
 
@@ -29,7 +31,7 @@ class LocaleSwitcher extends Component {
 
     cookie.save('currentLocale', locale, {
       path: '/',
-      expires: new Date(expireDate),
+      expires: new Date(expireDate)
     });
 
     window.location.reload();

@@ -27,7 +27,7 @@ export default class AudioStub {
       this.element.state = 'paused';
       this.element.dispatchEvent(pause);
       clearInterval(this.incrementTime());
-    }
+    };
 
     return this.element;
   }
@@ -41,10 +41,10 @@ export default class AudioStub {
         this.element.pause();
         this.element.dispatchEvent(ended);
       }
-    }, 100)
+    }, 100);
   }
 
   paused() {
     return this.element.state === 'paused';
   }
-};
+}

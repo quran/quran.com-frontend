@@ -8,15 +8,12 @@ const logo = require('../../../static/images/logo-lg-w.png');
 const styles = require('./style.scss');
 
 class IndexHeader extends Component {
-
   renderSearch() {
     if (this.props.noSearch) {
       return null;
     }
 
-    return (
-      <SearchInput />
-    );
+    return <SearchInput />;
   }
 
   render() {
@@ -27,16 +24,19 @@ class IndexHeader extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
-              <Link to="/" className={styles.link} data-metrics-event-name="IndexHeader:Link:Index">
+              <Link
+                to="/"
+                className={styles.link}
+                data-metrics-event-name="IndexHeader:Link:Index"
+              >
                 <img src={logo} className={styles.logo} alt="logo" />
               </Link>
-              <h4 className={styles.title}>THE NOBLE QUR&#x27;AN</h4>
+              <h4 className={styles.title}>THE NOBLE {"QUR'AN"}</h4>
               {this.renderSearch()}
             </div>
           </div>
         </div>
       </Jumbotron>
-
     );
   }
 }

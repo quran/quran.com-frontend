@@ -2,8 +2,8 @@
 import {
   LOAD as AYAHS_LOAD,
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
-  LOAD_FAIL as AYAHS_LOAD_FAIL,
-  } from 'redux/constants/verses.js';
+  LOAD_FAIL as AYAHS_LOAD_FAIL
+} from 'redux/constants/verses.js';
 
 import { SET_CURRENT as SURAHS_SET_CURRENT } from 'redux/constants/chapters.js';
 
@@ -34,7 +34,9 @@ export default function reducer(state = initialState, action = {}) {
 
         ayah.words.forEach((word) => {
           if (lines[`${word.pageNum}-${word.lineNum}`]) {
-            const isInArray = lines[`${word.pageNum}-${word.lineNum}`].find((item) => {
+            const isInArray = lines[
+              `${word.pageNum}-${word.lineNum}`
+            ].find((item) => {
               const itemChecksum = `${item.lineNum}${item.code}${item.verseKey}${item.position}`;
               const dataChecksum = `${word.lineNum}${word.code}${word.verseKey}${item.position}`;
 

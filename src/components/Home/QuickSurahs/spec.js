@@ -1,6 +1,8 @@
 import React from 'react';
 import QuickSurahs from './index.js';
-import { mountWithIntl } from '../../../../tests/helpers/intl-enzyme-test-helper.js';
+import {
+  mountWithIntl
+} from '../../../../tests/helpers/intl-enzyme-test-helper.js';
 
 describe('<QuickSurahs />', () => {
   const count = new Date().getDay() === 5 ? 5 : 4;

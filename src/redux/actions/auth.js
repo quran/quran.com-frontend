@@ -24,7 +24,7 @@ export function load() {
 
 export function facebook() {
   return {
-    types: [FACEBOOK, FACEBOOK_SUCCESS, FACEBOOK_FAILURE],
+    types: [FACEBOOK, FACEBOOK_SUCCESS, FACEBOOK_FAILURE]
   };
 }
 

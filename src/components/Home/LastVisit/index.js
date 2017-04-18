@@ -13,10 +13,20 @@ const LastVisit = (props) => {
   return (
     <div>
       <h4 className={`text-muted ${styles.title}`}>
-        <LocaleFormattedMessage id="surah.index.continue" defaultMessage="Continue" />{' '}
+        <LocaleFormattedMessage
+          id="surah.index.continue"
+          defaultMessage="Continue"
+        />
+        {' '}
         <Link to={`/${props.chapter.chapterNumber}/${props.verse}`}>
           <span>
-            {props.chapter.nameSimple} ({props.chapter.chapterNumber}:{props.verse})
+            {props.chapter.nameSimple}
+            {' '}
+            (
+            {props.chapter.chapterNumber}
+            :
+            {props.verse}
+            )
           </span>
         </Link>
       </h4>

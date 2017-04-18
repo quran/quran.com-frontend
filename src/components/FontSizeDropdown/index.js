@@ -5,7 +5,6 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 const style = require('./style.scss');
 
 class FontSizeDropdown extends Component {
-
   handleOptionSelected = (type, direction) => {
     const { onOptionChange, fontSize } = this.props;
     const changeFactor = {
@@ -16,10 +15,10 @@ class FontSizeDropdown extends Component {
     return onOptionChange({
       fontSize: {
         ...fontSize,
-        [type]: fontSize[type] + (changeFactor[type] * direction)
+        [type]: fontSize[type] + changeFactor[type] * direction
       }
     });
-  }
+  };
 
   renderPopup() {
     return (
@@ -35,7 +34,10 @@ class FontSizeDropdown extends Component {
             </a>
           </li>
           <li className={`text-center ${style.item}`}>
-            <LocaleFormattedMessage id="setting.fontSize.arabic" defaultMessage="Arabic" />
+            <LocaleFormattedMessage
+              id="setting.fontSize.arabic"
+              defaultMessage="Arabic"
+            />
           </li>
           <li className={`text-center ${style.item}`}>
             <a
@@ -59,7 +61,10 @@ class FontSizeDropdown extends Component {
             </a>
           </li>
           <li className={`text-center ${style.item}`}>
-            <LocaleFormattedMessage id="setting.translations.title" defaultMessage="Translations" />
+            <LocaleFormattedMessage
+              id="setting.translations.title"
+              defaultMessage="Translations"
+            />
           </li>
           <li className={`text-center ${style.item}`}>
             <a

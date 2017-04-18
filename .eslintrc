@@ -5,8 +5,11 @@
     "comma-dangle": 0,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "import/no-extraneous-dependencies": 0,
+    "import/prefer-default-export": 1,
     "import/extensions": 0,
     "import/no-unresolved": 0,
+    "property": 1,
+    "no-mixed-operators": 0,
     "strict": 0
   },
   "ecmaFeatures": {
@@ -38,7 +41,9 @@
     mixpanel: true,
     "expect": true,
     "browser": true,
+    "import": true,
     "FB": true,
+    "window": true,
     sinon: true
   },
   "env": {

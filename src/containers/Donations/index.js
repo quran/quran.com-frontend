@@ -59,7 +59,11 @@ export default () => (
           </a>
           <br /><br />
           If you have any questions, please do not hesitate to contact
-          us at <a href="mailto:support@quran.zendesk.com">support@quran.zendesk.com.</a>
+          us at
+          {' '}
+          <a href="mailto:support@quran.zendesk.com">
+            support@quran.zendesk.com.
+          </a>
         </div>
       </div>
     </div>

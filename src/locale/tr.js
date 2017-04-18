@@ -8,7 +8,7 @@ export default {
     'local.selectLabel': 'Dil',
     'setting.title': 'Ayarlar',
     'setting.surahs': 'Sureler',
-    'setting.verses': 'Ayet\'e git',
+    'setting.verses': "Ayet'e git",
     'setting.reciters.title': 'Hafızlar',
     'setting.translations.title': 'Çeviriler',
     'setting.translations.removeAll': 'Tümünü kaldır',
@@ -72,12 +72,12 @@ export default {
     'nav.otherLinks': 'Diğer bağlantılar',
     'nav.contactUs': 'Bize ulaşın',
     'nav.help': 'Yardım & Geri Bildirim',
-    'nav.aboutQuranProject': 'Quran.com (Kur\'an-ı Kerim) bir pro bono projesidir.', // eslint-disable-line max-len
+    'nav.aboutQuranProject': "Quran.com (Kur'an-ı Kerim) bir pro bono projesidir.", // eslint-disable-line max-len
     'nav.rightsReserved': 'Tüm Hakları Saklıdır',
     'nav.mobile': 'Mobil Uygulamalar',
     'nav.navigate': 'Bağlantılar', // there is no exact translation for Navigate in Turkish
     'nav.legacySite': 'Eski Siteye Git Quran.com',
 
-    'login.message': 'Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com\'a giriş yapın.'
+    'login.message': "Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com'a giriş yapın."
   }
 };

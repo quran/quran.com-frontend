@@ -21,7 +21,7 @@ class Word extends Component {
       title = '';
     }
     return title;
-  }
+  };
 
   handleWordPlay = () => {
     const { word } = this.props;
@@ -31,30 +31,46 @@ class Word extends Component {
 
       audio.play();
     }
-  }
+  };
 
   handleSegmentPlay = () => {
-    const { word, currentVerse, audioActions, audioPosition, isPlaying, isSearched } = this.props;
+    const {
+      word,
+      currentVerse,
+      audioActions,
+      audioPosition,
+      isPlaying,
+      isSearched
+    } = this.props;
 
     if (isSearched || !word.audio) {
       return;
     }
 
-    if ((currentVerse === word.verseKey) && isPlaying) {
+    if (currentVerse === word.verseKey && isPlaying) {
       audioActions.setCurrentWord(word.code);
     } else {
       audioActions.pause();
       audioActions.setAyah(word.verseKey);
       audioActions.playCurrentWord({ word, position: audioPosition });
     }
-  }
+  };
 
   render() {
-    const { tooltip, word, currentVerse, isPlaying, audioPosition, useTextFont } = this.props;
+    const {
+      tooltip,
+      word,
+      currentVerse,
+      isPlaying,
+      audioPosition,
+      useTextFont
+    } = this.props;
 
     let text;
     let spacer;
-    const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
+    const highlight = currentVerse === word.verseKey && isPlaying
+      ? 'highlight'
+      : '';
     const className = `${useTextFont ? 'text-' : ''}${word.charType === CHAR_TYPE_WORD ? word.className : 'p0'} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
     const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
 
@@ -73,7 +89,7 @@ class Word extends Component {
     return (
       <span>
         <b // eslint-disable-line
-          { ...bindTooltip}
+          {...bindTooltip}
           key={word.code}
           id={id}
           onDoubleClick={this.handleSegmentPlay}
@@ -82,7 +98,10 @@ class Word extends Component {
           title={this.buildTooltip(word, tooltip)}
           dangerouslySetInnerHTML={{ __html: text }}
         />
-        <small dangerouslySetInnerHTML={{ __html: spacer }} style={{ letterSpacing: -15 }} />
+        <small
+          dangerouslySetInnerHTML={{ __html: spacer }}
+          style={{ letterSpacing: -15 }}
+        />
       </span>
     );
   }

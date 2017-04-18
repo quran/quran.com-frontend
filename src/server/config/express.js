@@ -67,9 +67,20 @@ export default (server) => {
   server.use(cors());
 
   // Static content
-  server.use(favicon(path.join((process.env.PWD || process.env.pm_cwd), '/static/favicon.ico')));
-  server.use(express.static(path.join(process.env.PWD || process.env.pm_cwd, '/static')));
-  server.use('/public', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/static/dist')));
+  server.use(
+    favicon(
+      path.join(process.env.PWD || process.env.pm_cwd, '/static/favicon.ico')
+    )
+  );
+  server.use(
+    express.static(path.join(process.env.PWD || process.env.pm_cwd, '/static'))
+  );
+  server.use(
+    '/public',
+    express.static(
+      path.join(process.env.PWD || process.env.pm_cwd, '/static/dist')
+    )
+  );
 
   sitemap(server);
   support(server);

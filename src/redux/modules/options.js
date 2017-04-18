@@ -5,7 +5,7 @@ import {
   SET_USER_AGENT,
   LOAD_TRANSLATIONS,
   LOAD_TRANSLATIONS_SUCCESS
- } from 'redux/constants/options.js';
+} from 'redux/constants/options.js';
 
 const initialState = {
   isReadingMode: false,

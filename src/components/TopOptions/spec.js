@@ -27,11 +27,7 @@ describe('<TopOptions />', () => {
     };
 
     const component = shallow(
-      <TopOptions
-        options={options}
-        actions={actions}
-        chapter={getSurahs[5]}
-      />
+      <TopOptions options={options} actions={actions} chapter={getSurahs[5]} />
     );
 
     expect(component).to.be.ok; // eslint-disable-line

@@ -6,8 +6,8 @@ import {
   LOAD_INFO,
   LOAD_INFO_SUCCESS,
   LOAD_INFO_FAIL,
-  SET_CURRENT } from 'redux/constants/chapters.js';
-
+  SET_CURRENT
+} from 'redux/constants/chapters.js';
 
 export function loadAll() {
   return {
@@ -27,11 +27,12 @@ export function load(id) {
 
 export const loadInfo = params => ({
   types: [LOAD_INFO, LOAD_INFO_SUCCESS, LOAD_INFO_FAIL],
-  promise: client => client.get(`/api/v3/chapters/${params.chapterId}/info`, {
-    params: {
-      language: params.language || 'en'
-    }
-  }),
+  promise: client =>
+    client.get(`/api/v3/chapters/${params.chapterId}/info`, {
+      params: {
+        language: params.language || 'en'
+      }
+    }),
   id: params.chapterId
 });
 
