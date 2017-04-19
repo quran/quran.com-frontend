@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 
 const ComponentLoader = ({ isLoading, error, pastDelay }) => {
   if (isLoading) {
-    return pastDelay ? <div>Loading...</div> : null;
+    return pastDelay ? <noscript /> : null;
   } else if (error) {
     return <div>Error! Component failed to load</div>;
   }
