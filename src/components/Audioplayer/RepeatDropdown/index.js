@@ -97,7 +97,7 @@ class RepeatButton extends Component {
             >
               {
                 array.reduce((options, ayah, index) => {
-                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= chapter.versesCount) {
+                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= chapter.versesCount) { // eslint-disable-line max-len
                     options.push(
                       <option key={index} value={index + 1}>
                         {index + 1}
