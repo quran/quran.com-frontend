@@ -7067,9 +7067,9 @@ querystringify@0.0.x:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-0.0.4.tgz#0cf7f84f9463ff0ae51c4c4b142d95be37724d9c"
 
-quran-components@^0.0.66:
-  version "0.0.66"
-  resolved "https://registry.yarnpkg.com/quran-components/-/quran-components-0.0.66.tgz#6ed563ee77b30365d910fd807be20e90d1e84c10"
+quran-components@^0.0.69:
+  version "0.0.69"
+  resolved "https://registry.yarnpkg.com/quran-components/-/quran-components-0.0.69.tgz#d53052355319097ecb91024bd943ef7837fc8860"
   dependencies:
     react-icons "^2.2.3"
     react-tether "^0.5.6"

@@ -6,6 +6,7 @@ import Link from 'react-router/lib/Link';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 
+import Sites from 'quran-components/lib/Sites';
 import LocaleSwitcher from 'components/LocaleSwitcher';
 
 import debug from 'helpers/debug';
@@ -49,6 +50,7 @@ class GlobalNav extends Component {
     const { user, rightControls } = this.props;
 
     return rightControls || [
+      <li><a tabIndex="-1"><Sites /></a></li>,
       <LocaleSwitcher />,
       user ?
         <li>
