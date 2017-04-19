@@ -1,18 +1,15 @@
 import React from 'react';
 import IndexHeader from 'components/IndexHeader';
 
-import Grid from 'react-bootstrap/lib/Grid';
-import Col from 'react-bootstrap/lib/Col';
-
 export default () => (
   <div className="top-section">
     <IndexHeader noSearch />
-    <Grid>
+    <div className="container">
       <div className="row">
-        <Col md={12} className="text-center">
+        <div className="col-md-12 text-center">
           <h1>Quran.com</h1>
-        </Col>
-        <Col md={8} mdOffset={2}>
+        </div>
+        <div className="col-md-8 col-md-offset-2">
           <h3>Who we are.</h3>
           <p>
             Since 2008, Alhamdulilah Quran.com now serves over 3.1 million
@@ -48,9 +45,9 @@ export default () => (
             For those looking to make a stronger impact, support us by
             contributing any monetary amount.
           </p>
-        </Col>
+        </div>
 
-        <Col md={4} mdOffset={4} className="text-center">
+        <div className="col-md-4 col-md-offset-4 text-center">
           <br /><br />
           <a
             target="_blank"
@@ -63,8 +60,8 @@ export default () => (
           <br /><br />
           If you have any questions, please do not hesitate to contact
           us at <a href="mailto:support@quran.zendesk.com">support@quran.zendesk.com.</a>
-        </Col>
+        </div>
       </div>
-    </Grid>
+    </div>
   </div>
 );

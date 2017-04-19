@@ -6,7 +6,7 @@ import RepeatDropdown from './index';
 let component;
 let overlay;
 let setRepeat;
-const surah = {
+const chapter = {
   ayat: 10
 };
 
@@ -18,7 +18,7 @@ const makeComponent = (repeat) => {
       repeat={repeat}
       setRepeat={setRepeat}
       current={1}
-      surah={surah}
+      chapter={chapter}
     />
   );
 

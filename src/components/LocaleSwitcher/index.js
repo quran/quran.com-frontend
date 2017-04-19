@@ -3,12 +3,11 @@ import React, { PropTypes, Component } from 'react';
 import cookie from 'react-cookie';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import { locales, defaultLocale } from '../../config';
+import config from '../../config';
 
-export default class LocaleSwitcher extends Component {
-  static propTypes = {
-    className: PropTypes.string
-  };
+const { locales, defaultLocale } = config;
+
+class LocaleSwitcher extends Component {
 
   state = {
     currentLocale: defaultLocale,
@@ -43,7 +42,7 @@ export default class LocaleSwitcher extends Component {
       <MenuItem
         key={key}
         className={key === this.state.currentLocale && 'active'} // NOTE: if you use key `active` it will make all dropdown active
-        onClick={() => this.handleLocaleClick(key)}
+        onClick={e => this.handleLocaleClick(key, e)}
         href={`?local=${key}`}
       >
         {locales[key]}
@@ -66,3 +65,9 @@ export default class LocaleSwitcher extends Component {
     );
   }
 }
+
+LocaleSwitcher.propTypes = {
+  className: PropTypes.string
+};
+
+export default LocaleSwitcher;

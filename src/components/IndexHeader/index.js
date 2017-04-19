@@ -1,15 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
-
 import SearchInput from 'components/SearchInput';
 import debug from 'helpers/debug';
+import Jumbotron from 'quran-components/lib/Jumbotron';
 
 const logo = require('../../../static/images/logo-lg-w.png');
+const styles = require('./style.scss');
 
-export default class IndexHeader extends Component {
-  static propTypes = {
-    noSearch: PropTypes.bool
-  };
+class IndexHeader extends Component {
 
   renderSearch() {
     if (this.props.noSearch) {
@@ -25,19 +23,26 @@ export default class IndexHeader extends Component {
     debug('component:IndexHeader', 'Render');
 
     return (
-      <div className="index-header" style={{ backgroundColor: '#2CA4AB' }}>
+      <Jumbotron>
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1 text-center">
-              <Link to="/" data-metrics-event-name="IndexHeader:Link:Index">
-                <img src={logo} className="logo" alt="logo" />
+              <Link to="/" className={styles.link} data-metrics-event-name="IndexHeader:Link:Index">
+                <img src={logo} className={styles.logo} alt="logo" />
               </Link>
-              <h4 className="title">THE NOBLE QUR&#x27;AN</h4>
+              <h4 className={styles.title}>THE NOBLE QUR&#x27;AN</h4>
               {this.renderSearch()}
             </div>
           </div>
         </div>
-      </div>
+      </Jumbotron>
+
     );
   }
 }
+
+IndexHeader.propTypes = {
+  noSearch: PropTypes.bool
+};
+
+export default IndexHeader;

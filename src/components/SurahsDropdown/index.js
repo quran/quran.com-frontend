@@ -1,45 +1,37 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-
-import Col from 'react-bootstrap/lib/Col';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
-export default class SurahsDropdown extends Component {
-  static propTypes = {
-    surahs: PropTypes.objectOf(surahType).isRequired,
-    title: PropTypes.string,
-  };
-
+class SurahsDropdown extends Component {
   shouldComponentUpdate(nextProps) {
-    return this.props.surahs !== nextProps.surahs;
+    return this.props.chapters !== nextProps.chapters;
   }
 
   renderList() {
-    const { surahs } = this.props;
+    const { chapters } = this.props;
 
-    return Object.values(surahs).map((surah, index) => (
-      <LinkContainer to={`/${surah.id}`} activeClass="active" key={`surah-${index}`}>
+    return Object.values(chapters).map((chapter, index) => (
+      <LinkContainer to={`/${chapter.chapterNumber}`} activeClass="active" key={`chapter-${index}`}>
         <MenuItem>
           <div className="row">
-            <Col xs={2} md={2}>
-              <span className="surah-num">
-                {surah.id}
+            <div className="col-xs-2 col-md-2">
+              <span className="chapter-num">
+                {chapter.chapterNumber}
               </span>
-            </Col>
-            <Col xs={7} md={7}>
-              <span className="suran-name">{surah.name.simple}</span>
+            </div>
+            <div className="col-xs-7 col-md-7">
+              <span className="suran-name">{chapter.nameSimple}</span>
               <br />
-              <span className="surah-meaning">{surah.name.english}</span>
-            </Col>
-            <Col xs={3} md={3} className={`text-right ${styles.arabicName}`}>
-              {surah.name.arabic}
-            </Col>
+              <span className="chapter-meaning">{chapter.translatedName.name}</span>
+            </div>
+            <div className={`col-xs-3  col-md-3 text-right ${styles.arabicName}`}>
+              {chapter.nameArabic}
+            </div>
           </div>
         </MenuItem>
       </LinkContainer>
@@ -47,17 +39,24 @@ export default class SurahsDropdown extends Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { chapter } = this.props;
 
     return (
       <NavDropdown
         link
         className={styles.dropdown}
-        id="surahs-dropdown"
-        title={title || <LocaleFormattedMessage id="setting.surahs" defaultMessage="Surahs" />}
+        id="chapters-dropdown"
+        title={chapter.nameSimple || <LocaleFormattedMessage id="setting.chapters" defaultMessage="Surahs" />}
       >
         {this.renderList()}
       </NavDropdown>
     );
   }
 }
+
+SurahsDropdown.propTypes = {
+  chapters: customPropTypes.chapters.isRequired,
+  chapter: customPropTypes.chapters.isRequired,
+};
+
+export default SurahsDropdown;

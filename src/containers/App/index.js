@@ -1,40 +1,39 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
-import SmartBanner from 'components/SmartBanner';
+import Loadable from 'react-loadable';
+import ComponentLoader from 'components/ComponentLoader';
 import GlobalNav from 'components/GlobalNav';
-import GlobalSidebar from 'components/GlobalSidebar';
-import Col from 'react-bootstrap/lib/Col';
-
 import debug from 'helpers/debug';
 import config from 'config';
 import metricsConfig from 'helpers/metrics';
 import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
-import FontStyles from 'components/FontStyles';
 import { removeMedia } from 'redux/actions/media';
-
+import { removeFootNote } from 'redux/actions/footNote';
+import Loader from 'quran-components/lib/Loader';
 import authConnect from './connect';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
+const GlobalSidebar = Loadable({
+  loader: () => import('components/GlobalSidebar'),
+  LoadingComponent: ComponentLoader
+});
+
+const SmartBanner = Loadable({
+  loader: () => import('components/SmartBanner'),
+  LoadingComponent: ComponentLoader
+});
+
 class App extends Component {
-  static propTypes = {
-    media: PropTypes.shape({
-      content: PropTypes.string
-    }).isRequired,
-    removeMedia: PropTypes.func.isRequired,
-    children: PropTypes.element,
-    main: PropTypes.element,
-    nav: PropTypes.element,
-    sidebar: PropTypes.element,
-  };
 
   static contextTypes = {
     store: PropTypes.object.isRequired
@@ -48,21 +47,29 @@ class App extends Component {
     const {
       main,
       nav,
-      sidebar,
       children,
       media,
+      footNote,
+      loadingFootNote,
       removeMedia, // eslint-disable-line no-shadow
+      removeFootNote, // eslint-disable-line no-shadow
       ...props
     } = this.props;
     debug('component:APPLICATION', 'Render');
+    let footNoteText;
+
+    if (footNote) {
+      footNoteText = footNote.text;
+    } else {
+      footNoteText = <Loader isActive={loadingFootNote} />;
+    }
 
     return (
       <div>
         <Helmet {...config.app.head} />
-        <FontStyles />
         <NoScript>
           <div className="row noscript-warning">
-            <Col md={12}>
+            <div className="col-md-12">
               <p>
                 Looks like either your browser does not support Javascript or its disabled.
                 Quran.com workes best with JavaScript enabled.
@@ -71,7 +78,7 @@ class App extends Component {
                   Click here
                 </a>
               </p>
-            </Col>
+            </div>
           </div>
         </NoScript>
         {
@@ -82,35 +89,39 @@ class App extends Component {
             }
           )
         }
-        {
-          React.cloneElement(
-            sidebar || <GlobalSidebar />,
-            {
-              open: this.state.sidebarOpen,
-              handleOpen: open => this.setState({ sidebarOpen: open })
-            }
-          )
-        }
+        <GlobalSidebar
+          open={this.state.sidebarOpen}
+          handleOpen={open => this.setState({ sidebarOpen: open })}
+        />
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
-        <Modal bsSize="large" show={!!media.content} onHide={removeMedia}>
+
+        <Modal bsSize="large" show={media && media.content} onHide={removeMedia}>
           <ModalHeader closeButton>
             <ModalTitle className="montserrat">
-              {media.content && media.content.resource.name}
+              {media.content && media.content.authorName}
             </ModalTitle>
           </ModalHeader>
           <ModalBody>
-            <div className="embed-responsive embed-responsive-16by9">
-              {
-                media.content &&
-                  <iframe
-                    className="embed-responsive-item"
-                    src={media.content.url}
-                    allowFullScreen
-                  />
-              }
-            </div>
+            <div
+              className="embed-responsive embed-responsive-16by9"
+              dangerouslySetInnerHTML={{ __html: media.content && media.content.embedText }}
+            />
+          </ModalBody>
+        </Modal>
+
+        <Modal bsSize="large" show={!!footNote || loadingFootNote} onHide={removeFootNote}>
+          <ModalHeader closeButton>
+            <ModalTitle className="montserrat">
+              Foot note
+            </ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <div
+              className={`${footNote && footNote.languageName}`}
+              dangerouslySetInnerHTML={{ __html: footNoteText }}
+            />
           </ModalBody>
         </Modal>
       </div>
@@ -121,7 +132,23 @@ class App extends Component {
 const metricsApp = metrics(metricsConfig)(App);
 const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 
+App.propTypes = {
+  media: customPropTypes.media.isRequired,
+  removeMedia: PropTypes.func.isRequired,
+  removeFootNote: PropTypes.func.isRequired,
+  children: PropTypes.element,
+  main: PropTypes.element,
+  nav: PropTypes.element,
+  sidebar: PropTypes.element,
+  footNote: customPropTypes.footNoteType,
+  loadingFootNote: PropTypes.bool
+};
+
 export default connect(
-  state => ({ media: state.media }),
-  { removeMedia }
+  state => ({
+    media: state.media,
+    footNote: state.footNote.footNote,
+    loadingFootNote: state.footNote.loadingFootNote
+  }),
+  { removeMedia, removeFootNote }
 )(AsyncApp);

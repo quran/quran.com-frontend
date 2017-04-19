@@ -2,8 +2,8 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 import { reducer as reduxAsyncConnect } from 'redux-connect';
 
-import surahs from './surahs';
-import ayahs from './ayahs';
+import chapters from './chapters';
+import verses from './verses';
 import audioplayer from './audioplayer';
 import lines from './lines';
 import options from './options';
@@ -13,6 +13,7 @@ import fontFaces from './fontFaces';
 import auth from './auth';
 import bookmarks from './bookmarks';
 import media from './media';
+import footNote from './footNote';
 
 export default combineReducers({
   routing: routerReducer,
@@ -20,12 +21,13 @@ export default combineReducers({
   auth,
   bookmarks,
   media,
-  surahs,
-  ayahs,
+  chapters,
+  verses,
   audioplayer,
   fontFaces,
   lines,
   searchResults,
   suggestResults,
-  options
+  options,
+  footNote
 });

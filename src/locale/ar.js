@@ -7,7 +7,7 @@ export default {
     'local.navtiveName': 'العربية',
     'local.selectLabel': 'اللغة',
     'setting.title': 'خيارات',
-    'setting.surahs': 'السورة',
+    'setting.chapters': 'السورة',
     'setting.verses': 'الذهاب إلى الآية',
     'setting.reciters.title': 'القراء',
     'setting.translations.title': 'الترجمات',
@@ -32,6 +32,7 @@ export default {
     'search.placeholder': 'بحث',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'آسف، كان هناك خطأ مع بحثك.',
+    'search.nothing': 'لا استعلام البحث',
     'search.noResult': 'لا توجد نتائج.ا',
 
     'surah.next': 'تالية سورة',
@@ -41,8 +42,9 @@ export default {
     'surah.index.continue': 'استءنف',
     'surah.index.quickLinks': 'روابط سريعة',
     'surah.goToBeginning': 'ابتداء من سورة',
+    'surah.read': 'قراءة سورة كاملة',
 
-    'player.currentAyah': 'آية',
+    'player.currentVerse': 'آية',
     'player.nextAyah': 'آية القادمة',
     'player.previousAyah': 'آية السابقة',
     'player.repeat.title': 'تكرار التبديل',
@@ -75,6 +77,8 @@ export default {
     'nav.navigate': 'انتقل',
     'nav.legacySite': 'الموقع القديم',
 
-    'login.message': 'تسجيل الدخول إلى Quran.com لتخزين كل ما تبذلونه من العناوين والملاحظات والأنشطة.'
+    'login.message': 'تسجيل الدخول إلى Quran.com لتخزين كل ما تبذلونه من العناوين والملاحظات والأنشطة.',
+
+    'ayah.notFound': 'لم يتم العثور على الآية'
   }
 };

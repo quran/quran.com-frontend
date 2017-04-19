@@ -1,9 +1,8 @@
 // TODO: Should be handled by redux and not component states.
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { surahType } from 'types';
-
 import { suggest } from 'redux/actions/suggest';
 
 const styles = require('./style.scss');
@@ -11,25 +10,6 @@ const styles = require('./style.scss');
 const ayahRegex = /^(\d+)(?::(\d+))?$/;
 
 class SearchAutocomplete extends Component {
-  static propTypes = {
-    surahs: PropTypes.objectOf(surahType).isRequired,
-    value: PropTypes.string,
-    // TODO: This should not be doing html stuff. Should use react onKeydown.
-    input: PropTypes.any, // eslint-disable-line
-    push: PropTypes.func.isRequired,
-    suggest: PropTypes.func.isRequired,
-    suggestions: PropTypes.arrayOf(PropTypes.shape({
-      ayah: PropTypes.string,
-      href: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired
-    })),
-    lang: PropTypes.string,
-    delay: PropTypes.number,
-  };
-
-  static defaultProps = {
-    delay: 200
-  }
 
   componentDidMount() {
     this.props.input.addEventListener('keydown', this.handleInputKeyDown.bind(this));
@@ -64,23 +44,23 @@ class SearchAutocomplete extends Component {
 
     if (!value) return matches;
 
-    const isAyahKeySearch = ayahRegex.test(value);
+    const isverseKeySearch = ayahRegex.test(value);
 
-    if (isAyahKeySearch) {
+    if (isverseKeySearch) {
       const captures = value.match(ayahRegex);
-      const surahId = captures[1];
+      const chapterId = captures[1];
       const ayahNum = captures[2];
-      const surah = this.props.surahs[surahId];
-      matches.push([surah.name.simple, surah.id + (ayahNum ? `/${ayahNum}` : '')]);
+      const chapter = this.props.chapters[chapterId];
+      matches.push([chapter.nameSimple, chapter.chapterNumber + (ayahNum ? `/${ayahNum}` : '')]);
     } else if (value.length >= 2) {
       const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
-      Object.keys(this.props.surahs).forEach((surahId) => {
-        const surah = this.props.surahs[surahId];
-        if (RegExp(escaped, 'i').test(surah.name.simple.replace(/['-]/g, ''))) {
-          matches.push([surah.name.simple, surah.id]);
-        } else if (RegExp(escaped, 'i').test(surah.name.arabic)) {
-          matches.push([surah.name.arabic, surah.id]);
+      Object.keys(this.props.chapters).forEach((chapterId) => {
+        const chapter = this.props.chapters[chapterId];
+        if (RegExp(escaped, 'i').test(chapter.nameSimple.replace(/['-]/g, ''))) {
+          matches.push([chapter.nameSimple, chapter.chapterNumber]);
+        } else if (RegExp(escaped, 'i').test(chapter.nameArabic)) {
+          matches.push([chapter.nameArabic, chapter.chapterNumber]);
         }
       });
     }
@@ -174,7 +154,7 @@ class SearchAutocomplete extends Component {
         onKeyDown={event => this.handleItemKeyDown(event, item)}
       >
         <div className={styles.link}>
-          <a href={item.href} tabIndex="-1">{item.href}</a>
+          <a href={item.href} tabIndex="-1">{item.ayah}</a>
         </div>
         <div className={styles.text}>
           <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{ __html: item.text }} />
@@ -195,17 +175,17 @@ class SearchAutocomplete extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const surahs = state.surahs.entities;
-  const surahId = state.surahs.current;
+  const chapters = state.chapters.entities;
+  const chapterId = state.chapters.current;
   const suggestions = state.suggestResults.results[ownProps.value];
   let lang = 'en';
 
-  if (state.ayahs && state.ayahs.entities && state.ayahs.entities[surahId]) {
-    const ayahs = state.ayahs.entities[surahId];
-    const ayahKey = Object.keys(ayahs)[0];
+  if (state.verses && state.verses.entities && state.verses.entities[chapterId]) {
+    const ayahs = state.verses.entities[chapterId];
+    const verseKey = Object.keys(ayahs)[0];
 
-    if (ayahKey) {
-      const ayah = ayahs[ayahKey];
+    if (verseKey) {
+      const ayah = ayahs[verseKey];
 
       if (ayah.content && ayah.content[0] && ayah.content[0].lang) {
         lang = ayah.content[0].lang;
@@ -214,10 +194,26 @@ function mapStateToProps(state, ownProps) {
   }
 
   return {
-    surahs,
+    chapters,
     suggestions,
     lang
   };
 }
+
+SearchAutocomplete.propTypes = {
+  chapters: customPropTypes.chapters.isRequired,
+  value: PropTypes.string,
+  // TODO: This should not be doing html stuff. Should use react onKeydown.
+  input: PropTypes.any, // eslint-disable-line
+  push: PropTypes.func.isRequired,
+  suggest: PropTypes.func.isRequired,
+  suggestions: customPropTypes.suggestions,
+  lang: PropTypes.string,
+  delay: PropTypes.number,
+};
+
+SearchAutocomplete.defaultProps = {
+  delay: 200
+};
 
 export default connect(mapStateToProps, { push, suggest })(SearchAutocomplete);

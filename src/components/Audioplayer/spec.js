@@ -27,7 +27,7 @@ describe('<Audioplayer />', () => {
               setRepeat={setRepeat}
               setAyah={setAyah}
               repeat={repeat}
-              currentAyah="2:3"
+              currentVerse="2:3"
             />
           );
 
@@ -91,7 +91,7 @@ describe('<Audioplayer />', () => {
               setRepeat={setRepeat}
               setAyah={setAyah}
               repeat={repeat}
-              currentAyah="2:3"
+              currentVerse="2:3"
             />
           );
 

@@ -1,4 +1,3 @@
-export const SET_USER_AGENT = '@@quran/audioplayer/SET_USER_AGENT';
 export const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
 export const SET_CURRENT_WORD = '@@quran/audioplayer/SET_CURRENT_WORD';
 export const PLAY_CURRENT_WORD = '@@quran/audioplayer/PLAY_CURRENT_WORD';
@@ -11,4 +10,6 @@ export const SET_REPEAT = '@@quran/audioplayer/SET_REPEAT';
 export const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
 export const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
 export const UPDATE = '@@quran/audioplayer/UPDATE';
-
+export const LOAD = '@@quran/audioplayer/LOAD';
+export const LOAD_SUCCESS = '@@quran/audioplayer/LOAD_SUCCESS';
+export const LOAD_FAIL = '@@quran/audioplayer/LOAD_FAIL';

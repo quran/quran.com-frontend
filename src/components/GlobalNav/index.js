@@ -1,5 +1,6 @@
 /* global window */
 import React, { PropTypes, Component } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import Link from 'react-router/lib/Link';
 import Navbar from 'react-bootstrap/lib/Navbar';
@@ -8,30 +9,10 @@ import Nav from 'react-bootstrap/lib/Nav';
 import LocaleSwitcher from 'components/LocaleSwitcher';
 
 import debug from 'helpers/debug';
-import { userType } from 'types';
 
 const styles = require('./style.scss');
 
 class GlobalNav extends Component {
-  static propTypes = {
-    // handleToggleSidebar: PropTypes.func.isRequired,
-    leftControls: PropTypes.arrayOf(PropTypes.element),
-    rightControls: PropTypes.arrayOf(PropTypes.element),
-    handleSidebarToggle: PropTypes.func.isRequired,
-    isStatic: PropTypes.bool.isRequired,
-    user: userType,
-    location: PropTypes.shape({
-      action: PropTypes.string,
-      hash: PropTypes.string,
-      pathname: PropTypes.string,
-      search: PropTypes.string,
-      query: PropTypes.objectOf(PropTypes.string)
-    })
-  };
-
-  static defaultProps = {
-    isStatic: false
-  };
 
   state = {
     scrolled: false
@@ -112,7 +93,7 @@ class GlobalNav extends Component {
             leftControls.map(((control, index) => React.cloneElement(control, { key: index })))
           }
         </Nav>
-        <Nav pullRight className="hidden-xs">
+        <Nav pullRight className="hidden-xs hidden-sm">
           {
             this.renderRightControls()
             .map(((control, index) => React.cloneElement(control, { key: index })))
@@ -122,6 +103,20 @@ class GlobalNav extends Component {
     );
   }
 }
+
+GlobalNav.propTypes = {
+  // handleToggleSidebar: PropTypes.func.isRequired,
+  leftControls: PropTypes.arrayOf(PropTypes.element),
+  rightControls: PropTypes.arrayOf(PropTypes.element),
+  handleSidebarToggle: PropTypes.func.isRequired,
+  isStatic: PropTypes.bool.isRequired,
+  user: customPropTypes.userType,
+  location: customPropTypes.location
+};
+
+GlobalNav.defaultProps = {
+  isStatic: false
+};
 
 export default connect(
   state => ({

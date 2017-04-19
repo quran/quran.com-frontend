@@ -1,25 +1,23 @@
 import React from 'react';
-import Col from 'react-bootstrap/lib/Col';
-
-import Title from 'containers/Surah/Title';
 import Share from 'components/Share';
-import { surahType } from 'types';
+import * as customPropTypes from 'customPropTypes';
 
-const TopOptions = ({ surah }) => (
+const TopOptions = ({ chapter }) => (
   <div className="row">
-    <Col md={4} className="hidden-xs hidden-sm">
-      <Title surah={surah} />
-    </Col>
-    <Col md={8} className="text-right">
+    <div className="col-md-4 hidden-xs hidden-sm">
+      {/* NOTE: Caused about 7000 lines of code to accept all titles SVG */}
+      {/* <Title chapterNumber={chapter.id} className={styles.title} color={'#2CA4AB'} /> */}
+    </div>
+    <div className="col-md-8 text-right">
       <ul className="list-inline">
-        <li><Share surah={surah} /></li>
+        <li><Share chapter={chapter} /></li>
       </ul>
-    </Col>
+    </div>
   </div>
 );
 
 TopOptions.propTypes = {
-  surah: surahType.isRequired
+  chapter: customPropTypes.surahType.isRequired
 };
 
 export default TopOptions;

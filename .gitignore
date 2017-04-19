@@ -11,8 +11,7 @@ webpack-stats.json
 webpack-assets.json
 bundle-stats.json
 selenium-debug.log
-tests/functional/output/*
-test/functional/screenshots/*
 .ssh
 webpack-stats.debug.json
 *.DS_Store
+.vscode

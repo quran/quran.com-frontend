@@ -1,80 +1,181 @@
-import React, { PropTypes } from 'react';
-import { connect } from 'react-redux';
-import NavDropdown from 'react-bootstrap/lib/NavDropdown';
-
-import { surahType, optionsType } from 'types';
+import React, { PropTypes, Component } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import * as OptionsActions from 'redux/actions/options.js';
-
+import { connect } from 'react-redux';
+import { replace } from 'react-router-redux';
+import Link from 'react-router/lib/Link';
+import Drawer from 'quran-components/lib/Drawer';
+import Menu from 'quran-components/lib/Menu';
+import SearchInput from 'components/SearchInput';
 import SurahsDropdown from 'components/SurahsDropdown';
 import ReadingModeToggle from 'components/ReadingModeToggle';
 import NightModeToggle from 'components/NightModeToggle';
-import FontSizeDropdown from 'components/FontSizeDropdown';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-// TODO: import VersesDropdown from 'components/VersesDropdown';
 import InformationToggle from 'components/InformationToggle';
+import FontSizeDropdown from 'components/FontSizeDropdown';
+import ReciterDropdown from 'components/ReciterDropdown';
+import ContentDropdown from 'components/ContentDropdown';
+import TooltipDropdown from 'components/TooltipDropdown';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import VersesDropdown from 'components/VersesDropdown';
+
+import { load, setCurrentVerse } from 'redux/actions/verses.js';
+
 import GlobalNav from '../index';
 
 const styles = require('../style.scss');
 
-const GlobalNavSurah = ({ surah, surahs, setOption, options, ...props }) => (
-  <GlobalNav
-    {...props}
-    leftControls={[
-      <SurahsDropdown title={surah.name.simple} surahs={surahs} />,
-      <NavDropdown
-        id="hidden-dropdown"
-        className={`visible-xs-inline-block ${styles.optionsDropdown}`}
-        title={<LocaleFormattedMessage id="settings.options" defaultMessage="Options" />}
-      >
-        <FontSizeDropdown
-          fontSize={options.fontSize}
-          onOptionChange={setOption}
-        />
-        <InformationToggle
-          onToggle={setOption}
-          isToggled={options.isShowingSurahInfo}
-        />
-        <ReadingModeToggle
-          isToggled={options.isReadingMode}
-          onToggle={setOption}
-        />
-        <NightModeToggle />
-      </NavDropdown>
-    ]}
-    rightControls={[
-      <FontSizeDropdown
-        fontSize={options.fontSize}
-        onOptionChange={setOption}
-      />,
-      <InformationToggle
-        onToggle={setOption}
-        isToggled={options.isShowingSurahInfo}
-      />,
-      <ReadingModeToggle
-        isToggled={options.isReadingMode}
-        onToggle={setOption}
-      />,
-      <NightModeToggle />
-    ]}
-  />
-);
+class GlobalNavSurah extends Component {
+  state = {
+    drawerOpen: false
+  }
 
-GlobalNavSurah.propTypes = {
-  surah: surahType.isRequired,
-  surahs: PropTypes.objectOf(surahType).isRequired,
-  options: optionsType.isRequired,
-  setOption: PropTypes.func.isRequired,
-};
+  handleOptionChange = (payload) => {
+    const { chapter, setOption, options, versesIds } = this.props;
+
+    setOption(payload);
+
+    if (chapter) {
+      const from = [...versesIds][0];
+      const to = [...versesIds][[...versesIds].length - 1];
+      const paging = { offset: from - 1, limit: (to - from) + 1 };
+      this.props.load(chapter.chapterNumber, paging, { ...options, ...payload });
+    }
+  };
+
+  handleVerseDropdownClick = (verseNum) => {
+    const { versesIds, chapter } = this.props; // eslint-disable-line no-shadow
+
+    this.props.setCurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
+
+    if (versesIds.has(verseNum)) {
+      return false;
+    }
+
+    return this.props.replace(`/${chapter.chapterNumber}/${verseNum}-${verseNum + 10}`);
+  }
+
+  handleDrawerToggle = (open) => {
+    this.setState({ drawerOpen: open });
+  }
+
+  renderDrawerToggle(visibleXs) {
+    return (
+      <li>
+        <a
+          tabIndex="-1"
+          className={`pointer ${visibleXs && 'visible-xs visible-sm'}`}
+          onClick={() => this.handleDrawerToggle(true)}
+        >
+          <i className="ss-icon ss-settings text-align" />
+          <LocaleFormattedMessage id="setting.title" defaultMessage="Settings" />
+        </a>
+      </li>
+    );
+  }
+
+  render() {
+    const { chapter, chapters, setOption, versesIds, options, ...props } = this.props;
+
+    return (
+      <GlobalNav
+        {...props}
+        leftControls={[
+          <SurahsDropdown chapter={chapter} chapters={chapters} />,
+          <VersesDropdown
+            chapter={chapter}
+            isReadingMode={options.isReadingMode}
+            loadedVerses={versesIds}
+            onClick={this.handleVerseDropdownClick}
+          />,
+          <div className="navbar-form navbar-left hidden-xs hidden-sm">
+            <SearchInput className="search-input" />
+          </div>,
+          <li className="visible-xs-inline-block visible-sm-inline-block">
+            <Link to="/search">
+              <i className="ss-icon ss-search" style={{ verticalAlign: 'sub' }} />
+            </Link>
+          </li>,
+          this.renderDrawerToggle(true),
+          <Drawer
+            right
+            drawerClickClose={false}
+            open={this.state.drawerOpen}
+            handleOpen={this.handleDrawerToggle}
+            toggle={<noscript />}
+          >
+            <div style={{ padding: 15 }}>
+              <h4><LocaleFormattedMessage id="setting.title" defaultMessage="Settings" /></h4>
+            </div>
+            <Menu>
+              <InformationToggle
+                onToggle={setOption}
+                isToggled={options.isShowingSurahInfo}
+              />
+              <ReadingModeToggle
+                isToggled={options.isReadingMode}
+                onToggle={setOption}
+              />
+              <NightModeToggle
+                isNightMode={options.isNightMode}
+                onToggle={setOption}
+              />
+              <hr />
+              <ReciterDropdown
+                onOptionChange={this.handleOptionChange}
+              />
+              <ContentDropdown
+                onOptionChange={this.handleOptionChange}
+              />
+              <TooltipDropdown
+                tooltip={options.tooltip}
+                onOptionChange={setOption}
+              />
+              <hr />
+              <div className={styles.title}>
+                <LocaleFormattedMessage id="setting.fontSize" defaultMessage="Font Size" />
+              </div>
+              <FontSizeDropdown
+                fontSize={options.fontSize}
+                onOptionChange={setOption}
+              />
+            </Menu>
+          </Drawer>
+        ]}
+        rightControls={[
+          this.renderDrawerToggle()
+        ]}
+      />
+    );
+  }
+}
 
 function mapStateToProps(state, ownProps) {
-  const surahId = parseInt(ownProps.params.surahId, 10);
-  const surah: Object = state.surahs.entities[surahId];
+  const chapterId = parseInt(ownProps.params.chapterId, 10);
+  const chapter: Object = state.chapters.entities[chapterId];
+  const verses: Object = state.verses.entities[chapterId];
+  const versesArray = verses ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10)) : [];
+  const versesIds = new Set(versesArray);
 
   return {
-    surah,
-    surahs: state.surahs.entities,
-    options: state.options
+    chapter,
+    chapters: state.chapters.entities,
+    options: state.options,
+    versesIds
   };
 }
 
-export default connect(mapStateToProps, OptionsActions)(GlobalNavSurah);
+GlobalNavSurah.propTypes = {
+  chapter: customPropTypes.surahType.isRequired,
+  chapters: customPropTypes.chapters.isRequired,
+  options: customPropTypes.optionsType.isRequired,
+  setOption: PropTypes.func.isRequired,
+  versesIds: PropTypes.instanceOf(Set),
+  load: PropTypes.func.isRequired,
+  setCurrentVerse: PropTypes.func.isRequired,
+  replace: PropTypes.func.isRequired
+};
+
+export default connect(
+  mapStateToProps,
+  { ...OptionsActions, load, replace, setCurrentVerse }
+)(GlobalNavSurah);

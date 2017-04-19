@@ -3,11 +3,11 @@ export default {
   messages: {
     local: 'english',
     'local.siteLocale': 'Site Language',
-    'local.changeLocal': 'Choose the language you want the site to display with',
+    'local.changeLocal': 'Choose the language you want the site to display in',
     'local.navtiveName': 'English',
     'local.selectLabel': 'Language',
     'setting.title': 'Settings',
-    'setting.surahs': 'Surahs',
+    'setting.chapters': 'Surahs',
     'setting.verses': 'Go to verse',
     'setting.reciters.title': 'Reciters',
     'setting.translations.title': 'Translations',
@@ -18,7 +18,7 @@ export default {
     'setting.fontSize.arabic': 'Arabic',
     'setting.reading': 'Reading',
     'setting.tooltip': 'Tooltip content',
-    'setting.tooltip.title': 'TOOLTIP DISPLAY',
+    'setting.tooltip.title': 'Tooltip display',
     'setting.tooltip.translation': 'Translation',
     'setting.tooltip.transliteration': 'Transliteration',
     'setting.nightMode': 'Night Mode',
@@ -28,10 +28,12 @@ export default {
     'ayah.media.lectureFrom': 'Watch video commentary from {from}',
     'ayah.bookmarked': 'Bookmarked',
     'ayah.bookmark': 'Bookmark',
+    'ayah.notFound': 'Ayah not found',
 
     'search.placeholder': 'Search "Noah"',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Sorry, there was an error with your search.',
+    'search.nothing': 'No search query.',
     'search.noResult': 'No results found.',
 
     'surah.next': 'NEXT',
@@ -41,8 +43,9 @@ export default {
     'surah.index.continue': 'Continue',
     'surah.index.quickLinks': 'Quick links',
     'surah.goToBeginning': 'Beginning of Surah',
+    'surah.read': 'Read full Surah',
 
-    'player.currentAyah': 'Ayah',
+    'player.currentVerse': 'Ayah',
     'player.nextAyah': 'Next Ayah',
     'player.previousAyah': 'Previous Ayah',
     'player.repeat.title': 'TOGGLE REPEAT',
@@ -52,9 +55,9 @@ export default {
     'player.repeat.rangeEnd': 'To',
     'player.repeat.times': 'Times',
     'player.repeat.loop': 'loop',
-    'player.scrollButtonTip': 'Automatically scrolls to the currently playing ayah on transitions...', // eslint-disable-line max-len
+    'player.scrollButtonTip': 'Automatically scrolls to the currently playing ayah', // eslint-disable-line max-len
 
-    'app.loading': 'Loading ...',
+    'app.loading': 'Loading...',
     'actions.copy': 'Copy',
     'actions.copied': 'Copied!',
     'actions.play': 'Play',
@@ -75,6 +78,6 @@ export default {
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
 
-    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes and activities.'
+    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.'
   }
 };

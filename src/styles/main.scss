@@ -12,6 +12,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import 'partials/highlight';
 @import 'nightmode';
 @import 'partials/no-script';
+@import 'partials/surah_names';
 
 html,body{
   height: 100%;
@@ -31,8 +32,9 @@ html,body{
   background-color: #F5FBF7;
 }
 
-a:hover{
+a:hover, a:focus{
   text-decoration: none;
+  outline: none;
 }
 
 .form-control:focus{
@@ -165,6 +167,12 @@ li em{
 .urdu, .punjabi{
   direction: rtl;
   font-family: 'Nafees';
+  text-align: right;
+  line-height: 30px;
+
+  #arabic{
+    font-family: initial;
+  }
 }
 
 .modal-backdrop{

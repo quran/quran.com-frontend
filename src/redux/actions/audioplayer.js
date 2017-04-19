@@ -1,5 +1,4 @@
 import {
-  SET_USER_AGENT,
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
   PLAY_CURRENT_WORD,
@@ -11,14 +10,10 @@ import {
   SET_REPEAT,
   TOGGLE_SCROLL,
   BUILD_ON_CLIENT,
+  LOAD,
+  LOAD_SUCCESS,
+  LOAD_FAIL,
   UPDATE } from 'redux/constants/audioplayer.js';
-
-export function setUserAgent(userAgent) {
-  return {
-    type: SET_USER_AGENT,
-    userAgent
-  };
-}
 
 export function setCurrentFile(file) {
   return {
@@ -53,24 +48,24 @@ export function pause() {
   };
 }
 
-export function next(currentAyah) {
+export function next(currentVerse) {
   return {
     type: NEXT,
-    currentAyah
+    currentVerse
   };
 }
 
-export function setAyah(currentAyah) {
+export function setAyah(currentVerse) {
   return {
     type: SET_AYAH,
-    currentAyah
+    currentVerse
   };
 }
 
-export function previous(currentAyah) {
+export function previous(currentVerse) {
   return {
     type: PREVIOUS,
-    currentAyah
+    currentVerse
   };
 }
 
@@ -87,10 +82,10 @@ export function toggleScroll() {
   };
 }
 
-export function buildOnClient(surahId) {
+export function buildOnClient(chapterId) {
   return {
     type: BUILD_ON_CLIENT,
-    surahId
+    chapterId
   };
 }
 
@@ -98,5 +93,18 @@ export function update(payload) {
   return {
     type: UPDATE,
     payload
+  };
+}
+
+export function load({ chapterId, verseId, verseKey, audio }) { // eslint-disable-line
+  return {
+    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    promise: client => client.get(`/api/v3/chapters/${chapterId}/verses/${verseId}/audio_files`, {
+      params: {
+        recitation: audio || 8 // NOTE: default, but should never be used
+      }
+    }),
+    verseKey,
+    chapterId
   };
 }

@@ -1,25 +1,18 @@
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import Helmet from 'react-helmet';
-import { segmentType } from 'types';
-
 import debug from 'helpers/debug';
 
-export default class Segments extends Component {
-  static propTypes = {
-    segments: PropTypes.objectOf(segmentType).isRequired,
-    currentAyah: PropTypes.string,
-    currentTime: PropTypes.number
-  };
-
+class Segments extends Component {
   shouldComponentUpdate(nextProps) {
     return [
-      this.props.currentAyah !== nextProps.currentAyah,
+      this.props.currentVerse !== nextProps.currentVerse,
       this.props.currentTime !== nextProps.currentTime,
     ].some(test => test);
   }
 
   render() {
-    const { segments, currentAyah, currentTime } = this.props;
+    const { segments, currentVerse, currentTime } = this.props;
     const style = [];
     let currentWord = null;
 
@@ -29,7 +22,7 @@ export default class Segments extends Component {
       const word = segments.words[wordIndex];
 
       if (currentTime >= word.startTime && currentTime < word.endTime) {
-        currentWord = `${currentAyah}:${wordIndex}`;
+        currentWord = `${currentVerse}:${wordIndex}`;
       }
     });
 
@@ -53,3 +46,11 @@ export default class Segments extends Component {
     );
   }
 }
+
+Segments.propTypes = {
+  segments: customPropTypes.segments.isRequired,
+  currentVerse: PropTypes.string,
+  currentTime: PropTypes.number
+};
+
+export default Segments;

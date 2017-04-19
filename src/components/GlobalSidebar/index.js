@@ -3,27 +3,16 @@ import React, { PropTypes, Component } from 'react';
 import Link from 'react-router/lib/Link';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import SettingsModal from 'components/SettingsModal';
 
 const styles = require('./style.scss');
 
 const NavbarHeader = Navbar.Header;
 
 class GlobalSidebar extends Component {
-  static propTypes = {
-    open: PropTypes.bool.isRequired,
-    handleOpen: PropTypes.func,
-    settingsModalProps: PropTypes.object, // eslint-disable-line
-    children: PropTypes.node
-  };
-
-  static defaultProps = {
-    open: false
-  };
 
   state = {
     settingsModalOpen: false
-  }
+  };
 
   componentDidMount() {
     document.body.addEventListener('click', this.onBodyClick.bind(this), true);
@@ -44,7 +33,7 @@ class GlobalSidebar extends Component {
   }
 
   render() {
-    const { open, handleOpen, settingsModalProps, children } = this.props;
+    const { open, handleOpen, children } = this.props;
 
     return (
       <div
@@ -55,19 +44,12 @@ class GlobalSidebar extends Component {
             <p // eslint-disable-line
               className="navbar-text"
               onClick={() => handleOpen(false)}
-            >
-              <LocaleFormattedMessage id="nav.title" defaultMessage="Quran" />
+            ><Link to="/"><i className={`ss-icon ss-home ${styles.backToHome}`} /><LocaleFormattedMessage id="nav.title" defaultMessage="Quran" /></Link>
             </p>
           </NavbarHeader>
         </Navbar>
         <ul className={styles.list}>
           {children}
-          <li>
-            <a tabIndex="-1" className="pointer" onClick={() => this.setState({ settingsModalOpen: true }, handleOpen(false))}>
-              <i className="ss-icon ss-settings vertical-align-middle" />{' '}
-              <LocaleFormattedMessage id="nav.settings" defaultMessage="Settings" />
-            </a>
-          </li>
           <li>
             <a href="https://quran.zendesk.com/hc/en-us" data-metrics-event-name="Sidebar:Link:Help">
               <i className="ss-icon ss-help vertical-align-middle" />{' '}
@@ -77,7 +59,6 @@ class GlobalSidebar extends Component {
               />
             </a>
           </li>
-          <hr />
           <li>
             <Link to="/apps" data-metrics-event-name="Sidebar:Link:Mobile">
               <i className="ss-icon ss-cell vertical-align-middle" />{' '}
@@ -120,14 +101,20 @@ class GlobalSidebar extends Component {
             </a>
           </li>
         </ul>
-        <SettingsModal
-          {...settingsModalProps}
-          open={this.state.settingsModalOpen}
-          handleHide={() => this.setState({ settingsModalOpen: false })}
-        />
       </div>
     );
   }
 }
+
+GlobalSidebar.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleOpen: PropTypes.func,
+  settingsModalProps: PropTypes.object, // eslint-disable-line
+  children: PropTypes.node
+};
+
+GlobalSidebar.defaultProps = {
+  open: false
+};
 
 export default GlobalSidebar;

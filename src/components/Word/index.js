@@ -1,71 +1,104 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import bindTooltip from 'utils/bindTooltip';
+import { zeroPad } from 'helpers/StringHelpers';
+
 /* eslint-disable no-unused-vars */
-const CHAR_TYPE_WORD = 1;
-const CHAR_TYPE_END = 2;
-const CHAR_TYPE_PAUSE = 3;
-const CHAR_TYPE_RUB = 4;
-const CHAR_TYPE_SAJDAH = 5;
+const CHAR_TYPE_WORD = 'word';
+const CHAR_TYPE_END = 'end';
+const CHAR_TYPE_PAUSE = 'pause';
+const CHAR_TYPE_RUB = 'rub';
+const CHAR_TYPE_SAJDAH = 'sajdah';
 
-export default class Word extends React.Component {
-  static propTypes = {
-    word: PropTypes.object.isRequired, // eslint-disable-line
-    tooltip: PropTypes.string,
-    audioActions: PropTypes.object.isRequired, // eslint-disable-line
-    audioPosition: PropTypes.number,
-    currentAyah: PropTypes.string.isRequired,
-    isPlaying: PropTypes.bool,
-    isSearched: PropTypes.bool
-  };
-
+class Word extends Component {
   buildTooltip = (word, tooltip) => {
     let title;
-    if (!word.wordId && word.charTypeId === CHAR_TYPE_END) {
-      title = `Verse ${word.ayahKey.split(':')[1]}`;
+
+    if (word.charType === CHAR_TYPE_END) {
+      title = `Verse ${word.verseKey.split(':')[1]}`;
+    } else if (word.charType === CHAR_TYPE_WORD) {
+      title = word[tooltip].text;
     } else {
-      title = word[tooltip];
+      title = '';
     }
     return title;
   }
 
-  handleWordClick = () => {
-    const { word, currentAyah, audioActions, audioPosition, isPlaying, isSearched } = this.props;
+  handleWordPlay = () => {
+    const { word } = this.props;
 
-    if (isSearched) {
+    if (word.audio) {
+      const audio = new Audio(word.audio.url); // eslint-disable-line
+
+      audio.play();
+    }
+  }
+
+  handleSegmentPlay = () => {
+    const { word, currentVerse, audioActions, audioPosition, isPlaying, isSearched } = this.props;
+
+    if (isSearched || !word.audio) {
       return;
     }
 
-    if ((currentAyah === word.ayahKey) && isPlaying) {
+    if ((currentVerse === word.verseKey) && isPlaying) {
       audioActions.setCurrentWord(word.code);
     } else {
       audioActions.pause();
-      audioActions.setAyah(word.ayahKey);
+      audioActions.setAyah(word.verseKey);
       audioActions.playCurrentWord({ word, position: audioPosition });
     }
   }
 
   render() {
-    const { tooltip, word, currentAyah, isPlaying, audioPosition } = this.props;
+    const { tooltip, word, currentVerse, isPlaying, audioPosition, useTextFont } = this.props;
 
-    let id = null;
-    const highlight = currentAyah === word.ayahKey && isPlaying ? 'highlight' : '';
-    const className = `${word.className} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    let text;
+    let spacer;
+    const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
+    const className = `${useTextFont ? 'text-' : ''}${word.className} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
 
-    if (word.charTypeId === CHAR_TYPE_WORD) {
-      id = `word-${word.ayahKey.replace(/:/, '-')}-${audioPosition || word.position}`;
+    if (useTextFont) {
+      if (word.charType === CHAR_TYPE_END) {
+        text = zeroPad(word.verseKey.split(':')[1], 3, 0);
+      } else {
+        text = word.textMadani;
+      }
+    } else {
+      text = word.code;
+    }
+
+    if (word.charType === CHAR_TYPE_WORD) {
+      spacer = '&nbsp;';
     }
 
     return (
-      <b // eslint-disable-line
-        { ...bindTooltip}
-        key={word.code}
-        id={id}
-        onClick={this.handleWordClick}
-        className={`${className} pointer`}
-        title={this.buildTooltip(word, tooltip)}
-        dangerouslySetInnerHTML={{ __html: word.code }}
-      />
+      <span>
+        <b // eslint-disable-line
+          { ...bindTooltip}
+          key={word.code}
+          id={id}
+          onDoubleClick={this.handleSegmentPlay}
+          onClick={this.handleWordPlay}
+          className={`${className} pointer`}
+          title={this.buildTooltip(word, tooltip)}
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
+        <small dangerouslySetInnerHTML={{ __html: spacer }} style={{ letterSpacing: -15 }} />
+      </span>
     );
   }
-
 }
+
+Word.propTypes = {
+  word: PropTypes.object.isRequired, // eslint-disable-line
+  tooltip: PropTypes.string,
+  audioActions: PropTypes.object.isRequired, // eslint-disable-line
+  audioPosition: PropTypes.number,
+  currentVerse: PropTypes.string,
+  isPlaying: PropTypes.bool,
+  isSearched: PropTypes.bool,
+  useTextFont: PropTypes.bool // tmp change to compare text and code based rendering
+};
+
+export default Word;

@@ -1,22 +1,20 @@
 import React, { PropTypes } from 'react';
+import * as customProptypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import Modal from 'react-bootstrap/lib/Modal';
-
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import ReciterDropdown from 'components/ReciterDropdown';
 import ContentDropdown from 'components/ContentDropdown';
 import TooltipDropdown from 'components/TooltipDropdown';
-
 import { setOption } from 'redux/actions/options.js';
-import { load } from 'redux/actions/ayahs.js';
-import { optionsType, surahType } from 'types';
+import { load } from 'redux/actions/verses.js';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
 const SettingsModal = ({
-  surah,
+  chapter,
   ayahIds,
   open,
   handleHide,
@@ -27,10 +25,10 @@ const SettingsModal = ({
   const handleOptionChange = (payload) => {
     setOption(payload);
 
-    if (surah) {
+    if (chapter) {
       const first = [...ayahIds][0];
       const last = [...ayahIds][[...ayahIds].length - 1];
-      load(surah.id, first, last, { ...options, ...payload });
+      load(chapter.chapterNumber, first, last, { ...options, ...payload });
     }
   };
 
@@ -48,7 +46,6 @@ const SettingsModal = ({
           </h5>
           <ReciterDropdown
             onOptionChange={handleOptionChange}
-            audio={options.audio}
           />
         </div>
         <div className="form-group">
@@ -57,7 +54,6 @@ const SettingsModal = ({
           </h5>
           <ContentDropdown
             onOptionChange={handleOptionChange}
-            content={options.content}
           />
         </div>
         <div className="form-group">
@@ -75,11 +71,11 @@ const SettingsModal = ({
 };
 
 SettingsModal.propTypes = {
-  surah: surahType,
+  chapter: customProptypes.surahType,
   ayahIds: PropTypes.instanceOf(Set),
   open: PropTypes.bool,
   handleHide: PropTypes.func.isRequired,
-  options: optionsType,
+  options: customProptypes.optionsType,
   setOption: PropTypes.func.isRequired,
   load: PropTypes.func.isRequired,
 };

@@ -7,7 +7,7 @@ export default {
     'local.navtiveName': 'اردو',
     'local.selectLabel': 'زبان',
     'setting.title': 'اختیارات',
-    'setting.surahs': 'سورة',
+    'setting.chapters': 'سورة',
     'setting.verses': 'آیت منتخب کریں',
     'setting.reciters.title': 'قاری منتخب کریں',
     'setting.translations.title': 'ترجمے',
@@ -28,10 +28,12 @@ export default {
     'ayah.media.lectureFrom': 'کے لیکچر دیکھے  {from}',
     'ayah.bookmarked': 'حوالہ ہے',
     'ayah.bookmark': 'حوالہ',
+    'ayah.notFound': 'آیت نہیں ملا',
 
     'search.placeholder': 'تلاش کر یں',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
-    'search.error': 'معذرت، آپ کی تلاش کے ساتھ ایک خرابی پیش آگئی.',
+    'search.error': 'معذرت، آپ کی تلاش کے ساتھ ایک خرابی پیش آگئی ہے',
+    'search.nothing': 'تلاش کے لئے کچھ لکھئے',
     'search.noResult': 'کوئی نتیجہ نہیں ملا',
 
     'surah.next': 'اگلی سورت',
@@ -41,8 +43,9 @@ export default {
     'surah.index.continue': 'جاری رہے',
     'surah.index.quickLinks': 'فوری لنک',
     'surah.goToBeginning': 'سورہ کے شروع میں جائیں',
+    'surah.read': 'مکمل سورت پڑھیں',
 
-    'player.currentAyah': 'آیت',
+    'player.currentVerse': 'آیت',
     'player.nextAyah': 'اگلی آیت',
     'player.previousAyah': 'پچھلی آیت',
     'player.repeat.title': ' دہرائیں',
@@ -69,7 +72,7 @@ export default {
     'nav.otherLinks': 'دیگر لنکس',
     'nav.contactUs': 'ہم سے رابطہ',
     'nav.help': 'مدد اور تاثرات',
-    'nav.aboutQuranProject': 'قرآن کریم ایک فلاں عامہ (عوامی بہبود کے لئے) منصوبہ ہے',
+    'nav.aboutQuranProject': 'قرآن کریم ایک فلاح عامہ (عوامی بہبود کے لئے) منصوبہ ہے',
     'nav.rightsReserved': 'جملہ حقوق محفوظ ہیں',
     'nav.mobile': 'موبائل',
     'nav.navigate': 'تشریف لے جائیں',

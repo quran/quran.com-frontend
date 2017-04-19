@@ -55,10 +55,6 @@ Pull requests are the greatest contributions, so be sure they are focused in sco
 	```
 	Our `npm run test` tests and _watch_. Otherwise use `npm run test:ci:unit` for CI level tests.
 
-	We also have nightwatch function tests. You can install nightwatch globally and can run tests like this:
-	```
-	nightwatch --test tests/functional/specs/Index_spec.js
-	```
 
 5. To create a PR you need to push your branch to the origin(forked) remote and then press some buttons on GitHub:
 

@@ -1,31 +1,17 @@
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import Col from 'react-bootstrap/lib/Col';
 import { intlShape, injectIntl } from 'react-intl';
-
 import SwitchToggle from 'components/SwitchToggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
-import surahType from 'types/surahType';
 
 const style = require('../style.scss');
 
 class RepeatButton extends Component {
-  static propTypes = {
-    surah: surahType,
-    repeat: PropTypes.shape({
-      from: PropTypes.number,
-      to: PropTypes.number,
-      times: PropTypes.number
-    }).isRequired,
-    setRepeat: PropTypes.func.isRequired,
-    current: PropTypes.number.isRequired,
-    intl: intlShape.isRequired
-  };
 
   handleToggle = () => {
     const { repeat, setRepeat, current } = this.props;
@@ -38,7 +24,7 @@ class RepeatButton extends Component {
       from: current,
       to: current
     });
-  }
+  };
 
   handleNavChange = (nav) => {
     const { setRepeat, current } = this.props;
@@ -58,11 +44,11 @@ class RepeatButton extends Component {
   }
 
   renderRangeAyahs() {
-    const { surah, repeat, setRepeat } = this.props;
-    const array = Array(surah.ayat).join().split(',');
+    const { chapter, repeat, setRepeat } = this.props;
+    const array = Array(chapter.versesCount).join().split(',');
 
     return (
-      <Col md={12} style={{ paddingTop: 15 }}>
+      <div className="col-md-12" style={{ paddingTop: 15 }}>
         <ul className="list-inline" style={{ marginBottom: 0 }}>
           <li>
             <LocaleFormattedMessage
@@ -73,18 +59,27 @@ class RepeatButton extends Component {
             <FormControl
               componentClass="select"
               value={repeat.from}
-              onChange={event => setRepeat({
-                ...repeat,
-                from: parseInt(event.target.value, 10),
-                to: parseInt(event.target.value, 10) + 3
-              })}
+              onChange={(event) => {
+                let to = parseInt(event.target.value, 10) + 3;
+                to = to < chapter.ayat ? to : chapter.ayat;
+                setRepeat({
+                  ...repeat,
+                  from: parseInt(event.target.value, 10),
+                  to
+                });
+              }}
             >
               {
-                array.map((ayah, index) => (
-                  <option key={index} value={index + 1}>
-                    {index + 1}
-                  </option>
-                ))
+                array.reduce((options, ayah, index) => {
+                  if (index + 1 < chapter.ayat) { // Exclude last verse
+                    options.push(
+                      <option key={index} value={index + 1}>
+                        {index + 1}
+                      </option>
+                    );
+                  }
+                  return options;
+                }, [])
               }
             </FormControl>
           </li>
@@ -101,27 +96,32 @@ class RepeatButton extends Component {
               onChange={event => setRepeat({ ...repeat, to: parseInt(event.target.value, 10) })}
             >
               {
-                array.map((ayah, index) => (
-                  <option key={index} value={repeat.from ? index + 1 + repeat.from : index + 1}>
-                    {repeat.from ? index + 1 + repeat.from : index + 1}
-                  </option>
-                ))
+                array.reduce((options, ayah, index) => {
+                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= chapter.ayat) {
+                    options.push(
+                      <option key={index} value={index + 1}>
+                        {index + 1}
+                      </option>
+                    );
+                  }
+                  return options;
+                }, [])
               }
             </FormControl>
           </li>
         </ul>
-      </Col>
+      </div>
     );
   }
 
   renderSingleAyah() {
-    const { repeat, setRepeat, surah } = this.props;
-    const array = Array(surah.ayat).join().split(',');
+    const { repeat, setRepeat, chapter } = this.props;
+    const array = Array(chapter.versesCount).join().split(',');
 
     return (
-      <Col md={12} style={{ paddingTop: 15 }}>
+      <div className="col-md-12" style={{ paddingTop: 15 }}>
         <LocaleFormattedMessage
-          id="player.currentAyah"
+          id="player.currentVerse"
           defaultMessage="Ayah"
         />{' '}: <br />
         <FormControl
@@ -141,7 +141,7 @@ class RepeatButton extends Component {
             ))
           }
         </FormControl>
-      </Col>
+      </div>
     );
   }
 
@@ -150,7 +150,7 @@ class RepeatButton extends Component {
 
     return (
       <div className={`${!repeat.from && style.disabled} row`}>
-        <Col md={12}>
+        <div className="col-md-12">
           <Nav
             bsStyle="pills"
             activeKey={repeat.from === repeat.to ? 1 : 2}
@@ -169,7 +169,7 @@ class RepeatButton extends Component {
               />
             </NavItem>
           </Nav>
-        </Col>
+        </div>
       </div>
     );
   }
@@ -190,7 +190,7 @@ class RepeatButton extends Component {
 
     return (
       <div className={`${!repeat.from && style.disabled} row`}>
-        <Col md={12} style={{ paddingTop: 15 }}>
+        <div className="col-md-12" style={{ paddingTop: 15 }}>
           <LocaleFormattedMessage
             id="player.repeat.title"
             defaultMessage="Repeat"
@@ -216,7 +216,7 @@ class RepeatButton extends Component {
               ))
             }
           </FormControl>
-        </Col>
+        </div>
       </div>
     );
   }
@@ -230,7 +230,7 @@ class RepeatButton extends Component {
         className={style.popover}
         title={
           <div className="row">
-            <Col md={12} className="text-center">
+            <div className="col-md-12 text-center">
               <LocaleFormattedMessage
                 id="player.repeat.title"
                 defaultMessage="TOGGLE REPEAT"
@@ -241,7 +241,7 @@ class RepeatButton extends Component {
                 id="repeat-toggle"
                 flat
               />
-            </Col>
+            </div>
           </div>
         }
       >
@@ -267,5 +267,13 @@ class RepeatButton extends Component {
     );
   }
 }
+
+RepeatButton.propTypes = {
+  chapter: customPropTypes.surahType,
+  repeat: customPropTypes.timeInterval,
+  setRepeat: PropTypes.func.isRequired,
+  current: PropTypes.number.isRequired,
+  intl: intlShape.isRequired
+};
 
 export default injectIntl(RepeatButton);

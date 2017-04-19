@@ -23,6 +23,10 @@ $width: 280px;
 
   :global(.navbar-text){
     margin-left: 0px;
+      .backToHome {
+          margin-right: 23px;
+          font-size: 17px;
+      }
   }
 
   @media(max-width: $screen-sm) {

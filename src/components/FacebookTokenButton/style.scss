@@ -3,4 +3,9 @@
   border-color: #3B5998;
   color: #fff;
   font-weight: 300;
+
+  & > :global(div){
+    display: inline-block;
+    vertical-align: text-top;
+  }
 }

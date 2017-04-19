@@ -10,7 +10,7 @@ const environment = {
 const title = 'Al-Qur\'an al-Kareem - القرآن الكريم';
 const description = 'The Quran translated into many languages in a simple and easy interface.';
 
-module.exports = Object.assign({
+const config = {
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
   api: process.env.API_URL,
@@ -19,7 +19,7 @@ module.exports = Object.assign({
   sentryServer: process.env.SENTRY_KEY_SERVER,
   facebookAppId: process.env.FACEBOOK_APP_ID,
   // Supported locales
-  locales: { en: 'English', ar: 'العربية', ur: 'اردو' },
+  locales: { en: 'English', ar: 'العربية', ur: 'اردو', id: 'Bahasa Indonesia', tr: 'Türkçe', fr: 'Langue du Site' },
   defaultLocale: 'en',
   app: {
     head: {
@@ -33,7 +33,7 @@ module.exports = Object.assign({
         { name: 'Charset', content: 'UTF-8' },
         { name: 'Distribution', content: 'Global' },
         { name: 'Rating', content: 'General' },
-        { name: 'viewport', content: 'width=device-width, user-scalable=no, initial-scale=1' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' },
         { name: 'google-site-verification', content: 'ehFz7FvmL7V9MzP40F8_kLABhCzqGzMDMrCnUP44Too' },
         { name: 'theme-color', content: '#004f54' },
         { property: 'og:site_name', content: title },
@@ -116,5 +116,9 @@ module.exports = Object.assign({
         }
       ]
     }
-  }
-}, environment);
+  },
+  ...environment
+};
+
+
+export default config;

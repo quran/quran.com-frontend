@@ -26,5 +26,5 @@ export default (req) => {
 
   const localeData = require('../locale/' + currentLocal + '.js'); // eslint-disable-line
 
-  return localeData.messages;
+  return localeData.default.messages;
 };

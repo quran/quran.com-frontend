@@ -2,89 +2,93 @@ import {
   isAllLoaded,
   loadAll,
   loadInfo,
-  setCurrent as setCurrentSurah
-  } from 'redux/actions/surahs.js';
+  setCurrent as setCurrentSurah,
+  isInfoLoaded
+} from 'redux/actions/chapters.js';
 
 import {
   clearCurrent,
-  load as loadAyahs
-  } from 'redux/actions/ayahs.js';
+  load as loadVerses,
+  isLoaded
+  } from 'redux/actions/verses.js';
 
-import { debug, isLoaded } from 'helpers';
+import { debug } from 'helpers';
 
-const ayahRangeSize = 30;
-
-export const surahsConnect = ({ store: { getState, dispatch } }) => {
-  debug('component:Surah:surahsConnect', 'Init');
-
-  if (!isAllLoaded(getState())) {
-    debug('component:Surah:surahsConnect', 'Surahs not loaded');
-
-    if (__CLIENT__) {
-      dispatch(loadAll());
-      return true;
-    }
-
-    return dispatch(loadAll());
-  }
-
-  return true;
-};
-
-export const surahInfoConnect = ({ store: { dispatch }, params }) => {
-  if (__CLIENT__) {
-    dispatch(loadInfo(params.surahId));
-    return true;
-  }
-
-  return dispatch(loadInfo(params.surahId));
-};
-
-export const ayahsConnect = ({ store: { dispatch, getState }, params }) => {
-  debug('component:Surah:ayahsConnect', 'Init');
-
-  const range = params.range;
-  const surahId = parseInt(params.surahId, 10);
-
+const determinePage = (range) => {
   let from;
   let to;
 
   if (range) {
     if (range.includes('-')) {
-      [from, to] = range.split('-');
-    } else {
-      // Single ayah. For example /2/30
-      from = range;
-      to = parseInt(range, 10) + ayahRangeSize;
+      [from, to] = range.split('-').map(value => parseInt(value, 10));
+
+      if (isNaN(from) || isNaN(to)) return {};
+
+      return {
+        offset: from - 1,
+        limit: to - from
+      };
     }
 
-    if (isNaN(from) || isNaN(to)) {
-      // Something wrong happened like /2/SOMETHING
-      // going to rescue by giving beginning of surah.
-      [from, to] = [1, ayahRangeSize];
-    }
-  } else {
-    [from, to] = [1, ayahRangeSize];
+    const offset = parseInt(range, 10);
+
+    if (isNaN(offset)) return {};
+
+    return {
+      offset: offset - 1,
+      limit: 1
+    };
   }
 
-  from = parseInt(from, 10);
-  to = parseInt(to, 10);
+  return {};
+};
 
-  if (surahId !== getState().surahs.current) {
-    dispatch(setCurrentSurah(surahId));
+export const chaptersConnect = ({ store: { getState, dispatch } }) => {
+  debug('component:Surah:chaptersConnect', 'Init');
+  if (isAllLoaded(getState())) return false;
+
+  debug('component:Surah:chaptersConnect', 'Surahs not loaded');
+
+  if (__CLIENT__) {
+    dispatch(loadAll());
+    return true;
   }
 
-  if (!isLoaded(getState(), surahId, from, to)) {
-    debug('component:Surah:ayahsConnect', 'Not loaded');
+  return dispatch(loadAll());
+};
 
-    dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
+export const chapterInfoConnect = ({ store: { dispatch, getState }, params }) => {
+  if (isInfoLoaded(getState(), params.chapterId)) return false;
+
+  if (__CLIENT__) {
+    dispatch(loadInfo(params));
+    return true;
+  }
+
+  return dispatch(loadInfo(params));
+};
+
+export const versesConnect = ({ store: { dispatch, getState }, params }) => {
+  debug('component:Surah:versesConnect', 'Init');
+
+  const chapterId = parseInt(params.chapterId, 10);
+  const paging = determinePage(params.range);
+
+  if (chapterId !== getState().chapters.current) {
+    dispatch(setCurrentSurah(chapterId));
+  }
+
+  if (!isLoaded(getState(), chapterId, paging)) {
+    debug('component:Surah:versesConnect', 'Not loaded');
+
+    dispatch(clearCurrent(chapterId)); // In the case where you go to same surah but later ayahs.
 
     if (__CLIENT__) {
-      dispatch(loadAyahs(surahId, from, to, getState().options));
+      dispatch(loadVerses(chapterId, paging, getState().options));
       return true;
     }
 
-    return dispatch(loadAyahs(surahId, from, to, getState().options));
+    return dispatch(loadVerses(chapterId, paging, getState().options));
   }
 
   return true;
