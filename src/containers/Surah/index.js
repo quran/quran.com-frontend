@@ -411,17 +411,17 @@ function mapStateToProps(state, ownProps) {
   const verseIds = new Set(verseArray);
   const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah = !!ownProps.params.range && !ownProps.params.range.includes('-');
-
+  const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
     chapter,
     verses,
     verseIds,
     isSingleAyah,
+    currentVerse,
     info: state.chapters.infos[ownProps.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
-    currentVerse: state.audioplayer.currentVerse,
     isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
     isEndOfSurah: lastAyahInArray === chapter.versesCount,
