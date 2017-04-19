@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import Link from 'react-router/lib/Link';
-
 import SearchInput from 'components/SearchInput';
 import debug from 'helpers/debug';
 import Jumbotron from 'quran-components/lib/Jumbotron';
@@ -8,10 +7,7 @@ import Jumbotron from 'quran-components/lib/Jumbotron';
 const logo = require('../../../static/images/logo-lg-w.png');
 const styles = require('./style.scss');
 
-export default class IndexHeader extends Component {
-  static propTypes = {
-    noSearch: PropTypes.bool
-  };
+class IndexHeader extends Component {
 
   renderSearch() {
     if (this.props.noSearch) {
@@ -44,3 +40,9 @@ export default class IndexHeader extends Component {
     );
   }
 }
+
+IndexHeader.propTypes = {
+  noSearch: PropTypes.bool
+};
+
+export default IndexHeader;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { surahType } from 'types';
+import * as customPropTypes from 'customPropTypes';
 
 const Bismillah = ({ chapter }) => {
   if (chapter && chapter.bismillahPre) {
@@ -19,7 +19,7 @@ const Bismillah = ({ chapter }) => {
 };
 
 Bismillah.propTypes = {
-  chapter: surahType.isRequired
+  chapter: customPropTypes.surahType.isRequired
 };
 
 export default Bismillah;
