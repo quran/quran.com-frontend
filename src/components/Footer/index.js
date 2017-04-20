@@ -28,12 +28,12 @@ const Footer = () => (
                   </Link>
                 </li>
                 <li>
-                  <Link to="/contact">
+                  <a href="https://quran.zendesk.com/hc/en-us/requests/new">
                     <LocaleFormattedMessage
                       id="nav.contactUs"
                       defaultMessage="Contact Us"
                     />
-                  </Link>
+                  </a>
                 </li>
                 <li>
                   <a
