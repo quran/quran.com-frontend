@@ -62,6 +62,7 @@ class RepeatButton extends Component {
               onChange={(event) => {
                 let to = parseInt(event.target.value, 10) + 3;
                 to = to < chapter.versesCount ? to : chapter.versesCount;
+
                 setRepeat({
                   ...repeat,
                   from: parseInt(event.target.value, 10),
