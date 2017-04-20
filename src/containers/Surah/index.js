@@ -413,7 +413,6 @@ function mapStateToProps(state, ownProps) {
   const isSingleAyah = !!ownProps.params.range && !ownProps.params.range.includes('-');
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
-
   return {
     chapter,
     verses,
