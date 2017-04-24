@@ -1,22 +1,14 @@
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import Radio from 'quran-components/lib/Radio';
-
 import Loader from 'quran-components/lib/Loader';
 import Icon from 'quran-components/lib/Icon';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
 import { loadRecitations } from 'redux/actions/options';
-import { recitationType } from 'types';
 
 class ReciterDropdown extends Component {
-  static propTypes = {
-    onOptionChange: PropTypes.func,
-    audio: PropTypes.number,
-    loadRecitations: PropTypes.func.isRequired,
-    recitations: PropTypes.arrayOf(recitationType)
-  };
 
   componentDidMount() {
     if (!this.props.recitations.length) {
@@ -35,11 +27,13 @@ class ReciterDropdown extends Component {
       >
         <Radio
           checked={slug.id === audio}
-          id={slug.id}
+          id={`slug-${slug.id}`}
           name="reciter"
           handleChange={() => onOptionChange({ audio: slug.id })}
         >
-          {slug.reciterNameEng} {slug.style ? `(${slug.style})` : ''}
+          <span>
+            {slug.reciterNameEng} {slug.style ? `(${slug.style})` : ''}
+          </span>
         </Radio>
       </MenuItem>
     ));
@@ -60,6 +54,13 @@ class ReciterDropdown extends Component {
     );
   }
 }
+
+ReciterDropdown.propTypes = {
+  onOptionChange: PropTypes.func,
+  audio: PropTypes.number,
+  loadRecitations: PropTypes.func.isRequired,
+  recitations: customPropTypes.recitations
+};
 
 export default connect(state => ({
   recitations: state.options.options.recitations,

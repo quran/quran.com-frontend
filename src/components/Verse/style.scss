@@ -29,9 +29,10 @@
       display: block;
       text-decoration: none;
       font-size: 12px;
+      cursor: pointer;
 
-      &:hover{
-        cursor: pointer;
+      &:focus{
+        color: $text-muted;
       }
     }
     .label{
@@ -74,10 +75,10 @@
   float: left;
 
   b, span{
-    float: right;
     border-color: transparent;
     border-width: 0px 0px 1px 0px;
     border-style: solid;
+    float: right;
     &.active {
       color: $brand-primary-darker-5;
       border-color: $brand-primary-darker-15;
@@ -86,7 +87,7 @@
 
   .line{
     direction: rtl;
-    b{
+    b, span{
       float: none;
       display: inline-block;
     }
@@ -142,4 +143,3 @@
   width: 100%;
   margin: 0px auto;
 }
-

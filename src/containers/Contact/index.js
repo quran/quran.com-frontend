@@ -3,7 +3,7 @@ import superagent from 'superagent';
 
 import IndexHeader from 'components/IndexHeader';
 
-export default class Contact extends Component {
+class Contact extends Component {
   state = {
     success: false
   };
@@ -113,3 +113,5 @@ export default class Contact extends Component {
     );
   }
 }
+
+export default Contact;

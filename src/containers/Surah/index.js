@@ -1,5 +1,6 @@
 /* global window, document */
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
 // redux
 import { bindActionCreators } from 'redux';
@@ -18,14 +19,9 @@ import ComponentLoader from 'components/ComponentLoader';
 import Bismillah from 'components/Bismillah';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-// utils
-import scroller from 'utils/scroller';
-
 // Helpers
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
-
-import { surahType, verseType, infoType } from 'types';
 
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/verses.js';
@@ -58,27 +54,6 @@ const TopOptions = Loadable({
 });
 
 class Surah extends Component {
-  static propTypes = {
-    chapter: surahType.isRequired,
-    chapters: PropTypes.objectOf(surahType).isRequired,
-    actions: PropTypes.object.isRequired, // eslint-disable-line
-    lines: PropTypes.object.isRequired, // eslint-disable-line
-    isEndOfSurah: PropTypes.bool.isRequired,
-    verseIds: PropTypes.instanceOf(Set),
-    currentVerse: PropTypes.string,
-    info: infoType,
-    bookmarks: PropTypes.object.isRequired, // eslint-disable-line
-    isLoading: PropTypes.bool.isRequired,
-    isLoaded: PropTypes.bool.isRequired,
-    isSingleAyah: PropTypes.bool.isRequired,
-    isAuthenticated: PropTypes.bool.isRequired,
-    options: PropTypes.object.isRequired, // eslint-disable-line
-    params: PropTypes.shape({
-      chapterId: PropTypes.string.isRequired
-    }).isRequired,
-    verses: PropTypes.objectOf(verseType),
-    isPlaying: PropTypes.bool
-  };
 
   state = {
     lazyLoading: false,
@@ -134,27 +109,6 @@ class Surah extends Component {
 
   hasAyahs() {
     return Object.keys(this.props.verses).length;
-  }
-
-  handleVerseDropdownClick = (verseNum) => {
-    const { verseIds, chapter, actions } = this.props; // eslint-disable-line no-shadow
-
-    actions.verse.setcurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
-
-    if (verseIds.has(verseNum)) {
-      return false;
-    }
-
-    if (verseNum > (this.getLast() + 10) || verseNum < this.getFirst()) {
-      // This is beyond lazy loading next page.
-      if (actions.push) {
-        return actions.push.push(`/${chapter.chapterNumber}/${verseNum}-${verseNum + 10}`);
-      }
-    }
-
-    return this.handleLazyLoadAyahs(() => setTimeout(() =>
-      scroller.scrollTo(`verse:${chapter.chapterNumber}:${verseNum}`),
-    1000)); // then scroll to it
   }
 
   handleLazyLoadAyahs = (callback) => {
@@ -421,6 +375,28 @@ class Surah extends Component {
   }
 }
 
+Surah.propTypes = {
+  chapter: customPropTypes.surahType.isRequired,
+  chapters: customPropTypes.chapters.isRequired,
+  actions: PropTypes.object.isRequired, // eslint-disable-line
+  lines: PropTypes.object.isRequired, // eslint-disable-line
+  isEndOfSurah: PropTypes.bool.isRequired,
+  verseIds: PropTypes.instanceOf(Set),
+  currentVerse: PropTypes.string,
+  info: customPropTypes.infoType,
+  bookmarks: PropTypes.object.isRequired, // eslint-disable-line
+  isLoading: PropTypes.bool.isRequired,
+  isLoaded: PropTypes.bool.isRequired,
+  isSingleAyah: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  options: PropTypes.object.isRequired, // eslint-disable-line
+  params: PropTypes.shape({
+    chapterId: PropTypes.string.isRequired
+  }).isRequired,
+  verses: customPropTypes.verses,
+  isPlaying: PropTypes.bool
+};
+
 const AsyncSurah = asyncConnect([
   { promise: chaptersConnect },
   { promise: chapterInfoConnect },
@@ -435,17 +411,17 @@ function mapStateToProps(state, ownProps) {
   const verseIds = new Set(verseArray);
   const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah = !!ownProps.params.range && !ownProps.params.range.includes('-');
-
+  const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
     chapter,
     verses,
     verseIds,
     isSingleAyah,
+    currentVerse,
     info: state.chapters.infos[ownProps.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
-    currentVerse: state.audioplayer.currentVerse,
     isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
     isEndOfSurah: lastAyahInArray === chapter.versesCount,

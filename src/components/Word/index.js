@@ -9,18 +9,7 @@ const CHAR_TYPE_PAUSE = 'pause';
 const CHAR_TYPE_RUB = 'rub';
 const CHAR_TYPE_SAJDAH = 'sajdah';
 
-export default class Word extends Component {
-  static propTypes = {
-    word: PropTypes.object.isRequired, // eslint-disable-line
-    tooltip: PropTypes.string,
-    audioActions: PropTypes.object.isRequired, // eslint-disable-line
-    audioPosition: PropTypes.number,
-    currentVerse: PropTypes.string.isRequired,
-    isPlaying: PropTypes.bool,
-    isSearched: PropTypes.bool,
-    useTextFont: PropTypes.bool // tmp change to compare text and code based rendering
-  };
-
+class Word extends Component {
   buildTooltip = (word, tooltip) => {
     let title;
 
@@ -66,15 +55,17 @@ export default class Word extends Component {
     let text;
     let spacer;
     const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
-    const className = `${useTextFont ? 'text-' : ''}${word.charType === CHAR_TYPE_WORD ? word.className : 'p0'} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
-    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition || word.position}`;
+    const className = `${useTextFont ? 'text-' : ''}${word.className} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
 
-    if (word.charType === CHAR_TYPE_END) {
-      text = zeroPad(word.verseKey.split(':')[1], 3, 0);
-    } else if (!useTextFont || word.charType === CHAR_TYPE_PAUSE) {
-      text = word.codeV3;
+    if (useTextFont) {
+      if (word.charType === CHAR_TYPE_END) {
+        text = zeroPad(word.verseKey.split(':')[1], 3, 0);
+      } else {
+        text = word.textMadani;
+      }
     } else {
-      text = word.textMadani;
+      text = word.code;
     }
 
     if (word.charType === CHAR_TYPE_WORD) {
@@ -97,5 +88,17 @@ export default class Word extends Component {
       </span>
     );
   }
-
 }
+
+Word.propTypes = {
+  word: PropTypes.object.isRequired, // eslint-disable-line
+  tooltip: PropTypes.string,
+  audioActions: PropTypes.object.isRequired, // eslint-disable-line
+  audioPosition: PropTypes.number,
+  currentVerse: PropTypes.string,
+  isPlaying: PropTypes.bool,
+  isSearched: PropTypes.bool,
+  useTextFont: PropTypes.bool // tmp change to compare text and code based rendering
+};
+
+export default Word;

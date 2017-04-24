@@ -1,17 +1,15 @@
 /* global document */
 // TODO: This file is too too large.
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
 import Loadable from 'react-loadable';
-
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 // Helpers
 import debug from 'helpers/debug';
 import scroller from 'utils/scroller';
-
-import { surahType, segmentType, verseType } from 'types';
 
 // Redux
 import * as AudioActions from 'redux/actions/audioplayer';
@@ -29,38 +27,6 @@ const RepeatDropdown = Loadable({
 });
 
 export class Audioplayer extends Component {
-  static propTypes = {
-    className: PropTypes.string,
-    chapter: surahType,
-    onLoadAyahs: PropTypes.func.isRequired,
-    segments: PropTypes.objectOf(segmentType),
-    // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
-    files: PropTypes.object, // eslint-disable-line
-    currentVerse: PropTypes.string,
-    buildOnClient: PropTypes.func.isRequired,
-    isLoadedOnClient: PropTypes.bool.isRequired,
-    isLoading: PropTypes.bool.isRequired,
-    play: PropTypes.func.isRequired,
-    pause: PropTypes.func.isRequired,
-    next: PropTypes.func.isRequired, // eslint-disable-line
-    previous: PropTypes.func.isRequired, // eslint-disable-line
-    update: PropTypes.func.isRequired,
-    repeat: PropTypes.shape({
-      from: PropTypes.number,
-      to: PropTypes.number,
-      time: PropTypes.number,
-    }).isRequired,
-    shouldScroll: PropTypes.bool.isRequired,
-    setRepeat: PropTypes.func.isRequired,
-    setAyah: PropTypes.func.isRequired,
-    toggleScroll: PropTypes.func.isRequired,
-    isPlaying: PropTypes.bool,
-    currentTime: PropTypes.number,
-    duration: PropTypes.number,
-    // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
-    currentFile: PropTypes.any, // eslint-disable-line
-    startVerse: verseType // eslint-disable-line
-  };
 
   componentDidMount() {
     const { isLoadedOnClient, buildOnClient, chapter, currentFile } = this.props; // eslint-disable-line no-shadow, max-len
@@ -86,8 +52,8 @@ export class Audioplayer extends Component {
       return false;
     }
 
-    // When you go directly to the chapter page, /2, the files are not loaded yet
-    if (this.props.isLoadedOnClient !== nextProps.isLoadedOnClient) {
+    // First load
+    if (this.props.currentFile !== nextProps.currentFile) {
       return this.handleAddFileListeners(nextProps.currentFile);
     }
 
@@ -283,6 +249,9 @@ export class Audioplayer extends Component {
   }
 
   handleAddFileListeners(file) {
+    // NOTE: if no file, just wait.
+    if (!file) return false;
+
     const { update, currentTime } = this.props; // eslint-disable-line no-shadow
     debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
 
@@ -418,7 +387,6 @@ export class Audioplayer extends Component {
       duration,
       chapter,
       isPlaying,
-      isLoadedOnClient,
       repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
       setRepeat // eslint-disable-line no-shadow
@@ -440,15 +408,15 @@ export class Audioplayer extends Component {
     return (
       <div className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}>
         <div className={style.wrapper}>
-          {isLoadedOnClient ?
+          {
+            currentFile &&
             <Track
               progress={(currentTime / duration) * 100}
               onTrackChange={this.handleTrackChange}
-            /> : null}
+            />
+          }
           {
-            isLoadedOnClient &&
             segments &&
-            segments[currentVerse] &&
             segments[currentVerse] &&
               <Segments
                 segments={segments[currentVerse]}
@@ -508,6 +476,35 @@ const mapStateToProps = (state, ownProps) => {
     duration: state.audioplayer.duration,
     currentTime: state.audioplayer.currentTime,
   };
+};
+
+Audioplayer.propTypes = {
+  className: PropTypes.string,
+  chapter: customPropTypes.surahType,
+  onLoadAyahs: PropTypes.func.isRequired,
+  segments: customPropTypes.segments,
+  // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
+  files: PropTypes.object, // eslint-disable-line
+  currentVerse: PropTypes.string,
+  buildOnClient: PropTypes.func.isRequired,
+  isLoadedOnClient: PropTypes.bool.isRequired,
+  isLoading: PropTypes.bool.isRequired,
+  play: PropTypes.func.isRequired,
+  pause: PropTypes.func.isRequired,
+  next: PropTypes.func.isRequired, // eslint-disable-line
+  previous: PropTypes.func.isRequired, // eslint-disable-line
+  update: PropTypes.func.isRequired,
+  repeat: customPropTypes.timeInterval.isRequired,
+  shouldScroll: PropTypes.bool.isRequired,
+  setRepeat: PropTypes.func.isRequired,
+  setAyah: PropTypes.func.isRequired,
+  toggleScroll: PropTypes.func.isRequired,
+  isPlaying: PropTypes.bool,
+  currentTime: PropTypes.number,
+  duration: PropTypes.number,
+  // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
+  currentFile: PropTypes.any, // eslint-disable-line
+  startVerse: customPropTypes.verseType // eslint-disable-line
 };
 
 export default connect(mapStateToProps, AudioActions)(Audioplayer);

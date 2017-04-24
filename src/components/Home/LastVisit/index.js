@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
-import { surahType } from 'types';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const styles = require('containers/Home/style.scss');
@@ -25,7 +25,7 @@ const LastVisit = (props) => {
 };
 
 LastVisit.propTypes = {
-  chapter: surahType.isRequired,
+  chapter: customPropTypes.surahType.isRequired,
   verse: PropTypes.number.isRequired
 };
 

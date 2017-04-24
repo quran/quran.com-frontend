@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
-
-import { surahType, infoType } from 'types';
+import * as customPropTypes from 'customPropTypes';
 import Loader from 'quran-components/lib/Loader';
 
 const style = require('./style.scss');
@@ -52,8 +51,8 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
 SurahInfo.propTypes = {
   onClose: PropTypes.func,
   isShowingSurahInfo: PropTypes.bool,
-  chapter: surahType,
-  info: infoType
+  chapter: customPropTypes.surahType,
+  info: customPropTypes.infoType
 };
 
 export default SurahInfo;

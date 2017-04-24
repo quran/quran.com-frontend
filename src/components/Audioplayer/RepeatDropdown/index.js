@@ -1,30 +1,17 @@
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import { intlShape, injectIntl } from 'react-intl';
-
 import SwitchToggle from 'components/SwitchToggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
-import surahType from 'types/surahType';
 
 const style = require('../style.scss');
 
 class RepeatButton extends Component {
-  static propTypes = {
-    chapter: surahType,
-    repeat: PropTypes.shape({
-      from: PropTypes.number,
-      to: PropTypes.number,
-      times: PropTypes.number
-    }).isRequired,
-    setRepeat: PropTypes.func.isRequired,
-    current: PropTypes.number.isRequired,
-    intl: intlShape.isRequired
-  };
 
   handleToggle = () => {
     const { repeat, setRepeat, current } = this.props;
@@ -37,7 +24,7 @@ class RepeatButton extends Component {
       from: current,
       to: current
     });
-  }
+  };
 
   handleNavChange = (nav) => {
     const { setRepeat, current } = this.props;
@@ -74,7 +61,7 @@ class RepeatButton extends Component {
               value={repeat.from}
               onChange={(event) => {
                 let to = parseInt(event.target.value, 10) + 3;
-                to = to < chapter.ayat ? to : chapter.ayat;
+                to = to < chapter.versesCount ? to : chapter.versesCount;
                 setRepeat({
                   ...repeat,
                   from: parseInt(event.target.value, 10),
@@ -84,7 +71,7 @@ class RepeatButton extends Component {
             >
               {
                 array.reduce((options, ayah, index) => {
-                  if (index + 1 < chapter.ayat) { // Exclude last verse
+                  if (index + 1 < chapter.versesCount) { // Exclude last verse
                     options.push(
                       <option key={index} value={index + 1}>
                         {index + 1}
@@ -110,7 +97,7 @@ class RepeatButton extends Component {
             >
               {
                 array.reduce((options, ayah, index) => {
-                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= chapter.ayat) {
+                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= chapter.versesCount) { // eslint-disable-line max-len
                     options.push(
                       <option key={index} value={index + 1}>
                         {index + 1}
@@ -280,5 +267,13 @@ class RepeatButton extends Component {
     );
   }
 }
+
+RepeatButton.propTypes = {
+  chapter: customPropTypes.surahType,
+  repeat: customPropTypes.timeInterval,
+  setRepeat: PropTypes.func.isRequired,
+  current: PropTypes.number.isRequired,
+  intl: intlShape.isRequired
+};
 
 export default injectIntl(RepeatButton);

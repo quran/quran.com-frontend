@@ -9,17 +9,17 @@ export default (server) => {
 
     client.get('/api/v3/chapters').then((response) => {
       response.chapters.forEach((chapter) => {
-        Array(chapter.versesCount).fill().forEach((_, index) => {
-          const ayahId = index + 1;
+        Array(chapter.verses_count).fill().forEach((_, index) => {
+          const verseId = index + 1;
 
           urls.push({
-            url: `/${chapter.id}/${ayahId}`,
+            url: `/${chapter.id}/${verseId}`,
             changefreq: 'weekly',
             priority: 1
           });
 
           urls.push({
-            url: `/${chapter.id}/${ayahId}-${ayahId + 9}`,
+            url: `/${chapter.id}/${verseId}-${verseId + 9}`,
             changefreq: 'weekly',
             priority: 1
           });
@@ -61,7 +61,6 @@ export default (server) => {
           priority: 1
         });
       });
-
 
       const xml = sitemap.createSitemap({
         hostname: 'https://quran.com',

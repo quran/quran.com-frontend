@@ -1,6 +1,6 @@
 import React from 'react';
 import Share from 'components/Share';
-import { surahType } from 'types';
+import * as customPropTypes from 'customPropTypes';
 
 const TopOptions = ({ chapter }) => (
   <div className="row">
@@ -17,7 +17,7 @@ const TopOptions = ({ chapter }) => (
 );
 
 TopOptions.propTypes = {
-  chapter: surahType.isRequired
+  chapter: customPropTypes.surahType.isRequired
 };
 
 export default TopOptions;

@@ -1,20 +1,13 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
-
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { surahType } from 'types';
 
 const styles = require('./style.scss');
 
-export default class SurahsDropdown extends Component {
-  static propTypes = {
-    chapters: PropTypes.objectOf(surahType).isRequired,
-    title: PropTypes.string,
-  };
-
+class SurahsDropdown extends Component {
   shouldComponentUpdate(nextProps) {
     return this.props.chapters !== nextProps.chapters;
   }
@@ -46,17 +39,24 @@ export default class SurahsDropdown extends Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { chapter } = this.props;
 
     return (
       <NavDropdown
         link
         className={styles.dropdown}
         id="chapters-dropdown"
-        title={title || <LocaleFormattedMessage id="setting.chapters" defaultMessage="Surahs" />}
+        title={chapter.nameSimple || <LocaleFormattedMessage id="setting.chapters" defaultMessage="Surahs" />}
       >
         {this.renderList()}
       </NavDropdown>
     );
   }
 }
+
+SurahsDropdown.propTypes = {
+  chapters: customPropTypes.chapters.isRequired,
+  chapter: customPropTypes.chapters.isRequired,
+};
+
+export default SurahsDropdown;
