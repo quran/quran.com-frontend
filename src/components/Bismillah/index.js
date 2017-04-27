@@ -1,12 +1,16 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import * as customPropTypes from 'customPropTypes';
 
-const Bismillah = ({ surah }) => {
-  if (surah && surah.bismillahPre) {
+const Bismillah = ({ chapter }) => {
+  if (chapter && chapter.bismillahPre) {
     return (
       <div
+        id="bismillah"
         className="bismillah text-center word-font"
-        style={{textAlign: 'center'}}>
-        ﭑﭒﭓ
+        style={{ textAlign: 'center' }}
+        title="بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ"
+      >
+        ﷽
       </div>
     );
   }
@@ -15,7 +19,7 @@ const Bismillah = ({ surah }) => {
 };
 
 Bismillah.propTypes = {
-  surah: PropTypes.object.isRequired
+  chapter: customPropTypes.surahType.isRequired
 };
 
 export default Bismillah;

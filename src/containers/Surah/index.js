@@ -1,530 +1,450 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router';
+/* global window, document */
+import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
+import Link from 'react-router/lib/Link';
+// redux
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-async-connect';
+import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
+
 import Helmet from 'react-helmet';
+import Loadable from 'react-loadable';
 
 // components
-import LazyLoad from '../../components/LazyLoad';
-import PageBreak from '../../components/PageBreak';
-import Audioplayer from '../../components/Audioplayer';
-import ContentDropdown from '../../components/ContentDropdown';
-import ReciterDropdown from '../../components/ReciterDropdown';
-import SurahsDropdown from '../../components/SurahsDropdown';
-import VersesDropdown from '../../components/VersesDropdown';
-import FontSizeDropdown from '../../components/FontSizeDropdown';
-import InformationToggle from '../../components/InformationToggle';
-import SurahInfo from '../../components/SurahInfo';
-import MasterHeader from 'components/header/MasterHeader';
-import ReadingModeToggle from 'components/header/ReadingModeToggle';
-import Ayah from '../../components/Ayah';
-import Line from '../../components/Line';
-import SearchInput from 'components/header/SearchInput';
-import Bismillah from '../../components/Bismillah';
-import scroller from '../../scripts/utils/scroller';
+import Loader from 'quran-components/lib/Loader';
+import LazyLoad from 'components/LazyLoad';
+import Verse from 'components/Verse';
+import ComponentLoader from 'components/ComponentLoader';
+import Bismillah from 'components/Bismillah';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 // Helpers
-import makeHeadTags from '../../helpers/makeHeadTags';
+import makeHeadTags from 'helpers/makeHeadTags';
+import debug from 'helpers/debug';
+
+import * as AudioActions from 'redux/actions/audioplayer.js';
+import * as AyahActions from 'redux/actions/verses.js';
+import * as BookmarkActions from 'redux/actions/bookmarks.js';
+import * as OptionsActions from 'redux/actions/options.js';
+import * as MediaActions from 'redux/actions/media.js';
+
+import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
+
+const LoaderStyle = { width: '10em', height: '10em' };
 
 const style = require('./style.scss');
 
-import debug from 'utils/Debug';
+const PageView = Loadable({
+  loader: () => import('components/PageView'),
+  LoadingComponent: ComponentLoader
+});
 
-import { clearCurrent, isLoaded, load as loadAyahs, setCurrentAyah, setCurrentWord, clearCurrentWord } from '../../redux/modules/ayahs';
-import { isAllLoaded, loadAll, setCurrent as setCurrentSurah } from '../../redux/modules/surahs';
-import { setOption, toggleReadingMode } from '../../redux/modules/options';
+const Audioplayer = Loadable({
+  loader: () => import('components/Audioplayer'),
+  LoadingComponent: ComponentLoader
+});
+const SurahInfo = Loadable({
+  loader: () => import('components/SurahInfo'),
+  LoadingComponent: ComponentLoader
+});
+const TopOptions = Loadable({
+  loader: () => import('components/TopOptions'),
+  LoadingComponent: ComponentLoader
+});
 
-let lastScroll = 0;
-const ayahRangeSize = 30;
-
-@asyncConnect([
-  {
-    promise({ store: { getState, dispatch } }) {
-      if (!isAllLoaded(getState())) {
-        return dispatch(loadAll());
-      }
-
-      return true;
-    }
-  },
-  {
-    promise({ store: { dispatch, getState }, params }) {
-      const { range, surahId } = params;
-      const { options } = getState();
-      let from;
-      let to;
-
-      if (range) {
-        if (range.includes('-')) {
-          [from, to] = range.split('-');
-        } else {
-          // Single ayah. For example /2/30
-          from = range;
-          to = parseInt(range, 10) + ayahRangeSize;
-        }
-
-        if (isNaN(from) || isNaN(to)) {
-          // Something wrong happened like /2/SOMETHING
-          // going to rescue by giving beginning of surah.
-          [from, to] = [1, ayahRangeSize];
-        }
-      } else {
-        [from, to] = [1, ayahRangeSize];
-      }
-
-      if (isNaN(surahId)) {
-        // Should have an alert or something to tell user there is an error.
-        return dispatch(push('/'));
-      }
-
-      if (params.surahId !== getState().surahs.current) {
-        dispatch(setCurrentSurah(surahId));
-      }
-
-      if (!isLoaded(getState(), surahId, from, to)) {
-        dispatch(clearCurrent(surahId)); // In the case where you go to same surah but later ayahs.
-
-        return dispatch(loadAyahs(surahId, from, to, options));
-      }
-
-      return true;
-    }
-  }
-])
-@connect(
-  (state, ownProps) => {
-    const surah: Object = state.surahs.entities[ownProps.params.surahId];
-    const ayahs: Object = state.ayahs.entities[ownProps.params.surahId];
-    const ayahIds = new Set(Object.keys(ayahs).map(key => parseInt(key.split(':')[1], 10)));
-    ayahIds.first = function() {return [...this][0];};
-    ayahIds.last = function() {return [...this][[...this].length - 1];};
-
-    const isEndOfSurah = ayahIds.last() === surah.ayat;
-    const currentWord = state.ayahs.currentWord;
-    const isPlaying = state.audioplayer.isPlaying;
-
-    return {
-      isPlaying,
-      currentWord,
-      surah,
-      ayahs,
-      isEndOfSurah,
-      ayahIds,
-      surahs: state.surahs.entities,
-      isLoading: state.ayahs.loading,
-      isLoaded: state.ayahs.loaded,
-      lines: state.lines.lines,
-      options: state.options,
-    };
-  },
-  {
-    loadAyahsDispatch: loadAyahs,
-    setOptionDispatch: setOption,
-    toggleReadingModeDispatch: toggleReadingMode,
-    setCurrentAyah: setCurrentAyah,
-    setCurrentWord: setCurrentWord,
-    clearCurrentWord: clearCurrentWord,
-    push
-  }
-)
-export default class Surah extends Component {
-  constructor() {
-    super(...arguments);
-  }
+class Surah extends Component {
 
   state = {
-    lazyLoading: false
+    lazyLoading: false,
+    sidebarOpen: false
   };
 
-  componentDidMount() {
-    if (__CLIENT__) {
-      window.removeEventListener('scroll', this.handleNavbar, true);
-      window.addEventListener('scroll', this.handleNavbar, true);
-      lastScroll = window.pageYOffset;
+  componentWillMount() {
+    const { params, chapter, actions } = this.props; // eslint-disable-line no-shadow
+
+    if (params.range && params.range.includes('-')) {
+      const start = parseInt(params.range.split('-')[0], 10);
+
+      if (start > chapter.versesCount || isNaN(start)) {
+        return actions.push.push('/error/invalid-verse-range');
+      }
+
+      return false;
     }
+
+    return false;
   }
 
-//<<<<<<< HEAD
-//=======
-  // TODO lets try this with and without this function, but shouldComponentUpdate is the additional function from audio-segments in the merge conflict
-  /*
-  shouldComponentUpdate(nextProps) {
-    const sameSurahIdRouting = this.props.params.surahId === nextProps.params.surahId;
-    const lazyLoadFinished = sameSurahIdRouting && (!this.props.isLoaded && nextProps.isLoaded);
-    const hasReadingModeChange = this.props.options.isReadingMode !== nextProps.options.isReadingMode;
-    const hasFontSizeChange = this.props.options.fontSize !== nextProps.options.fontSize;
-    const hasSurahInfoChange = this.props.options.isShowingSurahInfo !== nextProps.options.isShowingSurahInfo;
-    const hasCurrentWordChange = this.props.currentWord !== nextProps.currentWord;
+  shouldComponentUpdate(nextProps, nextState) {
+    const conditions = [
+      this.state.lazyLoading !== nextState.lazyLoading,
+      this.state.sidebarOpen !== nextState.sidebarOpen,
+      this.props.chapter !== nextProps.chapter,
+      this.props.isEndOfSurah !== nextProps.isEndOfSurah,
+      this.props.verseIds.length !== nextProps.verseIds.length,
+      this.props.chapters !== nextProps.chapters,
+      this.props.bookmarks !== nextProps.bookmarks,
+      this.props.isLoading !== nextProps.isLoading,
+      this.props.isLoaded !== nextProps.isLoaded,
+      this.props.options !== nextProps.options,
+      this.props.currentVerse !== nextProps.currentVerse,
+      this.props.isPlaying !== nextProps.isPlaying,
+    ];
 
-    return (
-      !sameSurahIdRouting ||
-      lazyLoadFinished ||
-      hasReadingModeChange ||
-      hasFontSizeChange ||
-      hasSurahInfoChange ||
-      hasCurrentWordChange
-    );
+    return conditions.some(condition => condition);
   }
-  */
 
-//>>>>>>> audio-segments
-  componentWillUnmount() {
-    if (__CLIENT__) {
-      window.removeEventListener('scroll', this.handleNavbar, true);
+  getLast() {
+    const { verseIds } = this.props;
+
+    return [...verseIds][[...verseIds].length - 1];
+  }
+
+  getFirst() {
+    const { verseIds } = this.props;
+
+    return [...verseIds][0];
+  }
+
+  hasAyahs() {
+    return Object.keys(this.props.verses).length;
+  }
+
+  handleLazyLoadAyahs = (callback) => {
+    const { verseIds, chapter, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
+    const range = [this.getFirst(), this.getLast()];
+
+    const size = 10;
+    const from = range[1];
+    const to = (from + size);
+    const paging = { offset: from, limit: to - from };
+
+    if (!isEndOfSurah && !verseIds.has(to)) {
+      actions.verse.load(chapter.chapterNumber, paging, options).then(() => {
+        this.setState({ lazyLoading: false });
+        return callback && callback();
+      });
     }
+
+    return false;
+  }
+
+  handleSurahInfoToggle = (payload) => {
+    const { actions } = this.props; // eslint-disable-line no-shadow
+
+    return actions.options.setOption(payload);
   }
 
   title() {
-    const { params, surah } = this.props;
+    const { params, chapter } = this.props;
 
     if (params.range) {
-      return `Surah ${surah.name.simple} [${surah.id}:${params.range}]`;
+      return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}:${params.range}]`;
     }
 
-    return `${surah.id} Surah ${surah.name.simple}`;
+    return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`;
   }
 
   description() {
-    const { params, ayahs, surah } = this.props;
+    const { params, verses, chapter, info } = this.props;
 
     if (params.range) {
       if (params.range.includes('-')) {
         const [from, to] = params.range.split('-').map(num => parseInt(num, 10));
         const array = Array(to - from).fill(from);
         const translations = array.map((fromAyah, index) => {
-          const ayah = ayahs[`${surah.id}:${fromAyah + index}`];
-          if (ayah && ayah.content && ayah.content[0]) {
-            return ayah.content[0].text;
+          const verse = verses[`${chapter.chapterNumber}:${fromAyah + index}`];
+
+          if (verse && verse.content && verse.content[0]) {
+            return verse.content[0].text;
           }
+
+          return '';
         });
+
         const content = translations.join(' - ').slice(0, 250);
 
-        return `Surat ${surah.name.simple} [verse ${params.range}] - ${content}`;
-      } else {
-        const ayah = ayahs[`${surah.id}:${params.range}`];
-        if (ayah && ayah.content && ayah.content[0]) {
-          return `Surat ${surah.name.simple} [verse ${params.range}] - ${ayah.content[0].text}`;
-        } else {
-          return `Surat ${surah.name.simple} [verse ${params.range}]`;
-        }
+        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${content}`;
       }
+
+      const verse = verses[`${chapter.chapterNumber}:${params.range}`];
+
+      if (verse && verse.content && verse.content[0]) {
+        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${verse.content[0].text}`;
+      }
+
+      return `Surat ${chapter.nameSimple} [verse ${params.range}]`;
     }
 
-    return null;
+    return `${info ? info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
-  handleOptionChange(payload) {
-    const { setOptionDispatch, loadAyahsDispatch, surah, ayahIds, options } = this.props;
-    const from = ayahIds.first();
-    const to = ayahIds.last();
+  renderNoAyah() {
+    const { isLoading } = this.props;
 
-    setOptionDispatch(payload);
-    loadAyahsDispatch(surah.id, from, to, Object.assign({}, options, payload));
-  }
+    const noAyah = (<div className="text-center">
+      <h2><LocaleFormattedMessage id="ayah.notFound" defaultMessage="Ayah not found." /></h2>
+    </div>
+    );
 
-  handleFontSizeChange = (payload) => {
-    const { setOptionDispatch } = this.props;
-
-    return setOptionDispatch(payload);
-  }
-
-  handleSurahInfoToggle = (payload) => {
-    const { setOptionDispatch } = this.props;
-
-    return setOptionDispatch(payload);
-  }
-
-  handleNavbar = () => {
-    // TODO: This should be done with react!
-    if (window.pageYOffset > lastScroll) {
-      document.querySelector('nav').classList.add('scroll-up');
-    } else {
-      document.querySelector('nav').classList.remove('scroll-up');
-    }
-
-    lastScroll = window.pageYOffset;
-  }
-
-  handleVerseDropdownClick(ayahNum) {
-    const { ayahIds, push, surah, setCurrentAyah } = this.props; // eslint-disable-line no-shadow
-
-    setCurrentAyah(surah.id +':'+ ayahNum);
-
-    if (ayahIds.has(ayahNum)) {
-      return;
-    }
-
-    if (ayahNum > (ayahIds.last() + 10) || ayahNum < ayahIds.first()) {
-      // This is beyond lazy loading next page.
-      return push(`/${surah.id}/${ayahNum}-${ayahNum + 10}`);
-    }
-
-    this.lazyLoadAyahs(() => setTimeout(() => {
-      scroller.scrollTo('ayah:'+ ayahNum);
-    }, 1000)); // then scroll to it
-  }
-
-
-  lazyLoadAyahs(callback) {
-    const { loadAyahsDispatch, ayahIds, surah, options } = this.props;
-
-    const range = [ayahIds.first(), ayahIds.last()];
-    let size = 10;
-
-    if ((range[1] - range[0] + 1) < 10) {
-      size = range[1] - range[0] + 1;
-    }
-
-    const from = range[1];
-    const to = (from + size);
-
-    if (!ayahIds.has(to)) {
-      loadAyahsDispatch(surah.id, from, to, options).then(() => {
-        this.setState({lazyLoading: false});
-        if (callback) {
-          callback();
-        }
-      });
-    }
+    return isLoading ? <Loader isActive style={LoaderStyle} /> : noAyah;
   }
 
   renderPagination() {
-    const { isLoading, isEndOfSurah, surah } = this.props;
+    const { isSingleAyah, isLoading, isEndOfSurah, chapter } = this.props;
+
+    // If single verse, eh. /2/30
+    if (isSingleAyah) {
+      const to = this.getFirst() + 10 > chapter.versesCount ?
+        chapter.versesCount :
+        this.getFirst() + 10;
+
+      return (
+        <ul className="pager">
+          <li className="text-center">
+            <Link to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}`}>
+              <LocaleFormattedMessage id="chapter.index.continue" defaultMessage="Continue" />
+            </Link>
+          </li>
+        </ul>
+      );
+    }
 
     return (
       <LazyLoad
-        onLazyLoad={this.lazyLoadAyahs.bind(this)}
+        onLazyLoad={this.handleLazyLoadAyahs}
         isEnd={isEndOfSurah && !isLoading}
         isLoading={isLoading}
         endComponent={
           <ul className="pager">
             {
-              surah.id > 1 &&
-              <li className="previous">
-                <Link to={`/${surah.id * 1 - 1}`}>
-                  &larr; Previous Surah
-                </Link>
-              </li>
+              chapter.chapterNumber > 1 &&
+                <li className="previous">
+                  <Link to={`/${(chapter.chapterNumber * 1) - 1}`}>
+                    &larr;
+                    <LocaleFormattedMessage
+                      id="chapter.previous"
+                      defaultMessage="Previous Surah"
+                    />
+                  </Link>
+                </li>
             }
             <li className="text-center">
-              <Link to={`/${surah.id}`}>
-                Beginning of Surah
+              <Link to={`/${chapter.chapterNumber}`}>
+                <LocaleFormattedMessage
+                  id="chapter.goToBeginning"
+                  defaultMessage="Beginning of Surah"
+                />
               </Link>
             </li>
             {
-              surah.id < 114 &&
-              <li className="next">
-                <Link to={`/${surah.id * 1 + 1}`}>
-                  Next Surah &rarr;
-                </Link>
-              </li>
+              chapter.chapterNumber < 114 &&
+                <li className="next">
+                  <Link to={`/${(chapter.chapterNumber * 1) + 1}`}>
+                    <LocaleFormattedMessage
+                      id="chapter.next"
+                      defaultMessage="Next Surah"
+                    />
+                    &rarr;
+                  </Link>
+                </li>
             }
           </ul>
         }
-        loadingComponent={<p>Loading...</p>}
+        loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
       />
     );
   }
 
-  onWordClick(id) {
-    const { setCurrentWord, clearCurrentWord, currentWord, isPlaying } = this.props;
-    if (id == currentWord && !isPlaying) {
-      clearCurrentWord();
-    } else {
-      setCurrentWord(id);
-    }
-  }
-
-  onWordFocus(id, elem) {
-    try {
-      const { setCurrentWord, clearCurrentWord, currentWord, isPlaying } = this.props;
-      if (id != currentWord && isPlaying) {
-        setCurrentWord(id); // let tabbing around while playing trigger seek to word action
-      }
-      if (elem && elem.nextSibling && elem.nextSibling.classList.contains('tooltip')) { // forcefully removing tooltips
-        elem.nextSibling.remove();                                                      // because our version of bootstrap does not respect the data-trigger option
-      } else {
-        const saved = elem.dataset.toggle;
-        elem.dataset.toggle = '';
-        setTimeout(function() {
-          try {
-            elem.dataset.toggle = saved;
-          } catch(e) {
-            console.info('caught in timeout',e);
-          }
-        }, 100);
-      }
-    } catch(e) {
-      console.info('caught in onWordFocus',e);
-    }
-  }
-
   renderAyahs() {
-    const { ayahs, currentWord } = this.props;
+    const {
+      chapter,
+      verses,
+      actions,
+      options,
+      bookmarks,
+      isPlaying,
+      isAuthenticated,
+      currentVerse,
+    } = this.props; // eslint-disable-line no-shadow
 
-    return Object.values(ayahs).map(ayah => (
-      <Ayah
-        ayah={ayah}
-        currentWord={currentWord && (new RegExp('^'+ ayah.ayahKey +':')).test(currentWord)? parseInt(currentWord.match(/\d+$/)[0], 10) : null}
-        onWordClick={this.onWordClick.bind(this)}
-        onWordFocus={this.onWordFocus.bind(this)}
-        key={`${ayah.surahId}-${ayah.ayahNum}-ayah`}
+    return Object.values(verses).map(verse => (
+      <Verse
+        verse={verse}
+        chapter={chapter}
+        currentVerse={currentVerse}
+        iscurrentVerse={isPlaying && verse.verseKey === currentVerse}
+        bookmarked={!!bookmarks[verse.verseKey]}
+        tooltip={options.tooltip}
+        bookmarkActions={actions.bookmark}
+        audioActions={actions.audio}
+        mediaActions={actions.media}
+        isPlaying={isPlaying}
+        isAuthenticated={isAuthenticated}
+        key={`${verse.chapterId}-${verse.id}-verse`}
+        userAgent={options.userAgent}
+        audio={options.audio}
       />
     ));
   }
 
   renderLines() {
-    const { lines } = this.props;
+    const { lines, options, currentVerse, isPlaying, actions } = this.props;
     const keys = Object.keys(lines);
 
-    return keys.map((lineNum, index) => {
-      const nextNum = keys[index + 1];
-      const pageNum = lineNum.split('-')[0];
-      const line = lines[lineNum];
-
-      if (index + 1 !== keys.length && pageNum !== nextNum.split('-')[0]) {
-        return [
-          <Line line={line} key={lineNum} />,
-          <PageBreak pageNum={parseInt(pageNum, 10) + 1} />
-        ];
-      }
-
-      return <Line line={line} key={lineNum} />;
-    });
-  }
-
-  renderTopOptions() {
-    const { toggleReadingModeDispatch, options } = this.props;
-
     return (
-      <Row>
-        <Col md={6} mdOffset={6} className="text-right">
-          <ul className="list-inline">
-            <li>
-              <InformationToggle
-                onToggle={this.handleSurahInfoToggle}
-                isShowingSurahInfo={options.isShowingSurahInfo}
-              />
-            </li>
-            <li>|</li>
-            <li>
-              <FontSizeDropdown
-                options={options}
-                onOptionChange={this.handleFontSizeChange}
-              />
-            </li>
-            <li>|</li>
-            <li>
-              <ReadingModeToggle
-                isToggled={options.isReadingMode}
-                onReadingModeToggle={toggleReadingModeDispatch} />
-            </li>
-          </ul>
-        </Col>
-      </Row>
+      <PageView
+        lines={lines}
+        keys={keys}
+        options={options}
+        currentVerse={currentVerse}
+        audioActions={actions.audio}
+        isPlaying={isPlaying}
+      />
     );
   }
 
   render() {
-    const { surah, surahs, ayahIds, options } = this.props;
+    const { chapter, verses, options, info, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
+    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}>{this.renderNoAyah()}</div>;
+
     return (
-      <div className="surah-body">
+      <div className="chapter-body">
         <Helmet
-          title={surah.name.simple}
           {...makeHeadTags({
             title: this.title(),
             description: this.description()
           })}
+          script={[{
+            type: 'application/ld+json',
+            innerHTML: `{
+              "@context": "http://schema.org",
+              "@type": "BreadcrumbList",
+              "itemListElement": [{
+                "@type": "ListItem",
+                "position": 1,
+                "item": {
+                  "@id": "https://quran.com/",
+                  "name": "Quran"
+                }
+              },{
+                "@type": "ListItem",
+                "position": 2,
+                "item": {
+                  "@id": "https://quran.com/${chapter.chapterNumber}",
+                  "name": "${chapter.nameSimple}"
+                }
+              }]
+            }`
+          }]}
+          style={[
+            {
+              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+            }
+          ]}
         />
-        <script type="application/ld+json" dangerouslySetInnerHTML={{
-          __html: `{
-            "@context": "http://schema.org",
-            "@type": "BreadcrumbList",
-            "itemListElement": [{
-              "@type": "ListItem",
-              "position": 1,
-              "item": {
-                "@id": "http://quran.com/",
-                "name": "Quran"
-              }
-            },{
-              "@type": "ListItem",
-              "position": 2,
-              "item": {
-                "@id": "http://quran.com/${surah.id}",
-                "name": "${surah.name.simple}"
-              }
-            }]
-          }`
-        }} />
-        <style dangerouslySetInnerHTML={{
-          __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
-          }}
-        />
-        <MasterHeader surah={surah}>
-          <Row className="navbar-bottom">
-            <Col md={8}>
-              <Row>
-                <SurahsDropdown
-                  surahs={surahs}
-                  className={`col-md-3 ${style.rightborder} ${style.dropdown}`}
-                />
-                <VersesDropdown
-                  ayat={surah.ayat}
-                  loadedAyahs={ayahIds}
-                  isReadingMode={options.isReadingMode}
-                  onClick={this.handleVerseDropdownClick.bind(this)}
-                  className={`col-md-1 ${style.rightborder} ${style.dropdown}`}
-                />
-                <ReciterDropdown
-                  onOptionChange={this.handleOptionChange.bind(this)}
-                  options={options}
-                  className={`col-md-2 ${style.rightborder} ${style.dropdown}`}
-                />
-                <Audioplayer
-                  surah={surah}
-                  onLoadAyahs={this.lazyLoadAyahs.bind(this)}
-                  className={`col-md-4 ${style.rightborder}`}
-                />
-                <ContentDropdown
-                  onOptionChange={this.handleOptionChange.bind(this)}
-                  options={options}
-                  className={`col-md-2 ${style.rightborder} ${style.dropdown}`}
-                />
-              </Row>
-            </Col>
-            <Col md={4}>
-              <Row>
-                <SearchInput
-                  className={`col-md-12 search-input`}
-                />
-              </Row>
-            </Col>
-          </Row>
-        </MasterHeader>
-        <div className={`container-fluid ${style['surah-container']}`}>
-          <Row>
+        <div className={`container-fluid ${style.container}`}>
+          <div className="row">
             <SurahInfo
-              surah={surah}
+              chapter={chapter}
+              info={info}
+              loadInfo={actions.loadInfo}
               isShowingSurahInfo={options.isShowingSurahInfo}
               onClose={this.handleSurahInfoToggle}
             />
-            <Col md={10} mdOffset={1}>
-              {this.renderTopOptions()}
-              <Bismillah surah={surah} />
+            <div className="col-md-10 col-md-offset-1">
+              <TopOptions chapter={chapter} />
+              <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
-            </Col>
-            <Col md={10} mdOffset={1}>
+            </div>
+            <div className="col-md-10 col-md-offset-1">
               {this.renderPagination()}
-            </Col>
-          </Row>
+            </div>
+          </div>
         </div>
+        <Audioplayer
+          chapter={chapter}
+          startVerse={Object.values(verses)[0]}
+          onLoadAyahs={this.handleLazyLoadAyahs}
+        />
       </div>
     );
   }
 }
+
+Surah.propTypes = {
+  chapter: customPropTypes.surahType.isRequired,
+  chapters: customPropTypes.chapters.isRequired,
+  actions: PropTypes.object.isRequired, // eslint-disable-line
+  lines: PropTypes.object.isRequired, // eslint-disable-line
+  isEndOfSurah: PropTypes.bool.isRequired,
+  verseIds: PropTypes.instanceOf(Set),
+  currentVerse: PropTypes.string,
+  info: customPropTypes.infoType,
+  bookmarks: PropTypes.object.isRequired, // eslint-disable-line
+  isLoading: PropTypes.bool.isRequired,
+  isLoaded: PropTypes.bool.isRequired,
+  isSingleAyah: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired,
+  options: PropTypes.object.isRequired, // eslint-disable-line
+  params: PropTypes.shape({
+    chapterId: PropTypes.string.isRequired
+  }).isRequired,
+  verses: customPropTypes.verses,
+  isPlaying: PropTypes.bool
+};
+
+const AsyncSurah = asyncConnect([
+  { promise: chaptersConnect },
+  { promise: chapterInfoConnect },
+  { promise: versesConnect }
+])(Surah);
+
+function mapStateToProps(state, ownProps) {
+  const chapterId = parseInt(ownProps.params.chapterId, 10);
+  const chapter: Object = state.chapters.entities[chapterId];
+  const verses: Object = state.verses.entities[chapterId];
+  const verseArray = verses ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10)) : [];
+  const verseIds = new Set(verseArray);
+  const lastAyahInArray = verseArray.slice(-1)[0];
+  const isSingleAyah = !!ownProps.params.range && !ownProps.params.range.includes('-');
+  const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
+
+  return {
+    chapter,
+    verses,
+    verseIds,
+    isSingleAyah,
+    currentVerse,
+    info: state.chapters.infos[ownProps.params.chapterId],
+    isStarted: state.audioplayer.isStarted,
+    isPlaying: state.audioplayer.isPlaying,
+    isAuthenticated: state.auth.loaded,
+    currentWord: state.verses.currentWord,
+    isEndOfSurah: lastAyahInArray === chapter.versesCount,
+    chapters: state.chapters.entities,
+    bookmarks: state.bookmarks.entities,
+    isLoading: state.verses.loading,
+    isLoaded: state.verses.loaded,
+    lines: state.lines.lines,
+    options: state.options
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: {
+      options: bindActionCreators(OptionsActions, dispatch),
+      verse: bindActionCreators(AyahActions, dispatch),
+      audio: bindActionCreators(AudioActions, dispatch),
+      bookmark: bindActionCreators(BookmarkActions, dispatch),
+      media: bindActionCreators(MediaActions, dispatch),
+      push: bindActionCreators(push, dispatch)
+    },
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AsyncSurah);

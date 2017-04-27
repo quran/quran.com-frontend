@@ -6,35 +6,11 @@
   .dropdown-icon.ss-icon:before{
     content:"▾";
   }
-
-
-
-  @media (max-width: $screen-xs-max) {
-    background: $olive;
-    color: $cream;
-    a{
-      color: $cream;
-    }
-  }
-}
-
-// When dropdown is open!
-.dropdown.open{
-  background-color: $olive;
-
-  .dropdown-icon.ss-icon:before{
-    content:"▴";
-  }
-
-  a.dropdown-toggle{
-    color: $beige !important;
-  }
 }
 
 .dropdown-menu{
   margin-top: 0px;
   border-radius: 0px;
-  border-color: $dropdown-bg;
   @extend .montserrat;
   min-width: 100%;
 
@@ -59,15 +35,5 @@
     line-height: 1.428571429;
     white-space: nowrap;
     margin-bottom: 0px;
-    color: $beige;
-  }
-
-  & > li > a {
-    &:hover,
-    &.active{
-      background: $beige;
-      color: $olive;
-      cursor: pointer;
-    }
   }
 }

@@ -1,32 +1,43 @@
 import React, { Component, PropTypes } from 'react';
-import CopyToClipboard from 'copy-to-clipboard';
+import copyToClipboard from 'copy-to-clipboard';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-export default class Copy extends Component {
-  static propTypes = {
-    text: PropTypes.string.isRequired
-  }
+class Copy extends Component {
 
   state = {
     isCopied: false
   };
 
   handleCopy = () => {
-    CopyToClipboard(this.props.text);
-    this.setState({isCopied: true});
+    copyToClipboard(`${this.props.text} - ${this.props.verseKey}`);
+    this.setState({ isCopied: true });
 
-    setTimeout(() => this.setState({isCopied: false}), 1000);
-  }
+    setTimeout(() => this.setState({ isCopied: false }), 1000);
+  };
 
   render() {
     const { isCopied } = this.state;
 
     return (
       <a
+        tabIndex="-1"
         onClick={this.handleCopy}
         className={!isCopied && 'text-muted'}
-        data-metrics-event-name="Ayah:Copy">
-        <i className="ss-icon ss-attach" /> {isCopied ? 'Copied!' : 'Copy'}
+        data-metrics-event-name="Ayah:Copy"
+      >
+        <i className="ss-icon ss-attach vertical-align-middle" />{' '}
+        <LocaleFormattedMessage
+          id={isCopied ? 'actions.copied' : 'actions.copy'}
+          defaultMessage={isCopied ? 'Copied!' : 'Copy'}
+        />
       </a>
     );
   }
 }
+
+Copy.propTypes = {
+  text: PropTypes.string.isRequired,
+  verseKey: PropTypes.string.isRequired,
+};
+
+export default Copy;

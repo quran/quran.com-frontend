@@ -3,13 +3,15 @@ build
 node_modules
 /node_modules
 static/dist
+dist
 test-results.xml
 npm-debug.log
+npm-debug.log.*
 webpack-stats.json
 webpack-assets.json
 bundle-stats.json
 selenium-debug.log
-tests/functional/output/*
-test/functional/screenshots/*
 .ssh
 webpack-stats.debug.json
+*.DS_Store
+.vscode

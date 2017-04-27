@@ -1,13 +1,13 @@
 .right-inner-addon.search-input{
   padding: 0px;
-  height: 40px;
   margin-bottom: 0px;
+  width: auto;
 
   input{
     padding: 10px 15px;
     height: 100%;
     padding-right: 48px;
-    background: transparent;
+    background: #f1f1f1;
   }
 
   input::-webkit-input-placeholder { /* WebKit browsers */
@@ -24,11 +24,10 @@
   }
   i.ss-icon{
     font-size: 90%;
-    padding: 15px;
+    padding: 12px;
     height: 100%;
     text-align: center;
-    border: initial;
-    background: transparent;
+    border: 0;
     right: 0px;
   }
 }
@@ -76,7 +75,7 @@
     color: #fff;
     cursor: pointer;
     height: 100%;
-      border: 3px solid #fff;
+    border: 3px solid #fff;
 
     &:hover{
       background-color: lighten($brand-primary, 10%);
@@ -85,10 +84,6 @@
 }
 
 
-@media (max-width: $screen-xs-max) {
-  .right-inner-addon.search-input{
-    i{
-      display: none;
-    }
-  }
+.search-status{
+  span span{color: #2CA4AB}
 }

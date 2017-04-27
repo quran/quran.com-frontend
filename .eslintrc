@@ -1,40 +1,53 @@
 {
+  "extends": "airbnb",
   "parser": "babel-eslint",
-  "env": {
-    "es6": true,
-    "node": true,
-    "browser": true,
-    "jquery": true
+  "rules": {
+    "comma-dangle": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/no-extraneous-dependencies": 0,
+    "import/prefer-default-export": 1,
+    "import/extensions": 0,
+    "import/no-unresolved": 0,
+    "property": 0,
+    "no-mixed-operators": 0,
+    "strict": 0
   },
   "ecmaFeatures": {
-    "arrowFunctions": true,
-    "binaryLiterals": true,
-    "blockBindings": true,
     "classes": true,
-    "defaultParams": true,
-    "destructuring": true,
-    "forOf": true,
-    "generators": true,
-    "modules": true,
-    "objectLiteralComputedProperties": true,
-    "objectLiteralDuplicateProperties": true,
-    "objectLiteralShorthandMethods": true,
-    "objectLiteralShorthandProperties": true,
-    "octalLiterals": true,
-    "regexUFlag": true,
-    "regexYFlag": true,
-    "spread": true,
-    "superInFunctions": true,
-    "templateStrings": true,
-    "unicodeCodePointEscapes": true,
-    "globalReturn": true,
-    "jsx": false
+    "jsx": true
   },
-  "rules": {
-    "strict": 0,
-    "indent": [2, 2],
-    "quotes": [2, "single"],
-    "no-unused-vars": 0
+  "plugins": [
+    "react",
+    "mocha"
+  ],
+  "settings": {
+    "import/resolver": "webpack"
   },
-  "plugins": ["react"]
+  "parserOptions":{
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "globals": {
+    "__DEVELOPMENT__": true,
+    "__CLIENT__": true,
+    "__SERVER__": true,
+    "__DISABLE_SSR__": true,
+    "__DEVTOOLS__": true,
+    "socket": true,
+    "webpackIsomorphicTools": true,
+    ga: true,
+    Raven: true,
+    mixpanel: true,
+    "expect": true,
+    "browser": true,
+    "import": true,
+    "FB": true,
+    "window": true,
+    sinon: true
+  },
+  "env": {
+    "mocha": true,
+    "amd": true
+  }
 }

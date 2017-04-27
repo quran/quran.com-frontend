@@ -1,4 +1,4 @@
-@import '../../styles/_bootstrap-config.scss';
+@import '../../styles/variables.scss';
 $old-color: #8ce196;
 $color: $brand-primary;
 $height: 25px;
@@ -21,6 +21,7 @@ $width: 50px;
   cursor: pointer;
   outline: none;
   user-select: none;
+  margin-bottom: 0px;
 }
 
 .toggleRound + .label {

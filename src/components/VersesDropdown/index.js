@@ -1,70 +1,80 @@
 import React, { Component, PropTypes } from 'react';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import * as customPropTypes from 'customPropTypes';
+import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { Link } from 'react-scroll';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('./style.scss');
 
-export default class VersesDropdown extends Component {
-  static propTypes = {
-    ayat: PropTypes.number.isRequired,
-    loadedAyahs: PropTypes.object.isRequired, // Set
-    onClick: PropTypes.func.isRequired,
-    isReadingMode: PropTypes.bool
-  };
+class VersesDropdown extends Component {
+  renderItem = (ayah, index) => {
+    const { chapter, loadedVerses, isReadingMode, onClick } = this.props;
+    const number = index + 1;
 
-  static defaultProps = {
-    className: 'col-md-3'
-  };
-
-  renderItem(ayah, index) {
-    const { loadedAyahs, isReadingMode, onClick } = this.props;
-    const ayahNum = index + 1;
-
-    if (loadedAyahs.has(ayahNum) && !isReadingMode) {
+    if (loadedVerses.has(number) && !isReadingMode) {
       return (
         <li key={index}>
-          <Link onClick={onClick.bind(this, ayahNum)} to={`ayah:${ayahNum}`} smooth spy offset={-120} activeClass="active" duration={500} className="pointer">
-            {ayahNum}
+          <Link
+            onClick={() => onClick(number)}
+            to={`verse:${chapter.chapterNumber}:${number}`}
+            smooth
+            spy
+            offset={-120}
+            activeClass="active"
+            duration={500}
+            className="pointer"
+          >
+            {number}
           </Link>
         </li>
       );
     }
 
-    return <MenuItem key={index} onClick={onClick.bind(this, ayahNum)}>{ayahNum}</MenuItem>;
+    return (
+      <MenuItem key={index} onClick={() => onClick(number)}>
+        {number}
+      </MenuItem>
+    );
   }
 
   renderMenu() {
-    const { ayat } = this.props;
+    const { chapter } = this.props;
+    const array = Array(chapter.versesCount).join().split(',');
 
-    return Array(ayat).join().split(',').map(this.renderItem.bind(this));
+    return array.map((ayah, index) => this.renderItem(ayah, index));
   }
 
   render() {
     const { className } = this.props;
 
     const title = (
-      <span>
-        Verses
-      </span>
+      <LocaleFormattedMessage id={'setting.verses'} defaultMessage={'Go to verse'} />
     );
 
     return (
-      <div className={`dropdown ${className} ${style.dropdown}`}>
-        <button
-          className={`btn btn-link no-outline`}
-          id="verses-dropdown"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false">
-          {title}
-          <span className="caret"></span>
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="verses-dropdown">
-          {this.renderMenu()}
-        </ul>
-      </div>
+      <NavDropdown
+        link
+        className={`dropdown ${className} ${style.dropdown}`}
+        id="verses-dropdown"
+        title={title}
+      >
+        {this.renderMenu()}
+      </NavDropdown>
     );
   }
 }
+
+VersesDropdown.propTypes = {
+  loadedVerses: PropTypes.instanceOf(Set).isRequired,
+  chapter: customPropTypes.surahType.isRequired, // Set
+  onClick: PropTypes.func.isRequired,
+  isReadingMode: PropTypes.bool,
+  className: PropTypes.string
+};
+
+VersesDropdown.defaultProps = {
+  className: ''
+};
+
+export default VersesDropdown;

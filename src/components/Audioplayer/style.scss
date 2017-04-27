@@ -1,72 +1,133 @@
-@import '../../styles/_bootstrap-config.scss';
+@import '../../styles/variables.scss';
 
-:local .padding_left {
-  padding-left: 40px
-}
-
-:local .container{
-  position:relative;
+.container{
+  position: fixed;
+  bottom: 15px;
   display: block;
   user-select: none;
-  height: 40px;
-  padding: 10px 20px 8px 40px;
+  height: auto;
+  padding: 10px 20px 5px;
+  background: #fff;
+  box-shadow: 0 0 0.5rem 0 rgba(0,0,0,.2);
+  min-width: 340px;
+  @media(max-width: $screen-sm){
+    bottom: 0px;
+    width: 100%;
+  }
+  // border: 0.08333rem solid transparent !important;
 }
 
-:local .wrapper{
+.wrapper{
   width: 100%;
   position: absolute;
-  top: 90%;
+  top: 0;
   left: 0px;
   height: 10%;
-  transition: all 0.5s;
-  &:hover{
-    height: 20%;
-    top: 80%;
-  }
 }
 
-:local .options{
+.options{
   border-radius: 4px;
   width: 100%;
   display: inline-block;
   margin: 0px;
   height: 90%;
   text-align: center;
+}
 
-
-  .buttons{
-    cursor: pointer;
-    padding-right: 1.5%;
-    color: $olive;
-    outline: none;
-
-    &.playing{
-      color: $brand-primary;
-    }
-    i.fa{
-      color: inherit;
-      font-size: 100%;
-    }
-  }
-  .checkbox{
-    display: none;
-  }
-  .repeat{
-    color: $brand-primary;
-  }
-  .scroll{
-    color: $brand-primary;
+.controls{
+  margin: 0px;
+  .controlItem{
+    vertical-align: middle;
+    padding-right: 20px;
+    color: #939598;
   }
 }
 
-:local .disabled{
+.list{
+  margin-bottom: 0px;
+  display: table;
+  width: 100%;
+  padding-left: 0px;
+  text-align: center;
+
+  :global(li){
+    padding-right: 15px;
+    display: table-cell;
+  }
+}
+
+.buttons{
+  width: 100%;
+  display: inline-block;
+  cursor: pointer;
+  padding-right: 1.5%;
+  color: $text-color;
+  outline: none;
+
+  &:focus, &:active{
+    outline: none;
+  }
+
+  &.playingButton{
+    background: $brand-primary;
+    color: #fff;
+    height: 32px;
+    width: 32px;
+    padding: 8px;
+    border-radius: 50%;
+    position: relative;
+    vertical-align: middle;
+
+    &:hover{
+      opacity: 0.75;
+    }
+  }
+
+  i.fa{
+    color: inherit;
+    font-size: 100%;
+  }
+}
+
+.checkbox{
+  display: none;
+}
+.repeat{
+  color: $brand-primary;
+}
+.scroll{
+  color: $brand-primary;
+}
+
+.disabled{
   opacity: 0.5;
   cursor: not-allowed !important;
+  pointer-events: none;
 }
 
-:local .verse{
-  position: absolute;
-  left: 20px;
+.verse{
+  padding: 0px;
   color: $olive;
-  opacity: 0.5;
+}
+
+.popover{
+  :global(.popover-title){
+    font-family: $font-montserrat;
+    text-transform: uppercase;
+    color: $cream;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 0.75em;
+  }
+
+  :global(.popover-content){
+    :global(a){
+      font-size: 0.8em;
+    }
+  }
+  .pill{
+    :global(a){
+      padding: 10px 15px;
+    }
+  }
 }

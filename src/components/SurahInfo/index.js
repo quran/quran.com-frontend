@@ -1,43 +1,58 @@
-import React, { Component, PropTypes } from 'react';
-
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
+import React, { PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
+import Loader from 'quran-components/lib/Loader';
 
 const style = require('./style.scss');
 
-export default class SurahInfo extends Component {
-  render() {
-    const { surah, isShowingSurahInfo, onClose } = this.props;
-    const html = require(`./htmls/${surah.id}.html.js`);
-
-    return (
-      <Col xs={12} className={`${style.container} ${isShowingSurahInfo ? style.show : ''}`}>
-        <div className={`${style.close} ss-delete`} onClick={onClose.bind(null, {isShowingSurahInfo: !isShowingSurahInfo})} />
-        <Row className={style.row}>
-          <Col
-            md={3}
-            xs={6}
-            className={style.bg}
-            style={{background: `url(/images/${surah.revelation.place}.jpg) center center no-repeat`}}
-          />
-          <Col md={1} xs={6} className={style.list}>
-            <dl>
-              <dt>VERSES</dt>
-              <dd className="text-uppercase">{surah.ayat}</dd>
-              <dt>PAGES</dt>
-              <dd className="text-uppercase">{surah.page.join('-')}</dd>
-            </dl>
-          </Col>
-          <Col md={8} className={`${style.info} times-new`}>
-            <div dangerouslySetInnerHTML={{__html: html}} />
-            <div>
-              <p>
-                <em>Source: Sayyid Abul Ala Maududi - Tafhim al-Qur'an - The Meaning of the Quran</em>
-              </p>
-            </div>
-          </Col>
-        </Row>
-      </Col>
-    );
+const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
+  // So we don't need to load images and files unless needed
+  if (!isShowingSurahInfo) return <noscript />;
+  if (!info) {
+    return <Loader isActive />;
   }
-}
+
+  return (
+    <div className={`col-xs-12 ${style.container} chapter-info ${style.show}`}>
+      {
+        onClose &&
+        <button
+          tabIndex="-1"
+          className={`${style.close} ss-delete`}
+          onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
+        />
+      }
+      <div className={`${style.row} row`}>
+        <div
+          className={`col-md-3 col-xs-6 ${style.bg} ${style[chapter.revelationPlace]}`}
+        />
+        <div className={`${style.list} col-md-1 col-xs-6`}>
+          <dl>
+            <dt>VERSES</dt>
+            <dd className="text-uppercase">{chapter.versesCount}</dd>
+            <dt>PAGES</dt>
+            <dd className="text-uppercase">{chapter.pages.join('-')}</dd>
+          </dl>
+        </div>
+        <div className={`${style.info} ${info.languageName} times-new col-md-8`}>
+          <div dangerouslySetInnerHTML={{ __html: info.text }} />
+          <div>
+            <p>
+              <em>
+                Source: {info.source}
+              </em>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+SurahInfo.propTypes = {
+  onClose: PropTypes.func,
+  isShowingSurahInfo: PropTypes.bool,
+  chapter: customPropTypes.surahType,
+  info: customPropTypes.infoType
+};
+
+export default SurahInfo;

@@ -1,17 +1,18 @@
+/* global window */
 export default {
   pageViewEvent: 'pageLoad',
   vendors: [
     {
       api: {
-        name: 'Segment',
-        pageView(eventName) {
-          if (eventName !== 'pageLoad') {
-            return analytics.page(...arguments);
-          }
+        name: 'Analytics',
+        pageView() {
+          mixpanel.track('Pageview', window.location);
 
           return ga('send', 'pageview');
         },
         track(eventName, params) {
+          mixpanel.track(eventName, params);
+
           return ga('send', {
             hitType: 'event',
             eventCategory: eventName,
@@ -20,7 +21,7 @@ export default {
           });
         },
         user(user) {
-          return new Promise(resolve => {
+          return new Promise((resolve) => {
             resolve({
               user
             });
@@ -29,4 +30,4 @@ export default {
       }
     }
   ]
-}
+};

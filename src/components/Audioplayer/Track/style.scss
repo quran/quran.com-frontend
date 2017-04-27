@@ -1,10 +1,31 @@
-@import '../../../styles/_bootstrap-config.scss';
+@import '../../../styles/variables.scss';
 
-:local .track{
-  background: $track-bg;
-  display: block;
-  height: 100%;
+.container{
+  height: 6px;
   width: 100%;
-  user-select: none;
+  background-color: #f7f7f7;
   cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.progress{
+  height: 100%;
+  background-color: $brand-primary;
+  position: relative;
+  padding-left: 12px;
+
+
+  &:after{
+    content: '';
+    height: 12px;
+    width: 12px;
+    border-radius: 10px;
+    position: absolute;
+    right: 0px;
+    display: block;
+    background: #fff;
+    top: -3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.45);
+    transition: height 0.5s;
+  }
 }

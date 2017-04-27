@@ -1,11 +1,13 @@
-import { Schema } from 'normalizr';
+import { schema } from 'normalizr';
 
-const surahsSchema = new Schema('surahs');
-const ayahsSchema = new Schema('ayahs', { idAttribute: 'ayahKey' });
+export const chaptersSchema = new schema.Entity('chapters', {}, { idAttribute: 'id' });
+export const versesSchema = new schema.Entity('verses', {}, { idAttribute: 'verseKey' });
+export const bookmarksSchema = new schema.Entity('bookmarks', {}, { idAttribute: 'verseKey' });
 
 const schemas = {
-  surahsSchema,
-  ayahsSchema
+  chaptersSchema,
+  versesSchema,
+  bookmarksSchema
 };
 
 export default schemas;

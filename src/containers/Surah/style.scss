@@ -1,12 +1,18 @@
-@import '../../styles/_bootstrap-config.scss';
+@import '../../styles/variables.scss';
 
-:local .dropdown {
-  padding-left: 0;
-  padding-right: 0;
+.dropdown {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  width: 100%;
+  text-align: left;
+  border-radius: 0px;
+  border: none;
+  font-weight: 300;
 
-  &> button {
-    width: 100%;
-    text-align: left;
+  &.open{
+    :global(.dropdown-icon.ss-icon:before){
+      content:"▴";
+    }
   }
 
   :global(.caret) {
@@ -21,10 +27,24 @@
   border-right: 1px solid rgba(173, 170, 156, 0.5);
 }
 
-:local .surah-container {
-  padding-top: 130px;
+.container {
+  padding-top: 70px;
+  min-height: 100vh;
 
   @media(max-width: $screen-xs-max) {
-    padding-top: 100px;
+    padding-top: 70px;
+  }
+}
+
+.sidebarItem{
+  padding: 10px 12px;
+  color: #333;
+  font-weight: 300;
+
+  :global(.switch){
+    float: right;
+  }
+  :global(a){
+    color: #333;
   }
 }

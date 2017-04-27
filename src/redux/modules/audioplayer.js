@@ -1,200 +1,242 @@
 /* eslint-disable no-case-declarations */
-import { buildAudioFromHash, testIfSupported } from '../../helpers/buildAudio';
+import { buildAudioForAyah } from 'helpers/buildAudio';
+import { buildSegments } from 'helpers/buildSegments';
 
-import { LOAD_SUCCESS as AYAHS_LOAD_SUCCESS, LOAD as AYAHS_LOAD, CLEAR_CURRENT as AYAHS_CLEAR_CURRENT, SET_CURRENT_AYAH } from './ayahs';
+import {
+  SET_CURRENT_FILE,
+  SET_CURRENT_WORD,
+  PLAY_CURRENT_WORD,
+  PLAY,
+  PAUSE,
+  NEXT,
+  SET_AYAH,
+  PREVIOUS,
+  SET_REPEAT,
+  TOGGLE_SCROLL,
+  UPDATE,
+  // LOAD,
+  LOAD_SUCCESS,
+  // LOAD_FAIL
+  } from 'redux/constants/audioplayer.js';
 
-const SET_USER_AGENT = '@@quran/audioplayer/SET_USER_AGENT';
-const SET_CURRENT_FILE = '@@quran/audioplayer/SET_CURRENT_FILE';
-const PLAY = '@@quran/audioplayer/PLAY';
-const PAUSE = '@@quran/audioplayer/PAUSE';
-const PLAY_PAUSE = '@@quran/audioplayer/PLAY_PAUSE';
-const REPEAT = '@@quran/audioplayer/REPEAT';
-const TOGGLE_SCROLL = '@@quran/audioplayer/TOGGLE_SCROLL';
-const BUILD_ON_CLIENT = '@@quran/audioplayer/BUILD_ON_CLIENT';
+import {
+  LOAD as VERSES_LOAD,
+  CLEAR_CURRENT as VERSES_CLEAR_CURRENT,
+  SET_CURRENT_VERSE
+} from './verses';
+
+export { NEXT, SET_AYAH };
 
 const initialState = {
   files: {},
-  segments: {},
-  userAgent: null,
   currentFile: null,
-  isSupported: true,
+  currentVerse: null,
+  currentWord: null,
+  currentTime: 0,
   isPlaying: false,
-  shouldRepeat: false,
+  repeat: {
+    from: undefined,
+    to: undefined,
+    times: Infinity
+  },
   shouldScroll: true,
-  isLoadedOnClient: false
+  isLoadedOnClient: false,
+  isLoading: true,
+  segments: {}
 };
-
-let audioFromHash;
-let files;
-let segments;
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case BUILD_ON_CLIENT:
-      audioFromHash = buildAudioFromHash(state.files[action.surahId], state.userAgent);
-      files = Object.assign({}, state.files[action.surahId], audioFromHash.files);
-      segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
+    case VERSES_CLEAR_CURRENT: {
+      const stateFilesCurrent = state.files;
 
       return {
         ...state,
-        isLoadedOnClient: true,
         files: {
-          ...state.files,
-          [action.surahId]: files
-        },
-        segments: {
-          ...state.segments,
-          [action.surahId]: segments
+          ...stateFilesCurrent,
+          [action.id]: {}
         }
       };
-    case AYAHS_CLEAR_CURRENT:
+    }
+    case VERSES_LOAD: {
       return {
         ...state,
+        isLoading: false
+      };
+    }
+    case LOAD_SUCCESS: {
+      const data = buildAudioForAyah(action.result.audioFile);
+
+      return {
+        ...state,
+        loaded: true,
+        loading: false,
+        errored: false,
         files: {
           ...state.files,
-          [action.id]: {}
+          [action.chapterId]: {
+            ...state.files[action.chapterId],
+            [action.verseKey]: data.audio
+          }
         },
         segments: {
           ...state.segments,
-          [action.id]: {}
-        },
-      };
-    case AYAHS_LOAD:
-      return {
-        ...state,
-        isLoadedOnClient: false
-      };
-    case AYAHS_LOAD_SUCCESS:
-      const isSupported = testIfSupported(
-        action.result.entities.ayahs[action.result.result[0]],
-        state.userAgent
-      );
-
-      let currentFile = state.currentFile ? state.currentFile : action.result.result[0];
-
-      if (parseInt(state.surahId, 10) !== action.surahId) {
-        currentFile = action.result.result[0];
-      }
-
-      if (!isSupported) {
-        return {
-          ...state,
-          isSupported: false
-        };
-      }
-
-      const incoming = action.result.entities.ayahs;
-      audioFromHash = __CLIENT__ ? buildAudioFromHash(incoming, state.userAgent) : incoming;
-      files = Object.assign({}, state.files[action.surahId], __CLIENT__ ? audioFromHash.files : audioFromHash);
-      segments = Object.assign({}, state.segments[action.surahId], audioFromHash.segments);
-
-      return {
-        ...state,
-        currentFile,
-        isSupported,
-        surahId: action.surahId,
-        isLoadedOnClient: __CLIENT__,
-        files: {
-          ...state.files,
-          [action.surahId]: files
-        },
-        segments: {
-          ...state.segments,
-          [action.surahId]: segments
+          [action.chapterId]: {
+            ...state.segments[action.chapterId],
+            [action.verseKey]: buildSegments(data.segments)
+          }
         }
       };
-    case SET_USER_AGENT:
+    }
+    case UPDATE: {
+      const { payload } = action;
       return {
         ...state,
-        userAgent: action.userAgent
+        ...payload
       };
-    case PLAY:
+    }
+    case PLAY: {
       return {
         ...state,
         isPlaying: true
       };
-    case PAUSE:
+    }
+    case PAUSE: {
       return {
         ...state,
         isPlaying: false
       };
-    case PLAY_PAUSE:
+    }
+    case NEXT: {
+      const [chapterId, ayahNum] = action.currentVerse.split(':');
+      const nextId = `${chapterId}:${parseInt(ayahNum, 10) + 1}`;
+
       return {
         ...state,
-        isPlaying: !state.isPlaying
+        currentVerse: nextId,
+        currentFile: state.files[chapterId][nextId],
+        currentTime: 0
       };
-    case REPEAT:
+    }
+    case PREVIOUS: {
+      const [chapterId, ayahNum] = action.currentVerse.split(':');
+      const nextId = `${chapterId}:${parseInt(ayahNum, 10) - 1}`;
+
       return {
         ...state,
-        shouldRepeat: !state.shouldRepeat
+        currentVerse: nextId,
+        currentFile: state.files[chapterId][nextId],
+        currentTime: 0
       };
-    case TOGGLE_SCROLL:
+    }
+    case SET_AYAH: {
+      const [chapterId, ayahNum] = action.currentVerse.split(':');
+      const currentVerse = `${chapterId}:${parseInt(ayahNum, 10)}`;
+      const currentFile = state.files[chapterId][currentVerse];
+
+      return {
+        ...state,
+        currentVerse,
+        currentFile,
+        currentTime: 0
+      };
+    }
+    case SET_REPEAT: {
+      const { repeat } = action;
+      return {
+        ...state,
+        repeat
+      };
+    }
+    case TOGGLE_SCROLL: {
       return {
         ...state,
         shouldScroll: !state.shouldScroll
       };
-    case SET_CURRENT_FILE:
+    }
+    case SET_CURRENT_FILE: {
       return {
         ...state,
         currentFile: action.file
       };
-    case SET_CURRENT_AYAH:
+    }
+    case SET_CURRENT_WORD: {
+      if (!action.word) return state;
+      let currentTime = null;
+      const [chapterId, ayahNum, word] = action.word.split(':');
+      const nextId = `${chapterId}:${ayahNum}`;
+      if (!state.segments[chapterId][nextId]) return state;
+      if (state.files[chapterId][nextId] === state.currentFile) {
+        // When the files are the same, set the current time to that word
+        currentTime = state.segments[chapterId][nextId].words[word].startTime;
+        state.currentFile.currentTime = currentTime; // eslint-disable-line no-param-reassign
+
+        return {
+          ...state,
+          currentWord: action.word,
+          currentTime
+        };
+      }
+
+      // When the files are not the same.
+      const currentFile = state.files[chapterId][nextId];
+      const segment = buildSegments(state.segments[chapterId][nextId]);
+      currentTime = segment.words[word].startTime;
+      currentFile.currentTime = currentTime;
+      const stateSegments = state.segments;
+      const stateSegmentsId = state.segments[chapterId];
+
       return {
         ...state,
-        currentFile: action.id
+        currentWord: action.word,
+        currentVerse: nextId,
+        isPlaying: false,
+        currentTime,
+        currentFile,
+        segments: {
+          ...stateSegments,
+          [chapterId]: {
+            ...stateSegmentsId,
+            [nextId]: segment
+          }
+        }
       };
-    default:
+    }
+    case PLAY_CURRENT_WORD: {
+      if (!action.payload) return state;
+
+      const { word, position } = action.payload;
+      const [chapterId, ayahNum] = word.verseKey.split(':');
+      const nextId = `${chapterId}:${ayahNum}`;
+      const currentFile = state.files[chapterId][nextId];
+
+      if (!state.segments[chapterId][nextId].words[position]) return state;
+
+      const currentTime = state.segments[chapterId][nextId].words[position].startTime;
+      const endTime = state.segments[chapterId][nextId].words[position].endTime;
+      currentFile.currentTime = currentTime;
+
+      const int = setInterval(() => {
+        if (currentFile.currentTime > endTime) {
+          currentFile.pause();
+          clearInterval(int);
+        }
+      }, 10);
+      currentFile.play();
+
+      return {
+        ...state,
+        currentWord: word
+      };
+    }
+    case SET_CURRENT_VERSE: {
+      return {
+        ...state,
+        currentVerse: action.id
+      };
+    }
+    default: {
       return state;
+    }
   }
-}
-
-export function setUserAgent(userAgent) {
-  return {
-    type: SET_USER_AGENT,
-    userAgent
-  };
-}
-
-export function setCurrentFile(file) {
-  return {
-    type: SET_CURRENT_FILE,
-    file
-  };
-}
-
-export function play() {
-  return {
-    type: PLAY
-  };
-}
-
-export function pause() {
-  return {
-    type: PAUSE
-  };
-}
-
-export function playPause() {
-  return {
-    type: PLAY_PAUSE
-  };
-}
-
-export function repeat() {
-  return {
-    type: REPEAT
-  };
-}
-
-export function toggleScroll() {
-  return {
-    type: TOGGLE_SCROLL
-  };
-}
-
-export function buildOnClient(surahId) {
-  return {
-    type: BUILD_ON_CLIENT,
-    surahId
-  };
 }

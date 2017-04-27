@@ -1,54 +1,33 @@
 /* eslint-disable max-len */
-export default function createFontFaces(ayahs) {
-  if (__SERVER__) {
-    return false;
-  }
 
-  const fontFaces = [];
+export const fontFaceStyle = fontClassName => (
+  `@font-face {font-family: '${fontClassName}';
+  src: url('//quran-1f14.kxcdn.com/fonts/compressed/eot/${fontClassName}.eot?#iefix') format('embedded-opentype'),
+  url('//quran-1f14.kxcdn.com/fonts/ttf/${fontClassName}.ttf') format('truetype'),
+  url('//quran-1f14.kxcdn.com/fonts/woff/${fontClassName}.woff?-snx2rh') format('woff');}
+  .${fontClassName} {font-family: '${fontClassName}';}
+  .${fontClassName} {display: none;}`
+);
 
-  return ayahs.map((ayah) => {
-    const font = ayah.words[0].className;
+export const fontFaceStyleLoaded = fontClassName => (
+  `.${fontClassName} {display: block;}
+  .text-${fontClassName} {display: none;}`
+);
 
-    if (fontFaces.indexOf(font) === -1) {
-      fontFaces.push(font);
-
-      return this.fontFace(font);
-    }
-  });
-}
-
-export function fontFace(className) {
-  const style = document.createElement('style');
-
-  style.type = 'text/css';
-  style.appendChild(
-      document.createTextNode(
-          `@font-face {font-family: "${className}";
-          src: url('//quran-1f14.kxcdn.com/fonts/compressed/eot/${className}.eot?#iefix') format('embedded-opentype'),
-          url('//quran-1f14.kxcdn.com/fonts/ttf/${className}.ttf') format('truetype'),
-          url('//quran-1f14.kxcdn.com/fonts/woff/${className}.woff?-snx2rh') format('woff'),
-          url('//quran-1f14.kxcdn.com/fonts/compressed/svg/${className}.svg#') format('svg');}
-          .${className}{font-family: "${className}";}`
-      )
-  );
-  return document.head.appendChild(style);
-}
-
-export function createFontFacesArray(ayahs) {
+export function createFontFacesArray(verses) {
   const fontFaces = [];
   const fontFacesArray = [];
 
-  ayahs.map((ayah) => {
+  verses.forEach((ayah) => {
     const font = ayah.words[0].className;
 
-    if (!fontFaces.includes(font)) {
+    if (fontFaces.indexOf(font) === -1) {
       fontFaces.push(font);
       fontFacesArray.push(
         `@font-face {font-family: '${font}';
         src: url('//quran-1f14.kxcdn.com/fonts/compressed/eot/${font}.eot?#iefix') format('embedded-opentype'),
         url('//quran-1f14.kxcdn.com/fonts/ttf/${font}.ttf') format('truetype'),
-        url('//quran-1f14.kxcdn.com/fonts/woff/${font}.woff?-snx2rh') format('woff'),
-        url('//quran-1f14.kxcdn.com/fonts/compressed/svg/${font}.svg#') format('svg');}
+        url('//quran-1f14.kxcdn.com/fonts/woff/${font}.woff?-snx2rh') format('woff');}
         .${font} {font-family: '${font}';}`
       );
     }

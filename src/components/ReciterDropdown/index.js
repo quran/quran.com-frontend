@@ -1,239 +1,69 @@
 import React, { Component, PropTypes } from 'react';
-import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
+import * as customPropTypes from 'customPropTypes';
+import { connect } from 'react-redux';
+import Menu, { MenuItem } from 'quran-components/lib/Menu';
+import Radio from 'quran-components/lib/Radio';
+import Loader from 'quran-components/lib/Loader';
+import Icon from 'quran-components/lib/Icon';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import { loadRecitations } from 'redux/actions/options';
 
-const style = require('./style.scss');
+class ReciterDropdown extends Component {
 
-// To save API calls.
-export const slugs = [
-  {
-    reciter: {
-      slug: 'abdulbaset',
-      id: 1
-    },
-    name: {
-      english: 'AbdulBaset AbdulSamad (Mujawwad)',
-      arabic: 'عبد الباسط عبد الصمد (مجود)'
-    },
-    style: {
-      slug: 'mujawwad',
-      id: 1
-    },
-    id: 1
-  },
-  {
-    reciter: {
-      slug: 'abdulbaset',
-      id: 1
-    },
-    name: {
-      english: 'AbdulBaset AbdulSamad (Murattal)',
-      arabic: 'عبد الباسط عبد الصمد (مرتل)'
-    },
-    style: {
-      slug: 'murattal',
-      id: 2
-    },
-    id: 2
-  },
-  {
-    reciter: {
-      slug: 'sudais',
-      id: 2
-    },
-    name: {
-      english: 'Abdur-Rahman as-Sudais',
-      arabic: 'عبدالرحمن السديس'
-    },
-    style: {
-      slug: null,
-      id: null
-    },
-    id: 3
-  },
-  {
-    reciter: {
-      slug: 'shatri',
-      id: 3
-    },
-    name: {
-      english: 'Abu Bakr al-Shatri',
-      arabic: 'أبو بكر الشاطرى'
-    },
-    style: {
-      slug: null,
-      id: null
-    },
-    id: 4
-  },
-  {
-    reciter: {
-      slug: 'rifai',
-      id: 4
-    },
-    name: {
-      english: 'Hani ar-Rifai',
-      arabic: 'هاني الرفاعي'
-    },
-    style: {
-      slug: null,
-      id: null
-    },
-    id: 5
-  },
-  {
-    reciter: {
-      slug: 'alafasy',
-      id: 6
-    },
-    name: {
-      english: 'Mishari Rashid al-`Afasy',
-      arabic: 'مشاري راشد العفاسي'
-    },
-    style: {
-      slug: null,
-      id: null
-    },
-    id: 8
-  },
-  {
-    reciter: {
-      slug: 'minshawi',
-      id: 7
-    },
-    name: {
-      english: 'Mohamed Siddiq al-Minshawi (Mujawwad)',
-      arabic: 'محمد صديق المنشاوي (مجود)'
-    },
-    style: {
-      slug: 'mujawwad',
-      id: 1
-    },
-    id: 9
-  },
-  {
-    reciter: {
-      slug: 'minshawi',
-      id: 7
-    },
-    name: {
-      english: 'Mohamed Siddiq al-Minshawi (Murattal)',
-      arabic: 'محمد صديق المنشاوي (مرتل)'
-    },
-    style: {
-      slug: 'murattal',
-      id: 2
-    },
-    id: 10
-  },
-  {
-    reciter: {
-      slug: 'altablawi',
-      id: 9
-    },
-    name: {
-      english: 'Mohamed al-Tablawi',
-      arabic: 'محمد الطبلاوي'
-    },
-    style: {
-      slug: null,
-      id: null
-    },
-    id: 12
-  },
-  {
-    reciter: {
-      slug: 'alhusary',
-      id: 5
-    },
-    name: {
-      english: 'Mahmoud Khalil Al-Husary',
-      arabic: 'محمود خليل الحصري'
-    },
-    style: {
-      slug: null,
-      id: null
-    },
-    id: 7
-  },
-  {
-    reciter: {
-      slug: 'muallim', // i'm just making up values for slug, i dont think we need this at all
-      id: 5
-    },
-    name: {
-      english: 'Mahmoud Khalil Al-Husary (Muallim)',
-      arabic: 'محمود خليل الحصري'
-    },
-    style: {
-      slug: 'muallim',
-      id: 3
-    },
-    id: 13
-  },
-  {
-    reciter: {
-      slug: 'shuraym',
-      id: 8
-    },
-    name: {
-      english: 'Sa`ud ash-Shuraym',
-      arabic: 'سعود الشريم'
-    },
-    style: {
-      slug: null,
-      id: null
-    },
-    id: 11
-  }
-];
+  componentDidMount() {
+    if (!this.props.recitations.length) {
+      return this.props.loadRecitations();
+    }
 
-export default class ReciterDropdown extends Component {
-  static propTypes = {
-    onOptionChange: PropTypes.func,
-    options: PropTypes.object
-  };
-
-  static defaultProps = {
-    className: 'col-md-3'
-  };
-
-  shouldComponentUpdate(nextProps) {
-    return this.props.options !== nextProps.options;
+    return false;
   }
 
   renderMenu() {
-    const { options, onOptionChange } = this.props;
+    const { audio, onOptionChange, recitations } = this.props;
 
-    return slugs.map(slug => (
+    return recitations.map(slug => (
       <MenuItem
-        key={slug.name.english}
-        active={slug.id === options.audio}
-        onClick={onOptionChange.bind(this, {audio: slug.id})}>
-        {slug.name.english}
+        key={slug.id}
+      >
+        <Radio
+          checked={slug.id === audio}
+          id={`slug-${slug.id}`}
+          name="reciter"
+          handleChange={() => onOptionChange({ audio: slug.id })}
+        >
+          <span>
+            {slug.reciterNameEng} {slug.style ? `(${slug.style})` : ''}
+          </span>
+        </Radio>
       </MenuItem>
     ));
   }
 
   render() {
-    const { className } = this.props;
+    const { recitations } = this.props;
 
     return (
-      <div className={`dropdown ${className} ${style.dropdown}`}>
-        <button
-          className={`btn btn-link no-outline`}
-          id="reciters-dropdown"
-          type="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false">
-          Reciters
-          <span className="caret"></span>
-        </button>
-        <ul className="dropdown-menu" aria-labelledby="reciters-dropdown">
-          {this.renderMenu()}
-        </ul>
-      </div>
+      <MenuItem
+        icon={<Icon type="mic" />}
+        menu={
+          recitations.length ? <Menu>{this.renderMenu()}</Menu> : <Loader isActive />
+        }
+      >
+        <LocaleFormattedMessage id="setting.reciters.title" default="Reciters" />
+      </MenuItem>
     );
   }
 }
+
+ReciterDropdown.propTypes = {
+  onOptionChange: PropTypes.func,
+  audio: PropTypes.number,
+  loadRecitations: PropTypes.func.isRequired,
+  recitations: customPropTypes.recitations
+};
+
+export default connect(state => ({
+  recitations: state.options.options.recitations,
+  loadingRecitations: state.options.loadingRecitations,
+  audio: state.options.audio
+}), { loadRecitations })(ReciterDropdown);

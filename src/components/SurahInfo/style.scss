@@ -1,4 +1,4 @@
-@import '../../styles/_bootstrap-config.scss';
+@import '../../styles/variables.scss';
 $transition-speed: 0.75s;
 
 .container{
@@ -8,6 +8,11 @@ $transition-speed: 0.75s;
   max-height: 0px;
   min-height: 0px;
   transition: max-height $transition-speed, height $transition-speed;
+  margin-top: -20px; // To account for the .surah-container padding.
+
+  @media(max-width: $screen-xs-max) {
+    margin-bottom: 0;
+  }
 
   &.show{
     max-height: 600px;
@@ -22,6 +27,16 @@ $transition-speed: 0.75s;
   .bg{
     height: 100%;
     background-size: cover !important;
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    &.madinah{
+      background-image: url('../../../static/images/madinah.jpg');
+    }
+
+    &.makkah{
+      background-image: url('../../../static/images/makkah.jpg');
+    }
   }
 
   .list{

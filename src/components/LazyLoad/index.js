@@ -1,24 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+/* global window */
+import { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
-import debug from '../../helpers/debug';
+import debug from 'helpers/debug';
 
-export default class LazyLoad extends Component {
-  static propTypes = {
-    isLoading: PropTypes.bool.isRequired,
-    isEnd: PropTypes.bool.isRequired,
-    isLoaded: PropTypes.bool,
-    onLazyLoad: PropTypes.func.isRequired,
-    loadingComponent: PropTypes.any,
-    endComponent: PropTypes.any,
-    offset: PropTypes.number
-  }
-
-  static defaultProps = {
-    loadingComponent: 'Loading...',
-    endComponent: 'End.',
-    offset: 1000
-  }
+class LazyLoad extends Component {
 
   componentDidMount() {
     if (__CLIENT__) {
@@ -27,13 +13,21 @@ export default class LazyLoad extends Component {
     }
   }
 
-  onScroll = () => {
-    const { isLoading, isEnd, offset } = this.props;
-    const dom = ReactDOM.findDOMNode(this);
+  componentWillUnmount() {
+    if (__CLIENT__) {
+      window.removeEventListener('scroll', this.onScroll, true);
+    }
+  }
 
-    if ((!isLoading && !isEnd) && (dom.offsetParent || dom).offsetTop - (window.pageYOffset + window.innerHeight) <  offset) {
+  onScroll = () => {
+    const { isLoading, isEnd, offset, onLazyLoad } = this.props;
+    // TODO: Remove ReactDOM!
+    const dom = ReactDOM.findDOMNode(this); // eslint-disable-line
+    const componentOffset = (dom.offsetParent || dom).offsetTop - (window.pageYOffset + window.innerHeight); // eslint-disable-line max-len
+
+    if ((!isLoading && !isEnd) && componentOffset < offset) {
       debug('component:LazyLoad', 'onLazyLoad called');
-      return this.props.onLazyLoad();
+      return onLazyLoad();
     }
 
     return false;
@@ -49,3 +43,20 @@ export default class LazyLoad extends Component {
     return loadingComponent;
   }
 }
+
+LazyLoad.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+  isEnd: PropTypes.bool.isRequired,
+  onLazyLoad: PropTypes.func.isRequired,
+  loadingComponent: PropTypes.element,
+  endComponent: PropTypes.element,
+  offset: PropTypes.number
+};
+
+LazyLoad.defaultProps = {
+  loadingComponent: 'Loading...',
+  endComponent: 'End.',
+  offset: 1000
+};
+
+export default LazyLoad;

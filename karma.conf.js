@@ -13,18 +13,20 @@ module.exports = function(config) {
       'karma-sinon',
       'karma-webpack',
       'karma-chrome-launcher',
-      'karma-phantomjs-launcher'
+      'karma-phantomjs-launcher',
+      'karma-intl-shim'
     ],
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['mocha', 'chai-sinon', 'sinon'],
+    frameworks: ['mocha', 'chai-sinon', 'sinon', 'intl-shim'],
 
     // list of files / patterns to load in the browser
     files: [
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
       './tests/polyfill/Event.js',
-      {pattern: "static/images/*", watched: false, included: false, served: true},
+      './node_modules/Intl/locale-data/jsonp/en-US.js',
+      {pattern: 'static/images/*', watched: false, included: false, served: true},
 
       // Actual tests here
       'tests.webpack.js'
@@ -56,7 +58,7 @@ module.exports = function(config) {
         'react/lib/ReactContext': true
       },
       resolve: {
-        modulesDirectories: [
+        modules: [
           'src',
           'node_modules'
         ],
@@ -81,7 +83,7 @@ module.exports = function(config) {
       node: {
         // karma watches test/unit/index.js
         // webpack watches dependencies of test/unit/index.js
-        fs: "empty"
+        fs: 'empty'
       },
 
       plugins:[

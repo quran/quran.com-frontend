@@ -1,76 +1,39 @@
 import React, { Component, PropTypes } from 'react';
-import { PropTypes as MetricsPropTypes } from "react-metrics";
-import { asyncConnect } from 'redux-async-connect';
+import * as customPropTypes from 'customPropTypes';
+import { PropTypes as MetricsPropTypes } from 'react-metrics';
+import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
-
-// Bootstrap
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-
-import SearchHeader from 'components/header/SearchHeader';
-import Ayah from '../../components/Ayah';
-import CoreLoader from '../../scripts/components/Loader';
-
-import { search } from '../../redux/modules/searchResults';
+import { FormattedHTMLMessage } from 'react-intl';
+import IndexHeader from 'components/IndexHeader';
+import Verse from 'components/Verse';
+import Loader from 'quran-components/lib/Loader';
+import { search } from 'redux/actions/search.js';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('./style.scss');
 
-@asyncConnect([{
-  promise({ store: { dispatch }, location: { query } }) {
-    return dispatch(search(query));
-  }
-}])
-@connect(
-  state => ({
-    isErrored: state.searchResults.errored,
-    isLoading: state.searchResults.loading,
-    total: state.searchResults.total,
-    page: state.searchResults.page,
-    size: state.searchResults.size,
-    from: state.searchResults.from,
-    took: state.searchResults.took,
-    query: state.searchResults.query,
-    results: state.searchResults.results,
-    ayahs: state.searchResults.entities,
-    options: state.options
-  }),
-  { push }
-)
 class Search extends Component {
-  static propTypes = {
-    isErrored: PropTypes.bool,
-    isLoading: PropTypes.bool,
-    total: PropTypes.number,
-    page: PropTypes.number,
-    size: PropTypes.number,
-    from: PropTypes.number,
-    took: PropTypes.object,
-    query: PropTypes.string,
-    results: PropTypes.array,
-    ayahs: PropTypes.object,
-    push: PropTypes.func.isRequired,
-    options: PropTypes.object
-  };
 
   static contextTypes = {
     metrics: MetricsPropTypes.metrics
   };
 
-  handlePageChange(payload) {
-    const { push, query, page } = this.props; // eslint-disable-line no-shadow
+  handlePageChange = (payload) => {
+    const { push, query, currentPage } = this.props; // eslint-disable-line no-shadow
     const selectedPage = payload.selected + 1;
 
-    if (page !== selectedPage) {
-      this.context.metrics.track('Search', {action: 'paginate', label: `${query} - ${selectedPage}`});
+    if (currentPage !== selectedPage) {
+      this.context.metrics.track(
+        'Search',
+        { action: 'paginate', label: `${query} - ${selectedPage}` }
+      );
 
       return push({
         pathname: '/search',
-        query: {p: selectedPage, q: query}
+        query: { p: selectedPage, q: query }
       });
     }
 
@@ -78,77 +41,114 @@ class Search extends Component {
   }
 
   renderStatsBar() {
-   const { total, size, page, from, query } = this.props;
+    const { totalCount, totalPages, currentPage, query, perPage } = this.props;
+    const from = Math.max(...[(currentPage - 1) * perPage, 1]);
+    const to = Math.min(...[currentPage * perPage, totalCount]);
+    const values = { from, to, query, total: totalCount };
 
-   if (total) {
-     const pageNum = Math.ceil(total / size);
+    if (totalPages) {
+      return (
+        <div className={style.header}>
+          <div className="container">
+            <div className="row">
+              <div className="col-md-6 text-uppercase search-status">
+                <FormattedHTMLMessage
+                  id="search.resultHeading"
+                  defaultMessage="{from}-{to} OF {total} SEARCH RESULTS FOR: {query}"
+                  values={values}
+                />
+              </div>
+              <div className="col-md-6 text-right">
+                <ReactPaginate
+                  previousLabel={
+                    <span aria-hidden="true">
+                      <i className="ss-icon ss-directleft" />
+                    </span>
+                  }
+                  nextLabel={
+                    <span aria-hidden="true">
+                      <i className="ss-icon ss-directright" />
+                    </span>
+                  }
+                  breakLabel={<a href="">...</a>}
+                  pageNum={currentPage}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={5}
+                  initialSelected={currentPage}
+                  forceSelected={currentPage}
+                  onPageChange={this.handlePageChange}
+                  containerClassName="pagination"
+                  subContainerClassName="pages pagination"
+                  pageLinkClassName="pointer"
+                  activeClass={style.active}
+                  pageCount={totalPages}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
 
-     return (
-       <div className={style.header}>
-         <Grid>
-           <Row>
-             <Col md={6} className="text-uppercase">
-               {from}-{from + size - 1} OF
-               <span className={style.colored}> {total} </span>
-               SEARCH RESULTS FOR:
-               <span className={style.colored}> {query}</span>
-             </Col>
-             <Col className="text-right">
-               <ReactPaginate
-                 previousLabel={<span aria-hidden="true"><i className="ss-icon ss-directleft"/></span>}
-                 nextLabel={<span aria-hidden="true"><i className="ss-icon ss-directright"/></span>}
-                 breakLabel={<li className="break"><a href="">...</a></li>}
-                 pageNum={pageNum}
-                 marginPagesDisplayed={2}
-                 pageRangeDisplayed={5}
-                 initialSelected={page - 1}
-                 forceSelected={page - 1}
-                 clickCallback={this.handlePageChange.bind(this)}
-                 containerClassName={"pagination"}
-                 subContainerClassName={"pages pagination"}
-                 activeClass={style.active}
-               />
-             </Col>
-           </Row>
-         </Grid>
-       </div>
-     );
-   }
+    return false;
+  }
 
-   return false;
- }
+  renderBody() {
+    const { isErrored, isLoading, results, entities, options, location: { query } } = this.props;
 
+    if (!query || !query.q) {
+      return (
+        <h3 className="text-center" style={{ padding: '15%' }}>
+          <LocaleFormattedMessage id="search.nothing" defaultMessage="No search query." />
+        </h3>
+      );
+    }
 
+    if (isErrored) {
+      return (
+        <h3 className="text-center" style={{ padding: '15%' }}>
+          <LocaleFormattedMessage id="search.error" defaultMessage="Sorry, there was an error with your search." />
+        </h3>
+      );
+    }
 
- renderBody() {
-   const { isErrored, isLoading, total, results, ayahs } = this.props;
+    if (isLoading) {
+      return <Loader isActive={isLoading} />;
+    }
 
-   if (isErrored) {
-     return <h3 className="text-center" style={{padding: '15%'}}>Sorry, there was an error with your search.</h3>;
-   }
+    if (!results.length) {
+      return (
+        <h3 className="text-center" style={{ padding: '15%' }}>
+          <LocaleFormattedMessage id="search.noResult" defaultMessage="No results found." />
+        </h3>
+      );
+    }
 
-   if (!total) {
-     return <h3 className="text-center" style={{padding: '15%'}}>No results found.</h3>;
-   }
-
-   if (isLoading) {
-     return <div style={{padding: '15%'}}><CoreLoader /></div>;
-   }
-
-   return results.map(result => <Ayah ayah={ayahs[result.ayah]} match={result.match} key={result.ayah} isSearched />);
- }
+    return results.map(result => (
+      <Verse
+        verse={entities[result]}
+        match={entities[result].match}
+        key={entities[result].verseKey}
+        tooltip={options.tooltip}
+        userAgent={options.userAgent}
+        isSearched
+      />
+    ));
+  }
 
   render() {
     const { query, options } = this.props;
 
     return (
       <div className="index-page">
-        <Helmet title={query} />
-        <style dangerouslySetInnerHTML={{
-          __html: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}`
-          }}
+        <Helmet
+          title={query}
+          style={[{
+            cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;}
+            .text-translation{font-size: ${options.fontSize.translation}rem;}`
+          }]}
         />
-        <SearchHeader />
+        <IndexHeader />
         {this.renderStatsBar()}
         <div className="container surah-list">
           <div className="row">
@@ -162,4 +162,53 @@ class Search extends Component {
   }
 }
 
-export default Search;
+Search.propTypes = {
+  isErrored: PropTypes.bool,
+  isLoading: PropTypes.bool,
+  totalCount: PropTypes.number,
+  totalPages: PropTypes.number,
+  currentPage: PropTypes.number,
+  perPage: PropTypes.number,
+  query: PropTypes.string,
+  results: PropTypes.arrayOf(PropTypes.string),
+  entities: PropTypes.arrayOf(customPropTypes.verseType),
+  push: PropTypes.func.isRequired,
+  location: PropTypes.shape({ // eslint-disable-line
+    q: PropTypes.string,
+    p: PropTypes.string
+  }),
+  options: customPropTypes.optionsType
+};
+
+Search.defaultProps = {
+  results: []
+};
+
+const AsyncSearch = asyncConnect([{
+  promise({ store: { dispatch }, location }) {
+    if (__CLIENT__) {
+      dispatch(search(location.query || location.q));
+      return false;
+    }
+
+    return dispatch(search(location.query || location.q));
+  }
+}])(Search);
+
+function mapStateToProps(state) {
+  return {
+    isErrored: state.searchResults.errored,
+    isLoading: state.searchResults.loading,
+    totalCount: state.searchResults.totalCount,
+    currentPage: state.searchResults.currentPage,
+    totalPages: state.searchResults.totalPages,
+    perPage: state.searchResults.perPage,
+    took: state.searchResults.took,
+    query: state.searchResults.query,
+    results: state.searchResults.results,
+    entities: state.searchResults.entities,
+    options: state.options
+  };
+}
+
+export default connect(mapStateToProps, { push })(AsyncSearch);

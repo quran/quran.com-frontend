@@ -1,14 +1,28 @@
-import cookie from 'react-cookie';
-
-const TOGGLE_READING_MODE = '@@quran/options/TOGGLE_READING_MODE';
-const SET_OPTION = '@@quran/options/SET_OPTION';
+import {
+  SET_OPTION,
+  LOAD_RECITERS,
+  LOAD_RECITERS_SUCCESS,
+  SET_USER_AGENT,
+  LOAD_TRANSLATIONS,
+  LOAD_TRANSLATIONS_SUCCESS
+ } from 'redux/constants/options.js';
 
 const initialState = {
   isReadingMode: false,
+  isNightMode: false,
   isShowingSurahInfo: false,
-  audio: 8,
-  quran: 1,
-  content: [19],
+  loadingRecitations: false,
+  loadingTranslations: false,
+  audio: 7, // Mishari Rashid al-`Afasy
+  translations: [20],  // Sahih International
+  tooltip: 'translation',
+  userAgent: null,
+  footNote: null,
+  loadingFootNote: false,
+  options: {
+    recitations: [],
+    translations: []
+  },
   fontSize: {
     arabic: 3.5,
     translation: 2
@@ -17,38 +31,53 @@ const initialState = {
 
 export default function reducer(state = initialState, action = {}) {
   switch (action.type) {
-    case TOGGLE_READING_MODE:
+    case SET_OPTION: {
+      const payload = action.payload;
       return {
         ...state,
-        isReadingMode: !state.isReadingMode
+        ...payload
       };
-    case SET_OPTION:
+    }
+    case LOAD_RECITERS: {
       return {
         ...state,
-        ...action.payload
+        loadingRecitations: true
       };
+    }
+    case LOAD_RECITERS_SUCCESS: {
+      return {
+        ...state,
+        loadingRecitations: false,
+        options: {
+          ...state.options,
+          recitations: action.result.recitations
+        }
+      };
+    }
+    case SET_USER_AGENT: {
+      const { userAgent } = action;
+      return {
+        ...state,
+        userAgent
+      };
+    }
+    case LOAD_TRANSLATIONS: {
+      return {
+        ...state,
+        loadingTranslations: true
+      };
+    }
+    case LOAD_TRANSLATIONS_SUCCESS: {
+      return {
+        ...state,
+        loadingTranslations: false,
+        options: {
+          ...state.options,
+          translations: action.result.translations
+        }
+      };
+    }
     default:
       return state;
   }
-}
-
-export function isReadingMode(globalState) {
-  return globalState.options.isReadingMode;
-}
-
-export function setOption(payload) {
-  const options = cookie.load('options') || {}; // protect against first timers.
-  Object.keys(payload).forEach(option => options[option] = payload[option]);
-  cookie.save('options', JSON.stringify(options));
-
-  return {
-    type: SET_OPTION,
-    payload
-  };
-}
-
-export function toggleReadingMode() {
-  return {
-    type: TOGGLE_READING_MODE
-  };
 }

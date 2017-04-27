@@ -1,0 +1,200 @@
+$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+
+@import 'components/MasterHeader';
+@import 'components/SmartBanner';
+@import 'fonts/fonts';
+
+@import 'partials/navbar-brand';
+@import 'partials/search-input';
+@import 'partials/dropdown';
+@import 'partials/index-header';
+@import 'partials/tooltip';
+@import 'partials/highlight';
+@import 'nightmode';
+@import 'partials/no-script';
+@import 'partials/surah_names';
+
+html,body{
+  height: 100%;
+  min-height: 100%;
+  font-size: 14px;
+
+  @media(max-width: $screen-sm-max) {
+    font-size: 12px;
+  }
+}
+
+.min-container{
+  min-height: 80vh;
+}
+
+.highlight {
+  background-color: #F5FBF7;
+}
+
+a:hover, a:focus{
+  text-decoration: none;
+  outline: none;
+}
+
+.form-control:focus{
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+.opening{
+  background-color: rgba(#C4BEB0, 0.25);
+}
+
+
+.font-sizes{
+  background-color: $brand-primary;
+  border-radius: 6px;
+  li{
+
+    &:hover{
+      cursor: pointer;
+      background-color: darken($brand-primary, 5%)
+    }
+  }
+}
+
+.popover{
+  max-width: 600px;
+  width: auto;
+  min-width: 100px;
+}
+
+li em{
+  word-break: break-all;
+}
+.loading{
+  img{
+    width: 100px;
+    padding-top: 100px;
+  }
+  h3{
+    margin: 0px;
+    padding-bottom: 50%;
+    font-weight: 300;
+  }
+}
+.form-success-message{
+  padding: 5% 0%;
+}
+
+.about-text{
+  padding-top: 5%;
+  padding-bottom: 5%;
+  h3{
+    font-size: 130%;
+  }
+  .row{
+    padding-top: 1%;
+    padding-bottom: 1%;
+    h3{
+      color: $light-green;
+      @extend .montserrat;
+    }
+    h4{
+      font-weight: 300;
+      line-height: 150%;
+    }
+  }
+  .credits{
+    h3{
+      color: $text-color;
+    }
+    h4{
+      @extend .source-sans;
+
+    }
+  }
+}
+
+.pointer{
+  cursor: pointer;
+}
+.vertical-align-middle{
+  vertical-align: middle;
+}
+.no-outline{
+  outline: none !important;
+
+  &:hover, &:focus{
+    outline: none !important;
+  }
+}
+.text-color{
+  color: $text-color;
+}
+.text-black{
+  color: #333;
+}
+.text-black-light{
+  color: #777;
+}
+
+.ss-icon.text-align{
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.dropdown{
+  .btn-link{
+    color: inherit;
+  }
+
+  .btn-link:hover, .btn-link:focus{
+    text-decoration: none;
+  }
+}
+
+.navbar-toggle{
+  display: inline-block !important;
+  float: left;
+  margin-right: 0px;
+}
+
+.ayah-name-svg{
+  width: 35%;
+  display: inherit;
+  position: absolute;
+  top: 0px;
+  transform: translateY(-40%);
+}
+
+.urdu, .punjabi{
+  direction: rtl;
+  font-family: 'Nafees';
+  text-align: right;
+  line-height: 30px;
+
+  #arabic{
+    font-family: initial;
+  }
+}
+
+.modal-backdrop{
+  bottom: 0;
+}
+
+// NOTE: This is for dropdown in navbar on mobile
+@media(max-width: $screen-sm){
+  .navbar-nav{
+    margin-bottom: 0px;
+    margin-top: 5px;
+  }
+  .navbar-nav .open .dropdown-menu{
+    position: absolute;;
+    float: left;
+    width: auto;
+    margin-top: 0px;
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+  }
+  .navbar-nav .open .dropdown-menu > li > a, .navbar-nav .open .dropdown-menu .dropdown-header{
+    padding: 5px 15px;
+  }
+}

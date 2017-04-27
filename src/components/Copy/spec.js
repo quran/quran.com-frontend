@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { shallow } from 'enzyme';
 
 import Copy from './index';
@@ -13,6 +12,6 @@ describe('<Copy />', () => {
   });
 
   it('should render', () => {
-    expect(wrapper).to.be.ok;
+    expect(wrapper).to.be.ok; // eslint-disable-line
   });
 });

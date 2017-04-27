@@ -1,106 +1,154 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
+import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
+import Modal from 'react-bootstrap/lib/Modal';
+import Loadable from 'react-loadable';
+import ComponentLoader from 'components/ComponentLoader';
+import GlobalNav from 'components/GlobalNav';
+import debug from 'helpers/debug';
+import config from 'config';
+import metricsConfig from 'helpers/metrics';
+import Footer from 'components/Footer';
+import NoScript from 'components/NoScript';
+import { removeMedia } from 'redux/actions/media';
+import { removeFootNote } from 'redux/actions/footNote';
+import Loader from 'quran-components/lib/Loader';
+import authConnect from './connect';
 
-import Grid from 'react-bootstrap/lib/Grid';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
+const ModalHeader = Modal.Header;
+const ModalTitle = Modal.Title;
+const ModalBody = Modal.Body;
 
-import FontStyles from '../../components/FontStyles';
+const GlobalSidebar = Loadable({
+  loader: () => import('components/GlobalSidebar'),
+  LoadingComponent: ComponentLoader
+});
 
-import debug from 'utils/Debug';
-import config from '../../config';
-import metricsConfig from '../../helpers/metrics';
+const SmartBanner = Loadable({
+  loader: () => import('components/SmartBanner'),
+  LoadingComponent: ComponentLoader
+});
 
-const styles = require('./style.scss');
-
-@metrics(metricsConfig)
-@connect(
-  state => ({
-    surahs: state.surahs.entities
-  })
-)
-export default class App extends Component {
-  static propTypes = {
-    surahs: PropTypes.object
-  };
+class App extends Component {
 
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
 
+  state = {
+    sidebarOpen: false
+  }
+
   render() {
-    const { surahs, children } = this.props;
+    const {
+      main,
+      nav,
+      children,
+      media,
+      footNote,
+      loadingFootNote,
+      removeMedia, // eslint-disable-line no-shadow
+      removeFootNote, // eslint-disable-line no-shadow
+      ...props
+    } = this.props;
     debug('component:APPLICATION', 'Render');
+    let footNoteText;
+
+    if (footNote) {
+      footNoteText = footNote.text;
+    } else {
+      footNoteText = <Loader isActive={loadingFootNote} />;
+    }
 
     return (
       <div>
-        <Helmet {...config.app.head}/>
-        <FontStyles />
-        {children}
-        <footer className={styles.footer}>
-          <Grid fluid>
-            <Row>
-              <Col md={2} mdOffset={3} xs={4} xsOffset={1} className={styles.about}>
-                <ul className={`source-sans ${styles.list}`}>
-                  <li><a href="/about">About</a></li>
-                  <li><a href="/contact">Contact</a></li>
-                  <li>
-                    <a href="https://github.com/quran/quran.com-frontend" target="_blank">Developers</a>
-                  </li>
-                </ul>
-              </Col>
-              <Col md={2} xs={5} className={styles.links}>
-                <ul className={`source-sans ${styles.list}`}>
-                  <li><a target="_blank" href="http://sunnah.com/">Sunnah.com</a></li>
-                  <li><a target="_blank" href="http://salah.com/">Salah.com</a></li>
-                  <li><a target="_blank" href="http://quranicaudio.com/">QuranicAudio.com</a></li>
-                  <li><a target="_blank" href="http://corpus.quran.com/wordbyword.jsp">Corpus: Word by Word</a></li>
-                </ul>
-              </Col>
-              <Col md={2} className={`text-right ${styles.links}`}>
-                <p className="monserrat">&copy; QURAN.COM. ALL RIGHTS RESERVED 2016</p>
-                <p className="monserrat">Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.</p>
-              </Col>
-            </Row>
-            <Row>
-              <Col md={10} mdOffset={1} className="text-center">
-                <ul className={`list-inline ${styles.seo}`}>
-                  <li><a href="/sitemap.xml">Sitemap</a></li>
-                  {Object.values(surahs).filter(surah => [2, 3, 18, 19, 55, 56, 67, 112].includes(surah.id)).map(surah => (
-                    <li key={surah.id}>
-                      <Link
-                        to={`/${surah.id}`}
-                        data-metrics-event-name="FooterLinks:Click"
-                        data-metrics-surah-id={surah.id}>
-                        {`Surah ${surah.name.simple} (سورة ${surah.name.arabic})`}
-                      </Link>
-                    </li>
-                  ))}
-                  <li>
-                    <Link
-                      to="/36"
-                      data-metrics-event-name="FooterLinks:Click"
-                      data-metrics-surah-id="36">
-                      Surah Yasin, Yaseen (يس)
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      to="/2/255"
-                      data-metrics-event-name="FooterLinks:Click"
-                      data-metrics-surah-id="2/255">
-                      Ayat Al-Kursi (آية الكرسي)
-                    </Link>
-                  </li>
-                </ul>
-              </Col>
-            </Row>
-          </Grid>
-        </footer>
+        <Helmet {...config.app.head} />
+        <NoScript>
+          <div className="row noscript-warning">
+            <div className="col-md-12">
+              <p>
+                Looks like either your browser does not support Javascript or its disabled.
+                Quran.com workes best with JavaScript enabled.
+                For more instruction on how to enable javascript
+                <a href="http://www.enable-javascript.com/">
+                  Click here
+                </a>
+              </p>
+            </div>
+          </div>
+        </NoScript>
+        {
+          React.cloneElement(
+            nav || <GlobalNav isStatic {...props} />,
+            {
+              handleSidebarToggle: () => this.setState({ sidebarOpen: !this.state.sidebarOpen })
+            }
+          )
+        }
+        <GlobalSidebar
+          open={this.state.sidebarOpen}
+          handleOpen={open => this.setState({ sidebarOpen: open })}
+        />
+        {children || main}
+        <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
+        <Footer />
+
+        <Modal bsSize="large" show={media && media.content} onHide={removeMedia}>
+          <ModalHeader closeButton>
+            <ModalTitle className="montserrat">
+              {media.content && media.content.authorName}
+            </ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <div
+              className="embed-responsive embed-responsive-16by9"
+              dangerouslySetInnerHTML={{ __html: media.content && media.content.embedText }}
+            />
+          </ModalBody>
+        </Modal>
+
+        <Modal bsSize="large" show={!!footNote || loadingFootNote} onHide={removeFootNote}>
+          <ModalHeader closeButton>
+            <ModalTitle className="montserrat">
+              Foot note
+            </ModalTitle>
+          </ModalHeader>
+          <ModalBody>
+            <div
+              className={`${footNote && footNote.languageName}`}
+              dangerouslySetInnerHTML={{ __html: footNoteText }}
+            />
+          </ModalBody>
+        </Modal>
       </div>
     );
   }
+}
+
+const metricsApp = metrics(metricsConfig)(App);
+const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
+
+App.propTypes = {
+  media: customPropTypes.media.isRequired,
+  removeMedia: PropTypes.func.isRequired,
+  removeFootNote: PropTypes.func.isRequired,
+  children: PropTypes.element,
+  main: PropTypes.element,
+  nav: PropTypes.element,
+  sidebar: PropTypes.element,
+  footNote: customPropTypes.footNoteType,
+  loadingFootNote: PropTypes.bool
 };
+
+export default connect(
+  state => ({
+    media: state.media,
+    footNote: state.footNote.footNote,
+    loadingFootNote: state.footNote.loadingFootNote
+  }),
+  { removeMedia, removeFootNote }
+)(AsyncApp);

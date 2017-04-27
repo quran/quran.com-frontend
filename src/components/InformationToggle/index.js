@@ -1,23 +1,19 @@
-import React, { Component } from 'react';
+import React, { PropTypes } from 'react';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import { MenuItem } from 'quran-components/lib/Menu';
 
-export default class InformationToggle extends Component {
-  toggleInformationMode = (event) => {
-    const { isShowingSurahInfo } = this.props;
+const InformationToggle = ({ isToggled, onToggle }) => (
+  <MenuItem
+    icon={<i className="ss-icon ss-info vertical-align-middle" />}
+    onClick={() => onToggle({ isShowingSurahInfo: !isToggled })}
+  >
+    <LocaleFormattedMessage id="surah.info" defaultMessage="Surah Info" />
+  </MenuItem>
+);
 
-    event.preventDefault();
+InformationToggle.propTypes = {
+  isToggled: PropTypes.bool.isRequired,
+  onToggle: PropTypes.func.isRequired
+};
 
-    this.props.onToggle({isShowingSurahInfo: !isShowingSurahInfo});
-  }
-
-  render() {
-    const { isShowingSurahInfo } = this.props;
-
-    return (
-      <a title="See information for this surah"
-        className={`${isShowingSurahInfo ? ' text-primary' : 'text-color'} pointer`}
-        onClick={this.toggleInformationMode}>
-        Surah Info
-      </a>
-    );
-  }
-}
+export default InformationToggle;

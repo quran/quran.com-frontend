@@ -1,18 +1,13 @@
-import { ayahsSchema } from '../schemas';
-import { arrayOf } from 'normalizr';
-
-import { createFontFacesArray } from '../../helpers/buildFontFaces';
-
-export const SEARCH = '@@quran/search/LOAD';
-export const SEARCH_SUCCESS = '@@quran/search/LOAD_SUCCESS';
-export const SEARCH_FAIL = '@@quran/search/LOAD_FAIL';
+import {
+  SEARCH,
+  SEARCH_SUCCESS,
+  SEARCH_FAIL
+} from 'redux/constants/search.js';
 
 const initialState = {
   errored: false,
   loaded: false,
-  entities: {},
-  results: [],
-  fontFaces: []
+  results: []
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -31,17 +26,14 @@ export default function reducer(state = initialState, action = {}) {
         loaded: true,
         loading: false,
         errored: false,
-        total: action.result.result.total,
-        page: action.result.result.page,
-        size: action.result.result.size,
-        from: action.result.result.from,
+        totalCount: action.result.result.totalCount,
+        totalPages: action.result.result.totalPages,
+        currentPage: action.result.result.currentPage,
+        perPage: action.result.result.perPage,
         took: action.result.result.took,
         query: action.result.result.query,
         results: action.result.result.results,
-        entities: Object.assign({}, state.entities, action.result.entities.ayahs),
-        fontFaces: [].concat(state.fontFaces, createFontFacesArray(
-          action.result.result.results.map(result => action.result.entities.ayahs[result.ayah])
-        ))
+        entities: action.result.entities.verses
       };
     case SEARCH_FAIL:
       return {
@@ -51,18 +43,4 @@ export default function reducer(state = initialState, action = {}) {
     default:
       return state;
   }
-}
-
-export function search(params) {
-  return {
-    types: [SEARCH, SEARCH_SUCCESS, SEARCH_FAIL],
-    schema: {results: arrayOf({ayah: ayahsSchema})},
-    promise: (client) => client.get('/search', { params }),
-    params
-  };
-}
-
-export function isQueried() {
-  // return globalState.searchResults.query === (query.q || query.query) && globalState.searchResults.page === (query.p || query.page);
-  return false;
 }

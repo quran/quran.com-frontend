@@ -1,3 +1,4 @@
+// TODO: Move to style.scss for the component
 .index-header{
   background: url('//quran-1f14.kxcdn.com/images/index-bg.jpg') center center no-repeat;
   background-size: cover;
@@ -44,15 +45,5 @@
       }
     }
 
-  }
-  .logo{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    width: 30%;
-  }
-  .title{
-    color: lighten($brand-primary, 30%);
-    font-size: 160%;
-    padding-bottom: 3.5%;
   }
 }

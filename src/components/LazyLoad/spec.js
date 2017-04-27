@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { mount } from 'enzyme';
 
 import LazyLoad from './index';
@@ -27,7 +26,7 @@ describe('<LazyLoad />', () => {
   });
 
   it('should render', () => {
-    expect(wrapper).to.be.ok;
+    expect(wrapper).to.be.ok; // eslint-disable-line
   });
 
   it('should show loading component', () => {
@@ -41,18 +40,18 @@ describe('<LazyLoad />', () => {
 
   it('should call onLazyLoad when not end and not loading', () => {
     wrapper.instance().onScroll();
-    expect(wrapper.props().onLazyLoad).to.have.been.called;
+    expect(wrapper.props().onLazyLoad).to.have.been.called; // eslint-disable-line
   });
 
   it('should not call onLazyLoad when at end', () => {
     makeComponent(true);
     wrapper.instance().onScroll();
-    expect(wrapper.props().onLazyLoad).not.to.have.been.called;
+    expect(wrapper.props().onLazyLoad).not.to.have.been.called; // eslint-disable-line
   });
 
   it('should not call onLazyLoad when loading', () => {
     makeComponent(false, true);
     wrapper.instance().onScroll();
-    expect(wrapper.props().onLazyLoad).not.to.have.been.called;
+    expect(wrapper.props().onLazyLoad).not.to.have.been.called; // eslint-disable-line
   });
 });

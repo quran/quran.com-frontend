@@ -1,0 +1,18 @@
+@import '../../styles/variables.scss';
+
+.link{
+  display: inline-block;
+  width: 30%;
+  margin-top: 35px;
+}
+.logo{
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: auto;
+  width: 100%;
+}
+.title{
+  color: lighten($brand-primary, 30%);
+  font-size: 160%;
+  padding-bottom: 3.5%;
+}
