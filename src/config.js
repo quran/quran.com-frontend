@@ -19,7 +19,7 @@ const config = {
   sentryServer: process.env.SENTRY_KEY_SERVER,
   facebookAppId: process.env.FACEBOOK_APP_ID,
   // Supported locales
-  locales: { en: 'English', ar: 'العربية', ur: 'اردو', id: 'Bahasa Indonesia', tr: 'Türkçe', fr: 'Français' },
+  locales: { en: 'English', ar: 'العربية', ur: 'اردو', id: 'Bahasa Indonesia', tr: 'Türkçe', fr: 'Langue du Site' },
   defaultLocale: 'en',
   app: {
     head: {
