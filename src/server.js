@@ -11,6 +11,7 @@ import { IntlProvider } from 'react-intl';
 import cookie from 'react-cookie';
 import Raven from 'raven';
 import errorhandler from 'errorhandler';
+import pdf from 'html-pdf';
 
 import config from 'config';
 import expressConfig from './server/config/express';
@@ -82,14 +83,26 @@ server.use((req, res, next) => {
                 </Provider>
               </IntlProvider>
             );
+            const html = `<!doctype html>\n${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`;
 
             res.type('html');
             res.setHeader('Cache-Control', 'public, max-age=31557600');
             res.status(status);
             debug('Server', 'Sending markup');
-            res.send(
-              `<!doctype html>\n${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`
-            );
+
+            if (req.originalUrl.includes('.pdf')) {
+              return pdf.create(html).toStream((err, stream) => {
+                if (err) {
+                  res.status(422).send(err);
+                }
+
+                res.set('Content-type', 'application/pdf');
+                res.set('Content-disposition', 'attachment; filename=pdf.pdf');
+                stream.pipe(res);
+              });
+            }
+
+            return res.send(html);
           })
           .catch(next);
       }
