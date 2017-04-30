@@ -97,7 +97,8 @@ server.use((req, res, next) => {
                 }
 
                 res.set('Content-type', 'application/pdf');
-                res.set('Content-disposition', 'attachment; filename=pdf.pdf');
+                // NOTE: If you want to export a file.
+                // res.set('Content-disposition', 'attachment; filename=pdf.pdf');
                 stream.pipe(res);
               });
             }
