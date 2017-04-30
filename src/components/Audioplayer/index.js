@@ -58,17 +58,19 @@ export class Audioplayer extends Component {
 
     // First load
     if (this.props.currentFile !== nextProps.currentFile) {
-      return this.handleAddFileListeners(nextProps.currentFile);
-    }
-
-    if (this.props.currentVerse !== nextProps.currentVerse) {
-      this.handleAddFileListeners(nextProps.currentFile);
-
       if (this.props.currentFile) {
         this.handleRemoveFileListeneres(this.props.currentFile);
       }
 
-      return false;
+      return this.handleAddFileListeners(nextProps.currentFile);
+    }
+
+    if (this.props.currentVerse !== nextProps.currentVerse) {
+      if (this.props.currentFile) {
+        this.handleRemoveFileListeneres(this.props.currentFile);
+      }
+
+      return this.handleAddFileListeners(nextProps.currentFile);
     }
 
     return false;
@@ -129,7 +131,6 @@ export class Audioplayer extends Component {
   handleAyahChange = (direction = 'next') => {
     const { isPlaying, play, pause, currentVerse } = this.props; // eslint-disable-line no-shadow, max-len
     const previouslyPlaying = isPlaying;
-    this.handleRemoveFileListeneres(this.props.currentFile);
 
     if (isPlaying) pause();
 
