@@ -35,6 +35,10 @@ const PdfHtml = ({ component, assets, url }) => {
         {Object.keys(assets.javascript).map((script, i) => (
           <script src={assets.javascript[script]} key={i} />
         ))}
+
+        <style>{`
+          body{ zoom: 75%;}
+        `}</style>
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
