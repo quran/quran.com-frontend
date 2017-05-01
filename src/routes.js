@@ -144,7 +144,7 @@ export default (store) => {
         path="/:chapterId(/:range).pdf"
         getComponents={(nextState, cb) =>
           import('./containers/Pdf')
-            .then(module => cb(null, module.default))
+            .then(module => cb(null, { main: module.default, nav: 'noscript' }))
             .catch(err => console.trace(err))}
         onEnter={checkValidSurah}
       />

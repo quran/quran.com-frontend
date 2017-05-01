@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { asyncConnect } from 'redux-connect';
 
 import Helmet from 'react-helmet';
-import TopOptions from 'components/TopOptions';
 
 // components
 import Verse from 'components/Verse';
@@ -46,6 +45,7 @@ class Pdf extends Component {
         key={`${verse.chapterId}-${verse.id}-verse`}
         userAgent={options.userAgent}
         audio={options.audio}
+        isPdf
       />
     ));
   }
@@ -74,7 +74,6 @@ class Pdf extends Component {
         <div className={`container-fluid ${style.container}`}>
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              <TopOptions chapter={chapter} />
               <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderVerses()}
             </div>
