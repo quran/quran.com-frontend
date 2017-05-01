@@ -96,44 +96,44 @@ class App extends Component {
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
-
-        <Modal
-          bsSize="large"
-          show={media && media.content}
-          onHide={removeMedia}
-        >
-          <ModalHeader closeButton>
-            <ModalTitle className="montserrat">
-              {media.content && media.content.authorName}
-            </ModalTitle>
-          </ModalHeader>
-          <ModalBody>
-            <div
-              className="embed-responsive embed-responsive-16by9"
-              dangerouslySetInnerHTML={{
-                __html: media.content && media.content.embedText
-              }}
-            />
-          </ModalBody>
-        </Modal>
-
-        <Modal
-          bsSize="large"
-          show={!!footNote || loadingFootNote}
-          onHide={removeFootNote}
-        >
-          <ModalHeader closeButton>
-            <ModalTitle className="montserrat">
-              Foot note
-            </ModalTitle>
-          </ModalHeader>
-          <ModalBody>
-            <div
-              className={`${footNote && footNote.languageName}`}
-              dangerouslySetInnerHTML={{ __html: footNoteText }}
-            />
-          </ModalBody>
-        </Modal>
+        {__CLIENT__ &&
+          <Modal
+            bsSize="large"
+            show={media && media.content}
+            onHide={removeMedia}
+          >
+            <ModalHeader closeButton>
+              <ModalTitle className="montserrat">
+                {media.content && media.content.authorName}
+              </ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+              <div
+                className="embed-responsive embed-responsive-16by9"
+                dangerouslySetInnerHTML={{
+                  __html: media.content && media.content.embedText
+                }}
+              />
+            </ModalBody>
+          </Modal>}
+        {__CLIENT__ &&
+          <Modal
+            bsSize="large"
+            show={!!footNote || loadingFootNote}
+            onHide={removeFootNote}
+          >
+            <ModalHeader closeButton>
+              <ModalTitle className="montserrat">
+                Foot note
+              </ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+              <div
+                className={`${footNote && footNote.languageName}`}
+                dangerouslySetInnerHTML={{ __html: footNoteText }}
+              />
+            </ModalBody>
+          </Modal>}
       </div>
     );
   }
