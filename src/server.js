@@ -91,7 +91,14 @@ server.use((req, res, next) => {
             debug('Server', 'Sending markup');
 
             if (req.originalUrl.includes('.pdf')) {
-              const html = `<!doctype html>\n${ReactDOM.renderToString(<PdfHtml component={component} assets={webpack_isomorphic_tools.assets()} />)}`;
+              const body = ReactDOM.renderToString(
+                <PdfHtml
+                  url={`${req.protocol}://${req.get('host')}`}
+                  component={component}
+                  assets={webpack_isomorphic_tools.assets()}
+                />
+              );
+              const html = `<!doctype html>\n${body}`;
 
               return pdf.create(html).toStream((err, stream) => {
                 if (err) {

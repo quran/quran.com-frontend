@@ -3,7 +3,7 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 
-const PdfHtml = ({ component, assets }) => {
+const PdfHtml = ({ component, assets, url }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
   const head = Helmet.rewind();
 
@@ -19,7 +19,7 @@ const PdfHtml = ({ component, assets }) => {
 
         {Object.keys(assets.styles).map((style, i) => (
           <link
-            href={`http://staging.quran.com:32869${assets.styles[style]}`}
+            href={`${url}${assets.styles[style]}`}
             key={i}
             rel="stylesheet"
             type="text/css"
@@ -46,7 +46,8 @@ const PdfHtml = ({ component, assets }) => {
 PdfHtml.propTypes = {
   store: PropTypes.object, // eslint-disable-line
   assets: PropTypes.object, // eslint-disable-line
-  component: PropTypes.element
+  component: PropTypes.element,
+  url: PropTypes.string.isRequired
 };
 
 export default PdfHtml;

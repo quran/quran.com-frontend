@@ -22,7 +22,6 @@ const Html = ({ store, component, assets }) => {
           <link
             href={assets.styles[style]}
             key={i}
-            media="screen, projection"
             rel="stylesheet"
             type="text/css"
           />
