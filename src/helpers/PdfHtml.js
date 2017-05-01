@@ -19,7 +19,7 @@ const PdfHtml = ({ component, assets }) => {
 
         {Object.keys(assets.styles).map((style, i) => (
           <link
-            href={assets.styles[style]}
+            href={`http://staging.quran.com:32869${assets.styles[style]}`}
             key={i}
             rel="stylesheet"
             type="text/css"
