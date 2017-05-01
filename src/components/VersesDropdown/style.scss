@@ -3,6 +3,7 @@
     max-height: 400px;
     max-height: 60vh;
     overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
     overflow-x: hidden;
   }
 }
