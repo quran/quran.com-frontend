@@ -16,12 +16,12 @@ const PdfHtml = ({ component, assets }) => {
         {head.link.toComponent()}
         {head.script.toComponent()}
         {head.style.toComponent()}
-
+        <link href="https://assets-1f14.kxcdn.com/main-524b58c10957821e377e.css" />
         {Object.keys(assets.styles).map((style, i) => (
           <link
             href={assets.styles[style]}
             key={i}
-            media="screen, projection"
+            media="all"
             rel="stylesheet"
             type="text/css"
           />
@@ -33,9 +33,6 @@ const PdfHtml = ({ component, assets }) => {
             }}
           />
           : null}
-        {Object.keys(assets.javascript).map((script, i) => (
-          <script src={assets.javascript[script]} key={i} />
-        ))}
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
