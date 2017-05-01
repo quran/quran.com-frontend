@@ -4307,6 +4307,12 @@ html-minifier@^1.0.0:
     relateurl "0.2.x"
     uglify-js "2.6.x"
 
+html-pdf@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/html-pdf/-/html-pdf-2.1.0.tgz#c34d518f7f802ffbc834bf80279cfce7da2cce4b"
+  optionalDependencies:
+    phantomjs-prebuilt "^2.1.4"
+
 html-tags@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/html-tags/-/html-tags-1.1.1.tgz#869f43859f12d9bdc3892419e494a628aa1b204e"
@@ -6573,7 +6579,7 @@ phantomjs-polyfill@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/phantomjs-polyfill/-/phantomjs-polyfill-0.0.1.tgz#5e61a5c5621a2656e5374f23909d871ce61c1dd2"
 
-phantomjs-prebuilt@^2.1.7:
+phantomjs-prebuilt@^2.1.4, phantomjs-prebuilt@^2.1.7:
   version "2.1.14"
   resolved "https://registry.yarnpkg.com/phantomjs-prebuilt/-/phantomjs-prebuilt-2.1.14.tgz#d53d311fcfb7d1d08ddb24014558f1188c516da0"
   dependencies:
