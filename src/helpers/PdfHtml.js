@@ -10,16 +10,16 @@ const PdfHtml = ({ component, assets, url }) => {
   return (
     <html lang="en">
       <head>
-        {head.base.toComponent()}
         {head.title.toComponent()}
         {head.meta.toComponent()}
         {head.link.toComponent()}
         {head.script.toComponent()}
         {head.style.toComponent()}
+        <base href={url} />
 
         {Object.keys(assets.styles).map((style, i) => (
           <link
-            href={`${url}${assets.styles[style]}`}
+            href={assets.styles[style]}
             key={i}
             rel="stylesheet"
             type="text/css"
