@@ -21,6 +21,7 @@ import createStore from './redux/create';
 import debug from './helpers/debug';
 
 import Html from './helpers/Html';
+import PdfHtml from './helpers/PdfHtml';
 
 import { setOption, setUserAgent } from './redux/actions/options.js';
 import getLocalMessages from './helpers/setLocal';
@@ -83,7 +84,6 @@ server.use((req, res, next) => {
                 </Provider>
               </IntlProvider>
             );
-            const html = `<!doctype html>\n${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`;
 
             res.type('html');
             res.setHeader('Cache-Control', 'public, max-age=31557600');
@@ -91,6 +91,8 @@ server.use((req, res, next) => {
             debug('Server', 'Sending markup');
 
             if (req.originalUrl.includes('.pdf')) {
+              const html = `<!doctype html>\n${ReactDOM.renderToString(<PdfHtml component={component} assets={webpack_isomorphic_tools.assets()} />)}`;
+
               return pdf.create(html).toStream((err, stream) => {
                 if (err) {
                   res.status(422).send(err);
@@ -102,6 +104,8 @@ server.use((req, res, next) => {
                 stream.pipe(res);
               });
             }
+
+            const html = `<!doctype html>\n${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`;
 
             return res.send(html);
           })
