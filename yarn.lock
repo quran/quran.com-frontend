@@ -7446,9 +7446,11 @@ react-json-tree@0.5.5:
     babel-runtime "^6.3.13"
     react-mixin "^1.7.0"
 
-react-loadable@^3.0.1:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/react-loadable/-/react-loadable-3.0.1.tgz#d285d0f32680fef3cf7c1fd8853206415f824ad8"
+react-loadable@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/react-loadable/-/react-loadable-3.3.1.tgz#91310f1c2adcc73ce944380ee9529f5d33e100d3"
+  dependencies:
+    babel-plugin-syntax-dynamic-import "^6.18.0"
 
 react-metrics@1.2.1:
   version "1.2.1"
