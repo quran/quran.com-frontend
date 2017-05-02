@@ -26,18 +26,28 @@ const Home = (props) => {
       <div className={`container ${styles.list}`}>
         <div className="row">
           <div className="col-md-10 col-md-offset-1">
-            {
-              lastVisit &&
-              <LastVisit chapter={props.chapters[lastVisit.chapterId]} verse={lastVisit.verseId} />
-            }
+            {lastVisit &&
+              <LastVisit
+                chapter={props.chapters[lastVisit.chapterId]}
+                verse={lastVisit.verseId}
+              />}
             <QuickSurahs />
             <h4 className={`text-muted ${styles.title}`}>
-              <LocaleFormattedMessage id="surah.index.heading" defaultMessage="SURAHS (CHAPTERS)" />
+              <LocaleFormattedMessage
+                id="surah.index.heading"
+                defaultMessage="SURAHS (CHAPTERS)"
+              />
             </h4>
             <div className="row">
-              <SurahsList chapters={Object.values(props.chapters).slice(0, 38)} />
-              <SurahsList chapters={Object.values(props.chapters).slice(38, 76)} />
-              <SurahsList chapters={Object.values(props.chapters).slice(76, 114)} />
+              <SurahsList
+                chapters={Object.values(props.chapters).slice(0, 38)}
+              />
+              <SurahsList
+                chapters={Object.values(props.chapters).slice(38, 76)}
+              />
+              <SurahsList
+                chapters={Object.values(props.chapters).slice(76, 114)}
+              />
             </div>
           </div>
         </div>
@@ -50,14 +60,18 @@ Home.propTypes = {
   chapters: customPropTypes.chapters.isRequired
 };
 
-const AsyncHome = asyncConnect([{
-  promise({ store: { getState, dispatch } }) {
-    if (!isAllLoaded(getState())) {
-      return dispatch(loadAll());
+const AsyncHome = asyncConnect([
+  {
+    promise({ store: { getState, dispatch } }) {
+      if (!isAllLoaded(getState())) {
+        return dispatch(loadAll());
+      }
+
+      return true;
     }
-
-    return true;
   }
-}])(Home);
+])(Home);
 
-export default connect(state => ({ chapters: state.chapters.entities }))(AsyncHome);
+export default connect(state => ({ chapters: state.chapters.entities }))(
+  AsyncHome
+);

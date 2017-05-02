@@ -370,7 +370,7 @@ class Surah extends Component {
               onClose={this.handleSurahInfoToggle}
             />
             <div className="col-md-10 col-md-offset-1">
-              <TopOptions chapter={chapter} />
+              {__CLIENT__ && <TopOptions chapter={chapter} />}
               <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderVerses()}
             </div>
@@ -379,11 +379,12 @@ class Surah extends Component {
             </div>
           </div>
         </div>
-        <Audioplayer
-          chapter={chapter}
-          startVerse={Object.values(verses)[0]}
-          onLoadAyahs={this.handleLazyLoadAyahs}
-        />
+        {__CLIENT__ &&
+          <Audioplayer
+            chapter={chapter}
+            startVerse={Object.values(verses)[0]}
+            onLoadAyahs={this.handleLazyLoadAyahs}
+          />}
       </div>
     );
   }
