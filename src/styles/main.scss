@@ -197,4 +197,13 @@ li em{
   .navbar-nav .open .dropdown-menu > li > a, .navbar-nav .open .dropdown-menu .dropdown-header{
     padding: 5px 15px;
   }
+
+  .pager .next, .pager .previous{
+    display: block;
+    margin: 10px 0px;
+
+    & > a{
+      float: none;
+    }
+  }
 }

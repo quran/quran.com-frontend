@@ -13,8 +13,8 @@ const initialState = {
   isShowingSurahInfo: false,
   loadingRecitations: false,
   loadingTranslations: false,
-  audio: 8,
-  translations: [20],
+  audio: 7, // Mishari Rashid al-`Afasy
+  translations: [20],  // Sahih International
   tooltip: 'translation',
   userAgent: null,
   footNote: null,
