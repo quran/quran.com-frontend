@@ -57,7 +57,6 @@ export default (server) => {
                 changefreq: 'weekly',
                 priority: 1
               });
-
             });
           });
         });
