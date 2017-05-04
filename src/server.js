@@ -11,6 +11,7 @@ import { IntlProvider } from 'react-intl';
 import cookie from 'react-cookie';
 import Raven from 'raven';
 import errorhandler from 'errorhandler';
+import pdf from 'html-pdf';
 
 import config from 'config';
 import expressConfig from './server/config/express';
@@ -20,6 +21,7 @@ import createStore from './redux/create';
 import debug from './helpers/debug';
 
 import Html from './helpers/Html';
+import PdfHtml from './helpers/PdfHtml';
 
 import { setOption, setUserAgent } from './redux/actions/options.js';
 import getLocalMessages from './helpers/setLocal';
@@ -31,9 +33,7 @@ Raven.config(config.sentryServer, {
   autoBreadcrumbs: true
 }).install();
 
-
 expressConfig(server);
-
 
 server.use(Raven.requestHandler());
 
@@ -49,14 +49,11 @@ server.use((req, res, next) => {
   }
 
   if (req.query.DISABLE_SSR) {
-    return res.status(200).send(`<!doctype html>\n${ReactDOM.renderToString(
-      <IntlProvider locale="en" messages={localMessages}>
-        <Html
-          store={store}
-          assets={webpack_isomorphic_tools.assets()}
-        />
-      </IntlProvider>
-    )}`);
+    return res.status(200).send(
+      `<!doctype html>\n${ReactDOM.renderToString(<IntlProvider locale="en" messages={localMessages}>
+        <Html store={store} assets={webpack_isomorphic_tools.assets()} />
+      </IntlProvider>)}`
+    );
   }
 
   store.dispatch(setUserAgent(req.useragent));
@@ -74,29 +71,52 @@ server.use((req, res, next) => {
         console.error('ROUTER ERROR:', pretty.render(error));
         res.status(500).send(error);
       } else if (renderProps) {
-        const status = renderProps.location.pathname.indexOf('/error') > -1 ? 404 : 200;
+        const status = renderProps.location.pathname.indexOf('/error') > -1
+          ? 404
+          : 200;
 
-        loadOnServer({ ...renderProps, store, helpers: { client } }).then(() => {
-          const component = (
-            <IntlProvider messages={localMessages} locale="en" >
-              <Provider store={store}>
-                <ReduxAsyncConnect {...renderProps} />
-              </Provider>
-            </IntlProvider>
-          );
+        loadOnServer({ ...renderProps, store, helpers: { client } })
+          .then(() => {
+            const component = (
+              <IntlProvider messages={localMessages} locale="en">
+                <Provider store={store}>
+                  <ReduxAsyncConnect {...renderProps} />
+                </Provider>
+              </IntlProvider>
+            );
 
-          res.type('html');
-          res.setHeader('Cache-Control', 'public, max-age=31557600');
-          res.status(status);
-          debug('Server', 'Sending markup');
-          res.send(`<!doctype html>\n${ReactDOM.renderToString(
-            <Html
-              component={component}
-              store={store}
-              assets={webpack_isomorphic_tools.assets()}
-            />
-          )}`);
-        }).catch(next);
+            res.type('html');
+            res.setHeader('Cache-Control', 'public, max-age=31557600');
+            res.status(status);
+            debug('Server', 'Sending markup');
+
+            if (req.originalUrl.includes('.pdf')) {
+              const body = ReactDOM.renderToString(
+                <PdfHtml
+                  url={`${req.protocol}://${req.get('host')}`}
+                  component={component}
+                  assets={webpack_isomorphic_tools.assets()}
+                />
+              );
+              const html = `<!doctype html>\n${body}`;
+
+              return pdf.create(html).toStream((err, stream) => {
+                if (err) {
+                  res.status(422).send(err);
+                }
+
+                res.set('Content-type', 'application/pdf');
+                // NOTE: If you want to export a file.
+                // res.set('Content-disposition', 'attachment; filename=pdf.pdf');
+                stream.pipe(res);
+              });
+            }
+
+            const html = `<!doctype html>\n${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`;
+
+            return res.send(html);
+          })
+          .catch(next);
       }
     }
   );
@@ -123,7 +143,11 @@ export default function serve(cb) {
     console.info(`==> 🌎  ENV=${process.env.NODE_ENV}`);
     console.info(`==> ✅  Server is listening at http://localhost:${port}`);
     console.info(`==> 🎯  API at ${process.env.API_URL}`);
-    Object.keys(config).forEach(key => config[key].constructor.name !== 'Object' && console.info(`==> ${key}`, config[key]));
+    Object.keys(config).forEach(
+      key =>
+        config[key].constructor.name !== 'Object' &&
+        console.info(`==> ${key}`, config[key])
+    );
 
     return cb && cb(this);
   });

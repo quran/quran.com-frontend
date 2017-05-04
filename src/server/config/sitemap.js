@@ -12,64 +12,53 @@ export default (server) => {
 
       client.get('/api/v3/chapters').then((response) => {
         response.chapters.forEach((chapter) => {
-          Array(chapter.versesCount).fill().forEach((_, index) => {
-            const ayahId = index + 1;
-
-            translations.forEach((translation) => {
-              urls.push({
-                url: `/${chapter.id}/${ayahId}/${translation.slug || translation.id}`,
-                changefreq: 'weekly',
-                priority: 1
-              });
-            });
-
-            urls.push({
-              url: `/${chapter.id}/${ayahId}`,
-              changefreq: 'weekly',
-              priority: 1
-            });
-
-            urls.push({
-              url: `/${chapter.id}/${ayahId}-${ayahId + 9}`,
-              changefreq: 'weekly',
-              priority: 1
-            });
-          });
-
+          // add chapter url
           urls.push({
             url: `/${chapter.id}`,
             changefreq: 'weekly',
             priority: 1
           });
 
-          urls.push({
-            url: `/${chapter.id}/info`,
-            changefreq: 'weekly',
-            priority: 1
+          // add chapter info for available languages
+          ['en', 'ur', 'ml', 'ta'].forEach((lang) => {
+            urls.push({
+              url: `/${chapter.id}/info/${lang}`,
+              changefreq: 'weekly',
+              priority: 1
+            });
           });
 
-          urls.push({
-            url: `/${chapter.id}/info/ur`,
-            changefreq: 'weekly',
-            priority: 1
-          });
+          // Add urls for all verse of chapter
+          Array(chapter.versesCount).fill().forEach((_, index) => {
+            const verseId = index + 1;
 
-          urls.push({
-            url: `/${chapter.id}/info/ml`,
-            changefreq: 'weekly',
-            priority: 1
-          });
+            urls.push({
+              url: `/${chapter.id}/${verseId}`,
+              changefreq: 'weekly',
+              priority: 1
+            });
 
-          urls.push({
-            url: `/${chapter.id}/info/ta`,
-            changefreq: 'weekly',
-            priority: 1
-          });
+            urls.push({
+              url: `/${chapter.id}/${verseId + 10}`,
+              changefreq: 'weekly',
+              priority: 1
+            });
 
-          urls.push({
-            url: `/${chapter.id}/info/en`,
-            changefreq: 'weekly',
-            priority: 1
+            // Add verse url with translations
+            translations.forEach((translation) => {
+              urls.push({
+                url: `/${chapter.id}/${verseId}/${translation.slug || translation.id}`,
+                changefreq: 'weekly',
+                priority: 1
+              });
+
+              urls.push({
+                url: `/${chapter.id}/${verseId + 10}/${translation.slug || translation.id}`,
+                changefreq: 'weekly',
+                priority: 1
+              });
+
+            });
           });
         });
 

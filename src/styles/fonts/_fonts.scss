@@ -1,7 +1,7 @@
 @mixin word_font($page) {
   @font-face {
     font-family: p#{$page};
-    src: url('../../static/fonts/ttf/p#{$page}.ttf') format('truetype');
+    src: url('//quran-1f14.kxcdn.com/fonts/ttf/p#{$page}.ttf') format('truetype');
   }
 
   @font-face {
