@@ -12,14 +12,28 @@
     "test:dev:lint": "./node_modules/eslint/bin/eslint.js ./src",
     "test:stylelint": "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
     "dev-old": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node ./webpack/webpack-dev-server.js & env NODE_PATH='./src' PORT=8000 node ./bin/server.js",
-    "dev": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js & env NODE_PATH='./src' PORT=8000 node ./bin/server.js",
+    "dev": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
     "start": "NODE_PATH='src' node ./start",
     "build": "npm run build:client & npm run build:server",
     "build:server": "babel ./src -d ./dist -D",
     "build:client": "webpack --config ./webpack/prod.config.js",
     "validate": "npm ls",
     "analyze:build": "env NODE_ENV=production webpack --json --config ./webpack/prod.config.js  > bundle-stats.json",
-    "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json"
+    "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json",
+    "lint:fix": "npm run test:dev:lint -- --fix",
+    "prettier": "prettier --single-quote --write",
+    "precommit": "lint-staged"
+  },
+  "pre-commit": [
+    "test:stylelint",
+    "precommit"
+  ],
+  "lint-staged": {
+    "*.js": [
+      "npm run prettier",
+      "npm run lint:fix",
+      "git add"
+    ]
   },
   "engines": {
     "node": ">= 6.3.0"
@@ -72,6 +86,7 @@
     "file-loader": "0.8.5",
     "fontfaceobserver": "1.7.3",
     "history": "^3.0.0",
+    "html-pdf": "^2.1.0",
     "html-webpack-plugin": "1.7.0",
     "http-proxy": "1.14.0",
     "humps": "2.0.0",
@@ -100,7 +115,7 @@
     "react-hot-loader": "3.0.0-beta.6",
     "react-inlinesvg": "0.5.4",
     "react-intl": "2.1.5",
-    "react-loadable": "^3.0.1",
+    "react-loadable": "^3.3.1",
     "react-metrics": "1.2.1",
     "react-paginate": "4.1.0",
     "react-redux": "5.0.1",
@@ -158,6 +173,7 @@
     "karma-sinon": "1.0.4",
     "karma-sourcemap-loader": "0.3.7",
     "karma-webpack": "1.8.0",
+    "lint-staged": "^3.4.0",
     "mocha": "2.2.5",
     "nodemon": "1.7.1",
     "path": "0.11.14",
@@ -165,6 +181,7 @@
     "phantomjs-polyfill": "0.0.1",
     "piping": "0.3.0",
     "pre-commit": "1.1.3",
+    "prettier": "^1.2.2",
     "react-addons-test-utils": "15.4.1",
     "react-transform-catch-errors": "1.0.0",
     "react-transform-hmr": "1.0.1",
@@ -179,9 +196,5 @@
     "webpack-bundle-analyzer": "2.2.1",
     "webpack-dev-server": "2.1.0-beta.0",
     "webpack-hot-middleware": "2.12.2"
-  },
-  "pre-commit": [
-    "test:dev:lint",
-    "test:stylelint"
-  ]
+  }
 }
