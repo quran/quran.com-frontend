@@ -2,15 +2,15 @@ import sitemap from 'sitemap';
 
 import ApiClient from 'helpers/ApiClient';
 
-export default server => {
+export default (server) => {
   server.get('/sitemap.xml', (req, res) => {
     const client = new ApiClient(req);
     const urls = [];
 
     client
       .get('/api/v3/chapters')
-      .then(response => {
-        response.chapters.forEach(chapter => {
+      .then((response) => {
+        response.chapters.forEach((chapter) => {
           Array(chapter.verses_count).fill().forEach((_, index) => {
             const verseId = index + 1;
 
