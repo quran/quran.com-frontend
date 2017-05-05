@@ -2,8 +2,8 @@
 import {
   LOAD as AYAHS_LOAD,
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
-  LOAD_FAIL as AYAHS_LOAD_FAIL,
-  } from 'redux/constants/verses.js';
+  LOAD_FAIL as AYAHS_LOAD_FAIL
+} from 'redux/constants/verses.js';
 
 import { SET_CURRENT as SURAHS_SET_CURRENT } from 'redux/constants/chapters.js';
 
@@ -33,19 +33,21 @@ export default function reducer(state = initialState, action = {}) {
         const ayah = ayahs[ayahId];
 
         ayah.words.forEach((word) => {
-          if (lines[`${word.pageNum}-${word.lineNum}`]) {
-            const isInArray = lines[`${word.pageNum}-${word.lineNum}`].find((item) => {
-              const itemChecksum = `${item.lineNum}${item.code}${item.verseKey}${item.position}`;
-              const dataChecksum = `${word.lineNum}${word.code}${word.verseKey}${item.position}`;
+          if (lines[`${word.pageNumber}-${word.lineNumber}`]) {
+            const isInArray = lines[
+              `${word.pageNumber}-${word.lineNumber}`
+            ].find((item) => {
+              const itemChecksum = `${item.lineNumber}${item.code}${item.verseKey}${item.position}`;
+              const dataChecksum = `${word.lineNumber}${word.code}${word.verseKey}${item.position}`;
 
               return itemChecksum === dataChecksum;
             });
 
             if (!isInArray) {
-              lines[`${word.pageNum}-${word.lineNum}`].push(word);
+              lines[`${word.pageNumber}-${word.lineNumber}`].push(word);
             }
           } else {
-            lines[`${word.pageNum}-${word.lineNum}`] = [word];
+            lines[`${word.pageNumber}-${word.lineNumber}`] = [word];
           }
         });
       });
