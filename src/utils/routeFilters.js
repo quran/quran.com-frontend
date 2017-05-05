@@ -2,7 +2,7 @@ function replaceChapterOrRange(params) {
   return (
     params.chapterId.length !==
       parseInt(params.chapterId, 10).toString().length ||
-    params.chapterId.length !== parseInt(params.chapterId, 10).toString().length
+    params.range.length !== parseInt(params.range, 10).toString().length
   );
 }
 
