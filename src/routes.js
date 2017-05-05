@@ -152,6 +152,15 @@ export default (store) => {
       />
 
       <Route
+        path="/:chapterId(/:range).pdf"
+        getComponents={(nextState, cb) =>
+          import('./containers/Pdf')
+            .then(module => cb(null, { main: module.default, nav: 'noscript' }))
+            .catch(err => console.trace(err))}
+        onEnter={checkValidSurah}
+      />
+
+      <Route
         path="/:chapterId(/:range)"
         getComponents={(nextState, cb) =>
           Promise.all([
