@@ -15,11 +15,13 @@ class GlobalSidebar extends Component {
   };
 
   componentDidMount() {
-    document.body.addEventListener('click', this.onBodyClick.bind(this), true);
+    this.sidebar.addEventListener('click', this.stopBodyClick);
+    document.body.addEventListener('click', this.onBodyClick);
   }
 
   componentWillUnmount() {
-    document.body.removeEventListener('click', this.onBodyClick.bind(this), true);
+    this.sidebar.removeEventListener('click', this.stopBodyClick);
+    document.body.removeEventListener('click', this.onBodyClick);
   }
 
   onBodyClick = () => {
@@ -32,15 +34,29 @@ class GlobalSidebar extends Component {
     return false;
   }
 
+  stopBodyClick = (e) => {
+    if (document.activeElement !== this.closeBtn) {
+      e.stopPropagation();
+    }
+  }
+
   render() {
     const { open, handleOpen, children } = this.props;
 
     return (
       <div
         className={`${styles.container} sidebar ${open && styles.open}`}
+        ref={(node) => { this.sidebar = node; }}
       >
-        <Navbar static fluid>
+        <Navbar static fluid className="removeNavBorderStyles">
           <NavbarHeader>
+            <button
+              className={`${styles.closeBtn}`}
+              onClick={this.onBodyClick}
+              ref={(node) => { this.closeBtn = node; }}
+            >
+              <i className="ss-icon ss-delete vertical-align-middle" />{' '}
+            </button>
             <p // eslint-disable-line
               className="navbar-text"
               onClick={() => handleOpen(false)}
