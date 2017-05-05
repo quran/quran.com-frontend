@@ -25,7 +25,7 @@ class RepeatButton extends Component {
     });
   };
 
-  handleNavChange = (nav) => {
+  handleNavChange = nav => {
     const { setRepeat, current } = this.props;
 
     if (nav === 1) {
@@ -60,7 +60,7 @@ class RepeatButton extends Component {
             <FormControl
               componentClass="select"
               value={repeat.from}
-              onChange={(event) => {
+              onChange={event => {
                 let to = parseInt(event.target.value, 10) + 3;
                 to = to < chapter.versesCount ? to : chapter.versesCount;
                 setRepeat({
