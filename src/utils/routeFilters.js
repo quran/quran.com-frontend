@@ -1,8 +1,11 @@
 function replaceChapterOrRange(params) {
+  const chapterId = params.chapterId;
+  const verseId = params.range;
+
   return (
-    params.chapterId.length !==
-      parseInt(params.chapterId, 10).toString().length ||
-    params.range.length !== parseInt(params.range, 10).toString().length
+    chapterId.length !==
+      parseInt(chapterId, 10).toString().length ||
+    verseId && verseId.length !== parseInt(verseId, 10).toString().length
   );
 }
 
