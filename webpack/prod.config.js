@@ -5,6 +5,8 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 const strip = require('strip-loader');
+const BabiliPlugin = require('babili-webpack-plugin');
+
 const isomorphicToolsConfig = require('./isomorphic-tools-configuration');
 
 const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(
@@ -188,6 +190,10 @@ module.exports = {
       threshold: 10240,
       minRatio: 0
     }),
+    /**
+     * Babli is an ES6+ aware minifier based on the Babel toolchain (beta)
+     */
+    new BabiliPlugin(),
     webpackIsomorphicToolsPlugin
   ]
 };
