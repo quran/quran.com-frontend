@@ -5,8 +5,11 @@ const CompressionPlugin = require('compression-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
 const strip = require('strip-loader');
+const isomorphicToolsConfig = require('./isomorphic-tools-configuration');
 
-const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration')); // eslint-disable-line max-len, global-require
+const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(
+  isomorphicToolsConfig
+);
 
 const relativeAssetsPath = '../static/dist';
 const assetsPath = path.join(__dirname, relativeAssetsPath);
@@ -15,11 +18,12 @@ const root = path.resolve(__dirname, '..');
 module.exports = {
   output: {
     path: assetsPath,
-    publicPath: process.env.USE_LOCAL_ASSETS ? '/public/' : '//assets-1f14.kxcdn.com/',
+    publicPath: process.env.USE_LOCAL_ASSETS
+      ? '/public/'
+      : '//assets-1f14.kxcdn.com/',
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[chunkhash].js',
     sourceMapFilename: '[name]-[chunkhash].map.js'
-
   },
   context: path.resolve(__dirname, '../src'),
   devtool: 'cheap-module-source-map',
@@ -27,7 +31,7 @@ module.exports = {
   cache: false,
   entry: [
     `bootstrap-loader/lib/bootstrap.loader?extractStyles&configFilePath=${root}/src/styles/bootstrap.config.prod.json!bootstrap-loader/no-op.js`,
-    './client.js',
+    './client.js'
   ],
   stats: {
     colors: true,
@@ -35,10 +39,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js'],
-    modules: [
-      'src',
-      'node_modules'
-    ]
+    modules: ['src', 'node_modules']
   },
   module: {
     rules: [
@@ -53,15 +54,17 @@ module.exports = {
             loader: 'babel-loader',
             options: {
               babelrc: false,
-              presets: [['es2015', { modules: false }], 'stage-2', 'react'],
+              presets: [
+                ['es2015', { modules: false }],
+                'stage-2',
+                'react',
+                'react-optimize'
+              ],
               plugins: [
                 'transform-runtime',
                 // 'add-module-exports',
                 'transform-decorators-legacy',
                 'transform-react-display-name',
-                'transform-react-inline-elements',
-                'transform-react-constant-elements',
-                'transform-react-remove-prop-types',
                 'syntax-dynamic-import'
               ]
             }
@@ -72,34 +75,33 @@ module.exports = {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-        //   loader: [
-        //     {
-        //       loader: 'css-loader',
-        //       options: {
-        //         modules: true,
-        //         importLoaders: 2,
-        //         sourceMap: true,
-        //         minimize: true,
-        //         localIdentName: '[path][name]__[local]--[hash:base64:5]'
-        //       }
-        //     },
-        //     {
-        //       loader: 'postcss-loader',
-        //       options: {
-        //         sourceMap: 'inline',
-        //         plugins() {
-        //           return [
-        //             require('precss'), // eslint-disable-line
-        //             require('autoprefixer'), // eslint-disable-line
-        //             require('cssnano'), // eslint-disable-line
-        //           ];
-        //         }
-        //       }
-        //     },
-        //     'sass-loader?sourceMap&sourceMapContents'
-        //   ]
+          //   loader: [
+          //     {
+          //       loader: 'css-loader',
+          //       options: {
+          //         modules: true,
+          //         importLoaders: 2,
+          //         sourceMap: true,
+          //         minimize: true,
+          //         localIdentName: '[path][name]__[local]--[hash:base64:5]'
+          //       }
+          //     },
+          //     {
+          //       loader: 'postcss-loader',
+          //       options: {
+          //         sourceMap: 'inline',
+          //         plugins() {
+          //           return [
+          //             require('precss'), // eslint-disable-line
+          //             require('autoprefixer'), // eslint-disable-line
+          //             require('cssnano'), // eslint-disable-line
+          //           ];
+          //         }
+          //       }
+          //     },
+          //     'sass-loader?sourceMap&sourceMapContents'
+          //   ]
           loader: 'css-loader?minimize&modules&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
-
         })
       },
       {
@@ -144,9 +146,15 @@ module.exports = {
       'process.env.BROWSER': true,
       'process.env.API_URL': JSON.stringify(process.env.API_URL),
       'process.env.SEGMENTS_KEY': JSON.stringify(process.env.SEGMENTS_KEY),
-      'process.env.SENTRY_KEY_CLIENT': JSON.stringify(process.env.SENTRY_KEY_CLIENT),
-      'process.env.SENTRY_KEY_SERVER': JSON.stringify(process.env.SENTRY_KEY_SERVER),
-      'process.env.FACEBOOK_APP_ID': JSON.stringify(process.env.FACEBOOK_APP_ID),
+      'process.env.SENTRY_KEY_CLIENT': JSON.stringify(
+        process.env.SENTRY_KEY_CLIENT
+      ),
+      'process.env.SENTRY_KEY_SERVER': JSON.stringify(
+        process.env.SENTRY_KEY_SERVER
+      ),
+      'process.env.FACEBOOK_APP_ID': JSON.stringify(
+        process.env.FACEBOOK_APP_ID
+      ),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env': {
         NODE_ENV: JSON.stringify('production') // for reach
@@ -156,9 +164,7 @@ module.exports = {
       __DEVELOPMENT__: false,
       __DEVTOOLS__: false
     }),
-    new webpack.EnvironmentPlugin([
-      'NODE_ENV'
-    ]),
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
     new ExtractTextPlugin({ filename: '[name]-[hash].css', allChunks: true }),
 
     // Optimizations
