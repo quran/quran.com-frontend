@@ -10,7 +10,7 @@ import {
   hasAccessToken
 } from 'redux/actions/auth';
 
-import checkValidSurah from './utils/checkValidSurah';
+import checkValidSurah from './utils/routeFilters';
 import App from './containers/App';
 import Home from './containers/Home';
 
@@ -136,9 +136,20 @@ export default (store) => {
           import('./containers/ChapterInfo')
             .then(module => cb(null, module.default))
             .catch(err => console.trace(err))}
+        onEnter={checkValidSurah}
       />
 
       <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
+      <Redirect from="/:chapterId/:from::to" to="/:chapterId/:from-:to" />
+
+      <Route
+        path="/:chapterId(/:range).pdf"
+        getComponents={(nextState, cb) =>
+          import('./containers/Pdf')
+            .then(module => cb(null, { main: module.default, nav: 'noscript' }))
+            .catch(err => console.trace(err))}
+        onEnter={checkValidSurah}
+      />
 
       <Route
         path="/:chapterId(/:range).pdf"
