@@ -22,14 +22,19 @@ import ScrollButton from './ScrollButton';
 const style = require('./style.scss');
 
 const RepeatDropdown = Loadable({
-  loader: () => import('./RepeatDropdown'),
+  loader: () =>
+    import(/* webpackChunkName: "repeatdropdown" */ './RepeatDropdown'),
   LoadingComponent: ComponentLoader
 });
 
 export class Audioplayer extends Component {
-
   componentDidMount() {
-    const { isLoadedOnClient, buildOnClient, chapter, currentFile } = this.props; // eslint-disable-line no-shadow, max-len
+    const {
+      isLoadedOnClient,
+      buildOnClient,
+      chapter,
+      currentFile
+    } = this.props; // eslint-disable-line no-shadow, max-len
 
     debug('component:Audioplayer', 'componentDidMount');
 
@@ -140,11 +145,11 @@ export class Audioplayer extends Component {
     if (previouslyPlaying) play();
 
     return false;
-  }
+  };
 
   scrollToVerse = (ayahNum = this.props.currentVerse) => {
     scroller.scrollTo(`verse:${ayahNum}`, -45);
-  }
+  };
 
   handleScrollTo = (ayahNum) => {
     const { shouldScroll } = this.props;
@@ -152,14 +157,14 @@ export class Audioplayer extends Component {
     if (shouldScroll) {
       this.scrollToVerse(ayahNum);
     }
-  }
+  };
 
   play = () => {
     this.handleScrollTo();
 
     this.props.play();
     this.preloadNext();
-  }
+  };
 
   preloadNext() {
     const { currentVerse, files } = this.props;
@@ -184,7 +189,9 @@ export class Audioplayer extends Component {
       setRepeat, // eslint-disable-line no-shadow
       setAyah // eslint-disable-line no-shadow
     } = this.props;
-    const [chapter, ayah] = currentVerse.split(':').map(val => parseInt(val, 10));
+    const [chapter, ayah] = currentVerse
+      .split(':')
+      .map(val => parseInt(val, 10));
 
     file.pause();
 
@@ -234,19 +241,20 @@ export class Audioplayer extends Component {
     }
 
     return false;
-  }
+  };
 
   handleScrollToggle = (event) => {
     event.preventDefault();
 
     const { shouldScroll, currentVerse } = this.props;
 
-    if (!shouldScroll) { // we use the inverse (!) here because we're toggling, so false is true
+    if (!shouldScroll) {
+      // we use the inverse (!) here because we're toggling, so false is true
       this.scrollToVerse(currentVerse);
     }
 
     this.props.toggleScroll();
-  }
+  };
 
   handleAddFileListeners(file) {
     // NOTE: if no file, just wait.
@@ -260,11 +268,8 @@ export class Audioplayer extends Component {
 
     const onLoadeddata = () => {
       // Default current time to zero. This will change
-      file.currentTime = ( // eslint-disable-line no-param-reassign
-        file.currentTime ||
-        currentTime ||
-        0
-      );
+      file.currentTime = // eslint-disable-line no-param-reassign
+        file.currentTime || currentTime || 0;
 
       return update({
         duration: file.duration,
@@ -272,10 +277,11 @@ export class Audioplayer extends Component {
       });
     };
 
-    const onTimeupdate = () => update({
-      currentTime: file.currentTime,
-      duration: file.duration
-    });
+    const onTimeupdate = () =>
+      update({
+        currentTime: file.currentTime,
+        duration: file.duration
+      });
 
     const onEnded = () => {
       const { repeat } = this.props;
@@ -299,7 +305,7 @@ export class Audioplayer extends Component {
       file.ontimeupdate = null; // eslint-disable-line no-param-reassign
     };
 
-    file.onloadeddata = onLoadeddata;  // eslint-disable-line no-param-reassign
+    file.onloadeddata = onLoadeddata; // eslint-disable-line no-param-reassign
     file.onpause = onPause; // eslint-disable-line no-param-reassign
     file.onplay = onPlay; // eslint-disable-line no-param-reassign
     file.onended = onEnded; // eslint-disable-line no-param-reassign
@@ -316,7 +322,7 @@ export class Audioplayer extends Component {
     file.onPause = null; // eslint-disable-line no-param-reassign
     file.onended = null; // eslint-disable-line no-param-reassign
     file.onprogress = null; // eslint-disable-line no-param-reassign
-  }
+  };
 
   handleTrackChange = (fraction) => {
     const { currentFile, update } = this.props; // eslint-disable-line no-shadow
@@ -326,7 +332,7 @@ export class Audioplayer extends Component {
     });
 
     currentFile.currentTime = fraction * currentFile.duration;
-  }
+  };
 
   renderPlayStopButtons() {
     const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
@@ -361,7 +367,8 @@ export class Audioplayer extends Component {
   renderNextButton() {
     const { chapter, currentVerse } = this.props;
     if (!chapter) return false;
-    const isEnd = chapter.versesCount === parseInt(currentVerse.split(':')[1], 10);
+    const isEnd =
+      chapter.versesCount === parseInt(currentVerse.split(':')[1], 10);
 
     return (
       <a
@@ -406,31 +413,32 @@ export class Audioplayer extends Component {
     }
 
     return (
-      <div className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}>
+      <div
+        className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}
+      >
         <div className={style.wrapper}>
-          {
-            currentFile &&
+          {currentFile &&
             <Track
-              progress={(currentTime / duration) * 100}
+              progress={currentTime / duration * 100}
               onTrackChange={this.handleTrackChange}
-            />
-          }
-          {
-            segments &&
+            />}
+          {segments &&
             segments[currentVerse] &&
-              <Segments
-                segments={segments[currentVerse]}
-                currentVerse={currentVerse}
-                currentTime={currentTime}
-              />
-          }
+            <Segments
+              segments={segments[currentVerse]}
+              currentVerse={currentVerse}
+              currentTime={currentTime}
+            />}
         </div>
         <ul className={`list-inline ${style.controls}`}>
           <li className={style.controlItem}>
             <LocaleFormattedMessage
               id="player.currentVerse"
               defaultMessage="Ayah"
-            />: {currentVerse.split(':')[1]}
+            />
+            :
+            {' '}
+            {currentVerse.split(':')[1]}
           </li>
           <li className={style.controlItem}>
             {this.renderPreviousButton()}
@@ -450,7 +458,10 @@ export class Audioplayer extends Component {
             />
           </li>
           <li className={style.controlItem}>
-            <ScrollButton shouldScroll={shouldScroll} onScrollToggle={this.handleScrollToggle} />
+            <ScrollButton
+              shouldScroll={shouldScroll}
+              onScrollToggle={this.handleScrollToggle}
+            />
           </li>
         </ul>
       </div>
@@ -459,7 +470,8 @@ export class Audioplayer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const currentVerse = state.audioplayer.currentVerse || ownProps.startVerse.verseKey;
+  const currentVerse =
+    state.audioplayer.currentVerse || ownProps.startVerse.verseKey;
   const files = state.audioplayer.files[ownProps.chapter.id];
 
   return {
@@ -474,7 +486,7 @@ const mapStateToProps = (state, ownProps) => {
     repeat: state.audioplayer.repeat,
     shouldScroll: state.audioplayer.shouldScroll,
     duration: state.audioplayer.duration,
-    currentTime: state.audioplayer.currentTime,
+    currentTime: state.audioplayer.currentTime
   };
 };
 
