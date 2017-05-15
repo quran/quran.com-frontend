@@ -24,7 +24,7 @@ module.exports = {
       ? '/public/'
       : '//assets-1f14.kxcdn.com/',
     filename: '[name]-[hash].js',
-    chunkFilename: '[name]-[chunkhash].js',
+    chunkFilename: '[name]-[chunkhash]-chunk.js',
     sourceMapFilename: '[name]-[chunkhash].map.js'
   },
   context: path.resolve(__dirname, '../src'),
