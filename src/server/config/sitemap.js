@@ -58,6 +58,12 @@ export default (server) => {
           });
         });
 
+        urls.push({
+          url: '/ayatul-kursi',
+          changefreq: 'weekly',
+          priority: 1
+        });
+
         const xml = sitemap.createSitemap({
           hostname: 'https://quran.com',
           cacheTime: 600000, // 600 sec cache period
