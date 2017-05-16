@@ -55,15 +55,17 @@ class Word extends Component {
     let text;
     let spacer;
     const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
-    const className = `${useTextFont ? 'text-' : ''}${word.charType === CHAR_TYPE_WORD ? word.className : 'p0'} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
+    const className = `${useTextFont ? 'text-' : ''}${word.className} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
     const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
 
-    if (word.charType === CHAR_TYPE_END) {
-      text = zeroPad(word.verseKey.split(':')[1], 3, 0);
-    } else if (!useTextFont || word.charType === CHAR_TYPE_PAUSE) {
-      text = word.codeV3;
+    if (useTextFont) {
+      if (word.charType === CHAR_TYPE_END) {
+        text = zeroPad(word.verseKey.split(':')[1], 3, 0);
+      } else {
+        text = word.textMadani;
+      }
     } else {
-      text = word.textMadani;
+      text = word.code;
     }
 
     if (word.charType === CHAR_TYPE_WORD) {

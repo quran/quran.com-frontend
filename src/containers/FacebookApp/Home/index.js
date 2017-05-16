@@ -1,7 +1,7 @@
 import React from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Helmet from 'react-helmet';
-import IndexHeader from 'components/IndexHeader';
+import IndexHeader from 'components/FacebookApp/IndexHeader';
 import cookie from 'react-cookie';
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
@@ -12,7 +12,7 @@ import SurahsList from 'components/Home/SurahsList';
 import QuickSurahs from 'components/Home/QuickSurahs';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-const styles = require('./style.scss');
+const styles = require('../../Home/style.scss');
 
 const Home = (props) => {
   debug('component:Index', 'Render');
@@ -40,13 +40,12 @@ const Home = (props) => {
             </h4>
             <div className="row">
               <SurahsList
-                chapters={Object.values(props.chapters).slice(0, 38)}
+                chapters={Object.values(props.chapters).slice(0, 57)}
+                urlPrefix="/fb"
               />
               <SurahsList
-                chapters={Object.values(props.chapters).slice(38, 76)}
-              />
-              <SurahsList
-                chapters={Object.values(props.chapters).slice(76, 114)}
+                chapters={Object.values(props.chapters).slice(57, 114)}
+                urlPrefix="/fb"
               />
             </div>
           </div>

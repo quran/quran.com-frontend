@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+
 import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
@@ -6,13 +7,18 @@ import Link from 'react-router/lib/Link';
 const styles = require('./style.scss');
 
 const SurahsList = (props) => {
+  const { urlPrefix, chapters } = props;
+
   debug('component:Index', 'SurahsList');
 
   return (
     <ul className="col-md-4 list-unstyled">
-      {props.chapters.map(chapter => (
+      {chapters.map(chapter => (
         <li className={`${styles.item}`} key={chapter.id}>
-          <Link to={`/${chapter.id}`} className={`${styles.link} row`}>
+          <Link
+            to={`${urlPrefix}/${chapter.id}`}
+            className={`${styles.link} row`}
+          >
             <div className="col-xs-2 text-muted">
               {chapter.chapterNumber}
             </div>
@@ -23,19 +29,25 @@ const SurahsList = (props) => {
               <span className={`icon-surah${chapter.id}`} />
             </div>
 
-            <div className={`col-md-12 col-xs-push-2 col-sm-push-2 col-md-push-2 col-lg-push-2 col-xl-push-2 ${styles.translated_name}`}>
-              <span className={`text-uppercase ${chapter.translatedName.languageName}`}>
+            <div
+              className={`col-xs-10 col-xs-offset-2 ${styles.translated_name}`}
+            >
+              <span
+                className={`text-uppercase ${chapter.translatedName.languageName}`}
+              >
                 {chapter.translatedName.name}
               </span>
             </div>
           </Link>
         </li>
       ))}
-    </ul>);
+    </ul>
+  );
 };
 
 SurahsList.propTypes = {
-  chapters: customPropTypes.chapters.isRequired
+  chapters: customPropTypes.chapters.isRequired,
+  urlPrefix: PropTypes.string
 };
 
 export default SurahsList;

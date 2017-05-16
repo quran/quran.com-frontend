@@ -8,7 +8,6 @@ import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import Loadable from 'react-loadable';
 import ComponentLoader from 'components/ComponentLoader';
-import GlobalNav from 'components/GlobalNav';
 import debug from 'helpers/debug';
 import config from 'config';
 import metricsConfig from 'helpers/metrics';
@@ -23,6 +22,11 @@ const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
+const GlobalNav = Loadable({
+  loader: () => import('components/GlobalNav'),
+  LoadingComponent: ComponentLoader
+});
+
 const GlobalSidebar = Loadable({
   loader: () => import('components/GlobalSidebar'),
   LoadingComponent: ComponentLoader
@@ -34,19 +38,19 @@ const SmartBanner = Loadable({
 });
 
 class App extends Component {
-
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
 
   state = {
     sidebarOpen: false
-  }
+  };
 
   render() {
     const {
       main,
       nav,
+      footer,
       children,
       media,
       footNote,
@@ -72,7 +76,7 @@ class App extends Component {
             <div className="col-md-12">
               <p>
                 Looks like either your browser does not support Javascript or its disabled.
-                Quran.com workes best with JavaScript enabled.
+                Quran.com works best with JavaScript enabled.
                 For more instruction on how to enable javascript
                 <a href="http://www.enable-javascript.com/">
                   Click here
@@ -81,49 +85,56 @@ class App extends Component {
             </div>
           </div>
         </NoScript>
-        {
-          React.cloneElement(
-            nav || <GlobalNav isStatic {...props} />,
-            {
-              handleSidebarToggle: () => this.setState({ sidebarOpen: !this.state.sidebarOpen })
-            }
-          )
-        }
-        <GlobalSidebar
-          open={this.state.sidebarOpen}
-          handleOpen={open => this.setState({ sidebarOpen: open })}
-        />
+        {React.cloneElement(nav || <GlobalNav isStatic {...props} />, {
+          handleSidebarToggle: () =>
+            this.setState({ sidebarOpen: !this.state.sidebarOpen })
+        })}
+        {__CLIENT__ &&
+          <GlobalSidebar
+            open={this.state.sidebarOpen}
+            handleOpen={open => this.setState({ sidebarOpen: open })}
+          />}
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
-        <Footer />
-
-        <Modal bsSize="large" show={media && media.content} onHide={removeMedia}>
-          <ModalHeader closeButton>
-            <ModalTitle className="montserrat">
-              {media.content && media.content.authorName}
-            </ModalTitle>
-          </ModalHeader>
-          <ModalBody>
-            <div
-              className="embed-responsive embed-responsive-16by9"
-              dangerouslySetInnerHTML={{ __html: media.content && media.content.embedText }}
-            />
-          </ModalBody>
-        </Modal>
-
-        <Modal bsSize="large" show={!!footNote || loadingFootNote} onHide={removeFootNote}>
-          <ModalHeader closeButton>
-            <ModalTitle className="montserrat">
-              Foot note
-            </ModalTitle>
-          </ModalHeader>
-          <ModalBody>
-            <div
-              className={`${footNote && footNote.languageName}`}
-              dangerouslySetInnerHTML={{ __html: footNoteText }}
-            />
-          </ModalBody>
-        </Modal>
+        {React.cloneElement(footer || <Footer />)}
+        {__CLIENT__ &&
+          <Modal
+            bsSize="large"
+            show={media && media.content}
+            onHide={removeMedia}
+          >
+            <ModalHeader closeButton>
+              <ModalTitle className="montserrat">
+                {media.content && media.content.authorName}
+              </ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+              <div
+                className="embed-responsive embed-responsive-16by9"
+                dangerouslySetInnerHTML={{
+                  __html: media.content && media.content.embedText
+                }}
+              />
+            </ModalBody>
+          </Modal>}
+        {__CLIENT__ &&
+          <Modal
+            bsSize="large"
+            show={!!footNote || loadingFootNote}
+            onHide={removeFootNote}
+          >
+            <ModalHeader closeButton>
+              <ModalTitle className="montserrat">
+                Foot note
+              </ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+              <div
+                className={`${footNote && footNote.languageName}`}
+                dangerouslySetInnerHTML={{ __html: footNoteText }}
+              />
+            </ModalBody>
+          </Modal>}
       </div>
     );
   }
@@ -139,7 +150,7 @@ App.propTypes = {
   children: PropTypes.element,
   main: PropTypes.element,
   nav: PropTypes.element,
-  sidebar: PropTypes.element,
+  footer: PropTypes.element,
   footNote: customPropTypes.footNoteType,
   loadingFootNote: PropTypes.bool
 };
