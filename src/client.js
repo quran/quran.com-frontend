@@ -1,10 +1,7 @@
 /* global document, window, $ */
-import 'babel-polyfill';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reactCookie from 'react-cookie';
-import Provider from 'react-redux/lib/components/Provider';
 import Router from 'react-router/lib/Router';
 import match from 'react-router/lib/match';
 import browserHistory from 'react-router/lib/browserHistory';
@@ -12,7 +9,7 @@ import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
 import useScroll from 'react-router-scroll';
 import { ReduxAsyncConnect } from 'redux-connect';
 import { syncHistoryWithStore } from 'react-router-redux';
-import { IntlProvider } from 'react-intl';
+import { AppContainer } from 'react-hot-loader';
 
 import debug from 'debug';
 
@@ -20,7 +17,7 @@ import config from './config';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import routes from './routes';
-import getLocalMessages from './helpers/setLocal';
+import Root from './containers/Root';
 
 const client = new ApiClient();
 const store = createStore(browserHistory, client, window.reduxData);
@@ -45,31 +42,47 @@ window.clearCookies = () => {
   reactCookie.remove('smartbanner-installed');
 };
 
-match({ history, routes: routes(store) }, (error, redirectLocation, renderProps) => {
-  const component = (
-    <Router
-      {...renderProps}
-      render={props => (
-        <ReduxAsyncConnect
-          {...props}
-          helpers={{ client }}
-          render={applyRouterMiddleware(useScroll())}
-        />
-      )}
-    />
-  );
+match(
+  { history, routes: routes(store) },
+  (error, redirectLocation, renderProps) => {
+    const component = (
+      <Router
+        {...renderProps}
+        render={props => (
+          <ReduxAsyncConnect
+            {...props}
+            helpers={{ client }}
+            render={applyRouterMiddleware(useScroll())}
+          />
+        )}
+      />
+    );
 
-  const mountNode = document.getElementById('app');
+    const mountNode = document.getElementById('app');
 
-  debug('client', 'React Rendering');
+    debug('client', 'React Rendering');
 
-  ReactDOM.render(
-    <IntlProvider locale="en" messages={getLocalMessages()}>
-      <Provider store={store} key="provider">
-        {component}
-      </Provider>
-    </IntlProvider>, mountNode, () => {
-      debug('client', 'React Rendered');
+    ReactDOM.render(
+      <AppContainer>
+        <Root component={component} store={store} />
+      </AppContainer>,
+      mountNode,
+      () => {
+        debug('client', 'React Rendered');
+      }
+    );
+
+    if (module.hot) {
+      module.hot.accept('./containers/Root', () => {
+        const NextRoot = require('./containers/Root'); // eslint-disable-line global-require
+
+        ReactDOM.render(
+          <AppContainer>
+            <NextRoot store={store} component={component} />
+          </AppContainer>,
+          document.getElementById('root')
+        );
+      });
     }
-  );
-});
+  }
+);
