@@ -77,6 +77,7 @@ export default {
     'nav.mobile': 'موبائل',
     'nav.navigate': 'تشریف لے جائیں',
     'nav.legacySite': 'پرانی سائٹ',
+    'export.promotion': '.سے ڈاؤن لوڈ کیا گیا ہے Quran.com اس پی ڈی ایف کو.',
 
     'login.message': 'Quran.com کرنے کیلئے سائن ان سب کو اپنے بک مارکس، نوٹوں اور سرگرمیوں کو ذخیرہ کرنے.'
   }

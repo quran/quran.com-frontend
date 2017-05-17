@@ -9,7 +9,7 @@ export default {
     'setting.title': 'Pengaturan',
     'setting.chapters': 'Surat',
     'setting.verses': 'Pergi ke ayat',
-    'setting.reciters.title': 'Qari\'',
+    'setting.reciters.title': "Qari'",
     'setting.translations.title': 'Terjemahan',
     'setting.translations.removeAll': 'Buang semua',
     'setting.translations.english': 'Bahasa Inggris',
@@ -77,6 +77,7 @@ export default {
     'nav.mobile': 'Aplikasi Ponsel',
     'nav.navigate': 'Telusuri',
     'nav.legacySite': 'Quran.com versi lama',
+    'export.promotion': 'PDF ini diekspor dari Quran.com',
 
     'login.message': 'Masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.'
   }

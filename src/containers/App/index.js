@@ -23,17 +23,20 @@ const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
 const GlobalNav = Loadable({
-  loader: () => import('components/GlobalNav'),
+  loader: () =>
+    import(/* webpackChunkName: "globalnav" */ 'components/GlobalNav'),
   LoadingComponent: ComponentLoader
 });
 
 const GlobalSidebar = Loadable({
-  loader: () => import('components/GlobalSidebar'),
+  loader: () =>
+    import(/* webpackChunkName: "globalsidebar" */ 'components/GlobalSidebar'),
   LoadingComponent: ComponentLoader
 });
 
 const SmartBanner = Loadable({
-  loader: () => import('components/SmartBanner'),
+  loader: () =>
+    import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner'),
   LoadingComponent: ComponentLoader
 });
 
@@ -50,6 +53,7 @@ class App extends Component {
     const {
       main,
       nav,
+      footer,
       children,
       media,
       footNote,
@@ -95,7 +99,7 @@ class App extends Component {
           />}
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
-        <Footer />
+        {React.cloneElement(footer || <Footer />)}
         {__CLIENT__ &&
           <Modal
             bsSize="large"
@@ -149,6 +153,7 @@ App.propTypes = {
   children: PropTypes.element,
   main: PropTypes.element,
   nav: PropTypes.element,
+  footer: PropTypes.element,
   sidebar: PropTypes.element,
   footNote: customPropTypes.footNoteType,
   loadingFootNote: PropTypes.bool

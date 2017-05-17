@@ -77,6 +77,7 @@ export default {
     'nav.mobile': 'Applications Mobile',
     'nav.navigate': 'Naviguer',
     'nav.legacySite': 'Version précédente de Quran.com',
+    'export.promotion': 'Ce PDF est exporté depuis Quran.com',
 
     'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. '
   }

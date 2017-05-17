@@ -36,20 +36,24 @@ const LoaderStyle = { width: '10em', height: '10em' };
 const style = require('./style.scss');
 
 const PageView = Loadable({
-  loader: () => import('components/PageView'),
+  loader: () =>
+    import(/* webpackChunkName: "pageview" */ 'components/PageView'),
   LoadingComponent: ComponentLoader
 });
 
 const Audioplayer = Loadable({
-  loader: () => import('components/Audioplayer'),
+  loader: () =>
+    import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
   LoadingComponent: ComponentLoader
 });
 const SurahInfo = Loadable({
-  loader: () => import('components/SurahInfo'),
+  loader: () =>
+    import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
   LoadingComponent: ComponentLoader
 });
 const TopOptions = Loadable({
-  loader: () => import('components/TopOptions'),
+  loader: () =>
+    import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
   LoadingComponent: ComponentLoader
 });
 
@@ -430,7 +434,6 @@ function mapStateToProps(state, ownProps) {
   const isSingleAyah =
     !!ownProps.params.range && !ownProps.params.range.includes('-');
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
-
 
   return {
     chapter,
