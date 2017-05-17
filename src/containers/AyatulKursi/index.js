@@ -12,8 +12,6 @@ import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
 
 // components
-import Loader from 'quran-components/lib/Loader';
-import LazyLoad from 'components/LazyLoad';
 import Verse from 'components/Verse';
 import ComponentLoader from 'components/ComponentLoader';
 import Bismillah from 'components/Bismillah';
@@ -30,8 +28,6 @@ import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
 import { chaptersConnect, versesConnect } from 'containers/Surah/connect';
-
-const LoaderStyle = { width: '10em', height: '10em' };
 
 const style = require('../Surah/style.scss');
 
@@ -60,34 +56,13 @@ const description =
 
 class AyatulKursi extends Component {
   state = {
-    lazyLoading: false,
     sidebarOpen: false
   };
 
-  componentWillMount() {
-    const { params, chapter, actions } = this.props; // eslint-disable-line no-shadow
-
-    if (params.range && params.range.includes('-')) {
-      const start = parseInt(params.range.split('-')[0], 10);
-
-      if (start > chapter.versesCount || isNaN(start)) {
-        return actions.push.push('/error/invalid-verse-range');
-      }
-
-      return false;
-    }
-
-    return false;
-  }
-
   shouldComponentUpdate(nextProps, nextState) {
     const conditions = [
-      this.state.lazyLoading !== nextState.lazyLoading,
       this.state.sidebarOpen !== nextState.sidebarOpen,
       this.props.chapter !== nextProps.chapter,
-      this.props.isEndOfSurah !== nextProps.isEndOfSurah,
-      this.props.verseIds.length !== nextProps.verseIds.length,
-      this.props.chapters !== nextProps.chapters,
       this.props.bookmarks !== nextProps.bookmarks,
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
@@ -99,128 +74,7 @@ class AyatulKursi extends Component {
     return conditions.some(condition => condition);
   }
 
-  getLast() {
-    const { verseIds } = this.props;
-
-    return [...verseIds][[...verseIds].length - 1];
-  }
-
-  getFirst() {
-    const { verseIds } = this.props;
-
-    return [...verseIds][0];
-  }
-
-  hasVerses() {
-    return Object.keys(this.props.verses).length;
-  }
-
-  handleLazyLoadAyahs = (callback) => {
-    const { verseIds, chapter, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
-    const range = [this.getFirst(), this.getLast()];
-
-    const size = 10;
-    const from = range[1];
-    const to = from + size;
-    const paging = { offset: from, limit: to - from };
-
-    if (!isEndOfSurah && !verseIds.has(to)) {
-      actions.verse.load(chapter.chapterNumber, paging, options).then(() => {
-        this.setState({ lazyLoading: false });
-        return callback && callback();
-      });
-    }
-
-    return false;
-  };
-
-  handleSurahInfoToggle = (payload) => {
-    const { actions } = this.props; // eslint-disable-line no-shadow
-
-    return actions.options.setOption(payload);
-  };
-
-  renderNoAyah() {
-    const { isLoading } = this.props;
-
-    const noAyah = (
-      <div className="text-center">
-        <h2>
-          <LocaleFormattedMessage
-            id="ayah.notFound"
-            defaultMessage="Ayah not found."
-          />
-        </h2>
-      </div>
-    );
-
-    return isLoading ? <Loader isActive style={LoaderStyle} /> : noAyah;
-  }
-
-  renderPagination() {
-    const { isSingleAyah, isLoading, isEndOfSurah, chapter } = this.props;
-
-    // If single verse, eh. /2/30
-    if (isSingleAyah) {
-      const to = this.getFirst() + 10 > chapter.versesCount
-        ? chapter.versesCount
-        : this.getFirst() + 10;
-
-      return (
-        <ul className="pager">
-          <li className="text-center">
-            <Link to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}`}>
-              <LocaleFormattedMessage
-                id="chapter.index.continue"
-                defaultMessage="Continue"
-              />
-            </Link>
-          </li>
-        </ul>
-      );
-    }
-
-    return (
-      <LazyLoad
-        onLazyLoad={this.handleLazyLoadAyahs}
-        isEnd={isEndOfSurah && !isLoading}
-        isLoading={isLoading}
-        endComponent={
-          <ul className="pager">
-            {chapter.chapterNumber > 1 &&
-              <li className="previous">
-                <Link to={`/${chapter.chapterNumber * 1 - 1}`}>
-                  ←
-                  <LocaleFormattedMessage
-                    id="chapter.previous"
-                    defaultMessage="Previous Surah"
-                  />
-                </Link>
-              </li>}
-            <li className="text-center">
-              <Link to={`/${chapter.chapterNumber}`}>
-                <LocaleFormattedMessage
-                  id="chapter.goToBeginning"
-                  defaultMessage="Beginning of Surah"
-                />
-              </Link>
-            </li>
-            {chapter.chapterNumber < 114 &&
-              <li className="next">
-                <Link to={`/${chapter.chapterNumber * 1 + 1}`}>
-                  <LocaleFormattedMessage
-                    id="chapter.next"
-                    defaultMessage="Next Surah"
-                  />
-                  →
-                </Link>
-              </li>}
-          </ul>
-        }
-        loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
-      />
-    );
-  }
+  handleLazyLoadAyahs = () => false;
 
   renderVerses() {
     const {
@@ -272,15 +126,7 @@ class AyatulKursi extends Component {
 
   render() {
     const { chapter, verses, options } = this.props; // eslint-disable-line no-shadow
-    debug('component:Surah', 'Render');
-
-    if (!this.hasVerses()) {
-      return (
-        <div className={style.container} style={{ margin: '50px auto' }}>
-          {this.renderNoAyah()}
-        </div>
-      );
-    }
+    debug('component:AyatulKursi', 'Render');
 
     return (
       <div className="chapter-body">
@@ -306,8 +152,8 @@ class AyatulKursi extends Component {
                 "@type": "ListItem",
                 "position": 2,
                 "item": {
-                  "@id": "https://quran.com/${chapter.chapterNumber}",
-                  "name": "${chapter.nameSimple}"
+                  "@id": "https://quran.com/ayatul-kursi",
+                  "name": "Ayatul Kursi"
                 }
               }]
             }`
@@ -328,7 +174,16 @@ class AyatulKursi extends Component {
               {options.isReadingMode ? this.renderLines() : this.renderVerses()}
             </div>
             <div className="col-md-10 col-md-offset-1">
-              {this.renderPagination()}
+              <ul className="pager">
+                <li className="text-center">
+                  <Link to="/2/255-265">
+                    <LocaleFormattedMessage
+                      id="chapter.index.continue"
+                      defaultMessage="Continue"
+                    />
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -345,21 +200,14 @@ class AyatulKursi extends Component {
 
 AyatulKursi.propTypes = {
   chapter: customPropTypes.surahType.isRequired,
-  chapters: customPropTypes.chapters.isRequired,
   actions: PropTypes.object.isRequired, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line
-  isEndOfSurah: PropTypes.bool.isRequired,
-  verseIds: PropTypes.instanceOf(Set),
   currentVerse: PropTypes.string,
   bookmarks: PropTypes.object.isRequired, // eslint-disable-line
   isLoading: PropTypes.bool.isRequired,
   isLoaded: PropTypes.bool.isRequired,
-  isSingleAyah: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   options: PropTypes.object.isRequired, // eslint-disable-line
-  params: PropTypes.shape({
-    chapterId: PropTypes.string.isRequired
-  }).isRequired,
   verses: customPropTypes.verses,
   isPlaying: PropTypes.bool
 };
@@ -376,26 +224,16 @@ function mapStateToProps(state) {
   const chapterId = 2;
   const chapter: Object = state.chapters.entities[chapterId];
   const verses: Object = state.verses.entities[chapterId];
-  const verseArray = verses
-    ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
-    : [];
-  const verseIds = new Set(verseArray);
-  const lastAyahInArray = verseArray.slice(-1)[0];
-  const isSingleAyah = true;
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
     chapter,
     verses,
-    verseIds,
-    isSingleAyah,
     currentVerse,
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
     isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
-    isEndOfSurah: lastAyahInArray === chapter.versesCount,
-    chapters: state.chapters.entities,
     bookmarks: state.bookmarks.entities,
     isLoading: state.verses.loading,
     isLoaded: state.verses.loaded,
