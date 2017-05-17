@@ -4,9 +4,13 @@ import IndexRoute from 'react-router/lib/IndexRoute';
 import Route from 'react-router/lib/Route';
 import Redirect from 'react-router/lib/Redirect';
 
-import { isLoaded as isAuthLoaded, load as loadAuth, hasAccessToken } from 'redux/actions/auth';
+import {
+  isLoaded as isAuthLoaded,
+  load as loadAuth,
+  hasAccessToken
+} from 'redux/actions/auth';
 
-import checkValidSurah from './utils/checkValidSurah';
+import checkValidSurah from './utils/routeFilters';
 import App from './containers/App';
 import Home from './containers/Home';
 
@@ -39,49 +43,150 @@ export default (store) => {
   return (
     <Route path="/" component={App} onEnter={shouldAuth}>
       <IndexRoute components={Home} />
-      <Route path="/donations" getComponent={(nextState, cb) => import('./containers/Donations').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
-      <Route path="/contributions" getComponent={(nextState, cb) => import('./containers/Donations').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route
+        path="/donations"
+        getComponent={(nextState, cb) =>
+          import(/* webpackChunkName: "donations" */ './containers/Donations')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
+      <Route
+        path="/contributions"
+        getComponent={(nextState, cb) =>
+          import(
+            /* webpackChunkName: "contributions" */ './containers/Donations'
+          )
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
 
-      <Route path="/about" getComponent={(nextState, cb) => import('./containers/About').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route
+        path="/about"
+        getComponent={(nextState, cb) =>
+          import(/* webpackChunkName: "about" */ './containers/About')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
 
-      <Route path="/contact" getComponent={(nextState, cb) => import('./containers/Contact').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
-      <Route path="/contactus" getComponent={(nextState, cb) => import('./containers/Contact').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route
+        path="/contact"
+        getComponent={(nextState, cb) =>
+          import(/* webpackChunkName: "contact" */ './containers/Contact')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
+      <Route
+        path="/contactus"
+        getComponent={(nextState, cb) =>
+          import(/* webpackChunkName: "contactus" */ './containers/Contact')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
 
-      <Route path="/mobile" getComponent={(nextState, cb) => import('./containers/MobileLanding').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
-      <Route path="/apps" getComponent={(nextState, cb) => import('./containers/MobileLanding').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route
+        path="/mobile"
+        getComponent={(nextState, cb) =>
+          import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
+      <Route
+        path="/apps"
+        getComponent={(nextState, cb) =>
+          import(/* webpackChunkName: "apps" */ './containers/MobileLanding')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
 
-      <Route path="/error/:errorKey" getComponent={(nextState, cb) => import('./containers/Error').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route
+        path="/error/:errorKey"
+        getComponent={(nextState, cb) =>
+          import(/* webpackChunkName: "error" */ './containers/Error')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
 
-      <Route path="/search" getComponent={(nextState, cb) => import('./containers/Search').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route
+        path="/search"
+        getComponent={(nextState, cb) =>
+          import(/* webpackChunkName: "search" */ './containers/Search')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
 
-      <Route path="/login" getComponent={(nextState, cb) => import('./containers/Login').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+      <Route
+        path="/login"
+        getComponent={(nextState, cb) =>
+          import(/* webpackChunkName: "login" */ './containers/Login')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
 
       <Route onEnter={requireLogin}>
-        <Route path="/profile" getComponent={(nextState, cb) => import('./containers/Profile').then(module => cb(null, module.default)).catch(err => console.trace(err))} />
+        <Route
+          path="/profile"
+          getComponent={(nextState, cb) =>
+            import(/* webpackChunkName: "profile" */ './containers/Profile')
+              .then(module => cb(null, module.default))
+              .catch(err => console.trace(err))}
+        />
       </Route>
 
       <Route
         path="/:chapterId/info(/:language)"
-        getComponents={
-          (nextState, cb) => import('./containers/ChapterInfo').then(module => cb(null, module.default)).catch(err => console.trace(err))
-        }
+        getComponents={(nextState, cb) =>
+          import(
+            /* webpackChunkName: "chapterinfo" */ './containers/ChapterInfo'
+          )
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+        onEnter={checkValidSurah}
+      />
+
+      <Route
+        path="/ayatul-kursi"
+        getComponents={(nextState, cb) =>
+          import(
+            /* webpackChunkName: "ayatulkursi" */ './containers/AyatulKursi'
+          )
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
       />
 
       <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
+      <Redirect from="/:chapterId/:from::to" to="/:chapterId/:from-:to" />
+
+      <Route
+        path="/:chapterId(/:range).pdf"
+        getComponents={(nextState, cb) =>
+          import('./containers/Pdf')
+            .then(module => cb(null, { main: module.default, nav: 'noscript' }))
+            .catch(err => console.trace(err))}
+        onEnter={checkValidSurah}
+      />
+
+      <Route
+        path="/:chapterId(/:range).pdf"
+        getComponents={(nextState, cb) =>
+          import(/* webpackChunkName: "pdf" */ './containers/Pdf')
+            .then(module => cb(null, { main: module.default, nav: 'noscript' }))
+            .catch(err => console.trace(err))}
+        onEnter={checkValidSurah}
+      />
 
       <Route
         path="/:chapterId(/:range)"
         getComponents={(nextState, cb) =>
           Promise.all([
-            import('./containers/Surah'),
-            import('./components/GlobalNav/Surah')
+            import(/* webpackChunkName: "surah" */ './containers/Surah'),
+            import(
+              /* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah'
+            )
           ])
-          .then(modules => cb(
-            null,
-            { main: modules[0].default, nav: modules[1].default }
-          ))
-          .catch(err => console.trace(err))
-        }
+            .then(modules =>
+              cb(null, { main: modules[0].default, nav: modules[1].default })
+            )
+            .catch(err => console.trace(err))}
         onEnter={checkValidSurah}
       />
     </Route>

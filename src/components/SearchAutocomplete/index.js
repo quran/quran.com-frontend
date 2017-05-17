@@ -51,13 +51,13 @@ class SearchAutocomplete extends Component {
       const chapterId = captures[1];
       const ayahNum = captures[2];
       const chapter = this.props.chapters[chapterId];
-      matches.push([chapter.name.simple, chapter.chapterNumber + (ayahNum ? `/${ayahNum}` : '')]);
+      matches.push([chapter.nameSimple, chapter.chapterNumber + (ayahNum ? `/${ayahNum}` : '')]);
     } else if (value.length >= 2) {
       const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
       Object.keys(this.props.chapters).forEach((chapterId) => {
         const chapter = this.props.chapters[chapterId];
-        if (RegExp(escaped, 'i').test(chapter.name.simple.replace(/['-]/g, ''))) {
+        if (RegExp(escaped, 'i').test(chapter.nameSimple.replace(/['-]/g, ''))) {
           matches.push([chapter.nameSimple, chapter.chapterNumber]);
         } else if (RegExp(escaped, 'i').test(chapter.nameArabic)) {
           matches.push([chapter.nameArabic, chapter.chapterNumber]);
@@ -154,7 +154,7 @@ class SearchAutocomplete extends Component {
         onKeyDown={event => this.handleItemKeyDown(event, item)}
       >
         <div className={styles.link}>
-          <a href={item.href} tabIndex="-1">{item.href}</a>
+          <a href={item.href} tabIndex="-1">{item.ayah}</a>
         </div>
         <div className={styles.text}>
           <a href={item.href} tabIndex="-1" dangerouslySetInnerHTML={{ __html: item.text }} />
