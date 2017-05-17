@@ -193,9 +193,9 @@ export default (store) => {
         path="/:chapterId(/:range)"
         getComponents={(nextState, cb) =>
           Promise.all([
-          import(/* webpackChunkName: "surah" */ './containers/Surah'),
-          import(
-          /* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah'
+            import(/* webpackChunkName: "surah" */ './containers/Surah'),
+            import(
+            /* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah'
           )
           ])
           .then(modules =>
