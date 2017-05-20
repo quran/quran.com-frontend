@@ -15,9 +15,9 @@ import {
   TOGGLE_SCROLL,
   UPDATE,
   // LOAD,
-  LOAD_SUCCESS,
+  LOAD_SUCCESS
   // LOAD_FAIL
-  } from 'redux/constants/audioplayer.js';
+} from 'redux/constants/audioplayer.js';
 
 import {
   LOAD as VERSES_LOAD,
@@ -33,6 +33,7 @@ const initialState = {
   currentVerse: null,
   currentWord: null,
   currentTime: 0,
+  duration: 1,
   isPlaying: false,
   repeat: {
     from: undefined,
@@ -212,7 +213,9 @@ export default function reducer(state = initialState, action = {}) {
 
       if (!state.segments[chapterId][nextId].words[position]) return state;
 
-      const currentTime = state.segments[chapterId][nextId].words[position].startTime;
+      const currentTime =
+        state.segments[chapterId][nextId].words[position].startTime;
+
       const endTime = state.segments[chapterId][nextId].words[position].endTime;
       currentFile.currentTime = currentTime;
 

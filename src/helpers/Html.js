@@ -7,7 +7,6 @@ import serialize from 'serialize-javascript';
 const Html = ({ store, component, assets }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
   const head = Helmet.rewind();
-
   return (
     <html lang="en">
       <head>
@@ -91,9 +90,11 @@ const Html = ({ store, component, assets }) => {
           />}
         {process.env.NODE_ENV === 'production' &&
           <script src="https://cdn.ravenjs.com/3.0.4/raven.min.js" />}
-        {Object.keys(assets.javascript).map((script, i) => (
-          <script src={assets.javascript[script]} key={i} />
-        ))}
+        {Object.keys(assets.javascript)
+          .filter(script => !assets.javascript[script].includes('-chunk'))
+          .map((script, i) => (
+            <script src={assets.javascript[script]} key={i} />
+          ))}
       </body>
     </html>
   );
