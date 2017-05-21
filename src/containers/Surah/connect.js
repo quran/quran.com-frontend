@@ -9,8 +9,10 @@ import {
 import {
   clearCurrent,
   load as loadVerses,
-  isLoaded
-  } from 'redux/actions/verses.js';
+  isLoaded,
+  loadTafsir,
+  isTafsirLoaded
+} from 'redux/actions/verses.js';
 
 import { debug } from 'helpers';
 
@@ -57,7 +59,10 @@ export const chaptersConnect = ({ store: { getState, dispatch } }) => {
   return dispatch(loadAll());
 };
 
-export const chapterInfoConnect = ({ store: { dispatch, getState }, params }) => {
+export const chapterInfoConnect = ({
+  store: { dispatch, getState },
+  params
+}) => {
   if (isInfoLoaded(getState(), params.chapterId)) return false;
 
   if (__CLIENT__) {
@@ -66,6 +71,28 @@ export const chapterInfoConnect = ({ store: { dispatch, getState }, params }) =>
   }
 
   return dispatch(loadInfo(params));
+};
+
+export const tafsirConnect = ({ store: { dispatch, getState }, params }) => {
+  if (
+    isTafsirLoaded(
+      getState(),
+      params.chapterId,
+      params.range,
+      params.tafsirId
+    )
+  ) {
+    return false;
+  }
+
+  if (__CLIENT__) {
+    dispatch(loadTafsir(params.chapterId, params.range, params.tafsirId));
+    return true;
+  }
+
+  return dispatch(
+    loadTafsir(params.chapterId, params.range, params.tafsirId)
+  );
 };
 
 export const versesConnect = ({ store: { dispatch, getState }, params }) => {

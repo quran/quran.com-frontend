@@ -34,6 +34,12 @@ export default (server) => {
           });
 
           urls.push({
+            url: `/${chapter.id}/info`,
+            changefreq: 'weekly',
+            priority: 1
+          });
+
+          urls.push({
             url: `/${chapter.id}/info/ur`,
             changefreq: 'weekly',
             priority: 1
@@ -74,6 +80,7 @@ export default (server) => {
             { url: '/contact', changefreq: 'monthly', priority: 0.3 },
             { url: '/donations', changefreq: 'monthly', priority: 0.3 },
             { url: '/contributions', changefreq: 'monthly', priority: 0.3 },
+
             { url: '/search', changefreq: 'weekly', priority: 0.8 }
           ]
         });

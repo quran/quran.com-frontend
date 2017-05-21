@@ -133,6 +133,14 @@ export default (store) => {
       </Route>
 
       <Route
+        path="/:chapterId/:range/tafsirs/:tafsirId"
+        getComponents={(nextState, cb) =>
+          import('./containers/VerseTafsir')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
+
+      <Route
         path="/:chapterId/info(/:language)"
         getComponents={(nextState, cb) =>
           import(

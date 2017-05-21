@@ -70,18 +70,17 @@ class RepeatButton extends Component {
                 });
               }}
             >
-              {
-                array.reduce((options, ayah, index) => {
-                  if (index + 1 < chapter.versesCount) { // Exclude last verse
-                    options.push(
-                      <option key={index} value={index + 1}>
-                        {index + 1}
-                      </option>
-                    );
-                  }
-                  return options;
-                }, [])
-              }
+              {array.reduce((options, ayah, index) => {
+                if (index + 1 < chapter.versesCount) {
+                  // Exclude last verse
+                  options.push(
+                    <option key={index} value={index + 1}>
+                      {index + 1}
+                    </option>
+                  );
+                }
+                return options;
+              }, [])}
             </FormControl>
           </li>
           <li> - </li>
@@ -99,18 +98,20 @@ class RepeatButton extends Component {
               onChange={event =>
                 setRepeat({ ...repeat, to: parseInt(event.target.value, 10) })}
             >
-              {
-                array.reduce((options, ayah, index) => {
-                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= chapter.versesCount) { // eslint-disable-line max-len
-                    options.push(
-                      <option key={index} value={index + 1}>
-                        {index + 1}
-                      </option>
-                    );
-                  }
-                  return options;
-                }, [])
-              }
+              {array.reduce((options, ayah, index) => {
+                if (
+                  (repeat.from ? repeat.from : 1) < index + 1 &&
+                  index + 1 <= chapter.versesCount
+                ) {
+                  // eslint-disable-line max-len
+                  options.push(
+                    <option key={index} value={index + 1}>
+                      {index + 1}
+                    </option>
+                  );
+                }
+                return options;
+              }, [])}
             </FormControl>
           </li>
         </ul>
