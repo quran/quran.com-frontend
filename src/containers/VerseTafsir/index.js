@@ -80,7 +80,7 @@ const AsyncTafsir = asyncConnect([
 ])(VerseTafsir);
 
 function mapStateToProps(state, ownProps) {
-  const verseKey = `${ownProps.params.chapterId}:${ownProps.params.verseId}`;
+  const verseKey = `${ownProps.params.chapterId}:${ownProps.params.range}`;
   const chapterId = parseInt(ownProps.params.chapterId, 10);
   const tafsirId = parseInt(ownProps.params.tafsirId, 10);
   const verse: Object = state.verses.entities[chapterId][verseKey];

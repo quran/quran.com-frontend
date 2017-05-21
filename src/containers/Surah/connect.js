@@ -78,7 +78,7 @@ export const tafsirConnect = ({ store: { dispatch, getState }, params }) => {
     isTafsirLoaded(
       getState(),
       params.chapterId,
-      params.verseId,
+      params.range,
       params.tafsirId
     )
   ) {
@@ -86,12 +86,12 @@ export const tafsirConnect = ({ store: { dispatch, getState }, params }) => {
   }
 
   if (__CLIENT__) {
-    dispatch(loadTafsir(params.chapterId, params.verseId, params.tafsirId));
+    dispatch(loadTafsir(params.chapterId, params.range, params.tafsirId));
     return true;
   }
 
   return dispatch(
-    loadTafsir(params.chapterId, params.verseId, params.tafsirId)
+    loadTafsir(params.chapterId, params.range, params.tafsirId)
   );
 };
 

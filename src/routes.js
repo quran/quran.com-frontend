@@ -133,7 +133,7 @@ export default (store) => {
       </Route>
 
       <Route
-        path="/:chapterId/:verseId/tafsirs/:tafsirId"
+        path="/:chapterId/:range/tafsirs/:tafsirId"
         getComponents={(nextState, cb) =>
           import('./containers/VerseTafsir')
             .then(module => cb(null, module.default))
