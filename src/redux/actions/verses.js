@@ -40,12 +40,13 @@ export function load(id, paging, params, options = defaultOptions) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: { verses: [versesSchema] },
-    promise: client => client.get(`/api/v3/chapters/${id}/verses`, {
-      params: {
-        ...paging,
-        ...apiOptions
-      }
-    }),
+    promise: client =>
+      client.get(`/api/v3/chapters/${id}/verses`, {
+        params: {
+          ...paging,
+          ...apiOptions
+        }
+      }),
     chapterId: id
   };
 }
@@ -78,9 +79,20 @@ export function setCurrentWord(id) {
 }
 
 export function isLoaded(globalState, chapterId, paging) {
+  if (paging.offset) {
+    return (
+      globalState.verses.entities[chapterId] &&
+      globalState.verses.entities[chapterId][
+        `${chapterId}:${paging.offset ? paging.offset + 1 : 1}`
+      ] &&
+      globalState.verses.entities[chapterId][
+        `${chapterId}:${paging.offset && paging.limit ? paging.offset + paging.limit : perPage}`
+      ]
+    );
+  }
+
   return (
     globalState.verses.entities[chapterId] &&
-    globalState.verses.entities[chapterId][`${chapterId}:${paging.offset || 1}`] &&
-    globalState.verses.entities[chapterId][`${chapterId}:${paging.offset + paging.limit || perPage}`]
+    globalState.verses.entities[chapterId][`${chapterId}:1`]
   );
 }

@@ -9,27 +9,10 @@ export default (server) => {
 
     client.get('/api/v3/options/translations').then((r) => {
       const translations = r.translations;
-
-      client.get('/api/v3/chapters').then((response) => {
+      client.get('/api/v3/chapters')
+      .then((response) => {
         response.chapters.forEach((chapter) => {
-          // add chapter url
-          urls.push({
-            url: `/${chapter.id}`,
-            changefreq: 'weekly',
-            priority: 1
-          });
-
-          // add chapter info for available languages
-          ['en', 'ur', 'ml', 'ta'].forEach((lang) => {
-            urls.push({
-              url: `/${chapter.id}/info/${lang}`,
-              changefreq: 'weekly',
-              priority: 1
-            });
-          });
-
-          // Add urls for all verse of chapter
-          Array(chapter.versesCount).fill().forEach((_, index) => {
+          Array(chapter.verses_count).fill().forEach((_, index) => {
             const verseId = index + 1;
 
             urls.push({
@@ -39,7 +22,7 @@ export default (server) => {
             });
 
             urls.push({
-              url: `/${chapter.id}/${verseId + 10}`,
+              url: `/${chapter.id}/${verseId}-${verseId + 9}`,
               changefreq: 'weekly',
               priority: 1
             });
@@ -59,6 +42,27 @@ export default (server) => {
               });
             });
           });
+
+          urls.push({
+            url: `/${chapter.id}`,
+            changefreq: 'weekly',
+            priority: 1
+          });
+
+          // add chapter info for available languages
+          ['en', 'ur', 'ml', 'ta'].forEach((lang) => {
+            urls.push({
+              url: `/${chapter.id}/info/${lang}`,
+              changefreq: 'weekly',
+              priority: 1
+            });
+          });
+        });
+
+        urls.push({
+          url: '/ayatul-kursi',
+          changefreq: 'weekly',
+          priority: 1
         });
 
         const xml = sitemap.createSitemap({
