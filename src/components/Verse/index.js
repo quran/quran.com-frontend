@@ -251,9 +251,10 @@ class Verse extends Component {
     );
   }
 
-  renderAyahBadge() {
+  renderBadge() {
     const { isSearched, verse } = this.props;
     let metric;
+    const translations = (verse.translations || []).map(translation => translation.resourceId).join(',');
 
     const content = (
       <h4>
@@ -271,7 +272,7 @@ class Verse extends Component {
 
     return (
       <Link
-        to={`/${verse.chapterId}/${verse.verseNumber}`}
+        to={`/${verse.chapterId}/${verse.verseNumber}?translations=${translations}`}
         data-metrics-event-name={metric}
       >
         {content}
@@ -284,7 +285,7 @@ class Verse extends Component {
 
     if (isSearched) return false;
 
-    return <Share chapter={chapter} verseKey={verse.verseKey} />;
+    return <Share chapter={chapter} verse={verse} />;
   }
 
   renderControls() {
@@ -292,7 +293,7 @@ class Verse extends Component {
 
     return (
       <div className={`col-md-1 col-sm-1 ${styles.controls}`}>
-        {this.renderAyahBadge()}
+        {this.renderBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderBookmark()}

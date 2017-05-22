@@ -203,7 +203,8 @@ class Surah extends Component {
   }
 
   renderPagination() {
-    const { isSingleAyah, isLoading, isEndOfSurah, chapter } = this.props;
+    const { isSingleAyah, isLoading, isEndOfSurah, chapter, verses, currentVerse } = this.props;
+    const translations = (verses[currentVerse].translations || []).map(translation => translation.resourceId).join(',');
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
@@ -214,7 +215,7 @@ class Surah extends Component {
       return (
         <ul className="pager">
           <li className="text-center">
-            <Link to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}`}>
+            <Link to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}?translations=${translations}`}>
               <LocaleFormattedMessage
                 id="chapter.index.continue"
                 defaultMessage="Continue"
@@ -232,34 +233,38 @@ class Surah extends Component {
         isLoading={isLoading}
         endComponent={
           <ul className="pager">
-            {chapter.chapterNumber > 1 &&
-              <li className="previous">
-                <Link to={`/${chapter.chapterNumber * 1 - 1}`}>
-                  ←
-                  <LocaleFormattedMessage
-                    id="chapter.previous"
-                    defaultMessage="Previous Surah"
-                  />
-                </Link>
-              </li>}
+            {
+              chapter.chapterNumber > 1 &&
+                <li className="previous">
+                  <Link to={`/${(chapter.chapterNumber * 1) - 1}?translations=${translations}`}>
+                    ←
+                    <LocaleFormattedMessage
+                      id="chapter.previous"
+                      defaultMessage="Previous Surah"
+                    />
+                  </Link>
+                </li>
+            }
             <li className="text-center">
-              <Link to={`/${chapter.chapterNumber}`}>
+              <Link to={`/${chapter.chapterNumber}?translations=${translations}`}>
                 <LocaleFormattedMessage
                   id="chapter.goToBeginning"
                   defaultMessage="Beginning of Surah"
                 />
               </Link>
             </li>
-            {chapter.chapterNumber < 114 &&
-              <li className="next">
-                <Link to={`/${chapter.chapterNumber * 1 + 1}`}>
-                  <LocaleFormattedMessage
-                    id="chapter.next"
-                    defaultMessage="Next Surah"
-                  />
-                  →
-                </Link>
-              </li>}
+            {
+              chapter.chapterNumber < 114 &&
+                <li className="next">
+                  <Link to={`/${(chapter.chapterNumber * 1) + 1}?translations=${translations}`}>
+                    <LocaleFormattedMessage
+                      id="chapter.next"
+                      defaultMessage="Next Surah"
+                    />
+                    →
+                  </Link>
+                </li>
+            }
           </ul>
         }
         loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
