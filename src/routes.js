@@ -143,6 +143,16 @@ export default (store) => {
         onEnter={checkValidSurah}
       />
 
+      <Route
+        path="/ayatul-kursi"
+        getComponents={(nextState, cb) =>
+          import(
+            /* webpackChunkName: "ayatulkursi" */ './containers/AyatulKursi'
+          )
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+      />
+
       <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
       <Redirect from="/:chapterId/:from::to" to="/:chapterId/:from-:to" />
 
