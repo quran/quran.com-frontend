@@ -152,6 +152,14 @@ export default (store) => {
             .then(module => cb(null, module.default))
             .catch(err => console.trace(err))}
       />
+      <Route
+        path="/:chapterId/:range/tafsirs/:tafsirId"
+        getComponents={(nextState, cb) =>
+          import('./containers/VerseTafsir')
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
+        onEnter={checkValidSurah}
+      />
 
       <Route
         path="/:chapterId/:range/:translations"

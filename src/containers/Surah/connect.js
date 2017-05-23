@@ -3,7 +3,9 @@ import {
   loadAll,
   loadInfo,
   setCurrent as setCurrentSurah,
-  isInfoLoaded
+  isInfoLoaded,
+  loadTafsir,
+  isTafsirLoaded
 } from 'redux/actions/chapters.js';
 
 import {
@@ -104,4 +106,19 @@ export const versesConnect = ({
   }
 
   return true;
+};
+
+export const tafsirConnect = ({ store: { dispatch, getState }, params }) => {
+  if (
+    isTafsirLoaded(getState(), params.chapterId, params.range, params.tafsirId)
+  ) {
+    return false;
+  }
+
+  if (__CLIENT__) {
+    dispatch(loadTafsir(params.chapterId, params.range, params.tafsirId));
+    return true;
+  }
+
+  return dispatch(loadTafsir(params.chapterId, params.range, params.tafsirId));
 };
