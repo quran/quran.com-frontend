@@ -4,7 +4,7 @@ function replaceChapterOrRange(params) {
 
   return (
     chapterId.length !==
-      parseInt(chapterId, 10).toString().length ||
+    parseInt(chapterId, 10).toString().length ||
     verseId && verseId.length !== parseInt(verseId, 10).toString().length
   );
 }

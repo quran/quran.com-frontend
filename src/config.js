@@ -190,7 +190,7 @@ const config = {
         },
         ...Object.keys(locales).map(key => ({
           rel: 'alternate',
-          hreflang: key,
+          hrefLang: key,
           href: `https://quran.com?local=${key}`
         }))
       ],

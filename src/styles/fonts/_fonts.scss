@@ -2,10 +2,18 @@
   @font-face {
     font-family: p#{$page};
     src: url('//quran-1f14.kxcdn.com/fonts/ttf/p#{$page}.ttf') format('truetype');
-  } // @font-face {
+  }
+
+  @font-face {
+    font-family: text#{$page};
+    src: url('../../static/fonts/embed_ttf/tp#{$page}.ttf') format('truetype');
+  }
+
+// @font-face {
   //   font-family: text#{$page};
   //   src: url('../../static/fonts/embed_ttf/tp#{$page}.ttf') format('truetype');
   // }
+
   .p#{$page} {
     font-family: p#{$page};
   }

@@ -47,79 +47,104 @@ export default (store) => {
         path="/donations"
         getComponent={(nextState, cb) =>
           import(/* webpackChunkName: "donations" */ './containers/Donations')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
       />
       <Route
         path="/contributions"
         getComponent={(nextState, cb) =>
           import(
-            /* webpackChunkName: "contributions" */ './containers/Donations'
+          /* webpackChunkName: "contributions" */ './containers/Donations'
           )
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
       />
 
       <Route
         path="/about"
         getComponent={(nextState, cb) =>
           import(/* webpackChunkName: "about" */ './containers/About')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
       />
 
       <Route
         path="/contact"
         getComponent={(nextState, cb) =>
           import(/* webpackChunkName: "contact" */ './containers/Contact')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
       />
       <Route
         path="/contactus"
         getComponent={(nextState, cb) =>
           import(/* webpackChunkName: "contactus" */ './containers/Contact')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
       />
 
       <Route
         path="/mobile"
         getComponent={(nextState, cb) =>
           import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
       />
       <Route
         path="/apps"
         getComponent={(nextState, cb) =>
           import(/* webpackChunkName: "apps" */ './containers/MobileLanding')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
+      />
+      <Route
+        path="/fb/install"
+        getComponent={(nextState, cb) =>
+          import('./containers/FacebookApp/Install')
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
+      />
+
+      <Route
+        path="/fb/success"
+        getComponent={(nextState, cb) =>
+          import('./containers/FacebookApp/Success')
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
+      />
+
+      <Route
+        path="/fb"
+        getComponent={(nextState, cb) =>
+        import('./containers/FacebookApp/Home')
+        .then(module =>
+          cb(null, { main: module.default, sidebar: 'noscript' })
+        )
+        .catch(err => console.trace(err))}
       />
 
       <Route
         path="/error/:errorKey"
         getComponent={(nextState, cb) =>
           import(/* webpackChunkName: "error" */ './containers/Error')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
       />
 
       <Route
         path="/search"
         getComponent={(nextState, cb) =>
           import(/* webpackChunkName: "search" */ './containers/Search')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
       />
 
       <Route
         path="/login"
         getComponent={(nextState, cb) =>
           import(/* webpackChunkName: "login" */ './containers/Login')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
       />
 
       <Route onEnter={requireLogin}>
@@ -127,8 +152,8 @@ export default (store) => {
           path="/profile"
           getComponent={(nextState, cb) =>
             import(/* webpackChunkName: "profile" */ './containers/Profile')
-              .then(module => cb(null, module.default))
-              .catch(err => console.trace(err))}
+            .then(module => cb(null, module.default))
+            .catch(err => console.trace(err))}
         />
       </Route>
 
@@ -136,10 +161,10 @@ export default (store) => {
         path="/:chapterId/info(/:language)"
         getComponents={(nextState, cb) =>
           import(
-            /* webpackChunkName: "chapterinfo" */ './containers/ChapterInfo'
+          /* webpackChunkName: "chapterinfo" */ './containers/ChapterInfo'
           )
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, module.default))
+          .catch(err => console.trace(err))}
         onEnter={checkValidSurah}
       />
 
@@ -174,8 +199,8 @@ export default (store) => {
         path="/:chapterId(/:range).pdf"
         getComponents={(nextState, cb) =>
           import('./containers/Pdf')
-            .then(module => cb(null, { main: module.default, nav: 'noscript' }))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, { main: module.default, nav: 'noscript' }))
+          .catch(err => console.trace(err))}
         onEnter={checkValidSurah}
       />
 
@@ -183,8 +208,8 @@ export default (store) => {
         path="/:chapterId(/:range).pdf"
         getComponents={(nextState, cb) =>
           import(/* webpackChunkName: "pdf" */ './containers/Pdf')
-            .then(module => cb(null, { main: module.default, nav: 'noscript' }))
-            .catch(err => console.trace(err))}
+          .then(module => cb(null, { main: module.default, nav: 'noscript' }))
+          .catch(err => console.trace(err))}
         onEnter={checkValidSurah}
       />
 
@@ -194,13 +219,13 @@ export default (store) => {
           Promise.all([
             import(/* webpackChunkName: "surah" */ './containers/Surah'),
             import(
-              /* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah'
-            )
+            /* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah'
+          )
           ])
-            .then(modules =>
-              cb(null, { main: modules[0].default, nav: modules[1].default })
-            )
-            .catch(err => console.trace(err))}
+          .then(modules =>
+          cb(null, { main: modules[0].default, nav: modules[1].default })
+          )
+          .catch(err => console.trace(err))}
         onEnter={checkValidSurah}
       />
     </Route>
