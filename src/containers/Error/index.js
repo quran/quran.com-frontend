@@ -17,7 +17,7 @@ const ErrorPage = ({ params }) => (
         <div className="col-md-8 col-md-offset-2">
           <h4 className="source-sans text-center">
             <FormattedHTMLMessage
-              id="error.invalid-surah"
+              id={`error.${params.errorKey}`}
               defaultMessage={error[params.errorKey]}
             />
           </h4>
