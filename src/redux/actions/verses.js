@@ -23,7 +23,9 @@ function prepareParams(params, options) {
   let translations;
 
   if (params.translations && params.translations.length) {
-    translations = params.translations.split(',');
+    translations = typeof params.translations === 'string'
+      ? params.translations.split(',')
+      : params.translations;
   } else {
     translations = options.translations || defaultOptions.translations;
   }
