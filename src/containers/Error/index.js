@@ -4,7 +4,7 @@ import Helmet from 'react-helmet';
 
 const error = {
   'invalid-surah': 'Surah is out of range',
-  'invalid-ayah-range': 'Ayah(s) selected are out of range'
+  'invalid-ayah': 'Ayah(s) selected are out of range'
 };
 
 const ErrorPage = ({ params }) => (
