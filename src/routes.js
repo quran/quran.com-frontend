@@ -10,7 +10,7 @@ import {
   hasAccessToken
 } from 'redux/actions/auth';
 
-import checkValidSurah from './utils/routeFilters';
+import checkValidChapterOrVerse from './utils/routeFilters';
 import App from './containers/App';
 import Home from './containers/Home';
 
@@ -140,7 +140,7 @@ export default (store) => {
           )
             .then(module => cb(null, module.default))
             .catch(err => console.trace(err))}
-        onEnter={checkValidSurah}
+        onEnter={checkValidChapterOrVerse}
       />
 
       <Route
@@ -164,7 +164,7 @@ export default (store) => {
               cb(null, { main: modules[0].default, nav: modules[1].default })
             )
             .catch(err => console.trace(err))}
-        onEnter={checkValidSurah}
+        onEnter={checkValidChapterOrVerse}
       />
 
       <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
@@ -176,7 +176,7 @@ export default (store) => {
           import('./containers/Pdf')
             .then(module => cb(null, { main: module.default, nav: 'noscript' }))
             .catch(err => console.trace(err))}
-        onEnter={checkValidSurah}
+        onEnter={checkValidChapterOrVerse}
       />
 
       <Route
@@ -185,7 +185,7 @@ export default (store) => {
           import(/* webpackChunkName: "pdf" */ './containers/Pdf')
             .then(module => cb(null, { main: module.default, nav: 'noscript' }))
             .catch(err => console.trace(err))}
-        onEnter={checkValidSurah}
+        onEnter={checkValidChapterOrVerse}
       />
 
       <Route
@@ -201,7 +201,7 @@ export default (store) => {
               cb(null, { main: modules[0].default, nav: modules[1].default })
             )
             .catch(err => console.trace(err))}
-        onEnter={checkValidSurah}
+        onEnter={checkValidChapterOrVerse}
       />
     </Route>
   );
