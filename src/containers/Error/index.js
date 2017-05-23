@@ -20,6 +20,11 @@ const ErrorPage = ({ params }) => (
             {' '}
             <a href="/">home page</a>
             {' '}
+            and select a Surah/Ayay.
+            Please go to the
+            {' '}
+            <a href="/">home page</a>
+            {' '}
             and select a Surah/Ayah
           </h4>
         </div>
