@@ -1,8 +1,13 @@
 .title {
-    width: 45%;
-    position: absolute;
-    top: 25px;
-    transform: translateY(-47%);
-    display: inline-block;
-    vertical-align: middle;
+  width: 45%;
+  position: absolute;
+  top: 25px;
+  transform: translateY(-47%);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.titleText {
+  color: #000;
+  font-size: 18px;
 }

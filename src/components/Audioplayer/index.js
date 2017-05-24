@@ -22,7 +22,8 @@ import ScrollButton from './ScrollButton';
 const style = require('./style.scss');
 
 const RepeatDropdown = Loadable({
-  loader: () => import('./RepeatDropdown'),
+  loader: () =>
+    import(/* webpackChunkName: "repeatdropdown" */ './RepeatDropdown'),
   LoadingComponent: ComponentLoader
 });
 

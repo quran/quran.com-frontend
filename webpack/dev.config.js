@@ -2,7 +2,11 @@ require('dotenv').load();
 const webpack = require('webpack');
 const path = require('path');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
-const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(require('./isomorphic-tools-configuration')); // eslint-disable-line max-len, global-require
+const isomorphicToolsConfig = require('./isomorphic-tools-configuration');
+
+const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(
+  isomorphicToolsConfig
+);
 
 const root = path.resolve(__dirname, '..');
 
@@ -10,12 +14,11 @@ module.exports = {
   context: root,
   resolve: {
     extensions: ['.js'],
-    modules: [
-      'src',
-      'node_modules'
-    ]
+    modules: ['src', 'node_modules']
   },
   entry: [
+    'babel-polyfill',
+
     'react-hot-loader/patch',
     // 'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr',
     'webpack-dev-server/client?http://localhost:8080',
@@ -29,6 +32,11 @@ module.exports = {
     noInfo: true,
     inline: true,
     lazy: false,
+    stats: 'verbose',
+
+    headers: {
+      'Access-Control-Allow-Origin': '*'
+    },
     // enable HMR on the server
 
     contentBase: path.resolve('./build'),
@@ -40,7 +48,8 @@ module.exports = {
   output: {
     path: path.resolve('./build'),
     publicPath: 'http://localhost:8080/public/',
-    filename: 'main.js'
+    filename: '[name].js',
+    chunkFilename: '[name]-chunk.js'
   },
   module: {
     rules: [
@@ -53,16 +62,16 @@ module.exports = {
             options: {
               babelrc: false,
               plugins: [
+                'react-hot-loader/babel',
                 'transform-runtime',
                 // 'add-module-exports',
-                'transform-decorators-legacy',
                 'transform-react-display-name',
                 'typecheck',
                 'react-hot-loader/babel',
                 'syntax-dynamic-import'
               ],
               presets: [['es2015', { modules: false }], 'stage-2', 'react'],
-              // cacheDirectory: true
+              cacheDirectory: true
             }
           }
         ]
@@ -127,6 +136,8 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.NamedModulesPlugin(),
+    // new DashboardPlugin(),
     new webpack.ProvidePlugin({
       $: 'jquery',
       jQuery: 'jquery',
@@ -136,24 +147,34 @@ module.exports = {
       'process.env.BROWSER': true,
       'process.env.API_URL': JSON.stringify(process.env.API_URL),
       'process.env.ONE_QURAN_URL': JSON.stringify(process.env.ONE_QURAN_URL),
-      'process.env.FACEBOOK_APP_ID': JSON.stringify(process.env.FACEBOOK_APP_ID),
+      'process.env.FACEBOOK_APP_ID': JSON.stringify(
+        process.env.FACEBOOK_APP_ID
+      ),
       'process.env.SEGMENTS_KEY': JSON.stringify(process.env.SEGMENTS_KEY),
-      'process.env.SENTRY_KEY_CLIENT': JSON.stringify(process.env.SENTRY_KEY_CLIENT),
-      'process.env.SENTRY_KEY_SERVER': JSON.stringify(process.env.SENTRY_KEY_SERVER),
+      'process.env.SENTRY_KEY_CLIENT': JSON.stringify(
+        process.env.SENTRY_KEY_CLIENT
+      ),
+      'process.env.SENTRY_KEY_SERVER': JSON.stringify(
+        process.env.SENTRY_KEY_SERVER
+      ),
       __SERVER__: false,
       __CLIENT__: true,
       __DEVELOPMENT__: true,
       __DEVTOOLS__: true
     }),
-    new webpack.EnvironmentPlugin([
-      'NODE_ENV'
-    ]),
-    new webpack.NamedModulesPlugin(),
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
     webpackIsomorphicToolsPlugin.development()
   ],
   stats: {
     colors: true,
-    reasons: true
+    reasons: true,
+    hash: true,
+    timings: true,
+    chunks: true,
+    chunkModules: true,
+    cachedAssets: true,
+    depth: true,
+    entrypoints: true
   },
   devtool: 'source-map',
   cache: true,

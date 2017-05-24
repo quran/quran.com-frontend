@@ -15,7 +15,7 @@ Read the [contributing] section before creating an issue.
 - Ensure you have [nodejs] installed
 - Get the source by running `git clone https://github.com/quran/quran.com-frontend/` or creating a [fork]
 - Run `npm install` to do first time installation of all dependencies
-- Run `npm run dev` to start the dev server
+- Run `npm run dev` to start the dev server. Make sure you have pm2 installed globally! `npm install -g pm2`
 - Open `http://localhost:8000` in your browser to see the app.
 
 ## Staging

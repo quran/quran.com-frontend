@@ -9,7 +9,7 @@ export default {
     'setting.title': 'Pengaturan',
     'setting.chapters': 'Surat',
     'setting.verses': 'Pergi ke ayat',
-    'setting.reciters.title': 'Qari\'',
+    'setting.reciters.title': "Qari'",
     'setting.translations.title': 'Terjemahan',
     'setting.translations.removeAll': 'Buang semua',
     'setting.translations.english': 'Bahasa Inggris',
@@ -78,6 +78,8 @@ export default {
     'nav.navigate': 'Telusuri',
     'nav.legacySite': 'Quran.com versi lama',
 
-    'login.message': 'Masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.'
+    'login.message': 'Masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.',
+    'error.invalid-surah': "Surah berada di luar jangkauan. Silahkan pergi ke <a href='/'> halaman rumah </a> dan pilih sebuah Surah",
+    'error.invalid-ayah': "Ayah berada di luar jangkauan. Silahkan pergi ke <a href='/'> halaman rumah </a> dan pilih Surah / Ayah"
   }
 };
