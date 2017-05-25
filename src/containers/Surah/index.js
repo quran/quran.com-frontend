@@ -208,12 +208,9 @@ class Surah extends Component {
       isLoading,
       isEndOfSurah,
       chapter,
-      verses,
-      currentVerse
+      options
     } = this.props;
-    const translations = (verses[currentVerse].translations || [])
-      .map(translation => translation.resourceId)
-      .join(',');
+    const translations = (options.translations || []).join(',');
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
