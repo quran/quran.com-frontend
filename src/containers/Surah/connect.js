@@ -3,15 +3,15 @@ import {
   loadAll,
   loadInfo,
   setCurrent as setCurrentSurah,
-  isInfoLoaded,
-  loadTafsir,
-  isTafsirLoaded
+  isInfoLoaded
 } from 'redux/actions/chapters.js';
 
 import {
   clearCurrent,
   load as loadVerses,
-  isLoaded
+  isLoaded,
+  loadTafsir,
+  isTafsirLoaded
 } from 'redux/actions/verses.js';
 
 import { debug } from 'helpers';

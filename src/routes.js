@@ -158,7 +158,7 @@ export default (store) => {
           import('./containers/VerseTafsir')
             .then(module => cb(null, module.default))
             .catch(err => console.trace(err))}
-        onEnter={checkValidSurah}
+        onEnter={checkValidChapterOrVerse}
       />
 
       <Route
