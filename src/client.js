@@ -31,6 +31,7 @@ try {
 
 window.quranDebug = debug;
 window.ReactDOM = ReactDOM; // For chrome dev tool support
+window.store = store;
 
 window.clearCookies = () => {
   reactCookie.remove('quran');

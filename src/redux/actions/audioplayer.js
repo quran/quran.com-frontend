@@ -114,3 +114,7 @@ export function load({ chapterId, verseId, verseKey, audio }) {
     chapterId
   };
 }
+
+export function isLoaded(files, verse) {
+  return files[verse.chapterId][verse.verseKey];
+}

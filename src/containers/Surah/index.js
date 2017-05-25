@@ -79,6 +79,35 @@ class Surah extends Component {
     return false;
   }
 
+  componentDidMount() {
+    const { verses, options: { audio } } = this.props;
+
+    Object.values(verses).forEach((verse) => {
+      this.props.actions.audio.load({
+        chapterId: verse.chapterId,
+        verseId: verse.id,
+        verseKey: verse.verseKey,
+        audio
+      });
+    });
+  }
+
+  // TODO: Should this belong here?
+  componentWillReceiveProps(nextProps) {
+    if (this.props.options.audio !== nextProps.options.audio) {
+      const { verses, options: { audio } } = nextProps;
+
+      Object.values(verses).forEach((verse) => {
+        this.props.actions.audio.load({
+          chapterId: verse.chapterId,
+          verseId: verse.id,
+          verseKey: verse.verseKey,
+          audio
+        });
+      });
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     const conditions = [
       this.state.lazyLoading !== nextState.lazyLoading,

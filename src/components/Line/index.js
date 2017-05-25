@@ -6,7 +6,6 @@ import Word from 'components/Word';
 const styles = require('../Verse/style.scss');
 
 class Line extends React.Component {
-
   // NOTE: this is commented out as it caused problems with 55:31 with missing text.
   // shouldComponentUpdate(nextProps) {
   //   const conditions = [
@@ -21,9 +20,19 @@ class Line extends React.Component {
   // }
 
   renderText() {
-    const { tooltip, currentVerse, audioActions, isPlaying, line, useTextFont } = this.props;
+    const {
+      tooltip,
+      currentVerse,
+      audioActions,
+      isPlaying,
+      line,
+      useTextFont
+    } = this.props;
 
-    const text = line.map(word => (
+    // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
+    let wordAudioPosition = -1;
+
+    const text = line.map((word) => ( // eslint-disable-line
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -31,6 +40,9 @@ class Line extends React.Component {
         tooltip={tooltip}
         isPlaying={isPlaying}
         audioActions={audioActions}
+        audioPosition={
+          word.charType === 'word' ? (wordAudioPosition += 1) : null
+        }
         useTextFont={useTextFont}
       />
     ));
@@ -52,7 +64,10 @@ class Line extends React.Component {
 
     return (
       <div className={`row ${styles.font} text-justify text-arabic`}>
-        <div className="col-md-12 line-container" name={`ayah:${line[0].verseKey}`}>
+        <div
+          className="col-md-12 line-container"
+          name={`ayah:${line[0].verseKey}`}
+        >
           {this.renderText()}
         </div>
       </div>

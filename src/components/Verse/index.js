@@ -2,9 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
 import Element from 'react-scroll/lib/components/Element';
-import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
-import { load as loadAudio } from 'redux/actions/audioplayer';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
@@ -24,34 +22,6 @@ const Share = Loadable({
 });
 
 class Verse extends Component {
-  // TODO: Should this belong here?
-  componentDidMount() {
-    const { verse, audio, isSearched } = this.props;
-
-    if (!isSearched) {
-      this.props.loadAudio({
-        chapterId: verse.chapterId,
-        verseId: verse.id,
-        verseKey: verse.verseKey,
-        audio
-      });
-    }
-  }
-
-  // TODO: Should this belong here?
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.isSearched && this.props.audio !== nextProps.audio) {
-      const { verse, audio } = nextProps;
-
-      this.props.loadAudio({
-        chapterId: verse.chapterId,
-        verseId: verse.id,
-        verseKey: verse.verseKey,
-        audio
-      });
-    }
-  }
-
   shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.verse !== nextProps.verse,
@@ -340,8 +310,6 @@ Verse.propTypes = {
   iscurrentVerse: PropTypes.bool,
   currentVerse: PropTypes.string,
   userAgent: PropTypes.object, // eslint-disable-line
-  audio: PropTypes.number.isRequired,
-  loadAudio: PropTypes.func.isRequired,
   isPdf: PropTypes.bool
 };
 
@@ -351,4 +319,4 @@ Verse.defaultProps = {
   isPdf: false
 };
 
-export default connect(() => ({}), { loadAudio })(Verse);
+export default Verse;
