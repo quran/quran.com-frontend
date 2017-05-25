@@ -29,24 +29,15 @@ const RepeatDropdown = Loadable({
 
 export class Audioplayer extends Component {
   componentDidMount() {
-    const {
-      isLoadedOnClient,
-      buildOnClient,
-      chapter,
-      currentFile
-    } = this.props; // eslint-disable-line no-shadow, max-len
+    const { currentFile } = this.props; // eslint-disable-line no-shadow, max-len
 
     debug('component:Audioplayer', 'componentDidMount');
-
-    if (!isLoadedOnClient && __CLIENT__) {
-      debug('component:Audioplayer', 'componentDidMount on client');
-
-      return buildOnClient(chapter.chapterNumber);
-    }
 
     if (currentFile) {
       return this.handleAddFileListeners(currentFile);
     }
+
+    console.error('Audioplayer mounted but no file available');
 
     return false;
   }
@@ -60,15 +51,16 @@ export class Audioplayer extends Component {
     // First load
     if (this.props.currentFile !== nextProps.currentFile) {
       if (this.props.currentFile) {
-        this.handleRemoveFileListeneres(this.props.currentFile);
+        this.handleRemoveFileListeners(this.props.currentFile);
       }
 
       return this.handleAddFileListeners(nextProps.currentFile);
     }
 
+    // Change verse
     if (this.props.currentVerse !== nextProps.currentVerse) {
       if (this.props.currentFile) {
-        this.handleRemoveFileListeneres(this.props.currentFile);
+        this.handleRemoveFileListeners(this.props.currentFile);
       }
 
       return this.handleAddFileListeners(nextProps.currentFile);
@@ -96,7 +88,7 @@ export class Audioplayer extends Component {
     debug('component:Audioplayer', 'componentWillUnmount');
 
     if (files[currentFile]) {
-      return this.handleRemoveFileListeneres(files[currentFile]);
+      return this.handleRemoveFileListeners(files[currentFile]);
     }
 
     return false;
@@ -315,7 +307,7 @@ export class Audioplayer extends Component {
     return file;
   }
 
-  handleRemoveFileListeneres = (file) => {
+  handleRemoveFileListeners = (file) => {
     file.pause();
     file.currentTime = 0; // eslint-disable-line no-param-reassign
     file.onloadeddata = null; // eslint-disable-line no-param-reassign
@@ -483,7 +475,6 @@ const mapStateToProps = (state, ownProps) => {
     currentFile: files[currentVerse],
     chapterId: ownProps.chapter.id,
     isPlaying: state.audioplayer.isPlaying,
-    isLoadedOnClient: state.audioplayer.isLoadedOnClient,
     isLoading: state.audioplayer.isLoading,
     repeat: state.audioplayer.repeat,
     shouldScroll: state.audioplayer.shouldScroll,
@@ -500,8 +491,6 @@ Audioplayer.propTypes = {
   // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
   files: PropTypes.object, // eslint-disable-line
   currentVerse: PropTypes.string,
-  buildOnClient: PropTypes.func.isRequired,
-  isLoadedOnClient: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   play: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
