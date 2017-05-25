@@ -1,11 +1,11 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
 import Word from 'components/Word';
 
 const styles = require('../Verse/style.scss');
 
-class Line extends React.Component {
+class Line extends Component {
   // NOTE: this is commented out as it caused problems with 55:31 with missing text.
   // shouldComponentUpdate(nextProps) {
   //   const conditions = [
