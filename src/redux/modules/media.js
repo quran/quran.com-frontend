@@ -2,7 +2,9 @@ import {
   SET_MEDIA,
   REMOVE_MEDIA,
   LOAD_TAFISRS,
-  LOAD_TAFISRS_SUCCESS
+  LOAD_TAFISRS_SUCCESS,
+  LOAD_FOOT_NOTE,
+  LOAD_FOOT_NOTE_SUCCESS
 } from 'redux/constants/media';
 
 import { buildTafsirList } from 'helpers/tafsirs';
@@ -50,8 +52,27 @@ export default function reducer(state = initialState, action = {}) {
         show: true,
         loading: false,
         content: {
-          title: 'Select a tafsir',
-          body: buildTafsirList(action.result.tafsirs, action.verse)
+          body: buildTafsirList(action.result.tafsirs)
+        }
+      };
+    }
+    case LOAD_FOOT_NOTE: {
+      return {
+        ...state,
+        show: true,
+        loading: true,
+        content: {
+          title: 'Foot note'
+        }
+      };
+    }
+    case LOAD_FOOT_NOTE_SUCCESS: {
+      return {
+        ...state,
+        show: true,
+        loading: false,
+        content: {
+          body: action.result.footNote.text
         }
       };
     }

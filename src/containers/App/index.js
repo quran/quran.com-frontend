@@ -61,7 +61,7 @@ class App extends Component {
 
     return (
       <div
-        className="embed-responsive embed-responsive-16by9"
+        className={`embed-responsive embed-responsive-16by9 ${media.wrapperClass}`}
         dangerouslySetInnerHTML={{
           __html: media.content.body
         }}
