@@ -14,7 +14,8 @@ export const removeMedia = () => ({
   type: REMOVE_MEDIA
 });
 
-export const loadTafsirs = () => ({
+export const loadTafsirs = verse => ({
   types: [LOAD_TAFISRS, LOAD_TAFISRS_SUCCESS],
-  promise: client => client.get('/api/v3/options/tafsirs')
+  promise: client => client.get('/api/v3/options/tafsirs'),
+  verse
 });

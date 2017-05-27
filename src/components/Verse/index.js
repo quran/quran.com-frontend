@@ -200,6 +200,25 @@ class Verse extends Component {
     return false;
   }
 
+  renderTafsirLink() {
+    const { verse } = this.props;
+
+    return (
+      <a
+        tabIndex="-1"
+        className="text-muted"
+        onClick={() => this.props.loadTafsirs(verse)}
+      >
+        <i className="ss-book vertical-align-middle" />
+        {' '}
+        <LocaleFormattedMessage
+          id={'actions.tafsir'}
+          defaultMessage={'Tafsir'}
+        />
+      </a>
+    );
+  }
+
   renderCopyLink() {
     const { isSearched, verse, isPdf } = this.props;
 
@@ -300,6 +319,7 @@ class Verse extends Component {
         {this.renderBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
+        {this.renderTafsirLink()}
         {this.renderBookmark()}
         {!isPdf && this.renderShare()}
       </div>

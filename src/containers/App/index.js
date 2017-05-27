@@ -49,6 +49,27 @@ class App extends Component {
     sidebarOpen: false
   };
 
+  renderModalBody() {
+    const {media} = this.props;
+
+    if (media.loading) {
+      return (
+        <div className="embed-responsive embed-responsive-16by9">
+          <Loader isActive relative />
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className="embed-responsive embed-responsive-16by9"
+        dangerouslySetInnerHTML={{
+          __html: media.content.body
+        }}
+      />
+    );
+  }
+
   render() {
     const {
       main,
@@ -69,7 +90,6 @@ class App extends Component {
     } else {
       footNoteText = <Loader isActive={loadingFootNote} />;
     }
-    const loader = <Loader isActive />;
 
     return (
       <div>
@@ -101,21 +121,18 @@ class App extends Component {
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
         {__CLIENT__ &&
-          <Modal bsSize="large" show={media.show} onHide={removeMedia}>
+          media.show &&
+          <Modal bsSize={media.size} show={media.show} onHide={removeMedia}>
             <ModalHeader closeButton>
               <ModalTitle className="montserrat">
                 {media.content.title}
               </ModalTitle>
             </ModalHeader>
             <ModalBody>
-              <div
-                className="embed-responsive embed-responsive-16by9"
-                dangerouslySetInnerHTML={{
-                  __html: media.loading ? loader : media.content.body
-                }}
-              />
+              {this.renderModalBody()}
             </ModalBody>
           </Modal>}
+
         {__CLIENT__ &&
           <Modal
             bsSize="large"
