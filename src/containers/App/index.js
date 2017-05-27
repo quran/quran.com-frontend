@@ -14,7 +14,6 @@ import metricsConfig from 'helpers/metrics';
 import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
-import { removeFootNote } from 'redux/actions/footNote';
 import Loader from 'quran-components/lib/Loader';
 import authConnect from './connect';
 
@@ -50,7 +49,7 @@ class App extends Component {
   };
 
   renderModalBody() {
-    const {media} = this.props;
+    const { media } = this.props;
 
     if (media.loading) {
       return (
@@ -76,20 +75,10 @@ class App extends Component {
       nav,
       children,
       media,
-      footNote,
-      loadingFootNote,
       removeMedia, // eslint-disable-line no-shadow
-      removeFootNote, // eslint-disable-line no-shadow
       ...props
     } = this.props;
     debug('component:APPLICATION', 'Render');
-    let footNoteText;
-
-    if (footNote) {
-      footNoteText = footNote.text;
-    } else {
-      footNoteText = <Loader isActive={loadingFootNote} />;
-    }
 
     return (
       <div>
@@ -132,25 +121,6 @@ class App extends Component {
               {this.renderModalBody()}
             </ModalBody>
           </Modal>}
-
-        {__CLIENT__ &&
-          <Modal
-            bsSize="large"
-            show={!!footNote || loadingFootNote}
-            onHide={removeFootNote}
-          >
-            <ModalHeader closeButton>
-              <ModalTitle className="montserrat">
-                Foot note
-              </ModalTitle>
-            </ModalHeader>
-            <ModalBody>
-              <div
-                className={`${footNote && footNote.languageName}`}
-                dangerouslySetInnerHTML={{ __html: footNoteText }}
-              />
-            </ModalBody>
-          </Modal>}
       </div>
     );
   }
@@ -162,20 +132,15 @@ const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 App.propTypes = {
   media: customPropTypes.media.isRequired,
   removeMedia: PropTypes.func.isRequired,
-  removeFootNote: PropTypes.func.isRequired,
   children: PropTypes.element,
   main: PropTypes.element,
   nav: PropTypes.element,
-  sidebar: PropTypes.element,
-  footNote: customPropTypes.footNoteType,
-  loadingFootNote: PropTypes.bool
+  sidebar: PropTypes.element
 };
 
 export default connect(
   state => ({
-    media: state.media,
-    footNote: state.footNote.footNote,
-    loadingFootNote: state.footNote.loadingFootNote
+    media: state.media
   }),
-  { removeMedia, removeFootNote }
+  { removeMedia }
 )(AsyncApp);

@@ -1,12 +1,13 @@
 import {
   LOAD_FOOT_NOTE,
-  LOAD_FOOT_NOTE_SUCCESS,
-  REMOVE_FOOT_NOTE
+  LOAD_FOOT_NOTE_SUCCESS
 } from 'redux/constants/footNote.js';
 
 const initialState = {
-  footNote: null,
-  loadingFootNote: false
+  content: { title: null, body: null },
+  show: false,
+  loading: false,
+  size: 'large'
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -14,22 +15,16 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD_FOOT_NOTE: {
       return {
         ...state,
-        loadingFootNote: true,
-        footNote: null,
+        show: true,
+        loading: true,
+        content: { title: 'Foot note' }
       };
     }
     case LOAD_FOOT_NOTE_SUCCESS: {
       return {
         ...state,
-        loadingFootNote: false,
-        footNote: action.result.footNote
-      };
-    }
-    case REMOVE_FOOT_NOTE: {
-      return {
-        ...state,
-        loadingFootNote: false,
-        footNote: null,
+        loading: false,
+        content: { body: action.result.footNote.text }
       };
     }
     default:
