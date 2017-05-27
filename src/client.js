@@ -18,6 +18,7 @@ import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import routes from './routes';
 import Root from './containers/Root';
+import './styles/main.global.scss';
 
 const client = new ApiClient();
 const store = createStore(browserHistory, client, window.reduxData);

@@ -25,13 +25,6 @@ const PdfHtml = ({ component, assets, url }) => {
             type="text/css"
           />
         ))}
-        {Object.keys(assets.styles).length === 0
-          ? <style
-            dangerouslySetInnerHTML={{
-              __html: require('../../src/styles/bootstrap.config')
-            }}
-          />
-          : null}
         {Object.keys(assets.javascript).map((script, i) => (
           <script src={assets.javascript[script]} key={i} />
         ))}

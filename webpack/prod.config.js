@@ -15,7 +15,6 @@ const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(
 
 const relativeAssetsPath = '../static/dist';
 const assetsPath = path.join(__dirname, relativeAssetsPath);
-const root = path.resolve(__dirname, '..');
 
 module.exports = {
   output: {
@@ -31,10 +30,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   target: 'web',
   cache: false,
-  entry: [
-    `bootstrap-loader/lib/bootstrap.loader?extractStyles&configFilePath=${root}/src/styles/bootstrap.config.prod.json!bootstrap-loader/no-op.js`,
-    './client.js'
-  ],
+  entry: ['./client.js'],
   stats: {
     colors: true,
     reasons: false
@@ -75,35 +71,17 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: /\.global.scss$/,
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          //   loader: [
-          //     {
-          //       loader: 'css-loader',
-          //       options: {
-          //         modules: true,
-          //         importLoaders: 2,
-          //         sourceMap: true,
-          //         minimize: true,
-          //         localIdentName: '[path][name]__[local]--[hash:base64:5]'
-          //       }
-          //     },
-          //     {
-          //       loader: 'postcss-loader',
-          //       options: {
-          //         sourceMap: 'inline',
-          //         plugins() {
-          //           return [
-          //             require('precss'), // eslint-disable-line
-          //             require('autoprefixer'), // eslint-disable-line
-          //             require('cssnano'), // eslint-disable-line
-          //           ];
-          //         }
-          //       }
-          //     },
-          //     'sass-loader?sourceMap&sourceMapContents'
-          //   ]
           loader: 'css-loader?minimize&modules&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
+        })
+      },
+      {
+        test: /\.global.scss$/,
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: 'css-loader?minimize&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
         })
       },
       {
