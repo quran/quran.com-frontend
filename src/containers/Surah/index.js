@@ -36,25 +36,28 @@ const LoaderStyle = { width: '10em', height: '10em' };
 const style = require('./style.scss');
 
 const PageView = Loadable({
-  loader: () => import('components/PageView'),
+  loader: () =>
+    import(/* webpackChunkName: "pageview" */ 'components/PageView'),
   LoadingComponent: ComponentLoader
 });
 
 const Audioplayer = Loadable({
-  loader: () => import('components/Audioplayer'),
+  loader: () =>
+    import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
   LoadingComponent: ComponentLoader
 });
 const SurahInfo = Loadable({
-  loader: () => import('components/SurahInfo'),
+  loader: () =>
+    import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
   LoadingComponent: ComponentLoader
 });
 const TopOptions = Loadable({
-  loader: () => import('components/TopOptions'),
+  loader: () =>
+    import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
   LoadingComponent: ComponentLoader
 });
 
 class Surah extends Component {
-
   state = {
     lazyLoading: false,
     sidebarOpen: false
@@ -76,6 +79,35 @@ class Surah extends Component {
     return false;
   }
 
+  componentDidMount() {
+    const { verses, options: { audio } } = this.props;
+
+    Object.values(verses).forEach((verse) => {
+      this.props.actions.audio.load({
+        chapterId: verse.chapterId,
+        verseId: verse.id,
+        verseKey: verse.verseKey,
+        audio
+      });
+    });
+  }
+
+  // TODO: Should this belong here?
+  componentWillReceiveProps(nextProps) {
+    if (this.props.options.audio !== nextProps.options.audio) {
+      const { verses, options: { audio } } = nextProps;
+
+      Object.values(verses).forEach((verse) => {
+        this.props.actions.audio.load({
+          chapterId: verse.chapterId,
+          verseId: verse.id,
+          verseKey: verse.verseKey,
+          audio
+        });
+      });
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     const conditions = [
       this.state.lazyLoading !== nextState.lazyLoading,
@@ -89,7 +121,7 @@ class Surah extends Component {
       this.props.isLoaded !== nextProps.isLoaded,
       this.props.options !== nextProps.options,
       this.props.currentVerse !== nextProps.currentVerse,
-      this.props.isPlaying !== nextProps.isPlaying,
+      this.props.isPlaying !== nextProps.isPlaying
     ];
 
     return conditions.some(condition => condition);
@@ -107,7 +139,7 @@ class Surah extends Component {
     return [...verseIds][0];
   }
 
-  hasAyahs() {
+  hasVerses() {
     return Object.keys(this.props.verses).length;
   }
 
@@ -117,7 +149,7 @@ class Surah extends Component {
 
     const size = 10;
     const from = range[1];
-    const to = (from + size);
+    const to = from + size;
     const paging = { offset: from, limit: to - from };
 
     if (!isEndOfSurah && !verseIds.has(to)) {
@@ -128,13 +160,13 @@ class Surah extends Component {
     }
 
     return false;
-  }
+  };
 
   handleSurahInfoToggle = (payload) => {
     const { actions } = this.props; // eslint-disable-line no-shadow
 
     return actions.options.setOption(payload);
-  }
+  };
 
   title() {
     const { params, chapter } = this.props;
@@ -151,7 +183,9 @@ class Surah extends Component {
 
     if (params.range) {
       if (params.range.includes('-')) {
-        const [from, to] = params.range.split('-').map(num => parseInt(num, 10));
+        const [from, to] = params.range
+          .split('-')
+          .map(num => parseInt(num, 10));
         const array = Array(to - from).fill(from);
         const translations = array.map((fromAyah, index) => {
           const verse = verses[`${chapter.chapterNumber}:${fromAyah + index}`];
@@ -183,28 +217,46 @@ class Surah extends Component {
   renderNoAyah() {
     const { isLoading } = this.props;
 
-    const noAyah = (<div className="text-center">
-      <h2><LocaleFormattedMessage id="ayah.notFound" defaultMessage="Ayah not found." /></h2>
-    </div>
+    const noAyah = (
+      <div className="text-center">
+        <h2>
+          <LocaleFormattedMessage
+            id="ayah.notFound"
+            defaultMessage="Ayah not found."
+          />
+        </h2>
+      </div>
     );
 
     return isLoading ? <Loader isActive style={LoaderStyle} /> : noAyah;
   }
 
   renderPagination() {
-    const { isSingleAyah, isLoading, isEndOfSurah, chapter } = this.props;
+    const {
+      isSingleAyah,
+      isLoading,
+      isEndOfSurah,
+      chapter,
+      options
+    } = this.props;
+    const translations = (options.translations || []).join(',');
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
-      const to = this.getFirst() + 10 > chapter.versesCount ?
-        chapter.versesCount :
-        this.getFirst() + 10;
+      const to = this.getFirst() + 10 > chapter.versesCount
+        ? chapter.versesCount
+        : this.getFirst() + 10;
 
       return (
         <ul className="pager">
           <li className="text-center">
-            <Link to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}`}>
-              <LocaleFormattedMessage id="chapter.index.continue" defaultMessage="Continue" />
+            <Link
+              to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}?translations=${translations}`}
+            >
+              <LocaleFormattedMessage
+                id="chapter.index.continue"
+                defaultMessage="Continue"
+              />
             </Link>
           </li>
         </ul>
@@ -218,38 +270,40 @@ class Surah extends Component {
         isLoading={isLoading}
         endComponent={
           <ul className="pager">
-            {
-              chapter.chapterNumber > 1 &&
-                <li className="previous">
-                  <Link to={`/${(chapter.chapterNumber * 1) - 1}`}>
-                    &larr;
-                    <LocaleFormattedMessage
-                      id="chapter.previous"
-                      defaultMessage="Previous Surah"
-                    />
-                  </Link>
-                </li>
-            }
+            {chapter.chapterNumber > 1 &&
+              <li className="previous">
+                <Link
+                  to={`/${chapter.chapterNumber * 1 - 1}?translations=${translations}`}
+                >
+                  ←
+                  <LocaleFormattedMessage
+                    id="chapter.previous"
+                    defaultMessage="Previous Surah"
+                  />
+                </Link>
+              </li>}
             <li className="text-center">
-              <Link to={`/${chapter.chapterNumber}`}>
+              <Link
+                to={`/${chapter.chapterNumber}?translations=${translations}`}
+              >
                 <LocaleFormattedMessage
                   id="chapter.goToBeginning"
                   defaultMessage="Beginning of Surah"
                 />
               </Link>
             </li>
-            {
-              chapter.chapterNumber < 114 &&
-                <li className="next">
-                  <Link to={`/${(chapter.chapterNumber * 1) + 1}`}>
-                    <LocaleFormattedMessage
-                      id="chapter.next"
-                      defaultMessage="Next Surah"
-                    />
-                    &rarr;
-                  </Link>
-                </li>
-            }
+            {chapter.chapterNumber < 114 &&
+              <li className="next">
+                <Link
+                  to={`/${chapter.chapterNumber * 1 + 1}?translations=${translations}`}
+                >
+                  <LocaleFormattedMessage
+                    id="chapter.next"
+                    defaultMessage="Next Surah"
+                  />
+                  →
+                </Link>
+              </li>}
           </ul>
         }
         loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
@@ -257,7 +311,7 @@ class Surah extends Component {
     );
   }
 
-  renderAyahs() {
+  renderVerses() {
     const {
       chapter,
       verses,
@@ -266,7 +320,7 @@ class Surah extends Component {
       bookmarks,
       isPlaying,
       isAuthenticated,
-      currentVerse,
+      currentVerse
     } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(verses).map(verse => (
@@ -309,7 +363,13 @@ class Surah extends Component {
     const { chapter, verses, options, info, actions } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!this.hasAyahs()) return <div className={style.container} style={{ margin: '50px auto' }}>{this.renderNoAyah()}</div>;
+    if (!this.hasVerses()) {
+      return (
+        <div className={style.container} style={{ margin: '50px auto' }}>
+          {this.renderNoAyah()}
+        </div>
+      );
+    }
 
     return (
       <div className="chapter-body">
@@ -318,9 +378,10 @@ class Surah extends Component {
             title: this.title(),
             description: this.description()
           })}
-          script={[{
-            type: 'application/ld+json',
-            innerHTML: `{
+          script={[
+            {
+              type: 'application/ld+json',
+              innerHTML: `{
               "@context": "http://schema.org",
               "@type": "BreadcrumbList",
               "itemListElement": [{
@@ -339,7 +400,8 @@ class Surah extends Component {
                 }
               }]
             }`
-          }]}
+            }
+          ]}
           style={[
             {
               cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
@@ -356,20 +418,21 @@ class Surah extends Component {
               onClose={this.handleSurahInfoToggle}
             />
             <div className="col-md-10 col-md-offset-1">
-              <TopOptions chapter={chapter} />
+              {__CLIENT__ && <TopOptions chapter={chapter} />}
               <Bismillah chapter={chapter} />
-              {options.isReadingMode ? this.renderLines() : this.renderAyahs()}
+              {options.isReadingMode ? this.renderLines() : this.renderVerses()}
             </div>
             <div className="col-md-10 col-md-offset-1">
               {this.renderPagination()}
             </div>
           </div>
         </div>
-        <Audioplayer
-          chapter={chapter}
-          startVerse={Object.values(verses)[0]}
-          onLoadAyahs={this.handleLazyLoadAyahs}
-        />
+        {__CLIENT__ &&
+          <Audioplayer
+            chapter={chapter}
+            startVerse={Object.values(verses)[0]}
+            onLoadAyahs={this.handleLazyLoadAyahs}
+          />}
       </div>
     );
   }
@@ -407,10 +470,13 @@ function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
   const verses: Object = state.verses.entities[chapterId];
-  const verseArray = verses ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10)) : [];
+  const verseArray = verses
+    ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
+    : [];
   const verseIds = new Set(verseArray);
   const lastAyahInArray = verseArray.slice(-1)[0];
-  const isSingleAyah = !!ownProps.params.range && !ownProps.params.range.includes('-');
+  const isSingleAyah =
+    !!ownProps.params.range && !ownProps.params.range.includes('-');
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
@@ -443,7 +509,7 @@ function mapDispatchToProps(dispatch) {
       bookmark: bindActionCreators(BookmarkActions, dispatch),
       media: bindActionCreators(MediaActions, dispatch),
       push: bindActionCreators(push, dispatch)
-    },
+    }
   };
 }
 

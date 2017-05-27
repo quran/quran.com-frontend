@@ -11,6 +11,7 @@ import { IntlProvider } from 'react-intl';
 import cookie from 'react-cookie';
 import Raven from 'raven';
 import errorhandler from 'errorhandler';
+import pdf from 'html-pdf';
 
 import config from 'config';
 import expressConfig from './server/config/express';
@@ -20,6 +21,7 @@ import createStore from './redux/create';
 import debug from './helpers/debug';
 
 import Html from './helpers/Html';
+import PdfHtml from './helpers/PdfHtml';
 
 import { setOption, setUserAgent } from './redux/actions/options.js';
 import getLocalMessages from './helpers/setLocal';
@@ -87,9 +89,32 @@ server.use((req, res, next) => {
             res.setHeader('Cache-Control', 'public, max-age=31557600');
             res.status(status);
             debug('Server', 'Sending markup');
-            res.send(
-              `<!doctype html>\n${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`
-            );
+
+            if (req.originalUrl.includes('.pdf')) {
+              const body = ReactDOM.renderToString(
+                <PdfHtml
+                  url={`${req.protocol}://${req.get('host')}`}
+                  component={component}
+                  assets={webpack_isomorphic_tools.assets()}
+                />
+              );
+              const html = `<!doctype html>\n${body}`;
+
+              return pdf.create(html).toStream((err, stream) => {
+                if (err) {
+                  res.status(422).send(err);
+                }
+
+                res.set('Content-type', 'application/pdf');
+                // NOTE: If you want to export a file.
+                // res.set('Content-disposition', 'attachment; filename=pdf.pdf');
+                stream.pipe(res);
+              });
+            }
+
+            const html = `<!doctype html>\n${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`;
+
+            return res.send(html);
           })
           .catch(next);
       }

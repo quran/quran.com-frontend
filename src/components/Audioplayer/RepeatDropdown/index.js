@@ -12,7 +12,6 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 const style = require('../style.scss');
 
 class RepeatButton extends Component {
-
   handleToggle = () => {
     const { repeat, setRepeat, current } = this.props;
 
@@ -41,7 +40,7 @@ class RepeatButton extends Component {
       from: current,
       to: current + 3
     });
-  }
+  };
 
   renderRangeAyahs() {
     const { chapter, repeat, setRepeat } = this.props;
@@ -54,7 +53,9 @@ class RepeatButton extends Component {
             <LocaleFormattedMessage
               id="player.repeat.rangeStart"
               defaultMessage="From"
-            />{' '}:
+            />
+            {' '}
+            :
             <br />
             <FormControl
               componentClass="select"
@@ -89,12 +90,15 @@ class RepeatButton extends Component {
             <LocaleFormattedMessage
               id="player.repeat.rangeEnd"
               defaultMessage="To"
-            />{' '}:
+            />
+            {' '}
+            :
             <br />
             <FormControl
               componentClass="select"
               value={repeat.to}
-              onChange={event => setRepeat({ ...repeat, to: parseInt(event.target.value, 10) })}
+              onChange={event =>
+                setRepeat({ ...repeat, to: parseInt(event.target.value, 10) })}
             >
               {
                 array.reduce((options, ayah, index) => {
@@ -124,23 +128,26 @@ class RepeatButton extends Component {
         <LocaleFormattedMessage
           id="player.currentVerse"
           defaultMessage="Ayah"
-        />{' '}: <br />
+        />
+        {' '}
+        :
+        {' '}
+        <br />
         <FormControl
           componentClass="select"
           value={repeat.from}
-          onChange={event => setRepeat({
-            ...repeat,
-            from: parseInt(event.target.value, 10),
-            to: parseInt(event.target.value, 10)
-          })}
+          onChange={event =>
+            setRepeat({
+              ...repeat,
+              from: parseInt(event.target.value, 10),
+              to: parseInt(event.target.value, 10)
+            })}
         >
-          {
-            array.map((ayah, index) => (
-              <option key={index} value={index + 1}>
-                {index + 1}
-              </option>
-            ))
-          }
+          {array.map((ayah, index) => (
+            <option key={index} value={index + 1}>
+              {index + 1}
+            </option>
+          ))}
         </FormControl>
       </div>
     );
@@ -180,7 +187,9 @@ class RepeatButton extends Component {
 
     return (
       <div className={`${!repeat.from && style.disabled} row`}>
-        {repeat.from === repeat.to ? this.renderSingleAyah() : this.renderRangeAyahs()}
+        {repeat.from === repeat.to
+          ? this.renderSingleAyah()
+          : this.renderRangeAyahs()}
       </div>
     );
   }
@@ -195,27 +204,30 @@ class RepeatButton extends Component {
           <LocaleFormattedMessage
             id="player.repeat.title"
             defaultMessage="Repeat"
-          />: <br />
+          />
+          :
+          {' '}
+          <br />
           <FormControl
             componentClass="select"
             value={repeat.times}
-            onChange={event => setRepeat({
-              ...repeat,
-              times: parseInt(event.target.value, 10)
-            })}
+            onChange={event =>
+              setRepeat({
+                ...repeat,
+                times: parseInt(event.target.value, 10)
+              })}
           >
             <option value={'Infinity'}>
-              {
-                intl.formatMessage({ id: 'player.repeat.loop', defaultMessage: 'Loop' })
-              }
+              {intl.formatMessage({
+                id: 'player.repeat.loop',
+                defaultMessage: 'Loop'
+              })}
             </option>
-            {
-              times.map((ayah, index) => (
-                <option key={index} value={index + 1}>
-                  {index + 1}
-                </option>
-              ))
-            }
+            {times.map((ayah, index) => (
+              <option key={index} value={index + 1}>
+                {index + 1}
+              </option>
+            ))}
           </FormControl>
         </div>
       </div>
@@ -235,7 +247,8 @@ class RepeatButton extends Component {
               <LocaleFormattedMessage
                 id="player.repeat.title"
                 defaultMessage="TOGGLE REPEAT"
-              />{'  '}
+              />
+              {'  '}
               <SwitchToggle
                 checked={!!repeat.from}
                 onToggle={this.handleToggle}

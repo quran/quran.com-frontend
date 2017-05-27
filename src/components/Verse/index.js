@@ -2,9 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
 import Element from 'react-scroll/lib/components/Element';
-import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
-import { load as loadAudio } from 'redux/actions/audioplayer';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
@@ -24,34 +22,6 @@ const Share = Loadable({
 });
 
 class Verse extends Component {
-  // TODO: Should this belong here?
-  componentDidMount() {
-    const { verse, audio, isSearched } = this.props;
-
-    if (!isSearched) {
-      this.props.loadAudio({
-        chapterId: verse.chapterId,
-        verseId: verse.id,
-        verseKey: verse.verseKey,
-        audio
-      });
-    }
-  }
-
-  // TODO: Should this belong here?
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.isSearched && this.props.audio !== nextProps.audio) {
-      const { verse, audio } = nextProps;
-
-      this.props.loadAudio({
-        chapterId: verse.chapterId,
-        verseId: verse.id,
-        verseKey: verse.verseKey,
-        audio
-      });
-    }
-  }
-
   shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.verse !== nextProps.verse,
@@ -89,56 +59,63 @@ class Verse extends Component {
     const array = match || verse.translations || [];
 
     return array.map(translation => (
-      <Translation translation={translation} index={translation.id} key={translation.id} />
+      <Translation
+        translation={translation}
+        index={translation.id}
+        key={translation.id}
+      />
     ));
   }
 
   renderMedia() {
-    const { verse, mediaActions, isSearched } = this.props;
+    const { verse, mediaActions, isSearched, isPdf } = this.props;
 
     if (isSearched || !verse.mediaContents) return false;
+    if (isPdf) return false;
 
     return (
       <div>
-        {
-          verse.mediaContents.map((content, index) => (
-            <div
-              className={`${styles.translation} translation`}
-              key={index}
-            >
-              <h2 className="text-translation times-new">
-                <small>
-                  <a
-                    tabIndex="-1"
-                    className="pointer"
-                    onClick={() => mediaActions.setMedia(content)}
-                    data-metrics-event-name="Media Click"
-                    data-metrics-media-content-url={content.url}
-                    data-metrics-media-content-id={content.id}
-                    data-metrics-media-content-verse-key={verse.verseKey}
-                  >
-                    <LocaleFormattedMessage
-                      id="verse.media.lectureFrom"
-                      defaultMessage="Watch lecture by {from}"
-                      values={{ from: content.authorName }}
-                    />
-                  </a>
-                </small>
-              </h2>
-            </div>
-          ))
-        }
+        {verse.mediaContents.map((content, index) => (
+          <div className={`${styles.translation} translation`} key={index}>
+            <h2 className="text-translation times-new">
+              <small>
+                <a
+                  tabIndex="-1"
+                  className="pointer"
+                  onClick={() => mediaActions.setMedia(content)}
+                  data-metrics-event-name="Media Click"
+                  data-metrics-media-content-url={content.url}
+                  data-metrics-media-content-id={content.id}
+                  data-metrics-media-content-verse-key={verse.verseKey}
+                >
+                  <LocaleFormattedMessage
+                    id="verse.media.lectureFrom"
+                    defaultMessage="Watch lecture by {from}"
+                    values={{ from: content.authorName }}
+                  />
+                </a>
+              </small>
+            </h2>
+          </div>
+        ))}
       </div>
     );
   }
 
   renderText() {
-    const { verse, tooltip, currentVerse, isPlaying, audioActions, isSearched } = this.props; // eslint-disable-line max-len
+    const {
+      verse,
+      tooltip,
+      currentVerse,
+      isPlaying,
+      audioActions,
+      isSearched
+    } = this.props; // eslint-disable-line max-len
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
     const renderText = false; // userAgent.isBot;
 
-    const text = verse.words.map(word => ( // eslint-disable-line
+    const text = verse.words.map((word) => ( // eslint-disable-line
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -146,7 +123,9 @@ class Verse extends Component {
         tooltip={tooltip}
         isPlaying={isPlaying}
         audioActions={audioActions}
-        audioPosition={word.charType === 'word' ? wordAudioPosition += 1 : null}
+        audioPosition={
+          word.charType === 'word' ? (wordAudioPosition += 1) : null
+        }
         isSearched={isSearched}
         useTextFont={renderText}
       />
@@ -162,8 +141,10 @@ class Verse extends Component {
   }
 
   renderPlayLink() {
-    const { isSearched, verse, currentVerse, isPlaying } = this.props;
+    const { isSearched, verse, currentVerse, isPlaying, isPdf } = this.props;
     const playing = verse.verseKey === currentVerse && isPlaying;
+
+    if (isPdf) return false;
 
     if (!isSearched) {
       return (
@@ -172,7 +153,10 @@ class Verse extends Component {
           onClick={() => this.handlePlay(verse)}
           className="text-muted"
         >
-          <i className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`} />{' '}
+          <i
+            className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`}
+          />
+          {' '}
           <LocaleFormattedMessage
             id={playing ? 'actions.pause' : 'actions.play'}
             defaultMessage={playing ? 'Pause' : 'Play'}
@@ -185,19 +169,25 @@ class Verse extends Component {
   }
 
   renderCopyLink() {
-    const { isSearched, verse } = this.props;
+    const { isSearched, verse, isPdf } = this.props;
+
+    if (isPdf) return false;
 
     if (!isSearched) {
-      return (
-        <Copy text={verse.textMadani} verseKey={verse.verseKey} />
-      );
+      return <Copy text={verse.textMadani} verseKey={verse.verseKey} />;
     }
 
     return false;
   }
 
   renderBookmark() {
-    const { verse, bookmarked, isAuthenticated, bookmarkActions, isSearched } = this.props;
+    const {
+      verse,
+      bookmarked,
+      isAuthenticated,
+      bookmarkActions,
+      isSearched
+    } = this.props;
 
     if (isSearched || !isAuthenticated) return false;
 
@@ -226,16 +216,16 @@ class Verse extends Component {
         className="text-muted"
       >
         <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
-        <LocaleFormattedMessage
-          id="verse.bookmark"
-          defaultMessage="Bookmark"
-        />
+        <LocaleFormattedMessage id="verse.bookmark" defaultMessage="Bookmark" />
       </a>
     );
   }
 
-  renderAyahBadge() {
+  renderBadge() {
     const { isSearched, verse } = this.props;
+    const translations = (verse.translations || [])
+      .map(translation => translation.resourceId)
+      .join(',');
     let metric;
 
     const content = (
@@ -254,7 +244,7 @@ class Verse extends Component {
 
     return (
       <Link
-        to={`/${verse.chapterId}/${verse.verseNumber}`}
+        to={`/${verse.chapterId}/${verse.verseNumber}?translations=${translations}`}
         data-metrics-event-name={metric}
       >
         {content}
@@ -267,17 +257,19 @@ class Verse extends Component {
 
     if (isSearched) return false;
 
-    return <Share chapter={chapter} verseKey={verse.verseKey} />;
+    return <Share chapter={chapter} verse={verse} />;
   }
 
   renderControls() {
+    const { isPdf } = this.props;
+
     return (
       <div className={`col-md-1 col-sm-1 ${styles.controls}`}>
-        {this.renderAyahBadge()}
+        {this.renderBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderBookmark()}
-        {this.renderShare()}
+        {!isPdf && this.renderShare()}
       </div>
     );
   }
@@ -318,13 +310,13 @@ Verse.propTypes = {
   iscurrentVerse: PropTypes.bool,
   currentVerse: PropTypes.string,
   userAgent: PropTypes.object, // eslint-disable-line
-  audio: PropTypes.number.isRequired,
-  loadAudio: PropTypes.func.isRequired
+  isPdf: PropTypes.bool
 };
 
 Verse.defaultProps = {
   currentWord: null,
-  isSearched: false
+  isSearched: false,
+  isPdf: false
 };
 
-export default connect(() => ({}), { loadAudio })(Verse);
+export default Verse;
