@@ -13,7 +13,8 @@ const initialState = {
   content: { title: null, body: null },
   show: false,
   loading: false,
-  size: 'large'
+  size: 'large',
+  wrapperClass: ''
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -52,7 +53,7 @@ export default function reducer(state = initialState, action = {}) {
         show: true,
         loading: false,
         content: {
-          body: buildTafsirList(action.result.tafsirs)
+          body: buildTafsirList(action.result.tafsirs, action.verse)
         }
       };
     }
@@ -71,6 +72,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         show: true,
         loading: false,
+        wrapperClass: action.result.footNote.languageName,
         content: {
           body: action.result.footNote.text
         }
