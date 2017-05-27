@@ -53,6 +53,7 @@ class App extends Component {
     const {
       main,
       nav,
+      footer,
       children,
       media,
       footNote,
@@ -98,7 +99,7 @@ class App extends Component {
           />}
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
-        <Footer />
+        {footer || <Footer />}
         {__CLIENT__ &&
           <Modal
             bsSize="large"
@@ -152,6 +153,7 @@ App.propTypes = {
   children: PropTypes.element,
   main: PropTypes.element,
   nav: PropTypes.element,
+  footer: PropTypes.element,
   sidebar: PropTypes.element,
   footNote: customPropTypes.footNoteType,
   loadingFootNote: PropTypes.bool
