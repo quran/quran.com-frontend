@@ -23,6 +23,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         show: true,
+        size: 'large',
         content: {
           title: action.content.authorName,
           body: action.content.embedText
