@@ -42,6 +42,7 @@ export default function reducer(state = initialState, action = {}) {
         show: true,
         loading: true,
         size: 'small',
+        wrapperClass: '',
         content: {
           title: 'Select a tafsir'
         }
@@ -50,10 +51,10 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD_TAFISRS_SUCCESS: {
       return {
         ...state,
-        show: true,
         loading: false,
         content: {
-          body: buildTafsirList(action.result.tafsirs, action.verse)
+          body: buildTafsirList(action.result.tafsirs, action.verse),
+          title: 'Select a tafsir'
         }
       };
     }
@@ -70,11 +71,12 @@ export default function reducer(state = initialState, action = {}) {
     case LOAD_FOOT_NOTE_SUCCESS: {
       return {
         ...state,
-        show: true,
         loading: false,
+        size: 'large',
         wrapperClass: action.result.footNote.languageName,
         content: {
-          body: action.result.footNote.text
+          body: action.result.footNote.text,
+          title: 'Foot note'
         }
       };
     }
