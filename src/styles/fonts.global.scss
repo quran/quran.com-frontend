@@ -2,16 +2,16 @@
   @font-face {
     font-family: p#{$page};
     src: url('//quran-1f14.kxcdn.com/fonts/ttf/p#{$page}.ttf') format('truetype');
+  }
+  .p#{$page} {
+    font-family: p#{$page};
   } // @font-face {
   //   font-family: text#{$page};
   //   src: url('../../static/fonts/embed_ttf/tp#{$page}.ttf') format('truetype');
   // }
-  .p#{$page} {
-    font-family: p#{$page};
-  }
-  .text-p#{$page} {
-    font-family: text#{$page};
-  }
+  // .text-p#{$page} {
+  //   font-family: text#{$page};
+  // }
 }
 
 @for $i from 1 through 604 {
@@ -59,18 +59,6 @@
   font-family: 'Montserrat';
   src: url('//quran-1f14.kxcdn.com/fonts/montserrat/Montserrat-Black.otf');
   font-weight: 600;
-}
-
-.source-sans {
-  font-family: 'Source Sans Pro', sans-serif;
-}
-
-.montserrat {
-  font-family: 'Montserrat', sans-serif;
-}
-
-.times-new {
-  font-family: 'Times New Roman', sans-serif;
 }
 
 @font-face {

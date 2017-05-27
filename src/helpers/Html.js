@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
+import styles from '../styles/fonts.global.scss';
 
 const Html = ({ store, component, assets }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
@@ -25,13 +26,11 @@ const Html = ({ store, component, assets }) => {
             type="text/css"
           />
         ))}
-        {Object.keys(assets.styles).length === 0
-          ? <style
-            dangerouslySetInnerHTML={{
-              __html: require('../../src/styles/bootstrap.config')
-            }}
-          />
-          : null}
+        <style
+          dangerouslySetInnerHTML={{
+            __html: styles._style // eslint-disable-line
+          }}
+        />
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
