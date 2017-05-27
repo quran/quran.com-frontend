@@ -69,6 +69,7 @@ class App extends Component {
     } else {
       footNoteText = <Loader isActive={loadingFootNote} />;
     }
+    const loader = <Loader isActive />;
 
     return (
       <div>
@@ -100,21 +101,17 @@ class App extends Component {
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
         {__CLIENT__ &&
-          <Modal
-            bsSize="large"
-            show={media && media.content}
-            onHide={removeMedia}
-          >
+          <Modal bsSize="large" show={media.show} onHide={removeMedia}>
             <ModalHeader closeButton>
               <ModalTitle className="montserrat">
-                {media.content && media.content.authorName}
+                {media.content.title}
               </ModalTitle>
             </ModalHeader>
             <ModalBody>
               <div
                 className="embed-responsive embed-responsive-16by9"
                 dangerouslySetInnerHTML={{
-                  __html: media.content && media.content.embedText
+                  __html: media.loading ? loader : media.content.body
                 }}
               />
             </ModalBody>

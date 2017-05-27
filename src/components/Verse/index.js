@@ -11,6 +11,8 @@ import Word from 'components/Word';
 import Translation from 'components/Translation';
 import debug from 'helpers/debug';
 
+import { loadTafsirs } from 'redux/actions/media';
+
 const styles = require('./style.scss');
 
 const Copy = Loadable({
@@ -342,6 +344,8 @@ Verse.propTypes = {
   userAgent: PropTypes.object, // eslint-disable-line
   audio: PropTypes.number.isRequired,
   loadAudio: PropTypes.func.isRequired,
+  loadTafsirs: PropTypes.func.isRequired,
+
   isPdf: PropTypes.bool
 };
 
@@ -351,4 +355,4 @@ Verse.defaultProps = {
   isPdf: false
 };
 
-export default connect(() => ({}), { loadAudio })(Verse);
+export default connect(() => ({}), { loadAudio, loadTafsirs })(Verse);
