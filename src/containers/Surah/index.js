@@ -79,6 +79,35 @@ class Surah extends Component {
     return false;
   }
 
+  componentDidMount() {
+    const { verses, options: { audio } } = this.props;
+
+    Object.values(verses).forEach((verse) => {
+      this.props.actions.audio.load({
+        chapterId: verse.chapterId,
+        verseId: verse.id,
+        verseKey: verse.verseKey,
+        audio
+      });
+    });
+  }
+
+  // TODO: Should this belong here?
+  componentWillReceiveProps(nextProps) {
+    if (this.props.options.audio !== nextProps.options.audio) {
+      const { verses, options: { audio } } = nextProps;
+
+      Object.values(verses).forEach((verse) => {
+        this.props.actions.audio.load({
+          chapterId: verse.chapterId,
+          verseId: verse.id,
+          verseKey: verse.verseKey,
+          audio
+        });
+      });
+    }
+  }
+
   shouldComponentUpdate(nextProps, nextState) {
     const conditions = [
       this.state.lazyLoading !== nextState.lazyLoading,
@@ -208,12 +237,9 @@ class Surah extends Component {
       isLoading,
       isEndOfSurah,
       chapter,
-      verses,
-      currentVerse
+      options
     } = this.props;
-    const translations = (verses[currentVerse].translations || [])
-      .map(translation => translation.resourceId)
-      .join(',');
+    const translations = (options.translations || []).join(',');
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
