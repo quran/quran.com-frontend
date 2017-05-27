@@ -41,7 +41,6 @@ const initialState = {
     times: Infinity
   },
   shouldScroll: true,
-  isLoadedOnClient: false,
   isLoading: true,
   segments: {}
 };
