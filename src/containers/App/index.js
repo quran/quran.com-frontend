@@ -8,7 +8,6 @@ import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import Loadable from 'react-loadable';
 import ComponentLoader from 'components/ComponentLoader';
-import GlobalNav from 'components/GlobalNav';
 import debug from 'helpers/debug';
 import config from 'config';
 import metricsConfig from 'helpers/metrics';
@@ -23,25 +22,32 @@ const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
+const GlobalNav = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "globalnav" */ 'components/GlobalNav'),
+  LoadingComponent: ComponentLoader
+});
+
 const GlobalSidebar = Loadable({
-  loader: () => import('components/GlobalSidebar'),
+  loader: () =>
+    import(/* webpackChunkName: "globalsidebar" */ 'components/GlobalSidebar'),
   LoadingComponent: ComponentLoader
 });
 
 const SmartBanner = Loadable({
-  loader: () => import('components/SmartBanner'),
+  loader: () =>
+    import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner'),
   LoadingComponent: ComponentLoader
 });
 
 class App extends Component {
-
   static contextTypes = {
     store: PropTypes.object.isRequired
   };
 
   state = {
     sidebarOpen: false
-  }
+  };
 
   render() {
     const {
@@ -81,49 +87,56 @@ class App extends Component {
             </div>
           </div>
         </NoScript>
-        {
-          React.cloneElement(
-            nav || <GlobalNav isStatic {...props} />,
-            {
-              handleSidebarToggle: () => this.setState({ sidebarOpen: !this.state.sidebarOpen })
-            }
-          )
-        }
-        <GlobalSidebar
-          open={this.state.sidebarOpen}
-          handleOpen={open => this.setState({ sidebarOpen: open })}
-        />
+        {React.cloneElement(nav || <GlobalNav isStatic {...props} />, {
+          handleSidebarToggle: () =>
+            this.setState({ sidebarOpen: !this.state.sidebarOpen })
+        })}
+        {__CLIENT__ &&
+          <GlobalSidebar
+            open={this.state.sidebarOpen}
+            handleOpen={open => this.setState({ sidebarOpen: open })}
+          />}
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         <Footer />
-
-        <Modal bsSize="large" show={media && media.content} onHide={removeMedia}>
-          <ModalHeader closeButton>
-            <ModalTitle className="montserrat">
-              {media.content && media.content.authorName}
-            </ModalTitle>
-          </ModalHeader>
-          <ModalBody>
-            <div
-              className="embed-responsive embed-responsive-16by9"
-              dangerouslySetInnerHTML={{ __html: media.content && media.content.embedText }}
-            />
-          </ModalBody>
-        </Modal>
-
-        <Modal bsSize="large" show={!!footNote || loadingFootNote} onHide={removeFootNote}>
-          <ModalHeader closeButton>
-            <ModalTitle className="montserrat">
-              Foot note
-            </ModalTitle>
-          </ModalHeader>
-          <ModalBody>
-            <div
-              className={`${footNote && footNote.languageName}`}
-              dangerouslySetInnerHTML={{ __html: footNoteText }}
-            />
-          </ModalBody>
-        </Modal>
+        {__CLIENT__ &&
+          <Modal
+            bsSize="large"
+            show={media && media.content}
+            onHide={removeMedia}
+          >
+            <ModalHeader closeButton>
+              <ModalTitle className="montserrat">
+                {media.content && media.content.authorName}
+              </ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+              <div
+                className="embed-responsive embed-responsive-16by9"
+                dangerouslySetInnerHTML={{
+                  __html: media.content && media.content.embedText
+                }}
+              />
+            </ModalBody>
+          </Modal>}
+        {__CLIENT__ &&
+          <Modal
+            bsSize="large"
+            show={!!footNote || loadingFootNote}
+            onHide={removeFootNote}
+          >
+            <ModalHeader closeButton>
+              <ModalTitle className="montserrat">
+                Foot note
+              </ModalTitle>
+            </ModalHeader>
+            <ModalBody>
+              <div
+                className={`${footNote && footNote.languageName}`}
+                dangerouslySetInnerHTML={{ __html: footNoteText }}
+              />
+            </ModalBody>
+          </Modal>}
       </div>
     );
   }

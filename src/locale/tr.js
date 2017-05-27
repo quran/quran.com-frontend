@@ -8,7 +8,7 @@ export default {
     'local.selectLabel': 'Dil',
     'setting.title': 'Ayarlar',
     'setting.surahs': 'Sureler',
-    'setting.verses': 'Ayet\'e git',
+    'setting.verses': "Ayet'e git",
     'setting.reciters.title': 'Hafızlar',
     'setting.translations.title': 'Çeviriler',
     'setting.translations.removeAll': 'Tümünü kaldır',
@@ -19,8 +19,8 @@ export default {
     'setting.reading': 'Okuma modu',
     'setting.tooltip': 'İpucu içeriği',
     'setting.tooltip.title': 'İpucu görüntüleme',
-    'setting.tooltip.translation': 'Çeviri',
-    'setting.tooltip.transliteration': 'Harf çevirisi',
+    'setting.tooltip.translation': 'Çeviriyi göster',
+    'setting.tooltip.transliteration': 'Okunuşu göster',
     'setting.nightMode': 'Gece Modu',
     'setting.nightMode.dayTip': 'Gündüz moduna geç',
     'setting.nightMode.nightTip': 'Gece moduna geç',
@@ -39,7 +39,7 @@ export default {
     'surah.next': 'SONRAKİ',
     'surah.previous': 'ÖNCEKİ',
     'surah.info': 'Sure Bilgisi',
-    'surah.index.heading': 'SURELER (BÖLÜMLER)',
+    'surah.index.heading': 'SURELER',
     'surah.index.continue': 'Devam',
     'surah.index.quickLinks': 'Hızlı bağlantılar',
     'surah.goToBeginning': 'Sure Başlangıcı',
@@ -72,12 +72,14 @@ export default {
     'nav.otherLinks': 'Diğer bağlantılar',
     'nav.contactUs': 'Bize ulaşın',
     'nav.help': 'Yardım & Geri Bildirim',
-    'nav.aboutQuranProject': 'Quran.com (Kur\'an-ı Kerim) bir pro bono projesidir.', // eslint-disable-line max-len
+    'nav.aboutQuranProject': "Quran.com (Kur'an-ı Kerim) bir pro bono projesidir.", // eslint-disable-line max-len
     'nav.rightsReserved': 'Tüm Hakları Saklıdır',
     'nav.mobile': 'Mobil Uygulamalar',
     'nav.navigate': 'Bağlantılar', // there is no exact translation for Navigate in Turkish
     'nav.legacySite': 'Eski Siteye Git Quran.com',
 
-    'login.message': 'Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com\'a giriş yapın.'
+    'login.message': "Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com'a giriş yapın.",
+    'error.invalid-surah': "Surah aralık dışı. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah seçin",
+    'error.invalid-ayah': "Ayah menzilin dışında. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah / Ayah seçin"
   }
 };
