@@ -73,6 +73,7 @@ class App extends Component {
     const {
       main,
       nav,
+      footer,
       children,
       media,
       removeMedia, // eslint-disable-line no-shadow
@@ -108,7 +109,7 @@ class App extends Component {
           />}
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
-        <Footer />
+        {footer || <Footer />}
         {__CLIENT__ &&
           media.show &&
           <Modal bsSize={media.size} show={media.show} onHide={removeMedia}>
@@ -135,7 +136,10 @@ App.propTypes = {
   children: PropTypes.element,
   main: PropTypes.element,
   nav: PropTypes.element,
-  sidebar: PropTypes.element
+  footer: PropTypes.element,
+  sidebar: PropTypes.element,
+  footNote: customPropTypes.footNoteType,
+  loadingFootNote: PropTypes.bool
 };
 
 export default connect(
