@@ -173,17 +173,19 @@ export default (store) => {
       <Route
         path="/:chapterId(/:range).pdf"
         getComponents={(nextState, cb) =>
-          import('./containers/Pdf')
-            .then(module => cb(null, { main: module.default, nav: 'noscript' }))
-            .catch(err => console.trace(err))}
-        onEnter={checkValidChapterOrVerse}
-      />
-
-      <Route
-        path="/:chapterId(/:range).pdf"
-        getComponents={(nextState, cb) =>
-          import(/* webpackChunkName: "pdf" */ './containers/Pdf')
-            .then(module => cb(null, { main: module.default, nav: 'noscript' }))
+          Promise.all([
+            import(/* webpackChunkName: "pdf" */ './containers/Pdf'),
+            import(
+              /* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter'
+            )
+          ])
+            .then(modules =>
+              cb(null, {
+                main: modules[0].default,
+                footer: modules[1].default,
+                nav: 'noscript'
+              })
+            )
             .catch(err => console.trace(err))}
         onEnter={checkValidChapterOrVerse}
       />
