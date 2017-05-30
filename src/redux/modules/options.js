@@ -17,8 +17,6 @@ const initialState = {
   translations: [20], // Sahih International
   tooltip: 'translation',
   userAgent: null,
-  footNote: null,
-  loadingFootNote: false,
   options: {
     recitations: [],
     translations: []
