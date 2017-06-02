@@ -28,7 +28,6 @@
     height: 100%;
     text-align: center;
     border: 0;
-    right: 0px;
   }
 }
 .right-inner-addon {
@@ -38,8 +37,7 @@
 
   input{
     width: 100%;
-    padding: 20px 30px;
-    padding-right: 60px;
+    padding: 20px 60px;
     outline: none;
     border: none;
     background-color: #fff;
@@ -68,17 +66,25 @@
 
   i.ss-icon {
     position: absolute;
-    right: 0px;
     padding: 15px 15px;
     font-size: 150%;
-    background-color: $brand-primary;
     color: #fff;
     cursor: pointer;
     height: 100%;
     border: 3px solid #fff;
 
-    &:hover{
-      background-color: lighten($brand-primary, 10%);
+    &.ss-search, &.ss-loading{
+      right: 0px;
+      background-color: $brand-primary;
+
+      &:hover{
+        background-color: lighten($brand-primary, 10%);
+      }
+    }
+
+    &.ss-mic{
+      left: 0px;
+      color: $brand-primary;
     }
   }
 }
