@@ -487,6 +487,7 @@ function mapStateToProps(state, ownProps) {
     !!ownProps.params.range && !ownProps.params.range.includes('-');
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
+
   return {
     chapter,
     verses,
