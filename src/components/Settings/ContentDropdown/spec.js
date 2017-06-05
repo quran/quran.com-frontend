@@ -1,17 +1,17 @@
 import React from 'react';
 import { mountWithIntl } from '../../../tests/helpers/intl-enzyme-test-helper.js';
 
-import ContentDropdown, { slugs } from './index';
+import Translations, { slugs } from './index';
 
 let wrapper;
 let onOptionChange = sinon.stub();
 const defaultOption = 19;
 
-describe('<ContentDropdown />', () => {
+describe('<Translations />', () => {
   beforeEach(() => {
     onOptionChange = sinon.stub();
     wrapper = mountWithIntl(
-      <ContentDropdown
+      <Translations
         content={[defaultOption]}
         onOptionChange={onOptionChange}
       />

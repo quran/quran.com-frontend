@@ -8,13 +8,7 @@ import Drawer from 'quran-components/lib/Drawer';
 import Menu from 'quran-components/lib/Menu';
 import SearchInput from 'components/SearchInput';
 import SurahsDropdown from 'components/SurahsDropdown';
-import ReadingModeToggle from 'components/ReadingModeToggle';
-import NightModeToggle from 'components/NightModeToggle';
-import InformationToggle from 'components/InformationToggle';
-import FontSizeDropdown from 'components/FontSizeDropdown';
-import ReciterDropdown from 'components/ReciterDropdown';
-import ContentDropdown from 'components/ContentDropdown';
-import TooltipDropdown from 'components/TooltipDropdown';
+import Settings from 'components/Settings';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import VersesDropdown from 'components/VersesDropdown';
 
@@ -54,8 +48,10 @@ class GlobalNavSurah extends Component {
       return false;
     }
 
+    const to = Math.min(...[verseNum + 10, chapter.versesCount]);
+
     return this.props.replace(
-      `/${chapter.chapterNumber}/${verseNum}-${verseNum + 10}`
+      `/${chapter.chapterNumber}/${verseNum}-${to}`
     );
   };
 
@@ -129,38 +125,7 @@ class GlobalNavSurah extends Component {
               </h4>
             }
           >
-            <Menu>
-              <InformationToggle
-                onToggle={setOption}
-                isToggled={options.isShowingSurahInfo}
-              />
-              <ReadingModeToggle
-                isToggled={options.isReadingMode}
-                onToggle={setOption}
-              />
-              <NightModeToggle
-                isNightMode={options.isNightMode}
-                onToggle={setOption}
-              />
-              <hr />
-              <ReciterDropdown onOptionChange={this.handleOptionChange} />
-              <ContentDropdown onOptionChange={this.handleOptionChange} />
-              <TooltipDropdown
-                tooltip={options.tooltip}
-                onOptionChange={setOption}
-              />
-              <hr />
-              <div className={styles.title}>
-                <LocaleFormattedMessage
-                  id="setting.fontSize"
-                  defaultMessage="Font Size"
-                />
-              </div>
-              <FontSizeDropdown
-                fontSize={options.fontSize}
-                onOptionChange={setOption}
-              />
-            </Menu>
+           <Settings />
           </Drawer>
         ]}
         rightControls={[this.renderDrawerToggle()]}
