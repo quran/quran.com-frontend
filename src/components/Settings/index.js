@@ -5,19 +5,19 @@ import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import Link from 'react-router/lib/Link';
 import Menu from 'quran-components/lib/Menu';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-import ReadingModeToggle from 'components/ReadingModeToggle';
-import NightModeToggle from 'components/NightModeToggle';
-import InformationToggle from 'components/InformationToggle';
-import FontSizeDropdown from 'components/FontSizeDropdown';
-import ReciterDropdown from 'components/ReciterDropdown';
-import ContentDropdown from 'components/ContentDropdown';
-import TooltipDropdown from 'components/TooltipDropdown';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import LocaleSwitcher from 'components/LocaleSwitcher';
 
-import { load  } from 'redux/actions/verses.js';
+import ReadingModeToggle from './ReadingModeToggle';
+import NightModeToggle from './NightModeToggle';
+import ChapterInfoToggle from './ChapterInfoToggle';
+import FontSizeOptions from 'components/Settings/FontSizeOptions';
+import ReciterDropdown from './ReciterDropdown';
+import TranslationsDropdown from './TranslationsDropdown';
+import TooltipOptions from './TooltipOptions';
 
+import { load } from 'redux/actions/verses.js';
 
 class Settings extends Component {
   handleOptionChange = (payload) => {
@@ -36,28 +36,6 @@ class Settings extends Component {
     }
   };
 
-  handleDrawerToggle = (open) => {
-    this.setState({ drawerOpen: open });
-  };
-
-  renderDrawerToggle(visibleXs) {
-    return (
-      <li>
-        <a
-          tabIndex="-1"
-          className={`pointer ${visibleXs && 'visible-xs visible-sm'}`}
-          onClick={() => this.handleDrawerToggle(true)}
-        >
-          <i className="ss-icon ss-settings text-align" />
-          <LocaleFormattedMessage
-            id="setting.title"
-            defaultMessage="Settings"
-          />
-        </a>
-      </li>
-    );
-  }
-
   render() {
     const {
       chapter,
@@ -69,39 +47,43 @@ class Settings extends Component {
     } = this.props;
 
     return (
-
-            <Menu>
-              <InformationToggle
-                onToggle={setOption}
-                isToggled={options.isShowingSurahInfo}
-              />
-              <ReadingModeToggle
-                isToggled={options.isReadingMode}
-                onToggle={setOption}
-              />
-              <NightModeToggle
-                isNightMode={options.isNightMode}
-                onToggle={setOption}
-              />
-              <hr />
-              <ReciterDropdown onOptionChange={this.handleOptionChange} />
-              <ContentDropdown onOptionChange={this.handleOptionChange} />
-              <TooltipDropdown
-                tooltip={options.tooltip}
-                onOptionChange={setOption}
-              />
-              <hr />
-              <div className={styles.title}>
-                <LocaleFormattedMessage
-                  id="setting.fontSize"
-                  defaultMessage="Font Size"
-                />
-              </div>
-              <FontSizeDropdown
-                fontSize={options.fontSize}
-                onOptionChange={setOption}
-              />
-            </Menu>
+      <Menu>
+        <ChapterInfoToggle
+          onToggle={setOption}
+          isToggled={options.isShowingSurahInfo}
+        />
+        <ReadingModeToggle
+          isToggled={options.isReadingMode}
+          onToggle={setOption}
+        />
+        <NightModeToggle
+          isNightMode={options.isNightMode}
+          onToggle={setOption}
+        />
+        <hr />
+        <ReciterDropdown onOptionChange={this.handleOptionChange} />
+        <TranslationsDropdown onOptionChange={this.handleOptionChange} />
+        <TooltipOptions tooltip={options.tooltip} onOptionChange={setOption} />
+        <hr />
+        <div className={'styles.title'}>
+          <LocaleFormattedMessage
+            id="setting.fontSize"
+            defaultMessage="Font Size"
+          />
+        </div>
+        <FontSizeOptions
+          fontSize={options.fontSize}
+          onOptionChange={setOption}
+        />
+        <hr />
+        <div className={'styles.title'}>
+          <LocaleFormattedMessage
+            id="local.siteLocale"
+            defaultMessage="Site Language"
+          />
+        </div>
+        <LocaleSwitcher />
+      </Menu>
     );
   }
 }
@@ -119,5 +101,5 @@ function mapStateToProps(state, ownProps) {
 
 export default connect(mapStateToProps, {
   ...OptionsActions,
-  load,
+  load
 })(Settings);

@@ -1,5 +1,7 @@
 import React from 'react';
-import { mountWithIntl } from '../../../tests/helpers/intl-enzyme-test-helper.js';
+import {
+  mountWithIntl
+} from '../../../tests/helpers/intl-enzyme-test-helper.js';
 
 import Translations, { slugs } from './index';
 
@@ -11,10 +13,7 @@ describe('<Translations />', () => {
   beforeEach(() => {
     onOptionChange = sinon.stub();
     wrapper = mountWithIntl(
-      <Translations
-        content={[defaultOption]}
-        onOptionChange={onOptionChange}
-      />
+      <Translations content={[defaultOption]} onOptionChange={onOptionChange} />
     );
   });
 
@@ -29,7 +28,9 @@ describe('<Translations />', () => {
   });
 
   it('should show chosen content option', () => {
-    expect(wrapper.find(`#${defaultOption}en`).prop('checked')).to.equal(defaultOption);
+    expect(wrapper.find(`#${defaultOption}en`).prop('checked')).to.equal(
+      defaultOption
+    );
   });
 
   it('should add option when clicked', () => {
@@ -37,7 +38,9 @@ describe('<Translations />', () => {
     wrapper.find(`#${id}en`).simulate('change');
 
     expect(onOptionChange).to.have.been.called; // eslint-disable-line
-    expect(onOptionChange).to.have.been.calledWith({ content: [defaultOption, id] });
+    expect(onOptionChange).to.have.been.calledWith({
+      content: [defaultOption, id]
+    });
   });
 
   it('should remove option when clicked', () => {

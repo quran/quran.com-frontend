@@ -125,7 +125,7 @@ class GlobalNavSurah extends Component {
               </h4>
             }
           >
-           <Settings />
+            <Settings />
           </Drawer>
         ]}
         rightControls={[this.renderDrawerToggle()]}

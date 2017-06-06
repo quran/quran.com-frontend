@@ -27,7 +27,7 @@ const compareAlphabetically = property => (previous, next) => {
 
 const TRANSLATIONS_SELECTION_LIMIT = 10;
 
-class Translations extends Component {
+class TranslationsDropdown extends Component {
   componentDidMount() {
     if (!this.props.translationOptions.length) {
       return this.props.loadTranslations();
@@ -138,7 +138,7 @@ class Translations extends Component {
   }
 }
 
-Translations.propTypes = {
+TranslationsDropdown.propTypes = {
   onOptionChange: PropTypes.func.isRequired,
   translations: PropTypes.arrayOf(PropTypes.number).isRequired,
   translationOptions: customPropTypes.translationOptions,
@@ -152,4 +152,4 @@ export default connect(
     translations: state.options.translations
   }),
   { loadTranslations }
-)(Translations);
+)(TranslationsDropdown);
