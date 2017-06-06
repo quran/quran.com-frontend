@@ -56,9 +56,9 @@ const VerseTafsir = ({ verse, tafsir }) => (
 
         <div className="col-md-12">
           <div className="text-center">
-            <Button href={`/${verse.verseKey}`}>
+            <Button href={`/${verse.chapterId}/${verse.verseNumber}`}>
               <LocaleFormattedMessage
-                id="verse.bacToAyah"
+                id="verse.backToAyah"
                 defaultMessage="Back to Ayah"
               />
             </Button>
