@@ -19,6 +19,8 @@ import TooltipOptions from './TooltipOptions';
 
 import { load } from 'redux/actions/verses.js';
 
+const styles = require('./styles.scss');
+
 class Settings extends Component {
   handleOptionChange = (payload) => {
     const { chapter, setOption, options, versesIds } = this.props;
@@ -65,7 +67,7 @@ class Settings extends Component {
         <TranslationsDropdown onOptionChange={this.handleOptionChange} />
         <TooltipOptions tooltip={options.tooltip} onOptionChange={setOption} />
         <hr />
-        <div className={'styles.title'}>
+        <div className={styles.title}>
           <LocaleFormattedMessage
             id="setting.fontSize"
             defaultMessage="Font Size"
@@ -76,13 +78,7 @@ class Settings extends Component {
           onOptionChange={setOption}
         />
         <hr />
-        <div className={'styles.title'}>
-          <LocaleFormattedMessage
-            id="local.siteLocale"
-            defaultMessage="Site Language"
-          />
-        </div>
-        <LocaleSwitcher />
+        <LocaleSwitcher renderAs="menu" />
       </Menu>
     );
   }
