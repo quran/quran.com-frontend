@@ -5,7 +5,6 @@ import Menu from 'quran-components/lib/Menu';
 import { load } from 'redux/actions/verses.js';
 
 import * as customPropTypes from 'customPropTypes';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import LocaleSwitcher from 'components/LocaleSwitcher';
 
 import FontSizeOptions from './FontSizeOptions';
@@ -16,8 +15,6 @@ import ChapterInfoToggle from './ChapterInfoToggle';
 import ReciterDropdown from './ReciterDropdown';
 import TranslationsDropdown from './TranslationsDropdown';
 import TooltipOptions from './TooltipOptions';
-
-const styles = require('./styles.scss');
 
 class Settings extends Component {
   handleOptionChange = (payload) => {
@@ -58,12 +55,6 @@ class Settings extends Component {
         <TranslationsDropdown onOptionChange={this.handleOptionChange} />
         <TooltipOptions tooltip={options.tooltip} onOptionChange={setOption} />
         <hr />
-        <div className={styles.title}>
-          <LocaleFormattedMessage
-            id="setting.fontSize"
-            defaultMessage="Font Size"
-          />
-        </div>
         <FontSizeOptions
           fontSize={options.fontSize}
           onOptionChange={setOption}

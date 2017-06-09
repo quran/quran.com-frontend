@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import Icon from 'quran-components/lib/Icon';
 
 const styles = require('./styles.scss');
 
@@ -16,6 +17,17 @@ class FontSizeOptions extends Component {
       fontSize: {
         ...fontSize,
         [type]: fontSize[type] + changeFactor[type] * direction
+      }
+    });
+  };
+
+  resetFontSize = () => {
+    const { onOptionChange } = this.props;
+
+    return onOptionChange({
+      fontSize: {
+        arabic: 3.5,
+        translation: 2
       }
     });
   };
@@ -80,11 +92,29 @@ class FontSizeOptions extends Component {
     );
   }
 
+  renderTitle() {
+    return (
+      <div className={styles.title}>
+        <LocaleFormattedMessage
+          id="setting.fontSize"
+          defaultMessage="Font Size"
+        />
+        <Icon
+          type="refresh"
+          className={`text-right ${styles.reset}`}
+          onClick={this.resetFontSize}
+        />
+      </div>
+    );
+  }
   render() {
     return (
-      <li className={styles.link}>
-        {this.renderOptions()}
-      </li>
+      <div>
+        {this.renderTitle()}
+        <li className={styles.link}>
+          {this.renderOptions()}
+        </li>
+      </div>
     );
   }
 }
