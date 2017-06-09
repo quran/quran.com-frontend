@@ -1,11 +1,9 @@
 import React, { PropTypes, Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import * as OptionsActions from 'redux/actions/options.js';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import Link from 'react-router/lib/Link';
 import Drawer from 'quran-components/lib/Drawer';
-import Menu from 'quran-components/lib/Menu';
 import SearchInput from 'components/SearchInput';
 import SurahsDropdown from 'components/SurahsDropdown';
 import Settings from 'components/Settings';
@@ -16,27 +14,9 @@ import { load, setCurrentVerse } from 'redux/actions/verses.js';
 
 import GlobalNav from '../index';
 
-const styles = require('../style.scss');
-
 class GlobalNavSurah extends Component {
   state = {
     drawerOpen: false
-  };
-
-  handleOptionChange = (payload) => {
-    const { chapter, setOption, options, versesIds } = this.props;
-
-    setOption(payload);
-
-    if (chapter) {
-      const from = [...versesIds][0];
-      const to = [...versesIds][[...versesIds].length - 1];
-      const paging = { offset: from - 1, limit: to - from + 1 };
-      this.props.load(chapter.chapterNumber, paging, {
-        ...options,
-        ...payload
-      });
-    }
   };
 
   handleVerseDropdownClick = (verseNum) => {
@@ -50,9 +30,7 @@ class GlobalNavSurah extends Component {
 
     const to = Math.min(...[verseNum + 10, chapter.versesCount]);
 
-    return this.props.replace(
-      `/${chapter.chapterNumber}/${verseNum}-${to}`
-    );
+    return this.props.replace(`/${chapter.chapterNumber}/${verseNum}-${to}`);
   };
 
   handleDrawerToggle = (open) => {
@@ -78,14 +56,7 @@ class GlobalNavSurah extends Component {
   }
 
   render() {
-    const {
-      chapter,
-      chapters,
-      setOption,
-      versesIds,
-      options,
-      ...props
-    } = this.props;
+    const { chapter, chapters, versesIds, options, ...props } = this.props;
 
     return (
       <GlobalNav
@@ -125,7 +96,7 @@ class GlobalNavSurah extends Component {
               </h4>
             }
           >
-            <Settings />
+            <Settings chapter={chapter} versesIds={versesIds} />
           </Drawer>
         ]}
         rightControls={[this.renderDrawerToggle()]}
@@ -155,7 +126,6 @@ GlobalNavSurah.propTypes = {
   chapter: customPropTypes.surahType.isRequired,
   chapters: customPropTypes.chapters.isRequired,
   options: customPropTypes.optionsType.isRequired,
-  setOption: PropTypes.func.isRequired,
   versesIds: PropTypes.instanceOf(Set),
   load: PropTypes.func.isRequired,
   setCurrentVerse: PropTypes.func.isRequired,
@@ -163,7 +133,6 @@ GlobalNavSurah.propTypes = {
 };
 
 export default connect(mapStateToProps, {
-  ...OptionsActions,
   load,
   replace,
   setCurrentVerse

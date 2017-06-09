@@ -3,9 +3,11 @@ import React, { PropTypes, Component } from 'react';
 import cookie from 'react-cookie';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
-import config from '../../config';
+
 import Icon from 'quran-components/lib/Icon';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
+import config from '../../config';
 
 const { locales, defaultLocale } = config;
 
@@ -17,9 +19,10 @@ class LocaleSwitcher extends Component {
   componentDidMount() {
     if (__CLIENT__) {
       // TODO: This should be passed in as a prop!
+      // eslint-disable-next-line
       this.setState({
         currentLocale: cookie.load('currentLocale') || defaultLocale
-      }); // eslint-disable-line
+      });
     }
   }
 

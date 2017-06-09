@@ -1,23 +1,21 @@
 import React, { PropTypes, Component } from 'react';
-import * as customPropTypes from 'customPropTypes';
 import * as OptionsActions from 'redux/actions/options.js';
 import { connect } from 'react-redux';
-import { replace } from 'react-router-redux';
-import Link from 'react-router/lib/Link';
 import Menu from 'quran-components/lib/Menu';
+import { load } from 'redux/actions/verses.js';
 
+import * as customPropTypes from 'customPropTypes';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import LocaleSwitcher from 'components/LocaleSwitcher';
+
+import FontSizeOptions from './FontSizeOptions';
 
 import ReadingModeToggle from './ReadingModeToggle';
 import NightModeToggle from './NightModeToggle';
 import ChapterInfoToggle from './ChapterInfoToggle';
-import FontSizeOptions from 'components/Settings/FontSizeOptions';
 import ReciterDropdown from './ReciterDropdown';
 import TranslationsDropdown from './TranslationsDropdown';
 import TooltipOptions from './TooltipOptions';
-
-import { load } from 'redux/actions/verses.js';
 
 const styles = require('./styles.scss');
 
@@ -39,14 +37,7 @@ class Settings extends Component {
   };
 
   render() {
-    const {
-      chapter,
-      chapters,
-      setOption,
-      versesIds,
-      options,
-      ...props
-    } = this.props;
+    const { setOption, options } = this.props;
 
     return (
       <Menu>
@@ -86,10 +77,13 @@ class Settings extends Component {
 
 Settings.propTypes = {
   setOption: PropTypes.func.isRequired,
-  load: PropTypes.func.isRequired
+  load: PropTypes.func.isRequired,
+  chapter: customPropTypes.surahType.isRequired,
+  options: customPropTypes.optionsType.isRequired,
+  versesIds: PropTypes.instanceOf(Set)
 };
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   return {
     options: state.options
   };
