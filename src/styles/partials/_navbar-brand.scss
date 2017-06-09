@@ -4,7 +4,7 @@
   padding: $content-padding;
   position: relative;
   text-align: center;
-  margin-left: 0px !important;
+  margin-left: 0 !important;
   transition: height 0.5s;
 
   .title{
@@ -29,7 +29,7 @@
 @media (max-width: $screen-sm-max) {
   .navbar-brand{
     height: 50px;
-    padding: 10px 0px 10px 5px !important;
+    padding: 10px 0 10px 5px !important;
     text-align: center;
     background: $brand-primary !important;
     .menu{
@@ -52,7 +52,7 @@
     .title{
       position: static;
       font-size: 12px;
-      margin: 0px 15%
+      margin: 0 15%
     }
   }
 }
