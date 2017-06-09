@@ -31,7 +31,7 @@ class LazyLoad extends Component {
     }
 
     return false;
-  }
+  };
 
   render() {
     const { isEnd, loadingComponent, endComponent } = this.props;

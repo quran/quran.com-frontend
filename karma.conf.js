@@ -1,6 +1,7 @@
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
-module.exports = function(config) {
+module.exports = (config) => {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -26,7 +27,7 @@ module.exports = function(config) {
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
       './tests/polyfill/Event.js',
       './node_modules/Intl/locale-data/jsonp/en-US.js',
-      {pattern: 'static/images/*', watched: false, included: false, served: true},
+      { pattern: 'static/images/*', watched: false, included: false, served: true },
 
       // Actual tests here
       'tests.webpack.js'
@@ -37,17 +38,16 @@ module.exports = function(config) {
     ],
 
     proxies: {
-      '/images': __dirname + '/static/images',
-      '/images/': __dirname + '/static/images/',
+      '/images': path.join(__dirname, '/static/images'),
+      '/images/': path.join(__dirname, '/static/images/'),
     },
 
     proxyValidateSSL: false,
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessors
-
     preprocessors: {
-      'tests.webpack.js': [ 'webpack', 'sourcemap' ]
+      'tests.webpack.js': ['webpack', 'sourcemap']
     },
 
     webpack: {
@@ -72,9 +72,9 @@ module.exports = function(config) {
             exclude: [/server/, /node_modules/, /tests/],
             loader: 'babel'
           },
-          { test: /\.json$/, loader: 'json-loader'},
+          { test: /\.json$/, loader: 'json-loader' },
           { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' },
-          { test: /\.(jpe?g|png|gif|svg)$/, loader: 'url', query: {limit: 10240} }
+          { test: /\.(jpe?g|png|gif|svg)$/, loader: 'url', query: { limit: 10240 } }
         ]
       },
 

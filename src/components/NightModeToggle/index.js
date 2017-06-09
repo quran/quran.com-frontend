@@ -23,7 +23,7 @@ class NightModeToggle extends Component {
     }
 
     onToggle({ isNightMode: !isNightMode });
-  }
+  };
 
   render() {
     return (

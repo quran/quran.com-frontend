@@ -19,7 +19,7 @@ class FontSizeDropdown extends Component {
         [type]: fontSize[type] + (changeFactor[type] * direction)
       }
     });
-  }
+  };
 
   renderPopup() {
     return (

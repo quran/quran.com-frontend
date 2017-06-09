@@ -36,7 +36,7 @@ class VersesDropdown extends Component {
         {number}
       </MenuItem>
     );
-  }
+  };
 
   renderMenu() {
     const { chapter } = this.props;
