@@ -36,15 +36,15 @@
     "__DEVTOOLS__": true,
     "socket": true,
     "webpackIsomorphicTools": true,
-    ga: true,
-    Raven: true,
-    mixpanel: true,
+    "ga": true,
+    "Raven": true,
+    "mixpanel": true,
     "expect": true,
     "browser": true,
     "import": true,
     "FB": true,
     "window": true,
-    sinon: true
+    "sinon": true
   },
   "env": {
     "mocha": true,
