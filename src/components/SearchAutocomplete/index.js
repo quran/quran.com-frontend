@@ -69,7 +69,7 @@ class SearchAutocomplete extends Component {
       text: `<b>${match[0]}</b>`,
       href: `/${match[1]}`
     })).slice(0, 5);
-  }
+  };
 
   suggest = (query) => {
     const { lang } = this.props;
@@ -77,7 +77,7 @@ class SearchAutocomplete extends Component {
     if (!query || ayahRegex.test(query)) return false;
 
     return this.props.suggest(query, lang);
-  }
+  };
 
   handleInputKeyDown = (event) => {
     if (!(event.keyCode === 9 || event.keyCode === 40 || event.keyCode === 27)) {
@@ -104,7 +104,7 @@ class SearchAutocomplete extends Component {
         return;
     }
     event.preventDefault();
-  }
+  };
 
   handleItemKeyDown(event, item) {
     const items = this.menu.getElementsByTagName('li');

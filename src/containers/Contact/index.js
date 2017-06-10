@@ -28,7 +28,7 @@ class Contact extends Component {
         });
       }
     });
-  }
+  };
 
   renderForm() {
     return (

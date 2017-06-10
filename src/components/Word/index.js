@@ -12,7 +12,6 @@ const CHAR_TYPE_SAJDAH = 'sajdah';
 class Word extends Component {
   buildTooltip = (word, tooltip) => {
     let title;
-
     if (word.charType === CHAR_TYPE_END) {
       title = `Verse ${word.verseKey.split(':')[1]}`;
     } else if (word.charType === CHAR_TYPE_WORD) {
@@ -21,17 +20,15 @@ class Word extends Component {
       title = '';
     }
     return title;
-  }
+  };
 
   handleWordPlay = () => {
     const { word } = this.props;
-
     if (word.audio) {
       const audio = new Audio(word.audio.url); // eslint-disable-line
-
       audio.play();
     }
-  }
+  };
 
   handleSegmentPlay = () => {
     const { word, currentVerse, audioActions, audioPosition, isPlaying, isSearched } = this.props;
@@ -47,7 +44,7 @@ class Word extends Component {
       audioActions.setAyah(word.verseKey);
       audioActions.playCurrentWord({ word, position: audioPosition });
     }
-  }
+  };
 
   render() {
     const { tooltip, word, currentVerse, isPlaying, audioPosition, useTextFont } = this.props;
@@ -84,7 +81,10 @@ class Word extends Component {
           title={this.buildTooltip(word, tooltip)}
           dangerouslySetInnerHTML={{ __html: text }}
         />
-        <small dangerouslySetInnerHTML={{ __html: spacer }} style={{ letterSpacing: -15 }} />
+        <small
+          dangerouslySetInnerHTML={{ __html: spacer }}
+          style={{ letterSpacing: -15 }}
+        />
       </span>
     );
   }

@@ -38,7 +38,7 @@ class Search extends Component {
     }
 
     return true;
-  }
+  };
 
   renderStatsBar() {
     const { totalCount, totalPages, currentPage, query, perPage } = this.props;

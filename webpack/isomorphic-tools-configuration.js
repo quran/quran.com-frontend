@@ -56,6 +56,7 @@ module.exports = {
                   WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log));
         }
         // no need for it in production mode
+        return null;
       },
       // in development mode there's webpack "style-loader",
       // so the module.name is not equal to module.name

@@ -82,7 +82,7 @@ class SearchInput extends Component {
     }
 
     return false;
-  }
+  };
 
   render() {
     const { showAutocomplete } = this.state;

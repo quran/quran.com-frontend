@@ -74,13 +74,13 @@ li em{
     padding-top: 100px;
   }
   h3{
-    margin: 0px;
+    margin: 0;
     padding-bottom: 50%;
     font-weight: 300;
   }
 }
 .form-success-message{
-  padding: 5% 0%;
+  padding: 5% 0;
 }
 
 .about-text{
@@ -153,14 +153,14 @@ li em{
 .navbar-toggle{
   display: inline-block !important;
   float: left;
-  margin-right: 0px;
+  margin-right: 0;
 }
 
 .ayah-name-svg{
   width: 35%;
   display: inherit;
   position: absolute;
-  top: 0px;
+  top: 0;
   transform: translateY(-40%);
 }
 
@@ -186,14 +186,14 @@ li em{
 // NOTE: This is for dropdown in navbar on mobile
 @media(max-width: $screen-sm){
   .navbar-nav{
-    margin-bottom: 0px;
+    margin-bottom: 0;
     margin-top: 5px;
   }
   .navbar-nav .open .dropdown-menu{
     position: absolute;;
     float: left;
     width: auto;
-    margin-top: 0px;
+    margin-top: 0;
     background-color: #fff;
     border: 1px solid rgba(0, 0, 0, 0.15);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
@@ -204,7 +204,7 @@ li em{
 
   .pager .next, .pager .previous{
     display: block;
-    margin: 10px 0px;
+    margin: 10px 0;
 
     & > a{
       float: none;
