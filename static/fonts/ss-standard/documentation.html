@@ -3113,15 +3113,15 @@
                   addClass(on, 'off');
                   for (var i = icons.length - 1; i >= 0; i--) {
                     icons[i].setAttribute('style', 'font-weight:bold;')
-                  };
+                  }
                 } else {
                   addClass(off, 'off');
                   addClass(on, 'on');
                   for (var i = icons.length - 1; i >= 0; i--) {
                     icons[i].setAttribute('style', '')
-                  };
-                };
-              };
+                  }
+                }
+            };
             if (on && off){
               for (var i = spans.length - 1; i >= 0; i--) {
                 spans[i].addEventListener('click', toggleOn, false);
@@ -3132,20 +3132,20 @@
           // Toggle View Style
           var grid = document.getElementsByClassName('toggle-grid')[0]
             , list = document.getElementsByClassName('toggle-list')[0]
-            , body = document.body
+            , body = document.body;
 
           grid.addEventListener('click', function(e){
-            e.preventDefault()
+            e.preventDefault();
             addClass(body, 'grid')
-          }, false)
+          }, false);
 
           list.addEventListener('click', function(e){
-            e.preventDefault()
+            e.preventDefault();
             removeClass(body, 'grid')
-          }, false)
+          }, false);
 
           // Grid view active
-          var tr = document.getElementsByTagName('tr')
+          var tr = document.getElementsByTagName('tr');
 
           document.addEventListener('click', hideDetails, false);
 
@@ -3156,47 +3156,46 @@
             }
             (function(){
               for (var i = tr.length - 1; i >= 0; i--) {
-                tr[i].setAttribute('style','')
+                tr[i].setAttribute('style','');
                 removeClass(tr[i], 'open')
-              };
+              }
             })();
           }
 
           function showDetails(e){
             var item = e.target.parentNode;
             if (hasClass(body, 'grid') && !hasClass(item,  'open')) {
-              e.stopPropagation()
-              hideDetails()
+              e.stopPropagation();
+              hideDetails();
 
               var left = item.offsetLeft
-                , top = item.offsetTop
+                , top = item.offsetTop;
 
-              item.setAttribute('style', 'top:'+top+'px;left:'+left+'px;')
-              addClass(item, 'open')
-              var placeholder = document.createElement('tr')
-              placeholder = item.parentNode.insertBefore(placeholder, item)
+              item.setAttribute('style', 'top:'+top+'px;left:'+left+'px;');
+              addClass(item, 'open');
+              var placeholder = document.createElement('tr');
+              placeholder = item.parentNode.insertBefore(placeholder, item);
               placeholder.id = 'placeholder'
             }
-          };
-
+          }
           (function(){
             for (var i = tr.length - 1; i >= 0; i--) {
               tr[i].addEventListener('click', showDetails, false)
-            };
+            }
           })();
 
           // Helpers
           function hasClass(elem, classname) {
-            var regexp = new RegExp('\\b' + classname + '\\b', 'g')
+            var regexp = new RegExp('\\b' + classname + '\\b', 'g');
             return elem.className.match(regexp)
           }
           function addClass(elem, classname) {
-            if (hasClass(elem, classname)) return
-            elem.className = elem.className + ' ' + classname
+            if (hasClass(elem, classname)) return;
+            elem.className = elem.className + ' ' + classname;
             elem.className = elem.className.replace(/^\s+|\s+$/g, '')
           }
           function removeClass(elem, classname) {
-            if (!hasClass(elem, classname)) return
+            if (!hasClass(elem, classname)) return;
             elem.className = elem.className.replace(classname, '')
           }
 

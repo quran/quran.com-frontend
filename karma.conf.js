@@ -1,8 +1,8 @@
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
 
-module.exports = function(config) {
+module.exports = config => {
   config.set({
-
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
@@ -26,42 +26,42 @@ module.exports = function(config) {
       './node_modules/phantomjs-polyfill/bind-polyfill.js',
       './tests/polyfill/Event.js',
       './node_modules/Intl/locale-data/jsonp/en-US.js',
-      {pattern: 'static/images/*', watched: false, included: false, served: true},
+      {
+        pattern: 'static/images/*',
+        watched: false,
+        included: false,
+        served: true
+      },
 
       // Actual tests here
       'tests.webpack.js'
     ],
 
     // list of files to exclude
-    exclude: [
-    ],
+    exclude: [],
 
     proxies: {
-      '/images': __dirname + '/static/images',
-      '/images/': __dirname + '/static/images/',
+      '/images': path.join(__dirname, '/static/images'),
+      '/images/': path.join(__dirname, '/static/images/')
     },
 
     proxyValidateSSL: false,
 
     // preprocess matching files before serving them to the browser
     // available preprocessors: https://npmjs.org/browse/keyword/karma-preprocessors
-
     preprocessors: {
-      'tests.webpack.js': [ 'webpack', 'sourcemap' ]
+      'tests.webpack.js': ['webpack', 'sourcemap']
     },
 
     webpack: {
       externals: {
-        'cheerio': 'window',
+        cheerio: 'window',
         'react/addons': true,
         'react/lib/ExecutionEnvironment': true,
         'react/lib/ReactContext': true
       },
       resolve: {
-        modules: [
-          'src',
-          'node_modules'
-        ],
+        modules: ['src', 'node_modules'],
         extensions: ['', '.json', '.js']
       },
 
@@ -72,9 +72,16 @@ module.exports = function(config) {
             exclude: [/server/, /node_modules/, /tests/],
             loader: 'babel'
           },
-          { test: /\.json$/, loader: 'json-loader'},
-          { test: /\.scss$/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap' },
-          { test: /\.(jpe?g|png|gif|svg)$/, loader: 'url', query: {limit: 10240} }
+          { test: /\.json$/, loader: 'json-loader' },
+          {
+            test: /\.scss$/,
+            loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap'
+          },
+          {
+            test: /\.(jpe?g|png|gif|svg)$/,
+            loader: 'url',
+            query: { limit: 10240 }
+          }
         ]
       },
 
@@ -86,12 +93,12 @@ module.exports = function(config) {
         fs: 'empty'
       },
 
-      plugins:[
+      plugins: [
         new webpack.DefinePlugin({
           __CLIENT__: true,
           __SERVER__: false,
           __DEVELOPMENT__: true,
-          __DEVTOOLS__: false  // <-------- DISABLE redux-devtools HERE
+          __DEVTOOLS__: false // <-------- DISABLE redux-devtools HERE
         })
       ],
 
@@ -119,19 +126,15 @@ module.exports = function(config) {
     // web server port
     port: 9876,
 
-
     // enable / disable colors in the output (reporters and logs)
     colors: true,
-
 
     // level of logging
     // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
-
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
