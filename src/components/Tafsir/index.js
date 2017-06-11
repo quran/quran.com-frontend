@@ -1,10 +1,14 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
+import Loader from 'quran-components/lib/Loader';
 
 export default class Tafsir extends Component {
   render() {
     const { tafsir, verse } = this.props;
+    if (!tafsir) {
+      return <Loader isActive relative />;
+    }
 
     return (
       <div className="col-md-10 col-md-offset-1">

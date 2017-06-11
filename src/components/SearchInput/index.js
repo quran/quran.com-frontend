@@ -78,8 +78,11 @@ class SearchInput extends Component {
     const splitSearch = /[\.,\:,\,,\\,//]/g; // eslint-disable-line no-useless-escape
 
     if (
-      event &&
-      (event.key === 'Enter' || event.keyCode === 13 || event.type === 'click')
+      event && (
+        event.key === 'Enter' ||
+        event.keyCode === 13 ||
+        event.type === 'click'
+       )
     ) {
       const inputEl = this.input;
       const searching = inputEl.value.trim();

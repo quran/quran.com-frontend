@@ -1,6 +1,6 @@
 .right-inner-addon.search-input{
-  padding: 0px;
-  margin-bottom: 0px;
+  padding: 0;
+  margin-bottom: 0;
   width: auto;
 
   input{
@@ -32,7 +32,7 @@
 }
 .right-inner-addon {
   position: relative;
-  margin: 0px auto;
+  margin: 0 auto;
   margin-bottom: 50px;
 
   input{
@@ -74,7 +74,7 @@
     border: 3px solid #fff;
 
     &.ss-search, &.ss-loading{
-      right: 0px;
+      right: 0;
       background-color: $brand-primary;
 
       &:hover{
@@ -83,7 +83,7 @@
     }
 
     &.ss-mic{
-      left: 0px;
+      left: 0;
       color: $brand-primary;
     }
   }
