@@ -12,7 +12,7 @@
   box-shadow: 0 0 0.5rem 0 rgba(0,0,0,.2);
   min-width: 340px;
   @media(max-width: $screen-sm){
-    bottom: 0px;
+    bottom: 0;
     width: 100%;
   }
   // border: 0.08333rem solid transparent !important;
@@ -22,7 +22,7 @@
   width: 100%;
   position: absolute;
   top: 0;
-  left: 0px;
+  left: 0;
   height: 10%;
 }
 
@@ -30,13 +30,13 @@
   border-radius: 4px;
   width: 100%;
   display: inline-block;
-  margin: 0px;
+  margin: 0;
   height: 90%;
   text-align: center;
 }
 
 .controls{
-  margin: 0px;
+  margin: 0;
   .controlItem{
     vertical-align: middle;
     padding-right: 20px;
@@ -45,10 +45,10 @@
 }
 
 .list{
-  margin-bottom: 0px;
+  margin-bottom: 0;
   display: table;
   width: 100%;
-  padding-left: 0px;
+  padding-left: 0;
   text-align: center;
 
   :global(li){
@@ -107,7 +107,7 @@
 }
 
 .verse{
-  padding: 0px;
+  padding: 0;
   color: $olive;
 }
 

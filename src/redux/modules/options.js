@@ -1,3 +1,5 @@
+import cookie from 'react-cookie';
+
 import {
   SET_OPTION,
   LOAD_RECITERS,
@@ -7,24 +9,26 @@ import {
   LOAD_TRANSLATIONS_SUCCESS
 } from 'redux/constants/options.js';
 
+const options = cookie.load('options') || {};
+
 const initialState = {
-  isReadingMode: false,
-  isNightMode: false,
-  isShowingSurahInfo: false,
-  loadingRecitations: false,
-  loadingTranslations: false,
-  audio: 7, // Mishari Rashid al-`Afasy
-  translations: [20], // Sahih International
-  tooltip: 'translation',
+  isReadingMode: options.isReadingMode || false,
+  isNightMode: options.isNightMode || false,
+  isShowingSurahInfo: options.isShowingSurahInfo || false,
+  audio: options.audio || 7, // Mishari Rashid al-`Afasy
+  translations: options.translations || [20], // Sahih International
+  tooltip: options.tooltip || 'translation',
+  fontSize: options.fontSize || {
+    arabic: 3.5,
+    translation: 2
+  },
   userAgent: null,
   options: {
     recitations: [],
     translations: []
   },
-  fontSize: {
-    arabic: 3.5,
-    translation: 2
-  }
+  loadingRecitations: false,
+  loadingTranslations: false
 };
 
 export default function reducer(state = initialState, action = {}) {

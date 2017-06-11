@@ -5,8 +5,8 @@ $width: 280px;
 .container{
   position: fixed;
   left: $width * -1;
-  top: 0px;
-  bottom: 0px;
+  top: 0;
+  bottom: 0;
   background: #fff;
   z-index: 1031;
   box-shadow: 0 16px 24px 2px rgba(0,0,0,0.14), 0 6px 30px 5px rgba(0,0,0,0.12), 0 8px 10px -5px rgba(0,0,0,0.2);
@@ -17,12 +17,12 @@ $width: 280px;
   transition: left 0.35s cubic-bezier(0.24,1,0.32,1), visibility 0.2s;
 
   &.open{
-    left: 0px;
+    left: 0;
     visibility: visible;;
   }
 
   :global(.navbar-text){
-    margin-left: 0px;
+    margin-left: 0;
       .backToHome {
           margin-right: 23px;
           font-size: 17px;
@@ -34,7 +34,7 @@ $width: 280px;
     left: -1 * $width;
 
     &.open{
-      left: 0px;
+      left: 0;
     }
 
     :global(.navbar-text){
@@ -44,7 +44,7 @@ $width: 280px;
 }
 
 .list{
-  padding-left: 0px;
+  padding-left: 0;
 
   :global(li){
     color: #777;
