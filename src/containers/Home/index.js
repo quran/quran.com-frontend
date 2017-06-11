@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Helmet from 'react-helmet';
 import IndexHeader from 'components/IndexHeader';
@@ -14,47 +14,51 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const styles = require('./style.scss');
 
-const Home = (props) => {
-  debug('component:Index', 'Render');
+class Home extends Component {
+  renderChapterList(chapterList) {
+    return (
+      <div className="row">
+        <SurahsList chapters={chapterList.slice(0, 38)} />
+        <SurahsList chapters={chapterList.slice(38, 76)} />
+        <SurahsList chapters={chapterList.slice(76, 114)} />
+      </div>
+    );
+  }
 
-  const lastVisit = cookie.load('lastVisit') || null;
+  render() {
+    debug('component:Home', 'Render');
 
-  return (
-    <div className="index-page">
-      <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
-      <IndexHeader />
-      <div className={`container ${styles.list}`}>
-        <div className="row">
-          <div className="col-md-10 col-md-offset-1">
-            {lastVisit &&
-              <LastVisit
-                chapter={props.chapters[lastVisit.chapterId]}
-                verse={lastVisit.verseId}
-              />}
-            <QuickSurahs />
-            <h4 className={`text-muted ${styles.title}`}>
-              <LocaleFormattedMessage
-                id="surah.index.heading"
-                defaultMessage="SURAHS (CHAPTERS)"
-              />
-            </h4>
-            <div className="row">
-              <SurahsList
-                chapters={Object.values(props.chapters).slice(0, 38)}
-              />
-              <SurahsList
-                chapters={Object.values(props.chapters).slice(38, 76)}
-              />
-              <SurahsList
-                chapters={Object.values(props.chapters).slice(76, 114)}
-              />
+    const lastVisit = cookie.load('lastVisit') || null;
+    const { chapters } = this.props;
+    const chaptersList = Object.values(chapters);
+
+    return (
+      <div className="index-page">
+        <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
+        <IndexHeader />
+        <div className={`container ${styles.list}`}>
+          <div className="row">
+            <div className="col-md-10 col-md-offset-1">
+              {lastVisit &&
+                <LastVisit
+                  chapter={chapters[lastVisit.chapterId]}
+                  verse={lastVisit.verseId}
+                />}
+              <QuickSurahs />
+              <h4 className={`text-muted ${styles.title}`}>
+                <LocaleFormattedMessage
+                  id="surah.index.heading"
+                  defaultMessage="SURAHS (CHAPTERS)"
+                />
+              </h4>
+              {this.renderChapterList(chaptersList)}
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 Home.propTypes = {
   chapters: customPropTypes.chapters.isRequired
