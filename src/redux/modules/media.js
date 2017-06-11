@@ -74,9 +74,9 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         loading: false,
         size: 'large',
-        wrapperClass: action.result.footNote.languageName,
+        wrapperClass: 'text-translation foote-note-text',
         content: {
-          body: action.result.footNote.text,
+          body: `<small class='${action.result.footNote.languageName}'>${action.result.footNote.text}</small>`,
           title: 'Foot note'
         }
       };

@@ -49,7 +49,10 @@ class VersesDropdown extends Component {
     const { className } = this.props;
 
     const title = (
-      <LocaleFormattedMessage id={'setting.verses'} defaultMessage={'Go to verse'} />
+      <LocaleFormattedMessage
+        id={'setting.verses'}
+        defaultMessage={'Go to verse'}
+      />
     );
 
     return (

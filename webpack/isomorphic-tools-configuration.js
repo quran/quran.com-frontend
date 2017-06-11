@@ -3,7 +3,6 @@ const WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 // see this link for more info on what all of this means
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
 module.exports = {
-
   // when adding "js" extension to asset types
   // and then enabling debug mode, it may cause a weird error:
   //
@@ -14,21 +13,11 @@ module.exports = {
 
   assets: {
     images: {
-      extensions: [
-        'jpeg',
-        'jpg',
-        'png',
-        'gif'
-      ],
+      extensions: ['jpeg', 'jpg', 'png', 'gif'],
       parser: WebpackIsomorphicToolsPlugin.url_loader_parser
     },
     fonts: {
-      extensions: [
-        'woff',
-        'woff2',
-        'ttf',
-        'eot'
-      ],
+      extensions: ['woff', 'woff2', 'ttf', 'eot'],
       parser: WebpackIsomorphicToolsPlugin.url_loader_parser
     },
     svg: {
@@ -52,8 +41,15 @@ module.exports = {
           return name.indexOf('./bootstrap.config.js') >= 0;
         }
         if (options.development) {
-          return (isBootstrapStyle(module.name) &&
-                  WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log));
+          return (
+            isBootstrapStyle(module.name) &&
+            WebpackIsomorphicToolsPlugin.style_loader_filter(
+              module,
+              regex,
+              options,
+              log
+            )
+          );
         }
         // no need for it in production mode
         return null;
@@ -69,7 +65,12 @@ module.exports = {
         if (options.development) {
           // in development mode there's webpack "style-loader",
           // so the module.name is not equal to module.name
-          return WebpackIsomorphicToolsPlugin.style_loader_filter(module, regex, options, log);
+          return WebpackIsomorphicToolsPlugin.style_loader_filter(
+            module,
+            regex,
+            options,
+            log
+          );
         }
         // in production mode there's no webpack "style-loader",
         // so the module.name will be equal to the asset path
@@ -79,7 +80,11 @@ module.exports = {
         if (options.development) {
           // in development mode there's webpack "style-loader",
           // so the module.name is not equal to module.name
-          return WebpackIsomorphicToolsPlugin.style_loader_path_extractor(module, options, log);
+          return WebpackIsomorphicToolsPlugin.style_loader_path_extractor(
+            module,
+            options,
+            log
+          );
         }
         // in production mode there's no webpack "style-loader",
         // so the module.name will be equal to the asset path
@@ -87,7 +92,11 @@ module.exports = {
       },
       parser(module, options, log) {
         if (options.development) {
-          return WebpackIsomorphicToolsPlugin.css_modules_loader_parser(module, options, log);
+          return WebpackIsomorphicToolsPlugin.css_modules_loader_parser(
+            module,
+            options,
+            log
+          );
         }
         // in production mode there's Extract Text Loader which extracts CSS text away
         return module.source;

@@ -11,14 +11,12 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
 
   return (
     <div className={`col-xs-12 ${style.container} chapter-info ${style.show}`}>
-      {
-        onClose &&
+      {onClose &&
         <button
           tabIndex="-1"
           className={`${style.close} ss-delete`}
           onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
-        />
-      }
+        />}
       <div className={`${style.row} row`}>
         <div
           className={`col-md-3 col-xs-6 ${style.bg} ${style[chapter.revelationPlace]}`}
@@ -31,7 +29,9 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
             <dd className="text-uppercase">{chapter.pages.join('-')}</dd>
           </dl>
         </div>
-        <div className={`${style.info} ${info.languageName} times-new col-md-8`}>
+        <div
+          className={`${style.info} ${info.languageName} times-new col-md-8`}
+        >
           <div dangerouslySetInnerHTML={{ __html: info.text }} />
           <div>
             <p>

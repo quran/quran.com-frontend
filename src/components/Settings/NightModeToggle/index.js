@@ -4,7 +4,6 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { MenuItem } from 'quran-components/lib/Menu';
 
 class NightModeToggle extends Component {
-
   componentDidMount() {
     const { isNightMode } = this.props;
 
@@ -31,7 +30,10 @@ class NightModeToggle extends Component {
         icon={<i className="ss-icon ss-lightbulb vertical-align-middle" />}
         onClick={this.toggleNightMode}
       >
-        <LocaleFormattedMessage id="setting.nightMode" defaultMessage="Night Mode" />
+        <LocaleFormattedMessage
+          id="setting.nightMode"
+          defaultMessage="Night Mode"
+        />
       </MenuItem>
     );
   }

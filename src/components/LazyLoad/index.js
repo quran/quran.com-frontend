@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import debug from 'helpers/debug';
 
 class LazyLoad extends Component {
-
   componentDidMount() {
     if (__CLIENT__) {
       window.removeEventListener('scroll', this.onScroll, true);
@@ -23,9 +22,11 @@ class LazyLoad extends Component {
     const { isLoading, isEnd, offset, onLazyLoad } = this.props;
     // TODO: Remove ReactDOM!
     const dom = ReactDOM.findDOMNode(this); // eslint-disable-line
-    const componentOffset = (dom.offsetParent || dom).offsetTop - (window.pageYOffset + window.innerHeight); // eslint-disable-line max-len
+    const componentOffset =
+      (dom.offsetParent || dom).offsetTop -
+      (window.pageYOffset + window.innerHeight); // eslint-disable-line max-len
 
-    if ((!isLoading && !isEnd) && componentOffset < offset) {
+    if (!isLoading && !isEnd && componentOffset < offset) {
       debug('component:LazyLoad', 'onLazyLoad called');
       return onLazyLoad();
     }
