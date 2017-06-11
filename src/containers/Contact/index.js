@@ -8,7 +8,7 @@ class Contact extends Component {
     success: false
   };
 
-  submitSupport = event => {
+  submitSupport = (event) => {
     event.preventDefault();
 
     const form = {
@@ -39,7 +39,7 @@ class Contact extends Component {
             <input
               type="text"
               className="form-control"
-              ref={name => {
+              ref={(name) => {
                 this.name = name;
               }}
             />
@@ -54,7 +54,7 @@ class Contact extends Component {
             <input
               type="email"
               className="form-control"
-              ref={email => {
+              ref={(email) => {
                 this.email = email;
               }}
             />
@@ -67,7 +67,7 @@ class Contact extends Component {
           <div className="col-sm-8">
             <select
               className="form-control"
-              ref={purpose => {
+              ref={(purpose) => {
                 this.purpose = purpose;
               }}
               defaultValue="feedback"
@@ -89,7 +89,7 @@ class Contact extends Component {
               rows="4"
               cols="50"
               className="form-control"
-              ref={body => {
+              ref={(body) => {
                 this.body = body;
               }}
             />

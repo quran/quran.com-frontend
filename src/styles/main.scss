@@ -176,8 +176,10 @@ li em{
 
 .text-translation{
   .urdu, .punjabi, .persian {
-   float: right;
+    float: right;
     line-height: 1.7;
+    clear: both;
+    width: 100%;
   }
 }
 .persian{

@@ -65,7 +65,7 @@ class SmartBanner extends Component {
     }
   }
 
-  parseAppId = metaName => {
+  parseAppId = (metaName) => {
     const meta = window.document.querySelector(`meta[name="${metaName}"]`);
     return /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];
   };

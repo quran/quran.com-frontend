@@ -51,8 +51,8 @@ server.use((req, res, next) => {
   if (req.query.DISABLE_SSR) {
     return res.status(200).send(
       `<!doctype html>\n${ReactDOM.renderToString(<IntlProvider locale="en" messages={localMessages}>
-          <Html store={store} assets={webpack_isomorphic_tools.assets()} />
-        </IntlProvider>)}`
+        <Html store={store} assets={webpack_isomorphic_tools.assets()} />
+      </IntlProvider>)}`
     );
   }
 
