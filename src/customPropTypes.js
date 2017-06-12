@@ -118,6 +118,14 @@ export const surahType = PropTypes.shape({
   nameArabic: PropTypes.string.isRequired
 });
 
+export const juzType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
+  juzNumber: PropTypes.number.isRequired,
+  nameArabic: PropTypes.string.isRequired,
+  nameSimple: PropTypes.string.isRequired,
+  chapters: PropTypes.arrayOf(PropTypes.object)
+});
+
 export const timeInterval = PropTypes.shape({
   from: PropTypes.number,
   to: PropTypes.number,
@@ -212,6 +220,8 @@ export const segments = PropTypes.objectOf(segmentType);
 export const match = PropTypes.arrayOf(matchType);
 
 export const chapters = PropTypes.objectOf(surahType);
+
+export const juzs = PropTypes.objectOf(juzType);
 
 export const line = PropTypes.arrayOf(wordType);
 
