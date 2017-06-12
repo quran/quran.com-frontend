@@ -123,7 +123,7 @@ export const juzType = PropTypes.shape({
   juzNumber: PropTypes.number.isRequired,
   nameArabic: PropTypes.string.isRequired,
   nameSimple: PropTypes.string.isRequired,
-  chapters: PropTypes.arrayOf(PropTypes.object)
+  verseMapping: PropTypes.arrayOf(PropTypes.object)
 });
 
 export const timeInterval = PropTypes.shape({

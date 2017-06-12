@@ -14,10 +14,7 @@ import {
   isTafsirLoaded
 } from 'redux/actions/verses.js';
 
-import {
-  isJuzsLoaded,
-  loadJuzs
-} from 'redux/actions/juzs.js';
+import { isJuzsLoaded, loadJuzs } from 'redux/actions/juzs.js';
 
 import { debug } from 'helpers';
 
@@ -75,7 +72,7 @@ export const juzsConnect = ({ store: { getState, dispatch } }) => {
   }
 
   return dispatch(loadJuzs());
-}
+};
 
 export const chapterInfoConnect = ({
   store: { dispatch, getState },

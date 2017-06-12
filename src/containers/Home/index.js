@@ -6,24 +6,43 @@ import cookie from 'react-cookie';
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import debug from 'helpers/debug';
-import { isAllLoaded, loadAll } from 'redux/actions/chapters.js';
 import LastVisit from 'components/Home/LastVisit';
 import SurahsList from 'components/Home/SurahsList';
+import JuzList from 'components/Home/JuzList';
 import QuickSurahs from 'components/Home/QuickSurahs';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Tabs, { Tab } from 'quran-components/lib/Tabs';
+import Loader from 'quran-components/lib/Loader';
 
 import { chaptersConnect, juzsConnect } from '../Surah/connect';
 
 const styles = require('./style.scss');
 
 class Home extends Component {
-  renderChapterList(chapterList) {
+  renderJuzList() {
+    const { chapters, juzs } = this.props;
+
+    if (juzs.loading) {
+      return <div className="row"><Loader isActive relative /></div>;
+    }
+
+    const juzList = Object.values(juzs.entities);
+
     return (
       <div className="row">
-        <SurahsList chapters={chapterList.slice(0, 38)} />
-        <SurahsList chapters={chapterList.slice(38, 76)} />
-        <SurahsList chapters={chapterList.slice(76, 114)} />
+        <JuzList chapters={chapters} juzs={juzList.slice(0, 10)} />
+        <JuzList chapters={chapters} juzs={juzList.slice(10, 20)} />
+        <JuzList chapters={chapters} juzs={juzList.slice(20, 30)} />
+      </div>
+    );
+  }
+
+  renderChapterList(chaptersList) {
+    return (
+      <div className="row">
+        <SurahsList chapters={chaptersList.slice(0, 38)} />
+        <SurahsList chapters={chaptersList.slice(38, 76)} />
+        <SurahsList chapters={chaptersList.slice(76, 114)} />
       </div>
     );
   }
@@ -35,13 +54,20 @@ class Home extends Component {
     const { chapters } = this.props;
     const chaptersList = Object.values(chapters);
 
-    const surahTitle = (
-     <span className={`text-muted ${styles.title}`}>
-       <LocaleFormattedMessage
-        id="surah.index.heading"
-        defaultMessage="SURAHS (CHAPTERS)"
+    const chapterTitle = (
+      <span className={`text-muted ${styles.title}`}>
+        <LocaleFormattedMessage
+          id="surah.index.heading"
+          defaultMessage="SURAHS (CHAPTERS)"
         />
-     </span>);
+      </span>
+    );
+
+    const juzTitle = (
+      <span className={`text-muted ${styles.title}`}>
+        <LocaleFormattedMessage id="juz.index.heading" defaultMessage="Juz" />
+      </span>
+    );
 
     return (
       <div className="index-page">
@@ -58,11 +84,12 @@ class Home extends Component {
               <QuickSurahs />
 
               <Tabs>
-                <Tab title={surahTitle}>
+                <Tab title={chapterTitle}>
                   {this.renderChapterList(chaptersList)}
                 </Tab>
-                <Tab title="Juz">
-                 Juzz list here
+
+                <Tab title={juzTitle}>
+                  {this.renderJuzList()}
                 </Tab>
               </Tabs>
             </div>
@@ -75,7 +102,7 @@ class Home extends Component {
 
 Home.propTypes = {
   chapters: customPropTypes.chapters.isRequired,
-  juzs: customPropTypes.juzs.isRequired,
+  juzs: customPropTypes.juzs.isRequired
 };
 
 const AsyncHome = asyncConnect([
@@ -86,7 +113,7 @@ const AsyncHome = asyncConnect([
 function mapStateToProps(state) {
   return {
     chapters: state.chapters.entities,
-    juzs: state.juzs.entities
+    juzs: state.juzs
   };
 }
 
