@@ -1,6 +1,7 @@
 /* global document */
 // TODO: This file is too too large.
 import React, { Component, PropTypes } from 'react';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
@@ -26,6 +27,20 @@ const RepeatDropdown = Loadable({
     import(/* webpackChunkName: "repeatdropdown" */ './RepeatDropdown'),
   LoadingComponent: ComponentLoader
 });
+
+const Wrapper = styled.div`
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 10%;
+`;
+
+const ControlItem = styled.li`
+  vertical-align: middle;
+  padding-right: 20px;
+  color: #939598;
+`;
 
 export class Audioplayer extends Component {
   state = {
@@ -458,7 +473,7 @@ export class Audioplayer extends Component {
       <div
         className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}
       >
-        <div className={style.wrapper}>
+        <Wrapper>
           {currentFile &&
             <Track
               progress={currentTime / duration * 100}
@@ -471,9 +486,9 @@ export class Audioplayer extends Component {
               currentVerse={currentVerse.verseKey}
               currentTime={currentTime}
             />}
-        </div>
-        <ul className={`list-inline ${style.controls}`}>
-          <li className={style.controlItem}>
+        </Wrapper>
+        <ul className="list-inline" style={{ margin: 0 }}>
+          <ControlItem>
             <LocaleFormattedMessage
               id="player.currentVerse"
               defaultMessage="Ayah"
@@ -481,30 +496,30 @@ export class Audioplayer extends Component {
             :
             {' '}
             {currentVerse.verseKey.split(':')[1]}
-          </li>
-          <li className={style.controlItem}>
+          </ControlItem>
+          <ControlItem>
             {this.renderPreviousButton()}
-          </li>
-          <li className={style.controlItem}>
+          </ControlItem>
+          <ControlItem>
             {this.renderPlayStopButtons()}
-          </li>
-          <li className={style.controlItem}>
+          </ControlItem>
+          <ControlItem>
             {this.renderNextButton()}
-          </li>
-          <li className={style.controlItem}>
+          </ControlItem>
+          <ControlItem>
             <RepeatDropdown
               repeat={repeat}
               setRepeat={setRepeat}
               current={parseInt(currentVerse.verseKey.split(':')[1], 10)}
               chapter={chapter}
             />
-          </li>
-          <li className={style.controlItem}>
+          </ControlItem>
+          <ControlItem>
             <ScrollButton
               shouldScroll={shouldScroll}
               onScrollToggle={this.handleScrollToggle}
             />
-          </li>
+          </ControlItem>
         </ul>
       </div>
     );
