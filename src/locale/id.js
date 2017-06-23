@@ -4,7 +4,7 @@ export default {
     local: 'indonesian',
     'local.siteLocale': 'Bahasa Situs',
     'local.changeLocal': 'Pilih bahasa yang diinginkan untuk tampilan situs',
-    'local.navtiveName': 'Indonesia',
+    'local.nativeName': 'Indonesia',
     'local.selectLabel': 'Bahasa',
     'setting.title': 'Pengaturan',
     'setting.chapters': 'Surat',

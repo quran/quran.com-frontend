@@ -4,7 +4,7 @@ export default {
     local: 'french',
     'local.siteLocale': 'Langue du Site',
     'local.changeLocal': 'Choisir la langue du site',
-    'local.navtiveName': 'Français',
+    'local.nativeName': 'Français',
     'local.selectLabel': 'Langue',
     'setting.title': 'Paramètres',
     'setting.chapters': 'Sourates',

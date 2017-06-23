@@ -4,7 +4,7 @@ export default {
     local: 'arabic',
     'local.siteLocale': 'اختر لغة الموقع',
     'local.changeLocal': 'اختر اللغة التي تود عرض الموقع بها',
-    'local.navtiveName': 'العربية',
+    'local.nativeName': 'العربية',
     'local.selectLabel': 'اللغة',
     'setting.title': 'خيارات',
     'setting.chapters': 'السورة',

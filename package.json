@@ -13,7 +13,6 @@
     "test:stylelint": "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
     "dev-old": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node ./webpack/webpack-dev-server.js & env NODE_PATH='./src' PORT=8000 node ./bin/server.js",
     "dev": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress  & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
-    "start": "NODE_PATH='src' node ./start",
     "build": "npm run build:client & npm run build:server",
     "build:server": "babel ./src -d ./dist -D",
     "build:client": "webpack --config ./webpack/prod.config.js",

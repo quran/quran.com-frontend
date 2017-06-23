@@ -4,7 +4,7 @@ export default {
     local: 'turkish',
     'local.siteLocale': 'Site Dili',
     'local.changeLocal': 'Siteyi görüntülemek istediğiniz dili seçin ',
-    'local.navtiveName': 'Türkçe',
+    'local.nativeName': 'Türkçe',
     'local.selectLabel': 'Dil',
     'setting.title': 'Ayarlar',
     'setting.surahs': 'Sureler',
