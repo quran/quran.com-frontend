@@ -78,6 +78,8 @@ export default {
     'nav.navigate': 'Bağlantılar', // there is no exact translation for Navigate in Turkish
     'nav.legacySite': 'Eski Siteye Git Quran.com',
 
+    'juz.index.heading': 'Juza',
+
     'login.message': "Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com'a giriş yapın.",
     'error.invalid-surah': "Surah aralık dışı. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah seçin",
     'error.invalid-ayah': "Ayah menzilin dışında. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah / Ayah seçin"

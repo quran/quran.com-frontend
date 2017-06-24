@@ -78,6 +78,8 @@ export default {
     'nav.navigate': 'Naviguer',
     'nav.legacySite': 'Version précédente de Quran.com',
 
+    'juz.index.heading': 'Juz',
+
     'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. ',
     'error.invalid-surah': "La sourate est hors de portée. Accédez à <a href='/'> page d'accueil </a> et sélectionnez une Sourate",
     'error.invalid-ayah': "Ayah est hors de portée. Accédez à la <a href='/'> page d'accueil </a> et sélectionnez un Surah / Ayah"
