@@ -37,6 +37,7 @@ class Home extends Component {
     );
   }
 
+  // eslint-disable-next-line class-methods-use-this
   renderChapterList(chaptersList) {
     return (
       <div className="row">
