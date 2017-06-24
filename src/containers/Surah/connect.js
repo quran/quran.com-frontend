@@ -97,7 +97,8 @@ export const versesConnect = ({
 
   const chapterId = parseInt(params.chapterId, 10);
   const paging = determinePage(params.range);
-  const translations = params.translations || location.query.translations;
+  const translations =
+    params.translations || (location && location.query.translations);
 
   if (chapterId !== getState().chapters.current) {
     dispatch(setCurrentSurah(chapterId));

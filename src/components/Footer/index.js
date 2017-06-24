@@ -109,7 +109,15 @@ const Footer = () => (
                 />
               </p>
               <ul className={`source-sans ${styles.list}`}>
-                <li><a href="/sitemap.xml">Sitemap</a></li>
+                <li>
+                  <a
+                    href="https://quran.com/sitemaps/sitemap.xml.gz"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Sitemap
+                  </a>
+                </li>
                 <li>
                   <Link
                     to="/36"
