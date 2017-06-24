@@ -16,7 +16,8 @@ const locales = {
   ur: 'اردو',
   id: 'Bahasa Indonesia',
   tr: 'Türkçe',
-  fr: 'Français'
+  fr: 'Français',
+  nl: 'Dutch'
 };
 
 const config = {

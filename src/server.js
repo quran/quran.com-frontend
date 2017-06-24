@@ -113,13 +113,7 @@ server.use((req, res, next) => {
             }
 
             const html = `<!doctype html>
-            ${ReactDOM.renderToString(
-              <Html
-                component={component}
-                store={store}
-                assets={webpack_isomorphic_tools.assets()}
-              />
-            )}`;
+            ${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`;
 
             return res.send(html);
           })

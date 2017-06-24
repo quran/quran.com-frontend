@@ -168,19 +168,31 @@ li em{
   direction: rtl;
   font-family: 'Nafees';
   text-align: right;
-  line-height: 30px;
 
   #arabic{
     font-family: monospace;
   }
 }
 
+.text-translation{
+  .urdu, .punjabi, .persian {
+    float: right;
+    line-height: 1.7;
+    clear: both;
+    width: 100%;
+  }
+}
 .persian{
+  text-align: right;
   direction: rtl;
 }
 
 .modal-backdrop{
   bottom: 0;
+}
+
+.foote-note-text{
+  overflow-y: auto;
 }
 
 // NOTE: This is for dropdown in navbar on mobile

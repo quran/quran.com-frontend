@@ -14,6 +14,8 @@ import {
   isTafsirLoaded
 } from 'redux/actions/verses.js';
 
+import { isJuzsLoaded, loadJuzs } from 'redux/actions/juzs.js';
+
 import { debug } from 'helpers';
 
 const determinePage = (range) => {
@@ -59,6 +61,19 @@ export const chaptersConnect = ({ store: { getState, dispatch } }) => {
   return dispatch(loadAll());
 };
 
+export const juzsConnect = ({ store: { getState, dispatch } }) => {
+  debug('component:JuzConnect', 'Init');
+
+  if (isJuzsLoaded(getState())) return false;
+
+  if (__CLIENT__) {
+    dispatch(loadJuzs());
+    return true;
+  }
+
+  return dispatch(loadJuzs());
+};
+
 export const chapterInfoConnect = ({
   store: { dispatch, getState },
   params
@@ -82,7 +97,8 @@ export const versesConnect = ({
 
   const chapterId = parseInt(params.chapterId, 10);
   const paging = determinePage(params.range);
-  const translations = params.translations || location.query.translations;
+  const translations =
+    params.translations || (location && location.query.translations);
 
   if (chapterId !== getState().chapters.current) {
     dispatch(setCurrentSurah(chapterId));

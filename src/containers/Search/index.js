@@ -16,7 +16,6 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 const style = require('./style.scss');
 
 class Search extends Component {
-
   static contextTypes = {
     metrics: MetricsPropTypes.metrics
   };
@@ -26,10 +25,10 @@ class Search extends Component {
     const selectedPage = payload.selected + 1;
 
     if (currentPage !== selectedPage) {
-      this.context.metrics.track(
-        'Search',
-        { action: 'paginate', label: `${query} - ${selectedPage}` }
-      );
+      this.context.metrics.track('Search', {
+        action: 'paginate',
+        label: `${query} - ${selectedPage}`
+      });
 
       return push({
         pathname: '/search',
@@ -94,12 +93,22 @@ class Search extends Component {
   }
 
   renderBody() {
-    const { isErrored, isLoading, results, entities, options, location: { query } } = this.props;
+    const {
+      isErrored,
+      isLoading,
+      results,
+      entities,
+      options,
+      location: { query }
+    } = this.props;
 
     if (!query || !query.q) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
-          <LocaleFormattedMessage id="search.nothing" defaultMessage="No search query." />
+          <LocaleFormattedMessage
+            id="search.nothing"
+            defaultMessage="No search query."
+          />
         </h3>
       );
     }
@@ -107,7 +116,10 @@ class Search extends Component {
     if (isErrored) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
-          <LocaleFormattedMessage id="search.error" defaultMessage="Sorry, there was an error with your search." />
+          <LocaleFormattedMessage
+            id="search.error"
+            defaultMessage="Sorry, there was an error with your search."
+          />
         </h3>
       );
     }
@@ -119,7 +131,10 @@ class Search extends Component {
     if (!results.length) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
-          <LocaleFormattedMessage id="search.noResult" defaultMessage="No results found." />
+          <LocaleFormattedMessage
+            id="search.noResult"
+            defaultMessage="No results found."
+          />
         </h3>
       );
     }
@@ -143,10 +158,12 @@ class Search extends Component {
       <div className="index-page">
         <Helmet
           title={query}
-          style={[{
-            cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;}
+          style={[
+            {
+              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;}
             .text-translation{font-size: ${options.fontSize.translation}rem;}`
-          }]}
+            }
+          ]}
         />
         <IndexHeader />
         {this.renderStatsBar()}
@@ -173,7 +190,8 @@ Search.propTypes = {
   results: PropTypes.arrayOf(PropTypes.string),
   entities: PropTypes.arrayOf(customPropTypes.verseType),
   push: PropTypes.func.isRequired,
-  location: PropTypes.shape({ // eslint-disable-line
+  location: PropTypes.shape({
+    // eslint-disable-line
     q: PropTypes.string,
     p: PropTypes.string
   }),
@@ -184,16 +202,18 @@ Search.defaultProps = {
   results: []
 };
 
-const AsyncSearch = asyncConnect([{
-  promise({ store: { dispatch }, location }) {
-    if (__CLIENT__) {
-      dispatch(search(location.query || location.q));
-      return false;
-    }
+const AsyncSearch = asyncConnect([
+  {
+    promise({ store: { dispatch }, location }) {
+      if (__CLIENT__) {
+        dispatch(search(location.query || location.q));
+        return false;
+      }
 
-    return dispatch(search(location.query || location.q));
+      return dispatch(search(location.query || location.q));
+    }
   }
-}])(Search);
+])(Search);
 
 function mapStateToProps(state) {
   return {

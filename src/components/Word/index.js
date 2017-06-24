@@ -31,13 +31,20 @@ class Word extends Component {
   };
 
   handleSegmentPlay = () => {
-    const { word, currentVerse, audioActions, audioPosition, isPlaying, isSearched } = this.props;
+    const {
+      word,
+      currentVerse,
+      audioActions,
+      audioPosition,
+      isPlaying,
+      isSearched
+    } = this.props;
 
     if (isSearched || !word.audio) {
       return;
     }
 
-    if ((currentVerse === word.verseKey) && isPlaying) {
+    if (currentVerse === word.verseKey && isPlaying) {
       audioActions.setCurrentWord(word.code);
     } else {
       audioActions.pause();
@@ -47,13 +54,26 @@ class Word extends Component {
   };
 
   render() {
-    const { tooltip, word, currentVerse, isPlaying, audioPosition, useTextFont } = this.props;
+    const {
+      tooltip,
+      word,
+      currentVerse,
+      isPlaying,
+      audioPosition,
+      useTextFont
+    } = this.props;
 
     let text;
     let spacer;
-    const highlight = currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
-    const className = `${useTextFont ? 'text-' : ''}${word.className} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
-    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
+    const highlight = currentVerse === word.verseKey && isPlaying
+      ? 'highlight'
+      : '';
+    const className = `${useTextFont
+      ? 'text-'
+      : ''}${word.className} ${word.charType} ${highlight} ${word.highlight
+      ? word.highlight
+      : ''}`;
+    const id = `word-${word.verseKey.replace(/:/, '-')}-${word.position}`;
 
     if (useTextFont) {
       if (word.charType === CHAR_TYPE_END) {
@@ -72,7 +92,7 @@ class Word extends Component {
     return (
       <span>
         <b // eslint-disable-line
-          { ...bindTooltip}
+          {...bindTooltip}
           key={word.code}
           id={id}
           onDoubleClick={this.handleSegmentPlay}
