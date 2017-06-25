@@ -13,7 +13,7 @@ import fontFaces from './fontFaces';
 import auth from './auth';
 import bookmarks from './bookmarks';
 import media from './media';
-import footNote from './footNote';
+import juzs from './juzs';
 
 export default combineReducers({
   routing: routerReducer,
@@ -29,5 +29,5 @@ export default combineReducers({
   searchResults,
   suggestResults,
   options,
-  footNote
+  juzs
 });

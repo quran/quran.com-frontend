@@ -28,6 +28,7 @@ export default {
     'ayah.media.lectureFrom': 'مشاهدة محاضرة {from}',
     'ayah.bookmarked': 'إشارة مرجعية',
     'ayah.bookmark': 'المرجعية',
+    'ayah.notFound': 'لم يتم العثور على الآية',
 
     'search.placeholder': 'بحث',
     'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
@@ -71,14 +72,16 @@ export default {
     'nav.otherLinks': 'روابط اخرى',
     'nav.contactUs': 'اتصل بنا',
     'nav.help': 'مساعدة وتعليقات',
-    'nav.aboutQuranProject': 'Quran.com المعروف أيضا باسم القرآن الكريم، قناة القرآن الكريم، القرآن الكريم، القرآن الكريم) هو مشروع خيري)',  // eslint-disable-line max-len
+    'nav.aboutQuranProject': 'Quran.com المعروف أيضا باسم القرآن الكريم، قناة القرآن الكريم، القرآن الكريم، القرآن الكريم) هو مشروع خيري)', // eslint-disable-line max-len
     'nav.rightsReserved': 'كل الحقوق محفوظة',
     'nav.mobile': 'التليفون المحمول',
     'nav.navigate': 'انتقل',
     'nav.legacySite': 'الموقع القديم',
 
-    'login.message': 'تسجيل الدخول إلى Quran.com لتخزين كل ما تبذلونه من العناوين والملاحظات والأنشطة.',
+    'juz.index.heading': 'الجوز',
 
-    'ayah.notFound': 'لم يتم العثور على الآية'
+    'login.message': 'تسجيل الدخول إلى Quran.com لتخزين كل ما تبذلونه من العناوين والملاحظات والأنشطة.',
+    'error.invalid-surah': "السورة خارج النطاق. الرجاء الانتقال إلى <a href='/'> الصفحة الرئيسية </a> وتحديد سورة",
+    'error.invalid-ayah': "آية خارج النطاق. الرجاء الانتقال إلى <a href='/'> الصفحة الرئيسية </a> وتحديد سورة / آية"
   }
 };

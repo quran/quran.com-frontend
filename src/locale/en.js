@@ -78,6 +78,10 @@ export default {
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
 
-    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.'
+    'juz.index.heading': 'Juz',
+
+    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.',
+    'error.invalid-surah': "Surah is out of range. Please go to <a href='/'> home page</a> and select a Surah",
+    'error.invalid-ayah': "Ayah is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah"
   }
 };

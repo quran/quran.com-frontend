@@ -1,15 +1,16 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
-import Element from 'react-scroll/lib/components/Element';
 import { connect } from 'react-redux';
+import Element from 'react-scroll/lib/components/Element';
 import Loadable from 'react-loadable';
-import { load as loadAudio } from 'redux/actions/audioplayer';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
 import Translation from 'components/Translation';
 import debug from 'helpers/debug';
+
+import { loadTafsirs } from 'redux/actions/media';
 
 const styles = require('./style.scss');
 
@@ -24,34 +25,6 @@ const Share = Loadable({
 });
 
 class Verse extends Component {
-  // TODO: Should this belong here?
-  componentDidMount() {
-    const { verse, audio, isSearched } = this.props;
-
-    if (!isSearched) {
-      this.props.loadAudio({
-        chapterId: verse.chapterId,
-        verseId: verse.id,
-        verseKey: verse.verseKey,
-        audio
-      });
-    }
-  }
-
-  // TODO: Should this belong here?
-  componentWillReceiveProps(nextProps) {
-    if (!this.props.isSearched && this.props.audio !== nextProps.audio) {
-      const { verse, audio } = nextProps;
-
-      this.props.loadAudio({
-        chapterId: verse.chapterId,
-        verseId: verse.id,
-        verseKey: verse.verseKey,
-        audio
-      });
-    }
-  }
-
   shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.verse !== nextProps.verse,
@@ -198,6 +171,25 @@ class Verse extends Component {
     return false;
   }
 
+  renderTafsirLink() {
+    const { verse } = this.props;
+
+    return (
+      <a
+        tabIndex="-1"
+        className="text-muted"
+        onClick={() => this.props.loadTafsirs(verse)}
+      >
+        <i className="ss-book vertical-align-middle" />
+        {' '}
+        <LocaleFormattedMessage
+          id={'actions.tafsir'}
+          defaultMessage={'Tafsir'}
+        />
+      </a>
+    );
+  }
+
   renderCopyLink() {
     const { isSearched, verse, isPdf } = this.props;
 
@@ -251,8 +243,11 @@ class Verse extends Component {
     );
   }
 
-  renderAyahBadge() {
+  renderBadge() {
     const { isSearched, verse } = this.props;
+    const translations = (verse.translations || [])
+      .map(translation => translation.resourceId)
+      .join(',');
     let metric;
 
     const content = (
@@ -271,7 +266,7 @@ class Verse extends Component {
 
     return (
       <Link
-        to={`/${verse.chapterId}/${verse.verseNumber}`}
+        to={`/${verse.chapterId}/${verse.verseNumber}?translations=${translations}`}
         data-metrics-event-name={metric}
       >
         {content}
@@ -284,7 +279,7 @@ class Verse extends Component {
 
     if (isSearched) return false;
 
-    return <Share chapter={chapter} verseKey={verse.verseKey} />;
+    return <Share chapter={chapter} verse={verse} />;
   }
 
   renderControls() {
@@ -292,9 +287,10 @@ class Verse extends Component {
 
     return (
       <div className={`col-md-1 col-sm-1 ${styles.controls}`}>
-        {this.renderAyahBadge()}
+        {this.renderBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
+        {this.renderTafsirLink()}
         {this.renderBookmark()}
         {!isPdf && this.renderShare()}
       </div>
@@ -337,8 +333,7 @@ Verse.propTypes = {
   iscurrentVerse: PropTypes.bool,
   currentVerse: PropTypes.string,
   userAgent: PropTypes.object, // eslint-disable-line
-  audio: PropTypes.number.isRequired,
-  loadAudio: PropTypes.func.isRequired,
+  loadTafsirs: PropTypes.func.isRequired,
   isPdf: PropTypes.bool
 };
 
@@ -348,4 +343,4 @@ Verse.defaultProps = {
   isPdf: false
 };
 
-export default connect(() => ({}), { loadAudio })(Verse);
+export default connect(() => ({}), { loadTafsirs })(Verse);

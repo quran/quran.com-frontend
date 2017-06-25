@@ -1,6 +1,7 @@
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 .footer{
   background-color: #32312C;
-  padding: 3% 0%;
+  padding: 3% 0 5% 0;
   font-size: 14px;
   margin-top: 50px;
 
@@ -14,7 +15,7 @@
     }
 
     .list{
-      padding-left: 0px;
+      padding-left: 0;
       :global(li){
         list-style: none;
         padding: 5px 0;
@@ -29,6 +30,14 @@
     a:hover{
       color: #fff;
     }
+  }
+
+  @media(max-width: $screen-sm-max){
+    padding-bottom: 7%;
+  }
+
+  @media(max-width: $screen-sm){
+    padding-bottom: 9%;
   }
 
   :global(a){
