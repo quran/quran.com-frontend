@@ -9,6 +9,9 @@ const BabiliPlugin = require('babili-webpack-plugin');
 
 const isomorphicToolsConfig = require('./isomorphic-tools-configuration');
 
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
 const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(
   isomorphicToolsConfig
 );
@@ -103,24 +106,29 @@ module.exports = {
           //     },
           //     'sass-loader?sourceMap&sourceMapContents'
           //   ]
-          loader: 'css-loader?minimize&modules&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
+          loader:
+            'css-loader?minimize&modules&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
         })
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
@@ -128,7 +136,8 @@ module.exports = {
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
+        loader:
+          'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('images'),
@@ -194,6 +203,57 @@ module.exports = {
      * Babli is an ES6+ aware minifier based on the Babel toolchain (beta)
      */
     new BabiliPlugin(),
-    webpackIsomorphicToolsPlugin
+    webpackIsomorphicToolsPlugin,
+
+    new HtmlWebpackPlugin({
+      filename: 'index.html',
+      template: 'src/progressive.js'
+    }),
+
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'quran-com-frontend',
+      maximumFileSizeToCacheInBytes: 8388608,
+
+      // // Ensure all our static, local assets are cached.
+      staticFileGlobs: [
+        `${relativeAssetsPath}/**/*.{js,html,css,png,jpg,gif,svg,eot,ttf,woff}`
+      ],
+
+      directoryIndex: '/',
+      verbose: true,
+      runtimeCaching: [
+        {
+          urlPattern: /\${process.env.API_URL}\/(.*)/,
+          handler: 'networkFirst',
+          options: {
+            debug: true
+          }
+        }
+      ],
+      // By default, a cache-busting query parameter is appended to requests
+      // used to populate the caches, to ensure the responses are fresh.
+      // If a URL is already hashed by Webpack, then there is no concern
+      // about it being stale, and the cache-busting can be skipped.
+      dontCacheBustUrlsMatching: /\.\w{8}\./,
+      filename: 'quran-com-service-worker.js',
+      logger(message) {
+        if (message.indexOf('Total precache size is') === 0) {
+          // This message occurs for every build and is a bit too noisy.
+          return;
+        }
+        console.log(message);
+      },
+      minify: true,
+      // For unknown URLs, fallback to the index page
+      navigateFallback: '../dist/index.html',
+      // Ignores URLs starting from /__ (useful for Firebase):
+      // https://github.com/facebookincubator/create-react-app/issues/2237#issuecomment-302693219
+      navigateFallbackWhitelist: [/^(?!\/__).*/],
+      // Don't precache sourcemaps (they're large) and build asset manifest:
+      staticFileGlobsIgnorePatterns: [/\.map$/, /asset-manifest\.json$/],
+      // Work around Windows path issue in SWPrecacheWebpackPlugin:
+      // https://github.com/facebookincubator/create-react-app/issues/2235
+      stripPrefix: `${relativeAssetsPath.replace(/\\/g, '/')}/`
+    })
   ]
 };
