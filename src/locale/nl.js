@@ -4,7 +4,7 @@ export default {
     local: 'nederlands',
     'local.siteLocale': 'Site Taal',
     'local.changeLocal': 'Kies de taal waarin u de site wilt weergeven',
-    'local.navtiveName': 'Nederlands',
+    'local.nativeName': 'Nederlands',
     'local.selectLabel': 'Taal',
     'setting.title': 'Instellingen',
     'setting.chapters': 'Soeras',

@@ -9,13 +9,17 @@ const apple = require('../../../static/images/apple-white.svg');
 const play = require('../../../static/images/play-store.svg');
 const phones = require('../../../static/images/mockup-desktop@2x.png');
 
+const title = 'Quran Android and iOS apps by Quran.com';
+const description = 'From the makers of Quran.com comes Quran ' +
+                    'for iOS and Android, a beautiful, and ad-free mushaf app';
+
 export default () => (
   <div className={`${styles.container} montserrat container`}>
     <Helmet
       {
         ...makeHeadTags({
-          title: 'Quran Android and iOS apps by Quran.com',
-          description: 'From the makers of Quran.com comes Quran for iOS and Android, a beautiful, and ad-free mushaf apps' // eslint-disable-line max-len
+          title,
+          description
         })
       }
     />

@@ -4,7 +4,7 @@ export default {
     local: 'urdu',
     'local.siteLocale': 'سائٹ کی زبان',
     'local.changeLocal': 'جس زبان میں سایٹ دیکہنا چاہتے ہیں اس زبان کا انتخاب کریں',
-    'local.navtiveName': 'اردو',
+    'local.nativeName': 'اردو',
     'local.selectLabel': 'زبان',
     'setting.title': 'اختیارات',
     'setting.chapters': 'سورة',
