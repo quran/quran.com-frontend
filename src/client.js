@@ -19,6 +19,8 @@ import createStore from './redux/create';
 import routes from './routes';
 import Root from './containers/Root';
 
+import registerServiceWorker from './registerServiceWorker';
+
 const client = new ApiClient();
 const store = createStore(browserHistory, client, window.reduxData);
 const history = syncHistoryWithStore(browserHistory, store);
@@ -49,13 +51,12 @@ match(
     const component = (
       <Router
         {...renderProps}
-        render={props => (
+        render={props =>
           <ReduxAsyncConnect
             {...props}
             helpers={{ client }}
             render={applyRouterMiddleware(useScroll())}
-          />
-        )}
+          />}
       />
     );
 
@@ -87,3 +88,5 @@ match(
     }
   }
 );
+
+registerServiceWorker();

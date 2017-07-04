@@ -6,11 +6,12 @@
   "background_color": "#fff",
   "description": "The Quran translated into many languages in a simple and easy interface.",
   "theme_color": "#004f54",
-  "icons": [{
-    "src": "/android-chrome-48x48.png",
-    "sizes": "48x48",
-    "type": "image/png"
-  },
+  "icons": [
+    {
+      "src": "/android-chrome-48x48.png",
+      "sizes": "48x48",
+      "type": "image/png"
+    },
     {
       "src": "/android-chrome-144x144.png",
       "sizes": "144x144",
@@ -28,14 +29,18 @@
     }
   ],
   "prefer_related_applications": true,
-  "related_applications": [{
-    "platform": "play",
-    "url": "https://play.google.com/store/apps/details?id=com.quran.labs.androidquran"
-  },{
-    "platform": "itunes",
-    "url": "https://itunes.apple.com/us/app/quran-by-quran.com-qran/id1118663303"
-  },{
-    "platform": "web",
-    "url": "https://quran.com"
-  }]
+  "related_applications": [
+    {
+      "platform": "play",
+      "url": "https://play.google.com/store/apps/details?id=com.quran.labs.androidquran"
+    },
+    {
+      "platform": "itunes",
+      "url": "https://itunes.apple.com/us/app/quran-by-quran.com-qran/id1118663303"
+    },
+    {
+      "platform": "web",
+      "url": "https://quran.com"
+    }
+  ]
 }

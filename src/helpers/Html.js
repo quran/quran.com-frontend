@@ -17,14 +17,16 @@ const Html = ({ store, component, assets }) => {
         {head.script.toComponent()}
         {head.style.toComponent()}
 
-        {Object.keys(assets.styles).map((style, i) => (
+        <link rel="manifest" href="/manifest.json" />
+
+        {Object.keys(assets.styles).map((style, i) =>
           <link
             href={assets.styles[style]}
             key={i}
             rel="stylesheet"
             type="text/css"
           />
-        ))}
+        )}
         {Object.keys(assets.styles).length === 0
           ? <style
             dangerouslySetInnerHTML={{
@@ -62,12 +64,12 @@ const Html = ({ store, component, assets }) => {
           }}
           charSet="UTF-8"
         />
-        <script
+        {/* <script
           dangerouslySetInnerHTML={{
             __html: `if ('serviceWorker' in navigator) {navigator.serviceWorker.register('/quran-service-worker.js', {scope: './'}).then(function(registration) {}).catch(function(error) {});}`
           }}
           charSet="UTF-8"
-        />
+        />*/}
         <script
           dangerouslySetInnerHTML={{
             __html: `window.reduxData=${serialize(store.getState())};`
@@ -92,9 +94,9 @@ const Html = ({ store, component, assets }) => {
           <script src="https://cdn.ravenjs.com/3.0.4/raven.min.js" />}
         {Object.keys(assets.javascript)
           .filter(script => !assets.javascript[script].includes('-chunk'))
-          .map((script, i) => (
+          .map((script, i) =>
             <script src={assets.javascript[script]} key={i} />
-          ))}
+          )}
       </body>
     </html>
   );
