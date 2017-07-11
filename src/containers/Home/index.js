@@ -18,9 +18,7 @@ import Loader from 'quran-components/lib/Loader';
 import { chaptersConnect, juzsConnect } from '../Surah/connect';
 
 export const Title = styled.h4`
-  padding: 20px 0;
   font-size: 14px;
-  margin-top: 20px;
 
   span {
     margin: 0;
@@ -32,7 +30,6 @@ export const Title = styled.h4`
 
   &:last-child {
     margin-top: 25px;
-    border-bottom: solid 2px rgba(0,0,0,.05)
   }
 `;
 
@@ -41,7 +38,11 @@ class Home extends Component {
     const { chapters, juzs } = this.props;
 
     if (juzs.loading) {
-      return <div className="row"><Loader isActive relative /></div>;
+      return (
+        <div className="row">
+          <Loader isActive relative />
+        </div>
+      );
     }
 
     const juzList = Object.values(juzs.entities);
