@@ -1,5 +1,6 @@
 /* global document */
 import React, { PropTypes, Component } from 'react';
+import styled from 'styled-components';
 import Link from 'react-router/lib/Link';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -7,6 +8,30 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 const styles = require('./style.scss');
 
 const NavbarHeader = Navbar.Header;
+
+const List = styled.ul`
+  padding-left: 0;
+
+  li{
+    color: #777;
+
+    a{
+      color: #777;
+      padding: 10px 15px;
+      display: block;
+
+      .ss-icon{
+        font-size: 18px;
+        margin-right: 20px;
+      }
+
+      &:hover{
+        background: #f5f5f5;
+        color: #333;
+      }
+    }
+  }
+`;
 
 class GlobalSidebar extends Component {
   state = {
@@ -53,7 +78,7 @@ class GlobalSidebar extends Component {
             </p>
           </NavbarHeader>
         </Navbar>
-        <ul className={styles.list}>
+        <List>
           {children}
           <li>
             <a
@@ -142,7 +167,7 @@ class GlobalSidebar extends Component {
               Sunnah
             </a>
           </li>
-        </ul>
+        </List>
       </div>
     );
   }
