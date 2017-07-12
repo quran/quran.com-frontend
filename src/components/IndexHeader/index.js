@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-import Link from 'react-router/lib/Link';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import SearchInput from 'components/SearchInput';
 import Jumbotron from 'quran-components/lib/Jumbotron';
 import styled from 'styled-components';

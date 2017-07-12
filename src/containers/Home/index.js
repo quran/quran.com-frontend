@@ -4,7 +4,6 @@ import styled from 'styled-components';
 import Helmet from 'react-helmet';
 import IndexHeader from 'components/IndexHeader';
 import cookie from 'react-cookie';
-import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import debug from 'helpers/debug';
 import LastVisit from 'components/Home/LastVisit';
@@ -125,16 +124,5 @@ Home.propTypes = {
   juzs: customPropTypes.juzs.isRequired
 };
 
-const AsyncHome = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: juzsConnect }
-])(Home);
-
-function mapStateToProps(state) {
-  return {
-    chapters: state.chapters.entities,
-    juzs: state.juzs
-  };
-}
-
-export default connect(mapStateToProps)(AsyncHome);
+// TODO: readd juzs
+export default connect(state => ({ chapters: state.chapters.entities }))(Home);

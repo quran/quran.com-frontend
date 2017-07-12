@@ -20,7 +20,6 @@ module.exports = {
     'babel-polyfill',
 
     'react-hot-loader/patch',
-    // 'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
     `bootstrap-loader/lib/bootstrap.loader?configFilePath=${root}/src/styles/bootstrap.config.json!bootstrap-loader/no-op.js`,
@@ -57,6 +56,7 @@ module.exports = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
+          'react-hot',
           {
             loader: 'babel-loader',
             options: {

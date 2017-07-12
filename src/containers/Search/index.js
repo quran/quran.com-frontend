@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
-import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
@@ -10,7 +9,6 @@ import { FormattedHTMLMessage } from 'react-intl';
 import IndexHeader from 'components/IndexHeader';
 import Verse from 'components/Verse';
 import Loader from 'quran-components/lib/Loader';
-import { search } from 'redux/actions/search.js';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('./style.scss');
@@ -202,19 +200,6 @@ Search.defaultProps = {
   results: []
 };
 
-const AsyncSearch = asyncConnect([
-  {
-    promise({ store: { dispatch }, location }) {
-      if (__CLIENT__) {
-        dispatch(search(location.query || location.q));
-        return false;
-      }
-
-      return dispatch(search(location.query || location.q));
-    }
-  }
-])(Search);
-
 function mapStateToProps(state) {
   return {
     isErrored: state.searchResults.errored,
@@ -231,4 +216,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { push })(AsyncSearch);
+export default connect(mapStateToProps, { push })(Search);

@@ -1,11 +1,10 @@
 /* global window, document */
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
 import Helmet from 'react-helmet';
@@ -29,8 +28,6 @@ import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
-import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
-
 const LoaderStyle = {};
 
 const style = require('./style.scss');
@@ -38,23 +35,23 @@ const style = require('./style.scss');
 const PageView = Loadable({
   loader: () =>
     import(/* webpackChunkName: "pageview" */ 'components/PageView'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const Audioplayer = Loadable({
   loader: () =>
     import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 const SurahInfo = Loadable({
   loader: () =>
     import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 const TopOptions = Loadable({
   loader: () =>
     import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 class Surah extends Component {
@@ -313,7 +310,7 @@ class Surah extends Component {
               </li>}
           </ul>
         }
-        loadingComponent={
+        loading={
           <Loader isActive={isLoading} relative style={LoaderStyle} />
         }
       />
@@ -477,12 +474,6 @@ Surah.propTypes = {
   isPlaying: PropTypes.bool
 };
 
-const AsyncSurah = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: chapterInfoConnect },
-  { promise: versesConnect }
-])(Surah);
-
 function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
@@ -530,4 +521,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AsyncSurah);
+export default connect(mapStateToProps, mapDispatchToProps)(Surah);

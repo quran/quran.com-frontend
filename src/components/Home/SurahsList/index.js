@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import debug from 'helpers/debug';
+import { Link } from 'react-router-dom';
 
 const Item = styled.li`
   color: ${props => props.theme.brandPrimary};

@@ -35,13 +35,13 @@ class LazyLoad extends Component {
   };
 
   render() {
-    const { isEnd, loadingComponent, endComponent } = this.props;
+    const { isEnd, loading, endComponent } = this.props;
 
     if (isEnd) {
       return endComponent;
     }
 
-    return loadingComponent;
+    return loading;
   }
 }
 
@@ -49,13 +49,13 @@ LazyLoad.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   isEnd: PropTypes.bool.isRequired,
   onLazyLoad: PropTypes.func.isRequired,
-  loadingComponent: PropTypes.element,
+  loading: PropTypes.element,
   endComponent: PropTypes.element,
   offset: PropTypes.number
 };
 
 LazyLoad.defaultProps = {
-  loadingComponent: 'Loading...',
+  loading: 'Loading...',
   endComponent: 'End.',
   offset: 1000
 };

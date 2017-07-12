@@ -1,7 +1,6 @@
 import * as customPropTypes from 'customPropTypes';
 import React from 'react';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 
 import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
@@ -10,12 +9,10 @@ import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
-import { chaptersConnect, chapterInfoConnect } from '../Surah/connect';
-
 const SurahInfo = Loadable({
   loader: () =>
     import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const ChapterInfo = ({ chapter, info }) => (
@@ -67,11 +64,6 @@ ChapterInfo.propTypes = {
   info: customPropTypes.infoType
 };
 
-const AsyncChapterInfo = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: chapterInfoConnect }
-])(ChapterInfo);
-
 function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
@@ -82,4 +74,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(AsyncChapterInfo);
+export default connect(mapStateToProps)(ChapterInfo);

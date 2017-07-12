@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Element from 'react-scroll/lib/components/Element';
 import Loadable from 'react-loadable';
@@ -16,12 +16,12 @@ const styles = require('./style.scss');
 
 const Copy = Loadable({
   loader: () => import('components/Copy'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const Share = Loadable({
   loader: () => import('components/Share'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 class Verse extends Component {

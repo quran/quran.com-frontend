@@ -2,7 +2,7 @@
 import React, { PropTypes, Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 
@@ -41,6 +41,7 @@ class GlobalNav extends Component {
   };
 
   isHome() {
+    return true; // TODO: Change this
     return this.props.location.pathname === '/';
   }
 

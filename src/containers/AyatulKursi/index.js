@@ -1,11 +1,10 @@
 /* global window, document */
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
 import Helmet from 'react-helmet';
@@ -27,26 +26,24 @@ import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
-import { chaptersConnect, versesConnect } from 'containers/Surah/connect';
-
 const style = require('../Surah/style.scss');
 
 const PageView = Loadable({
   loader: () =>
     import(/* webpackChunkName: "pageview" */ 'components/PageView'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const Audioplayer = Loadable({
   loader: () =>
     import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const TopOptions = Loadable({
   loader: () =>
     import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const title = 'Ayatul Kursi';
@@ -222,14 +219,6 @@ AyatulKursi.propTypes = {
   isPlaying: PropTypes.bool
 };
 
-const AsyncAyatulKursi = asyncConnect([
-  { promise: chaptersConnect },
-  {
-    promise: ({ store }) =>
-      versesConnect({ store, params: { chapterId: '2', range: '255' } })
-  }
-])(AyatulKursi);
-
 function mapStateToProps(state) {
   const chapterId = 2;
   const chapter: Object = state.chapters.entities[chapterId];
@@ -265,4 +254,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AsyncAyatulKursi);
+export default connect(mapStateToProps, mapDispatchToProps)(AyatulKursi);

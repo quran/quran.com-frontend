@@ -2,7 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import Drawer from 'quran-components/lib/Drawer';
 import SearchInput from 'components/SearchInput';
 import SurahsDropdown from 'components/SurahsDropdown';

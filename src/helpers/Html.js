@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
 
-const Html = ({ store, component, assets }) => {
+const Html = ({ store, component, assets, state }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
   const head = Helmet.rewind();
   return (
@@ -88,6 +88,7 @@ const Html = ({ store, component, assets }) => {
                 `
             }}
           />}
+        <span dangerouslySetInnerHTML={{ __html: state }} />
         {process.env.NODE_ENV === 'production' &&
           <script src="https://cdn.ravenjs.com/3.0.4/raven.min.js" />}
         {Object.keys(assets.javascript)

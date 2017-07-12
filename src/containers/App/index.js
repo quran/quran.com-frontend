@@ -1,42 +1,41 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
+import { Switch, Route, Redirect, withRouter } from 'react-router';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import Loadable from 'react-loadable';
+import { routes } from 'routes';
 import ComponentLoader from 'components/ComponentLoader';
 import debug from 'helpers/debug';
 import config from 'config';
 import metricsConfig from 'helpers/metrics';
-import Footer from 'components/Footer';
+import GlobalNav from 'components/GlobalNav';
 import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
 import Loader from 'quran-components/lib/Loader';
-import authConnect from './connect';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
-const GlobalNav = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "globalnav" */ 'components/GlobalNav'),
-  LoadingComponent: ComponentLoader
+const Footer = Loadable({
+  loader: () => import(/* webpackChunkName: "footer" */ 'components/Footer'),
+  loading: ComponentLoader
 });
 
 const GlobalSidebar = Loadable({
   loader: () =>
     import(/* webpackChunkName: "globalsidebar" */ 'components/GlobalSidebar'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const SmartBanner = Loadable({
   loader: () =>
     import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 class App extends Component {
@@ -105,7 +104,11 @@ class App extends Component {
             open={this.state.sidebarOpen}
             handleOpen={open => this.setState({ sidebarOpen: open })}
           />}
-        {children || main}
+        <Switch>
+          {routes.map(route => <Route {...route} />)}
+          <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
+          <Redirect from="/:chapterId/:from::to" to="/:chapterId/:from-:to" />
+        </Switch>
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         {footer || <Footer />}
         {__CLIENT__ &&
@@ -126,7 +129,6 @@ class App extends Component {
 }
 
 const metricsApp = metrics(metricsConfig)(App);
-const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 
 App.propTypes = {
   media: customPropTypes.media.isRequired,
@@ -140,9 +142,11 @@ App.propTypes = {
   loadingFootNote: PropTypes.bool
 };
 
-export default connect(
-  state => ({
-    media: state.media
-  }),
-  { removeMedia }
-)(AsyncApp);
+export default withRouter(
+  connect(
+    state => ({
+      media: state.media
+    }),
+    { removeMedia }
+  )(metricsApp)
+);

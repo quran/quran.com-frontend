@@ -1,7 +1,6 @@
 import * as customPropTypes from 'customPropTypes';
 import React from 'react';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 
 import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
@@ -10,11 +9,9 @@ import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
-import { versesConnect, tafsirConnect } from '../Surah/connect';
-
 const Tafsir = Loadable({
   loader: () => import('components/Tafsir'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const VerseTafsir = ({ verse, tafsir }) => (
@@ -74,11 +71,6 @@ VerseTafsir.propTypes = {
   tafsir: customPropTypes.tafsirType
 };
 
-const AsyncTafsir = asyncConnect([
-  { promise: versesConnect },
-  { promise: tafsirConnect }
-])(VerseTafsir);
-
 function mapStateToProps(state, ownProps) {
   const verseKey = `${ownProps.params.chapterId}:${ownProps.params.range}`;
   const chapterId = parseInt(ownProps.params.chapterId, 10);
@@ -91,4 +83,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(AsyncTafsir);
+export default connect(mapStateToProps)(VerseTafsir);

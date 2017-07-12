@@ -25,7 +25,7 @@ const style = require('./style.scss');
 const RepeatDropdown = Loadable({
   loader: () =>
     import(/* webpackChunkName: "repeatdropdown" */ './RepeatDropdown'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const Wrapper = styled.div`
