@@ -1,20 +1,34 @@
 /* global window */
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
-import Link from 'react-router/lib/Link';
+import Loadable from 'react-loadable';
+import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
+import Drawer from 'quran-components/lib/Drawer';
 import Nav from 'react-bootstrap/lib/Nav';
 
-import LocaleSwitcher from 'components/LocaleSwitcher';
+import ComponentLoader from '../ComponentLoader';
+import LocaleSwitcher from '../LocaleSwitcher';
+import LocaleFormattedMessage from '../LocaleFormattedMessage';
 
-import debug from 'helpers/debug';
+import debug from '../../helpers/debug';
 
 const styles = require('./style.scss');
 
+const NavbarHeader = Navbar.Header;
+
+const GlobalSidebar = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "GlobalSidebar" */ 'components/GlobalSidebar'),
+  loading: ComponentLoader
+});
+
 class GlobalNav extends Component {
   state = {
-    scrolled: false
+    scrolled: false,
+    drawerOpen: false
   };
 
   componentDidMount() {
@@ -40,8 +54,12 @@ class GlobalNav extends Component {
     return false;
   };
 
+  handleDrawerToggle = (open) => {
+    this.setState({ drawerOpen: open });
+  };
+
   isHome() {
-    return this.props.location.pathname === '/';
+    return !this.props.history || this.props.history.location.pathname === '/';
   }
 
   renderRightControls() {
@@ -80,8 +98,8 @@ class GlobalNav extends Component {
           </a>
         </li>,
         <LocaleSwitcher />,
-        user
-          ? <li>
+        user ? (
+          <li>
             <Link
               to="/profile"
               data-metrics-event-name="IndexHeader:Link:Profile"
@@ -89,13 +107,15 @@ class GlobalNav extends Component {
               {user.firstName || user.name}
             </Link>
           </li>
-          : <noscript />
+        ) : (
+          <noscript />
+        )
       ]
     );
   }
 
   render() {
-    const { leftControls, handleSidebarToggle, isStatic } = this.props;
+    const { leftControls, isStatic } = this.props;
     debug('component:GlobalNav', 'Render');
 
     return (
@@ -105,23 +125,44 @@ class GlobalNav extends Component {
         fluid
         static={isStatic}
       >
-        <button
-          type="button"
-          className="navbar-toggle collapsed"
-          onClick={handleSidebarToggle}
+        <Drawer
+          drawerClickClose={false}
+          open={this.state.drawerOpen}
+          handleOpen={this.handleDrawerToggle}
+          toggle={
+            <button type="button" className="navbar-toggle collapsed">
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+            </button>
+          }
+          header={
+            <NavbarHeader>
+              <p className="navbar-text">
+                <Link to="/">
+                  <LocaleFormattedMessage
+                    id="nav.title"
+                    defaultMessage="Quran"
+                  />
+                </Link>
+              </p>
+            </NavbarHeader>
+          }
         >
-          <span className="sr-only">Toggle navigation</span>
-          <span className="icon-bar" />
-          <span className="icon-bar" />
-          <span className="icon-bar" />
-        </button>
+          <GlobalSidebar />
+        </Drawer>
         <Nav className={styles.nav}>
-          {!this.isHome() &&
+          {!this.isHome() && (
             <li>
-              <Link to="/"><i className="ss-icon ss-home" /></Link>
-            </li>}
-          {this.isHome() &&
-            <LocaleSwitcher className="visible-xs-inline-block" />}
+              <Link to="/">
+                <i className="ss-icon ss-home" />
+              </Link>
+            </li>
+          )}
+          {this.isHome() && (
+            <LocaleSwitcher className="visible-xs-inline-block" />
+          )}
           {leftControls &&
             leftControls.map((control, index) =>
               React.cloneElement(control, { key: index })
@@ -138,13 +179,12 @@ class GlobalNav extends Component {
 }
 
 GlobalNav.propTypes = {
-  // handleToggleSidebar: PropTypes.func.isRequired,
   leftControls: PropTypes.arrayOf(PropTypes.element),
   rightControls: PropTypes.arrayOf(PropTypes.element),
-  handleSidebarToggle: PropTypes.func.isRequired,
   isStatic: PropTypes.bool.isRequired,
   user: customPropTypes.userType,
-  location: customPropTypes.location
+  location: customPropTypes.location,
+  history: PropTypes.object.isRequired // eslint-disable-line
 };
 
 GlobalNav.defaultProps = {

@@ -1,5 +1,6 @@
 /* eslint-disable global-require, quotes, max-len */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 

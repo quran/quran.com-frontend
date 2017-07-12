@@ -1,5 +1,6 @@
 /* global window */
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import cookie from 'react-cookie';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
@@ -75,11 +76,7 @@ class LocaleSwitcher extends Component {
     return (
       <MenuItem
         icon={<Icon type="globe" />}
-        menu={
-          <Menu>
-            {this.renderList()}
-          </Menu>
-        }
+        menu={<Menu>{this.renderList()}</Menu>}
       >
         <LocaleFormattedMessage
           id="local.siteLocale"

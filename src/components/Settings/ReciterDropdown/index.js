@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
@@ -9,7 +10,6 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { loadRecitations } from 'redux/actions/options';
 
 class ReciterDropdown extends Component {
-
   componentDidMount() {
     if (!this.props.recitations.length) {
       return this.props.loadRecitations();
@@ -22,9 +22,7 @@ class ReciterDropdown extends Component {
     const { audio, onOptionChange, recitations } = this.props;
 
     return recitations.map(slug => (
-      <MenuItem
-        key={slug.id}
-      >
+      <MenuItem key={slug.id}>
         <Radio
           checked={slug.id === audio}
           id={`slug-${slug.id}`}
@@ -46,10 +44,15 @@ class ReciterDropdown extends Component {
       <MenuItem
         icon={<Icon type="mic" />}
         menu={
-          recitations.length ? <Menu>{this.renderMenu()}</Menu> : <Loader isActive />
+          recitations.length
+            ? <Menu>{this.renderMenu()}</Menu>
+            : <Loader isActive />
         }
       >
-        <LocaleFormattedMessage id="setting.reciters.title" default="Reciters" />
+        <LocaleFormattedMessage
+          id="setting.reciters.title"
+          default="Reciters"
+        />
       </MenuItem>
     );
   }
@@ -62,8 +65,11 @@ ReciterDropdown.propTypes = {
   recitations: customPropTypes.recitations
 };
 
-export default connect(state => ({
-  recitations: state.options.options.recitations,
-  loadingRecitations: state.options.loadingRecitations,
-  audio: state.options.audio
-}), { loadRecitations })(ReciterDropdown);
+export default connect(
+  state => ({
+    recitations: state.options.options.recitations,
+    loadingRecitations: state.options.loadingRecitations,
+    audio: state.options.audio
+  }),
+  { loadRecitations }
+)(ReciterDropdown);

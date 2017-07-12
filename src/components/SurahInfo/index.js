@@ -1,25 +1,29 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import Loader from 'quran-components/lib/Loader';
 
 const style = require('./style.scss');
 
-const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
+const SurahInfo = ({ chapter, chapterInfo, isShowingSurahInfo, onClose }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
-  if (!info) return <Loader isActive />;
+  if (!chapterInfo) return <Loader isActive />;
 
   return (
     <div className={`col-xs-12 ${style.container} chapter-info ${style.show}`}>
-      {onClose &&
+      {onClose && (
         <button
           tabIndex="-1"
           className={`${style.close} ss-delete`}
           onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
-        />}
+        />
+      )}
       <div className={`${style.row} row`}>
         <div
-          className={`col-md-3 col-xs-6 ${style.bg} ${style[chapter.revelationPlace]}`}
+          className={`col-md-3 col-xs-6 ${style.bg} ${style[
+            chapter.revelationPlace
+          ]}`}
         />
         <div className={`${style.list} col-md-1 col-xs-6`}>
           <dl>
@@ -30,14 +34,12 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
           </dl>
         </div>
         <div
-          className={`${style.info} ${info.languageName} times-new col-md-8`}
+          className={`${style.info} ${chapterInfo.languageName} times-new col-md-8`}
         >
-          <div dangerouslySetInnerHTML={{ __html: info.text }} />
+          <div dangerouslySetInnerHTML={{ __html: chapterInfo.text }} />
           <div>
             <p>
-              <em>
-                Source: {info.source}
-              </em>
+              <em>Source: {chapterInfo.source}</em>
             </p>
           </div>
         </div>
@@ -49,8 +51,8 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
 SurahInfo.propTypes = {
   onClose: PropTypes.func,
   isShowingSurahInfo: PropTypes.bool,
-  chapter: customPropTypes.surahType,
-  info: customPropTypes.infoType
+  chapter: customPropTypes.chapterType,
+  chapterInfo: customPropTypes.infoType
 };
 
 export default SurahInfo;

@@ -9,9 +9,9 @@
   border: none;
   font-weight: 300;
 
-  &.open{
-    :global(.dropdown-icon.ss-icon:before){
-      content:"▴";
+  &.open {
+    :global(.dropdown-icon.ss-icon:before) {
+      content: '▴';
     }
   }
 
@@ -31,20 +31,20 @@
   padding-top: 70px;
   min-height: 100vh;
 
-  @media(max-width: $screen-xs-max) {
+  @media (max-width: $screen-xs-max) {
     padding-top: 70px;
   }
 }
 
-.sidebarItem{
+.sidebarItem {
   padding: 10px 12px;
   color: #333;
   font-weight: 300;
 
-  :global(.switch){
+  :global(.switch) {
     float: right;
   }
-  :global(a){
+  :global(a) {
     color: #333;
   }
 }

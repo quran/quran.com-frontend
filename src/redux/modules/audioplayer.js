@@ -14,10 +14,8 @@ import {
   SET_REPEAT,
   TOGGLE_SCROLL,
   UPDATE,
-  // LOAD,
   LOAD_SUCCESS
-  // LOAD_FAIL
-} from 'redux/constants/audioplayer.js';
+} from '../constants/audioplayer';
 
 import {
   LOAD as VERSES_LOAD,
@@ -32,7 +30,6 @@ const initialState = {
   currentFile: null,
   currentVerse: null,
   currentWord: null,
-  currentTime: 0,
   duration: 1,
   isPlaying: false,
   repeat: {
@@ -113,9 +110,7 @@ export default function reducer(state = initialState, action = {}) {
 
       return {
         ...state,
-        currentVerse: nextId,
-        currentFile: state.files[chapterId][nextId],
-        currentTime: 0
+        currentVerse: nextId
       };
     }
     case PREVIOUS: {
@@ -125,8 +120,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         currentVerse: nextId,
-        currentFile: state.files[chapterId][nextId],
-        currentTime: 0
+        currentFile: state.files[chapterId][nextId]
       };
     }
     case SET_AYAH: {
@@ -137,8 +131,7 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         currentVerse,
-        currentFile,
-        currentTime: 0
+        currentFile
       };
     }
     case SET_REPEAT: {

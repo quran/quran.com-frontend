@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
@@ -7,12 +8,18 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('./style.scss');
 
-class VersesDropdown extends Component {
-  renderItem = (ayah, index) => {
-    const { chapter, loadedVerses, isReadingMode, onClick } = this.props;
+const VersesDropdown = ({
+  chapter,
+  loadedVerses,
+  isReadingMode,
+  onClick,
+  className
+}) => {
+  const renderItem = (ayah, index) => {
     const number = index + 1;
+    const hasVerse = loadedVerses.find(verse => verse.verseNumber === number);
 
-    if (loadedVerses.has(number) && !isReadingMode) {
+    if (hasVerse && !isReadingMode) {
       return (
         <li key={index}>
           <Link
@@ -38,38 +45,34 @@ class VersesDropdown extends Component {
     );
   };
 
-  renderMenu() {
-    const { chapter } = this.props;
+  const renderMenu = () => {
     const array = Array(chapter.versesCount).join().split(',');
 
-    return array.map((ayah, index) => this.renderItem(ayah, index));
-  }
+    return array.map((ayah, index) => renderItem(ayah, index));
+  };
 
-  render() {
-    const { className } = this.props;
+  const title = (
+    <LocaleFormattedMessage
+      id={'setting.verses'}
+      defaultMessage={'Go to verse'}
+    />
+  );
 
-    const title = (
-      <LocaleFormattedMessage
-        id={'setting.verses'}
-        defaultMessage={'Go to verse'}
-      />
-    );
-
-    return (
-      <NavDropdown
-        className={`dropdown ${className} ${style.dropdown}`}
-        id="verses-dropdown"
-        title={title}
-      >
-        {this.renderMenu()}
-      </NavDropdown>
-    );
-  }
-}
+  return (
+    <NavDropdown
+      link
+      className={`dropdown ${className} ${style.dropdown}`}
+      id="verses-dropdown"
+      title={title}
+    >
+      {renderMenu()}
+    </NavDropdown>
+  );
+};
 
 VersesDropdown.propTypes = {
   loadedVerses: PropTypes.instanceOf(Set).isRequired,
-  chapter: customPropTypes.surahType.isRequired, // Set
+  chapter: customPropTypes.chapterType.isRequired, // Set
   onClick: PropTypes.func.isRequired,
   isReadingMode: PropTypes.bool,
   className: PropTypes.string

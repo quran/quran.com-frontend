@@ -1,6 +1,6 @@
 import React from 'react';
-import Link from 'react-router/lib/Link';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { Title } from 'containers/Home';

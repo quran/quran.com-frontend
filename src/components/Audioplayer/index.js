@@ -1,10 +1,10 @@
 /* global document */
 // TODO: This file is too too large.
-import React, { Component, PropTypes } from 'react';
 import styled from 'styled-components';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
-import { camelize } from 'humps';
 import Loadable from 'react-loadable';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
@@ -24,9 +24,26 @@ const style = require('./style.scss');
 
 const RepeatDropdown = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "repeatdropdown" */ './RepeatDropdown'),
-  LoadingComponent: ComponentLoader
+    import(/* webpackChunkName: "RepeatDropdown" */ './RepeatDropdown'),
+  loading: ComponentLoader
 });
+
+const Container = styled.div`
+  position: fixed;
+  bottom: 15px;
+  display: block;
+  user-select: none;
+  height: auto;
+  z-index: 1;
+  padding: 10px 20px 5px;
+  background: #fff;
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+  min-width: 340px;
+  @media (max-width: $screen-sm) {
+    bottom: 0;
+    width: 100%;
+  }
+`;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -36,9 +53,14 @@ const Wrapper = styled.div`
   height: 10%;
 `;
 
-const ControlItem = styled.li`
+const ControlsContainer = styled.div`
+  display: table;
+  width: 100%;
+`;
+
+const ControlItem = styled.div`
+  display: table-cell;
   vertical-align: middle;
-  padding-right: 20px;
   color: #939598;
 `;
 
@@ -48,8 +70,7 @@ export class Audioplayer extends Component {
   };
 
   componentDidMount() {
-    const { currentFile, currentVerse, audio, verses, load } = this.props; // eslint-disable-line no-shadow, max-len
-    const nextVerse = verses[this.getNext()];
+    const { currentFile } = this.props; // eslint-disable-line no-shadow, max-len
 
     debug('component:Audioplayer', 'componentDidMount');
 
@@ -57,108 +78,62 @@ export class Audioplayer extends Component {
       return this.handleAddFileListeners(currentFile);
     }
 
-    load({
-      chapterId: currentVerse.chapterId,
-      verseId: currentVerse.id,
-      verseKey: currentVerse.verseKey,
-      audio
-    });
-
-    if (nextVerse) {
-      load({
-        chapterId: nextVerse.chapterId,
-        verseId: nextVerse.id,
-        verseKey: nextVerse.verseKey,
-        audio
-      });
-    }
-
     return false;
   }
 
-  componentWillReceiveProps(nextProps) {
-    // Make sure we have a current ayah to mount it to Audio
-    if (!this.props.currentVerse && !nextProps.currentFile) {
-      return false;
+  componentWillReceiveProps({ currentFile: nextFile }) {
+    const { currentFile } = this.props;
+
+    if (!currentFile && nextFile) {
+      this.handleAddFileListeners(nextFile);
     }
 
-    // First load
-    if (this.props.currentFile !== nextProps.currentFile) {
-      if (this.props.currentFile) {
-        this.handleRemoveFileListeners(this.props.currentFile);
-      }
-
-      return this.handleAddFileListeners(nextProps.currentFile);
+    if (currentFile !== nextFile) {
+      this.handleAddFileListeners(nextFile);
     }
-
-    // Change verse
-    if (this.props.currentVerse.verseKey !== nextProps.currentVerse.verseKey) {
-      if (this.props.currentFile) {
-        this.handleRemoveFileListeners(this.props.currentFile);
-      }
-
-      return this.handleAddFileListeners(nextProps.currentFile);
-    }
-
-    if (this.props.audio !== nextProps.audio) {
-      Object.keys(this.props.files).forEach(key =>
-        this.props.load({
-          chapterId: this.props.verses[key].chapterId,
-          verseId: this.props.verses[key].id,
-          verseKey: this.props.verses[key].verseKey,
-          audio: nextProps.audio
-        })
-      );
-    }
-
-    return false;
   }
 
-  componentDidUpdate(previousProps) {
-    const {
-      currentFile,
-      isPlaying,
-      verses,
-      audio,
-      currentVerse,
-      load
-    } = this.props;
-
-    if (
-      currentVerse.verseKey !== previousProps.currentVerse.verseKey &&
-      verses[this.getNext()]
-    ) {
-      const verse = verses[this.getNext()];
-      load({
-        chapterId: verse.chapterId,
-        verseId: verse.id,
-        verseKey: verse.verseKey,
-        audio
-      });
-    }
+  componentDidUpdate({
+    isPlaying: previousPlaying,
+    currentFile: previousFile
+  }) {
+    const { currentFile, isPlaying } = this.props;
 
     if (!currentFile) return false;
 
-    if (isPlaying) {
-      const playPromise = currentFile.play();
-      // Catch/silence error when a pause interrupts a play request
-      // on browsers which return a promise
-      if (playPromise !== undefined && typeof playPromise.then === 'function') {
-        playPromise.then(null, () => {});
+    if (isPlaying !== previousPlaying) {
+      if (isPlaying) {
+        debug('component:Audioplayer', 'play');
+        const playPromise = currentFile.play();
+        // Catch/silence error when a pause interrupts a play request
+        // on browsers which return a promise
+        if (
+          playPromise !== undefined &&
+          typeof playPromise.then === 'function'
+        ) {
+          playPromise.then(null, () => {});
+        }
       }
-    } else {
-      currentFile.pause();
+
+      if (!isPlaying) {
+        debug('component:Audioplayer', 'pause');
+        return currentFile.pause();
+      }
     }
 
-    return false;
-  }
-
-  componentWillUnmount() {
-    const { files, currentFile } = this.props;
-    debug('component:Audioplayer', 'componentWillUnmount');
-
-    if (files[currentFile]) {
-      return this.handleRemoveFileListeners(files[currentFile]);
+    if (currentFile !== previousFile) {
+      if (isPlaying) {
+        debug('component:Audioplayer', 'play');
+        const playPromise = currentFile.play();
+        // Catch/silence error when a pause interrupts a play request
+        // on browsers which return a promise
+        if (
+          playPromise !== undefined &&
+          typeof playPromise.then === 'function'
+        ) {
+          playPromise.then(null, () => {});
+        }
+      }
     }
 
     return false;
@@ -173,7 +148,7 @@ export class Audioplayer extends Component {
 
   getNext() {
     const { currentVerse, chapter, onLoadAyahs, verseIds } = this.props;
-    const ayahNum = currentVerse.verseKey.split(':')[1];
+    const ayahNum = currentVerse.verseNumber;
     const index = verseIds.findIndex(id => id === currentVerse.verseKey);
 
     if (chapter.versesCount === ayahNum + 1) {
@@ -189,35 +164,32 @@ export class Audioplayer extends Component {
     return verseIds[index + 1];
   }
 
-  handleAyahChange = (direction = 'next') => {
-    const { isPlaying, play, pause, currentVerse } = this.props; // eslint-disable-line no-shadow, max-len
-    const previouslyPlaying = isPlaying;
+  handleVerseChange = (direction = 'next') => {
+    const { pause, currentVerse } = this.props; // eslint-disable-line no-shadow, max-len
+    const directions = {
+      next: 'getNext',
+      previous: 'getPrevious'
+    };
 
-    if (isPlaying) pause();
-
-    const nextVerse = this[camelize(`get_${direction}`)]();
+    const nextVerse = this[directions[direction]]();
     if (!nextVerse) return pause();
 
     this.props[direction](currentVerse.verseKey);
 
     this.handleScrollTo(nextVerse);
 
-    this.preloadNext();
-
-    if (previouslyPlaying) play();
-
     return false;
   };
 
-  scrollToVerse = (ayahNum = this.props.currentVerse.verseKey) => {
-    scroller.scrollTo(`verse:${ayahNum}`, -45);
+  scrollToVerse = (verseNumber = this.props.currentVerse.verseKey) => {
+    scroller.scrollTo(`verse:${verseNumber}`, -45);
   };
 
-  handleScrollTo = (ayahNum) => {
+  handleScrollTo = (verseNumber) => {
     const { shouldScroll } = this.props;
 
     if (shouldScroll) {
-      this.scrollToVerse(ayahNum);
+      this.scrollToVerse(verseNumber);
     }
   };
 
@@ -225,24 +197,7 @@ export class Audioplayer extends Component {
     this.handleScrollTo();
 
     this.props.play();
-    this.preloadNext();
   };
-
-  preloadNext() {
-    const { currentVerse, files } = this.props;
-    const ayahIds = Object.keys(files);
-    const index = ayahIds.findIndex(id => id === currentVerse.verseKey) + 1;
-
-    for (let id = index; id <= index + 2; id += 1) {
-      if (ayahIds[id]) {
-        const verseKey = ayahIds[id];
-
-        if (files[verseKey]) {
-          files[verseKey].setAttribute('preload', 'auto');
-        }
-      }
-    }
-  }
 
   handleRepeat = (file) => {
     const {
@@ -259,18 +214,18 @@ export class Audioplayer extends Component {
 
     if (repeat.from > ayah && repeat.to < ayah) {
       // user selected a range where current ayah is outside
-      return this.handleAyahChange();
+      return this.handleVerseChange();
     }
 
     if (repeat.from === repeat.to) {
       // user selected single ayah repeat
-      if (ayah !== repeat.from) return this.handleAyahChange();
+      if (ayah !== repeat.from) return this.handleVerseChange();
 
       if (repeat.times === 1) {
         // end of times
         setRepeat({});
 
-        return this.handleAyahChange();
+        return this.handleVerseChange();
       }
 
       setRepeat({ ...repeat, times: repeat.times - 1 });
@@ -283,7 +238,7 @@ export class Audioplayer extends Component {
       // user selected a range
       if (ayah < repeat.to) {
         // still in range
-        return this.handleAyahChange();
+        return this.handleVerseChange();
       }
 
       if (ayah === repeat.to) {
@@ -292,7 +247,7 @@ export class Audioplayer extends Component {
           // end of times
           setRepeat({});
 
-          return this.handleAyahChange();
+          return this.handleVerseChange();
         }
 
         setRepeat({ ...repeat, times: repeat.times - 1 });
@@ -327,17 +282,13 @@ export class Audioplayer extends Component {
 
     // Preload file
     file.setAttribute('preload', 'auto');
+    file.currentTime = 0; // eslint-disable-line
 
-    const onLoadeddata = () => {
-      // Default current time to zero. This will change
-      file.currentTime = 0; // eslint-disable-line
-      // file.currentTime || currentTime || 0;
-
-      return update({
+    const onLoadeddata = () =>
+      update({
         duration: file.duration,
         isLoading: false
       });
-    };
 
     const onTimeupdate = () =>
       update({
@@ -352,11 +303,7 @@ export class Audioplayer extends Component {
         return this.handleRepeat(file);
       }
 
-      if (file.readyState >= 3 && file.paused) {
-        file.pause();
-      }
-
-      return this.handleAyahChange();
+      return this.handleVerseChange();
     };
 
     const onPlay = () => {
@@ -375,23 +322,8 @@ export class Audioplayer extends Component {
     return file;
   }
 
-  handleRemoveFileListeners = (file) => {
-    file.pause();
-    file.currentTime = 0; // eslint-disable-line no-param-reassign
-    file.onloadeddata = null; // eslint-disable-line no-param-reassign
-    file.ontimeupdate = null; // eslint-disable-line no-param-reassign
-    file.onplay = null; // eslint-disable-line no-param-reassign
-    file.onpause = null; // eslint-disable-line no-param-reassign
-    file.onended = null; // eslint-disable-line no-param-reassign
-    file.onprogress = null; // eslint-disable-line no-param-reassign
-  };
-
   handleTrackChange = (fraction) => {
-    const { currentFile, update } = this.props; // eslint-disable-line no-shadow
-
-    update({
-      currentTime: fraction * currentFile.duration
-    });
+    const { currentFile } = this.props;
 
     currentFile.currentTime = fraction * currentFile.duration;
   };
@@ -411,17 +343,16 @@ export class Audioplayer extends Component {
   }
 
   renderPreviousButton() {
-    const { currentVerse, files } = this.props;
-    if (!files) return false;
-    const index = Object.keys(files).findIndex(
-      id => id === currentVerse.verseKey
-    );
+    const { chapter, currentVerse } = this.props;
+    if (!chapter) return null;
+
+    const isBeginning = parseInt(currentVerse.verseNumber, 10) === 1;
 
     return (
       <a
         tabIndex="-1"
-        className={`pointer ${style.buttons} ${!index ? style.disabled : ''}`}
-        onClick={() => index && this.handleAyahChange('previous')}
+        className={`pointer ${style.buttons} ${!isBeginning ? style.disabled : ''}`}
+        onClick={() => isBeginning && this.handleVerseChange('previous')}
       >
         <i className="ss-icon ss-skipback" />
       </a>
@@ -430,15 +361,16 @@ export class Audioplayer extends Component {
 
   renderNextButton() {
     const { chapter, currentVerse } = this.props;
-    if (!chapter) return false;
+    if (!chapter) return null;
+
     const isEnd =
-      chapter.versesCount === parseInt(currentVerse.verseKey.split(':')[1], 10);
+      chapter.versesCount === parseInt(currentVerse.verseNumber, 10);
 
     return (
       <a
         tabIndex="-1"
         className={`pointer ${style.buttons} ${isEnd ? style.disabled : ''}`}
-        onClick={() => !isEnd && this.handleAyahChange()}
+        onClick={() => !isEnd && this.handleVerseChange()}
       >
         <i className="ss-icon ss-skipforward" />
       </a>
@@ -446,18 +378,13 @@ export class Audioplayer extends Component {
   }
 
   render() {
-    debug('component:Audioplayer', 'render');
-
     const {
       className,
       segments,
       isLoading,
       currentVerse,
       currentFile,
-      currentTime,
-      duration,
       chapter,
-      isPlaying,
       repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
       setRepeat // eslint-disable-line no-shadow
@@ -465,45 +392,40 @@ export class Audioplayer extends Component {
 
     if (isLoading || !currentFile) {
       return (
-        <li className={`${style.container} ${className}`}>
+        <Container className={className}>
           <div>
             <LocaleFormattedMessage
               id="app.loading"
               defaultMessage="Loading..."
             />
           </div>
-        </li>
+        </Container>
       );
     }
 
     return (
-      <div
-        className={`${isPlaying &&
-          style.isPlaying} ${style.container} ${className}`}
-      >
+      <Container className={className}>
         <Wrapper>
-          {currentFile && (
+          {currentFile &&
             <Track
-              progress={currentTime / duration * 100}
+              progress={currentFile.currentTime / currentFile.duration * 100}
               onTrackChange={this.handleTrackChange}
-            />
-          )}
+            />}
           {segments &&
-            segments[currentVerse.verseKey] && (
-              <Segments
-                segments={segments[currentVerse.verseKey]}
-                currentVerse={currentVerse.verseKey}
-                currentTime={currentTime}
-              />
-            )}
+            segments[currentVerse.verseKey] &&
+            <Segments
+              segments={segments[currentVerse.verseKey]}
+              currentVerse={currentVerse.verseKey}
+              currentTime={currentFile.currentTime}
+            />}
         </Wrapper>
-        <ul className="list-inline" style={{ margin: 0 }}>
+        <ControlsContainer>
           <ControlItem>
             <LocaleFormattedMessage
               id="player.currentVerse"
               defaultMessage="Ayah"
             />
-            : {currentVerse.verseKey.split(':')[1]}
+            : {currentVerse.verseNumber}
           </ControlItem>
           <ControlItem>{this.renderPreviousButton()}</ControlItem>
           <ControlItem>{this.renderPlayStopButtons()}</ControlItem>
@@ -512,7 +434,7 @@ export class Audioplayer extends Component {
             <RepeatDropdown
               repeat={repeat}
               setRepeat={setRepeat}
-              current={parseInt(currentVerse.verseKey.split(':')[1], 10)}
+              current={parseInt(currentVerse.verseNumber, 10)}
               chapter={chapter}
             />
           </ControlItem>
@@ -522,8 +444,8 @@ export class Audioplayer extends Component {
               onScrollToggle={this.handleScrollToggle}
             />
           </ControlItem>
-        </ul>
-      </div>
+        </ControlsContainer>
+      </Container>
     );
   }
 }
@@ -535,8 +457,6 @@ const mapStateToProps = (state, ownProps) => {
   return {
     files,
     verseIds,
-    segments: state.audioplayer.segments[ownProps.chapter.id],
-    currentFile: files[ownProps.currentVerse.verseKey],
     chapterId: ownProps.chapter.id,
     isPlaying: state.audioplayer.isPlaying,
     isLoading: state.audioplayer.isLoading,
@@ -550,12 +470,12 @@ const mapStateToProps = (state, ownProps) => {
 
 Audioplayer.propTypes = {
   className: PropTypes.string,
-  chapter: customPropTypes.surahType,
+  chapter: customPropTypes.chapterType,
   onLoadAyahs: PropTypes.func.isRequired,
   segments: customPropTypes.segments,
   // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
   files: PropTypes.object, // eslint-disable-line
-  currentVerse: PropTypes.verseType,
+  currentVerse: customPropTypes.verseType,
   isLoading: PropTypes.bool.isRequired,
   play: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
@@ -568,14 +488,9 @@ Audioplayer.propTypes = {
   setAyah: PropTypes.func.isRequired,
   toggleScroll: PropTypes.func.isRequired,
   isPlaying: PropTypes.bool,
-  currentTime: PropTypes.number,
-  duration: PropTypes.number,
-  load: PropTypes.func.isRequired,
   // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
   currentFile: PropTypes.any, // eslint-disable-line
-  audio: PropTypes.number.isRequired,
-  verses: customPropTypes.verses,
-  verseIds: PropTypes.object // eslint-disable-line
+  verseIds: PropTypes.array // eslint-disable-line
 };
 
 export default connect(mapStateToProps, AudioActions)(Audioplayer);
