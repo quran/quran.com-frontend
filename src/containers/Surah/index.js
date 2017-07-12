@@ -310,9 +310,7 @@ class Surah extends Component {
               </li>}
           </ul>
         }
-        loading={
-          <Loader isActive={isLoading} relative style={LoaderStyle} />
-        }
+        loading={<Loader isActive={isLoading} relative style={LoaderStyle} />}
       />
     );
   }
