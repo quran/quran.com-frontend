@@ -139,7 +139,7 @@ const Footer = () => (
                 .
               </p>
               <p className="monserrat">
-                © 2016 Quran.com.
+                © 2017 and 1438H Quran.com.
                 {' '}
                 <LocaleFormattedMessage
                   id="nav.rightsReserved"
