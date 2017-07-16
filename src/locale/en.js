@@ -4,7 +4,7 @@ export default {
     local: 'english',
     'local.siteLocale': 'Site Language',
     'local.changeLocal': 'Choose the language you want the site to display in',
-    'local.navtiveName': 'English',
+    'local.nativeName': 'English',
     'local.selectLabel': 'Language',
     'setting.title': 'Settings',
     'setting.chapters': 'Surahs',

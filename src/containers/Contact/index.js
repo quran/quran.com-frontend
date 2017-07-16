@@ -111,8 +111,8 @@ class Contact extends Component {
   renderSubmitSuccess = () => (
     <h3 className="text-center form-success-message">
       Thank you for contacting us - we look forward to speaking with you. While this is a
-      volunteer effort, we do experience many
-      support tickets on a daily basis and would love to get back to everyone on a timely manner.
+      volunteer effort, we do experience many support tickets on a daily basis and would
+      love to get back to everyone on a timely manner.
     </h3>
   );
 
@@ -133,8 +133,8 @@ class Contact extends Component {
             <div className="col-md-6 col-md-offset-3">
               <h4>
                 Contacting us - thank you for taking time to speak to us.
-                Please be as concise as possible
-                and include screenshots where applicable to help us help you as quickly as we can.
+                Please be as concise as possible and include screenshots
+                where applicable to help us help you as quickly as we can.
                 <br />
                 <br />
               </h4>
