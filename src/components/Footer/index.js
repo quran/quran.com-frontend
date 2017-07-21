@@ -147,7 +147,7 @@ const Footer = () => (
                 .
               </p>
               <p className="monserrat">
-                © 2016 Quran.com.
+                © { new Date().getFullYear() } Quran.com.
                 {' '}
                 <LocaleFormattedMessage
                   id="nav.rightsReserved"
