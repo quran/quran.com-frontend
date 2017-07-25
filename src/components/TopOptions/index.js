@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
 import styled from 'styled-components';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Share from 'components/Share';
 import * as customPropTypes from 'customPropTypes';
 

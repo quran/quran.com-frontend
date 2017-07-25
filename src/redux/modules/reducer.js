@@ -14,18 +14,20 @@ import bookmarks from './bookmarks';
 import media from './media';
 import juzs from './juzs';
 
-export default combineReducers({
-  routing: routerReducer,
-  auth,
-  bookmarks,
-  media,
-  chapters,
-  verses,
-  audioplayer,
-  fontFaces,
-  lines,
-  searchResults,
-  suggestResults,
-  options,
-  juzs
-});
+export default (others = {}) =>
+  combineReducers({
+    routing: routerReducer,
+    auth,
+    bookmarks,
+    media,
+    chapters,
+    verses,
+    audioplayer,
+    fontFaces,
+    lines,
+    searchResults,
+    suggestResults,
+    options,
+    juzs,
+    ...others
+  });

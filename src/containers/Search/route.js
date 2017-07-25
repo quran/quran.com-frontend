@@ -1,4 +1,5 @@
 import loadable from 'loadable-components';
+import qs from 'qs';
 import { search } from 'redux/actions/search.js';
 
 export default [
@@ -9,12 +10,16 @@ export default [
     ),
     loadData: [
       ({ store: { dispatch }, location }) => {
+        const query = location.query
+          ? location.query
+          : qs.parse(location.search, { ignoreQueryPrefix: true });
+
         if (__CLIENT__) {
-          dispatch(search(location.query || location.q));
+          dispatch(search(query));
           return false;
         }
 
-        return dispatch(search(location.query || location.q));
+        return dispatch(search(query));
       }
     ]
   }

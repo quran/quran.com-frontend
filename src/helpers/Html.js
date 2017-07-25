@@ -1,11 +1,11 @@
 /* eslint-disable global-require, quotes, max-len */
-import React, { PropTypes } from 'react';
-import ReactDOM from 'react-dom/server';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
 
-const Html = ({ store, component, assets, state }) => {
-  const content = component ? ReactDOM.renderToString(component) : '';
+const Html = ({ store, apollo, component, assets, state }) => {
+  const content = component || '';
   const head = Helmet.rewind();
   return (
     <html lang="en">
@@ -65,6 +65,12 @@ const Html = ({ store, component, assets, state }) => {
         <script
           dangerouslySetInnerHTML={{
             __html: `if ('serviceWorker' in navigator) {navigator.serviceWorker.register('/quran-service-worker.js', {scope: './'}).then(function(registration) {}).catch(function(error) {});}`
+          }}
+          charSet="UTF-8"
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `window.__APOLLO_STATE__=${serialize(apollo)};`
           }}
           charSet="UTF-8"
         />

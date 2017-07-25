@@ -56,19 +56,20 @@ class GlobalNavSurah extends Component {
   }
 
   render() {
-    const { chapter, chapters, versesIds, options, ...props } = this.props;
+    const { chapter, chapters, verses, options, ...props } = this.props;
+    const versesIds = verses.map(verse => verse.verseNumber);
 
     return (
       <GlobalNav
         {...props}
         leftControls={[
           <SurahsDropdown chapter={chapter} chapters={chapters} />,
-          <VersesDropdown
-            chapter={chapter}
-            isReadingMode={options.isReadingMode}
-            loadedVerses={versesIds}
-            onClick={this.handleVerseDropdownClick}
-          />,
+          // <VersesDropdown
+          //   chapter={chapter}
+          //   isReadingMode={options.isReadingMode}
+          //   loadedVerses={versesIds}
+          //   onClick={this.handleVerseDropdownClick}
+          // />,
           <div className="navbar-form navbar-left hidden-xs hidden-sm">
             <SearchInput className="search-input" />
           </div>,
@@ -105,34 +106,17 @@ class GlobalNavSurah extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
-  const chapter: Object = state.chapters.entities[chapterId];
-  const verses: Object = state.verses.entities[chapterId];
-  const versesArray = verses
-    ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
-    : [];
-  const versesIds = new Set(versesArray);
-
-  return {
-    chapter,
-    chapters: state.chapters.entities,
-    options: state.options,
-    versesIds
-  };
-}
-
 GlobalNavSurah.propTypes = {
   chapter: customPropTypes.surahType.isRequired,
   chapters: customPropTypes.chapters.isRequired,
   options: customPropTypes.optionsType.isRequired,
-  versesIds: PropTypes.instanceOf(Set),
+  verses: PropTypes.array,
   load: PropTypes.func.isRequired,
   setCurrentVerse: PropTypes.func.isRequired,
   replace: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, {
+export default connect(null, {
   load,
   replace,
   setCurrentVerse

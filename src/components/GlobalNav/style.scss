@@ -1,20 +1,19 @@
 @import '../../styles/variables.scss';
-
-.scrolled{
-  box-shadow: 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.2);
+.scrolled {
+  box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.14), 0 1px 10px 0 rgba(0, 0, 0, 0.12), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
 }
 
-.nav{
-  @media(max-width: $screen-sm){
+.nav {
+  @media(max-width: $screen-sm) {
     // display: inline-block;
-    :global(& > li){
+     :global(& > li) {
       display: inline-block;
     }
   }
 }
 
-.optionsDropdown{
-  :global(.ss-icon){
+.optionsDropdown {
+   :global(.ss-icon) {
     margin-right: 5px;
   }
 }

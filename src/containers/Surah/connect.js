@@ -44,7 +44,7 @@ const determinePage = (range) => {
     };
   }
 
-  return {};
+  return { offset: 0, limit: 10 };
 };
 
 export const chaptersConnect = ({ store: { getState, dispatch } }) => {
@@ -91,14 +91,19 @@ export const chapterInfoConnect = ({
 export const versesConnect = ({
   store: { dispatch, getState },
   params,
-  location
+  location = { query: { translations: [] } }
 }) => {
   debug('component:Surah:versesConnect', 'Init');
 
   const chapterId = parseInt(params.chapterId, 10);
   const paging = determinePage(params.range);
+<<<<<<< HEAD
   const translations =
     params.translations || (location && location.query.translations);
+=======
+
+  const translations = params.translations || location.query.translations;
+>>>>>>> graphql + react router
 
   if (chapterId !== getState().chapters.current) {
     dispatch(setCurrentSurah(chapterId));

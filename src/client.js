@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reactCookie from 'react-cookie';
 
-import { matchPath } from 'react-router';
 // import browserHistory from 'react-router/lib/browserHistory';
 // import useScroll from 'react-router-scroll';
 // import { syncHistoryWithStore } from 'react-router-redux';
@@ -15,11 +14,13 @@ import debug from './helpers/debug';
 import config from './config';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
-import { routes } from './routes';
 import Root from './containers/Root';
+import createClient from './graphql/client';
 
-const client = new ApiClient();
-const store = createStore(client, window.reduxData);
+const api = new ApiClient();
+const client = createClient({ initialState: window.__APOLLO_STATE__ });
+console.log(client);
+const store = createStore(client, api, window.reduxData);
 // const history = syncHistoryWithStore(browserHistory, store);
 
 try {
@@ -44,22 +45,7 @@ window.clearCookies = () => {
 
 const mountNode = document.getElementById('app');
 
-// debug('client', 'React Rendering');
-
-const promises = [loadComponents()];
-// use `some` to imitate `<Switch>` behavior of selecting only
-// the first to match
-routes.some((route) => {
-  // use `matchPath` here
-  const match = matchPath(window.location.pathname, route);
-  if (match && route.loadData) {
-    promises.push(...route.loadData.map(loader => loader({ store, match })));
-  }
-
-  return match;
-});
-
-Promise.all(promises).then(() => {
+loadComponents().then(() => {
   const render = (component, time) => {
     ReactDOM.render(
       <AppContainer>
@@ -72,14 +58,14 @@ Promise.all(promises).then(() => {
     );
   };
 
-  render(<Root store={store} />, 'first');
+  render(<Root client={client} store={store} />, 'first');
 
   if (module.hot) {
     debug('client:hot', 'Activated');
 
     module.hot.accept('./containers/Root', () => {
       debug('client:hot', 'Reload');
-      render(<Root store={store} />, 'second');
+      render(<Root client={client} store={store} />, 'second');
     });
   }
 });

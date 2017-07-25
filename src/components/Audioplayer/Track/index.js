@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { Component, PropTypes } from 'react';
+
 import styled from 'styled-components';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
   height: 6px;

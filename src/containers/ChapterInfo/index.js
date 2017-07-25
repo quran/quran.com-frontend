@@ -64,8 +64,8 @@ ChapterInfo.propTypes = {
   info: customPropTypes.infoType
 };
 
-function mapStateToProps(state, ownProps) {
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
+function mapStateToProps(state, { match: { params } }) {
+  const chapterId = parseInt(params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
 
   return {

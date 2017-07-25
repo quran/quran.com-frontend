@@ -5,7 +5,7 @@ export default [
   {
     path: '/ayatul-kursi',
     component: loadable(() =>
-      import(/* webpackChunkName: "ayatulkursi" */ './containers/AyatulKursi')
+      import(/* webpackChunkName: "ayatulkursi" */ './index')
     ),
     loadData: [
       chaptersConnect,

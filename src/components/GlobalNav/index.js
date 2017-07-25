@@ -4,17 +4,23 @@ import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
+import Drawer from 'quran-components/lib/Drawer';
 import Nav from 'react-bootstrap/lib/Nav';
 
 import LocaleSwitcher from 'components/LocaleSwitcher';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import GlobalSidebar from 'components/GlobalSidebar';
 
 import debug from 'helpers/debug';
 
 const styles = require('./style.scss');
 
+const NavbarHeader = Navbar.Header;
+
 class GlobalNav extends Component {
   state = {
-    scrolled: false
+    scrolled: false,
+    drawerOpen: false
   };
 
   componentDidMount() {
@@ -40,9 +46,12 @@ class GlobalNav extends Component {
     return false;
   };
 
+  handleDrawerToggle = (open) => {
+    this.setState({ drawerOpen: open });
+  };
+
   isHome() {
-    return true; // TODO: Change this
-    return this.props.location.pathname === '/';
+    return !this.props.history || this.props.history.location.pathname === '/';
   }
 
   renderRightControls() {
@@ -106,16 +115,33 @@ class GlobalNav extends Component {
         fluid
         static={isStatic}
       >
-        <button
-          type="button"
-          className="navbar-toggle collapsed"
-          onClick={handleSidebarToggle}
+        <Drawer
+          drawerClickClose={false}
+          open={this.state.drawerOpen}
+          handleOpen={this.handleDrawerToggle}
+          toggle={
+            <button type="button" className="navbar-toggle collapsed">
+              <span className="sr-only">Toggle navigation</span>
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+              <span className="icon-bar" />
+            </button>
+          }
+          header={
+            <NavbarHeader>
+              <p className="navbar-text">
+                <Link to="/">
+                  <LocaleFormattedMessage
+                    id="nav.title"
+                    defaultMessage="Quran"
+                  />
+                </Link>
+              </p>
+            </NavbarHeader>
+          }
         >
-          <span className="sr-only">Toggle navigation</span>
-          <span className="icon-bar" />
-          <span className="icon-bar" />
-          <span className="icon-bar" />
-        </button>
+          <GlobalSidebar />
+        </Drawer>
         <Nav className={styles.nav}>
           {!this.isHome() &&
             <li>

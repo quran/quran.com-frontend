@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -308,8 +309,8 @@ class Verse extends Component {
       >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">
-          {this.renderText()}
-          {this.renderTranslations()}
+          {verse.words ? this.renderText() : verse.textMadani}
+          {verse.translations && this.renderTranslations()}
           {this.renderMedia()}
         </div>
       </Element>

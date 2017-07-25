@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -7,8 +8,6 @@ import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import Checkbox from 'quran-components/lib/Checkbox';
 import Loader from 'quran-components/lib/Loader';
 import Icon from 'quran-components/lib/Icon';
-
-const style = require('./style.scss');
 
 const compareAlphabetically = property => (previous, next) => {
   const previousText = previous[property].toUpperCase();
@@ -59,7 +58,7 @@ class TranslationsDropdown extends Component {
       const checked = translations.find(option => option === translation.id);
 
       return (
-        <MenuItem key={translation.id} className={style.item}>
+        <MenuItem key={translation.id}>
           <Checkbox
             id={translation.id + translation.languageName}
             name="translation"

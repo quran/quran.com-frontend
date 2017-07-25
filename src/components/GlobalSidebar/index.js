@@ -1,11 +1,11 @@
 /* global document */
-import React, { PropTypes, Component } from 'react';
 import styled from 'styled-components';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import Navbar from 'react-bootstrap/lib/Navbar';
+import Icon from 'quran-components/lib/Icon';
+import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
-const styles = require('./style.scss');
 
 const NavbarHeader = Navbar.Header;
 
@@ -174,14 +174,8 @@ class GlobalSidebar extends Component {
 }
 
 GlobalSidebar.propTypes = {
-  open: PropTypes.bool.isRequired,
-  handleOpen: PropTypes.func,
   settingsModalProps: PropTypes.object, // eslint-disable-line
   children: PropTypes.node
-};
-
-GlobalSidebar.defaultProps = {
-  open: false
 };
 
 export default GlobalSidebar;

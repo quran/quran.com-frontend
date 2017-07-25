@@ -1,7 +1,12 @@
 /* global document */
 // TODO: This file is too too large.
+<<<<<<< HEAD
 import React, { Component, PropTypes } from 'react';
 import styled from 'styled-components';
+=======
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+>>>>>>> graphql + react router
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
@@ -171,7 +176,7 @@ export class Audioplayer extends Component {
 
   getNext() {
     const { currentVerse, chapter, onLoadAyahs, verseIds } = this.props;
-    const ayahNum = currentVerse.verseKey.split(':')[1];
+    const ayahNum = currentVerse.verseNumber;
     const index = verseIds.findIndex(id => id === currentVerse.verseKey);
 
     if (chapter.versesCount === ayahNum + 1) {
@@ -430,7 +435,7 @@ export class Audioplayer extends Component {
     const { chapter, currentVerse } = this.props;
     if (!chapter) return false;
     const isEnd =
-      chapter.versesCount === parseInt(currentVerse.verseKey.split(':')[1], 10);
+      chapter.versesCount === parseInt(currentVerse.verseNumber, 10);
 
     return (
       <a
@@ -499,9 +504,17 @@ export class Audioplayer extends Component {
               id="player.currentVerse"
               defaultMessage="Ayah"
             />
+<<<<<<< HEAD
             : {currentVerse.verseKey.split(':')[1]}
           </ControlItem>
           <ControlItem>
+=======
+            :
+            {' '}
+            {currentVerse.verseNumber}
+          </li>
+          <li className={style.controlItem}>
+>>>>>>> graphql + react router
             {this.renderPreviousButton()}
           </ControlItem>
           <ControlItem>
@@ -514,7 +527,7 @@ export class Audioplayer extends Component {
             <RepeatDropdown
               repeat={repeat}
               setRepeat={setRepeat}
-              current={parseInt(currentVerse.verseKey.split(':')[1], 10)}
+              current={parseInt(currentVerse.verseNumber, 10)}
               chapter={chapter}
             />
           </ControlItem>

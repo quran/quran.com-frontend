@@ -1,5 +1,4 @@
 import loadable from 'loadable-components';
-import { isAllLoaded, loadAll } from 'redux/actions/chapters.js';
 
 export default [
   {
@@ -7,15 +6,6 @@ export default [
     component: loadable(() =>
       import(/* webpackChunkName: "contact" */ './index')
     ),
-    exact: true,
-    loadData: [
-      ({ store: { getState, dispatch } }) => {
-        if (!isAllLoaded(getState())) {
-          return dispatch(loadAll());
-        }
-
-        return true;
-      }
-    ]
+    exact: true
   }
 ];

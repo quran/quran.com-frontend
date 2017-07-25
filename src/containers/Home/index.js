@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { graphql } from 'react-apollo';
 import * as customPropTypes from 'customPropTypes';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
@@ -14,7 +15,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Tabs, { Tab } from 'quran-components/lib/Tabs';
 import Loader from 'quran-components/lib/Loader';
 
-import { chaptersConnect, juzsConnect } from '../Surah/connect';
+import chaptersQuery from '../../graphql/queries/chapters.js';
 
 export const Title = styled.h4`
   font-size: 14px;
@@ -92,28 +93,29 @@ class Home extends Component {
       <div className="index-page">
         <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
         <IndexHeader />
-        <div className="container">
-          <div className="row">
-            <div className="col-md-10 col-md-offset-1">
-              {lastVisit &&
-                <LastVisit
-                  chapter={chapters[lastVisit.chapterId]}
-                  verse={lastVisit.verseId}
-                />}
-              <QuickSurahs />
+        {!this.props.data.loading &&
+          <div className={`container ${styles.list}`}>
+            <div className="row">
+              <div className="col-md-10 col-md-offset-1">
+                {lastVisit &&
+                  <LastVisit
+                    chapter={chapters[lastVisit.chapterId]}
+                    verse={lastVisit.verseId}
+                  />}
+                <QuickSurahs />
 
-              <Tabs>
-                <Tab title={chapterTitle}>
-                  {this.renderChapterList(chaptersList)}
-                </Tab>
+                <Tabs>
+                  <Tab title={chapterTitle}>
+                    {this.renderChapterList(chaptersList)}
+                  </Tab>
 
-                <Tab title={juzTitle}>
-                  {this.renderJuzList()}
-                </Tab>
-              </Tabs>
+                  <Tab title={juzTitle}>
+                    {this.renderJuzList()}
+                  </Tab>
+                </Tabs>
+              </div>
             </div>
-          </div>
-        </div>
+          </div>}
       </div>
     );
   }
@@ -125,4 +127,4 @@ Home.propTypes = {
 };
 
 // TODO: readd juzs
-export default connect(state => ({ chapters: state.chapters.entities }))(Home);
+export default graphql(chaptersQuery)(Home);

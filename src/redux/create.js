@@ -4,8 +4,8 @@ import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 import createMiddleware from './middleware/clientMiddleware';
 import reducer from './modules/reducer';
 
-export default function createStore(client, data) {
-  const middleware = [createMiddleware(client)];
+export default function createStore(client, api, data) {
+  const middleware = [createMiddleware(api)];
 
   let finalCreateStore;
   if (__DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__) {
@@ -23,7 +23,7 @@ export default function createStore(client, data) {
     finalCreateStore = applyMiddleware(...middleware)(_createStore);
   }
 
-  const store = finalCreateStore(reducer, data);
+  const store = finalCreateStore(reducer({ apollo: client.reducer() }), data);
 
   if (__DEVELOPMENT__ && module.hot) {
     module.hot.accept('./modules/reducer', () => {

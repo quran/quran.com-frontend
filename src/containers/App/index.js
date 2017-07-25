@@ -1,18 +1,18 @@
 /* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import { Switch, Route, Redirect, withRouter } from 'react-router';
+import { Switch, Route, Redirect, withRouter, matchPath } from 'react-router';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import Loadable from 'react-loadable';
-import { routes } from 'routes';
+import { routes, navs } from 'routes';
 import ComponentLoader from 'components/ComponentLoader';
 import debug from 'helpers/debug';
 import config from 'config';
 import metricsConfig from 'helpers/metrics';
-import GlobalNav from 'components/GlobalNav';
 import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
 import Loader from 'quran-components/lib/Loader';
@@ -39,10 +39,6 @@ const SmartBanner = Loadable({
 });
 
 class App extends Component {
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  };
-
   state = {
     sidebarOpen: false
   };
@@ -68,10 +64,8 @@ class App extends Component {
 
   render() {
     const {
-      main,
-      nav,
       footer,
-      children,
+      location,
       media,
       removeMedia, // eslint-disable-line no-shadow
       ...props
@@ -95,15 +89,20 @@ class App extends Component {
             </div>
           </div>
         </NoScript>
-        {React.cloneElement(nav || <GlobalNav isStatic {...props} />, {
-          handleSidebarToggle: () =>
-            this.setState({ sidebarOpen: !this.state.sidebarOpen })
-        })}
-        {__CLIENT__ &&
-          <GlobalSidebar
-            open={this.state.sidebarOpen}
-            handleOpen={open => this.setState({ sidebarOpen: open })}
-          />}
+        <Switch>
+          {navs.map(({ component: NavComponent, ...nav }) => (
+            <Route
+              {...nav}
+              render={routeProps => (
+                <NavComponent
+                  {...routeProps}
+                  handleSidebarToggle={() =>
+                    this.setState({ sidebarOpen: !this.state.sidebarOpen })}
+                />
+              )}
+            />
+          ))}
+        </Switch>
         <Switch>
           {routes.map(route => <Route {...route} />)}
           <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
