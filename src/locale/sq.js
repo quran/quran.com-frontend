@@ -55,7 +55,7 @@ export default {
     'player.repeat.rangeEnd': 'Deri',
     'player.repeat.times': 'Herë',
     'player.repeat.loop': 'përsërit',
-    'player.scrollButtonTip': "Zhvendoset automatikisht te ajeti që është duke u lexuar momentalisht', // eslint-disable-line max-len
+    'player.scrollButtonTip': "Zhvendoset automatikisht te ajeti që është duke u lexuar momentalisht", // eslint-disable-line max-len
 
     'app.loading': 'Duke u hapur...',
     'actions.copy': 'Kopjoni',
