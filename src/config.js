@@ -33,6 +33,7 @@ const locales = {
   ar: 'العربية',
   ur: 'اردو',
   id: 'Bahasa Indonesia',
+  sq: 'Shqip',
   tr: 'Türkçe',
   fr: 'Français',
   nl: 'Dutch'
