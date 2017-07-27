@@ -16,7 +16,7 @@ export function createFontFacesArray(verses) {
   const fontFaces = [];
   const fontFacesArray = [];
 
-  verses.forEach((ayah) => {
+  verses.forEach(ayah => {
     const font = ayah.words[0].className;
 
     if (fontFaces.indexOf(font) === -1) {

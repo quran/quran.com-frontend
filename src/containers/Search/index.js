@@ -20,7 +20,7 @@ class Search extends Component {
     metrics: MetricsPropTypes.metrics
   };
 
-  handlePageChange = (payload) => {
+  handlePageChange = payload => {
     const { push, query, currentPage } = this.props; // eslint-disable-line no-shadow
     const selectedPage = payload.selected + 1;
 

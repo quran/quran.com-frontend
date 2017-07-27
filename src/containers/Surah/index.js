@@ -369,7 +369,13 @@ class Surah extends Component {
               </li>}
           </ul>
         }
-        loading={<Loader isActive={this.state.lazyLoading} relative style={LoaderStyle} />}
+        loading={
+          <Loader
+            isActive={this.state.lazyLoading}
+            relative
+            style={LoaderStyle}
+          />
+        }
       />
     );
   }
@@ -392,7 +398,9 @@ class Surah extends Component {
           verse={verse}
           chapter={chapter}
           currentVerse={this.getCurrentVerse()}
-          iscurrentVerse={isPlaying && verse.verseKey === this.getCurrentVerse()}
+          iscurrentVerse={
+            isPlaying && verse.verseKey === this.getCurrentVerse()
+          }
           bookmarked={!!bookmarks[verse.verseKey]}
           tooltip={options.tooltip}
           bookmarkActions={actions.bookmark}
@@ -532,13 +540,14 @@ class Surah extends Component {
             </div>
           </div>
         </div>
-         {__CLIENT__ &&
-          <Audioplayer
-            chapter={chapter}
-            verses={verses}
-            currentVerse={verses[this.getCurrentVerse()]}
-            onLoadAyahs={this.handleLazyLoadAyahs}
-          />} 
+        <Audioplayer
+          chapter={chapter}
+          verses={verses}
+          currentVerse={verses.find(
+            verse => verse.verseKey === this.getCurrentVerse()
+          )}
+          onLoadAyahs={this.handleLazyLoadAyahs}
+        />
       </div>
     );
   }

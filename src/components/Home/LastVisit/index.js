@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { Title } from 'containers/Home';
 
-const LastVisit = (props) => {
+const LastVisit = props => {
   debug('component:Index', 'LastVisit');
   if (!props.chapter) return false;
 

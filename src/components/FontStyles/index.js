@@ -24,7 +24,7 @@ class FontStyles extends Component {
 
       Object.keys(fontFaces)
         .filter(className => !fontFaces[className])
-        .forEach((className) => {
+        .forEach(className => {
           const font = new FontFaceObserver(className);
 
           font.load().then(() => load(className), () => load(className));

@@ -113,6 +113,7 @@ class Home extends Component {
                     {this.renderJuzList()}
                   </Tab>
                 </Tabs>
+
               </div>
             </div>
           </div>}

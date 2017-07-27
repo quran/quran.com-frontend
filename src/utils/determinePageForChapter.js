@@ -1,4 +1,4 @@
-const determinePageForChapter = (range) => {
+const determinePageForChapter = range => {
   let from;
   let to;
 

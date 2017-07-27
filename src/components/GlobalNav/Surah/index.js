@@ -19,7 +19,7 @@ class GlobalNavSurah extends Component {
     drawerOpen: false
   };
 
-  handleVerseDropdownClick = (verseNum) => {
+  handleVerseDropdownClick = verseNum => {
     const { versesIds, chapter } = this.props; // eslint-disable-line no-shadow
 
     this.props.setCurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
@@ -33,7 +33,7 @@ class GlobalNavSurah extends Component {
     return this.props.replace(`/${chapter.chapterNumber}/${verseNum}-${to}`);
   };
 
-  handleDrawerToggle = (open) => {
+  handleDrawerToggle = open => {
     this.setState({ drawerOpen: open });
   };
 

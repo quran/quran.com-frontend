@@ -28,7 +28,7 @@ class Translation extends Component {
     // }
   }
 
-  fetchFootNote = (event) => {
+  fetchFootNote = event => {
     const { loadFootNote } = this.props; // eslint-disable-line no-shadow
 
     if (event.target.nodeName === 'SUP' && event.target.attributes.foot_note) {

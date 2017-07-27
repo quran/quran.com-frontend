@@ -1,12 +1,12 @@
 export default (verses, initial) => {
   const lines = initial || {};
 
-  verses.forEach((currentVerse) => {
-    currentVerse.words.forEach((word) => {
+  verses.forEach(currentVerse => {
+    currentVerse.words.forEach(word => {
       if (lines[`${word.pageNumber}-${word.lineNumber}`]) {
         const isInArray = lines[
           `${word.pageNumber}-${word.lineNumber}`
-        ].find((item) => {
+        ].find(item => {
           const itemChecksum = `${item.lineNumber}${item.code}${item.verseKey}${item.position}`;
           const dataChecksum = `${word.lineNumber}${word.code}${word.verseKey}${item.position}`;
 

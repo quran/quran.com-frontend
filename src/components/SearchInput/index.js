@@ -19,7 +19,7 @@ class SearchInput extends Component {
     showAutocomplete: false
   };
 
-  search = (event) => {
+  search = event => {
     const arabic = new RegExp(/[\u0600-\u06FF]/);
     const shortcutSearch = /\d[\.,\:,\,,\\,//]/g; // eslint-disable-line no-useless-escape
     const splitSearch = /[\.,\:,\,,\\,//]/g; // eslint-disable-line no-useless-escape
@@ -100,7 +100,7 @@ class SearchInput extends Component {
         <input
           type="search"
           placeholder={placeholder}
-          ref={(input) => {
+          ref={input => {
             this.input = input;
           }}
           onFocus={() => this.setState({ showAutocomplete: true })}

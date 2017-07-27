@@ -53,8 +53,15 @@ export class Audioplayer extends Component {
   };
 
   componentDidMount() {
-    const { currentFile, currentVerse, audio, verses, load } = this.props; // eslint-disable-line no-shadow, max-len
-    const nextVerse = verses[this.getNext()];
+    const {
+      chapter,
+      currentFile,
+      currentVerse,
+      audio,
+      verses,
+      load
+    } = this.props; // eslint-disable-line no-shadow, max-len
+    const nextVerse = verses.find(verse => verse.verseKey === this.getNext());
 
     debug('component:Audioplayer', 'componentDidMount');
 
@@ -63,18 +70,20 @@ export class Audioplayer extends Component {
     }
 
     load({
-      chapterId: currentVerse.chapterId,
+      chapterId: chapter.id,
       verseId: currentVerse.id,
       verseKey: currentVerse.verseKey,
       audio
     });
 
-    load({
-      chapterId: nextVerse.chapterId,
-      verseId: nextVerse.id,
-      verseKey: nextVerse.verseKey,
-      audio
-    });
+    if (nextVerse) {
+      load({
+        chapterId: chapter.id,
+        verseId: nextVerse.id,
+        verseKey: nextVerse.verseKey,
+        audio
+      });
+    }
 
     return false;
   }
@@ -104,14 +113,18 @@ export class Audioplayer extends Component {
     }
 
     if (this.props.audio !== nextProps.audio) {
-      Object.keys(this.props.files).forEach(key =>
+      Object.keys(this.props.files).forEach((key) => {
+        const verse = this.props.verses.find(
+          current => current.verseKey === key
+        );
+
         this.props.load({
-          chapterId: this.props.verses[key].chapterId,
-          verseId: this.props.verses[key].id,
-          verseKey: this.props.verses[key].verseKey,
+          chapterId: verse.chapterId,
+          verseId: verse.id,
+          verseKey: verse.verseKey,
           audio: nextProps.audio
-        })
-      );
+        });
+      });
     }
 
     return false;
@@ -124,16 +137,18 @@ export class Audioplayer extends Component {
       verses,
       audio,
       currentVerse,
+      chapter,
       load
     } = this.props;
 
+    const verse = verses.find(current => current.verseKey === this.getNext());
+
     if (
       currentVerse.verseKey !== previousProps.currentVerse.verseKey &&
-      verses[this.getNext()]
+      verse
     ) {
-      const verse = verses[this.getNext()];
       load({
-        chapterId: verse.chapterId,
+        chapterId: chapter.id,
         verseId: verse.id,
         verseKey: verse.verseKey,
         audio
@@ -544,15 +559,14 @@ export class Audioplayer extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => {
-  const files = state.audioplayer.files[ownProps.chapter.id];
-  const verseIds = Object.keys(ownProps.verses);
+  const files = state.audioplayer.files[ownProps.chapter.id] || {};
+  const verseIds = ownProps.verses.map(verse => verse.verseNumber);
 
   return {
     files,
     verseIds,
     segments: state.audioplayer.segments[ownProps.chapter.id],
     currentFile: files[ownProps.currentVerse.verseKey],
-    chapterId: ownProps.chapter.id,
     isPlaying: state.audioplayer.isPlaying,
     isLoading: state.audioplayer.isLoading,
     repeat: state.audioplayer.repeat,

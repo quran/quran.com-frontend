@@ -42,7 +42,7 @@ class SearchAutocomplete extends Component {
     return suggestions;
   }
 
-  getSurahSuggestions = (value) => {
+  getSurahSuggestions = value => {
     const matches = [];
 
     if (!value) return matches;
@@ -61,7 +61,7 @@ class SearchAutocomplete extends Component {
     } else if (value.length >= 2) {
       const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
-      Object.keys(this.props.chapters).forEach((chapterId) => {
+      Object.keys(this.props.chapters).forEach(chapterId => {
         const chapter = this.props.chapters[chapterId];
         if (
           RegExp(escaped, 'i').test(chapter.nameSimple.replace(/['-]/g, ''))
@@ -81,7 +81,7 @@ class SearchAutocomplete extends Component {
       .slice(0, 5);
   };
 
-  suggest = (query) => {
+  suggest = query => {
     const { lang } = this.props;
 
     if (!query || ayahRegex.test(query)) return false;
@@ -89,7 +89,7 @@ class SearchAutocomplete extends Component {
     return this.props.suggest(query, lang);
   };
 
-  handleInputKeyDown = (event) => {
+  handleInputKeyDown = event => {
     if (
       !(event.keyCode === 9 || event.keyCode === 40 || event.keyCode === 27)
     ) {
@@ -188,7 +188,7 @@ class SearchAutocomplete extends Component {
         <ul
           role="menu"
           className={styles.list}
-          ref={(ref) => {
+          ref={ref => {
             this.menu = ref;
           }}
         >

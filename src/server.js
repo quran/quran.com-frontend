@@ -60,8 +60,8 @@ server.use((req, res, next) => {
   if (req.query.DISABLE_SSR) {
     return res.status(200).send(
       `<!doctype html>\n${ReactDOM.renderToString(<IntlProvider locale="en" messages={localMessages}>
-        <Html store={store} assets={webpack_isomorphic_tools.assets()} />
-      </IntlProvider>)}`
+          <Html store={store} assets={webpack_isomorphic_tools.assets()} />
+        </IntlProvider>)}`
     );
   }
 
@@ -101,9 +101,9 @@ server.use((req, res, next) => {
   );
 
   return getLoadableState(component)
-    .then((loadableState) => {
+    .then(loadableState => {
       renderToStringWithData(component)
-        .then((content) => {
+        .then(content => {
           const initialState = {
             [client.reduxRootKey || 'apollo']: client.getInitialState()
           };
@@ -115,12 +115,12 @@ server.use((req, res, next) => {
           `;
           res.send(html);
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
           res.send(error);
         });
     })
-    .catch((error) => {
+    .catch(error => {
       console.log(error);
       res.send(error);
     });

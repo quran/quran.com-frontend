@@ -67,10 +67,10 @@ export default () => [
   }
 ];
 
-export const collectPromises = (path) => {
+export const collectPromises = path => {
   const promises = [];
 
-  routes.some((route) => {
+  routes.some(route => {
     // use `matchPath` here
     const match = matchPath(path, route);
     if (match && route.loadData) {
