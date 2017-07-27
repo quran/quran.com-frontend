@@ -315,7 +315,7 @@ export class Audioplayer extends Component {
     // NOTE: if no file, just wait.
     if (!file) return false;
 
-    const { update } = this.props; // eslint-disable-line no-shadow
+    const { update, stop } = this.props; // eslint-disable-line no-shadow
     debug('component:Audioplayer', `Attaching listeners to ${file.src}`);
 
     // Preload file
@@ -360,11 +360,16 @@ export class Audioplayer extends Component {
       file.ontimeupdate = null; // eslint-disable-line no-param-reassign
     };
 
+    const stopAudio = () => {
+      file.currentTime = 0; // eslint-disable-line no-param-reassign
+      stop();
+    };
+
     file.onloadeddata = onLoadeddata; // eslint-disable-line no-param-reassign
     file.onpause = onPause; // eslint-disable-line no-param-reassign
     file.onplay = onPlay; // eslint-disable-line no-param-reassign
     file.onended = onEnded; // eslint-disable-line no-param-reassign
-
+    file.stopAudio = stopAudio; // eslint-disable-line no-param-reassign
     return file;
   }
 
@@ -377,6 +382,7 @@ export class Audioplayer extends Component {
     file.onPause = null; // eslint-disable-line no-param-reassign
     file.onended = null; // eslint-disable-line no-param-reassign
     file.onprogress = null; // eslint-disable-line no-param-reassign
+    delete file.stopAudio; // eslint-disable-line no-param-reassign
   };
 
   handleTrackChange = (fraction) => {
@@ -389,7 +395,7 @@ export class Audioplayer extends Component {
     currentFile.currentTime = fraction * currentFile.duration;
   };
 
-  renderPlayStopButtons() {
+  renderPlayPauseButtons() {
     const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
 
     return (
@@ -438,6 +444,21 @@ export class Audioplayer extends Component {
     );
   }
 
+  renderStopButton() {
+    const { currentFile } = this.props;
+    return (
+      <a
+        tabIndex="-1"
+        className={`pointer ${style.buttons} ${currentFile.currentTime > 0
+          ? ''
+          : style.disabled}`}
+        onClick={currentFile.stopAudio}
+      >
+        <i className="ss-icon ss-stop" />
+      </a>
+    );
+  }
+
   render() {
     debug('component:Audioplayer', 'render');
 
@@ -471,7 +492,8 @@ export class Audioplayer extends Component {
 
     return (
       <div
-        className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}
+        className={`${isPlaying &&
+          style.isPlaying} ${style.container} ${className}`}
       >
         <Wrapper>
           {currentFile &&
@@ -493,15 +515,16 @@ export class Audioplayer extends Component {
               id="player.currentVerse"
               defaultMessage="Ayah"
             />
-            :
-            {' '}
-            {currentVerse.verseKey.split(':')[1]}
+            : {currentVerse.verseKey.split(':')[1]}
           </ControlItem>
           <ControlItem>
             {this.renderPreviousButton()}
           </ControlItem>
           <ControlItem>
-            {this.renderPlayStopButtons()}
+            {this.renderPlayPauseButtons()}
+          </ControlItem>
+          <ControlItem>
+            {this.renderStopButton()}
           </ControlItem>
           <ControlItem>
             {this.renderNextButton()}
@@ -557,6 +580,7 @@ Audioplayer.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   play: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
+  stop: PropTypes.func.isRequired,
   next: PropTypes.func.isRequired, // eslint-disable-line
   previous: PropTypes.func.isRequired, // eslint-disable-line
   update: PropTypes.func.isRequired,

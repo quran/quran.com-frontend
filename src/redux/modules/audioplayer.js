@@ -9,6 +9,7 @@ import {
   PLAY,
   PAUSE,
   NEXT,
+  STOP,
   SET_AYAH,
   PREVIOUS,
   SET_REPEAT,
@@ -99,6 +100,12 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         isPlaying: true
+      };
+    }
+    case STOP: {
+      return {
+        ...state,
+        isPlaying: false
       };
     }
     case PAUSE: {

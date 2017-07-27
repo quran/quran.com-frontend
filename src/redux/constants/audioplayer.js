@@ -13,3 +13,4 @@ export const UPDATE = '@@quran/audioplayer/UPDATE';
 export const LOAD = '@@quran/audioplayer/LOAD';
 export const LOAD_SUCCESS = '@@quran/audioplayer/LOAD_SUCCESS';
 export const LOAD_FAIL = '@@quran/audioplayer/LOAD_FAIL';
+export const STOP = '@@quran/audioplayer/STOP';
