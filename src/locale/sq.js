@@ -62,6 +62,10 @@ export default {
     'actions.copied': 'U kopjua!',
     'actions.play': 'Lëshojeni',
     'actions.pause': 'Ndaleni',
+    'actions.tafsir': 'Tefsir',
+
+    'tafsirs': 'Tefsir',
+    'tasfisr.select': 'Zgjidhni një tefsir',
 
     'nav.title': 'Kurani',
     'nav.settings': 'Opsionet',
