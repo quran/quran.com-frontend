@@ -60,7 +60,7 @@ export default (server) => {
     const siteAssociation = fs.readFileSync(
       `${__dirname}/apple-app-site-association.json`
     );
-    res.set('Content-Type', 'application/pkcs7-mime');
+    res.set('Content-Type', 'application/json');
     res.status(200).send(siteAssociation);
   });
 
