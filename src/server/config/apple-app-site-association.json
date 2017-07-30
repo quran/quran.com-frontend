@@ -1,0 +1,23 @@
+{
+  "activitycontinuation": {
+    "apps": [
+      "abc.com.quran"
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "abc.com.quran"
+    ]
+  },
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "abc.com.quran",
+        "paths": [
+          "*"
+        ]
+      }
+    ]
+  }
+}

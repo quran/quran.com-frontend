@@ -8,6 +8,7 @@ import useragent from 'express-useragent';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import httpProxy from 'http-proxy';
+import fs from 'fs';
 
 import support from './support';
 
@@ -53,6 +54,14 @@ export default (server) => {
   // Must be first thing. See: https://github.com/nodejitsu/node-http-proxy/issues/180#issuecomment-3677221
   server.use('/onequran', (req, res) => {
     proxyOneQuran.web(req, res);
+  });
+
+  server.use('/apple-app-site-association', (req, res) => {
+    const siteAssociation = fs.readFileSync(
+      `${__dirname}/apple-app-site-association.json`
+    );
+    res.set('Content-Type', 'application/pkcs7-mime');
+    res.status(200).send(siteAssociation);
   });
 
   server.use('/api', (req, res) => {
