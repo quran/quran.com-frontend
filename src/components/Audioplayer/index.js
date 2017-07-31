@@ -138,7 +138,12 @@ export class Audioplayer extends Component {
     if (!currentFile) return false;
 
     if (isPlaying) {
-      currentFile.play();
+      const playPromise = currentFile.play();
+      // Catch/silence error when a pause interrupts a play request
+      // on browsers which return a promise
+      if (playPromise !== undefined && typeof playPromise.then === 'function') {
+        playPromise.then(null, () => {});
+      }
     } else {
       currentFile.pause();
     }
@@ -374,7 +379,7 @@ export class Audioplayer extends Component {
     file.onloadeddata = null; // eslint-disable-line no-param-reassign
     file.ontimeupdate = null; // eslint-disable-line no-param-reassign
     file.onplay = null; // eslint-disable-line no-param-reassign
-    file.onPause = null; // eslint-disable-line no-param-reassign
+    file.onpause = null; // eslint-disable-line no-param-reassign
     file.onended = null; // eslint-disable-line no-param-reassign
     file.onprogress = null; // eslint-disable-line no-param-reassign
   };
@@ -471,7 +476,8 @@ export class Audioplayer extends Component {
 
     return (
       <div
-        className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}
+        className={`${isPlaying &&
+          style.isPlaying} ${style.container} ${className}`}
       >
         <Wrapper>
           {currentFile &&
@@ -493,9 +499,7 @@ export class Audioplayer extends Component {
               id="player.currentVerse"
               defaultMessage="Ayah"
             />
-            :
-            {' '}
-            {currentVerse.verseKey.split(':')[1]}
+            : {currentVerse.verseKey.split(':')[1]}
           </ControlItem>
           <ControlItem>
             {this.renderPreviousButton()}
