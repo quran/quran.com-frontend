@@ -16,10 +16,11 @@ export const removeMedia = () => ({
   type: REMOVE_MEDIA
 });
 
-export const loadTafsirs = verse => ({
+export const loadTafsirs = (verse, title) => ({
   types: [LOAD_TAFISRS, LOAD_TAFISRS_SUCCESS],
   promise: client => client.get('/api/v3/options/tafsirs'),
-  verse
+  verse,
+  title
 });
 
 export const loadFootNote = footNoteId => ({

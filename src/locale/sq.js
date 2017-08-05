@@ -31,7 +31,8 @@ export default {
     'ayah.notFound': 'Ajeti nuk u gjet',
 
     'search.placeholder': 'Kërko "Nuh"',
-    'search.resultHeading': '{from}-{to} OF <span> {total} </span> REZULTATET E KËRKIMIT PËR <span>{query}</span>', // eslint-disable-line max-len
+    'search.resultHeading':
+      '{from}-{to} OF <span> {total} </span> REZULTATET E KËRKIMIT PËR <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Na vjen keq, ndodhi një problem me kërkimin tuaj.',
     'search.nothing': 'Nuk keni shkruar ndonjë gjë për të filluar kërkimin.',
     'search.noResult': 'Nuk u gjet ndonjë rezultat.',
@@ -55,7 +56,8 @@ export default {
     'player.repeat.rangeEnd': 'Deri',
     'player.repeat.times': 'Herë',
     'player.repeat.loop': 'përsërit',
-    'player.scrollButtonTip': 'Zhvendoset automatikisht te ajeti që është duke u lexuar momentalisht', // eslint-disable-line max-len
+    'player.scrollButtonTip':
+      'Zhvendoset automatikisht te ajeti që është duke u lexuar momentalisht', // eslint-disable-line max-len
 
     'app.loading': 'Duke u hapur...',
     'actions.copy': 'Kopjoni',
@@ -64,8 +66,8 @@ export default {
     'actions.pause': 'Ndaleni',
     'actions.tafsir': 'Tefsir',
 
-    'tafsirs': 'Tefsir',
-    'tasfisr.select': 'Zgjidhni një tefsir',
+    tafsirs: 'Tefsir',
+    'tafsir.select': 'Zgjidhni një tefsir',
 
     'nav.title': 'Kurani',
     'nav.settings': 'Opsionet',
@@ -76,7 +78,8 @@ export default {
     'nav.otherLinks': 'Lidhje të tjera',
     'nav.contactUs': 'Na kontaktoni',
     'nav.help': 'Ndihma & këshillimet',
-    'nav.aboutQuranProject': 'Quran.com (i njohur ndryshe si Kurani Fisnik, Kurani, Kur\'ani) është një projekt vullnetar.', // eslint-disable-line max-len
+    'nav.aboutQuranProject':
+      "Quran.com (i njohur ndryshe si Kurani Fisnik, Kurani, Kur'ani) është një projekt vullnetar.", // eslint-disable-line max-len
     'nav.rightsReserved': 'Të Gjitha të Drejtat e Rezervuara.',
     'nav.mobile': 'Aplikacionet Mobile',
     'nav.navigate': 'Navigoni',
@@ -84,8 +87,11 @@ export default {
 
     'juz.index.heading': 'Xhuzi',
 
-    'login.message': 'Kyçuni në Quran.com për të ruajtur tv gjitha memorizimet, shënimet dhe aktivitetet tuaja',
-    'error.invalid-surah': "Surja është jashtë intervalit. Ju lutemi, shkoni te <a href='/'> faqja fillestare </a> dhe zgjidhni një Sure.",
-    'error.invalid-ayah': "Ajeti është jashtë intervalit. Ju lutemi, shkloni te <a href='/'> faqja fillestare </a> dhe zgjidhni një Sure/Ajet."
+    'login.message':
+      'Kyçuni në Quran.com për të ruajtur tv gjitha memorizimet, shënimet dhe aktivitetet tuaja',
+    'error.invalid-surah':
+      "Surja është jashtë intervalit. Ju lutemi, shkoni te <a href='/'> faqja fillestare </a> dhe zgjidhni një Sure.",
+    'error.invalid-ayah':
+      "Ajeti është jashtë intervalit. Ju lutemi, shkloni te <a href='/'> faqja fillestare </a> dhe zgjidhni një Sure/Ajet."
   }
 };

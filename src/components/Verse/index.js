@@ -61,13 +61,13 @@ class Verse extends Component {
     const { verse, match } = this.props;
     const array = match || verse.translations || [];
 
-    return array.map(translation => (
+    return array.map(translation =>
       <Translation
         translation={translation}
         index={translation.id}
         key={translation.id}
       />
-    ));
+    );
   }
 
   renderMedia() {
@@ -78,7 +78,7 @@ class Verse extends Component {
 
     return (
       <div>
-        {verse.mediaContents.map((content, index) => (
+        {verse.mediaContents.map((content, index) =>
           <div className={`${styles.translation} translation`} key={index}>
             <h2 className="text-translation times-new">
               <small>
@@ -100,7 +100,7 @@ class Verse extends Component {
               </small>
             </h2>
           </div>
-        ))}
+        )}
       </div>
     );
   }
@@ -118,7 +118,7 @@ class Verse extends Component {
     let wordAudioPosition = -1;
     const renderText = false; // userAgent.isBot;
 
-    const text = verse.words.map((word) => ( // eslint-disable-line
+    const text = verse.words.map(word =>
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -132,7 +132,7 @@ class Verse extends Component {
         isSearched={isSearched}
         useTextFont={renderText}
       />
-    ));
+    );
 
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
@@ -157,9 +157,10 @@ class Verse extends Component {
           className="text-muted"
         >
           <i
-            className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`}
-          />
-          {' '}
+            className={`ss-icon ${playing
+              ? 'ss-pause'
+              : 'ss-play'} vertical-align-middle`}
+          />{' '}
           <LocaleFormattedMessage
             id={playing ? 'actions.pause' : 'actions.play'}
             defaultMessage={playing ? 'Pause' : 'Play'}
@@ -178,10 +179,16 @@ class Verse extends Component {
       <a
         tabIndex="-1"
         className="text-muted"
-        onClick={() => this.props.loadTafsirs(verse)}
+        onClick={() =>
+          this.props.loadTafsirs(
+            verse,
+            <LocaleFormattedMessage
+              id="tafsir.select"
+              defaultMessage={'Select a tafsir'}
+            />
+          )}
       >
-        <i className="ss-book vertical-align-middle" />
-        {' '}
+        <i className="ss-book vertical-align-middle" />{' '}
         <LocaleFormattedMessage
           id={'actions.tafsir'}
           defaultMessage={'Tafsir'}
