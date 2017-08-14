@@ -157,11 +157,11 @@ export class Audioplayer extends Component {
 
     if (files[currentFile]) {
       return this.handleRemoveFileListeners(files[currentFile]);
-    } else {
-      update({
-        currentTime: 0
-      })
     }
+
+    update({
+      currentTime: 0
+    });
 
     return false;
   }
