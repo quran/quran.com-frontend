@@ -52,7 +52,7 @@ const PageView = Loadable({
 
 const Audioplayer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
+    import(/* webpackChunkName: "audioplayer" */ 'containers/Audioplayer'),
   loading: ComponentLoader
 });
 const SurahInfo = Loadable({
@@ -546,6 +546,7 @@ class Surah extends Component {
           currentVerse={verses.find(
             verse => verse.verseKey === this.getCurrentVerse()
           )}
+          audio={options.audio}
           onLoadAyahs={this.handleLazyLoadAyahs}
         />
       </div>

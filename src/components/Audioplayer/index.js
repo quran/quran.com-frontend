@@ -1,6 +1,7 @@
 /* global document */
 // TODO: This file is too too large.
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { Component, PropTypes } from 'react';
 import styled from 'styled-components';
 =======
@@ -8,17 +9,21 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 >>>>>>> graphql + react router
 import * as customPropTypes from 'customPropTypes';
+=======
+import React from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+>>>>>>> working audioplayer
 import { connect } from 'react-redux';
+import * as customPropTypes from 'customPropTypes';
 import { camelize } from 'humps';
 import Loadable from 'react-loadable';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import * as AudioActions from 'redux/actions/audioplayer';
 
 // Helpers
 import debug from 'helpers/debug';
 import scroller from 'utils/scroller';
-
-// Redux
-import * as AudioActions from 'redux/actions/audioplayer';
 
 import ComponentLoader from 'components/ComponentLoader';
 import Track from './Track';
@@ -33,6 +38,7 @@ const RepeatDropdown = Loadable({
   loading: ComponentLoader
 });
 
+<<<<<<< HEAD
 const Wrapper = styled.div`
   width: 100%;
   position: absolute;
@@ -51,17 +57,34 @@ export class Audioplayer extends Component {
   state = {
     loadingFile: false
   };
+=======
+const ControlButton = styled.a`
+  cursor: pointer;
+  width: 100%;
+  display: inline-block;
+  cursor: pointer;
+  padding-right: 1.5%;
+  color: ${props => props.theme.textColor || '#939598'};
+  outline: none;
 
+  &:focus, &:active{
+    outline: none;
+  }
+>>>>>>> working audioplayer
+
+  ${props => (
+    props.disabled ?
+    `
+      opacity: 0.5;
+      cursor: not-allowed !important;
+      pointer-events: none;
+    ` : ''
+  )}
+`;
+
+export class Audioplayer extends React.PureComponent {
   componentDidMount() {
-    const {
-      chapter,
-      currentFile,
-      currentVerse,
-      audio,
-      verses,
-      load
-    } = this.props; // eslint-disable-line no-shadow, max-len
-    const nextVerse = verses.find(verse => verse.verseKey === this.getNext());
+    const { currentFile } = this.props;
 
     debug('component:Audioplayer', 'componentDidMount');
 
@@ -69,93 +92,17 @@ export class Audioplayer extends Component {
       return this.handleAddFileListeners(currentFile);
     }
 
-    load({
-      chapterId: chapter.id,
-      verseId: currentVerse.id,
-      verseKey: currentVerse.verseKey,
-      audio
-    });
-
-    if (nextVerse) {
-      load({
-        chapterId: chapter.id,
-        verseId: nextVerse.id,
-        verseKey: nextVerse.verseKey,
-        audio
-      });
-    }
-
     return false;
   }
 
-  componentWillReceiveProps(nextProps) {
-    // Make sure we have a current ayah to mount it to Audio
-    if (!this.props.currentVerse && !nextProps.currentFile) {
-      return false;
-    }
-
-    // First load
-    if (this.props.currentFile !== nextProps.currentFile) {
-      if (this.props.currentFile) {
-        this.handleRemoveFileListeners(this.props.currentFile);
-      }
-
-      return this.handleAddFileListeners(nextProps.currentFile);
-    }
-
-    // Change verse
-    if (this.props.currentVerse.verseKey !== nextProps.currentVerse.verseKey) {
-      if (this.props.currentFile) {
-        this.handleRemoveFileListeners(this.props.currentFile);
-      }
-
-      return this.handleAddFileListeners(nextProps.currentFile);
-    }
-
-    if (this.props.audio !== nextProps.audio) {
-      Object.keys(this.props.files).forEach((key) => {
-        const verse = this.props.verses.find(
-          current => current.verseKey === key
-        );
-
-        this.props.load({
-          chapterId: verse.chapterId,
-          verseId: verse.id,
-          verseKey: verse.verseKey,
-          audio: nextProps.audio
-        });
-      });
-    }
-
-    return false;
-  }
-
-  componentDidUpdate(previousProps) {
-    const {
-      currentFile,
-      isPlaying,
-      verses,
-      audio,
-      currentVerse,
-      chapter,
-      load
-    } = this.props;
-
-    const verse = verses.find(current => current.verseKey === this.getNext());
-
-    if (
-      currentVerse.verseKey !== previousProps.currentVerse.verseKey &&
-      verse
-    ) {
-      load({
-        chapterId: chapter.id,
-        verseId: verse.id,
-        verseKey: verse.verseKey,
-        audio
-      });
-    }
+  componentDidUpdate(prevProps) {
+    const { currentFile, isPlaying } = this.props;
 
     if (!currentFile) return false;
+
+    if (prevProps.currentFile !== currentFile) {
+      this.handleAddFileListeners(currentFile);
+    }
 
     if (isPlaying) {
       const playPromise = currentFile.play();
@@ -166,17 +113,6 @@ export class Audioplayer extends Component {
       }
     } else {
       currentFile.pause();
-    }
-
-    return false;
-  }
-
-  componentWillUnmount() {
-    const { files, currentFile } = this.props;
-    debug('component:Audioplayer', 'componentWillUnmount');
-
-    if (files[currentFile]) {
-      return this.handleRemoveFileListeners(files[currentFile]);
     }
 
     return false;
@@ -207,7 +143,7 @@ export class Audioplayer extends Component {
     return verseIds[index + 1];
   }
 
-  handleAyahChange = (direction = 'next') => {
+  handleVerseChange = (direction = 'next') => {
     const { isPlaying, play, pause, currentVerse } = this.props; // eslint-disable-line no-shadow, max-len
     const previouslyPlaying = isPlaying;
 
@@ -220,7 +156,7 @@ export class Audioplayer extends Component {
 
     this.handleScrollTo(nextVerse);
 
-    this.preloadNext();
+    // this.preloadNext();
 
     if (previouslyPlaying) play();
 
@@ -240,10 +176,10 @@ export class Audioplayer extends Component {
   };
 
   play = () => {
-    this.handleScrollTo();
+    // this.handleScrollTo();
 
     this.props.play();
-    this.preloadNext();
+    // this.preloadNext();
   };
 
   preloadNext() {
@@ -277,18 +213,18 @@ export class Audioplayer extends Component {
 
     if (repeat.from > ayah && repeat.to < ayah) {
       // user selected a range where current ayah is outside
-      return this.handleAyahChange();
+      return this.handleVerseChange();
     }
 
     if (repeat.from === repeat.to) {
       // user selected single ayah repeat
-      if (ayah !== repeat.from) return this.handleAyahChange();
+      if (ayah !== repeat.from) return this.handleVerseChange();
 
       if (repeat.times === 1) {
         // end of times
         setRepeat({});
 
-        return this.handleAyahChange();
+        return this.handleVerseChange();
       }
 
       setRepeat({ ...repeat, times: repeat.times - 1 });
@@ -301,7 +237,7 @@ export class Audioplayer extends Component {
       // user selected a range
       if (ayah < repeat.to) {
         // still in range
-        return this.handleAyahChange();
+        return this.handleVerseChange();
       }
 
       if (ayah === repeat.to) {
@@ -310,7 +246,7 @@ export class Audioplayer extends Component {
           // end of times
           setRepeat({});
 
-          return this.handleAyahChange();
+          return this.handleVerseChange();
         }
 
         setRepeat({ ...repeat, times: repeat.times - 1 });
@@ -374,7 +310,7 @@ export class Audioplayer extends Component {
         file.pause();
       }
 
-      return this.handleAyahChange();
+      return this.handleVerseChange();
     };
 
     const onPlay = () => {
@@ -393,6 +329,7 @@ export class Audioplayer extends Component {
     return file;
   }
 
+<<<<<<< HEAD
   handleRemoveFileListeners = (file) => {
     file.pause();
     file.currentTime = 0; // eslint-disable-line no-param-reassign
@@ -404,6 +341,8 @@ export class Audioplayer extends Component {
     file.onprogress = null; // eslint-disable-line no-param-reassign
   };
 
+=======
+>>>>>>> working audioplayer
   handleTrackChange = (fraction) => {
     const { currentFile, update } = this.props; // eslint-disable-line no-shadow
 
@@ -414,7 +353,7 @@ export class Audioplayer extends Component {
     currentFile.currentTime = fraction * currentFile.duration;
   };
 
-  renderPlayStopButtons() {
+  renderPlayOrPauseButton() {
     const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
 
     return (
@@ -429,34 +368,33 @@ export class Audioplayer extends Component {
   }
 
   renderPreviousButton() {
-    const { currentVerse, files } = this.props;
-    if (!files) return false;
-    const index = Object.keys(files).findIndex(
-      id => id === currentVerse.verseKey
-    );
+    const { currentVerse } = this.props;
+
+    const isStart = currentVerse.verseNumber === 1;
 
     return (
-      <a
+      <ControlButton
         tabIndex="-1"
-        className={`pointer ${style.buttons} ${!index ? style.disabled : ''}`}
-        onClick={() => index && this.handleAyahChange('previous')}
+        className={`pointer ${style.buttons} ${isStart ? style.disabled : ''}`}
+        onClick={() => this.handleVerseChange('previous')}
       >
         <i className="ss-icon ss-skipback" />
-      </a>
+      </ControlButton>
     );
   }
 
   renderNextButton() {
     const { chapter, currentVerse } = this.props;
+
     if (!chapter) return false;
-    const isEnd =
-      chapter.versesCount === parseInt(currentVerse.verseNumber, 10);
+
+    const isEnd = chapter.versesCount === currentVerse.verseNumber;
 
     return (
       <a
         tabIndex="-1"
         className={`pointer ${style.buttons} ${isEnd ? style.disabled : ''}`}
-        onClick={() => !isEnd && this.handleAyahChange()}
+        onClick={() => !isEnd && this.handleVerseChange()}
       >
         <i className="ss-icon ss-skipforward" />
       </a>
@@ -481,18 +419,18 @@ export class Audioplayer extends Component {
       setRepeat // eslint-disable-line no-shadow
     } = this.props;
 
-    if (isLoading || !currentFile) {
-      return (
-        <li className={`${style.container} ${className}`}>
-          <div>
-            <LocaleFormattedMessage
-              id="app.loading"
-              defaultMessage="Loading..."
-            />
-          </div>
-        </li>
-      );
-    }
+    // if (isLoading) {
+    //   return (
+    //     <li className={`${style.container} ${className}`}>
+    //       <div>
+    //         <LocaleFormattedMessage
+    //           id="app.loading"
+    //           defaultMessage="Loading..."
+    //         />
+    //       </div>
+    //     </li>
+    //   );
+    // }
 
     return (
       <div
@@ -531,6 +469,7 @@ export class Audioplayer extends Component {
           <li className={style.controlItem}>
 >>>>>>> graphql + react router
             {this.renderPreviousButton()}
+<<<<<<< HEAD
           </ControlItem>
           <ControlItem>
             {this.renderPlayStopButtons()}
@@ -539,43 +478,43 @@ export class Audioplayer extends Component {
             {this.renderNextButton()}
           </ControlItem>
           <ControlItem>
+=======
+          </li>
+          <li className={style.controlItem}>
+            {this.renderPlayOrPauseButton()}
+          </li>
+          <li className={style.controlItem}>
+            {this.renderNextButton()}
+          </li>
+          {/* <li className={style.controlItem}>
+>>>>>>> working audioplayer
             <RepeatDropdown
               repeat={repeat}
               setRepeat={setRepeat}
               current={parseInt(currentVerse.verseNumber, 10)}
               chapter={chapter}
             />
+<<<<<<< HEAD
           </ControlItem>
           <ControlItem>
+=======
+          </li> */}
+          {/* <li className={style.controlItem}>
+>>>>>>> working audioplayer
             <ScrollButton
               shouldScroll={shouldScroll}
               onScrollToggle={this.handleScrollToggle}
             />
+<<<<<<< HEAD
           </ControlItem>
+=======
+          </li> */}
+>>>>>>> working audioplayer
         </ul>
       </div>
     );
   }
 }
-
-const mapStateToProps = (state, ownProps) => {
-  const files = state.audioplayer.files[ownProps.chapter.id] || {};
-  const verseIds = ownProps.verses.map(verse => verse.verseNumber);
-
-  return {
-    files,
-    verseIds,
-    segments: state.audioplayer.segments[ownProps.chapter.id],
-    currentFile: files[ownProps.currentVerse.verseKey],
-    isPlaying: state.audioplayer.isPlaying,
-    isLoading: state.audioplayer.isLoading,
-    repeat: state.audioplayer.repeat,
-    shouldScroll: state.audioplayer.shouldScroll,
-    duration: state.audioplayer.duration,
-    currentTime: state.audioplayer.currentTime,
-    audio: state.options.audio
-  };
-};
 
 Audioplayer.propTypes = {
   className: PropTypes.string,
@@ -599,12 +538,24 @@ Audioplayer.propTypes = {
   isPlaying: PropTypes.bool,
   currentTime: PropTypes.number,
   duration: PropTypes.number,
-  load: PropTypes.func.isRequired,
   // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
   currentFile: PropTypes.any, // eslint-disable-line
-  audio: PropTypes.number.isRequired,
-  verses: customPropTypes.verses,
   verseIds: PropTypes.object // eslint-disable-line
+};
+
+const mapStateToProps = (state, ownProps) => {
+  const verseIds = ownProps.verses.map(verse => verse.verseNumber);
+
+  return {
+    verseIds,
+    isPlaying: state.audioplayer.isPlaying,
+    isLoading: state.audioplayer.isLoading,
+    repeat: state.audioplayer.repeat,
+    shouldScroll: state.audioplayer.shouldScroll,
+    duration: state.audioplayer.duration,
+    currentTime: state.audioplayer.currentTime,
+    audio: state.options.audio
+  };
 };
 
 export default connect(mapStateToProps, AudioActions)(Audioplayer);

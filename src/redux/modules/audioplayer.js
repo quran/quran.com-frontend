@@ -114,7 +114,6 @@ export default function reducer(state = initialState, action = {}) {
       return {
         ...state,
         currentVerse: nextId,
-        currentFile: state.files[chapterId][nextId],
         currentTime: 0
       };
     }
