@@ -72,14 +72,11 @@ const ControlButton = styled.a`
   }
 >>>>>>> working audioplayer
 
-  ${props => (
-    props.disabled ?
-    `
+  ${props => (props.disabled ? `
       opacity: 0.5;
       cursor: not-allowed !important;
       pointer-events: none;
-    ` : ''
-  )}
+    ` : '')}
 `;
 
 export class Audioplayer extends React.PureComponent {

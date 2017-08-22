@@ -102,7 +102,6 @@ class TranslationsDropdown extends Component {
         menu={
           translationOptions.length
             ? <Menu>
-
               {translations &&
                   translations.length &&
                   <MenuItem onClick={this.handleRemoveContent}>
