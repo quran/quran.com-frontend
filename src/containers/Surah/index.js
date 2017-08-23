@@ -1,11 +1,12 @@
 /* global window, document */
-import React, { Component, PropTypes } from 'react';
-import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+import { graphql, compose } from 'react-apollo';
+
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
 import Helmet from 'react-helmet';
@@ -18,6 +19,7 @@ import Verse from 'components/Verse';
 import ComponentLoader from 'components/ComponentLoader';
 import Bismillah from 'components/Bismillah';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import GlobalNavSurah from 'components/GlobalNav/Surah';
 
 // Helpers
 import makeHeadTags from 'helpers/makeHeadTags';
@@ -29,7 +31,14 @@ import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
-import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
+import chaptersQuery from 'graphql/queries/chapters';
+import chapterQuery from 'graphql/queries/chapter';
+import chapterInfoQuery from 'graphql/queries/chapterInfo';
+import versesQuery from 'graphql/queries/verses';
+
+import generateLines from 'utils/generateLines';
+import determinePageForChapter from 'utils/determinePageForChapter';
+import { fontFaceStyle } from 'helpers/buildFontFaces';
 
 const LoaderStyle = {};
 
@@ -38,23 +47,23 @@ const style = require('./style.scss');
 const PageView = Loadable({
   loader: () =>
     import(/* webpackChunkName: "pageview" */ 'components/PageView'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const Audioplayer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
-  LoadingComponent: ComponentLoader
+    import(/* webpackChunkName: "audioplayer" */ 'containers/Audioplayer'),
+  loading: ComponentLoader
 });
 const SurahInfo = Loadable({
   loader: () =>
     import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 const TopOptions = Loadable({
   loader: () =>
     import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 class Surah extends Component {
@@ -63,21 +72,21 @@ class Surah extends Component {
     sidebarOpen: false
   };
 
-  componentWillMount() {
-    const { params, chapter, actions } = this.props; // eslint-disable-line no-shadow
+  // componentWillMount() {
+  //   const { match: { params }, chapter, actions } = this.props; // eslint-disable-line no-shadow
 
-    if (params.range && params.range.includes('-')) {
-      const start = parseInt(params.range.split('-')[0], 10);
+  //   if (params.range && params.range.includes('-')) {
+  //     const start = parseInt(params.range.split('-')[0], 10);
 
-      if (start > chapter.versesCount || isNaN(start)) {
-        return actions.push.push('/error/invalid-verse-range');
-      }
+  //     if (start > chapter.versesCount || isNaN(start)) {
+  //       return actions.push.push('/error/invalid-verse-range');
+  //     }
 
-      return false;
-    }
+  //     return false;
+  //   }
 
-    return false;
-  }
+  //   return false;
+  // }
 
   // componentDidMount() {
   //   const { verses, options: { audio } } = this.props;
@@ -108,52 +117,87 @@ class Surah extends Component {
   //   }
   // }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    const conditions = [
-      this.state.lazyLoading !== nextState.lazyLoading,
-      this.state.sidebarOpen !== nextState.sidebarOpen,
-      this.props.chapter !== nextProps.chapter,
-      this.props.isEndOfSurah !== nextProps.isEndOfSurah,
-      this.props.verseIds.length !== nextProps.verseIds.length,
-      this.props.chapters !== nextProps.chapters,
-      this.props.bookmarks !== nextProps.bookmarks,
-      this.props.isLoading !== nextProps.isLoading,
-      this.props.isLoaded !== nextProps.isLoaded,
-      this.props.options !== nextProps.options,
-      this.props.currentVerse !== nextProps.currentVerse,
-      this.props.isPlaying !== nextProps.isPlaying
-    ];
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   const conditions = [
+  //     this.state.lazyLoading !== nextState.lazyLoading,
+  //     this.state.sidebarOpen !== nextState.sidebarOpen,
+  //     this.props.chapter !== nextProps.chapter,
+  //     this.props.isEndOfSurah !== nextProps.isEndOfSurah,
+  //     this.props.chapters !== nextProps.chapters,
+  //     this.props.bookmarks !== nextProps.bookmarks,
+  //     this.props.isLoading !== nextProps.isLoading,
+  //     this.props.isLoaded !== nextProps.isLoaded,
+  //     this.props.options !== nextProps.options,
+  //     this.props.currentVerse !== nextProps.currentVerse,
+  //     this.props.isPlaying !== nextProps.isPlaying
+  //   ];
 
-    return conditions.some(condition => condition);
-  }
+  //   return conditions.some(condition => condition);
+  // }
 
   getLast() {
-    const { verseIds } = this.props;
+    const { versesQuery: { verses } } = this.props;
 
-    return [...verseIds][[...verseIds].length - 1];
+    return [...verses].reverse()[0].verseNumber;
   }
 
   getFirst() {
-    const { verseIds } = this.props;
+    const { versesQuery: { verses } } = this.props;
 
-    return [...verseIds][0];
+    return [...verses][0].verseNumber;
   }
 
-  hasVerses() {
-    return Object.keys(this.props.verses).length;
+  getCurrentVerse() {
+    const { currentVerse, versesQuery: { verses } } = this.props;
+
+    return currentVerse || verses[0].verseKey;
+  }
+
+  getVerseIds() {
+    const { versesQuery: { verses } } = this.props;
+
+    if (verses) {
+      return verses.map(verse => verse.verseNumber);
+    }
+
+    return [];
   }
 
   handleLazyLoadAyahs = (callback) => {
-    const { verseIds, chapter, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
+    const {
+      versesQuery: { verses, loading, fetchMore },
+      chapterQuery: { chapter },
+      options
+    } = this.props; // eslint-disable-line no-shadow, max-len
+    const { lazyLoading } = this.state;
+
+    this.setState({ lazyLoading: true });
+    debug('component:Surah', 'handleLazyLoadAyahs');
     const range = [this.getFirst(), this.getLast()];
 
     const size = 10;
-    const from = range[1];
+    const from = parseInt(range[1], 10);
     const to = from + size;
     const paging = { offset: from, limit: to - from };
+    const toVerse = verses.find(verse => verse.verseNumber === to);
 
-    if (!isEndOfSurah && !verseIds.has(to)) {
-      actions.verse.load(chapter.chapterNumber, paging, options).then(() => {
+    if (!this.isEndOfSurah() && !toVerse && !loading && !lazyLoading) {
+      fetchMore({
+        variables: {
+          chapterId: chapter.id,
+          ...paging
+        },
+        updateQuery: (previousResult, { fetchMoreResult }) => {
+          if (!fetchMoreResult) {
+            return previousResult;
+          }
+
+          return {
+            ...previousResult,
+            verses: [...previousResult.verses, ...fetchMoreResult.verses]
+          };
+        }
+      }).then(() => {
         this.setState({ lazyLoading: false });
         return callback && callback();
       });
@@ -169,7 +213,7 @@ class Surah extends Component {
   };
 
   title() {
-    const { params, chapter } = this.props;
+    const { match: { params }, chapterQuery: { chapter } } = this.props;
 
     if (params.range) {
       return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}:${params.range}]`;
@@ -179,7 +223,12 @@ class Surah extends Component {
   }
 
   description() {
-    const { params, verses, chapter, info } = this.props;
+    const {
+      match: { params },
+      versesQuery: { verses },
+      chapterQuery: { chapter },
+      chapterInfoQuery: { chapterInfo }
+    } = this.props;
 
     if (params.range) {
       if (params.range.includes('-')) {
@@ -211,11 +260,21 @@ class Surah extends Component {
       return `Surat ${chapter.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${info ? info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${chapterInfo ? chapterInfo.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
+  }
+
+  isEndOfSurah() {
+    const { chapterQuery: { chapter }, versesQuery: { verses } } = this.props;
+
+    if (chapter && verses) {
+      return chapter.versesCount === [...verses].reverse()[0].verseNumber;
+    }
+
+    return false;
   }
 
   renderNoAyah() {
-    const { isLoading } = this.props;
+    const { versesQuery: { loading } } = this.props;
 
     const noAyah = (
       <div className="text-center">
@@ -228,19 +287,16 @@ class Surah extends Component {
       </div>
     );
 
-    return isLoading
-      ? <Loader isActive relative style={LoaderStyle} />
-      : noAyah;
+    return loading ? <Loader isActive relative style={LoaderStyle} /> : noAyah;
   }
 
   renderPagination() {
     const {
       isSingleAyah,
-      isLoading,
-      isEndOfSurah,
-      chapter,
-      options,
-      actions
+
+      chapterQuery: { chapter },
+      versesQuery: { loading },
+      options
     } = this.props;
     const translations = (options.translations || []).join(',');
 
@@ -269,8 +325,8 @@ class Surah extends Component {
     return (
       <LazyLoad
         onLazyLoad={this.handleLazyLoadAyahs}
-        isEnd={isEndOfSurah && !isLoading}
-        isLoading={isLoading}
+        isEnd={this.isEndOfSurah() && !loading}
+        isLoading={this.state.lazyLoading}
         endComponent={
           <ul className="pager">
             {chapter.chapterNumber > 1 &&
@@ -313,8 +369,12 @@ class Surah extends Component {
               </li>}
           </ul>
         }
-        loadingComponent={
-          <Loader isActive={isLoading} relative style={LoaderStyle} />
+        loading={
+          <Loader
+            isActive={this.state.lazyLoading}
+            relative
+            style={LoaderStyle}
+          />
         }
       />
     );
@@ -322,38 +382,42 @@ class Surah extends Component {
 
   renderVerses() {
     const {
-      chapter,
-      verses,
+      chapterQuery: { chapter },
+      versesQuery: { loading, verses },
       actions,
       options,
       bookmarks,
       isPlaying,
-      isAuthenticated,
-      currentVerse
+      isAuthenticated
     } = this.props; // eslint-disable-line no-shadow
 
-    return Object.values(verses).map(verse => (
-      <Verse
-        verse={verse}
-        chapter={chapter}
-        currentVerse={currentVerse}
-        iscurrentVerse={isPlaying && verse.verseKey === currentVerse}
-        bookmarked={!!bookmarks[verse.verseKey]}
-        tooltip={options.tooltip}
-        bookmarkActions={actions.bookmark}
-        audioActions={actions.audio}
-        mediaActions={actions.media}
-        isPlaying={isPlaying}
-        isAuthenticated={isAuthenticated}
-        key={`${verse.chapterId}-${verse.id}-verse`}
-        userAgent={options.userAgent}
-        audio={options.audio}
-      />
-    ));
+    return (
+      !loading &&
+      verses.map(verse => (
+        <Verse
+          verse={verse}
+          chapter={chapter}
+          currentVerse={this.getCurrentVerse()}
+          iscurrentVerse={
+            isPlaying && verse.verseKey === this.getCurrentVerse()
+          }
+          bookmarked={!!bookmarks[verse.verseKey]}
+          tooltip={options.tooltip}
+          bookmarkActions={actions.bookmark}
+          audioActions={actions.audio}
+          mediaActions={actions.media}
+          isPlaying={isPlaying}
+          isAuthenticated={isAuthenticated}
+          key={`${verse.chapterId}-${verse.id}-verse`}
+          userAgent={options.userAgent}
+          audio={options.audio}
+        />
+      ))
+    );
   }
 
   renderLines() {
-    const { lines, options, currentVerse, isPlaying, actions } = this.props;
+    const { lines, options, isPlaying, actions } = this.props;
     const keys = Object.keys(lines);
 
     return (
@@ -361,25 +425,50 @@ class Surah extends Component {
         lines={lines}
         keys={keys}
         options={options}
-        currentVerse={currentVerse}
+        currentVerse={this.getCurrentVerse()}
         audioActions={actions.audio}
         isPlaying={isPlaying}
       />
     );
   }
 
+  renderFonts() {
+    const { versesQuery: { verses } } = this.props;
+
+    if (verses) {
+      return verses
+        .reduce((pages, verse) => {
+          if (pages.includes(verse.pageNumber)) {
+            return pages;
+          }
+
+          return [...pages, verse.pageNumber];
+        }, [])
+        .map(pageNumber => (
+          <style
+            key={`p${pageNumber}`}
+            dangerouslySetInnerHTML={{
+              __html: fontFaceStyle(`p${pageNumber}`)
+            }}
+          />
+        ));
+    }
+
+    return <noscript />;
+  }
+
   render() {
     const {
-      chapter,
-      verses,
+      chapterQuery: { loading: chapterLoading, chapter },
+      chaptersQuery: { chapters },
+      versesQuery: { loading: versesLoading, verses },
+      chapterInfoQuery: { chapterInfo },
       options,
-      info,
-      actions,
-      currentVerse
+      actions
     } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!this.hasVerses()) {
+    if (chapterLoading || versesLoading) {
       return (
         <div className={style.container} style={{ margin: '50px auto' }}>
           {this.renderNoAyah()}
@@ -424,11 +513,18 @@ class Surah extends Component {
             }
           ]}
         />
+
+        <GlobalNavSurah
+          chapter={chapter}
+          chapters={chapters}
+          options={options}
+          verses={verses}
+        />
         <div className={`container-fluid ${style.container}`}>
           <div className="row">
             <SurahInfo
               chapter={chapter}
-              info={info}
+              info={chapterInfo}
               loadInfo={actions.loadInfo}
               isShowingSurahInfo={options.isShowingSurahInfo}
               onClose={this.handleSurahInfoToggle}
@@ -437,83 +533,60 @@ class Surah extends Component {
               {__CLIENT__ && <TopOptions chapter={chapter} />}
               <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderVerses()}
+              {this.renderFonts()}
             </div>
             <div className="col-md-10 col-md-offset-1">
               {this.renderPagination()}
             </div>
           </div>
         </div>
-        {__CLIENT__ &&
-          <Audioplayer
-            chapter={chapter}
-            verses={verses}
-            currentVerse={verses[currentVerse]}
-            onLoadAyahs={this.handleLazyLoadAyahs}
-          />}
+        <Audioplayer
+          chapter={chapter}
+          verses={verses}
+          currentVerse={verses.find(
+            verse => verse.verseKey === this.getCurrentVerse()
+          )}
+          audio={options.audio}
+          onLoadAyahs={this.handleLazyLoadAyahs}
+        />
       </div>
     );
   }
 }
 
 Surah.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
-  chapters: customPropTypes.chapters.isRequired,
   actions: PropTypes.object.isRequired, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line
-  isEndOfSurah: PropTypes.bool.isRequired,
-  verseIds: PropTypes.instanceOf(Set),
   currentVerse: PropTypes.string,
-  info: customPropTypes.infoType,
+  versesQuery: PropTypes.object, // eslint-disable-line
+  chapterQuery: PropTypes.object, // eslint-disable-line
+  chapterInfoQuery: PropTypes.object, // eslint-disable-line
   bookmarks: PropTypes.object.isRequired, // eslint-disable-line
-  isLoading: PropTypes.bool.isRequired,
-  isLoaded: PropTypes.bool.isRequired,
   isSingleAyah: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   options: PropTypes.object.isRequired, // eslint-disable-line
-  params: PropTypes.shape({
-    chapterId: PropTypes.string.isRequired
-  }).isRequired,
-  verses: customPropTypes.verses,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      chapterId: PropTypes.string.isRequired
+    }).isRequired
+  }),
   isPlaying: PropTypes.bool
 };
 
-const AsyncSurah = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: chapterInfoConnect },
-  { promise: versesConnect }
-])(Surah);
-
-function mapStateToProps(state, ownProps) {
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
-  const chapter: Object = state.chapters.entities[chapterId];
-  const verses: Object = state.verses.entities[chapterId];
-  const verseArray = verses
-    ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
-    : [];
-  const verseIds = new Set(verseArray);
-  const lastAyahInArray = verseArray.slice(-1)[0];
-  const isSingleAyah =
-    !!ownProps.params.range && !ownProps.params.range.includes('-');
-  const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
-
+function mapStateToProps(state, { match: { params } }) {
   return {
-    chapter,
-    verses,
-    verseIds,
-    isSingleAyah,
-    currentVerse,
-    info: state.chapters.infos[ownProps.params.chapterId],
+    info: state.chapters.infos[params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
     isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
-    isEndOfSurah: lastAyahInArray === chapter.versesCount,
     chapters: state.chapters.entities,
     bookmarks: state.bookmarks.entities,
     isLoading: state.verses.loading,
     isLoaded: state.verses.loaded,
     lines: state.lines.lines,
-    options: state.options
+    options: state.options,
+    currentVerse: state.audioplayer.currentVerse
   };
 }
 
@@ -530,4 +603,39 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AsyncSurah);
+const Graphed = compose(
+  graphql(chaptersQuery, {
+    name: 'chaptersQuery'
+  }),
+  graphql(chapterQuery, {
+    name: 'chapterQuery',
+    options: ({ match: { params } }) => ({
+      variables: { chapterId: params.chapterId }
+    })
+  }),
+  graphql(chapterInfoQuery, {
+    name: 'chapterInfoQuery',
+    options: ({ match: { params } }) => ({
+      ssr: false,
+      variables: { chapterId: params.chapterId }
+    })
+  }),
+  graphql(versesQuery, {
+    name: 'versesQuery',
+    options: ({ match: { params }, options }) => ({
+      variables: {
+        resource_content_id: options.translations,
+        chapterId: params.chapterId,
+        ...determinePageForChapter(params.range)
+      }
+    }),
+    props: ({ versesQuery }) => ({
+      // eslint-disable-line
+      lines: versesQuery.verses ? generateLines(versesQuery.verses) : [],
+      versesQuery
+    })
+  })
+)(Surah);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Graphed);
+// export default Graphed;

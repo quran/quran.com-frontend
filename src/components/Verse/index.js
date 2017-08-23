@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Element from 'react-scroll/lib/components/Element';
 import Loadable from 'react-loadable';
@@ -16,12 +17,12 @@ const styles = require('./style.scss');
 
 const Copy = Loadable({
   loader: () => import('components/Copy'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 const Share = Loadable({
   loader: () => import('components/Share'),
-  LoadingComponent: ComponentLoader
+  loading: ComponentLoader
 });
 
 class Verse extends Component {
@@ -308,8 +309,8 @@ class Verse extends Component {
       >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">
-          {this.renderText()}
-          {this.renderTranslations()}
+          {verse.words ? this.renderText() : verse.textMadani}
+          {verse.translations && this.renderTranslations()}
           {this.renderMedia()}
         </div>
       </Element>

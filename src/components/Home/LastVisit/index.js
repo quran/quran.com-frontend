@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { Title } from 'containers/Home';
 
