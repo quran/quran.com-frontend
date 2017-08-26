@@ -1,0 +1,23 @@
+{
+  "activitycontinuation": {
+    "apps": [
+      "MKP73M5X4A.com.quran.ios"
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "MKP73M5X4A.com.quran.ios"
+    ]
+  },
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "MKP73M5X4A.com.quran.ios",
+        "paths": [
+          "*"
+        ]
+      }
+    ]
+  }
+}
