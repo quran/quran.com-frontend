@@ -38,41 +38,26 @@ export default function checkValidChapterOrVerse(nextState, replaceState) {
   const chapterId = parseInt(nextState.params.chapterId, 10);
   filterValidChapter(replaceState, chapterId);
 
+  let location = `${nextState.location.pathname}${nextState.location.search}`;
   if (nextState.params.range) {
     if (nextState.params.range.includes('-')) {
       const [_from, _to] = nextState.params.range.split('-').map(num => num);
-      const [from, to] = nextState.params.range
-        .split('-')
-        .map(num => parseInt(num, 10));
-
+      const [from, to] = nextState.params.range.split('-').map(num => parseInt(num, 10));
       if (from > to) {
-        replaceState(`/${chapterId}/${to}-${from}${nextState.location.search}`);
+        location = `/${chapterId}/${to}-${from}${nextState.location.search}`;
       } else if (from === to) {
-        replaceState(`/${chapterId}/${from}`);
-      } else if (
-        _from.length !== from.toString().length ||
-        _to.length !== to.toString().length
-      ) {
-        replaceState(`/${chapterId}/${from}-${to}${nextState.location.search}`);
+        location = `/${chapterId}/${from}`;
+      } else if (_from.length !== from.toString().length || _to.length !== to.toString().length) {
+        location = `/${chapterId}/${from}-${to}${nextState.location.search}`;
       }
-      // TODO: Add check to make sure the range is within the ayah limit
-    } else {
+    } else if (replaceChapterOrRange(nextState.params)) {
       const verseId = parseInt(nextState.params.range, 10);
-
-      if (replaceChapterOrRange(nextState.params)) {
-        let location = `${nextState.location.pathname}${nextState.location.search}`;
-        location = location.replace(
-          /\/([0-9]+)\/([0-9]+)/,
-          `/${chapterId}/${verseId}`
-        );
-        replaceState(location);
-      }
+      location = location.replace(/\/([0-9]+)\/([0-9]+)/, `/${chapterId}/${verseId}`);
     }
   } else if (replaceChapterOrRange(nextState.params)) {
-    let location = `${nextState.location.pathname}${nextState.location.search}`;
     location = location.replace(/\/([0-9]+)/, `/${chapterId}`);
-    replaceState(location);
   }
 
+  replaceState(location);
   filterValidVerse(replaceState, chapterId, nextState.params.range);
 }
