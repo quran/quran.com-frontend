@@ -59,9 +59,7 @@ export class Audioplayer extends Component {
     return false;
   }
 
-  componentWillReceiveProps({
-    currentFile: nextFile,
-  }) {
+  componentWillReceiveProps({ currentFile: nextFile }) {
     const { currentFile } = this.props;
 
     if (!currentFile && nextFile) {
@@ -73,7 +71,10 @@ export class Audioplayer extends Component {
     }
   }
 
-  componentDidUpdate({ isPlaying: previousPlaying, currentFile: previousFile }) {
+  componentDidUpdate({
+    isPlaying: previousPlaying,
+    currentFile: previousFile
+  }) {
     const { currentFile, isPlaying } = this.props;
 
     if (!currentFile) return false;
