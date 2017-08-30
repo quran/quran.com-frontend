@@ -71,41 +71,6 @@ class Verse extends Component {
     ));
   }
 
-  renderMedia() {
-    const { verse, mediaActions, isSearched, isPdf } = this.props;
-
-    if (isSearched || !verse.mediaContents) return false;
-    if (isPdf) return false;
-
-    return (
-      <div>
-        {verse.mediaContents.map((content, index) => (
-          <div className={`${styles.translation} translation`} key={index}>
-            <h2 className="text-translation times-new">
-              <small>
-                <a
-                  tabIndex="-1"
-                  className="pointer"
-                  onClick={() => mediaActions.setMedia(content)}
-                  data-metrics-event-name="Media Click"
-                  data-metrics-media-content-url={content.url}
-                  data-metrics-media-content-id={content.id}
-                  data-metrics-media-content-verse-key={verse.verseKey}
-                >
-                  <LocaleFormattedMessage
-                    id="verse.media.lectureFrom"
-                    defaultMessage="Watch lecture by {from}"
-                    values={{ from: content.authorName }}
-                  />
-                </a>
-              </small>
-            </h2>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
   renderText() {
     const {
       verse,
@@ -311,7 +276,6 @@ class Verse extends Component {
         <div className="col-md-11 col-sm-11">
           {verse.words ? this.renderText() : verse.textMadani}
           {verse.translations && this.renderTranslations()}
-          {this.renderMedia()}
         </div>
       </Element>
     );
