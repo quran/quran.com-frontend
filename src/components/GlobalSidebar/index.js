@@ -1,13 +1,16 @@
 /* global document */
 import styled from 'styled-components';
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Icon from 'quran-components/lib/Icon';
+import Navbar from 'react-bootstrap/lib/Navbar';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const NavbarHeader = Navbar.Header;
+
+const styles = require('./style.scss');
 
 const List = styled.ul`
   padding-left: 0;

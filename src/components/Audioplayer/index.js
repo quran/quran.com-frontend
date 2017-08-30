@@ -1,29 +1,19 @@
 /* global document */
 // TODO: This file is too too large.
-<<<<<<< HEAD
-<<<<<<< HEAD
-import React, { Component, PropTypes } from 'react';
 import styled from 'styled-components';
-=======
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
->>>>>>> graphql + react router
 import * as customPropTypes from 'customPropTypes';
-=======
-import React from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
->>>>>>> working audioplayer
 import { connect } from 'react-redux';
-import * as customPropTypes from 'customPropTypes';
-import { camelize } from 'humps';
 import Loadable from 'react-loadable';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import * as AudioActions from 'redux/actions/audioplayer';
 
 // Helpers
 import debug from 'helpers/debug';
 import scroller from 'utils/scroller';
+
+// Redux
+import * as AudioActions from 'redux/actions/audioplayer';
 
 import ComponentLoader from 'components/ComponentLoader';
 import Track from './Track';
@@ -38,7 +28,6 @@ const RepeatDropdown = Loadable({
   loading: ComponentLoader
 });
 
-<<<<<<< HEAD
 const Wrapper = styled.div`
   width: 100%;
   position: absolute;
@@ -57,31 +46,9 @@ export class Audioplayer extends Component {
   state = {
     loadingFile: false
   };
-=======
-const ControlButton = styled.a`
-  cursor: pointer;
-  width: 100%;
-  display: inline-block;
-  cursor: pointer;
-  padding-right: 1.5%;
-  color: ${props => props.theme.textColor || '#939598'};
-  outline: none;
 
-  &:focus, &:active{
-    outline: none;
-  }
->>>>>>> working audioplayer
-
-  ${props => (props.disabled ? `
-      opacity: 0.5;
-      cursor: not-allowed !important;
-      pointer-events: none;
-    ` : '')}
-`;
-
-export class Audioplayer extends React.PureComponent {
   componentDidMount() {
-    const { currentFile } = this.props;
+    const { currentFile } = this.props; // eslint-disable-line no-shadow, max-len
 
     debug('component:Audioplayer', 'componentDidMount');
 
@@ -92,24 +59,58 @@ export class Audioplayer extends React.PureComponent {
     return false;
   }
 
-  componentDidUpdate(prevProps) {
+  componentWillReceiveProps({
+    currentFile: nextFile,
+  }) {
+    const { currentFile } = this.props;
+
+    if (!currentFile && nextFile) {
+      this.handleAddFileListeners(nextFile);
+    }
+
+    if (currentFile !== nextFile) {
+      this.handleAddFileListeners(nextFile);
+    }
+  }
+
+  componentDidUpdate({ isPlaying: previousPlaying, currentFile: previousFile }) {
     const { currentFile, isPlaying } = this.props;
 
     if (!currentFile) return false;
 
-    if (prevProps.currentFile !== currentFile) {
-      this.handleAddFileListeners(currentFile);
+    if (isPlaying !== previousPlaying) {
+      if (isPlaying) {
+        debug('component:Audioplayer', 'play');
+        const playPromise = currentFile.play();
+        // Catch/silence error when a pause interrupts a play request
+        // on browsers which return a promise
+        if (
+          playPromise !== undefined &&
+          typeof playPromise.then === 'function'
+        ) {
+          playPromise.then(null, () => {});
+        }
+      }
+
+      if (!isPlaying) {
+        debug('component:Audioplayer', 'pause');
+        return currentFile.pause();
+      }
     }
 
-    if (isPlaying) {
-      const playPromise = currentFile.play();
-      // Catch/silence error when a pause interrupts a play request
-      // on browsers which return a promise
-      if (playPromise !== undefined && typeof playPromise.then === 'function') {
-        playPromise.then(null, () => {});
+    if (currentFile !== previousFile) {
+      if (isPlaying) {
+        debug('component:Audioplayer', 'play');
+        const playPromise = currentFile.play();
+        // Catch/silence error when a pause interrupts a play request
+        // on browsers which return a promise
+        if (
+          playPromise !== undefined &&
+          typeof playPromise.then === 'function'
+        ) {
+          playPromise.then(null, () => {});
+        }
       }
-    } else {
-      currentFile.pause();
     }
 
     return false;
@@ -141,59 +142,39 @@ export class Audioplayer extends React.PureComponent {
   }
 
   handleVerseChange = (direction = 'next') => {
-    const { isPlaying, play, pause, currentVerse } = this.props; // eslint-disable-line no-shadow, max-len
-    const previouslyPlaying = isPlaying;
+    const { pause, currentVerse } = this.props; // eslint-disable-line no-shadow, max-len
+    const directions = {
+      next: 'getNext',
+      previous: 'getPrevious'
+    };
 
-    if (isPlaying) pause();
-
-    const nextVerse = this[camelize(`get_${direction}`)]();
+    const nextVerse = this[directions[direction]]();
     if (!nextVerse) return pause();
 
     this.props[direction](currentVerse.verseKey);
 
     this.handleScrollTo(nextVerse);
 
-    // this.preloadNext();
-
-    if (previouslyPlaying) play();
-
     return false;
   };
 
-  scrollToVerse = (ayahNum = this.props.currentVerse.verseKey) => {
-    scroller.scrollTo(`verse:${ayahNum}`, -45);
+  scrollToVerse = (verseNumber = this.props.currentVerse.verseKey) => {
+    scroller.scrollTo(`verse:${verseNumber}`, -45);
   };
 
-  handleScrollTo = (ayahNum) => {
+  handleScrollTo = (verseNumber) => {
     const { shouldScroll } = this.props;
 
     if (shouldScroll) {
-      this.scrollToVerse(ayahNum);
+      this.scrollToVerse(verseNumber);
     }
   };
 
   play = () => {
-    // this.handleScrollTo();
+    this.handleScrollTo();
 
     this.props.play();
-    // this.preloadNext();
   };
-
-  preloadNext() {
-    const { currentVerse, files } = this.props;
-    const ayahIds = Object.keys(files);
-    const index = ayahIds.findIndex(id => id === currentVerse.verseKey) + 1;
-
-    for (let id = index; id <= index + 2; id += 1) {
-      if (ayahIds[id]) {
-        const verseKey = ayahIds[id];
-
-        if (files[verseKey]) {
-          files[verseKey].setAttribute('preload', 'auto');
-        }
-      }
-    }
-  }
 
   handleRepeat = (file) => {
     const {
@@ -278,17 +259,13 @@ export class Audioplayer extends React.PureComponent {
 
     // Preload file
     file.setAttribute('preload', 'auto');
+    file.currentTime = 0; // eslint-disable-line
 
-    const onLoadeddata = () => {
-      // Default current time to zero. This will change
-      file.currentTime = 0; // eslint-disable-line
-      // file.currentTime || currentTime || 0;
-
-      return update({
+    const onLoadeddata = () =>
+      update({
         duration: file.duration,
         isLoading: false
       });
-    };
 
     const onTimeupdate = () =>
       update({
@@ -301,10 +278,6 @@ export class Audioplayer extends React.PureComponent {
 
       if (repeat.from) {
         return this.handleRepeat(file);
-      }
-
-      if (file.readyState >= 3 && file.paused) {
-        file.pause();
       }
 
       return this.handleVerseChange();
@@ -326,31 +299,13 @@ export class Audioplayer extends React.PureComponent {
     return file;
   }
 
-<<<<<<< HEAD
-  handleRemoveFileListeners = (file) => {
-    file.pause();
-    file.currentTime = 0; // eslint-disable-line no-param-reassign
-    file.onloadeddata = null; // eslint-disable-line no-param-reassign
-    file.ontimeupdate = null; // eslint-disable-line no-param-reassign
-    file.onplay = null; // eslint-disable-line no-param-reassign
-    file.onpause = null; // eslint-disable-line no-param-reassign
-    file.onended = null; // eslint-disable-line no-param-reassign
-    file.onprogress = null; // eslint-disable-line no-param-reassign
-  };
-
-=======
->>>>>>> working audioplayer
   handleTrackChange = (fraction) => {
-    const { currentFile, update } = this.props; // eslint-disable-line no-shadow
-
-    update({
-      currentTime: fraction * currentFile.duration
-    });
+    const { currentFile } = this.props;
 
     currentFile.currentTime = fraction * currentFile.duration;
   };
 
-  renderPlayOrPauseButton() {
+  renderPlayStopButtons() {
     const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
 
     return (
@@ -365,27 +320,28 @@ export class Audioplayer extends React.PureComponent {
   }
 
   renderPreviousButton() {
-    const { currentVerse } = this.props;
-
-    const isStart = currentVerse.verseNumber === 1;
+    const { currentVerse, files } = this.props;
+    if (!files) return false;
+    const index = Object.keys(files).findIndex(
+      id => id === currentVerse.verseKey
+    );
 
     return (
-      <ControlButton
+      <a
         tabIndex="-1"
-        className={`pointer ${style.buttons} ${isStart ? style.disabled : ''}`}
-        onClick={() => this.handleVerseChange('previous')}
+        className={`pointer ${style.buttons} ${!index ? style.disabled : ''}`}
+        onClick={() => index && this.handleVerseChange('previous')}
       >
         <i className="ss-icon ss-skipback" />
-      </ControlButton>
+      </a>
     );
   }
 
   renderNextButton() {
     const { chapter, currentVerse } = this.props;
-
     if (!chapter) return false;
-
-    const isEnd = chapter.versesCount === currentVerse.verseNumber;
+    const isEnd =
+      chapter.versesCount === parseInt(currentVerse.verseNumber, 10);
 
     return (
       <a
@@ -399,16 +355,12 @@ export class Audioplayer extends React.PureComponent {
   }
 
   render() {
-    debug('component:Audioplayer', 'render');
-
     const {
       className,
       segments,
       isLoading,
       currentVerse,
       currentFile,
-      currentTime,
-      duration,
       chapter,
       isPlaying,
       repeat, // eslint-disable-line no-shadow
@@ -416,28 +368,27 @@ export class Audioplayer extends React.PureComponent {
       setRepeat // eslint-disable-line no-shadow
     } = this.props;
 
-    // if (isLoading) {
-    //   return (
-    //     <li className={`${style.container} ${className}`}>
-    //       <div>
-    //         <LocaleFormattedMessage
-    //           id="app.loading"
-    //           defaultMessage="Loading..."
-    //         />
-    //       </div>
-    //     </li>
-    //   );
-    // }
+    if (isLoading || !currentFile) {
+      return (
+        <li className={`${style.container} ${className}`}>
+          <div>
+            <LocaleFormattedMessage
+              id="app.loading"
+              defaultMessage="Loading..."
+            />
+          </div>
+        </li>
+      );
+    }
 
     return (
       <div
-        className={`${isPlaying &&
-          style.isPlaying} ${style.container} ${className}`}
+        className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}
       >
         <Wrapper>
           {currentFile &&
             <Track
-              progress={currentTime / duration * 100}
+              progress={currentFile.currentTime / currentFile.duration * 100}
               onTrackChange={this.handleTrackChange}
             />}
           {segments &&
@@ -445,7 +396,7 @@ export class Audioplayer extends React.PureComponent {
             <Segments
               segments={segments[currentVerse.verseKey]}
               currentVerse={currentVerse.verseKey}
-              currentTime={currentTime}
+              currentTime={currentFile.currentTime}
             />}
         </Wrapper>
         <ul className="list-inline" style={{ margin: 0 }}>
@@ -454,19 +405,12 @@ export class Audioplayer extends React.PureComponent {
               id="player.currentVerse"
               defaultMessage="Ayah"
             />
-<<<<<<< HEAD
-            : {currentVerse.verseKey.split(':')[1]}
-          </ControlItem>
-          <ControlItem>
-=======
             :
             {' '}
             {currentVerse.verseNumber}
-          </li>
-          <li className={style.controlItem}>
->>>>>>> graphql + react router
+          </ControlItem>
+          <ControlItem>
             {this.renderPreviousButton()}
-<<<<<<< HEAD
           </ControlItem>
           <ControlItem>
             {this.renderPlayStopButtons()}
@@ -475,43 +419,42 @@ export class Audioplayer extends React.PureComponent {
             {this.renderNextButton()}
           </ControlItem>
           <ControlItem>
-=======
-          </li>
-          <li className={style.controlItem}>
-            {this.renderPlayOrPauseButton()}
-          </li>
-          <li className={style.controlItem}>
-            {this.renderNextButton()}
-          </li>
-          {/* <li className={style.controlItem}>
->>>>>>> working audioplayer
             <RepeatDropdown
               repeat={repeat}
               setRepeat={setRepeat}
               current={parseInt(currentVerse.verseNumber, 10)}
               chapter={chapter}
             />
-<<<<<<< HEAD
           </ControlItem>
           <ControlItem>
-=======
-          </li> */}
-          {/* <li className={style.controlItem}>
->>>>>>> working audioplayer
             <ScrollButton
               shouldScroll={shouldScroll}
               onScrollToggle={this.handleScrollToggle}
             />
-<<<<<<< HEAD
           </ControlItem>
-=======
-          </li> */}
->>>>>>> working audioplayer
         </ul>
       </div>
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  const files = state.audioplayer.files[ownProps.chapter.id];
+  const verseIds = Object.keys(ownProps.verses);
+
+  return {
+    files,
+    verseIds,
+    chapterId: ownProps.chapter.id,
+    isPlaying: state.audioplayer.isPlaying,
+    isLoading: state.audioplayer.isLoading,
+    repeat: state.audioplayer.repeat,
+    shouldScroll: state.audioplayer.shouldScroll,
+    duration: state.audioplayer.duration,
+    currentTime: state.audioplayer.currentTime,
+    audio: state.options.audio
+  };
+};
 
 Audioplayer.propTypes = {
   className: PropTypes.string,
@@ -533,26 +476,9 @@ Audioplayer.propTypes = {
   setAyah: PropTypes.func.isRequired,
   toggleScroll: PropTypes.func.isRequired,
   isPlaying: PropTypes.bool,
-  currentTime: PropTypes.number,
-  duration: PropTypes.number,
   // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
   currentFile: PropTypes.any, // eslint-disable-line
   verseIds: PropTypes.object // eslint-disable-line
-};
-
-const mapStateToProps = (state, ownProps) => {
-  const verseIds = ownProps.verses.map(verse => verse.verseNumber);
-
-  return {
-    verseIds,
-    isPlaying: state.audioplayer.isPlaying,
-    isLoading: state.audioplayer.isLoading,
-    repeat: state.audioplayer.repeat,
-    shouldScroll: state.audioplayer.shouldScroll,
-    duration: state.audioplayer.duration,
-    currentTime: state.audioplayer.currentTime,
-    audio: state.options.audio
-  };
 };
 
 export default connect(mapStateToProps, AudioActions)(Audioplayer);

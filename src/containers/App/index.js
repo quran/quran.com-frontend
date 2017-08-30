@@ -90,11 +90,12 @@ class App extends Component {
           </div>
         </NoScript>
         <Switch>
-          {navs.map(({ component: NavComponent, ...nav }) => (
+          {navs.map(({ component: NavComponent, isStatic, ...nav }) => (
             <Route
               {...nav}
               render={routeProps => (
                 <NavComponent
+                  isStatic={isStatic}
                   {...routeProps}
                   handleSidebarToggle={() =>
                     this.setState({ sidebarOpen: !this.state.sidebarOpen })}

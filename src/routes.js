@@ -55,7 +55,8 @@ export const navs = [
   {
     component: loadable(() =>
       import(/* webpackChunkName: "login" */ './components/GlobalNav')
-    )
+    ),
+    isStatic: true
   }
 ];
 
