@@ -40,7 +40,7 @@ class Translation extends Component {
     const { translation, index } = this.props;
     const lang = translation.languageName;
     const isArabic = lang === 'arabic';
-
+    const isRtl = (lang === 'arabic' || lang === 'persian' || lang === 'urdu' || lang === 'punjabi');
     return (
       <div
         id={`trans${index}`}
@@ -48,7 +48,7 @@ class Translation extends Component {
       >
         <h4 className="montserrat">{translation.resourceName}</h4>
         <h2
-          className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}
+          className={`${isRtl ? 'lang-dir-rtl' : 'text-left'} text-translation times-new`}
         >
           <small
             dangerouslySetInnerHTML={{ __html: translation.text }}
