@@ -1,6 +1,6 @@
 import * as customPropTypes from 'customPropTypes';
 import React from 'react';
-import { connect } from 'react-redux';
+import { compose, graphql } from 'react-apollo';
 
 import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
@@ -9,17 +9,25 @@ import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
+import verseTafsirQuery from 'graphql/queries/verseTafsir';
+import verseQuery from 'graphql/queries/verse';
+
 const Tafsir = Loadable({
   loader: () => import('components/Tafsir'),
   loading: ComponentLoader
 });
 
-const VerseTafsir = ({ verse, tafsir }) => (
+const VerseTafsir = ({
+  verseTafsirQuery: { verseTafsir },
+  verseQuery: { verse },
+  match: { params }
+}) =>
+  verseTafsir &&
   <div className="row" style={{ marginTop: 20 }}>
     <Helmet
       {...makeHeadTags({
-        title: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${verse.verseKey}`,
-        description: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${verse.verseKey} - ${verse.textMadani}` // eslint-disable-line max-len
+        title: `${verseTafsir ? verseTafsir.resourceName : 'Tafsir'} of ${verse.verseKey}`,
+        description: `${verseTafsir ? verseTafsir.resourceName : 'Tafsir'} of ${verse.verseKey} - ${verse.textMadani}` // eslint-disable-line max-len
       })}
       script={[
         {
@@ -49,11 +57,11 @@ const VerseTafsir = ({ verse, tafsir }) => (
 
     <div className={'container-fluid'}>
       <div className="row">
-        <Tafsir tafsir={tafsir} verse={verse} />
+        <Tafsir tafsir={verseTafsir} verse={verse} />
 
         <div className="col-md-12">
           <div className="text-center">
-            <Button href={`/${verse.chapterId}/${verse.verseNumber}`}>
+            <Button href={`/${params.chapterId}/${params.verseNumber}`}>
               <LocaleFormattedMessage
                 id="verse.backToAyah"
                 defaultMessage="Back to Ayah"
@@ -63,24 +71,29 @@ const VerseTafsir = ({ verse, tafsir }) => (
         </div>
       </div>
     </div>
-  </div>
-);
+  </div>;
 
 VerseTafsir.propTypes = {
   verse: customPropTypes.verseType,
   tafsir: customPropTypes.tafsirType
 };
 
-function mapStateToProps(state, ownProps) {
-  const verseKey = `${ownProps.params.chapterId}:${ownProps.params.range}`;
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
-  const tafsirId = ownProps.params.tafsirId;
-  const verse: Object = state.verses.entities[chapterId][verseKey];
-
-  return {
-    verse,
-    tafsir: state.verses.tafsirs[`${verseKey}-${tafsirId}`]
-  };
-}
-
-export default connect(mapStateToProps)(VerseTafsir);
+export default compose(
+  graphql(verseTafsirQuery, {
+    name: 'verseTafsirQuery',
+    options: ({ match: { params } }) => ({
+      variables: {
+        tafsirId: params.tafsirId,
+        verseKey: `${params.chapterId}:${params.verseNumber}`
+      }
+    })
+  }),
+  graphql(verseQuery, {
+    name: 'verseQuery',
+    options: ({ match: { params } }) => ({
+      variables: {
+        verseKey: `${params.chapterId}:${params.verseNumber}`
+      }
+    })
+  })
+)(VerseTafsir);

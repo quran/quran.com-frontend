@@ -108,8 +108,6 @@ server.use((req, res, next) => {
             [client.reduxRootKey || 'apollo']: client.getInitialState()
           };
 
-          console.log(client);
-
           const html = `<!doctype html>
               ${ReactDOM.renderToString(<Html component={content} apollo={initialState} store={store} assets={webpack_isomorphic_tools.assets()} state={loadableState.getScriptTag()} />)}
           `;

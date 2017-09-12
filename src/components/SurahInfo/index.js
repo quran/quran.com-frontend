@@ -5,10 +5,10 @@ import Loader from 'quran-components/lib/Loader';
 
 const style = require('./style.scss');
 
-const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
+const SurahInfo = ({ chapter, chapterInfo, isShowingSurahInfo, onClose }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
-  if (!info) return <Loader isActive />;
+  if (!chapterInfo) return <Loader isActive />;
 
   return (
     <div className={`col-xs-12 ${style.container} chapter-info ${style.show}`}>
@@ -31,13 +31,13 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
           </dl>
         </div>
         <div
-          className={`${style.info} ${info.languageName} times-new col-md-8`}
+          className={`${style.info} ${chapterInfo.languageName} times-new col-md-8`}
         >
-          <div dangerouslySetInnerHTML={{ __html: info.text }} />
+          <div dangerouslySetInnerHTML={{ __html: chapterInfo.text }} />
           <div>
             <p>
               <em>
-                Source: {info.source}
+                Source: {chapterInfo.source}
               </em>
             </p>
           </div>

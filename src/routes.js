@@ -67,19 +67,3 @@ export default () => [
     routes
   }
 ];
-
-export const collectPromises = (path) => {
-  const promises = [];
-
-  routes.some((route) => {
-    // use `matchPath` here
-    const match = matchPath(path, route);
-    if (match && route.loadData) {
-      promises.push(...route.loadData.map(loader => loader({ store, match })));
-    }
-
-    return match;
-  });
-
-  return promises;
-};

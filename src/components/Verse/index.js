@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -24,6 +25,19 @@ const Share = Loadable({
   loader: () => import('components/Share'),
   loading: ComponentLoader
 });
+
+const Label = styled.span`
+  padding: .65em 1.1em;
+  border-radius: 0;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-weight: 300;
+  color: ${props => props.theme.textColor};
+
+  &:hover{
+    opacity: 0.7;
+  }
+`;
 
 class Verse extends Component {
   shouldComponentUpdate(nextProps) {
@@ -218,9 +232,9 @@ class Verse extends Component {
 
     const content = (
       <h4>
-        <span className={`label label-default ${styles.label}`}>
+        <Label className="label label-default">
           {verse.verseKey}
-        </span>
+        </Label>
       </h4>
     );
 
@@ -288,7 +302,6 @@ Verse.propTypes = {
   chapter: customPropTypes.surahType.isRequired,
   bookmarked: PropTypes.bool, // TODO: Add this for search
   bookmarkActions: customPropTypes.bookmarkActions,
-  mediaActions: customPropTypes.mediaActions,
   audioActions: customPropTypes.audioActions,
   match: customPropTypes.match,
   isPlaying: PropTypes.bool,

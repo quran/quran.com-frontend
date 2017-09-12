@@ -2,14 +2,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import { Switch, Route, Redirect, withRouter, matchPath } from 'react-router';
+import { Switch, Route, Redirect, withRouter } from 'react-router';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
-import Loadable from 'react-loadable';
+import loadable from 'loadable-components';
 import { routes, navs } from 'routes';
-import ComponentLoader from 'components/ComponentLoader';
 import debug from 'helpers/debug';
 import config from 'config';
 import metricsConfig from 'helpers/metrics';
@@ -20,23 +19,14 @@ import Loader from 'quran-components/lib/Loader';
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
+loadable(() => import(/* webpackChunkName: "about" */ '../About'));
+const Footer = loadable(() =>
+  import(/* webpackChunkName: "footer" */ 'components/Footer')
+);
 
-const Footer = Loadable({
-  loader: () => import(/* webpackChunkName: "footer" */ 'components/Footer'),
-  loading: ComponentLoader
-});
-
-const GlobalSidebar = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "globalsidebar" */ 'components/GlobalSidebar'),
-  loading: ComponentLoader
-});
-
-const SmartBanner = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner'),
-  loading: ComponentLoader
-});
+const SmartBanner = loadable(() =>
+  import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner')
+);
 
 class App extends Component {
   state = {
@@ -65,10 +55,8 @@ class App extends Component {
   render() {
     const {
       footer,
-      location,
       media,
-      removeMedia, // eslint-disable-line no-shadow
-      ...props
+      removeMedia // eslint-disable-line no-shadow
     } = this.props;
     debug('component:APPLICATION', 'Render');
 
@@ -133,13 +121,7 @@ const metricsApp = metrics(metricsConfig)(App);
 App.propTypes = {
   media: customPropTypes.media.isRequired,
   removeMedia: PropTypes.func.isRequired,
-  children: PropTypes.element,
-  main: PropTypes.element,
-  nav: PropTypes.element,
-  footer: PropTypes.element,
-  sidebar: PropTypes.element,
-  footNote: customPropTypes.footNoteType,
-  loadingFootNote: PropTypes.bool
+  footer: PropTypes.element
 };
 
 export default withRouter(

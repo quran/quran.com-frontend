@@ -167,7 +167,6 @@ class Surah extends Component {
     const {
       versesQuery: { verses, loading, fetchMore },
       chapterQuery: { chapter },
-      options
     } = this.props; // eslint-disable-line no-shadow, max-len
     const { lazyLoading } = this.state;
 
@@ -561,6 +560,7 @@ Surah.propTypes = {
   versesQuery: PropTypes.object, // eslint-disable-line
   chapterQuery: PropTypes.object, // eslint-disable-line
   chapterInfoQuery: PropTypes.object, // eslint-disable-line
+  chaptersQuery: PropTypes.object, // eslint-disable-line
   bookmarks: PropTypes.object.isRequired, // eslint-disable-line
   isSingleAyah: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -629,13 +629,12 @@ const Graphed = compose(
         ...determinePageForChapter(params.range)
       }
     }),
-    props: ({ versesQuery }) => ({
+    props: ({ versesQuery: query }) => ({
       // eslint-disable-line
-      lines: versesQuery.verses ? generateLines(versesQuery.verses) : [],
-      versesQuery
+      lines: query.verses ? generateLines(query.verses) : [],
+      versesQuery: query
     })
   })
 )(Surah);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Graphed);
-// export default Graphed;

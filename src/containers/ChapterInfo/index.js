@@ -1,6 +1,8 @@
-import * as customPropTypes from 'customPropTypes';
 import React from 'react';
-import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { compose, graphql } from 'react-apollo';
+
+import * as customPropTypes from 'customPropTypes';
 
 import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
@@ -9,18 +11,25 @@ import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
-const SurahInfo = Loadable({
+import chapterQuery from 'graphql/queries/chapter';
+import chapterInfoQuery from 'graphql/queries/chapterInfo';
+
+const Info = Loadable({
   loader: () =>
     import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
   loading: ComponentLoader
 });
 
-const ChapterInfo = ({ chapter, info }) => (
+const ChapterInfo = ({
+  chapterQuery: { chapter },
+  chapterInfoQuery: { chapterInfo }
+}) =>
+  chapter &&
   <div className="row" style={{ marginTop: 20 }}>
     <Helmet
       {...makeHeadTags({
         title: `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`,
-        description: `${info ? info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
+        description: `${chapterInfo ? chapterInfo.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
       })}
       script={[
         {
@@ -47,7 +56,7 @@ const ChapterInfo = ({ chapter, info }) => (
         }
       ]}
     />
-    <SurahInfo chapter={chapter} info={info} isShowingSurahInfo />
+    <Info chapter={chapter} chapterInfo={chapterInfo} isShowingSurahInfo />
     <div className="text-center">
       <Button href={`/${chapter.id}`}>
         <LocaleFormattedMessage
@@ -56,22 +65,28 @@ const ChapterInfo = ({ chapter, info }) => (
         />
       </Button>
     </div>
-  </div>
-);
+  </div>;
 
 ChapterInfo.propTypes = {
-  chapter: customPropTypes.surahType,
-  info: customPropTypes.infoType
+  chapterQuery: PropTypes.shape({
+    chapter: customPropTypes.surahType
+  }),
+  chapterInfoQuery: PropTypes.shape({
+    chapterInfo: customPropTypes.infoType
+  })
 };
 
-function mapStateToProps(state, { match: { params } }) {
-  const chapterId = parseInt(params.chapterId, 10);
-  const chapter: Object = state.chapters.entities[chapterId];
-
-  return {
-    chapter,
-    info: state.chapters.infos[chapterId]
-  };
-}
-
-export default connect(mapStateToProps)(ChapterInfo);
+export default compose(
+  graphql(chapterQuery, {
+    name: 'chapterQuery',
+    options: ({ match: { params } }) => ({
+      variables: { chapterId: params.chapterId }
+    })
+  }),
+  graphql(chapterInfoQuery, {
+    name: 'chapterInfoQuery',
+    options: ({ match: { params } }) => ({
+      variables: { chapterId: params.chapterId }
+    })
+  })
+)(ChapterInfo);
