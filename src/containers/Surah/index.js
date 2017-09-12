@@ -166,7 +166,7 @@ class Surah extends Component {
   handleLazyLoadAyahs = (callback) => {
     const {
       versesQuery: { verses, loading, fetchMore },
-      chapterQuery: { chapter },
+      chapterQuery: { chapter }
     } = this.props; // eslint-disable-line no-shadow, max-len
     const { lazyLoading } = this.state;
 

@@ -51,7 +51,7 @@ SurahInfo.propTypes = {
   onClose: PropTypes.func,
   isShowingSurahInfo: PropTypes.bool,
   chapter: customPropTypes.surahType,
-  info: customPropTypes.infoType
+  chapterInfo: customPropTypes.infoType
 };
 
 export default SurahInfo;

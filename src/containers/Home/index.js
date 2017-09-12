@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { compose, graphql } from 'react-apollo';
 import * as customPropTypes from 'customPropTypes';
 import styled from 'styled-components';
@@ -12,10 +13,9 @@ import JuzList from 'components/Home/JuzList';
 import QuickSurahs from 'components/Home/QuickSurahs';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Tabs, { Tab } from 'quran-components/lib/Tabs';
-import Loader from 'quran-components/lib/Loader';
 
-import chaptersQuery from '../../graphql/queries/chapters.js';
-import juzsQuery from '../../graphql/queries/juzs.js';
+import chaptersGraphQuery from '../../graphql/queries/chapters.js';
+import juzsGraphQuery from '../../graphql/queries/juzs.js';
 
 export const Title = styled.h4`
   font-size: 14px;
@@ -115,12 +115,16 @@ const Home = ({ chaptersQuery, juzsQuery }) => {
 };
 
 Home.propTypes = {
-  chapters: customPropTypes.chapters.isRequired,
-  juzs: customPropTypes.juzs.isRequired
+  chaptersQuery: PropTypes.shape({
+    chapters: customPropTypes.chapters.isRequired
+  }),
+  juzsQuery: PropTypes.shape({
+    juzs: customPropTypes.juzs.isRequired
+  })
 };
 
 // TODO: readd juzs
 export default compose(
-  graphql(chaptersQuery, { name: 'chaptersQuery' }),
-  graphql(juzsQuery, { name: 'juzsQuery', options: { ssr: false } })
+  graphql(chaptersGraphQuery, { name: 'chaptersQuery' }),
+  graphql(juzsGraphQuery, { name: 'juzsQuery', options: { ssr: false } })
 )(Home);
