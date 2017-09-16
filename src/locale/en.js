@@ -4,7 +4,7 @@ export default {
     local: 'english',
     'local.siteLocale': 'Site Language',
     'local.changeLocal': 'Choose the language you want the site to display in',
-    'local.navtiveName': 'English',
+    'local.nativeName': 'English',
     'local.selectLabel': 'Language',
     'setting.title': 'Settings',
     'setting.chapters': 'Surahs',
@@ -77,6 +77,8 @@ export default {
     'nav.mobile': 'Mobile Apps',
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
+
+    'juz.index.heading': 'Juz',
 
     'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.',
     'error.invalid-surah': "Surah is out of range. Please go to <a href='/'> home page</a> and select a Surah",

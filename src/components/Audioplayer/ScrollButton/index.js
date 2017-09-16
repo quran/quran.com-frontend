@@ -1,9 +1,19 @@
 import React, { PropTypes } from 'react';
+import styled from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-const style = require('../style.scss');
+const ScrollLink = styled.a`
+  width: 100%;
+  display: inline-block;
+  cursor: pointer;
+  padding-right: 1.5%;
+  color: ${props => (props.active ? props.theme.brandPrimary : props.theme.textColor)};
+  outline: none;
+  cursor: pointer;
+  margin-bottom: 0;
+`;
 
 const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
   const tooltip = (
@@ -22,14 +32,13 @@ const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
         placement="top"
         trigger={['hover', 'focus']}
       >
-        <a
+        <ScrollLink
           tabIndex="-1"
-          className={`pointer ${style.buttons} ${shouldScroll ? style.scroll : ''}`}
+          active={shouldScroll}
           onClick={onScrollToggle}
-          style={{ marginBottom: 0 }}
         >
           <i className="ss-icon ss-link" />
-        </a>
+        </ScrollLink>
       </OverlayTrigger>
     </div>
   );

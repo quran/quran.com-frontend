@@ -4,7 +4,7 @@ export default {
     local: 'urdu',
     'local.siteLocale': 'سائٹ کی زبان',
     'local.changeLocal': 'جس زبان میں سایٹ دیکہنا چاہتے ہیں اس زبان کا انتخاب کریں',
-    'local.navtiveName': 'اردو',
+    'local.nativeName': 'اردو',
     'local.selectLabel': 'زبان',
     'setting.title': 'اختیارات',
     'setting.chapters': 'سورة',
@@ -77,6 +77,8 @@ export default {
     'nav.mobile': 'موبائل',
     'nav.navigate': 'تشریف لے جائیں',
     'nav.legacySite': 'پرانی سائٹ',
+
+    'juz.index.heading': 'سپارے',
 
     'login.message': 'Quran.com کرنے کیلئے سائن ان سب کو اپنے بک مارکس، نوٹوں اور سرگرمیوں کو ذخیرہ کرنے.',
     'error.invalid-surah': "سورہ رینج سے باہر ہے. براہ مہربانی <a href='/'> صفحۂ اول</a> پر جائیں اور درست سوره منتخب کریں",

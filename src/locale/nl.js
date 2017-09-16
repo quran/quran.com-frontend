@@ -4,7 +4,7 @@ export default {
     local: 'nederlands',
     'local.siteLocale': 'Site Taal',
     'local.changeLocal': 'Kies de taal waarin u de site wilt weergeven',
-    'local.navtiveName': 'Nederlands',
+    'local.nativeName': 'Nederlands',
     'local.selectLabel': 'Taal',
     'setting.title': 'Instellingen',
     'setting.chapters': 'Soeras',
@@ -77,6 +77,8 @@ export default {
     'nav.mobile': 'Mobiele apps',
     'nav.navigate': 'Navigeer',
     'nav.legacySite': 'Nalatenschap Quran.com',
+
+    'juz.index.heading': 'Juz',
 
     'login.message': 'Log in op Quran.com om al je bladwijzers, notities en activiteiten op te slaan.',
     'error.invalid-surah': "Soera is buiten bereik. Ga aub naar de <a href='/'> startpagina</a> en selecteer een Soera",

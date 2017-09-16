@@ -228,7 +228,9 @@ class Surah extends Component {
       </div>
     );
 
-    return isLoading ? <Loader isActive relative style={LoaderStyle} /> : noAyah;
+    return isLoading
+      ? <Loader isActive relative style={LoaderStyle} />
+      : noAyah;
   }
 
   renderPagination() {
@@ -237,7 +239,8 @@ class Surah extends Component {
       isLoading,
       isEndOfSurah,
       chapter,
-      options
+      options,
+      actions
     } = this.props;
     const translations = (options.translations || []).join(',');
 
@@ -285,6 +288,10 @@ class Surah extends Component {
             <li className="text-center">
               <Link
                 to={`/${chapter.chapterNumber}?translations=${translations}`}
+                onClick={() =>
+                  actions.verse.setCurrentVerse(
+                    `${chapter.chapterNumber}:${this.getFirst()}`
+                  )}
               >
                 <LocaleFormattedMessage
                   id="chapter.goToBeginning"
@@ -306,7 +313,9 @@ class Surah extends Component {
               </li>}
           </ul>
         }
-        loadingComponent={<Loader isActive={isLoading} relative style={LoaderStyle} />}
+        loadingComponent={
+          <Loader isActive={isLoading} relative style={LoaderStyle} />
+        }
       />
     );
   }

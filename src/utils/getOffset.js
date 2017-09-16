@@ -11,5 +11,8 @@ export default function getOffset(element) {
     elem = elem.offsetParent;
   } while (elem);
 
-  return { left: offsetLeft, top: offsetTop };
+  return {
+    left: offsetLeft,
+    top: offsetTop
+  };
 }

@@ -4,7 +4,7 @@ export default {
     local: 'indonesian',
     'local.siteLocale': 'Bahasa Situs',
     'local.changeLocal': 'Pilih bahasa yang diinginkan untuk tampilan situs',
-    'local.navtiveName': 'Indonesia',
+    'local.nativeName': 'Indonesia',
     'local.selectLabel': 'Bahasa',
     'setting.title': 'Pengaturan',
     'setting.chapters': 'Surat',
@@ -77,6 +77,8 @@ export default {
     'nav.mobile': 'Aplikasi Ponsel',
     'nav.navigate': 'Telusuri',
     'nav.legacySite': 'Quran.com versi lama',
+
+    'juz.index.heading': 'Juz',
 
     'login.message': 'Masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.',
     'error.invalid-surah': "Surah berada di luar jangkauan. Silahkan pergi ke <a href='/'> halaman rumah </a> dan pilih sebuah Surah",

@@ -68,8 +68,12 @@ class Word extends Component {
     const highlight = currentVerse === word.verseKey && isPlaying
       ? 'highlight'
       : '';
-    const className = `${useTextFont ? 'text-' : ''}${word.className} ${word.charType} ${highlight} ${word.highlight ? word.highlight : ''}`;
-    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
+    const className = `${useTextFont
+      ? 'text-'
+      : ''}${word.className} ${word.charType} ${highlight} ${word.highlight
+      ? word.highlight
+      : ''}`;
+    const id = `word-${word.verseKey.replace(/:/, '-')}-${word.position}`;
 
     if (useTextFont) {
       if (word.charType === CHAR_TYPE_END) {

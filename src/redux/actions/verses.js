@@ -15,7 +15,7 @@ import {
 
 // NOTE: For safe measure
 const defaultOptions = {
-  translations: [20]
+  translations: [101]
 };
 
 // NOTE: From the API!

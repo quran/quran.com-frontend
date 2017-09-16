@@ -32,7 +32,7 @@ class Line extends Component {
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
 
-    const text = line.map((word) => ( // eslint-disable-line
+    const text = line.map(word => // eslint-disable-line
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -45,7 +45,7 @@ class Line extends Component {
         }
         useTextFont={useTextFont}
       />
-    ));
+    );
 
     return (
       <span className={`${styles.line} text-center`}>
@@ -59,14 +59,15 @@ class Line extends Component {
 
     debug(
       'component:Line',
-      `Page: ${line[0].pageNum} - Line: ${line[0].lineNum} - Ayah: ${line[0].verseKey}`
+      `Page: ${line[0].pageNum} - Line: ${line[0].lineNum} - Ayah: ${line[0]
+        .verseKey}`
     );
 
     return (
       <div className={`row ${styles.font} text-justify text-arabic`}>
         <div
           className="col-md-12 line-container"
-          name={`ayah:${line[0].verseKey}`}
+          name={`verse:${line[0].verseKey}`}
         >
           {this.renderText()}
         </div>
