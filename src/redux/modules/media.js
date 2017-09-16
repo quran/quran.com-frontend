@@ -45,7 +45,7 @@ export default function reducer(state = initialState, action = {}) {
         size: 'small',
         wrapperClass: '',
         content: {
-          title: 'Select a tafsir'
+          title: action.title
         }
       };
     }
@@ -55,7 +55,7 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         content: {
           body: buildTafsirList(action.result.tafsirs, action.verse),
-          title: 'Select a tafsir'
+          title: action.title
         }
       };
     }
@@ -76,7 +76,8 @@ export default function reducer(state = initialState, action = {}) {
         size: 'large',
         wrapperClass: 'text-translation foote-note-text',
         content: {
-          body: `<small class='${action.result.footNote.languageName}'>${action.result.footNote.text}</small>`,
+          body: `<small class='${action.result.footNote.languageName}'>${action
+            .result.footNote.text}</small>`,
           title: 'Foot note'
         }
       };
