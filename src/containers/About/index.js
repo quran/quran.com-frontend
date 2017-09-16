@@ -10,13 +10,13 @@ export default () => (
       <div className="row">
         <div className="col-md-8 col-md-offset-2">
           <h4 className="source-sans">
-            The Noble Qur'an is the central religious text of Islam. Muslims
+            The Noble Qur’an is the central religious text of Islam. Muslims
             believe the Qur’an is the book of Divine guidance and direction for
             mankind, and consider the original Arabic text the final revelation
             of Allah (God).[<a href="en.wikipedia.org/wiki/Quran">1</a>] All
             translations of the original Arabic text are thus interpretations of
             the original meanings and should be embraced as such. For more
-            information about the Noble Qur'an, you may visit its{' '}
+            information about the Noble Qur’an, you may visit its{' '}
             <a href="https://en.wikipedia.org/wiki/Quran">Wikipedia article.</a>
           </h4>
         </div>
@@ -26,7 +26,7 @@ export default () => (
           <h3>MECCAN SURAHS</h3>
           <h4 className="source-sans">
             The Meccan Surahs are the chronologically earlier chapters (Surahs)
-            of the Qur'an that were, according to Islamic tradition, revealed
+            of the Qur’an that were, according to Islamic tradition, revealed
             anytime before the migration of the Islamic prophet Muhammed and his
             followers from Mecca to Medina (Hijra). The Medinan Surahs are those
             revelations that occurred after the move to the city of that name.
@@ -37,9 +37,9 @@ export default () => (
         <div className="col-md-8 col-md-offset-2">
           <h3>MEDINAN SURAHS</h3>
           <h4 className="source-sans">
-            The Medinan Surahs or Medinan Chapters of the Qur'an are the latest
+            The Medinan Surahs or Medinan Chapters of the Qur’an are the latest
             24 Surahs that, according to Islamic tradition, were revealed at
-            Medina after Muhammad's Hijra from Mecca. These Surahs were revealed
+            Medina after Muhammad’s Hijra from Mecca. These Surahs were revealed
             by Allah when the Muslim community was larger and more developed, as
             opposed to their minority position in Mecca.
           </h4>
@@ -74,11 +74,11 @@ export default () => (
             <a href="http://www.qurancomplex.com"> Qur‘anComplex</a>,
             <a href="https://github.com/cpfair/quran-align">
               {' '}
-              Colin Fair's work on audio segments
+              Colin Fair’s work on audio segments
             </a>
             ,
             <a href="http://www.zekr.org"> Zekr</a> and
-            <a href="http://www.al-quran.info"> Online Qur'an Project</a>.
+            <a href="http://www.al-quran.info"> Online Qur’an Project</a>.
             Special thanks to the
             <a href="http://elmohafez.com"> Elmohafez team</a> for word by word
             timing files. If you have any questions, you may visit the{' '}
