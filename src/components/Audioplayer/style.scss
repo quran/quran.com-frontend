@@ -1,6 +1,5 @@
 @import '../../styles/variables.scss';
-
-.container{
+.container {
   position: fixed;
   bottom: 15px;
   display: block;
@@ -9,67 +8,26 @@
   z-index: 1;
   padding: 10px 20px 5px;
   background: #fff;
-  box-shadow: 0 0 0.5rem 0 rgba(0,0,0,.2);
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
   min-width: 340px;
-  @media(max-width: $screen-sm){
+  @media (max-width: $screen-sm) {
     bottom: 0;
     width: 100%;
-  }
-  // border: 0.08333rem solid transparent !important;
+  } // border: 0.08333rem solid transparent !important;
 }
 
-.wrapper{
-  width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 10%;
-}
-
-.options{
-  border-radius: 4px;
-  width: 100%;
-  display: inline-block;
-  margin: 0;
-  height: 90%;
-  text-align: center;
-}
-
-.controls{
-  margin: 0;
-  .controlItem{
-    vertical-align: middle;
-    padding-right: 20px;
-    color: #939598;
-  }
-}
-
-.list{
-  margin-bottom: 0;
-  display: table;
-  width: 100%;
-  padding-left: 0;
-  text-align: center;
-
-  :global(li){
-    padding-right: 15px;
-    display: table-cell;
-  }
-}
-
-.buttons{
+.buttons {
   width: 100%;
   display: inline-block;
   cursor: pointer;
-  padding-right: 1.5%;
+  padding: 0 1.5%;
   color: $text-color;
   outline: none;
-
-  &:focus, &:active{
+  &:focus,
+  &:active {
     outline: none;
   }
-
-  &.playingButton{
+  &.playingButton {
     background: $brand-primary;
     color: #fff;
     height: 32px;
@@ -78,41 +36,24 @@
     border-radius: 50%;
     position: relative;
     vertical-align: middle;
-
-    &:hover{
+    &:hover {
       opacity: 0.75;
     }
   }
-
-  i.fa{
+  i.fa {
     color: inherit;
     font-size: 100%;
   }
 }
 
-.checkbox{
-  display: none;
-}
-.repeat{
-  color: $brand-primary;
-}
-.scroll{
-  color: $brand-primary;
-}
-
-.disabled{
+.disabled {
   opacity: 0.5;
   cursor: not-allowed !important;
   pointer-events: none;
 }
 
-.verse{
-  padding: 0;
-  color: $olive;
-}
-
-.popover{
-  :global(.popover-title){
+.popover {
+  :global(.popover-title) {
     font-family: $font-montserrat;
     text-transform: uppercase;
     color: $cream;
@@ -120,14 +61,13 @@
     padding-bottom: 15px;
     font-size: 0.75em;
   }
-
-  :global(.popover-content){
-    :global(a){
+  :global(.popover-content) {
+    :global(a) {
       font-size: 0.8em;
     }
   }
-  .pill{
-    :global(a){
+  .pill {
+    :global(a) {
       padding: 10px 15px;
     }
   }

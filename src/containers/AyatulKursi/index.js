@@ -50,9 +50,10 @@ const TopOptions = Loadable({
 });
 
 const title = 'Ayatul Kursi';
-
 const description =
-  'Ayatul Kursi is verse 255 of the second chapter, surah Baqarah of the Holy Quran, Surah al-Baqarah (The Chapter of the Cow).  It is also known as the Throne Verse.';
+  'Ayatul Kursi is verse 255 of the second chapter, ' +
+  'Surah al-Baqarah (The Chapter of the Cow), in the ' +
+  'Holy Quran. It is also known as the Throne Verse.';
 
 class AyatulKursi extends Component {
   state = {
@@ -161,15 +162,18 @@ class AyatulKursi extends Component {
           ]}
           style={[
             {
-              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${options.fontSize
+                .arabic}rem;} .text-translation{font-size: ${options.fontSize
+                .translation}rem;}` // eslint-disable-line max-len
             }
           ]}
         />
         <div className={`container-fluid ${style.container}`}>
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              {__CLIENT__ &&
-                <TopOptions title="Ayatul Kursi" chapter={chapter} />}
+              {__CLIENT__ && (
+                <TopOptions title="Ayatul Kursi" chapter={chapter} />
+              )}
               <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderVerses()}
             </div>
@@ -187,12 +191,13 @@ class AyatulKursi extends Component {
             </div>
           </div>
         </div>
-        {__CLIENT__ &&
+        {__CLIENT__ && (
           <Audioplayer
             chapter={chapter}
             startVerse={Object.values(verses)[0]}
             onLoadAyahs={this.handleLazyLoadAyahs}
-          />}
+          />
+        )}
       </div>
     );
   }

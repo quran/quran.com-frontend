@@ -10,11 +10,31 @@ const environment = {
 const title = "Al-Qur'an al-Kareem - القرآن الكريم";
 const description =
   'The Quran translated into many languages in a simple and easy interface.';
+const keywords = [
+  'القران الكريم',
+  'قران كريم',
+  'القرآن',
+  'قران',
+  'quran',
+  "qur'an",
+  'koran',
+  'kareem',
+  'surah',
+  'yasin',
+  'yaseen',
+  'kahf',
+  'mulk',
+  'rahman',
+  'muslim',
+  'islam',
+  'Allah'
+].join(', ');
 const locales = {
   en: 'English',
   ar: 'العربية',
   ur: 'اردو',
   id: 'Bahasa Indonesia',
+  sq: 'Shqip',
   tr: 'Türkçe',
   fr: 'Français',
   nl: 'Dutch'
@@ -28,66 +48,152 @@ const config = {
   sentryClient: process.env.SENTRY_KEY_CLIENT,
   sentryServer: process.env.SENTRY_KEY_SERVER,
   facebookAppId: process.env.FACEBOOK_APP_ID,
-  // Supported locales
   locales,
   defaultLocale: 'en',
   app: {
     head: {
       titleTemplate: `%s - ${title}`,
       meta: [
-        { charset: 'utf-8' },
-        { 'http-equiv': 'Content-Type', content: 'text/html; charset=utf-8' },
-        { 'http-equiv': 'Content-Language', content: 'EN; AR' },
-        { name: 'description', content: description },
+        {
+          charset: 'utf-8'
+        },
+        {
+          'http-equiv': 'Content-Type',
+          content: 'text/html; charset=utf-8'
+        },
+        {
+          'http-equiv': 'Content-Language',
+          content: 'EN; AR'
+        },
+        {
+          name: 'description',
+          content: description
+        },
         {
           name: 'keywords',
-          content: "quran, koran, qur'an, kareem, قران, القرآن, قران كريم, القران الكريم, surah, yasin, yaseen, kahf, mulk, rahman, muslim, islam, Allah"
-        }, // eslint-disable-line max-l en
-        { name: 'Charset', content: 'UTF-8' },
-        { name: 'Distribution', content: 'Global' },
-        { name: 'Rating', content: 'General' },
+          content: keywords
+        },
+        {
+          name: 'Charset',
+          content: 'UTF-8'
+        },
+        {
+          name: 'Distribution',
+          content: 'Global'
+        },
+        {
+          name: 'Rating',
+          content: 'General'
+        },
         {
           name: 'viewport',
-          content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+          content:
+            'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
         },
         {
           name: 'google-site-verification',
           content: 'ehFz7FvmL7V9MzP40F8_kLABhCzqGzMDMrCnUP44Too'
         },
-        { name: 'theme-color', content: '#004f54' },
-        { property: 'og:site_name', content: title },
+        {
+          name: 'theme-color',
+          content: '#004f54'
+        },
+        {
+          property: 'og:site_name',
+          content: title
+        },
         {
           property: 'og:image',
           content: 'https://quran.com/images/thumbnail.png'
         },
-        { property: 'og:locale', content: 'en_US' },
-        { property: 'og:title', content: title },
-        { property: 'og:description', content: description },
-        { property: 'og:url', content: 'https://quran.com' },
-        { property: 'og:type', content: 'website' },
-        { name: 'twitter:card', content: 'summary' },
-        { name: 'twitter:title', content: title },
-        { name: 'twitter:description', content: description },
+        {
+          property: 'og:locale',
+          content: 'en_US'
+        },
+        {
+          property: 'og:title',
+          content: title
+        },
+        {
+          property: 'og:description',
+          content: description
+        },
+        {
+          property: 'og:url',
+          content: 'https://quran.com'
+        },
+        {
+          property: 'og:type',
+          content: 'website'
+        },
+        {
+          name: 'twitter:card',
+          content: 'summary'
+        },
+        {
+          name: 'twitter:title',
+          content: title
+        },
+        {
+          name: 'twitter:description',
+          content: description
+        },
         {
           name: 'twitter:image',
           content: 'https://quran.com/images/thumbnail.png'
         },
-        { name: 'twitter:image:width', content: '200' },
-        { name: 'twitter:image:height', content: '200' },
+        {
+          name: 'twitter:image:width',
+          content: '200'
+        },
+        {
+          name: 'twitter:image:height',
+          content: '200'
+        },
         {
           name: 'google-play-app',
           content: 'app-id=com.quran.labs.androidquran'
         },
-        { name: 'apple-itunes-app', content: 'app-id=1118663303' },
-        { name: 'mobile-web-app-capable', content: 'yes' },
-        { name: 'apple-mobile-web-app-capable', content: 'yes' },
-        { name: 'apple-mobile-web-app-title', content: title },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'black' },
-        { name: 'application-name', content: 'Al-Quran - القرآن الكريم' },
-        { name: 'msapplication-TileColor', content: '#004f54' },
-        { name: 'msapplication-tooltip', content: description },
-        { name: 'msapplication-starturl', content: 'https://quran.com' },
-        { name: 'msapplication-navbutton-color', content: '#004f54' },
+        {
+          name: 'apple-itunes-app',
+          content: 'app-id=1118663303'
+        },
+        {
+          name: 'mobile-web-app-capable',
+          content: 'yes'
+        },
+        {
+          name: 'apple-mobile-web-app-capable',
+          content: 'yes'
+        },
+        {
+          name: 'apple-mobile-web-app-title',
+          content: title
+        },
+        {
+          name: 'apple-mobile-web-app-status-bar-style',
+          content: 'black'
+        },
+        {
+          name: 'application-name',
+          content: 'Al-Quran - القرآن الكريم'
+        },
+        {
+          name: 'msapplication-TileColor',
+          content: '#004f54'
+        },
+        {
+          name: 'msapplication-tooltip',
+          content: description
+        },
+        {
+          name: 'msapplication-starturl',
+          content: 'https://quran.com'
+        },
+        {
+          name: 'msapplication-navbutton-color',
+          content: '#004f54'
+        },
         {
           name: 'msapplication-square70x70logo',
           content: '/mstitle-70x70.jpg'
@@ -106,7 +212,10 @@ const config = {
         }
       ],
       link: [
-        { rel: 'manifest', href: 'manifest.json' },
+        {
+          rel: 'manifest',
+          href: '/manifest.json'
+        },
         {
           rel: 'search',
           type: 'application/opensearchdescription+xml',
@@ -136,9 +245,20 @@ const config = {
           href: '/favicon-16x16.png',
           sizes: '16x16'
         },
-        { rel: 'mask-icon', href: '/safari-pinned-tab.svg', color: '#004f54' },
-        { rel: 'shortcut icon', href: '/favicon.ico', type: 'image/x-icon' },
-        { rel: 'apple-touch-icon', href: 'apple-touch-icon.png' },
+        {
+          rel: 'mask-icon',
+          href: '/safari-pinned-tab.svg',
+          color: '#004f54'
+        },
+        {
+          rel: 'shortcut icon',
+          type: 'image/x-icon',
+          href: '/favicon.ico'
+        },
+        {
+          rel: 'apple-touch-icon',
+          href: '/apple-touch-icon.png'
+        },
         {
           rel: 'apple-touch-icon',
           sizes: '57x57',
@@ -191,7 +311,7 @@ const config = {
         },
         ...Object.keys(locales).map(key => ({
           rel: 'alternate',
-          hreflang: key,
+          hrefLang: key,
           href: `https://quran.com?local=${key}`
         }))
       ],
@@ -199,7 +319,8 @@ const config = {
       /* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */
       script: [
         {
-          src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en',
+          src:
+            'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en',
           async: '',
           defer: ''
         },

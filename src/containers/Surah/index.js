@@ -205,13 +205,17 @@ class Surah extends Component {
       const verse = verses[`${chapter.chapterNumber}:${params.range}`];
 
       if (verse && verse.content && verse.content[0]) {
-        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${verse.content[0].text}`;
+        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${verse
+          .content[0].text}`;
       }
 
       return `Surat ${chapter.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${info ? info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${info
+      ? info.shortText
+      : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter
+      .pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderNoAyah() {
@@ -228,9 +232,11 @@ class Surah extends Component {
       </div>
     );
 
-    return isLoading
-      ? <Loader isActive relative style={LoaderStyle} />
-      : noAyah;
+    return isLoading ? (
+      <Loader isActive relative style={LoaderStyle} />
+    ) : (
+      noAyah
+    );
   }
 
   renderPagination() {
@@ -239,15 +245,17 @@ class Surah extends Component {
       isLoading,
       isEndOfSurah,
       chapter,
-      options
+      options,
+      actions
     } = this.props;
     const translations = (options.translations || []).join(',');
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
-      const to = this.getFirst() + 10 > chapter.versesCount
-        ? chapter.versesCount
-        : this.getFirst() + 10;
+      const to =
+        this.getFirst() + 10 > chapter.versesCount
+          ? chapter.versesCount
+          : this.getFirst() + 10;
 
       return (
         <ul className="pager">
@@ -272,10 +280,11 @@ class Surah extends Component {
         isLoading={isLoading}
         endComponent={
           <ul className="pager">
-            {chapter.chapterNumber > 1 &&
+            {chapter.chapterNumber > 1 && (
               <li className="previous">
                 <Link
-                  to={`/${chapter.chapterNumber * 1 - 1}?translations=${translations}`}
+                  to={`/${chapter.chapterNumber * 1 -
+                    1}?translations=${translations}`}
                 >
                   ←
                   <LocaleFormattedMessage
@@ -283,10 +292,15 @@ class Surah extends Component {
                     defaultMessage="Previous Surah"
                   />
                 </Link>
-              </li>}
+              </li>
+            )}
             <li className="text-center">
               <Link
                 to={`/${chapter.chapterNumber}?translations=${translations}`}
+                onClick={() =>
+                  actions.verse.setCurrentVerse(
+                    `${chapter.chapterNumber}:${this.getFirst()}`
+                  )}
               >
                 <LocaleFormattedMessage
                   id="chapter.goToBeginning"
@@ -294,10 +308,11 @@ class Surah extends Component {
                 />
               </Link>
             </li>
-            {chapter.chapterNumber < 114 &&
+            {chapter.chapterNumber < 114 && (
               <li className="next">
                 <Link
-                  to={`/${chapter.chapterNumber * 1 + 1}?translations=${translations}`}
+                  to={`/${chapter.chapterNumber * 1 +
+                    1}?translations=${translations}`}
                 >
                   <LocaleFormattedMessage
                     id="chapter.next"
@@ -305,7 +320,8 @@ class Surah extends Component {
                   />
                   →
                 </Link>
-              </li>}
+              </li>
+            )}
           </ul>
         }
         loadingComponent={
@@ -415,7 +431,9 @@ class Surah extends Component {
           ]}
           style={[
             {
-              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${options.fontSize
+                .arabic}rem;} .text-translation{font-size: ${options.fontSize
+                .translation}rem;}` // eslint-disable-line max-len
             }
           ]}
         />
@@ -438,13 +456,14 @@ class Surah extends Component {
             </div>
           </div>
         </div>
-        {__CLIENT__ && // eslint-disable-line
+        {__CLIENT__ && ( // eslint-disable-line
           <Audioplayer
             chapter={chapter}
             verses={verses}
             currentVerse={verses[currentVerse]}
             onLoadAyahs={this.handleLazyLoadAyahs}
-          />}
+          />
+        )}
       </div>
     );
   }

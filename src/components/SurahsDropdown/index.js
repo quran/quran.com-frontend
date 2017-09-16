@@ -9,7 +9,7 @@ const styles = require('./style.scss');
 
 class SurahsDropdown extends Component {
   shouldComponentUpdate(nextProps) {
-    return this.props.chapters !== nextProps.chapters;
+    return this.props.chapter.chapterNumber !== nextProps.chapter.chapterNumber;
   }
 
   renderList() {
@@ -24,9 +24,7 @@ class SurahsDropdown extends Component {
         <MenuItem>
           <div className="row">
             <div className="col-xs-2 col-md-2">
-              <span className="chapter-num">
-                {chapter.chapterNumber}
-              </span>
+              <span className="chapter-num">{chapter.chapterNumber}</span>
             </div>
             <div className="col-xs-7 col-md-7">
               <span className="suran-name">{chapter.nameSimple}</span>
@@ -54,11 +52,12 @@ class SurahsDropdown extends Component {
         className={styles.dropdown}
         id="chapters-dropdown"
         title={
-          chapter.nameSimple ||
+          chapter.nameSimple || (
             <LocaleFormattedMessage
               id="setting.chapters"
               defaultMessage="Surahs"
             />
+          )
         }
       >
         {this.renderList()}

@@ -1,43 +1,52 @@
 import React from 'react';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
-import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
 
-const styles = require('./style.scss');
+const Item = styled.li`
+  color: ${props => props.theme.brandPrimary};
 
-const SurahsList = (props) => {
-  debug('component:Index', 'SurahsList');
+  &:hover {
+    background: #f1f1f1;
+  }
+`;
 
-  return (
-    <ul className="col-md-4 list-unstyled">
-      {props.chapters.map(chapter => (
-        <li className={`${styles.item}`} key={chapter.id}>
-          <Link to={`/${chapter.id}`} className={`${styles.link} row`}>
-            <div className="col-xs-2 text-muted">
-              {chapter.chapterNumber}
-            </div>
-            <div className="col-xs-7">
-              {chapter.nameSimple}
-            </div>
-            <div className={`col-xs-3 text-left ${styles.arabic}`}>
-              <span className={`icon-surah${chapter.id}`} />
-            </div>
+const Arabic = styled.div`font-size: 14px;`;
 
-            <div
-              className={`col-xs-10 col-xs-offset-2 ${styles.translated_name}`}
+const Translated = styled.div`
+  font-size: 10px;
+  color: #777;
+`;
+
+const StyledLink = styled(Link)`
+  display: block;
+  padding: 10px 10px;
+`;
+
+const SurahsList = props => (
+  <ul className="col-md-4 list-unstyled">
+    {props.chapters.map(chapter => (
+      <Item key={chapter.id}>
+        <StyledLink to={`/${chapter.id}`} className="row">
+          <div className="col-xs-2 text-muted">{chapter.chapterNumber}</div>
+          <div className="col-xs-7">{chapter.nameSimple}</div>
+          <Arabic className="col-xs-3 text-left">
+            <span className={`icon-surah${chapter.id}`} />
+          </Arabic>
+
+          <Translated className="col-xs-10 col-xs-offset-2">
+            <span
+              className={`text-uppercase ${chapter.translatedName
+                .languageName}`}
             >
-              <span
-                className={`text-uppercase ${chapter.translatedName.languageName}`}
-              >
-                {chapter.translatedName.name}
-              </span>
-            </div>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  );
-};
+              {chapter.translatedName.name}
+            </span>
+          </Translated>
+        </StyledLink>
+      </Item>
+    ))}
+  </ul>
+);
 
 SurahsList.propTypes = {
   chapters: customPropTypes.chapters.isRequired

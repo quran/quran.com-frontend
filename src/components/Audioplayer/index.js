@@ -1,6 +1,7 @@
 /* global document */
 // TODO: This file is too too large.
 import React, { Component, PropTypes } from 'react';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
@@ -26,6 +27,20 @@ const RepeatDropdown = Loadable({
     import(/* webpackChunkName: "repeatdropdown" */ './RepeatDropdown'),
   LoadingComponent: ComponentLoader
 });
+
+const Wrapper = styled.div`
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 10%;
+`;
+
+const ControlItem = styled.li`
+  vertical-align: middle;
+  padding-right: 20px;
+  color: #939598;
+`;
 
 export class Audioplayer extends Component {
   state = {
@@ -125,7 +140,12 @@ export class Audioplayer extends Component {
     if (!currentFile) return false;
 
     if (isPlaying) {
-      currentFile.play();
+      const playPromise = currentFile.play();
+      // Catch/silence error when a pause interrupts a play request
+      // on browsers which return a promise
+      if (playPromise !== undefined && typeof playPromise.then === 'function') {
+        playPromise.then(null, () => {});
+      }
     } else {
       currentFile.pause();
     }
@@ -361,7 +381,7 @@ export class Audioplayer extends Component {
     file.onloadeddata = null; // eslint-disable-line no-param-reassign
     file.ontimeupdate = null; // eslint-disable-line no-param-reassign
     file.onplay = null; // eslint-disable-line no-param-reassign
-    file.onPause = null; // eslint-disable-line no-param-reassign
+    file.onpause = null; // eslint-disable-line no-param-reassign
     file.onended = null; // eslint-disable-line no-param-reassign
     file.onprogress = null; // eslint-disable-line no-param-reassign
   };
@@ -458,55 +478,50 @@ export class Audioplayer extends Component {
 
     return (
       <div
-        className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}
+        className={`${isPlaying &&
+          style.isPlaying} ${style.container} ${className}`}
       >
-        <div className={style.wrapper}>
-          {currentFile &&
+        <Wrapper>
+          {currentFile && (
             <Track
               progress={currentTime / duration * 100}
               onTrackChange={this.handleTrackChange}
-            />}
+            />
+          )}
           {segments &&
-            segments[currentVerse.verseKey] &&
-            <Segments
-              segments={segments[currentVerse.verseKey]}
-              currentVerse={currentVerse.verseKey}
-              currentTime={currentTime}
-            />}
-        </div>
-        <ul className={`list-inline ${style.controls}`}>
-          <li className={style.controlItem}>
+            segments[currentVerse.verseKey] && (
+              <Segments
+                segments={segments[currentVerse.verseKey]}
+                currentVerse={currentVerse.verseKey}
+                currentTime={currentTime}
+              />
+            )}
+        </Wrapper>
+        <ul className="list-inline" style={{ margin: 0 }}>
+          <ControlItem>
             <LocaleFormattedMessage
               id="player.currentVerse"
               defaultMessage="Ayah"
             />
-            :
-            {' '}
-            {currentVerse.verseKey.split(':')[1]}
-          </li>
-          <li className={style.controlItem}>
-            {this.renderPreviousButton()}
-          </li>
-          <li className={style.controlItem}>
-            {this.renderPlayStopButtons()}
-          </li>
-          <li className={style.controlItem}>
-            {this.renderNextButton()}
-          </li>
-          <li className={style.controlItem}>
+            : {currentVerse.verseKey.split(':')[1]}
+          </ControlItem>
+          <ControlItem>{this.renderPreviousButton()}</ControlItem>
+          <ControlItem>{this.renderPlayStopButtons()}</ControlItem>
+          <ControlItem>{this.renderNextButton()}</ControlItem>
+          <ControlItem>
             <RepeatDropdown
               repeat={repeat}
               setRepeat={setRepeat}
               current={parseInt(currentVerse.verseKey.split(':')[1], 10)}
               chapter={chapter}
             />
-          </li>
-          <li className={style.controlItem}>
+          </ControlItem>
+          <ControlItem>
             <ScrollButton
               shouldScroll={shouldScroll}
               onScrollToggle={this.handleScrollToggle}
             />
-          </li>
+          </ControlItem>
         </ul>
       </div>
     );
