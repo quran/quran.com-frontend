@@ -49,12 +49,14 @@ export class Audioplayer extends Component {
       audio
     });
 
-    load({
-      chapterId: nextVerse.chapterId,
-      verseId: nextVerse.id,
-      verseKey: nextVerse.verseKey,
-      audio
-    });
+    if (nextVerse) {
+      load({
+        chapterId: nextVerse.chapterId,
+        verseId: nextVerse.id,
+        verseKey: nextVerse.verseKey,
+        audio
+      });
+    }
 
     return false;
   }

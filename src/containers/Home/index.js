@@ -30,9 +30,9 @@ class Home extends Component {
 
     return (
       <div className="row">
-        <JuzList chapters={chapters} juzs={juzList.slice(0, 10)} />
-        <JuzList chapters={chapters} juzs={juzList.slice(10, 20)} />
-        <JuzList chapters={chapters} juzs={juzList.slice(20, 30)} />
+        <JuzList chapters={chapters} juzs={juzList.slice(0, 20)} />
+        <JuzList chapters={chapters} juzs={juzList.slice(20, 28)} />
+        <JuzList chapters={chapters} juzs={juzList.slice(28, 30)} />
       </div>
     );
   }

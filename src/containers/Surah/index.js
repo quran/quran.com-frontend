@@ -228,7 +228,9 @@ class Surah extends Component {
       </div>
     );
 
-    return isLoading ? <Loader isActive relative style={LoaderStyle} /> : noAyah;
+    return isLoading
+      ? <Loader isActive relative style={LoaderStyle} />
+      : noAyah;
   }
 
   renderPagination() {
@@ -306,7 +308,9 @@ class Surah extends Component {
               </li>}
           </ul>
         }
-        loadingComponent={<Loader isActive={isLoading} relative style={LoaderStyle} />}
+        loadingComponent={
+          <Loader isActive={isLoading} relative style={LoaderStyle} />
+        }
       />
     );
   }
@@ -434,7 +438,7 @@ class Surah extends Component {
             </div>
           </div>
         </div>
-        {__CLIENT__ &&
+        {__CLIENT__ && // eslint-disable-line
           <Audioplayer
             chapter={chapter}
             verses={verses}

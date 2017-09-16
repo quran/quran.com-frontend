@@ -57,7 +57,6 @@ class VersesDropdown extends Component {
 
     return (
       <NavDropdown
-        link
         className={`dropdown ${className} ${style.dropdown}`}
         id="verses-dropdown"
         title={title}
