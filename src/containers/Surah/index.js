@@ -447,7 +447,7 @@ class Surah extends Component {
           <Audioplayer
             chapter={chapter}
             verses={verses}
-            currentVerse={verses[currentVerse]}
+            currentVerse={verses[currentVerse] || verses[Object.keys(verses)[0]]}
             onLoadAyahs={this.handleLazyLoadAyahs}
           />}
       </div>

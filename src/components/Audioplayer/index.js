@@ -152,12 +152,16 @@ export class Audioplayer extends Component {
   }
 
   componentWillUnmount() {
-    const { files, currentFile } = this.props;
+    const { files, currentFile, update } = this.props;
     debug('component:Audioplayer', 'componentWillUnmount');
 
     if (files[currentFile]) {
       return this.handleRemoveFileListeners(files[currentFile]);
     }
+
+    update({
+      currentTime: 0
+    });
 
     return false;
   }
