@@ -15,7 +15,7 @@ import {
 
 // NOTE: For safe measure
 const defaultOptions = {
-  translations: [108]
+  translations: [101]
 };
 
 // NOTE: From the API!
@@ -26,9 +26,10 @@ function prepareParams(params, options) {
   let translations;
 
   if (params.translations && params.translations.length) {
-    translations = typeof params.translations === 'string'
-      ? params.translations.split(',')
-      : params.translations;
+    translations =
+      typeof params.translations === 'string'
+        ? params.translations.split(',')
+        : params.translations;
   } else {
     translations = options.translations; // || defaultOptions.translations;
   }
@@ -91,7 +92,9 @@ export function isLoaded(globalState, chapterId, paging) {
         `${chapterId}:${paging.offset ? paging.offset + 1 : 1}`
       ] &&
       globalState.verses.entities[chapterId][
-        `${chapterId}:${paging.offset && paging.limit ? paging.offset + paging.limit : perPage}`
+        `${chapterId}:${paging.offset && paging.limit
+          ? paging.offset + paging.limit
+          : perPage}`
       ]
     );
   }
