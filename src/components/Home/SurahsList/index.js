@@ -11,12 +11,11 @@ const Item = styled.li`
   }
 `;
 
-const Arabic = styled.div`
-  font-size: 14px;
-`;
+const Arabic = styled.div`font-size: 14px;`;
 
 const Translated = styled.div`
   font-size: 10px;
+  color: #777;
 `;
 
 const StyledLink = styled(Link)`
@@ -29,19 +28,16 @@ const SurahsList = props => (
     {props.chapters.map(chapter => (
       <Item key={chapter.id}>
         <StyledLink to={`/${chapter.id}`} className="row">
-          <div className="col-xs-2 text-muted">
-            {chapter.chapterNumber}
-          </div>
-          <div className="col-xs-7">
-            {chapter.nameSimple}
-          </div>
+          <div className="col-xs-2 text-muted">{chapter.chapterNumber}</div>
+          <div className="col-xs-7">{chapter.nameSimple}</div>
           <Arabic className="col-xs-3 text-left">
             <span className={`icon-surah${chapter.id}`} />
           </Arabic>
 
           <Translated className="col-xs-10 col-xs-offset-2">
             <span
-              className={`text-uppercase ${chapter.translatedName.languageName}`}
+              className={`text-uppercase ${chapter.translatedName
+                .languageName}`}
             >
               {chapter.translatedName.name}
             </span>

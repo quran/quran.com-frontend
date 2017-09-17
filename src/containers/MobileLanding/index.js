@@ -20,14 +20,12 @@ const Container = styled.div`
   min-height: 100vh;
   padding-top: 15%;
 
-  & + footer{
+  & + footer {
     margin-top: 0;
   }
 `;
 
-const Title = styled.h1`
-  color: #000000;
-`;
+const Title = styled.h1`color: #000000;`;
 
 export default () => (
   <Container className="montserrat container">
@@ -40,16 +38,15 @@ export default () => (
     <div className="row">
       <div className="col-md-5">
         <Title>
-          <strong>Quran</strong><br />
+          <strong>Quran</strong>
+          <br />
           by quran.com القرآن
         </Title>
         <h3>
           <small>
-            From the makers of Quran.com comes Quran for iOS, a beautiful,{' '}
-            and ad-free mushaf app.
-            It’s now easier to read the Quran on the go, memorize it and listen to your
-            {' '}
-            favorite reciters.
+            From the makers of Quran.com comes Quran for iOS, a beautiful, and
+            ad-free mushaf app. It’s now easier to read the Quran on the go,
+            memorize it and listen to your favorite reciters.
           </small>
         </h3>
         <div className="row" style={{ paddingTop: 15 }}>

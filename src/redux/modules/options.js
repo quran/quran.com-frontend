@@ -16,7 +16,7 @@ const initialState = {
   isNightMode: options.isNightMode || false,
   isShowingSurahInfo: options.isShowingSurahInfo || false,
   audio: options.audio || 7, // Mishari Rashid al-`Afasy
-  translations: options.translations || [101], // Clear Quran
+  translations: options.translations || [108], // Clear Quran
   tooltip: options.tooltip || 'translation',
   fontSize: options.fontSize || {
     arabic: 3.5,

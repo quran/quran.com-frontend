@@ -1,9 +1,30 @@
 @import '../../styles/variables.scss';
-.button {
+
+.container{
+  min-height: 500px;
+  min-height: 100vh;
+  padding-top: 15%;
+
+  & + footer{
+    margin-top: 0;
+  }
+}
+
+.title{
+  color: #000000;
+}
+
+.button{
   border-radius: 50px;
-  @media(max-width: $screen-sm) {
-    &:last-child {
+
+  @media(max-width: $screen-sm){
+    &:last-child{
       margin-top: 15px;
     }
   }
+}
+
+.icons{
+  height: 18px;
+  padding-right: 5px;
 }

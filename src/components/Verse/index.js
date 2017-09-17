@@ -61,13 +61,13 @@ class Verse extends Component {
     const { verse, match } = this.props;
     const array = match || verse.translations || [];
 
-    return array.map(translation =>
+    return array.map(translation => (
       <Translation
         translation={translation}
         index={translation.id}
         key={translation.id}
       />
-    );
+    ));
   }
 
   renderMedia() {
@@ -78,7 +78,7 @@ class Verse extends Component {
 
     return (
       <div>
-        {verse.mediaContents.map((content, index) =>
+        {verse.mediaContents.map((content, index) => (
           <div className={`${styles.translation} translation`} key={index}>
             <h2 className="text-translation times-new">
               <small>
@@ -100,7 +100,7 @@ class Verse extends Component {
               </small>
             </h2>
           </div>
-        )}
+        ))}
       </div>
     );
   }
@@ -118,7 +118,7 @@ class Verse extends Component {
     let wordAudioPosition = -1;
     const renderText = false; // userAgent.isBot;
 
-    const text = verse.words.map(word =>
+    const text = verse.words.map(word => (
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -132,13 +132,11 @@ class Verse extends Component {
         isSearched={isSearched}
         useTextFont={renderText}
       />
-    );
+    ));
 
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
-        <p>
-          {text}
-        </p>
+        <p>{text}</p>
       </h1>
     );
   }

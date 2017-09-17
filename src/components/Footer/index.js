@@ -147,8 +147,7 @@ const Footer = () => (
                 .
               </p>
               <p className="monserrat">
-                © { new Date().getFullYear() } Quran.com.
-                {' '}
+                © {new Date().getFullYear()} Quran.com.{' '}
                 <LocaleFormattedMessage
                   id="nav.rightsReserved"
                   defaultMessage="All Rights Reserved"

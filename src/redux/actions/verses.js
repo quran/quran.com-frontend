@@ -15,7 +15,7 @@ import {
 
 // NOTE: For safe measure
 const defaultOptions = {
-  translations: [101]
+  translations: [108]
 };
 
 // NOTE: From the API!
@@ -30,7 +30,7 @@ function prepareParams(params, options) {
       ? params.translations.split(',')
       : params.translations;
   } else {
-    translations = options.translations || defaultOptions.translations;
+    translations = options.translations; // || defaultOptions.translations;
   }
 
   return { translations };

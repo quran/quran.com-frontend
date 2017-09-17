@@ -31,7 +31,8 @@ export default {
     'ayah.notFound': 'Ayat tidak ditemukan',
 
     'search.placeholder': 'Cari "Nuh"',
-    'search.resultHeading': '{from}-{to} DARI <span> {total} </span> HASIL PENCARIAN ATAS: <span>{query}</span>', // eslint-disable-line max-len
+    'search.resultHeading':
+      '{from}-{to} DARI <span> {total} </span> HASIL PENCARIAN ATAS: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Maaf, terdapat kesalahan dalam pencarian Anda.',
     'search.nothing': 'Tidak ada kata yang dicari.',
     'search.noResult': 'Tidak ada hasil yang ditemukan.',
@@ -55,7 +56,8 @@ export default {
     'player.repeat.rangeEnd': 'Hingga',
     'player.repeat.times': 'Kali',
     'player.repeat.loop': 'tak berhenti',
-    'player.scrollButtonTip': 'Gulirkan secara otomatis ke ayat yang sedang diputar pada saat transisi...', // eslint-disable-line max-len
+    'player.scrollButtonTip':
+      'Gulirkan secara otomatis ke ayat yang sedang diputar pada saat transisi...', // eslint-disable-line max-len
 
     'app.loading': 'Memuat ...',
     'actions.copy': 'Salin',
@@ -72,7 +74,8 @@ export default {
     'nav.otherLinks': 'Tautan lainnya',
     'nav.contactUs': 'Hubungi kami',
     'nav.help': 'Bantuan & umpan balik',
-    'nav.aboutQuranProject': 'Quran.com (juga dikenal sebagai The Noble Quran, Al Quran, Holy Quran, Koran) adalah sebuah proyek pro bono.', // eslint-disable-line max-len
+    'nav.aboutQuranProject':
+      'Quran.com (juga dikenal sebagai The Noble Quran, Al Quran, Holy Quran, Koran) adalah sebuah proyek pro bono.', // eslint-disable-line max-len
     'nav.rightsReserved': 'Hak Cipta Terpelihara',
     'nav.mobile': 'Aplikasi Ponsel',
     'nav.navigate': 'Telusuri',
@@ -80,8 +83,11 @@ export default {
 
     'juz.index.heading': 'Juz',
 
-    'login.message': 'Masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.',
-    'error.invalid-surah': "Surah berada di luar jangkauan. Silahkan pergi ke <a href='/'> halaman rumah </a> dan pilih sebuah Surah",
-    'error.invalid-ayah': "Ayah berada di luar jangkauan. Silahkan pergi ke <a href='/'> halaman rumah </a> dan pilih Surah / Ayah"
+    'login.message':
+      'Masuk ke Quran.com untuk menyimpan semua penanda, catatan, dan aktivitas Anda.',
+    'error.invalid-surah':
+      "Surah berada di luar jangkauan. Silahkan pergi ke <a href='/'> halaman rumah </a> dan pilih sebuah Surah",
+    'error.invalid-ayah':
+      "Ayah berada di luar jangkauan. Silahkan pergi ke <a href='/'> halaman rumah </a> dan pilih Surah / Ayah"
   }
 };

@@ -101,16 +101,18 @@ class TranslationsDropdown extends Component {
       <MenuItem
         icon={<Icon type="list" />}
         menu={
-          translationOptions.length
-            ? <Menu>
-              {translations && translations.length
-                  ? <MenuItem onClick={this.handleRemoveContent}>
-                    <LocaleFormattedMessage
-                      id="setting.translations.removeAll"
-                      defaultMessage="Remove all"
-                    />
-                  </MenuItem>
-                  : <span />}
+          translationOptions.length ? (
+            <Menu>
+              {translations && translations.length ? (
+                <MenuItem onClick={this.handleRemoveContent}>
+                  <LocaleFormattedMessage
+                    id="setting.translations.removeAll"
+                    defaultMessage="Remove all"
+                  />
+                </MenuItem>
+              ) : (
+                <span />
+              )}
               <MenuItem divider>
                 <LocaleFormattedMessage
                   id="setting.translations.english"
@@ -126,7 +128,9 @@ class TranslationsDropdown extends Component {
               </MenuItem>
               {this.renderLanguagesList()}
             </Menu>
-            : <Loader isActive />
+          ) : (
+            <Loader isActive />
+          )
         }
       >
         <LocaleFormattedMessage

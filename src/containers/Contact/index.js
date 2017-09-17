@@ -21,20 +21,25 @@ class Contact extends Component {
       }
     };
 
-    superagent.post('/support').send(form).end((err, { body }) => {
-      if (body.ticket) {
-        this.setState({
-          success: true
-        });
-      }
-    });
+    superagent
+      .post('/support')
+      .send(form)
+      .end((err, { body }) => {
+        if (body.ticket) {
+          this.setState({
+            success: true
+          });
+        }
+      });
   };
 
   renderForm() {
     return (
       <form className="form-horizontal" onSubmit={this.submitSupport}>
         <div className="form-group">
-          <label htmlFor="name" className="col-sm-2 control-label">Name</label>
+          <label htmlFor="name" className="col-sm-2 control-label">
+            Name
+          </label>
           <div className="col-sm-8">
             <input
               type="text"
@@ -110,9 +115,9 @@ class Contact extends Component {
 
   renderSubmitSuccess = () => (
     <h3 className="text-center form-success-message">
-      Thank you for contacting us - we look forward to speaking with you. While this is a
-      volunteer effort, we do experience many support tickets on a daily basis and would
-      love to get back to everyone on a timely manner.
+      Thank you for contacting us - we look forward to speaking with you. While
+      this is a volunteer effort, we do experience many support tickets on a
+      daily basis and would love to get back to everyone on a timely manner.
     </h3>
   );
 
@@ -132,16 +137,14 @@ class Contact extends Component {
           <div className="row">
             <div className="col-md-6 col-md-offset-3">
               <h4>
-                Contacting us - thank you for taking time to speak to us.
-                Please be as concise as possible and include screenshots
-                where applicable to help us help you as quickly as we can.
+                Contacting us - thank you for taking time to speak to us. Please
+                be as concise as possible and include screenshots where
+                applicable to help us help you as quickly as we can.
                 <br />
                 <br />
               </h4>
             </div>
-            <div className="col-md-8 col-md-offset-2">
-              {body}
-            </div>
+            <div className="col-md-8 col-md-offset-2">{body}</div>
           </div>
         </div>
       </div>

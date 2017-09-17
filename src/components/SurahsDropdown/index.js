@@ -24,9 +24,7 @@ class SurahsDropdown extends Component {
         <MenuItem>
           <div className="row">
             <div className="col-xs-2 col-md-2">
-              <span className="chapter-num">
-                {chapter.chapterNumber}
-              </span>
+              <span className="chapter-num">{chapter.chapterNumber}</span>
             </div>
             <div className="col-xs-7 col-md-7">
               <span className="suran-name">{chapter.nameSimple}</span>
@@ -51,15 +49,15 @@ class SurahsDropdown extends Component {
 
     return (
       <NavDropdown
-        link
         className={styles.dropdown}
         id="chapters-dropdown"
         title={
-          chapter.nameSimple ||
+          chapter.nameSimple || (
             <LocaleFormattedMessage
               id="setting.chapters"
               defaultMessage="Surahs"
             />
+          )
         }
       >
         {this.renderList()}
@@ -70,7 +68,7 @@ class SurahsDropdown extends Component {
 
 SurahsDropdown.propTypes = {
   chapters: customPropTypes.chapters.isRequired,
-  chapter: customPropTypes.chapters.isRequired
+  chapter: customPropTypes.surahType.isRequired
 };
 
 export default SurahsDropdown;

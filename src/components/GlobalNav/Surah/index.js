@@ -22,9 +22,9 @@ class GlobalNavSurah extends Component {
   handleVerseDropdownClick = (verseNum) => {
     const { versesIds, chapter } = this.props; // eslint-disable-line no-shadow
 
-    this.props.setCurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
-
     if (versesIds.has(verseNum)) {
+      this.props.setCurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
+
       return false;
     }
 

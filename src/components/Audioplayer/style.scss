@@ -8,9 +8,9 @@
   z-index: 1;
   padding: 10px 20px 5px;
   background: #fff;
-  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, .2);
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
   min-width: 340px;
-  @media(max-width: $screen-sm) {
+  @media (max-width: $screen-sm) {
     bottom: 0;
     width: 100%;
   } // border: 0.08333rem solid transparent !important;
@@ -20,7 +20,7 @@
   width: 100%;
   display: inline-block;
   cursor: pointer;
-  padding-right: 1.5%;
+  padding: 0 10px;
   color: $text-color;
   outline: none;
   &:focus,
@@ -53,7 +53,7 @@
 }
 
 .popover {
-   :global(.popover-title) {
+  :global(.popover-title) {
     font-family: $font-montserrat;
     text-transform: uppercase;
     color: $cream;
@@ -61,13 +61,13 @@
     padding-bottom: 15px;
     font-size: 0.75em;
   }
-   :global(.popover-content) {
-     :global(a) {
+  :global(.popover-content) {
+    :global(a) {
       font-size: 0.8em;
     }
   }
   .pill {
-     :global(a) {
+    :global(a) {
       padding: 10px 15px;
     }
   }
