@@ -1,15 +1,13 @@
-import React, { PropTypes, Component } from 'react';
-
-import * as customPropTypes from 'customPropTypes';
-// redux
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
 import Helmet from 'react-helmet';
 
 // components
 import Verse from 'components/Verse';
 import Bismillah from 'components/Bismillah';
 
+import * as customPropTypes from 'customPropTypes';
 // Helpers
 import debug from 'helpers/debug';
 

@@ -1,21 +1,29 @@
 /* global window */
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
+import Loadable from 'react-loadable';
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Drawer from 'quran-components/lib/Drawer';
 import Nav from 'react-bootstrap/lib/Nav';
 
-import LocaleSwitcher from 'components/LocaleSwitcher';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import GlobalSidebar from 'components/GlobalSidebar';
+import ComponentLoader from '../ComponentLoader';
+import LocaleSwitcher from '../LocaleSwitcher';
+import LocaleFormattedMessage from '../LocaleFormattedMessage';
 
-import debug from 'helpers/debug';
+import debug from '../../helpers/debug';
 
 const styles = require('./style.scss');
 
 const NavbarHeader = Navbar.Header;
+
+const GlobalSidebar = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "GlobalSidebar" */ 'components/GlobalSidebar'),
+  loading: ComponentLoader
+});
 
 class GlobalNav extends Component {
   state = {
