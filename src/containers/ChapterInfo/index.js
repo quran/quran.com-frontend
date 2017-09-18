@@ -24,17 +24,20 @@ const ChapterInfo = ({
   chapterQuery: { chapter },
   chapterInfoQuery: { chapterInfo }
 }) =>
-  chapter &&
-  <div className="row" style={{ marginTop: 20 }}>
-    <Helmet
-      {...makeHeadTags({
-        title: `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`,
-        description: `${chapterInfo ? chapterInfo.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
-      })}
-      script={[
-        {
-          type: 'application/ld+json',
-          innerHTML: `{
+  chapter && (
+    <div className="row" style={{ marginTop: 20 }}>
+      <Helmet
+        {...makeHeadTags({
+          title: `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`,
+          description: `${chapterInfo
+            ? chapterInfo.shortText
+            : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter
+            .pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
+        })}
+        script={[
+          {
+            type: 'application/ld+json',
+            innerHTML: `{
           "@context": "http://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [{
@@ -53,23 +56,24 @@ const ChapterInfo = ({
             }
           }]
         }`
-        }
-      ]}
-    />
-    <Info chapter={chapter} chapterInfo={chapterInfo} isShowingSurahInfo />
-    <div className="text-center">
-      <Button href={`/${chapter.id}`}>
-        <LocaleFormattedMessage
-          id="surah.read"
-          defaultMessage="Read full Surah"
-        />
-      </Button>
+          }
+        ]}
+      />
+      <Info chapter={chapter} chapterInfo={chapterInfo} isShowingSurahInfo />
+      <div className="text-center">
+        <Button href={`/${chapter.id}`}>
+          <LocaleFormattedMessage
+            id="surah.read"
+            defaultMessage="Read full Surah"
+          />
+        </Button>
+      </div>
     </div>
-  </div>;
+  );
 
 ChapterInfo.propTypes = {
   chapterQuery: PropTypes.shape({
-    chapter: customPropTypes.surahType
+    chapter: customPropTypes.chapterType
   }),
   chapterInfoQuery: PropTypes.shape({
     chapterInfo: customPropTypes.infoType

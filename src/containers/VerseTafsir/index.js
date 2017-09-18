@@ -13,7 +13,7 @@ import verseTafsirQuery from 'graphql/queries/verseTafsir';
 import verseQuery from 'graphql/queries/verse';
 
 const Tafsir = Loadable({
-  loader: () => import('components/Tafsir'),
+  loader: () => import(/* webpackChunkName: "Tafsir" */ 'components/Tafsir'),
   loading: ComponentLoader
 });
 
@@ -22,17 +22,21 @@ const VerseTafsir = ({
   verseQuery: { verse },
   match: { params }
 }) =>
-  verseTafsir &&
-  <div className="row" style={{ marginTop: 20 }}>
-    <Helmet
-      {...makeHeadTags({
-        title: `${verseTafsir ? verseTafsir.resourceName : 'Tafsir'} of ${verse.verseKey}`,
-        description: `${verseTafsir ? verseTafsir.resourceName : 'Tafsir'} of ${verse.verseKey} - ${verse.textMadani}` // eslint-disable-line max-len
-      })}
-      script={[
-        {
-          type: 'application/ld+json',
-          innerHTML: `{
+  verseTafsir && (
+    <div className="row" style={{ marginTop: 20 }}>
+      <Helmet
+        {...makeHeadTags({
+          title: `${verseTafsir
+            ? verseTafsir.resourceName
+            : 'Tafsir'} of ${verse.verseKey}`,
+          description: `${verseTafsir
+            ? verseTafsir.resourceName
+            : 'Tafsir'} of ${verse.verseKey} - ${verse.textMadani}` // eslint-disable-line max-len
+        })}
+        script={[
+          {
+            type: 'application/ld+json',
+            innerHTML: `{
           "@context": "http://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [{
@@ -51,27 +55,28 @@ const VerseTafsir = ({
             }
           }]
         }`
-        }
-      ]}
-    />
+          }
+        ]}
+      />
 
-    <div className={'container-fluid'}>
-      <div className="row">
-        <Tafsir tafsir={verseTafsir} verse={verse} />
+      <div className={'container-fluid'}>
+        <div className="row">
+          <Tafsir tafsir={verseTafsir} verse={verse} />
 
-        <div className="col-md-12">
-          <div className="text-center">
-            <Button href={`/${params.chapterId}/${params.verseNumber}`}>
-              <LocaleFormattedMessage
-                id="verse.backToAyah"
-                defaultMessage="Back to Ayah"
-              />
-            </Button>
+          <div className="col-md-12">
+            <div className="text-center">
+              <Button href={`/${params.chapterId}/${params.verseNumber}`}>
+                <LocaleFormattedMessage
+                  id="verse.backToAyah"
+                  defaultMessage="Back to Ayah"
+                />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>;
+  );
 
 VerseTafsir.propTypes = {
   verse: customPropTypes.verseType,

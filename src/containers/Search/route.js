@@ -6,7 +6,7 @@ export default [
   {
     path: '/search',
     component: loadable(() =>
-      import(/* webpackChunkName: "search" */ './index')
+      import(/* webpackChunkName: "Search" */ './index')
     ),
     loadData: [
       ({ store: { dispatch }, location }) => {

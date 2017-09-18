@@ -24,9 +24,26 @@ const style = require('./style.scss');
 
 const RepeatDropdown = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "repeatdropdown" */ './RepeatDropdown'),
+    import(/* webpackChunkName: "RepeatDropdown" */ './RepeatDropdown'),
   loading: ComponentLoader
 });
+
+const Container = styled.div`
+  position: fixed;
+  bottom: 15px;
+  display: block;
+  user-select: none;
+  height: auto;
+  z-index: 1;
+  padding: 10px 20px 5px;
+  background: #fff;
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+  min-width: 340px;
+  @media (max-width: $screen-sm) {
+    bottom: 0;
+    width: 100%;
+  }
+`;
 
 const Wrapper = styled.div`
   width: 100%;
@@ -36,9 +53,14 @@ const Wrapper = styled.div`
   height: 10%;
 `;
 
-const ControlItem = styled.li`
+const ControlsContainer = styled.div`
+  display: table;
+  width: 100%;
+`;
+
+const ControlItem = styled.div`
+  display: table-cell;
   vertical-align: middle;
-  padding-right: 20px;
   color: #939598;
 `;
 
@@ -321,17 +343,18 @@ export class Audioplayer extends Component {
   }
 
   renderPreviousButton() {
-    const { currentVerse, files } = this.props;
-    if (!files) return false;
-    const index = Object.keys(files).findIndex(
-      id => id === currentVerse.verseKey
-    );
+    const { chapter, currentVerse } = this.props;
+    if (!chapter) return null;
+
+    const isBeginning = parseInt(currentVerse.verseNumber, 10) === 1;
 
     return (
       <a
         tabIndex="-1"
-        className={`pointer ${style.buttons} ${!index ? style.disabled : ''}`}
-        onClick={() => index && this.handleVerseChange('previous')}
+        className={`pointer ${style.buttons} ${!isBeginning
+          ? style.disabled
+          : ''}`}
+        onClick={() => isBeginning && this.handleVerseChange('previous')}
       >
         <i className="ss-icon ss-skipback" />
       </a>
@@ -340,7 +363,8 @@ export class Audioplayer extends Component {
 
   renderNextButton() {
     const { chapter, currentVerse } = this.props;
-    if (!chapter) return false;
+    if (!chapter) return null;
+
     const isEnd =
       chapter.versesCount === parseInt(currentVerse.verseNumber, 10);
 
@@ -363,7 +387,6 @@ export class Audioplayer extends Component {
       currentVerse,
       currentFile,
       chapter,
-      isPlaying,
       repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
       setRepeat // eslint-disable-line no-shadow
@@ -371,54 +394,46 @@ export class Audioplayer extends Component {
 
     if (isLoading || !currentFile) {
       return (
-        <li className={`${style.container} ${className}`}>
+        <Container className={className}>
           <div>
             <LocaleFormattedMessage
               id="app.loading"
               defaultMessage="Loading..."
             />
           </div>
-        </li>
+        </Container>
       );
     }
 
     return (
-      <div
-        className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}
-      >
+      <Container className={className}>
         <Wrapper>
-          {currentFile &&
+          {currentFile && (
             <Track
               progress={currentFile.currentTime / currentFile.duration * 100}
               onTrackChange={this.handleTrackChange}
-            />}
+            />
+          )}
           {segments &&
-            segments[currentVerse.verseKey] &&
-            <Segments
-              segments={segments[currentVerse.verseKey]}
-              currentVerse={currentVerse.verseKey}
-              currentTime={currentFile.currentTime}
-            />}
+            segments[currentVerse.verseKey] && (
+              <Segments
+                segments={segments[currentVerse.verseKey]}
+                currentVerse={currentVerse.verseKey}
+                currentTime={currentFile.currentTime}
+              />
+            )}
         </Wrapper>
-        <ul className="list-inline" style={{ margin: 0 }}>
+        <ControlsContainer>
           <ControlItem>
             <LocaleFormattedMessage
               id="player.currentVerse"
               defaultMessage="Ayah"
             />
-            :
-            {' '}
-            {currentVerse.verseNumber}
+            : {currentVerse.verseNumber}
           </ControlItem>
-          <ControlItem>
-            {this.renderPreviousButton()}
-          </ControlItem>
-          <ControlItem>
-            {this.renderPlayStopButtons()}
-          </ControlItem>
-          <ControlItem>
-            {this.renderNextButton()}
-          </ControlItem>
+          <ControlItem>{this.renderPreviousButton()}</ControlItem>
+          <ControlItem>{this.renderPlayStopButtons()}</ControlItem>
+          <ControlItem>{this.renderNextButton()}</ControlItem>
           <ControlItem>
             <RepeatDropdown
               repeat={repeat}
@@ -433,8 +448,8 @@ export class Audioplayer extends Component {
               onScrollToggle={this.handleScrollToggle}
             />
           </ControlItem>
-        </ul>
-      </div>
+        </ControlsContainer>
+      </Container>
     );
   }
 }
@@ -459,12 +474,12 @@ const mapStateToProps = (state, ownProps) => {
 
 Audioplayer.propTypes = {
   className: PropTypes.string,
-  chapter: customPropTypes.surahType,
+  chapter: customPropTypes.chapterType,
   onLoadAyahs: PropTypes.func.isRequired,
   segments: customPropTypes.segments,
   // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
   files: PropTypes.object, // eslint-disable-line
-  currentVerse: PropTypes.verseType,
+  currentVerse: customPropTypes.verseType,
   isLoading: PropTypes.bool.isRequired,
   play: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
@@ -479,7 +494,7 @@ Audioplayer.propTypes = {
   isPlaying: PropTypes.bool,
   // NOTE: should be PropTypes.instanceOf(Audio) but not on server.
   currentFile: PropTypes.any, // eslint-disable-line
-  verseIds: PropTypes.object // eslint-disable-line
+  verseIds: PropTypes.array // eslint-disable-line
 };
 
 export default connect(mapStateToProps, AudioActions)(Audioplayer);

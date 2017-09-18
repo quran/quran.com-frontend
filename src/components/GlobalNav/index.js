@@ -90,8 +90,8 @@ class GlobalNav extends Component {
           </a>
         </li>,
         <LocaleSwitcher />,
-        user
-          ? <li>
+        user ? (
+          <li>
             <Link
               to="/profile"
               data-metrics-event-name="IndexHeader:Link:Profile"
@@ -99,13 +99,15 @@ class GlobalNav extends Component {
               {user.firstName || user.name}
             </Link>
           </li>
-          : <noscript />
+        ) : (
+          <noscript />
+        )
       ]
     );
   }
 
   render() {
-    const { leftControls, handleSidebarToggle, isStatic } = this.props;
+    const { leftControls, isStatic } = this.props;
     debug('component:GlobalNav', 'Render');
 
     return (
@@ -143,12 +145,16 @@ class GlobalNav extends Component {
           <GlobalSidebar />
         </Drawer>
         <Nav className={styles.nav}>
-          {!this.isHome() &&
+          {!this.isHome() && (
             <li>
-              <Link to="/"><i className="ss-icon ss-home" /></Link>
-            </li>}
-          {this.isHome() &&
-            <LocaleSwitcher className="visible-xs-inline-block" />}
+              <Link to="/">
+                <i className="ss-icon ss-home" />
+              </Link>
+            </li>
+          )}
+          {this.isHome() && (
+            <LocaleSwitcher className="visible-xs-inline-block" />
+          )}
           {leftControls &&
             leftControls.map((control, index) =>
               React.cloneElement(control, { key: index })
@@ -165,13 +171,12 @@ class GlobalNav extends Component {
 }
 
 GlobalNav.propTypes = {
-  // handleToggleSidebar: PropTypes.func.isRequired,
   leftControls: PropTypes.arrayOf(PropTypes.element),
   rightControls: PropTypes.arrayOf(PropTypes.element),
-  handleSidebarToggle: PropTypes.func.isRequired,
   isStatic: PropTypes.bool.isRequired,
   user: customPropTypes.userType,
-  location: customPropTypes.location
+  location: customPropTypes.location,
+  history: PropTypes.object.isRequired // eslint-disable-line
 };
 
 GlobalNav.defaultProps = {

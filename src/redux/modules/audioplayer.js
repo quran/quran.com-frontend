@@ -14,10 +14,8 @@ import {
   SET_REPEAT,
   TOGGLE_SCROLL,
   UPDATE,
-  // LOAD,
   LOAD_SUCCESS
-  // LOAD_FAIL
-} from 'redux/constants/audioplayer.js';
+} from '../constants/audioplayer';
 
 import {
   LOAD as VERSES_LOAD,

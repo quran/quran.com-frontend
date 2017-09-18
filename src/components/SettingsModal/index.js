@@ -80,7 +80,7 @@ const SettingsModal = ({
 };
 
 SettingsModal.propTypes = {
-  chapter: customProptypes.surahType,
+  chapter: customProptypes.chapterType,
   ayahIds: PropTypes.instanceOf(Set),
   open: PropTypes.bool,
   handleHide: PropTypes.func.isRequired,

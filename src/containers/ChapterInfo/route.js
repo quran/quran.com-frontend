@@ -4,7 +4,7 @@ export default [
   {
     path: '/:chapterId/info/:language?',
     component: loadable(() =>
-      import(/* webpackChunkName: "chapterinfo" */ './index')
+      import(/* webpackChunkName: "ChapterInfo" */ './index')
     )
     // onEnter: checkValidChapterOrVerse
   }

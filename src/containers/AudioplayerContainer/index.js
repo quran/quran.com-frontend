@@ -5,9 +5,9 @@ import * as customPropTypes from 'customPropTypes';
 
 import { buildAudioForAyah } from 'helpers/buildAudio';
 
-import Player from 'components/Audioplayer';
+import Audioplayer from 'components/Audioplayer';
 
-class Audioplayer extends Component {
+class AudioplayerContainer extends Component {
   constructor(props) {
     super(props);
 
@@ -65,7 +65,7 @@ class Audioplayer extends Component {
     }
 
     return (
-      <Player
+      <Audioplayer
         chapter={chapter}
         currentFile={this.currentFile}
         segments={this.segments}
@@ -76,30 +76,30 @@ class Audioplayer extends Component {
   }
 }
 
-Audioplayer.propTypes = {
+AudioplayerContainer.propTypes = {
   data: PropTypes.object, // eslint-disable-line
-  chapter: customPropTypes.surahType,
-  currentVerse: PropTypes.verseType,
+  chapter: customPropTypes.chapterType,
+  currentVerse: customPropTypes.verseType,
   audio: PropTypes.number.isRequired,
   verses: customPropTypes.verses
 };
 
-const GraphAudioplayer = graphql(
+const GraphAudioplayerContainer = graphql(
   gql`
-  query AudioFile($recitationId: ID!, $resourceId: ID!) {
-    audioFile(recitationId: $recitationId, resourceId: $resourceId) {
-      id
-      url
-      resourceId
+    query AudioFile($recitationId: ID!, $resourceId: ID!) {
+      audioFile(recitationId: $recitationId, resourceId: $resourceId) {
+        id
+        url
+        resourceId
+      }
     }
-  }
-`,
+  `,
   {
     options: ({ currentVerse, audio }) => ({
       ssr: false,
       variables: { recitationId: audio, resourceId: currentVerse.id }
     })
   }
-)(Audioplayer);
+)(AudioplayerContainer);
 
-export default GraphAudioplayer;
+export default GraphAudioplayerContainer;

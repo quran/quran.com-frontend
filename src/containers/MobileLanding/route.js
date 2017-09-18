@@ -4,13 +4,13 @@ export default [
   {
     path: '/mobile',
     component: loadable(() =>
-      import(/* webpackChunkName: "mobile" */ './index')
+      import(/* webpackChunkName: "Mobile" */ './index')
     )
   },
   {
     path: '/apps',
     component: loadable(() =>
-      import(/* webpackChunkName: "mobile" */ './index')
+      import(/* webpackChunkName: "Mobile" */ './index')
     )
   }
 ];

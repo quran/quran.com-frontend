@@ -6,7 +6,6 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
-import qs from 'qs';
 import { FormattedHTMLMessage } from 'react-intl';
 import IndexHeader from 'components/IndexHeader';
 import Verse from 'components/Verse';
@@ -169,9 +168,7 @@ class Search extends Component {
         {this.renderStatsBar()}
         <div className="container surah-list">
           <div className="row">
-            <div className="col-md-12">
-              {this.renderBody()}
-            </div>
+            <div className="col-md-12">{this.renderBody()}</div>
           </div>
         </div>
       </div>

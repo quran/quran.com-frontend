@@ -7,7 +7,7 @@ import { ThemeProvider } from 'styled-components';
 import theme from '../../theme';
 import App from '../App';
 
-import getLocalMessages from 'helpers/setLocal';
+import getLocalMessages from '../../helpers/setLocal';
 
 const Root = ({ client, store }) => (
   <ThemeProvider theme={theme}>

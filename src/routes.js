@@ -4,7 +4,7 @@ import loadable from 'loadable-components';
 // import checkValidChapterOrVerse from './utils/routeFilters';
 import App from './containers/App';
 
-import surahRoute from './containers/Surah/route';
+import surahRoute from './containers/ChapterContainer/route';
 import mobileLandingRoute from './containers/MobileLanding/route';
 import donationsRoute from './containers/Donations/route';
 import pdfRoute from './containers/Pdf/route';

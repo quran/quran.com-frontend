@@ -1,13 +1,9 @@
-import styled from 'styled-components';
 import React from 'react';
 import PropTypes from 'prop-types';
 import Share from 'components/Share';
 import * as customPropTypes from 'customPropTypes';
 
-const Title = styled.h1`
-  color: #000;
-  font-size: 18px;
-`;
+import Title from '../dls/Title';
 
 const TopOptions = ({ title, chapter }) => (
   <div className="row">
@@ -16,7 +12,9 @@ const TopOptions = ({ title, chapter }) => (
     </div>
     <div className="col-md-8 text-right">
       <ul className="list-inline">
-        <li><Share chapter={chapter} /></li>
+        <li>
+          <Share chapter={chapter} />
+        </li>
       </ul>
     </div>
   </div>
@@ -24,7 +22,7 @@ const TopOptions = ({ title, chapter }) => (
 
 TopOptions.propTypes = {
   title: PropTypes.string,
-  chapter: customPropTypes.surahType.isRequired
+  chapter: customPropTypes.chapterType.isRequired
 };
 
 export default TopOptions;

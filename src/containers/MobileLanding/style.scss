@@ -1,9 +1,0 @@
-@import '../../styles/variables.scss';
-.button {
-  border-radius: 50px;
-  @media(max-width: $screen-sm) {
-    &:last-child {
-      margin-top: 15px;
-    }
-  }
-}

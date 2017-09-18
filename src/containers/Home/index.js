@@ -55,15 +55,16 @@ const Home = ({ chaptersQuery, juzsQuery }) => {
     <div className="index-page">
       <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
       <IndexHeader />
-      {!chaptersQuery.loading &&
+      {!chaptersQuery.loading && (
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              {lastVisit &&
+              {lastVisit && (
                 <LastVisit
                   chapter={chaptersQuery.chapters[lastVisit.chapterId]}
                   verse={lastVisit.verseId}
-                />}
+                />
+              )}
               <QuickSurahs />
               <Tabs>
                 <Tab title={chapterTitle}>
@@ -90,7 +91,7 @@ const Home = ({ chaptersQuery, juzsQuery }) => {
                 </Tab>
 
                 <Tab title={juzTitle}>
-                  {!juzsQuery.loading &&
+                  {!juzsQuery.loading && (
                     <div className="row">
                       <JuzList
                         chapters={chaptersQuery.chapters}
@@ -104,12 +105,14 @@ const Home = ({ chaptersQuery, juzsQuery }) => {
                         chapters={chaptersQuery.chapters}
                         juzs={juzsQuery.juzs.slice(20, 30)}
                       />
-                    </div>}
+                    </div>
+                  )}
                 </Tab>
               </Tabs>
             </div>
           </div>
-        </div>}
+        </div>
+      )}
     </div>
   );
 };
@@ -119,7 +122,7 @@ Home.propTypes = {
     chapters: customPropTypes.chapters.isRequired
   }),
   juzsQuery: PropTypes.shape({
-    juzs: customPropTypes.juzs.isRequired
+    juzs: customPropTypes.juzs
   })
 };
 

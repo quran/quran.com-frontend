@@ -17,24 +17,24 @@ import { loadTafsirs } from 'redux/actions/media';
 const styles = require('./style.scss');
 
 const Copy = Loadable({
-  loader: () => import('components/Copy'),
+  loader: () => import(/* webpackChunkName: "copy" */ 'components/Copy'),
   loading: ComponentLoader
 });
 
 const Share = Loadable({
-  loader: () => import('components/Share'),
+  loader: () => import(/* webpackChunkName: "share" */ 'components/Share'),
   loading: ComponentLoader
 });
 
 const Label = styled.span`
-  padding: .65em 1.1em;
+  padding: 0.65em 1.1em;
   border-radius: 0;
   display: inline-block;
   margin-bottom: 15px;
   font-weight: 300;
   color: ${props => props.theme.textColor};
 
-  &:hover{
+  &:hover {
     opacity: 0.7;
   }
 `;
@@ -98,7 +98,7 @@ class Verse extends Component {
     let wordAudioPosition = -1;
     const renderText = false; // userAgent.isBot;
 
-    const text = verse.words.map((word) => ( // eslint-disable-line
+    const text = verse.words.map(word => (
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -116,9 +116,7 @@ class Verse extends Component {
 
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
-        <p>
-          {text}
-        </p>
+        <p>{text}</p>
       </h1>
     );
   }
@@ -137,9 +135,10 @@ class Verse extends Component {
           className="text-muted"
         >
           <i
-            className={`ss-icon ${playing ? 'ss-pause' : 'ss-play'} vertical-align-middle`}
-          />
-          {' '}
+            className={`ss-icon ${playing
+              ? 'ss-pause'
+              : 'ss-play'} vertical-align-middle`}
+          />{' '}
           <LocaleFormattedMessage
             id={playing ? 'actions.pause' : 'actions.play'}
             defaultMessage={playing ? 'Pause' : 'Play'}
@@ -160,8 +159,7 @@ class Verse extends Component {
         className="text-muted"
         onClick={() => this.props.loadTafsirs(verse)}
       >
-        <i className="ss-book vertical-align-middle" />
-        {' '}
+        <i className="ss-book vertical-align-middle" />{' '}
         <LocaleFormattedMessage
           id={'actions.tafsir'}
           defaultMessage={'Tafsir'}
@@ -232,9 +230,7 @@ class Verse extends Component {
 
     const content = (
       <h4>
-        <Label className="label label-default">
-          {verse.verseKey}
-        </Label>
+        <Label className="label label-default">{verse.verseKey}</Label>
       </h4>
     );
 
@@ -299,7 +295,7 @@ class Verse extends Component {
 Verse.propTypes = {
   isSearched: PropTypes.bool,
   verse: customPropTypes.verseType.isRequired,
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   bookmarked: PropTypes.bool, // TODO: Add this for search
   bookmarkActions: customPropTypes.bookmarkActions,
   audioActions: customPropTypes.audioActions,

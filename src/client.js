@@ -3,9 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reactCookie from 'react-cookie';
 
-// import browserHistory from 'react-router/lib/browserHistory';
-// import useScroll from 'react-router-scroll';
-// import { syncHistoryWithStore } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
 import { loadComponents } from 'loadable-components';
 
@@ -18,10 +15,9 @@ import Root from './containers/Root';
 import createClient from './graphql/client';
 
 const api = new ApiClient();
+// eslint-disable-next-line
 const client = createClient({ initialState: window.__APOLLO_STATE__ });
-console.log(client);
 const store = createStore(client, api, window.reduxData);
-// const history = syncHistoryWithStore(browserHistory, store);
 
 try {
   Raven.config(config.sentryClient).install();
@@ -47,15 +43,9 @@ const mountNode = document.getElementById('app');
 
 loadComponents().then(() => {
   const render = (component, time) => {
-    ReactDOM.render(
-      <AppContainer>
-        {component}
-      </AppContainer>,
-      mountNode,
-      () => {
-        debug('client', `React Rendered ${time} time`);
-      }
-    );
+    ReactDOM.render(<AppContainer>{component}</AppContainer>, mountNode, () => {
+      debug('client', `React Rendered ${time} time`);
+    });
   };
 
   render(<Root client={client} store={store} />, 'first');

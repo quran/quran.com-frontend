@@ -10,9 +10,6 @@ import {
   SET_REPEAT,
   TOGGLE_SCROLL,
   BUILD_ON_CLIENT,
-  LOAD,
-  LOAD_SUCCESS,
-  LOAD_FAIL,
   UPDATE
 } from 'redux/constants/audioplayer.js';
 

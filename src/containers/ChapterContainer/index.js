@@ -14,10 +14,8 @@ import Loadable from 'react-loadable';
 
 // components
 import Loader from 'quran-components/lib/Loader';
-import LazyLoad from 'components/LazyLoad';
 import Verse from 'components/Verse';
 import ComponentLoader from 'components/ComponentLoader';
-import Bismillah from 'components/Bismillah';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import GlobalNavSurah from 'components/GlobalNav/Surah';
 
@@ -40,33 +38,45 @@ import generateLines from 'utils/generateLines';
 import determinePageForChapter from 'utils/determinePageForChapter';
 import { fontFaceStyle } from 'helpers/buildFontFaces';
 
-const LoaderStyle = {};
-
 const style = require('./style.scss');
+
+const LazyLoad = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "LazyLoad" */ 'components/LazyLoad'),
+  loading: ComponentLoader
+});
+
+const Bismillah = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "Bismillah" */ 'components/Bismillah'),
+  loading: ComponentLoader
+});
 
 const PageView = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pageview" */ 'components/PageView'),
+    import(/* webpackChunkName: "PageView" */ 'components/PageView'),
   loading: ComponentLoader
 });
 
 const Audioplayer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "audioplayer" */ 'containers/Audioplayer'),
-  loading: ComponentLoader
-});
-const SurahInfo = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
-  loading: ComponentLoader
-});
-const TopOptions = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
+    import(/* webpackChunkName: "AudioplayerContainer" */ 'containers/AudioplayerContainer'),
   loading: ComponentLoader
 });
 
-class Surah extends Component {
+const SurahInfo = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "SurahInfo" */ 'components/SurahInfo'),
+  loading: ComponentLoader
+});
+
+const TopOptions = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "TopOptions" */ 'components/TopOptions'),
+  loading: ComponentLoader
+});
+
+class ChapterContainer extends Component {
   state = {
     lazyLoading: false,
     sidebarOpen: false
@@ -253,13 +263,17 @@ class Surah extends Component {
       const verse = verses[`${chapter.chapterNumber}:${params.range}`];
 
       if (verse && verse.content && verse.content[0]) {
-        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${verse.content[0].text}`;
+        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${verse
+          .content[0].text}`;
       }
 
       return `Surat ${chapter.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${chapterInfo ? chapterInfo.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${chapterInfo
+      ? chapterInfo.shortText
+      : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter
+      .pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   isEndOfSurah() {
@@ -286,13 +300,13 @@ class Surah extends Component {
       </div>
     );
 
-    return loading ? <Loader isActive relative style={LoaderStyle} /> : noAyah;
+    return loading ? <Loader isActive relative /> : noAyah;
   }
 
   renderPagination() {
     const {
       isSingleAyah,
-
+      actions,
       chapterQuery: { chapter },
       versesQuery: { loading },
       options
@@ -301,9 +315,10 @@ class Surah extends Component {
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
-      const to = this.getFirst() + 10 > chapter.versesCount
-        ? chapter.versesCount
-        : this.getFirst() + 10;
+      const to =
+        this.getFirst() + 10 > chapter.versesCount
+          ? chapter.versesCount
+          : this.getFirst() + 10;
 
       return (
         <ul className="pager">
@@ -328,10 +343,11 @@ class Surah extends Component {
         isLoading={this.state.lazyLoading}
         endComponent={
           <ul className="pager">
-            {chapter.chapterNumber > 1 &&
+            {chapter.chapterNumber > 1 && (
               <li className="previous">
                 <Link
-                  to={`/${chapter.chapterNumber * 1 - 1}?translations=${translations}`}
+                  to={`/${chapter.chapterNumber * 1 -
+                    1}?translations=${translations}`}
                 >
                   ←
                   <LocaleFormattedMessage
@@ -339,7 +355,8 @@ class Surah extends Component {
                     defaultMessage="Previous Surah"
                   />
                 </Link>
-              </li>}
+              </li>
+            )}
             <li className="text-center">
               <Link
                 to={`/${chapter.chapterNumber}?translations=${translations}`}
@@ -354,10 +371,11 @@ class Surah extends Component {
                 />
               </Link>
             </li>
-            {chapter.chapterNumber < 114 &&
+            {chapter.chapterNumber < 114 && (
               <li className="next">
                 <Link
-                  to={`/${chapter.chapterNumber * 1 + 1}?translations=${translations}`}
+                  to={`/${chapter.chapterNumber * 1 +
+                    1}?translations=${translations}`}
                 >
                   <LocaleFormattedMessage
                     id="chapter.next"
@@ -365,16 +383,11 @@ class Surah extends Component {
                   />
                   →
                 </Link>
-              </li>}
+              </li>
+            )}
           </ul>
         }
-        loading={
-          <Loader
-            isActive={this.state.lazyLoading}
-            relative
-            style={LoaderStyle}
-          />
-        }
+        loading={<Loader isActive={this.state.lazyLoading} relative />}
       />
     );
   }
@@ -456,6 +469,51 @@ class Surah extends Component {
     return <noscript />;
   }
 
+  renderHelmet() {
+    const { chapterQuery: { chapter }, options } = this.props;
+
+    return (
+      <Helmet
+        {...makeHeadTags({
+          title: this.title(),
+          description: this.description()
+        })}
+        script={[
+          {
+            type: 'application/ld+json',
+            innerHTML: `{
+        "@context": "http://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [{
+          "@type": "ListItem",
+          "position": 1,
+          "item": {
+            "@id": "https://quran.com/",
+            "name": "Quran"
+          }
+        },{
+          "@type": "ListItem",
+          "position": 2,
+          "item": {
+            "@id": "https://quran.com/${chapter.chapterNumber}",
+            "name": "${chapter.nameSimple}"
+          }
+        }]
+      }`
+          }
+        ]}
+        style={[
+          {
+            cssText: `
+              .text-arabic{font-size: ${options.fontSize.arabic}rem;}
+              .text-translation{font-size: ${options.fontSize.translation}rem;}
+            `
+          }
+        ]}
+      />
+    );
+  }
+
   render() {
     const {
       chapterQuery: { loading: chapterLoading, chapter },
@@ -464,7 +522,7 @@ class Surah extends Component {
       chapterInfoQuery: { chapterInfo },
       options,
       actions
-    } = this.props; // eslint-disable-line no-shadow
+    } = this.props;
     debug('component:Surah', 'Render');
 
     if (chapterLoading || versesLoading) {
@@ -476,43 +534,8 @@ class Surah extends Component {
     }
 
     return (
-      <div className="chapter-body">
-        <Helmet
-          {...makeHeadTags({
-            title: this.title(),
-            description: this.description()
-          })}
-          script={[
-            {
-              type: 'application/ld+json',
-              innerHTML: `{
-              "@context": "http://schema.org",
-              "@type": "BreadcrumbList",
-              "itemListElement": [{
-                "@type": "ListItem",
-                "position": 1,
-                "item": {
-                  "@id": "https://quran.com/",
-                  "name": "Quran"
-                }
-              },{
-                "@type": "ListItem",
-                "position": 2,
-                "item": {
-                  "@id": "https://quran.com/${chapter.chapterNumber}",
-                  "name": "${chapter.nameSimple}"
-                }
-              }]
-            }`
-            }
-          ]}
-          style={[
-            {
-              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
-            }
-          ]}
-        />
-
+      <div>
+        {this.renderHelmet()}
         <GlobalNavSurah
           chapter={chapter}
           chapters={chapters}
@@ -553,7 +576,7 @@ class Surah extends Component {
   }
 }
 
-Surah.propTypes = {
+ChapterContainer.propTypes = {
   actions: PropTypes.object.isRequired, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line
   currentVerse: PropTypes.string,
@@ -635,6 +658,6 @@ const Graphed = compose(
       versesQuery: query
     })
   })
-)(Surah);
+)(ChapterContainer);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Graphed);

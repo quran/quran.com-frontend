@@ -4,7 +4,7 @@ export default [
   {
     path: '/:chapterId/:range?.pdf',
     component: loadable(
-      () => import(/* webpackChunkName: "pdf" */ './index') // import(/* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter')
+      () => import(/* webpackChunkName: "Pdf" */ './index') // import(/* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter')
     )
     // onEnter: checkValidChapterOrVerse
   }

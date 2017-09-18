@@ -12,15 +12,18 @@ const SurahInfo = ({ chapter, chapterInfo, isShowingSurahInfo, onClose }) => {
 
   return (
     <div className={`col-xs-12 ${style.container} chapter-info ${style.show}`}>
-      {onClose &&
+      {onClose && (
         <button
           tabIndex="-1"
           className={`${style.close} ss-delete`}
           onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
-        />}
+        />
+      )}
       <div className={`${style.row} row`}>
         <div
-          className={`col-md-3 col-xs-6 ${style.bg} ${style[chapter.revelationPlace]}`}
+          className={`col-md-3 col-xs-6 ${style.bg} ${style[
+            chapter.revelationPlace
+          ]}`}
         />
         <div className={`${style.list} col-md-1 col-xs-6`}>
           <dl>
@@ -36,9 +39,7 @@ const SurahInfo = ({ chapter, chapterInfo, isShowingSurahInfo, onClose }) => {
           <div dangerouslySetInnerHTML={{ __html: chapterInfo.text }} />
           <div>
             <p>
-              <em>
-                Source: {chapterInfo.source}
-              </em>
+              <em>Source: {chapterInfo.source}</em>
             </p>
           </div>
         </div>
@@ -50,7 +51,7 @@ const SurahInfo = ({ chapter, chapterInfo, isShowingSurahInfo, onClose }) => {
 SurahInfo.propTypes = {
   onClose: PropTypes.func,
   isShowingSurahInfo: PropTypes.bool,
-  chapter: customPropTypes.surahType,
+  chapter: customPropTypes.chapterType,
   chapterInfo: customPropTypes.infoType
 };
 

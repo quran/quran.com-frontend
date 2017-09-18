@@ -69,7 +69,7 @@ class Settings extends Component {
 Settings.propTypes = {
   setOption: PropTypes.func.isRequired,
   load: PropTypes.func.isRequired,
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   options: customPropTypes.optionsType.isRequired,
   versesIds: PropTypes.instanceOf(Set)
 };

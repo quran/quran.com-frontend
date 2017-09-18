@@ -4,13 +4,13 @@ export default [
   {
     path: '/contact',
     component: loadable(() =>
-      import(/* webpackChunkName: "contact" */ './index')
+      import(/* webpackChunkName: "Contact" */ './index')
     )
   },
   {
     path: '/contactus',
     component: loadable(() =>
-      import(/* webpackChunkName: "contact" */ './index')
+      import(/* webpackChunkName: "Contact" */ './index')
     )
   }
 ];

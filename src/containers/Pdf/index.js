@@ -13,7 +13,7 @@ import Bismillah from 'components/Bismillah';
 // Helpers
 import debug from 'helpers/debug';
 
-const style = require('../Surah/style.scss');
+const style = require('../ChapterContainer/style.scss');
 
 class Pdf extends Component {
   hasVerses() {
@@ -60,11 +60,13 @@ class Pdf extends Component {
     }
 
     return (
-      <div className="chapter-body">
+      <div>
         <Helmet
           style={[
             {
-              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${options.fontSize
+                .arabic}rem;} .text-translation{font-size: ${options.fontSize
+                .translation}rem;}` // eslint-disable-line max-len
             }
           ]}
         />
@@ -82,7 +84,7 @@ class Pdf extends Component {
 }
 
 Pdf.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   lines: PropTypes.object.isRequired, // eslint-disable-line
   currentVerse: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,

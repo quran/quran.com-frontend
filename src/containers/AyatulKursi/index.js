@@ -31,7 +31,7 @@ import chapterQuery from 'graphql/queries/chapter';
 
 import { fontFaceStyle } from 'helpers/buildFontFaces';
 
-const style = require('../Surah/style.scss');
+const style = require('../ChapterContainer/style.scss');
 
 const PageView = Loadable({
   loader: () =>
@@ -75,23 +75,24 @@ class AyatulKursi extends Component {
     } = this.props; // eslint-disable-line no-shadow
 
     return (
-      verse &&
-      <Verse
-        verse={verse}
-        chapter={chapter}
-        currentVerse={currentVerse}
-        iscurrentVerse={isPlaying && verse.verseKey === currentVerse}
-        bookmarked={!!bookmarks[verse.verseKey]}
-        tooltip={options.tooltip}
-        bookmarkActions={actions.bookmark}
-        audioActions={actions.audio}
-        mediaActions={actions.media}
-        isPlaying={isPlaying}
-        isAuthenticated={isAuthenticated}
-        key={`${verse.chapterId}-${verse.id}-verse`}
-        userAgent={options.userAgent}
-        audio={options.audio}
-      />
+      verse && (
+        <Verse
+          verse={verse}
+          chapter={chapter}
+          currentVerse={currentVerse}
+          iscurrentVerse={isPlaying && verse.verseKey === currentVerse}
+          bookmarked={!!bookmarks[verse.verseKey]}
+          tooltip={options.tooltip}
+          bookmarkActions={actions.bookmark}
+          audioActions={actions.audio}
+          mediaActions={actions.media}
+          isPlaying={isPlaying}
+          isAuthenticated={isAuthenticated}
+          key={`${verse.chapterId}-${verse.id}-verse`}
+          userAgent={options.userAgent}
+          audio={options.audio}
+        />
+      )
     );
   }
 
@@ -137,7 +138,7 @@ class AyatulKursi extends Component {
     debug('component:AyatulKursi', 'Render');
 
     return (
-      <div className="chapter-body">
+      <div>
         <Helmet
           {...makeHeadTags({
             title,
@@ -169,15 +170,18 @@ class AyatulKursi extends Component {
           ]}
           style={[
             {
-              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${options.fontSize
+                .arabic}rem;} .text-translation{font-size: ${options.fontSize
+                .translation}rem;}` // eslint-disable-line max-len
             }
           ]}
         />
         <div className={`container-fluid ${style.container}`}>
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              {__CLIENT__ &&
-                <TopOptions title="Ayatul Kursi" chapter={chapter} />}
+              {__CLIENT__ && (
+                <TopOptions title="Ayatul Kursi" chapter={chapter} />
+              )}
               <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderVerses()}
               {this.renderFonts()}
@@ -196,12 +200,13 @@ class AyatulKursi extends Component {
             </div>
           </div>
         </div>
-        {__CLIENT__ &&
+        {__CLIENT__ && (
           <Audioplayer
             chapter={chapter}
             startVerse={verse}
             onLoadAyahs={this.handleLazyLoadAyahs}
-          />}
+          />
+        )}
       </div>
     );
   }
@@ -209,7 +214,7 @@ class AyatulKursi extends Component {
 
 AyatulKursi.propTypes = {
   chapterQuery: PropTypes.shape({
-    chapter: customPropTypes.surahType.isRequired
+    chapter: customPropTypes.chapterType.isRequired
   }),
   actions: PropTypes.object.isRequired, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line

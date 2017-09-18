@@ -45,7 +45,9 @@ class RepeatButton extends Component {
 
   renderRangeAyahs() {
     const { chapter, repeat, setRepeat } = this.props;
-    const array = Array(chapter.versesCount).join().split(',');
+    const array = Array(chapter.versesCount)
+      .join()
+      .split(',');
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
@@ -54,8 +56,7 @@ class RepeatButton extends Component {
             <LocaleFormattedMessage
               id="player.repeat.rangeStart"
               defaultMessage="From"
-            />
-            {' '}
+            />{' '}
             :
             <br />
             <FormControl
@@ -89,8 +90,7 @@ class RepeatButton extends Component {
             <LocaleFormattedMessage
               id="player.repeat.rangeEnd"
               defaultMessage="To"
-            />
-            {' '}
+            />{' '}
             :
             <br />
             <FormControl
@@ -122,18 +122,17 @@ class RepeatButton extends Component {
 
   renderSingleAyah() {
     const { repeat, setRepeat, chapter } = this.props;
-    const array = Array(chapter.versesCount).join().split(',');
+    const array = Array(chapter.versesCount)
+      .join()
+      .split(',');
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
         <LocaleFormattedMessage
           id="player.currentVerse"
           defaultMessage="Ayah"
-        />
-        {' '}
-        :
-        {' '}
-        <br />
+        />{' '}
+        : <br />
         <FormControl
           componentClass="select"
           value={repeat.from}
@@ -197,7 +196,9 @@ class RepeatButton extends Component {
 
   renderTimes() {
     const { repeat, setRepeat, intl } = this.props;
-    const times = Array(10).join().split(',');
+    const times = Array(10)
+      .join()
+      .split(',');
 
     return (
       <div className={`${!repeat.from && style.disabled} row`}>
@@ -206,9 +207,7 @@ class RepeatButton extends Component {
             id="player.repeat.title"
             defaultMessage="Repeat"
           />
-          :
-          {' '}
-          <br />
+          : <br />
           <FormControl
             componentClass="select"
             value={repeat.times}
@@ -275,7 +274,8 @@ class RepeatButton extends Component {
           rootClose
         >
           <i
-            className={`pointer ss-icon ss-repeat ${style.buttons} ${repeat.from && style.repeat}`}
+            className={`pointer ss-icon ss-repeat ${style.buttons} ${repeat.from &&
+              style.repeat}`}
           />
         </OverlayTrigger>
       </div>
@@ -284,7 +284,7 @@ class RepeatButton extends Component {
 }
 
 RepeatButton.propTypes = {
-  chapter: customPropTypes.surahType,
+  chapter: customPropTypes.chapterType,
   repeat: customPropTypes.timeInterval,
   setRepeat: PropTypes.func.isRequired,
   current: PropTypes.number.isRequired,
