@@ -1,6 +1,5 @@
 import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
-import { reducer as reduxAsyncConnect } from 'redux-connect';
 
 import chapters from './chapters';
 import verses from './verses';
@@ -15,19 +14,20 @@ import bookmarks from './bookmarks';
 import media from './media';
 import juzs from './juzs';
 
-export default combineReducers({
-  routing: routerReducer,
-  reduxAsyncConnect,
-  auth,
-  bookmarks,
-  media,
-  chapters,
-  verses,
-  audioplayer,
-  fontFaces,
-  lines,
-  searchResults,
-  suggestResults,
-  options,
-  juzs
-});
+export default (others = {}) =>
+  combineReducers({
+    routing: routerReducer,
+    auth,
+    bookmarks,
+    media,
+    chapters,
+    verses,
+    audioplayer,
+    fontFaces,
+    lines,
+    searchResults,
+    suggestResults,
+    options,
+    juzs,
+    ...others
+  });

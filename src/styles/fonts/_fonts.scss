@@ -1,23 +1,24 @@
-@mixin word_font($page) {
-  @font-face {
-    font-family: p#{$page};
-    src: url('//quran-1f14.kxcdn.com/fonts/ttf/p#{$page}.ttf') format('truetype');
-  } // @font-face {
-  //   font-family: text#{$page};
-  //   src: url('../../static/fonts/embed_ttf/tp#{$page}.ttf') format('truetype');
-  // }
-  .p#{$page} {
-    font-family: p#{$page};
-  }
-  .text-p#{$page} {
-    font-family: text#{$page};
-  }
-}
-
-@for $i from 1 through 604 {
-  @include word_font($i);
-}
-
+// @mixin word_font($page) {
+//   @font-face {
+//     font-family: p#{$page};
+//     src: url('//quran-1f14.kxcdn.com/fonts/ttf/p#{$page}.ttf') format('truetype');
+//     src: url('//quran-1f14.kxcdn.com/fonts/compressed/eot/p#{$page}.eot?#iefix') format('embedded-opentype');
+//     src: url('//quran-1f14.kxcdn.com/fonts/ttf/p#{$page}.ttf') format('truetype');
+//     src: url('//quran-1f14.kxcdn.com/fonts/woff/p#{$page}.woff?-snx2rh') format('woff');
+//   } // @font-face {
+//   //   font-family: text#{$page};
+//   //   src: url('../../static/fonts/embed_ttf/tp#{$page}.ttf') format('truetype');
+//   // }
+//   .p#{$page} {
+//     font-family: p#{$page};
+//   }
+//   .text-p#{$page} {
+//     font-family: text#{$page};
+//   }
+// }
+// @for $i from 1 through 604 {
+//   @include word_font($i);
+// }
 @font-face {
   font-family: quran-common;
   src: url('../../static/fonts/quran-common/quran_common.ttf') format('truetype');

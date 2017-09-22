@@ -3,8 +3,9 @@
   "plugins": [
     "transform-runtime",
     "transform-decorators-legacy",
-    "transform-react-display-name",
-    ["system-import-transformer", {"modules": "common"}]
+    "transform-react-display-name", ["system-import-transformer", {
+      "modules": "common"
+    }]
   ],
   "env": {
     "development": {

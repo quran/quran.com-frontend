@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import copyToClipboard from 'copy-to-clipboard';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 class Copy extends Component {
-
   state = {
     isCopied: false
   };
@@ -37,7 +37,7 @@ class Copy extends Component {
 
 Copy.propTypes = {
   text: PropTypes.string.isRequired,
-  verseKey: PropTypes.string.isRequired,
+  verseKey: PropTypes.string.isRequired
 };
 
 export default Copy;

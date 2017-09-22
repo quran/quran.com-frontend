@@ -1,6 +1,8 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { Component, PropTypes } from 'react';
+
 import styled from 'styled-components';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
   height: 6px;
@@ -37,6 +39,14 @@ export default class Track extends Component {
     onTrackChange: PropTypes.func.isRequired
   };
 
+  constructor(props) {
+    super(props);
+
+    this.setContainer = (container) => {
+      this.container = container;
+    };
+  }
+
   handleClick = (event) => {
     const { onTrackChange } = this.props;
 
@@ -50,12 +60,7 @@ export default class Track extends Component {
     const { progress } = this.props;
 
     return (
-      <Container
-        ref={(container) => {
-          this.container = container;
-        }}
-        onClick={this.handleClick}
-      >
+      <Container innerRef={this.setContainer} onClick={this.handleClick}>
         <Progress style={{ width: `${progress}%` }} />
       </Container>
     );

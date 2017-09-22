@@ -10,9 +10,6 @@ import {
   SET_REPEAT,
   TOGGLE_SCROLL,
   BUILD_ON_CLIENT,
-  LOAD,
-  LOAD_SUCCESS,
-  LOAD_FAIL,
   UPDATE
 } from 'redux/constants/audioplayer.js';
 
@@ -94,24 +91,6 @@ export function update(payload) {
   return {
     type: UPDATE,
     payload
-  };
-}
-
-export function load({ chapterId, verseId, verseKey, audio }) {
-  // eslint-disable-line
-  return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: client =>
-      client.get(
-        `/api/v3/chapters/${chapterId}/verses/${verseId}/audio_files`,
-        {
-          params: {
-            recitation: audio || 7 // NOTE: default, but should never be used
-          }
-        }
-      ),
-    verseKey,
-    chapterId
   };
 }
 

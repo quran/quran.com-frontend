@@ -1,22 +1,17 @@
-import React, { PropTypes, Component } from 'react';
-
-import * as customPropTypes from 'customPropTypes';
-// redux
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
-
 import Helmet from 'react-helmet';
 
 // components
 import Verse from 'components/Verse';
 import Bismillah from 'components/Bismillah';
 
+import * as customPropTypes from 'customPropTypes';
 // Helpers
 import debug from 'helpers/debug';
 
-import { chaptersConnect, versesConnect } from '../Surah/connect';
-
-const style = require('../Surah/style.scss');
+const style = require('../ChapterContainer/style.scss');
 
 class Pdf extends Component {
   hasVerses() {
@@ -63,11 +58,13 @@ class Pdf extends Component {
     }
 
     return (
-      <div className="chapter-body">
+      <div>
         <Helmet
           style={[
             {
-              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${options.fontSize
+                .arabic}rem;} .text-translation{font-size: ${options.fontSize
+                .translation}rem;}` // eslint-disable-line max-len
             }
           ]}
         />
@@ -85,7 +82,7 @@ class Pdf extends Component {
 }
 
 Pdf.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   lines: PropTypes.object.isRequired, // eslint-disable-line
   currentVerse: PropTypes.string,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -93,11 +90,6 @@ Pdf.propTypes = {
   verses: customPropTypes.verses,
   isPlaying: PropTypes.bool
 };
-
-const AsyncPdf = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: versesConnect }
-])(Pdf);
 
 function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
@@ -132,4 +124,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(AsyncPdf);
+export default connect(mapStateToProps)(Pdf);

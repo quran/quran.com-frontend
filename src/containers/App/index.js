@@ -1,49 +1,34 @@
 /* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
+import { Switch, Route, Redirect, withRouter } from 'react-router';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
-import Loadable from 'react-loadable';
-import ComponentLoader from 'components/ComponentLoader';
+import loadable from 'loadable-components';
+import { routes, navs } from 'routes';
 import debug from 'helpers/debug';
 import config from 'config';
 import metricsConfig from 'helpers/metrics';
-import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
 import Loader from 'quran-components/lib/Loader';
-import authConnect from './connect';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
+loadable(() => import(/* webpackChunkName: "about" */ '../About'));
+const Footer = loadable(() =>
+  import(/* webpackChunkName: "footer" */ 'components/Footer')
+);
 
-const GlobalNav = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "globalnav" */ 'components/GlobalNav'),
-  LoadingComponent: ComponentLoader
-});
-
-const GlobalSidebar = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "globalsidebar" */ 'components/GlobalSidebar'),
-  LoadingComponent: ComponentLoader
-});
-
-const SmartBanner = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner'),
-  LoadingComponent: ComponentLoader
-});
+const SmartBanner = loadable(() =>
+  import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner')
+);
 
 class App extends Component {
-  static contextTypes = {
-    store: PropTypes.object.isRequired
-  };
-
   state = {
     sidebarOpen: false
   };
@@ -69,13 +54,9 @@ class App extends Component {
 
   render() {
     const {
-      main,
-      nav,
       footer,
-      children,
       media,
-      removeMedia, // eslint-disable-line no-shadow
-      ...props
+      removeMedia // eslint-disable-line no-shadow
     } = this.props;
     debug('component:APPLICATION', 'Render');
 
@@ -96,16 +77,26 @@ class App extends Component {
             </div>
           </div>
         </NoScript>
-        {React.cloneElement(nav || <GlobalNav isStatic {...props} />, {
-          handleSidebarToggle: () =>
-            this.setState({ sidebarOpen: !this.state.sidebarOpen })
-        })}
-        {__CLIENT__ &&
-          <GlobalSidebar
-            open={this.state.sidebarOpen}
-            handleOpen={open => this.setState({ sidebarOpen: open })}
-          />}
-        {children || main}
+        <Switch>
+          {navs.map(({ component: NavComponent, isStatic, ...nav }) => (
+            <Route
+              {...nav}
+              render={routeProps => (
+                <NavComponent
+                  isStatic={isStatic}
+                  {...routeProps}
+                  handleSidebarToggle={() =>
+                    this.setState({ sidebarOpen: !this.state.sidebarOpen })}
+                />
+              )}
+            />
+          ))}
+        </Switch>
+        <Switch>
+          {routes.map(route => <Route {...route} />)}
+          <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
+          <Redirect from="/:chapterId/:from::to" to="/:chapterId/:from-:to" />
+        </Switch>
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         {footer || <Footer />}
         {__CLIENT__ &&
@@ -126,23 +117,18 @@ class App extends Component {
 }
 
 const metricsApp = metrics(metricsConfig)(App);
-const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 
 App.propTypes = {
   media: customPropTypes.media.isRequired,
   removeMedia: PropTypes.func.isRequired,
-  children: PropTypes.element,
-  main: PropTypes.element,
-  nav: PropTypes.element,
-  footer: PropTypes.element,
-  sidebar: PropTypes.element,
-  footNote: customPropTypes.footNoteType,
-  loadingFootNote: PropTypes.bool
+  footer: PropTypes.element
 };
 
-export default connect(
-  state => ({
-    media: state.media
-  }),
-  { removeMedia }
-)(AsyncApp);
+export default withRouter(
+  connect(
+    state => ({
+      media: state.media
+    }),
+    { removeMedia }
+  )(metricsApp)
+);

@@ -17,7 +17,7 @@ describe('<LazyLoad />', () => {
           isEnd={isEnd}
           isLoading={isLoading}
           endComponent={<p>End</p>}
-          loadingComponent={<p>Loading</p>}
+          loading={<p>Loading</p>}
         />
       );
     };

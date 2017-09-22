@@ -1,18 +1,32 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
-import Link from 'react-router/lib/Link';
-import Drawer from 'quran-components/lib/Drawer';
-import SearchInput from 'components/SearchInput';
-import SurahsDropdown from 'components/SurahsDropdown';
-import Settings from 'components/Settings';
+import { Link } from 'react-router-dom';
+import Loadable from 'react-loadable';
+
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import ComponentLoader from 'components/ComponentLoader';
+import Drawer from 'quran-components/lib/Drawer';
+import SurahsDropdown from 'components/SurahsDropdown';
 import VersesDropdown from 'components/VersesDropdown';
 
 import { load, setCurrentVerse } from 'redux/actions/verses.js';
 
 import GlobalNav from '../index';
+
+const Settings = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "Settings" */ 'components/Settings'),
+  loading: ComponentLoader
+});
+
+const SearchInput = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "SearchInput" */ 'components/SearchInput'),
+  loading: ComponentLoader
+});
 
 class GlobalNavSurah extends Component {
   state = {
@@ -20,11 +34,11 @@ class GlobalNavSurah extends Component {
   };
 
   handleVerseDropdownClick = (verseNum) => {
-    const { versesIds, chapter } = this.props; // eslint-disable-line no-shadow
+    const { verses, chapter } = this.props;
 
-    if (versesIds.has(verseNum)) {
-      this.props.setCurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
+    this.props.setCurrentVerse(`${chapter.chapterNumber}:${verseNum}`);
 
+    if (verses.find(verse => verse.verseNumber === verseNum)) {
       return false;
     }
 
@@ -56,7 +70,8 @@ class GlobalNavSurah extends Component {
   }
 
   render() {
-    const { chapter, chapters, versesIds, options, ...props } = this.props;
+    const { chapter, chapters, verses, options, ...props } = this.props;
+    const versesIds = verses.map(verse => verse.verseNumber);
 
     return (
       <GlobalNav
@@ -105,34 +120,17 @@ class GlobalNavSurah extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
-  const chapter: Object = state.chapters.entities[chapterId];
-  const verses: Object = state.verses.entities[chapterId];
-  const versesArray = verses
-    ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
-    : [];
-  const versesIds = new Set(versesArray);
-
-  return {
-    chapter,
-    chapters: state.chapters.entities,
-    options: state.options,
-    versesIds
-  };
-}
-
 GlobalNavSurah.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   chapters: customPropTypes.chapters.isRequired,
   options: customPropTypes.optionsType.isRequired,
-  versesIds: PropTypes.instanceOf(Set),
+  verses: PropTypes.array, // eslint-disable-line
   load: PropTypes.func.isRequired,
   setCurrentVerse: PropTypes.func.isRequired,
   replace: PropTypes.func.isRequired
 };
 
-export default connect(mapStateToProps, {
+export default connect(null, {
   load,
   replace,
   setCurrentVerse
