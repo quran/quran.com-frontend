@@ -1,9 +1,12 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { PropTypes } from 'react';
+import styled from 'styled-components';
 import Share from 'components/Share';
 import * as customPropTypes from 'customPropTypes';
 
-import Title from '../dls/Title';
+const Title = styled.h1`
+  color: #000;
+  font-size: 18px;
+`;
 
 const TopOptions = ({ title, chapter }) => (
   <div className="row">
@@ -22,7 +25,7 @@ const TopOptions = ({ title, chapter }) => (
 
 TopOptions.propTypes = {
   title: PropTypes.string,
-  chapter: customPropTypes.chapterType.isRequired
+  chapter: customPropTypes.surahType.isRequired
 };
 
 export default TopOptions;

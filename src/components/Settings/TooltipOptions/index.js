@@ -1,5 +1,4 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { PropTypes } from 'react';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import Radio from 'quran-components/lib/Radio';
 import Icon from 'quran-components/lib/Icon';

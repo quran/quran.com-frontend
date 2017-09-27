@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import { PropTypes } from 'react';
 
 export const bookmarkActions = PropTypes.shape({
   isLoaded: PropTypes.func.isRequired,
@@ -27,8 +27,7 @@ export const footNoteType = PropTypes.shape({
 });
 
 export const infoType = PropTypes.shape({
-  chapterId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-    .isRequired,
+  chapterId: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
   source: PropTypes.string.isRequired,
   shortText: PropTypes.string.isRequired,
@@ -107,8 +106,8 @@ export const recitationTypes = PropTypes.shape({
   reciter_name_eng: PropTypes.string
 });
 
-export const chapterType = PropTypes.shape({
-  id: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
+export const surahType = PropTypes.shape({
+  id: PropTypes.number.isRequired,
   versesCount: PropTypes.number.isRequired,
   bismillahPre: PropTypes.bool.isRequired,
   revelationOrder: PropTypes.number.isRequired,
@@ -179,8 +178,7 @@ export const wordType = PropTypes.shape({
 
 export const verseType = PropTypes.shape({
   id: PropTypes.number.isRequired,
-  chapterId: PropTypes.oneOfType([PropTypes.number, PropTypes.string])
-    .isRequired,
+  chapterId: PropTypes.number.isRequired,
   pageNumber: PropTypes.number.isRequired,
   juzNumber: PropTypes.number.isRequired,
   hizbNumber: PropTypes.number.isRequired,
@@ -194,7 +192,7 @@ export const verseType = PropTypes.shape({
   audio: PropTypes.object // NOTE: In search, it is not required.
 });
 
-export const verses = PropTypes.arrayOf(verseType);
+export const verses = PropTypes.objectOf(verseType);
 
 export const tafsirType = PropTypes.shape({
   id: PropTypes.number.isRequired,
@@ -221,9 +219,9 @@ export const segments = PropTypes.objectOf(segmentType);
 
 export const match = PropTypes.arrayOf(matchType);
 
-export const chapters = PropTypes.arrayOf(chapterType);
+export const chapters = PropTypes.objectOf(surahType);
 
-export const juzs = PropTypes.arrayOf(juzType);
+export const juzs = PropTypes.objectOf(juzType);
 
 export const line = PropTypes.arrayOf(wordType);
 

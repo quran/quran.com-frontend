@@ -1,6 +1,7 @@
 import * as customPropTypes from 'customPropTypes';
 import React from 'react';
-import { compose, graphql } from 'react-apollo';
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
 
 import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
@@ -9,34 +10,24 @@ import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
-import verseTafsirQuery from 'graphql/queries/verseTafsir';
-import verseQuery from 'graphql/queries/verse';
+import { versesConnect, tafsirConnect } from '../Surah/connect';
 
 const Tafsir = Loadable({
-  loader: () => import(/* webpackChunkName: "Tafsir" */ 'components/Tafsir'),
-  loading: ComponentLoader
+  loader: () => import('components/Tafsir'),
+  LoadingComponent: ComponentLoader
 });
 
-const VerseTafsir = ({
-  verseTafsirQuery: { verseTafsir },
-  verseQuery: { verse },
-  match: { params }
-}) =>
-  verseTafsir && (
-    <div className="row" style={{ marginTop: 20 }}>
-      <Helmet
-        {...makeHeadTags({
-          title: `${verseTafsir
-            ? verseTafsir.resourceName
-            : 'Tafsir'} of ${verse.verseKey}`,
-          description: `${verseTafsir
-            ? verseTafsir.resourceName
-            : 'Tafsir'} of ${verse.verseKey} - ${verse.textMadani}` // eslint-disable-line max-len
-        })}
-        script={[
-          {
-            type: 'application/ld+json',
-            innerHTML: `{
+const VerseTafsir = ({ verse, tafsir }) => (
+  <div className="row" style={{ marginTop: 20 }}>
+    <Helmet
+      {...makeHeadTags({
+        title: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${verse.verseKey}`,
+        description: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${verse.verseKey} - ${verse.textMadani}` // eslint-disable-line max-len
+      })}
+      script={[
+        {
+          type: 'application/ld+json',
+          innerHTML: `{
           "@context": "http://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [{
@@ -55,50 +46,49 @@ const VerseTafsir = ({
             }
           }]
         }`
-          }
-        ]}
-      />
+        }
+      ]}
+    />
 
-      <div className={'container-fluid'}>
-        <div className="row">
-          <Tafsir tafsir={verseTafsir} verse={verse} />
+    <div className={'container-fluid'}>
+      <div className="row">
+        <Tafsir tafsir={tafsir} verse={verse} />
 
-          <div className="col-md-12">
-            <div className="text-center">
-              <Button href={`/${params.chapterId}/${params.verseNumber}`}>
-                <LocaleFormattedMessage
-                  id="verse.backToAyah"
-                  defaultMessage="Back to Ayah"
-                />
-              </Button>
-            </div>
+        <div className="col-md-12">
+          <div className="text-center">
+            <Button href={`/${verse.chapterId}/${verse.verseNumber}`}>
+              <LocaleFormattedMessage
+                id="verse.backToAyah"
+                defaultMessage="Back to Ayah"
+              />
+            </Button>
           </div>
         </div>
       </div>
     </div>
-  );
+  </div>
+);
 
 VerseTafsir.propTypes = {
   verse: customPropTypes.verseType,
   tafsir: customPropTypes.tafsirType
 };
 
-export default compose(
-  graphql(verseTafsirQuery, {
-    name: 'verseTafsirQuery',
-    options: ({ match: { params } }) => ({
-      variables: {
-        tafsirId: params.tafsirId,
-        verseKey: `${params.chapterId}:${params.verseNumber}`
-      }
-    })
-  }),
-  graphql(verseQuery, {
-    name: 'verseQuery',
-    options: ({ match: { params } }) => ({
-      variables: {
-        verseKey: `${params.chapterId}:${params.verseNumber}`
-      }
-    })
-  })
-)(VerseTafsir);
+const AsyncTafsir = asyncConnect([
+  { promise: versesConnect },
+  { promise: tafsirConnect }
+])(VerseTafsir);
+
+function mapStateToProps(state, ownProps) {
+  const verseKey = `${ownProps.params.chapterId}:${ownProps.params.range}`;
+  const chapterId = parseInt(ownProps.params.chapterId, 10);
+  const tafsirId = ownProps.params.tafsirId;
+  const verse: Object = state.verses.entities[chapterId][verseKey];
+
+  return {
+    verse,
+    tafsir: state.verses.tafsirs[`${verseKey}-${tafsirId}`]
+  };
+}
+
+export default connect(mapStateToProps)(AsyncTafsir);

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'react-router/lib/Link';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 

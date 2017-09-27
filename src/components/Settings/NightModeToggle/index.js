@@ -1,6 +1,5 @@
 /* global document */
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { MenuItem } from 'quran-components/lib/Menu';
 

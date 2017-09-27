@@ -20,6 +20,7 @@ module.exports = {
     'babel-polyfill',
 
     'react-hot-loader/patch',
+    // 'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
     `bootstrap-loader/lib/bootstrap.loader?configFilePath=${root}/src/styles/bootstrap.config.json!bootstrap-loader/no-op.js`,
@@ -53,17 +54,9 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(graphql|gql)$/,
-        exclude: /node_modules/,
-        loader: 'graphql-tag/loader'
-      },
-      {
         test: /\.js$/,
         exclude: /node_modules/,
         use: [
-          {
-            loader: 'react-hot-loader/webpack'
-          },
           {
             loader: 'babel-loader',
             options: {

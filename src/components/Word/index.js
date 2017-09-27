@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import bindTooltip from 'utils/bindTooltip';
 import { zeroPad } from 'helpers/StringHelpers';
 
@@ -11,17 +10,15 @@ const CHAR_TYPE_RUB = 'rub';
 const CHAR_TYPE_SAJDAH = 'sajdah';
 
 class Word extends Component {
-  buildTooltip = () => {
-    const { tooltip, word } = this.props;
-
-    let title = '';
-
-    if (word.charTypeName === CHAR_TYPE_END) {
-      title = `Verse ${word.verseNumber}`;
-    } else if (word.charTypeName === CHAR_TYPE_WORD) {
+  buildTooltip = (word, tooltip) => {
+    let title;
+    if (word.charType === CHAR_TYPE_END) {
+      title = `Verse ${word.verseKey.split(':')[1]}`;
+    } else if (word.charType === CHAR_TYPE_WORD) {
       title = word[tooltip].text;
+    } else {
+      title = '';
     }
-
     return title;
   };
 
@@ -58,6 +55,7 @@ class Word extends Component {
 
   render() {
     const {
+      tooltip,
       word,
       currentVerse,
       isPlaying,
@@ -70,13 +68,16 @@ class Word extends Component {
     const highlight = currentVerse === word.verseKey && isPlaying
       ? 'highlight'
       : '';
-
-    const className = `${useTextFont ? 'text-' : ''}${word.className} ${word.charTypeName} ${highlight} ${word.highlight ? word.highlight : ''}`;
-    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
+    const className = `${useTextFont
+      ? 'text-'
+      : ''}${word.className} ${word.charType} ${highlight} ${word.highlight
+      ? word.highlight
+      : ''}`;
+    const id = `word-${word.verseKey.replace(/:/, '-')}-${word.position}`;
 
     if (useTextFont) {
-      if (word.charTypeName === CHAR_TYPE_END) {
-        text = zeroPad(word.verseNumber, 3, 0);
+      if (word.charType === CHAR_TYPE_END) {
+        text = zeroPad(word.verseKey.split(':')[1], 3, 0);
       } else {
         text = word.textMadani;
       }
@@ -97,7 +98,7 @@ class Word extends Component {
           onDoubleClick={this.handleSegmentPlay}
           onClick={this.handleWordPlay}
           className={`${className} pointer`}
-          title={this.buildTooltip()}
+          title={this.buildTooltip(word, tooltip)}
           dangerouslySetInnerHTML={{ __html: text }}
         />
         <small

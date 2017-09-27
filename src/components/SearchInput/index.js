@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';

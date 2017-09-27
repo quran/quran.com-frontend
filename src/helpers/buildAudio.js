@@ -4,7 +4,6 @@ export function buildAudioForAyah(audio) {
   let segments = null;
 
   scopedAudio.preload = 'none';
-  scopedAudio.setAttribute('checksum', Math.floor(Date.now()));
 
   if (audio.url) {
     scopedAudio.src = audio.url;
@@ -28,6 +27,7 @@ export function buildAudioFromHash(ayahsObject = {}) {
 
   return audioFromHash;
 }
+
 
 export default function buildAudio(ayahs) {
   if (!ayahs.length) {

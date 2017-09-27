@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Icon from 'quran-components/lib/Icon';

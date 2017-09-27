@@ -1,8 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { compose, graphql } from 'react-apollo';
-
 import * as customPropTypes from 'customPropTypes';
+import React from 'react';
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
 
 import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
@@ -11,33 +10,25 @@ import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
-import chapterQuery from 'graphql/queries/chapter';
-import chapterInfoQuery from 'graphql/queries/chapterInfo';
+import { chaptersConnect, chapterInfoConnect } from '../Surah/connect';
 
-const Info = Loadable({
+const SurahInfo = Loadable({
   loader: () =>
     import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
-  loading: ComponentLoader
+  LoadingComponent: ComponentLoader
 });
 
-const ChapterInfo = ({
-  chapterQuery: { chapter },
-  chapterInfoQuery: { chapterInfo }
-}) =>
-  chapter && (
-    <div className="row" style={{ marginTop: 20 }}>
-      <Helmet
-        {...makeHeadTags({
-          title: `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`,
-          description: `${chapterInfo
-            ? chapterInfo.shortText
-            : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter
-            .pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
-        })}
-        script={[
-          {
-            type: 'application/ld+json',
-            innerHTML: `{
+const ChapterInfo = ({ chapter, info }) => (
+  <div className="row" style={{ marginTop: 20 }}>
+    <Helmet
+      {...makeHeadTags({
+        title: `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`,
+        description: `${info ? info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
+      })}
+      script={[
+        {
+          type: 'application/ld+json',
+          innerHTML: `{
           "@context": "http://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [{
@@ -56,41 +47,39 @@ const ChapterInfo = ({
             }
           }]
         }`
-          }
-        ]}
-      />
-      <Info chapter={chapter} chapterInfo={chapterInfo} isShowingSurahInfo />
-      <div className="text-center">
-        <Button href={`/${chapter.id}`}>
-          <LocaleFormattedMessage
-            id="surah.read"
-            defaultMessage="Read full Surah"
-          />
-        </Button>
-      </div>
+        }
+      ]}
+    />
+    <SurahInfo chapter={chapter} info={info} isShowingSurahInfo />
+    <div className="text-center">
+      <Button href={`/${chapter.id}`}>
+        <LocaleFormattedMessage
+          id="surah.read"
+          defaultMessage="Read full Surah"
+        />
+      </Button>
     </div>
-  );
+  </div>
+);
 
 ChapterInfo.propTypes = {
-  chapterQuery: PropTypes.shape({
-    chapter: customPropTypes.chapterType
-  }),
-  chapterInfoQuery: PropTypes.shape({
-    chapterInfo: customPropTypes.infoType
-  })
+  chapter: customPropTypes.surahType,
+  info: customPropTypes.infoType
 };
 
-export default compose(
-  graphql(chapterQuery, {
-    name: 'chapterQuery',
-    options: ({ match: { params } }) => ({
-      variables: { chapterId: params.chapterId }
-    })
-  }),
-  graphql(chapterInfoQuery, {
-    name: 'chapterInfoQuery',
-    options: ({ match: { params } }) => ({
-      variables: { chapterId: params.chapterId }
-    })
-  })
-)(ChapterInfo);
+const AsyncChapterInfo = asyncConnect([
+  { promise: chaptersConnect },
+  { promise: chapterInfoConnect }
+])(ChapterInfo);
+
+function mapStateToProps(state, ownProps) {
+  const chapterId = parseInt(ownProps.params.chapterId, 10);
+  const chapter: Object = state.chapters.entities[chapterId];
+
+  return {
+    chapter,
+    info: state.chapters.infos[chapterId]
+  };
+}
+
+export default connect(mapStateToProps)(AsyncChapterInfo);
