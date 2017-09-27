@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -8,6 +7,8 @@ import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import Checkbox from 'quran-components/lib/Checkbox';
 import Loader from 'quran-components/lib/Loader';
 import Icon from 'quran-components/lib/Icon';
+
+const style = require('./style.scss');
 
 const compareAlphabetically = property => (previous, next) => {
   const previousText = previous[property].toUpperCase();
@@ -58,7 +59,7 @@ class TranslationsDropdown extends Component {
       const checked = translations.find(option => option === translation.id);
 
       return (
-        <MenuItem key={translation.id}>
+        <MenuItem key={translation.id} className={style.item}>
           <Checkbox
             id={translation.id + translation.languageName}
             name="translation"
@@ -102,15 +103,16 @@ class TranslationsDropdown extends Component {
         menu={
           translationOptions.length ? (
             <Menu>
-              {translations &&
-                translations.length && (
-                  <MenuItem onClick={this.handleRemoveContent}>
-                    <LocaleFormattedMessage
-                      id="setting.translations.removeAll"
-                      defaultMessage="Remove all"
-                    />
-                  </MenuItem>
-                )}
+              {translations && translations.length ? (
+                <MenuItem onClick={this.handleRemoveContent}>
+                  <LocaleFormattedMessage
+                    id="setting.translations.removeAll"
+                    defaultMessage="Remove all"
+                  />
+                </MenuItem>
+              ) : (
+                <span />
+              )}
               <MenuItem divider>
                 <LocaleFormattedMessage
                   id="setting.translations.english"

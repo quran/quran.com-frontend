@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
-import { Link } from 'react-router-dom';
+import Link from 'react-router/lib/Link';
 
 const Item = styled.li`
   color: ${props => props.theme.brandPrimary};
@@ -13,7 +13,10 @@ const Item = styled.li`
 
 const Arabic = styled.div`font-size: 14px;`;
 
-const Translated = styled.div`font-size: 10px;`;
+const Translated = styled.div`
+  font-size: 10px;
+  color: #777;
+`;
 
 const StyledLink = styled(Link)`
   display: block;
@@ -33,7 +36,8 @@ const SurahsList = props => (
 
           <Translated className="col-xs-10 col-xs-offset-2">
             <span
-              className={`text-uppercase ${chapter.translatedName.languageName}`}
+              className={`text-uppercase ${chapter.translatedName
+                .languageName}`}
             >
               {chapter.translatedName.name}
             </span>

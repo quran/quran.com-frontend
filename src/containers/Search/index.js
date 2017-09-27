@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
+import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
@@ -10,6 +10,7 @@ import { FormattedHTMLMessage } from 'react-intl';
 import IndexHeader from 'components/IndexHeader';
 import Verse from 'components/Verse';
 import Loader from 'quran-components/lib/Loader';
+import { search } from 'redux/actions/search.js';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const style = require('./style.scss');
@@ -98,10 +99,10 @@ class Search extends Component {
       results,
       entities,
       options,
-      location: { search }
+      location: { query }
     } = this.props;
 
-    if (!search || !search.includes('q')) {
+    if (!query || !query.q) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
           <LocaleFormattedMessage
@@ -168,7 +169,9 @@ class Search extends Component {
         {this.renderStatsBar()}
         <div className="container surah-list">
           <div className="row">
-            <div className="col-md-12">{this.renderBody()}</div>
+            <div className="col-md-12">
+              {this.renderBody()}
+            </div>
           </div>
         </div>
       </div>
@@ -199,6 +202,19 @@ Search.defaultProps = {
   results: []
 };
 
+const AsyncSearch = asyncConnect([
+  {
+    promise({ store: { dispatch }, location }) {
+      if (__CLIENT__) {
+        dispatch(search(location.query || location.q));
+        return false;
+      }
+
+      return dispatch(search(location.query || location.q));
+    }
+  }
+])(Search);
+
 function mapStateToProps(state) {
   return {
     isErrored: state.searchResults.errored,
@@ -215,4 +231,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { push })(Search);
+export default connect(mapStateToProps, { push })(AsyncSearch);

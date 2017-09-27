@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import { Link } from 'react-router-dom';
+import Link from 'react-router/lib/Link';
 import { connect } from 'react-redux';
 import Element from 'react-scroll/lib/components/Element';
 import Loadable from 'react-loadable';
@@ -17,27 +15,14 @@ import { loadTafsirs } from 'redux/actions/media';
 const styles = require('./style.scss');
 
 const Copy = Loadable({
-  loader: () => import(/* webpackChunkName: "copy" */ 'components/Copy'),
-  loading: ComponentLoader
+  loader: () => import('components/Copy'),
+  LoadingComponent: ComponentLoader
 });
 
 const Share = Loadable({
-  loader: () => import(/* webpackChunkName: "share" */ 'components/Share'),
-  loading: ComponentLoader
+  loader: () => import('components/Share'),
+  LoadingComponent: ComponentLoader
 });
-
-const Label = styled.span`
-  padding: 0.65em 1.1em;
-  border-radius: 0;
-  display: inline-block;
-  margin-bottom: 15px;
-  font-weight: 300;
-  color: ${props => props.theme.textColor};
-
-  &:hover {
-    opacity: 0.7;
-  }
-`;
 
 class Verse extends Component {
   shouldComponentUpdate(nextProps) {
@@ -83,6 +68,41 @@ class Verse extends Component {
         key={translation.id}
       />
     ));
+  }
+
+  renderMedia() {
+    const { verse, mediaActions, isSearched, isPdf } = this.props;
+
+    if (isSearched || !verse.mediaContents) return false;
+    if (isPdf) return false;
+
+    return (
+      <div>
+        {verse.mediaContents.map((content, index) => (
+          <div className={`${styles.translation} translation`} key={index}>
+            <h2 className="text-translation times-new">
+              <small>
+                <a
+                  tabIndex="-1"
+                  className="pointer"
+                  onClick={() => mediaActions.setMedia(content)}
+                  data-metrics-event-name="Media Click"
+                  data-metrics-media-content-url={content.url}
+                  data-metrics-media-content-id={content.id}
+                  data-metrics-media-content-verse-key={verse.verseKey}
+                >
+                  <LocaleFormattedMessage
+                    id="verse.media.lectureFrom"
+                    defaultMessage="Watch lecture by {from}"
+                    values={{ from: content.authorName }}
+                  />
+                </a>
+              </small>
+            </h2>
+          </div>
+        ))}
+      </div>
+    );
   }
 
   renderText() {
@@ -237,7 +257,9 @@ class Verse extends Component {
 
     const content = (
       <h4>
-        <Label className="label label-default">{verse.verseKey}</Label>
+        <span className={`label label-default ${styles.label}`}>
+          {verse.verseKey}
+        </span>
       </h4>
     );
 
@@ -291,8 +313,9 @@ class Verse extends Component {
       >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">
-          {verse.words ? this.renderText() : verse.textMadani}
-          {verse.translations && this.renderTranslations()}
+          {this.renderText()}
+          {this.renderTranslations()}
+          {this.renderMedia()}
         </div>
       </Element>
     );
@@ -302,9 +325,10 @@ class Verse extends Component {
 Verse.propTypes = {
   isSearched: PropTypes.bool,
   verse: customPropTypes.verseType.isRequired,
-  chapter: customPropTypes.chapterType.isRequired,
+  chapter: customPropTypes.surahType.isRequired,
   bookmarked: PropTypes.bool, // TODO: Add this for search
   bookmarkActions: customPropTypes.bookmarkActions,
+  mediaActions: customPropTypes.mediaActions,
   audioActions: customPropTypes.audioActions,
   match: customPropTypes.match,
   isPlaying: PropTypes.bool,

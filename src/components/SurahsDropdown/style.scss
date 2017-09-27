@@ -1,9 +1,14 @@
-.dropdown {
-  :global(.dropdown-menu) {
+.dropdown{
+  :global(.dropdown-menu){
     max-height: 400px;
     max-height: 60vh;
     overflow-y: scroll;
     overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
   }
+}
+
+.arabicName {
+  direction: rtl;
+  padding-right: 5px;
 }

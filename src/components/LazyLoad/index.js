@@ -1,6 +1,5 @@
 /* global window */
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { Component, PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 
 import debug from 'helpers/debug';
@@ -36,13 +35,13 @@ class LazyLoad extends Component {
   };
 
   render() {
-    const { isEnd, loading, endComponent } = this.props;
+    const { isEnd, loadingComponent, endComponent } = this.props;
 
     if (isEnd) {
       return endComponent;
     }
 
-    return loading;
+    return loadingComponent;
   }
 }
 
@@ -50,13 +49,13 @@ LazyLoad.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   isEnd: PropTypes.bool.isRequired,
   onLazyLoad: PropTypes.func.isRequired,
-  loading: PropTypes.element,
+  loadingComponent: PropTypes.element,
   endComponent: PropTypes.element,
   offset: PropTypes.number
 };
 
 LazyLoad.defaultProps = {
-  loading: 'Loading...',
+  loadingComponent: 'Loading...',
   endComponent: 'End.',
   offset: 1000
 };

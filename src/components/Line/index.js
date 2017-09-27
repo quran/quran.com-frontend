@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
 import Word from 'components/Word';

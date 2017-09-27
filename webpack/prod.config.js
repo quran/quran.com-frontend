@@ -45,11 +45,6 @@ module.exports = {
   },
   module: {
     rules: [
-      {
-        test: /\.(graphql|gql)$/,
-        exclude: /node_modules/,
-        loader: 'graphql-tag/loader'
-      },
       { test: /\.css$/, loader: 'style!css' },
       { test: /\.json$/, loader: 'json' },
       {
