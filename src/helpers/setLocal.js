@@ -20,7 +20,7 @@ export default (req) => {
 
   cookie.save('currentLocale', currentLocal, {
     path: '/',
-    expires: new Date(expireDate),
+    expires: new Date(expireDate)
   });
 
   const localeData = require('../locale/' + currentLocal + '.js'); // eslint-disable-line

@@ -12,20 +12,20 @@ const NavbarHeader = Navbar.Header;
 const List = styled.ul`
   padding-left: 0;
 
-  li{
+  li {
     color: #777;
 
-    a{
+    a {
       color: #777;
       padding: 10px 15px;
       display: block;
 
-      .ss-icon{
+      .ss-icon {
         font-size: 18px;
         margin-right: 20px;
       }
 
-      &:hover{
+      &:hover {
         background: #f5f5f5;
         color: #333;
       }

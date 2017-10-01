@@ -26,11 +26,12 @@ function prepareParams(params, options) {
   let translations;
 
   if (params.translations && params.translations.length) {
-    translations = typeof params.translations === 'string'
-      ? params.translations.split(',')
-      : params.translations;
+    translations =
+      typeof params.translations === 'string'
+        ? params.translations.split(',')
+        : params.translations;
   } else {
-    translations = options.translations || defaultOptions.translations;
+    translations = options.translations; // || defaultOptions.translations;
   }
 
   return { translations };
@@ -91,7 +92,9 @@ export function isLoaded(globalState, chapterId, paging) {
         `${chapterId}:${paging.offset ? paging.offset + 1 : 1}`
       ] &&
       globalState.verses.entities[chapterId][
-        `${chapterId}:${paging.offset && paging.limit ? paging.offset + paging.limit : perPage}`
+        `${chapterId}:${paging.offset && paging.limit
+          ? paging.offset + paging.limit
+          : perPage}`
       ]
     );
   }

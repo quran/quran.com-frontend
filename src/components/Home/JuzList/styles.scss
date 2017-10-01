@@ -3,19 +3,26 @@
 .item {
   color: $brand-primary;
 
-  &:hover {
-    background: #f1f1f1;
-  }
-
   .link {
     display: block;
     padding: 10px 10px;
+
+    &:hover {
+      background: #f1f1f1;
+    }
   }
 
   .translated_name {
     font-size: 10px;
+    color: #777;
   }
+
   .arabic {
+    font-size: 14px;
+  }
+
+  .chapterName{
+    margin-right: 5px;
     font-size: 14px;
   }
 }

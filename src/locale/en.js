@@ -31,7 +31,8 @@ export default {
     'ayah.notFound': 'Ayah not found',
 
     'search.placeholder': 'Search "Noah"',
-    'search.resultHeading': '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
+    'search.resultHeading':
+      '{from}-{to} OF <span> {total} </span> SEARCH RESULTS FOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Sorry, there was an error with your search.',
     'search.nothing': 'No search query.',
     'search.noResult': 'No results found.',
@@ -55,7 +56,8 @@ export default {
     'player.repeat.rangeEnd': 'To',
     'player.repeat.times': 'Times',
     'player.repeat.loop': 'loop',
-    'player.scrollButtonTip': 'Automatically scrolls to the currently playing ayah', // eslint-disable-line max-len
+    'player.scrollButtonTip':
+      'Automatically scrolls to the currently playing ayah', // eslint-disable-line max-len
 
     'app.loading': 'Loading...',
     'actions.copy': 'Copy',
@@ -72,7 +74,8 @@ export default {
     'nav.otherLinks': 'Other links',
     'nav.contactUs': 'Contact us',
     'nav.help': 'Help & feedback',
-    'nav.aboutQuranProject': 'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.', // eslint-disable-line max-len
+    'nav.aboutQuranProject':
+      'Quran.com (also known as The Noble Quran, Al Quran, Holy Quran, Koran) is a pro bono project.', // eslint-disable-line max-len
     'nav.rightsReserved': 'All Rights Reserved',
     'nav.mobile': 'Mobile Apps',
     'nav.navigate': 'Navigate',
@@ -80,8 +83,11 @@ export default {
 
     'juz.index.heading': 'Juz',
 
-    'login.message': 'Sign in to Quran.com to store all your bookmarks, notes, and activities.',
-    'error.invalid-surah': "Surah is out of range. Please go to <a href='/'> home page</a> and select a Surah",
-    'error.invalid-ayah': "Ayah is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah"
+    'login.message':
+      'Sign in to Quran.com to store all your bookmarks, notes, and activities.',
+    'error.invalid-surah':
+      "Surah is out of range. Please go to <a href='/'> home page</a> and select a Surah",
+    'error.invalid-ayah':
+      "Ayah is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah"
   }
 };

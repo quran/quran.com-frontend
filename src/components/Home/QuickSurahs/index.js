@@ -9,7 +9,8 @@ const Span = styled.span`
   &:after {
     content: '|';
   }
-  &:first-child, &:last-child {
+  &:first-child,
+  &:last-child {
     &:after {
       content: none;
     }
@@ -25,7 +26,7 @@ export default () => (
         id="surah.index.quickLinks"
         defaultMessage="Quick links"
       />
-      {isFriday &&
+      {isFriday && (
         <Span>
           <Link
             to="/18"
@@ -34,7 +35,8 @@ export default () => (
           >
             Surah Al-Kahf
           </Link>
-        </Span>}
+        </Span>
+      )}
       <Span>
         <Link
           to="/36"

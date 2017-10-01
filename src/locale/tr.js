@@ -31,7 +31,8 @@ export default {
     'ayah.notFound': 'Ayet bulunamadı',
 
     'search.placeholder': 'Arama yap "Nuh"',
-    'search.resultHeading': '{from}-{to} / <span> {total} </span> ARAMA SONUÇLARI: <span>{query}</span>', // eslint-disable-line max-len
+    'search.resultHeading':
+      '{from}-{to} / <span> {total} </span> ARAMA SONUÇLARI: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Maalesef aramanız ile ilgili bir hata oluştu.',
     'search.nothing': 'Arama sorgusu yok.',
     'search.noResult': 'Sonuç bulunamadı.',
@@ -72,7 +73,8 @@ export default {
     'nav.otherLinks': 'Diğer bağlantılar',
     'nav.contactUs': 'Bize ulaşın',
     'nav.help': 'Yardım & Geri Bildirim',
-    'nav.aboutQuranProject': "Quran.com (Kur'an-ı Kerim) bir pro bono projesidir.", // eslint-disable-line max-len
+    'nav.aboutQuranProject':
+      "Quran.com (Kur'an-ı Kerim) bir pro bono projesidir.", // eslint-disable-line max-len
     'nav.rightsReserved': 'Tüm Hakları Saklıdır',
     'nav.mobile': 'Mobil Uygulamalar',
     'nav.navigate': 'Bağlantılar', // there is no exact translation for Navigate in Turkish
@@ -80,8 +82,11 @@ export default {
 
     'juz.index.heading': 'Juza',
 
-    'login.message': "Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com'a giriş yapın.",
-    'error.invalid-surah': "Surah aralık dışı. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah seçin",
-    'error.invalid-ayah': "Ayah menzilin dışında. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah / Ayah seçin"
+    'login.message':
+      "Tüm yer işaretlerinizi, notlarınızı ve etkinliklerinizi saklamak için Quran.com'a giriş yapın.",
+    'error.invalid-surah':
+      "Surah aralık dışı. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah seçin",
+    'error.invalid-ayah':
+      "Ayah menzilin dışında. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah / Ayah seçin"
   }
 };

@@ -20,8 +20,11 @@ function filterValidVerse(replaceState, chapterId, verseRange) {
   if (verseRange) {
     if (verseRange.includes('-')) {
       const [from, to] = verseRange.split('-').map(num => parseInt(num, 10));
-      if (isNaN(from) || isNaN(to) ||
-          from < 1 || to > chapterToVersesMap[chapterId]
+      if (
+        isNaN(from) ||
+        isNaN(to) ||
+        from < 1 ||
+        to > chapterToVersesMap[chapterId]
       ) {
         replaceState('/error/invalid-ayah');
       }
@@ -60,7 +63,8 @@ export default function checkValidChapterOrVerse(nextState, replaceState) {
       const verseId = parseInt(nextState.params.range, 10);
 
       if (replaceChapterOrRange(nextState.params)) {
-        let location = `${nextState.location.pathname}${nextState.location.search}`;
+        let location = `${nextState.location.pathname}${nextState.location
+          .search}`;
         location = location.replace(
           /\/([0-9]+)\/([0-9]+)/,
           `/${chapterId}/${verseId}`

@@ -31,7 +31,8 @@ export default {
     'ayah.notFound': 'Ayah niet gevonden',
 
     'search.placeholder': 'Zoek "Noah"',
-    'search.resultHeading': '{from}-{to} VAN <span> {total} </span> ZOEKRESULTATEN VOOR: <span>{query}</span>', // eslint-disable-line max-len
+    'search.resultHeading':
+      '{from}-{to} VAN <span> {total} </span> ZOEKRESULTATEN VOOR: <span>{query}</span>', // eslint-disable-line max-len
     'search.error': 'Sorry, er is een fout opgetreden bij uw zoekopdracht.',
     'search.nothing': 'Geen zoekopdracht.',
     'search.noResult': 'Geen resultaten gevonden.',
@@ -72,7 +73,8 @@ export default {
     'nav.otherLinks': 'Andere links',
     'nav.contactUs': 'Contacteer ons',
     'nav.help': 'Help & feedback',
-    'nav.aboutQuranProject': 'Quran.com (ook bekend als de Edele Koran, Al Quran, Heilige Koran, Koran) is een pro bono project.', // eslint-disable-line max-len
+    'nav.aboutQuranProject':
+      'Quran.com (ook bekend als de Edele Koran, Al Quran, Heilige Koran, Koran) is een pro bono project.', // eslint-disable-line max-len
     'nav.rightsReserved': 'Alle rechten voorbehouden',
     'nav.mobile': 'Mobiele apps',
     'nav.navigate': 'Navigeer',
@@ -80,8 +82,11 @@ export default {
 
     'juz.index.heading': 'Juz',
 
-    'login.message': 'Log in op Quran.com om al je bladwijzers, notities en activiteiten op te slaan.',
-    'error.invalid-surah': "Soera is buiten bereik. Ga aub naar de <a href='/'> startpagina</a> en selecteer een Soera",
-    'error.invalid-ayah': "Ayah is buiten bereik. Ga aub naar de <a href='/'> startpagina </a> en selecteer een Soera/Ayah"
+    'login.message':
+      'Log in op Quran.com om al je bladwijzers, notities en activiteiten op te slaan.',
+    'error.invalid-surah':
+      "Soera is buiten bereik. Ga aub naar de <a href='/'> startpagina</a> en selecteer een Soera",
+    'error.invalid-ayah':
+      "Ayah is buiten bereik. Ga aub naar de <a href='/'> startpagina </a> en selecteer een Soera/Ayah"
   }
 };
