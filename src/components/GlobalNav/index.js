@@ -2,6 +2,7 @@
 import React, { PropTypes, Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 import Link from 'react-router/lib/Link';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
@@ -10,7 +11,18 @@ import LocaleSwitcher from 'components/LocaleSwitcher';
 
 import debug from 'helpers/debug';
 
-const styles = require('./style.scss');
+const scrolledStyle = {
+  boxShadow:
+    '0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.2)'
+};
+
+const StyledNav = styled(Nav)`
+  @media(max-width: $screen-sm){
+    & > li{
+      display: inline-block;
+    }
+  }
+`;
 
 class GlobalNav extends Component {
   state = {
@@ -100,7 +112,8 @@ class GlobalNav extends Component {
 
     return (
       <Navbar
-        className={`montserrat ${this.state.scrolled && styles.scrolled}`}
+        className="montserrat"
+        style={this.state.scrolled ? scrolledStyle : {}}
         fixedTop={!isStatic}
         fluid
         static={isStatic}
@@ -115,10 +128,12 @@ class GlobalNav extends Component {
           <span className="icon-bar" />
           <span className="icon-bar" />
         </button>
-        <Nav className={styles.nav}>
+        <StyledNav>
           {!this.isHome() &&
             <li>
-              <Link to="/"><i className="ss-icon ss-home" /></Link>
+              <Link to="/">
+                <i className="ss-icon ss-home" />
+              </Link>
             </li>}
           {this.isHome() &&
             <LocaleSwitcher className="visible-xs-inline-block" />}
@@ -126,7 +141,7 @@ class GlobalNav extends Component {
             leftControls.map((control, index) =>
               React.cloneElement(control, { key: index })
             )}
-        </Nav>
+        </StyledNav>
         <Nav pullRight className="hidden-xs hidden-sm">
           {this.renderRightControls().map((control, index) =>
             React.cloneElement(control, { key: index })

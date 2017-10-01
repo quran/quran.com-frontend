@@ -1,12 +1,53 @@
 import React from 'react';
 import { ShareButtons, generateShareIcon } from 'react-share';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 
-const styles = require('./style.scss');
+import FbDefault from '../../../static/images/FB-grn.png';
+import FbHover from '../../../static/images/FB-beige.png';
+import TwitterDefault from '../../../static/images/Twitter-grn.png';
+import TwitterHover from '../../../static/images/Twitter-beige.png';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 const FacebookIcon = generateShareIcon('facebook');
 const TwitterIcon = generateShareIcon('twitter');
+
+const Container = styled.div`
+  position: relative;
+  top: 7px;
+  display: inline-block;
+
+  .iconContainer {
+    display: inline-block;
+
+    &:last-child {
+      padding-left: 5px;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+`;
+
+const FacebookButton = styled(FacebookShareButton)`
+  background-image: url(${FbDefault});
+  background-repeat: no-repeat;
+  background-size: 12px;
+  padding-top: 1px;
+  &:hover {
+    background-image: url(${FbHover});
+  }
+`;
+
+const TwitterButton = styled(TwitterShareButton)`
+  background-image: url(${TwitterDefault});
+  background-repeat: no-repeat;
+  background-size: 21px;
+  &:hover {
+    background-image: url(${TwitterHover});
+  }
+`;
 
 const Share = ({ chapter, verse }) => {
   // Fallback to Surah Id
@@ -28,24 +69,19 @@ const Share = ({ chapter, verse }) => {
   const iconProps = verse ? { iconBgStyle: { fill: '#d1d0d0' } } : {};
 
   return (
-    <div className={`${styles.shareContainer}`}>
-      <FacebookShareButton
+    <Container>
+      <FacebookButton
         url={shareUrl}
         title={title}
         windowWidth={670}
         windowHeight={540}
-        className={`${styles.iconContainer}`}
       >
         <FacebookIcon size={24} round {...iconProps} />
-      </FacebookShareButton>
-      <TwitterShareButton
-        url={shareUrl}
-        title={title}
-        className={`${styles.iconContainer}`}
-      >
+      </FacebookButton>
+      <TwitterButton url={shareUrl} title={title}>
         <TwitterIcon size={24} round {...iconProps} />
-      </TwitterShareButton>
-    </div>
+      </TwitterButton>
+    </Container>
   );
 };
 

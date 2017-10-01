@@ -101,6 +101,7 @@
     "morgan": "1.7.0",
     "node-sass": "4.1.1",
     "normalizr": "3.0.2",
+    "polish": "^0.2.3",
     "postcss-loader": "0.9.1",
     "precss": "1.4.0",
     "pretty-error": "2.0.0",

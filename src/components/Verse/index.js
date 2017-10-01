@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Element from 'react-scroll/lib/components/Element';
 import Loadable from 'react-loadable';
@@ -23,6 +24,18 @@ const Share = Loadable({
   loader: () => import('components/Share'),
   LoadingComponent: ComponentLoader
 });
+
+const Label = styled.span`
+  padding: 0.65em 1.1em;
+  border-radius: 0;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-weight: 300;
+  color: ${props => props.theme.textColor};
+  &:hover {
+    opacity: 0.7;
+  }
+`;
 
 class Verse extends Component {
   shouldComponentUpdate(nextProps) {
@@ -61,13 +74,13 @@ class Verse extends Component {
     const { verse, match } = this.props;
     const array = match || verse.translations || [];
 
-    return array.map(translation => (
+    return array.map(translation =>
       <Translation
         translation={translation}
         index={translation.id}
         key={translation.id}
       />
-    ));
+    );
   }
 
   renderMedia() {
@@ -78,7 +91,7 @@ class Verse extends Component {
 
     return (
       <div>
-        {verse.mediaContents.map((content, index) => (
+        {verse.mediaContents.map((content, index) =>
           <div className={`${styles.translation} translation`} key={index}>
             <h2 className="text-translation times-new">
               <small>
@@ -100,7 +113,7 @@ class Verse extends Component {
               </small>
             </h2>
           </div>
-        ))}
+        )}
       </div>
     );
   }
@@ -118,7 +131,7 @@ class Verse extends Component {
     let wordAudioPosition = -1;
     const renderText = false; // userAgent.isBot;
 
-    const text = verse.words.map(word => (
+    const text = verse.words.map(word =>
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -132,11 +145,13 @@ class Verse extends Component {
         isSearched={isSearched}
         useTextFont={renderText}
       />
-    ));
+    );
 
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
-        <p>{text}</p>
+        <p>
+          {text}
+        </p>
       </h1>
     );
   }
@@ -257,9 +272,9 @@ class Verse extends Component {
 
     const content = (
       <h4>
-        <span className={`label label-default ${styles.label}`}>
+        <Label className="label label-default">
           {verse.verseKey}
-        </span>
+        </Label>
       </h4>
     );
 

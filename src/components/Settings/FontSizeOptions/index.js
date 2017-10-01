@@ -1,9 +1,34 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
+import styled from 'styled-components';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Icon from 'quran-components/lib/Icon';
 
-const styles = require('./styles.scss');
+const Title = styled.div`padding: 10px 15px;`;
+
+const List = styled.ul`
+  display: table;
+  width: 100%;
+  padding: 15px 0;
+`;
+
+const Item = styled.li`
+  list-style-type: none;
+  display: table-cell;
+  width: 33%;
+`;
+
+const ItemLink = styled.li`
+  position: relative;
+  display: block;
+  cursor: pointer;
+  color: #777;
+`;
+
+const Reset = styled(Icon)`
+  float: right;
+  cursor: pointer;
+`;
 
 class FontSizeOptions extends Component {
   handleOptionSelected = (type, direction) => {
@@ -35,8 +60,8 @@ class FontSizeOptions extends Component {
   renderOptions() {
     return (
       <div>
-        <ul className={styles.list}>
-          <li className={`text-center ${styles.item}`}>
+        <List>
+          <Item className="text-center">
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('arabic', -1)}
@@ -44,14 +69,14 @@ class FontSizeOptions extends Component {
             >
               <i className="ss-icon ss-hyphen" />
             </a>
-          </li>
-          <li className={`text-center ${styles.item}`}>
+          </Item>
+          <Item className="text-center">
             <LocaleFormattedMessage
               id="setting.fontSize.arabic"
               defaultMessage="Arabic"
             />
-          </li>
-          <li className={`text-center ${styles.item}`}>
+          </Item>
+          <Item className="text-center">
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('arabic', 1)}
@@ -59,11 +84,11 @@ class FontSizeOptions extends Component {
             >
               <i className="ss-icon ss-plus" />
             </a>
-          </li>
-        </ul>
+          </Item>
+        </List>
         <br />
-        <ul className={styles.list}>
-          <li className={`text-center ${styles.item}`}>
+        <List>
+          <Item className="text-center">
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('translation', -1)}
@@ -71,14 +96,14 @@ class FontSizeOptions extends Component {
             >
               <i className="ss-icon ss-hyphen" />
             </a>
-          </li>
-          <li className={`text-center ${styles.item}`}>
+          </Item>
+          <Item className="text-center">
             <LocaleFormattedMessage
               id="setting.translations.title"
               defaultMessage="Translations"
             />
-          </li>
-          <li className={`text-center ${styles.item}`}>
+          </Item>
+          <Item className="text-center">
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('translation', 1)}
@@ -86,34 +111,34 @@ class FontSizeOptions extends Component {
             >
               <i className="ss-icon ss-plus" />
             </a>
-          </li>
-        </ul>
+          </Item>
+        </List>
       </div>
     );
   }
 
   renderTitle() {
     return (
-      <div className={styles.title}>
+      <Title>
         <LocaleFormattedMessage
           id="setting.fontSize"
           defaultMessage="Font Size"
         />
-        <Icon
+        <Reset
           type="refresh"
-          className={`text-right ${styles.reset}`}
+          className="text-right"
           onClick={this.resetFontSize}
         />
-      </div>
+      </Title>
     );
   }
   render() {
     return (
       <div>
         {this.renderTitle()}
-        <li className={styles.link}>
+        <ItemLink>
           {this.renderOptions()}
-        </li>
+        </ItemLink>
       </div>
     );
   }
