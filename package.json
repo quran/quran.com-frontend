@@ -11,17 +11,39 @@
     "test:ci:lint": "./node_modules/eslint/bin/eslint.js ./src",
     "test:dev:lint": "./node_modules/eslint/bin/eslint.js ./src",
     "test:stylelint": "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
-    "dev-old": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node ./webpack/webpack-dev-server.js & env NODE_PATH='./src' PORT=8000 node ./bin/server.js",
-    "dev": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress  & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
+    "dev": "better-npm-run dev:webpack & better-npm-run dev:server",
     "build": "npm run build:client & npm run build:server",
     "build:server": "babel ./src -d ./dist -D",
     "build:client": "webpack --config ./webpack/prod.config.js",
     "validate": "npm ls",
-    "analyze:build": "env NODE_ENV=production webpack --json --config ./webpack/prod.config.js  > bundle-stats.json",
+    "analyze:build": "better-npm-run analyze:build",
     "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json",
     "lint:fix": "npm run test:dev:lint -- --fix",
     "prettier": "prettier --single-quote --write",
     "precommit": "lint-staged"
+  },
+  "betterScripts": {
+    "dev:webpack": {
+      "command": "node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress",
+      "env": {
+        "NODE_PATH": "./src",
+        "PORT": 8000,
+        "UV_THREADPOOL_SIZE": 100
+      }
+    },
+    "dev:server": {
+      "command": "node --expose-gc ./bin/server.js",
+      "env": {
+        "NODE_PATH": "./src",
+        "PORT": 8000
+      }
+    },
+    "analyze:build": {
+      "command": "webpack --json --config ./webpack/prod.config.js  > bundle-stats.json",
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
   },
   "pre-commit": [
     "test:stylelint",
