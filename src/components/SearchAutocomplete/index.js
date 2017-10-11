@@ -1,5 +1,6 @@
 // TODO: Should be handled by redux and not component states.
 import React, { Component, PropTypes } from 'react';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
@@ -8,6 +9,13 @@ import { suggest } from 'redux/actions/suggest';
 const styles = require('./style.scss');
 
 const ayahRegex = /^(\d+)(?::(\d+))?$/;
+
+const Container = styled.div`
+  width: 100%;
+  background-color: #ccc;
+  position: absolute;
+  z-index: 99;
+`;
 
 class SearchAutocomplete extends Component {
   componentDidMount() {
@@ -159,14 +167,16 @@ class SearchAutocomplete extends Component {
       return false;
     }
 
-    return this.getSuggestions().map(item => (
+    return this.getSuggestions().map(item =>
       <li // eslint-disable-line
         key={item.href}
         tabIndex="-1"
         onKeyDown={event => this.handleItemKeyDown(event, item)}
       >
         <div className={styles.link}>
-          <a href={item.href} tabIndex="-1">{item.ayah}</a>
+          <a href={item.href} tabIndex="-1">
+            {item.ayah}
+          </a>
         </div>
         <div className={styles.text}>
           <a
@@ -176,14 +186,12 @@ class SearchAutocomplete extends Component {
           />
         </div>
       </li>
-    ));
+    );
   }
 
   render() {
     return (
-      <div
-        className={`${styles.autocomplete} ${!this.getSuggestions().length && 'hidden'}`}
-      >
+      <Container className={!this.getSuggestions().length && 'hidden'}>
         <ul
           role="menu"
           className={styles.list}
@@ -193,7 +201,7 @@ class SearchAutocomplete extends Component {
         >
           {this.renderList()}
         </ul>
-      </div>
+      </Container>
     );
   }
 }

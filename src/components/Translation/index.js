@@ -1,10 +1,30 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { loadFootNote } from 'redux/actions/media';
 
-const styles = require('./style.scss');
+const Container = styled.div`
+  ${props => (props.arabic ? 'text-align: right;' : '')} h4 {
+    color: ${props => props.theme.brandPrimary};
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
+    @media (max-width: ${props => props.theme.screenMd}) {
+      font-size: 12px;
+    }
+  }
+  h2 {
+    margin-top: 5px;
+    margin-bottom: 25px;
+  }
+  sup {
+    color: ${props => props.theme.brandPrimary};
+    cursor: pointer;
+  }
+`;
 
 class Translation extends Component {
   componentDidMount() {
@@ -42,20 +62,24 @@ class Translation extends Component {
     const isArabic = lang === 'arabic';
 
     return (
-      <div
+      <Container
         id={`trans${index}`}
-        className={`${styles.translation} ${isArabic && 'arabic'} translation`}
+        className={`${isArabic && 'arabic'} translation`}
       >
-        <h4 className="montserrat">{translation.resourceName}</h4>
+        <h4 className="montserrat">
+          {translation.resourceName}
+        </h4>
         <h2
-          className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}
+          className={`${isArabic
+            ? 'text-right'
+            : 'text-left'} text-translation times-new`}
         >
           <small
             dangerouslySetInnerHTML={{ __html: translation.text }}
             className={`${lang || 'times-new'}`}
           />
         </h2>
-      </div>
+      </Container>
     );
   }
 }

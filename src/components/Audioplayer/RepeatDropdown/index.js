@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
+import styled, { css } from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
 import Nav from 'react-bootstrap/lib/Nav';
@@ -9,7 +10,37 @@ import { intlShape, injectIntl } from 'react-intl';
 import SwitchToggle from 'components/SwitchToggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-const style = require('../style.scss');
+import { ControlButton } from '../index';
+
+const StyledPopover = styled(Popover)`
+  .popover-title {
+    font-family: ${props => props.theme.fonts.montserrat};
+    text-transform: uppercase;
+    color: ${props => props.color.theme};
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 0.75em;
+  }
+  .popover-content {
+    a {
+      font-size: 0.8em;
+    }
+  }
+`;
+
+const Pill = styled(NavItem)`
+  a{
+    padding: 10px 15px;
+  }
+`;
+
+const disabled = css`
+opacity: 0.5;
+cursor: not-allowed !important;
+pointer-events: none;
+`;
+
+const Item = styled.div`${props => (props.disabled ? disabled : '')};`;
 
 class RepeatButton extends Component {
   handleToggle = () => {
@@ -53,8 +84,7 @@ class RepeatButton extends Component {
             <LocaleFormattedMessage
               id="player.repeat.rangeStart"
               defaultMessage="From"
-            />
-            {' '}
+            />{' '}
             :
             <br />
             <FormControl
@@ -70,18 +100,17 @@ class RepeatButton extends Component {
                 });
               }}
             >
-              {
-                array.reduce((options, ayah, index) => {
-                  if (index + 1 < chapter.versesCount) { // Exclude last verse
-                    options.push(
-                      <option key={index} value={index + 1}>
-                        {index + 1}
-                      </option>
-                    );
-                  }
-                  return options;
-                }, [])
-              }
+              {array.reduce((options, ayah, index) => {
+                if (index + 1 < chapter.versesCount) {
+                  // Exclude last verse
+                  options.push(
+                    <option key={index} value={index + 1}>
+                      {index + 1}
+                    </option>
+                  );
+                }
+                return options;
+              }, [])}
             </FormControl>
           </li>
           <li> - </li>
@@ -89,8 +118,7 @@ class RepeatButton extends Component {
             <LocaleFormattedMessage
               id="player.repeat.rangeEnd"
               defaultMessage="To"
-            />
-            {' '}
+            />{' '}
             :
             <br />
             <FormControl
@@ -99,18 +127,20 @@ class RepeatButton extends Component {
               onChange={event =>
                 setRepeat({ ...repeat, to: parseInt(event.target.value, 10) })}
             >
-              {
-                array.reduce((options, ayah, index) => {
-                  if ((repeat.from ? repeat.from : 1) < index + 1 && index + 1 <= chapter.versesCount) { // eslint-disable-line max-len
-                    options.push(
-                      <option key={index} value={index + 1}>
-                        {index + 1}
-                      </option>
-                    );
-                  }
-                  return options;
-                }, [])
-              }
+              {array.reduce((options, ayah, index) => {
+                if (
+                  (repeat.from ? repeat.from : 1) < index + 1 &&
+                  index + 1 <= chapter.versesCount
+                ) {
+                  // eslint-disable-line max-len
+                  options.push(
+                    <option key={index} value={index + 1}>
+                      {index + 1}
+                    </option>
+                  );
+                }
+                return options;
+              }, [])}
             </FormControl>
           </li>
         </ul>
@@ -127,11 +157,8 @@ class RepeatButton extends Component {
         <LocaleFormattedMessage
           id="player.currentVerse"
           defaultMessage="Ayah"
-        />
-        {' '}
-        :
-        {' '}
-        <br />
+        />{' '}
+        : <br />
         <FormControl
           componentClass="select"
           value={repeat.from}
@@ -142,11 +169,11 @@ class RepeatButton extends Component {
               to: parseInt(event.target.value, 10)
             })}
         >
-          {array.map((ayah, index) => (
+          {array.map((ayah, index) =>
             <option key={index} value={index + 1}>
               {index + 1}
             </option>
-          ))}
+          )}
         </FormControl>
       </div>
     );
@@ -156,28 +183,28 @@ class RepeatButton extends Component {
     const { repeat } = this.props;
 
     return (
-      <div className={`${!repeat.from && style.disabled} row`}>
+      <Item className="row" disabled={!repeat.from}>
         <div className="col-md-12">
           <Nav
             bsStyle="pills"
             activeKey={repeat.from === repeat.to ? 1 : 2}
             onSelect={this.handleNavChange}
           >
-            <NavItem eventKey={1} title="Single Ayah" className={style.pill}>
+            <Pill eventKey={1} title="Single Ayah">
               <LocaleFormattedMessage
                 id="player.repeat.single"
                 defaultMessage="Single"
               />
-            </NavItem>
-            <NavItem eventKey={2} title="Range" className={style.pill}>
+            </Pill>
+            <Pill eventKey={2} title="Range">
               <LocaleFormattedMessage
                 id="player.repeat.range"
                 defaultMessage="Range"
               />
-            </NavItem>
+            </Pill>
           </Nav>
         </div>
-      </div>
+      </Item>
     );
   }
 
@@ -185,11 +212,11 @@ class RepeatButton extends Component {
     const { repeat } = this.props;
 
     return (
-      <div className={`${!repeat.from && style.disabled} row`}>
+      <Item className="row" disabled={!repeat.from}>
         {repeat.from === repeat.to
           ? this.renderSingleAyah()
           : this.renderRangeAyahs()}
-      </div>
+      </Item>
     );
   }
 
@@ -198,15 +225,13 @@ class RepeatButton extends Component {
     const times = Array(10).join().split(',');
 
     return (
-      <div className={`${!repeat.from && style.disabled} row`}>
+      <Item className="row" disabled={!repeat.from}>
         <div className="col-md-12" style={{ paddingTop: 15 }}>
           <LocaleFormattedMessage
             id="player.repeat.title"
             defaultMessage="Repeat"
           />
-          :
-          {' '}
-          <br />
+          : <br />
           <FormControl
             componentClass="select"
             value={repeat.times}
@@ -222,14 +247,14 @@ class RepeatButton extends Component {
                 defaultMessage: 'Loop'
               })}
             </option>
-            {times.map((ayah, index) => (
+            {times.map((ayah, index) =>
               <option key={index} value={index + 1}>
                 {index + 1}
               </option>
-            ))}
+            )}
           </FormControl>
         </div>
-      </div>
+      </Item>
     );
   }
 
@@ -237,9 +262,8 @@ class RepeatButton extends Component {
     const { repeat } = this.props;
 
     const popover = (
-      <Popover
+      <StyledPopover
         id="FontSizeDropdown"
-        className={style.popover}
         title={
           <div className="row">
             <div className="col-md-12 text-center">
@@ -261,7 +285,7 @@ class RepeatButton extends Component {
         {this.renderNav()}
         {this.renderOptions()}
         {this.renderTimes()}
-      </Popover>
+      </StyledPopover>
     );
 
     return (
@@ -272,9 +296,9 @@ class RepeatButton extends Component {
           trigger="click"
           rootClose
         >
-          <i
-            className={`pointer ss-icon ss-repeat ${style.buttons} ${repeat.from && style.repeat}`}
-          />
+          <ControlButton>
+            <i className="ss-icon ss-repeat" />
+          </ControlButton>
         </OverlayTrigger>
       </div>
     );
