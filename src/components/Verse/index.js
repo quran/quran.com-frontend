@@ -61,47 +61,12 @@ class Verse extends Component {
     const { verse, match } = this.props;
     const array = match || verse.translations || [];
 
-    return array.map(translation => (
+    return array.map(translation =>
       <Translation
         translation={translation}
         index={translation.id}
         key={translation.id}
       />
-    ));
-  }
-
-  renderMedia() {
-    const { verse, mediaActions, isSearched, isPdf } = this.props;
-
-    if (isSearched || !verse.mediaContents) return false;
-    if (isPdf) return false;
-
-    return (
-      <div>
-        {verse.mediaContents.map((content, index) => (
-          <div className={`${styles.translation} translation`} key={index}>
-            <h2 className="text-translation times-new">
-              <small>
-                <a
-                  tabIndex="-1"
-                  className="pointer"
-                  onClick={() => mediaActions.setMedia(content)}
-                  data-metrics-event-name="Media Click"
-                  data-metrics-media-content-url={content.url}
-                  data-metrics-media-content-id={content.id}
-                  data-metrics-media-content-verse-key={verse.verseKey}
-                >
-                  <LocaleFormattedMessage
-                    id="verse.media.lectureFrom"
-                    defaultMessage="Watch lecture by {from}"
-                    values={{ from: content.authorName }}
-                  />
-                </a>
-              </small>
-            </h2>
-          </div>
-        ))}
-      </div>
     );
   }
 
@@ -118,7 +83,7 @@ class Verse extends Component {
     let wordAudioPosition = -1;
     const renderText = false; // userAgent.isBot;
 
-    const text = verse.words.map(word => (
+    const text = verse.words.map(word =>
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -132,11 +97,13 @@ class Verse extends Component {
         isSearched={isSearched}
         useTextFont={renderText}
       />
-    ));
+    );
 
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
-        <p>{text}</p>
+        <p>
+          {text}
+        </p>
       </h1>
     );
   }
@@ -315,7 +282,6 @@ class Verse extends Component {
         <div className="col-md-11 col-sm-11">
           {this.renderText()}
           {this.renderTranslations()}
-          {this.renderMedia()}
         </div>
       </Element>
     );
@@ -328,7 +294,6 @@ Verse.propTypes = {
   chapter: customPropTypes.surahType.isRequired,
   bookmarked: PropTypes.bool, // TODO: Add this for search
   bookmarkActions: customPropTypes.bookmarkActions,
-  mediaActions: customPropTypes.mediaActions,
   audioActions: customPropTypes.audioActions,
   match: customPropTypes.match,
   isPlaying: PropTypes.bool,

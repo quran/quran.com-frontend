@@ -27,7 +27,6 @@ import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/verses.js';
 import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
-import * as MediaActions from 'redux/actions/media.js';
 
 import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
 
@@ -232,11 +231,9 @@ class Surah extends Component {
       </div>
     );
 
-    return isLoading ? (
-      <Loader isActive relative style={LoaderStyle} />
-    ) : (
-      noAyah
-    );
+    return isLoading
+      ? <Loader isActive relative style={LoaderStyle} />
+      : noAyah;
   }
 
   renderPagination() {
@@ -280,7 +277,7 @@ class Surah extends Component {
         isLoading={isLoading}
         endComponent={
           <ul className="pager">
-            {chapter.chapterNumber > 1 && (
+            {chapter.chapterNumber > 1 &&
               <li className="previous">
                 <Link
                   to={`/${chapter.chapterNumber * 1 -
@@ -292,8 +289,7 @@ class Surah extends Component {
                     defaultMessage="Previous Surah"
                   />
                 </Link>
-              </li>
-            )}
+              </li>}
             <li className="text-center">
               <Link
                 to={`/${chapter.chapterNumber}?translations=${translations}`}
@@ -308,7 +304,7 @@ class Surah extends Component {
                 />
               </Link>
             </li>
-            {chapter.chapterNumber < 114 && (
+            {chapter.chapterNumber < 114 &&
               <li className="next">
                 <Link
                   to={`/${chapter.chapterNumber * 1 +
@@ -320,8 +316,7 @@ class Surah extends Component {
                   />
                   →
                 </Link>
-              </li>
-            )}
+              </li>}
           </ul>
         }
         loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
@@ -341,7 +336,7 @@ class Surah extends Component {
       currentVerse
     } = this.props; // eslint-disable-line no-shadow
 
-    return Object.values(verses).map(verse => (
+    return Object.values(verses).map(verse =>
       <Verse
         verse={verse}
         chapter={chapter}
@@ -351,14 +346,13 @@ class Surah extends Component {
         tooltip={options.tooltip}
         bookmarkActions={actions.bookmark}
         audioActions={actions.audio}
-        mediaActions={actions.media}
         isPlaying={isPlaying}
         isAuthenticated={isAuthenticated}
         key={`${verse.chapterId}-${verse.id}-verse`}
         userAgent={options.userAgent}
         audio={options.audio}
       />
-    ));
+    );
   }
 
   renderLines() {
@@ -454,14 +448,13 @@ class Surah extends Component {
             </div>
           </div>
         </div>
-        {__CLIENT__ && ( // eslint-disable-line
+        {__CLIENT__ && // eslint-disable-line
           <Audioplayer
             chapter={chapter}
             verses={verses}
             currentVerse={verses[currentVerse]}
             onLoadAyahs={this.handleLazyLoadAyahs}
-          />
-        )}
+          />}
       </div>
     );
   }
@@ -536,7 +529,6 @@ function mapDispatchToProps(dispatch) {
       verse: bindActionCreators(AyahActions, dispatch),
       audio: bindActionCreators(AudioActions, dispatch),
       bookmark: bindActionCreators(BookmarkActions, dispatch),
-      media: bindActionCreators(MediaActions, dispatch),
       push: bindActionCreators(push, dispatch)
     }
   };
