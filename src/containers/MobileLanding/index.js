@@ -27,7 +27,7 @@ const Container = styled.div`
 
 const Title = styled.h1`color: #000000;`;
 
-export default () => (
+export default () =>
   <Container className="montserrat container">
     <Helmet
       {...makeHeadTags({
@@ -89,5 +89,4 @@ export default () => (
         <img src={phones} width="100%" alt="Apps" />
       </div>
     </div>
-  </Container>
-);
+  </Container>;

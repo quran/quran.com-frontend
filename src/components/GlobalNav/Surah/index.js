@@ -3,16 +3,32 @@ import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import Link from 'react-router/lib/Link';
+import Loadable from 'react-loadable';
 import Drawer from 'quran-components/lib/Drawer';
 import SearchInput from 'components/SearchInput';
-import SurahsDropdown from 'components/SurahsDropdown';
-import Settings from 'components/Settings';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import VersesDropdown from 'components/VersesDropdown';
 
 import { load, setCurrentVerse } from 'redux/actions/verses.js';
+import ComponentLoader from '../../ComponentLoader';
 
 import GlobalNav from '../index';
+
+const VersesDropdown = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "verses-dropdown" */ '../../VersesDropdown'),
+  LoadingComponent: ComponentLoader
+});
+
+const SurahsDropdown = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "surahs-dropdown" */ '../../SurahsDropdown'),
+  LoadingComponent: ComponentLoader
+});
+
+const Settings = Loadable({
+  loader: () => import(/* webpackChunkName: "settings" */ '../../Settings'),
+  LoadingComponent: ComponentLoader
+});
 
 class GlobalNavSurah extends Component {
   state = {

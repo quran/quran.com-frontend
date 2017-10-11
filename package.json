@@ -18,7 +18,7 @@
     "build:client": "webpack --config ./webpack/prod.config.js",
     "validate": "npm ls",
     "analyze:build": "env NODE_ENV=production webpack --json --config ./webpack/prod.config.js  > bundle-stats.json",
-    "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json",
+    "analyze:json": "webpack-bundle-analyzer bundle-stats.json",
     "lint:fix": "npm run test:dev:lint -- --fix",
     "prettier": "prettier --single-quote --write",
     "precommit": "lint-staged"
@@ -200,7 +200,7 @@
     "sinon-chai": "2.8.0",
     "stylelint": "7.1.0",
     "stylelint-webpack-plugin": "0.2.0",
-    "webpack-bundle-analyzer": "2.2.1",
+    "webpack-bundle-analyzer": "^2.9.0",
     "webpack-dashboard": "^0.4.0",
     "webpack-dev-server": "2.1.0-beta.0",
     "webpack-hot-middleware": "2.12.2"

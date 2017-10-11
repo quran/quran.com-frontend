@@ -24,7 +24,7 @@ const style = require('./style.scss');
 
 const RepeatDropdown = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "repeatdropdown" */ './RepeatDropdown'),
+    import(/* webpackChunkName: "repeat-dropdown" */ './RepeatDropdown'),
   LoadingComponent: ComponentLoader
 });
 
@@ -482,20 +482,18 @@ export class Audioplayer extends Component {
           style.isPlaying} ${style.container} ${className}`}
       >
         <Wrapper>
-          {currentFile && (
+          {currentFile &&
             <Track
               progress={currentTime / duration * 100}
               onTrackChange={this.handleTrackChange}
-            />
-          )}
+            />}
           {segments &&
-            segments[currentVerse.verseKey] && (
-              <Segments
-                segments={segments[currentVerse.verseKey]}
-                currentVerse={currentVerse.verseKey}
-                currentTime={currentTime}
-              />
-            )}
+            segments[currentVerse.verseKey] &&
+            <Segments
+              segments={segments[currentVerse.verseKey]}
+              currentVerse={currentVerse.verseKey}
+              currentTime={currentTime}
+            />}
         </Wrapper>
         <ul className="list-inline" style={{ margin: 0 }}>
           <ControlItem>
@@ -505,9 +503,15 @@ export class Audioplayer extends Component {
             />
             : {currentVerse.verseKey.split(':')[1]}
           </ControlItem>
-          <ControlItem>{this.renderPreviousButton()}</ControlItem>
-          <ControlItem>{this.renderPlayStopButtons()}</ControlItem>
-          <ControlItem>{this.renderNextButton()}</ControlItem>
+          <ControlItem>
+            {this.renderPreviousButton()}
+          </ControlItem>
+          <ControlItem>
+            {this.renderPlayStopButtons()}
+          </ControlItem>
+          <ControlItem>
+            {this.renderNextButton()}
+          </ControlItem>
           <ControlItem>
             <RepeatDropdown
               repeat={repeat}

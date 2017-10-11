@@ -1,21 +1,33 @@
 import React, { Component } from 'react';
-import * as customPropTypes from 'customPropTypes';
 import styled from 'styled-components';
 import Helmet from 'react-helmet';
-import IndexHeader from 'components/IndexHeader';
 import cookie from 'react-cookie';
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
-import debug from 'helpers/debug';
-import LastVisit from 'components/Home/LastVisit';
-import SurahsList from 'components/Home/SurahsList';
-import JuzList from 'components/Home/JuzList';
-import QuickSurahs from 'components/Home/QuickSurahs';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import Loadable from 'react-loadable';
 import Tabs, { Tab } from 'quran-components/lib/Tabs';
 import Loader from 'quran-components/lib/Loader';
 
+import * as customPropTypes from '../../customPropTypes';
+import debug from '../../helpers/debug';
+import IndexHeader from '../../components/IndexHeader';
+import SurahsList from '../../components/Home/SurahsList';
+import QuickSurahs from '../../components/Home/QuickSurahs';
+import LocaleFormattedMessage from '../../components/LocaleFormattedMessage';
+import ComponentLoader from '../../components/ComponentLoader';
 import { chaptersConnect, juzsConnect } from '../Surah/connect';
+
+const JuzList = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "juz-list" */ '../../components/Home/JuzList'),
+  LoadingComponent: ComponentLoader
+});
+
+const LastVisit = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "last-visit" */ '../../components/Home/LastVisit'),
+  LoadingComponent: ComponentLoader
+});
 
 export const Title = styled.h4`
   font-size: 14px;
@@ -96,12 +108,11 @@ class Home extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              {lastVisit && (
+              {lastVisit &&
                 <LastVisit
                   chapter={chapters[lastVisit.chapterId]}
                   verse={lastVisit.verseId}
-                />
-              )}
+                />}
               <QuickSurahs />
 
               <Tabs>
@@ -109,7 +120,9 @@ class Home extends Component {
                   {this.renderChapterList(chaptersList)}
                 </Tab>
 
-                <Tab title={juzTitle}>{this.renderJuzList()}</Tab>
+                <Tab title={juzTitle}>
+                  {this.renderJuzList()}
+                </Tab>
               </Tabs>
             </div>
           </div>

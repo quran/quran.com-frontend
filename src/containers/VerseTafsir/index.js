@@ -13,16 +13,20 @@ import makeHeadTags from 'helpers/makeHeadTags';
 import { versesConnect, tafsirConnect } from '../Surah/connect';
 
 const Tafsir = Loadable({
-  loader: () => import('components/Tafsir'),
+  loader: () => import(/* webpackChunkName: "tafsir" */ 'components/Tafsir'),
   LoadingComponent: ComponentLoader
 });
 
-const VerseTafsir = ({ verse, tafsir }) => (
+const VerseTafsir = ({ verse, tafsir }) =>
   <div className="row" style={{ marginTop: 20 }}>
     <Helmet
       {...makeHeadTags({
-        title: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${verse.verseKey}`,
-        description: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${verse.verseKey} - ${verse.textMadani}` // eslint-disable-line max-len
+        title: `${tafsir
+          ? tafsir.resourceName
+          : 'Tafsir'} of ${verse.verseKey}`,
+        description: `${tafsir
+          ? tafsir.resourceName
+          : 'Tafsir'} of ${verse.verseKey} - ${verse.textMadani}` // eslint-disable-line max-len
       })}
       script={[
         {
@@ -66,8 +70,7 @@ const VerseTafsir = ({ verse, tafsir }) => (
         </div>
       </div>
     </div>
-  </div>
-);
+  </div>;
 
 VerseTafsir.propTypes = {
   verse: customPropTypes.verseType,
