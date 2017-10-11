@@ -7829,9 +7829,9 @@ pngquant-bin@^3.0.0:
     bin-wrapper "^3.0.0"
     logalot "^2.0.0"
 
-polish@^0.2.3:
-  version "0.2.3"
-  resolved "https://registry.yarnpkg.com/polish/-/polish-0.2.3.tgz#4a95296b5501dd10d3b25b8e6ed8339ef4deb147"
+polished@^1.8.0:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/polished/-/polished-1.8.0.tgz#21d5389c23ebb47e872f991b0b07503c618d5feb"
 
 portfinder@^1.0.9:
   version "1.0.13"

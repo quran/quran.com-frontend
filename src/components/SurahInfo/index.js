@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import styled from 'styled-components';
-import { lighten } from 'polish';
+import { lighten } from 'polished';
 import Loader from 'quran-components/lib/Loader';
 
 const style = require('./style.scss');
