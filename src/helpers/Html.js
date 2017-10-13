@@ -17,14 +17,14 @@ const Html = ({ store, component, assets }) => {
         {head.script.toComponent()}
         {head.style.toComponent()}
 
-        {Object.keys(assets.styles).map((style, i) => (
+        {Object.keys(assets.styles).map((style, i) =>
           <link
             href={assets.styles[style]}
             key={i}
             rel="stylesheet"
             type="text/css"
           />
-        ))}
+        )}
         {Object.keys(assets.styles).length === 0
           ? <style
             dangerouslySetInnerHTML={{
@@ -92,9 +92,9 @@ const Html = ({ store, component, assets }) => {
           <script src="https://cdn.ravenjs.com/3.0.4/raven.min.js" />}
         {Object.keys(assets.javascript)
           .filter(script => !assets.javascript[script].includes('-chunk'))
-          .map((script, i) => (
+          .map((script, i) =>
             <script src={assets.javascript[script]} key={i} />
-          ))}
+          )}
       </body>
     </html>
   );
