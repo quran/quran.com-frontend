@@ -1,24 +1,74 @@
 import React from 'react';
 import Link from 'react-router/lib/Link';
+import styled from 'styled-components';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-const styles = require('./style.scss');
+const Container = styled.footer`
+  background-color: ${props => props.theme.colors.tuatara};
+  padding: 3% 0 5% 0;
+  font-size: 14px;
+  margin-top: 50px;
 
-const Footer = () => (
-  <footer className={styles.footer}>
+  @media (max-width: ${props => props.theme.screen.lg}) {
+    padding-bottom: 7%;
+  }
+
+  @media (max-width: ${props => props.theme.screen.sm}) {
+    padding-bottom: 9%;
+  }
+
+  a {
+    -webkit-transition: color .15s ease-in-out;
+    -moz-transition: color .15s ease-in-out;
+    -o-transition: color .15s ease-in-out;
+    -ms-transition: color .15s ease-in-out;
+    transition: color .15s ease-in-out;
+  }
+`;
+
+const Section = styled.div`
+  padding-top: 30px;
+  text-transform: uppercase;
+
+  a {
+    font-size: 13px;
+    color: rgba(#fff, 0.5);
+
+    &:hover {
+      color: #fff;
+    }
+  }
+`;
+
+const Header = styled.p`
+  line-height: 30px;
+  color: ${props => props.theme.colors.white};
+`;
+
+const List = styled.ul`
+  padding-left: 0;
+
+  li {
+    list-style: none;
+    padding: 5px 0;
+  }
+`;
+
+const Footer = () =>
+  <Container>
     <div className="container">
       <div className="row">
         <div className="col-md-10 col-md-offset-1">
           <div className="row">
-            <div className={`${styles.about} col-md-2 col-sm-4 col-xs-12`}>
-              <p className={styles.header}>
+            <Section className="col-md-2 col-sm-4 col-xs-12">
+              <Header>
                 <LocaleFormattedMessage
                   id="nav.navigate"
                   defaultMessage="Navigate"
                 />
-              </p>
-              <ul className={`source-sans ${styles.list}`}>
+              </Header>
+              <List className="source-sans">
                 <li>
                   <Link to="/about">
                     <LocaleFormattedMessage
@@ -48,16 +98,16 @@ const Footer = () => (
                     />
                   </a>
                 </li>
-              </ul>
-            </div>
-            <div className={`${styles.links} col-md-3 col-sm-4 col-xs-12`}>
-              <p className={styles.header}>
+              </List>
+            </Section>
+            <Section className="col-md-3 col-sm-4 col-xs-12">
+              <Header>
                 <LocaleFormattedMessage
                   id="nav.usefulSites"
                   defaultMessage="USEFUL SITES"
                 />
-              </p>
-              <ul className={`source-sans ${styles.list}`}>
+              </Header>
+              <List className="source-sans">
                 <li>
                   <a
                     target="_blank"
@@ -98,17 +148,17 @@ const Footer = () => (
                     Corpus: Word by Word
                   </a>
                 </li>
-              </ul>
-            </div>
+              </List>
+            </Section>
 
-            <div className={`${styles.links} col-md-3 col-sm-4 col-xs-12`}>
-              <p className={styles.header}>
+            <Section className="col-md-3 col-sm-4 col-xs-12">
+              <Header>
                 <LocaleFormattedMessage
                   id="nav.otherLinks"
                   defaultMessage="Other links"
                 />
-              </p>
-              <ul className={`source-sans ${styles.list}`}>
+              </Header>
+              <List className="source-sans">
                 <li>
                   <a
                     href="https://quran.com/sitemaps/sitemap.xml.gz"
@@ -136,9 +186,9 @@ const Footer = () => (
                     Ayat Al-Kursi (آية الكرسي)
                   </Link>
                 </li>
-              </ul>
-            </div>
-            <div className={`${styles.links} col-md-4 col-sm-12 col-xs-12`}>
+              </List>
+            </Section>
+            <Section className="col-md-4 col-sm-12 col-xs-12">
               <p className="monserrat">
                 <LocaleFormattedMessage
                   id="nav.aboutQuranProject"
@@ -154,12 +204,11 @@ const Footer = () => (
                 />
                 .
               </p>
-            </div>
+            </Section>
           </div>
         </div>
       </div>
     </div>
-  </footer>
-);
+  </Container>;
 
 export default Footer;

@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Element from 'react-scroll/lib/components/Element';
 import Loadable from 'react-loadable';
@@ -24,6 +25,18 @@ const Share = Loadable({
   loader: () => import(/* webpackChunkName: "share" */ 'components/Share'),
   LoadingComponent: ComponentLoader
 });
+
+const Label = styled.span`
+  padding: 0.65em 1.1em;
+  border-radius: 0;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-weight: 300;
+  color: ${props => props.theme.textColor};
+  &:hover {
+    opacity: 0.7;
+  }
+`;
 
 class Verse extends Component {
   shouldComponentUpdate(nextProps) {
@@ -260,9 +273,9 @@ class Verse extends Component {
 
     const content = (
       <h4>
-        <span className={`label label-default ${styles.label}`}>
+        <Label className="label label-default">
           {verse.verseKey}
-        </span>
+        </Label>
       </h4>
     );
 
