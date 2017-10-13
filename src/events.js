@@ -2,26 +2,6 @@ import i from 'i';
 
 const inflect = i();
 
-const CLICK = 'click';
-
-const EXTERNAL_LINKS = {
-  [CLICK]: [
-    'quranicaudio link',
-    'corpus link',
-    'salah link',
-    'sunnah link',
-    'developers link',
-    'legacy link',
-    'chapter link',
-    'donations link',
-    'help link'
-  ]
-};
-
-const INTERNAL_LINKS = {
-  [CLICK]: ['apps link', 'home link', 'sitemap link', 'profile link']
-};
-
 // events
 // The goal for developers is to have them call
 // FOOTER.CLICK.AUDIO;
@@ -61,6 +41,26 @@ const makeConfig = (name, config) =>
     }),
     {}
   );
+
+const CLICK = 'click';
+
+const EXTERNAL_LINKS = {
+  [CLICK]: [
+    'quranicaudio link',
+    'corpus link',
+    'salah link',
+    'sunnah link',
+    'developers link',
+    'legacy link',
+    'chapter link',
+    'donations link',
+    'help link'
+  ]
+};
+
+const INTERNAL_LINKS = {
+  [CLICK]: ['apps link', 'home link', 'sitemap link', 'profile link']
+};
 
 export const FOOTER_EVENTS = makeConfig('footer', {
   [CLICK]: [...EXTERNAL_LINKS[CLICK], ...INTERNAL_LINKS[CLICK]]
