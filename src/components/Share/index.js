@@ -4,9 +4,7 @@ import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 
 import FbDefault from '../../../static/images/FB-grn.png';
-import FbHover from '../../../static/images/FB-beige.png';
 import TwitterDefault from '../../../static/images/Twitter-grn.png';
-import TwitterHover from '../../../static/images/Twitter-beige.png';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 const FacebookIcon = generateShareIcon('facebook');
@@ -35,18 +33,12 @@ const FacebookButton = styled(FacebookShareButton)`
   background-repeat: no-repeat;
   background-size: 12px;
   padding-top: 1px;
-  &:hover {
-    background-image: url(${FbHover});
-  }
 `;
 
 const TwitterButton = styled(TwitterShareButton)`
   background-image: url(${TwitterDefault});
   background-repeat: no-repeat;
   background-size: 21px;
-  &:hover {
-    background-image: url(${TwitterHover});
-  }
 `;
 
 const Share = ({ chapter, verse }) => {
