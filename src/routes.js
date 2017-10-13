@@ -8,8 +8,7 @@ import {
   isLoaded as isAuthLoaded,
   load as loadAuth,
   hasAccessToken
-} from 'redux/actions/auth';
-
+} from './redux/actions/auth';
 import checkValidChapterOrVerse from './utils/routeFilters';
 import App from './containers/App';
 import Home from './containers/Home';
@@ -53,9 +52,7 @@ export default (store) => {
       <Route
         path="/contributions"
         getComponent={(nextState, cb) =>
-          import(
-            /* webpackChunkName: "contributions" */ './containers/Donations'
-          )
+          import(/* webpackChunkName: "donations" */ './containers/Donations')
             .then(module => cb(null, module.default))
             .catch(err => console.trace(err))}
       />
@@ -71,14 +68,14 @@ export default (store) => {
       <Route
         path="/contact"
         getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "contact" */ './containers/Contact')
+          import(/* webpackChunkName: "contact-us" */ './containers/Contact')
             .then(module => cb(null, module.default))
             .catch(err => console.trace(err))}
       />
       <Route
         path="/contactus"
         getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "contactus" */ './containers/Contact')
+          import(/* webpackChunkName: "contact-us" */ './containers/Contact')
             .then(module => cb(null, module.default))
             .catch(err => console.trace(err))}
       />
@@ -135,9 +132,7 @@ export default (store) => {
       <Route
         path="/:chapterId/info(/:language)"
         getComponents={(nextState, cb) =>
-          import(
-            /* webpackChunkName: "chapterinfo" */ './containers/ChapterInfo'
-          )
+          import(/* webpackChunkName: "chapter-info" */ './containers/ChapterInfo')
             .then(module => cb(null, module.default))
             .catch(err => console.trace(err))}
         onEnter={checkValidChapterOrVerse}
@@ -146,16 +141,14 @@ export default (store) => {
       <Route
         path="/ayatul-kursi"
         getComponents={(nextState, cb) =>
-          import(
-            /* webpackChunkName: "ayatulkursi" */ './containers/AyatulKursi'
-          )
+          import(/* webpackChunkName: "ayatul-kursi" */ './containers/AyatulKursi')
             .then(module => cb(null, module.default))
             .catch(err => console.trace(err))}
       />
       <Route
         path="/:chapterId/:range/tafsirs/:tafsirId"
         getComponents={(nextState, cb) =>
-          import('./containers/VerseTafsir')
+          import(/* webpackChunkName: "verse-tafsir" */ './containers/VerseTafsir')
             .then(module => cb(null, module.default))
             .catch(err => console.trace(err))}
         onEnter={checkValidChapterOrVerse}
@@ -165,8 +158,8 @@ export default (store) => {
         path="/:chapterId/:range/:translations"
         getComponents={(nextState, cb) =>
           Promise.all([
-            import('./containers/Surah'),
-            import('./components/GlobalNav/Surah')
+            import(/* webpackChunkName: "surah" */ './containers/Surah'),
+            import(/* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah')
           ])
             .then(modules =>
               cb(null, { main: modules[0].default, nav: modules[1].default })
@@ -183,9 +176,7 @@ export default (store) => {
         getComponents={(nextState, cb) =>
           Promise.all([
             import(/* webpackChunkName: "pdf" */ './containers/Pdf'),
-            import(
-              /* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter'
-            )
+            import(/* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter')
           ])
             .then(modules =>
               cb(null, {
@@ -203,9 +194,7 @@ export default (store) => {
         getComponents={(nextState, cb) =>
           Promise.all([
             import(/* webpackChunkName: "surah" */ './containers/Surah'),
-            import(
-              /* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah'
-            )
+            import(/* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah')
           ])
             .then(modules =>
               cb(null, { main: modules[0].default, nav: modules[1].default })

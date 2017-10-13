@@ -23,19 +23,19 @@ const ModalBody = Modal.Body;
 
 const GlobalNav = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "globalnav" */ 'components/GlobalNav'),
+    import(/* webpackChunkName: "global-nav" */ 'components/GlobalNav'),
   LoadingComponent: ComponentLoader
 });
 
 const GlobalSidebar = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "globalsidebar" */ 'components/GlobalSidebar'),
+    import(/* webpackChunkName: "global-sidebar" */ 'components/GlobalSidebar'),
   LoadingComponent: ComponentLoader
 });
 
 const SmartBanner = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner'),
+    import(/* webpackChunkName: "smart-banner" */ 'components/SmartBanner'),
   LoadingComponent: ComponentLoader
 });
 
@@ -86,12 +86,10 @@ class App extends Component {
           <div className="row noscript-warning">
             <div className="col-md-12">
               <p>
-                Looks like either your browser does not support Javascript or its disabled.
-                Quran.com workes best with JavaScript enabled.
-                For more instruction on how to enable javascript
-                <a href="http://www.enable-javascript.com/">
-                  Click here
-                </a>
+                Looks like either your browser does not support Javascript or
+                its disabled. Quran.com workes best with JavaScript enabled. For
+                more instruction on how to enable javascript
+                <a href="http://www.enable-javascript.com/">Click here</a>
               </p>
             </div>
           </div>

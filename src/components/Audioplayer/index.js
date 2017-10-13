@@ -22,7 +22,7 @@ import ScrollButton from './ScrollButton';
 
 const RepeatDropdown = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "repeatdropdown" */ './RepeatDropdown'),
+    import(/* webpackChunkName: "repeat-dropdown" */ './RepeatDropdown'),
   LoadingComponent: ComponentLoader
 });
 

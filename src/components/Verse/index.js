@@ -5,23 +5,24 @@ import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Element from 'react-scroll/lib/components/Element';
 import Loadable from 'react-loadable';
-import ComponentLoader from 'components/ComponentLoader';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import Word from 'components/Word';
-import Translation from 'components/Translation';
-import debug from 'helpers/debug';
 
-import { loadTafsirs } from 'redux/actions/media';
+import debug from '../../helpers/debug';
+import { loadTafsirs } from '../../redux/actions/media';
+
+import ComponentLoader from '../../components/ComponentLoader';
+import LocaleFormattedMessage from '../../components/LocaleFormattedMessage';
+import Word from '../../components/Word';
+import Translation from '../../components/Translation';
 
 const styles = require('./style.scss');
 
 const Copy = Loadable({
-  loader: () => import('components/Copy'),
+  loader: () => import(/* webpackChunkName: "copy" */ 'components/Copy'),
   LoadingComponent: ComponentLoader
 });
 
 const Share = Loadable({
-  loader: () => import('components/Share'),
+  loader: () => import(/* webpackChunkName: "share" */ 'components/Share'),
   LoadingComponent: ComponentLoader
 });
 
