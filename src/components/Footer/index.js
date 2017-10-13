@@ -3,6 +3,7 @@ import Link from 'react-router/lib/Link';
 import styled from 'styled-components';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import { FOOTER_EVENTS } from '../../events';
 
 const Container = styled.footer`
   background-color: ${props => props.theme.colors.tuatara};
@@ -17,28 +18,11 @@ const Container = styled.footer`
   @media (max-width: ${props => props.theme.screen.sm}) {
     padding-bottom: 9%;
   }
-
-  a {
-    -webkit-transition: color .15s ease-in-out;
-    -moz-transition: color .15s ease-in-out;
-    -o-transition: color .15s ease-in-out;
-    -ms-transition: color .15s ease-in-out;
-    transition: color .15s ease-in-out;
-  }
 `;
 
 const Section = styled.div`
   padding-top: 30px;
   text-transform: uppercase;
-
-  a {
-    font-size: 13px;
-    color: rgba(#fff, 0.5);
-
-    &:hover {
-      color: #fff;
-    }
-  }
 `;
 
 const Header = styled.p`
@@ -52,6 +36,34 @@ const List = styled.ul`
   li {
     list-style: none;
     padding: 5px 0;
+  }
+`;
+
+const StyledLink = styled.a`
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: color .15s ease-in-out;
+  -moz-transition: color .15s ease-in-out;
+  -o-transition: color .15s ease-in-out;
+  -ms-transition: color .15s ease-in-out;
+  transition: color .15s ease-in-out;
+
+  &:hover {
+    color: #fff;
+  }
+`;
+
+const StyledRouterLink = styled(Link)`
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: color .15s ease-in-out;
+  -moz-transition: color .15s ease-in-out;
+  -o-transition: color .15s ease-in-out;
+  -ms-transition: color .15s ease-in-out;
+  transition: color .15s ease-in-out;
+
+  &:hover {
+    color: #fff;
   }
 `;
 
@@ -70,33 +82,33 @@ const Footer = () =>
               </Header>
               <List className="source-sans">
                 <li>
-                  <Link to="/about">
+                  <StyledRouterLink to="/about">
                     <LocaleFormattedMessage
                       id="nav.aboutUs"
                       defaultMessage="About Us"
                     />
-                  </Link>
+                  </StyledRouterLink>
                 </li>
                 <li>
-                  <a href="https://quran.zendesk.com/hc/en-us/requests/new">
+                  <StyledLink href="https://quran.zendesk.com/hc/en-us/requests/new">
                     <LocaleFormattedMessage
                       id="nav.contactUs"
                       defaultMessage="Contact Us"
                     />
-                  </a>
+                  </StyledLink>
                 </li>
                 <li>
-                  <a
+                  <StyledLink
                     href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help"
                     target="_blank"
                     rel="noopener noreferrer"
-                    data-metrics-event-name="Footer:Link:Developer"
+                    {...FOOTER_EVENTS.CLICK.DEVELOPERS_LINK.PROPS}
                   >
                     <LocaleFormattedMessage
                       id="nav.developers"
                       defaultMessage="Developers"
                     />
-                  </a>
+                  </StyledLink>
                 </li>
               </List>
             </Section>
@@ -109,44 +121,44 @@ const Footer = () =>
               </Header>
               <List className="source-sans">
                 <li>
-                  <a
+                  <StyledLink
                     target="_blank"
                     rel="noopener noreferrer"
                     href="http://sunnah.com/"
-                    data-metrics-event-name="Footer:Link:Sunnah"
+                    {...FOOTER_EVENTS.CLICK.SUNNAH_LINK.PROPS}
                   >
                     Sunnah.com
-                  </a>
+                  </StyledLink>
                 </li>
                 <li>
-                  <a
+                  <StyledLink
                     target="_blank"
                     rel="noopener noreferrer"
                     href="http://salah.com/"
-                    data-metrics-event-name="Footer:Link:Salah"
+                    {...FOOTER_EVENTS.CLICK.SALAH_LINK.PROPS}
                   >
                     Salah.com
-                  </a>
+                  </StyledLink>
                 </li>
                 <li>
-                  <a
+                  <StyledLink
                     target="_blank"
                     rel="noopener noreferrer"
                     href="http://quranicaudio.com/"
-                    data-metrics-event-name="Footer:Link:QuranicAudio"
+                    {...FOOTER_EVENTS.CLICK.QURANICAUDIO_LINK.PROPS}
                   >
                     QuranicAudio.com
-                  </a>
+                  </StyledLink>
                 </li>
                 <li>
-                  <a
+                  <StyledLink
                     target="_blank"
                     rel="noopener noreferrer"
                     href="http://corpus.quran.com/wordbyword.jsp"
-                    data-metrics-event-name="Footer:Link:Corpus"
+                    {...FOOTER_EVENTS.CLICK.CORPUS_LINK.PROPS}
                   >
                     Corpus: Word by Word
-                  </a>
+                  </StyledLink>
                 </li>
               </List>
             </Section>
@@ -160,31 +172,33 @@ const Footer = () =>
               </Header>
               <List className="source-sans">
                 <li>
-                  <a
+                  <StyledLink
                     href="https://quran.com/sitemaps/sitemap.xml.gz"
                     target="_blank"
                     rel="noopener noreferrer"
+                    {...FOOTER_EVENTS.CLICK.SITEMAP_LINK.PROPS}
                   >
                     Sitemap
-                  </a>
+                  </StyledLink>
                 </li>
                 <li>
-                  <Link
+                  <StyledRouterLink
                     to="/36"
-                    data-metrics-event-name="Footer:Link:Click"
-                    data-metrics-surah-id="36"
+                    {...FOOTER_EVENTS.CLICK.CHAPTER_LINK.PROPS}
+                    data-metrics-chapter-id="36"
                   >
                     Surah Yasin, Yaseen (يس)
-                  </Link>
+                  </StyledRouterLink>
                 </li>
                 <li>
-                  <Link
+                  <StyledRouterLink
                     to="/2/255"
-                    data-metrics-event-name="Footer:Link:Click"
-                    data-metrics-surah-id="2/255"
+                    {...FOOTER_EVENTS.CLICK.CHAPTER_LINK.PROPS}
+                    data-metrics-chapter-id="2"
+                    data-metrics-verse-id="255"
                   >
                     Ayat Al-Kursi (آية الكرسي)
-                  </Link>
+                  </StyledRouterLink>
                 </li>
               </List>
             </Section>

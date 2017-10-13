@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import debug from 'helpers/debug';
 import RouterLink from 'react-router/lib/Link';
 
+import { JUZ_LIST_EVENTS } from '../../../events';
+
 const Link = styled(RouterLink)`
   display: block;
   padding: 10px 10px;
@@ -33,8 +35,12 @@ class JuzList extends Component {
     const juzzChapters = Object.keys(juz.verseMapping);
 
     const list = juzzChapters.map(chapter =>
-      <Translated className="col-md-12">
-        <Link to={`/${chapter}/${juz.verseMapping[chapter]}`} className="row">
+      <Translated className="col-md-12" key={chapter.id}>
+        <Link
+          to={`/${chapter}/${juz.verseMapping[chapter]}`}
+          className="row"
+          {...JUZ_LIST_EVENTS.CLICK.JUZ_LINK.PROPS}
+        >
           <div className="col-xs-9">
             <Name>
               {chapters[chapter].nameSimple}

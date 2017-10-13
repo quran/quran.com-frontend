@@ -36,7 +36,7 @@ const makeObject = (name, action, labels) => {
     const ACTION = inflect.titleize(action);
     const NAME = inflect.titleize(name);
 
-    actionObj[label.replace(' ', '_').toUpperCase()] = {
+    actionObj[label.replace(/ /g, '_').toUpperCase()] = {
       LABEL,
       ACTION,
       NAME,
@@ -71,7 +71,12 @@ export const SIDEBAR_EVENTS = makeConfig('sidebar', {
 });
 
 export const NAVBAR_EVENTS = makeConfig('navbar', {
-  [CLICK]: [...EXTERNAL_LINKS[CLICK], ...INTERNAL_LINKS[CLICK]]
+  [CLICK]: [
+    ...EXTERNAL_LINKS[CLICK],
+    ...INTERNAL_LINKS[CLICK],
+    'sidebar toggle',
+    'locale switcher toggle'
+  ]
 });
 
 export const SITES_EVENTS = makeConfig('sites', {
@@ -84,4 +89,12 @@ export const COPY_EVENTS = makeConfig('copy', {
 
 export const QUICK_LINKS_EVENTS = makeConfig('quick links', {
   [CLICK]: ['verse', 'chapter']
+});
+
+export const CHAPTERS_LIST_EVENTS = makeConfig('chapters list', {
+  [CLICK]: ['chapter link']
+});
+
+export const JUZ_LIST_EVENTS = makeConfig('juz list', {
+  [CLICK]: ['juz link']
 });

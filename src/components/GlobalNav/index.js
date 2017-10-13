@@ -10,6 +10,7 @@ import Nav from 'react-bootstrap/lib/Nav';
 import LocaleSwitcher from 'components/LocaleSwitcher';
 
 import debug from 'helpers/debug';
+import { NAVBAR_EVENTS } from '../../events';
 
 const scrolledStyle = {
   boxShadow:
@@ -66,7 +67,7 @@ class GlobalNav extends Component {
             href="https://quranicaudio.com/"
             target="_blank"
             rel="noopener noreferrer"
-            data-metrics-event-name="Sites:Audio"
+            {...NAVBAR_EVENTS.CLICK.QURANICAUDIO_LINK.PROPS}
           >
             Audio
           </a>
@@ -76,7 +77,7 @@ class GlobalNav extends Component {
             href="http://salah.com/"
             target="_blank"
             rel="noopener noreferrer"
-            data-metrics-event-name="Sites:Salah"
+            {...NAVBAR_EVENTS.CLICK.SALAH_LINK.PROPS}
           >
             Salah
           </a>
@@ -86,7 +87,7 @@ class GlobalNav extends Component {
             href="http://sunnah.com/"
             target="_blank"
             rel="noopener noreferrer"
-            data-metrics-event-name="Sites:Sunnah"
+            {...NAVBAR_EVENTS.CLICK.SUNNAH_LINK.PROPS}
           >
             Sunnah
           </a>
@@ -94,10 +95,7 @@ class GlobalNav extends Component {
         <LocaleSwitcher />,
         user
           ? <li>
-            <Link
-              to="/profile"
-              data-metrics-event-name="IndexHeader:Link:Profile"
-            >
+            <Link to="/profile" {...NAVBAR_EVENTS.CLICK.PROFILE_LINK.PROPS}>
               {user.firstName || user.name}
             </Link>
           </li>
@@ -122,6 +120,7 @@ class GlobalNav extends Component {
           type="button"
           className="navbar-toggle collapsed"
           onClick={handleSidebarToggle}
+          {...NAVBAR_EVENTS.CLICK.SIDEBAR_TOGGLE.PROPS}
         >
           <span className="sr-only">Toggle navigation</span>
           <span className="icon-bar" />
@@ -131,7 +130,7 @@ class GlobalNav extends Component {
         <StyledNav>
           {!this.isHome() &&
             <li>
-              <Link to="/">
+              <Link to="/" {...NAVBAR_EVENTS.CLICK.HOME_LINK.PROPS}>
                 <i className="ss-icon ss-home" />
               </Link>
             </li>}
