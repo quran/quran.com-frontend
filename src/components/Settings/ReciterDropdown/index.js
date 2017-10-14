@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
@@ -7,6 +7,7 @@ import Loader from 'quran-components/lib/Loader';
 import Icon from 'quran-components/lib/Icon';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { loadRecitations } from 'redux/actions/options';
+import PropTypes from 'prop-types';
 
 class ReciterDropdown extends Component {
   componentDidMount() {
@@ -20,7 +21,7 @@ class ReciterDropdown extends Component {
   renderMenu() {
     const { audio, onOptionChange, recitations } = this.props;
 
-    return recitations.map(slug =>
+    return recitations.map(slug => (
       <MenuItem key={slug.id}>
         <Radio
           checked={slug.id === audio}
@@ -33,7 +34,7 @@ class ReciterDropdown extends Component {
           </span>
         </Radio>
       </MenuItem>
-    );
+    ));
   }
 
   render() {
@@ -43,11 +44,11 @@ class ReciterDropdown extends Component {
       <MenuItem
         icon={<Icon type="mic" />}
         menu={
-          recitations.length
-            ? <Menu>
-              {this.renderMenu()}
-            </Menu>
-            : <Loader isActive />
+          recitations.length ? (
+            <Menu>{this.renderMenu()}</Menu>
+          ) : (
+            <Loader isActive />
+          )
         }
       >
         <LocaleFormattedMessage

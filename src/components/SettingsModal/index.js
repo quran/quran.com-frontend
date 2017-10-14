@@ -1,13 +1,14 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import * as customProptypes from 'customPropTypes';
 import { connect } from 'react-redux';
-import Modal from 'react-bootstrap/lib/Modal';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import ReciterDropdown from 'components/ReciterDropdown';
 import ContentDropdown from 'components/ContentDropdown';
-import TooltipDropdown from 'components/TooltipDropdown';
-import { setOption } from 'redux/actions/options.js';
+import Modal from 'react-bootstrap/lib/Modal';
 import { load } from 'redux/actions/verses.js';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
+import ReciterDropdown from 'components/ReciterDropdown';
+import { setOption } from 'redux/actions/options.js';
+import TooltipDropdown from 'components/TooltipDropdown';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
@@ -19,7 +20,7 @@ const SettingsModal = ({
   open,
   handleHide,
   options,
-  setOption,  // eslint-disable-line no-shadow
+  setOption, // eslint-disable-line no-shadow
   load // eslint-disable-line no-shadow
 }) => {
   const handleOptionChange = (payload) => {
@@ -36,29 +37,37 @@ const SettingsModal = ({
     <Modal show={open} onHide={handleHide}>
       <ModalHeader closeButton>
         <ModalTitle className="montserrat">
-          <LocaleFormattedMessage id="setting.title" defaultMessage="Settings" />
+          <LocaleFormattedMessage
+            id="setting.title"
+            defaultMessage="Settings"
+          />
         </ModalTitle>
       </ModalHeader>
       <ModalBody>
         <div className="form-group">
           <h5 className="text-black">
-            <LocaleFormattedMessage id="setting.reciters.title" defaultMessage="Reciters" />
+            <LocaleFormattedMessage
+              id="setting.reciters.title"
+              defaultMessage="Reciters"
+            />
           </h5>
-          <ReciterDropdown
-            onOptionChange={handleOptionChange}
-          />
+          <ReciterDropdown onOptionChange={handleOptionChange} />
         </div>
         <div className="form-group">
           <h5 className="text-black">
-            <LocaleFormattedMessage id="setting.translations.title" defaultMessage="Translations" />
+            <LocaleFormattedMessage
+              id="setting.translations.title"
+              defaultMessage="Translations"
+            />
           </h5>
-          <ContentDropdown
-            onOptionChange={handleOptionChange}
-          />
+          <ContentDropdown onOptionChange={handleOptionChange} />
         </div>
         <div className="form-group">
           <h5 className="text-black">
-            <LocaleFormattedMessage id="setting.tooltip.title" defaultMessage="Tooltip Content" />
+            <LocaleFormattedMessage
+              id="setting.tooltip.title"
+              defaultMessage="Tooltip Content"
+            />
           </h5>
           <TooltipDropdown
             tooltip={options.tooltip}
@@ -77,13 +86,16 @@ SettingsModal.propTypes = {
   handleHide: PropTypes.func.isRequired,
   options: customProptypes.optionsType,
   setOption: PropTypes.func.isRequired,
-  load: PropTypes.func.isRequired,
+  load: PropTypes.func.isRequired
 };
 
 SettingsModal.defaultProps = {
   open: false
 };
 
-export default connect(state => ({
-  options: state.options
-}), { setOption, load })(SettingsModal);
+export default connect(
+  state => ({
+    options: state.options
+  }),
+  { setOption, load }
+)(SettingsModal);

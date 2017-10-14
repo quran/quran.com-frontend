@@ -1,8 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import copyToClipboard from 'copy-to-clipboard';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
 import { COPY_EVENTS } from '../../events';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
 
 class Copy extends Component {
   state = {

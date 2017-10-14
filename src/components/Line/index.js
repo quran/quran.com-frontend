@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
+import PropTypes from 'prop-types';
 import Word from 'components/Word';
 
 const styles = require('../Verse/style.scss');
@@ -32,7 +33,7 @@ class Line extends Component {
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
 
-    const text = line.map(word => // eslint-disable-line
+    const text = line.map(word => (
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -45,13 +46,9 @@ class Line extends Component {
         }
         useTextFont={useTextFont}
       />
-    );
+    ));
 
-    return (
-      <span className={`${styles.line} text-center`}>
-        {text}
-      </span>
-    );
+    return <span className={`${styles.line} text-center`}>{text}</span>;
   }
 
   render() {

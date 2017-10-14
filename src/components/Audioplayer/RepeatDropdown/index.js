@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import styled, { css } from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
@@ -29,18 +30,20 @@ const StyledPopover = styled(Popover)`
 `;
 
 const Pill = styled(NavItem)`
-  a{
+  a {
     padding: 10px 15px;
   }
 `;
 
 const disabled = css`
-opacity: 0.5;
-cursor: not-allowed !important;
-pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  pointer-events: none;
 `;
 
-const Item = styled.div`${props => (props.disabled ? disabled : '')};`;
+const Item = styled.div`
+  ${props => (props.disabled ? disabled : '')};
+`;
 
 class RepeatButton extends Component {
   handleToggle = () => {
@@ -75,7 +78,9 @@ class RepeatButton extends Component {
 
   renderRangeAyahs() {
     const { chapter, repeat, setRepeat } = this.props;
-    const array = Array(chapter.versesCount).join().split(',');
+    const array = Array(chapter.versesCount)
+      .join()
+      .split(',');
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
@@ -150,7 +155,9 @@ class RepeatButton extends Component {
 
   renderSingleAyah() {
     const { repeat, setRepeat, chapter } = this.props;
-    const array = Array(chapter.versesCount).join().split(',');
+    const array = Array(chapter.versesCount)
+      .join()
+      .split(',');
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
@@ -169,11 +176,11 @@ class RepeatButton extends Component {
               to: parseInt(event.target.value, 10)
             })}
         >
-          {array.map((ayah, index) =>
+          {array.map((ayah, index) => (
             <option key={index} value={index + 1}>
               {index + 1}
             </option>
-          )}
+          ))}
         </FormControl>
       </div>
     );
@@ -222,7 +229,9 @@ class RepeatButton extends Component {
 
   renderTimes() {
     const { repeat, setRepeat, intl } = this.props;
-    const times = Array(10).join().split(',');
+    const times = Array(10)
+      .join()
+      .split(',');
 
     return (
       <Item className="row" disabled={!repeat.from}>
@@ -247,11 +256,11 @@ class RepeatButton extends Component {
                 defaultMessage: 'Loop'
               })}
             </option>
-            {times.map((ayah, index) =>
+            {times.map((ayah, index) => (
               <option key={index} value={index + 1}>
                 {index + 1}
               </option>
-            )}
+            ))}
           </FormControl>
         </div>
       </Item>

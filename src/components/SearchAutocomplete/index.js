@@ -1,8 +1,9 @@
 // TODO: Should be handled by redux and not component states.
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { push } from 'react-router-redux';
 import { suggest } from 'redux/actions/suggest';
 
@@ -167,7 +168,7 @@ class SearchAutocomplete extends Component {
       return false;
     }
 
-    return this.getSuggestions().map(item =>
+    return this.getSuggestions().map(item => (
       <li // eslint-disable-line
         key={item.href}
         tabIndex="-1"
@@ -186,7 +187,7 @@ class SearchAutocomplete extends Component {
           />
         </div>
       </li>
-    );
+    ));
   }
 
   render() {

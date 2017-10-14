@@ -1,9 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { Link } from 'react-scroll';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
 
 const style = require('./style.scss');
 
@@ -40,7 +41,9 @@ class VersesDropdown extends Component {
 
   renderMenu() {
     const { chapter } = this.props;
-    const array = Array(chapter.versesCount).join().split(',');
+    const array = Array(chapter.versesCount)
+      .join()
+      .split(',');
 
     return array.map((ayah, index) => this.renderItem(ayah, index));
   }

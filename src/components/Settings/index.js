@@ -1,17 +1,15 @@
-import React, { PropTypes, Component } from 'react';
-import * as OptionsActions from 'redux/actions/options.js';
-import { connect } from 'react-redux';
-import Menu from 'quran-components/lib/Menu';
-import { load } from 'redux/actions/verses.js';
-
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import LocaleSwitcher from 'components/LocaleSwitcher';
-
-import FontSizeOptions from './FontSizeOptions';
-
-import ReadingModeToggle from './ReadingModeToggle';
-import NightModeToggle from './NightModeToggle';
+import * as OptionsActions from 'redux/actions/options.js';
 import ChapterInfoToggle from './ChapterInfoToggle';
+import { connect } from 'react-redux';
+import FontSizeOptions from './FontSizeOptions';
+import { load } from 'redux/actions/verses.js';
+import LocaleSwitcher from 'components/LocaleSwitcher';
+import Menu from 'quran-components/lib/Menu';
+import NightModeToggle from './NightModeToggle';
+import PropTypes from 'prop-types';
+import ReadingModeToggle from './ReadingModeToggle';
 import ReciterDropdown from './ReciterDropdown';
 import TranslationsDropdown from './TranslationsDropdown';
 import TooltipOptions from './TooltipOptions';

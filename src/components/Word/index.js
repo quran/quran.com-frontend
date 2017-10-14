@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import bindTooltip from 'utils/bindTooltip';
+import PropTypes from 'prop-types';
 import { zeroPad } from 'helpers/StringHelpers';
 
 /* eslint-disable no-unused-vars */
@@ -65,9 +66,8 @@ class Word extends Component {
 
     let text;
     let spacer;
-    const highlight = currentVerse === word.verseKey && isPlaying
-      ? 'highlight'
-      : '';
+    const highlight =
+      currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
     const className = `${useTextFont
       ? 'text-'
       : ''}${word.className} ${word.charType} ${highlight} ${word.highlight

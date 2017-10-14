@@ -1,15 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
-import Element from 'react-scroll/lib/components/Element';
-import Loadable from 'react-loadable';
 import ComponentLoader from 'components/ComponentLoader';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import Word from 'components/Word';
-import Translation from 'components/Translation';
 import debug from 'helpers/debug';
+import Element from 'react-scroll/lib/components/Element';
+import Link from 'react-router/lib/Link';
+import Loadable from 'react-loadable';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Translation from 'components/Translation';
+import Word from 'components/Word';
 
 import { loadTafsirs } from 'redux/actions/media';
 
@@ -74,13 +75,13 @@ class Verse extends Component {
     const { verse, match } = this.props;
     const array = match || verse.translations || [];
 
-    return array.map(translation =>
+    return array.map(translation => (
       <Translation
         translation={translation}
         index={translation.id}
         key={translation.id}
       />
-    );
+    ));
   }
 
   renderMedia() {
@@ -91,7 +92,7 @@ class Verse extends Component {
 
     return (
       <div>
-        {verse.mediaContents.map((content, index) =>
+        {verse.mediaContents.map((content, index) => (
           <div className={`${styles.translation} translation`} key={index}>
             <h2 className="text-translation times-new">
               <small>
@@ -113,7 +114,7 @@ class Verse extends Component {
               </small>
             </h2>
           </div>
-        )}
+        ))}
       </div>
     );
   }
@@ -131,7 +132,7 @@ class Verse extends Component {
     let wordAudioPosition = -1;
     const renderText = false; // userAgent.isBot;
 
-    const text = verse.words.map(word =>
+    const text = verse.words.map(word => (
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -145,13 +146,11 @@ class Verse extends Component {
         isSearched={isSearched}
         useTextFont={renderText}
       />
-    );
+    ));
 
     return (
       <h1 className={`${styles.font} text-right text-arabic`}>
-        <p>
-          {text}
-        </p>
+        <p>{text}</p>
       </h1>
     );
   }
@@ -272,9 +271,7 @@ class Verse extends Component {
 
     const content = (
       <h4>
-        <Label className="label label-default">
-          {verse.verseKey}
-        </Label>
+        <Label className="label label-default">{verse.verseKey}</Label>
       </h4>
     );
 

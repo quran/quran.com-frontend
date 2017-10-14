@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import Radio from 'quran-components/lib/Radio';
 import Icon from 'quran-components/lib/Icon';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
 
 const TooltipOptions = ({ tooltip, onOptionChange }) => {
   const handleOptionChange = type =>
@@ -27,14 +28,7 @@ const TooltipOptions = ({ tooltip, onOptionChange }) => {
   ));
 
   return (
-    <MenuItem
-      icon={<Icon type="globe" />}
-      menu={
-        <Menu>
-          {list}
-        </Menu>
-      }
-    >
+    <MenuItem icon={<Icon type="globe" />} menu={<Menu>{list}</Menu>}>
       <LocaleFormattedMessage
         id="setting.tooltip.title"
         defaultMessage="Tooltip Content"

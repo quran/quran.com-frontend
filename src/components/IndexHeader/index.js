@@ -1,7 +1,8 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import Link from 'react-router/lib/Link';
 import SearchInput from 'components/SearchInput';
 import Jumbotron from 'quran-components/lib/Jumbotron';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const logo = require('../../../static/images/logo-lg-w.png');
@@ -25,7 +26,7 @@ const Title = styled.h4`
   padding-bottom: 3.5%;
 `;
 
-const IndexHeader = props =>
+const IndexHeader = props => (
   <Jumbotron>
     <div className="container">
       <div className="row">
@@ -38,7 +39,8 @@ const IndexHeader = props =>
         </div>
       </div>
     </div>
-  </Jumbotron>;
+  </Jumbotron>
+);
 
 IndexHeader.propTypes = {
   noSearch: PropTypes.bool

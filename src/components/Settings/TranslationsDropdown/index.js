@@ -1,12 +1,13 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import { connect } from 'react-redux';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { loadTranslations } from 'redux/actions/options';
-import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import Checkbox from 'quran-components/lib/Checkbox';
-import Loader from 'quran-components/lib/Loader';
+import { connect } from 'react-redux';
 import Icon from 'quran-components/lib/Icon';
+import { loadTranslations } from 'redux/actions/options';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import Menu, { MenuItem } from 'quran-components/lib/Menu';
+import Loader from 'quran-components/lib/Loader';
+import PropTypes from 'prop-types';
 
 const compareAlphabetically = property => (previous, next) => {
   const previousText = previous[property].toUpperCase();
@@ -67,9 +68,7 @@ class TranslationsDropdown extends Component {
             }
             handleChange={() => this.handleOptionSelected(translation.id)}
           >
-            <span>
-              {render(translation)}
-            </span>
+            <span>{render(translation)}</span>
           </Checkbox>
         </MenuItem>
       );
@@ -101,16 +100,18 @@ class TranslationsDropdown extends Component {
       <MenuItem
         icon={<Icon type="list" />}
         menu={
-          translationOptions.length
-            ? <Menu>
-              {translations && translations.length
-                  ? <MenuItem onClick={this.handleRemoveContent}>
-                    <LocaleFormattedMessage
-                      id="setting.translations.removeAll"
-                      defaultMessage="Remove all"
-                    />
-                  </MenuItem>
-                  : <span />}
+          translationOptions.length ? (
+            <Menu>
+              {translations && translations.length ? (
+                <MenuItem onClick={this.handleRemoveContent}>
+                  <LocaleFormattedMessage
+                    id="setting.translations.removeAll"
+                    defaultMessage="Remove all"
+                  />
+                </MenuItem>
+              ) : (
+                <span />
+              )}
               <MenuItem divider>
                 <LocaleFormattedMessage
                   id="setting.translations.english"
@@ -126,7 +127,9 @@ class TranslationsDropdown extends Component {
               </MenuItem>
               {this.renderLanguagesList()}
             </Menu>
-            : <Loader isActive />
+          ) : (
+            <Loader isActive />
+          )
         }
       >
         <LocaleFormattedMessage

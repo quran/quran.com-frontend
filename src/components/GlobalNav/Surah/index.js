@@ -1,13 +1,14 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import Link from 'react-router/lib/Link';
 import Drawer from 'quran-components/lib/Drawer';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
 import SearchInput from 'components/SearchInput';
 import SurahsDropdown from 'components/SurahsDropdown';
 import Settings from 'components/Settings';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import VersesDropdown from 'components/VersesDropdown';
 
 import { load, setCurrentVerse } from 'redux/actions/verses.js';
