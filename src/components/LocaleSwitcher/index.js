@@ -8,6 +8,7 @@ import Icon from 'quran-components/lib/Icon';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import config from '../../config';
+import { NAVBAR_EVENTS } from '../../events';
 
 const { locales, defaultLocale } = config;
 
@@ -44,7 +45,7 @@ class LocaleSwitcher extends Component {
   renderList() {
     const keys = Object.keys(locales);
 
-    return keys.map(key => (
+    return keys.map(key =>
       <MenuItem
         key={key}
         className={key === this.state.currentLocale && 'active'} // NOTE: if you use key `active` it will make all dropdown active
@@ -53,7 +54,7 @@ class LocaleSwitcher extends Component {
       >
         {locales[key]}
       </MenuItem>
-    ));
+    );
   }
 
   renderAsDropdown() {
@@ -65,6 +66,7 @@ class LocaleSwitcher extends Component {
         id="site-language-dropdown"
         className={className}
         title={locales[this.state.currentLocale]}
+        {...NAVBAR_EVENTS.CLICK.LOCALE_SWITCHER_TOGGLE.PROPS}
       >
         {this.renderList()}
       </NavDropdown>

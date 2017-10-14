@@ -25,14 +25,17 @@ export default {
     'setting.nightMode.dayTip': 'Passer en mode jour',
     'setting.nightMode.nightTip': ' Passer en mode nuit',
 
-    'ayah.media.lectureFrom': 'Regarder les commentaires de la vidéo depuis {from}',
+    'ayah.media.lectureFrom':
+      'Regarder les commentaires de la vidéo depuis {from}',
     'ayah.bookmarked': 'Favoris ajouté',
     'ayah.bookmark': 'Favoris',
     'ayah.notFound': 'Verset introuvable',
 
     'search.placeholder': 'Chercher "Noah"',
-    'search.resultHeading': '{from}-{to} DE <span> {total} </span> RESULTATS DE LA RECHERCHE POUR : <span>{query}</span>', // eslint-disable-line max-len
-    'search.error': 'Désolé, une erreur s’est produite lors de votre recherche.',
+    'search.resultHeading':
+      '{from}-{to} DE <span> {total} </span> RESULTATS DE LA RECHERCHE POUR : <span>{query}</span>', // eslint-disable-line max-len
+    'search.error':
+      'Désolé, une erreur s’est produite lors de votre recherche.',
     'search.nothing': 'Aucune requête de recherche.',
     'search.noResult': 'Aucun résultat trouvé.',
 
@@ -55,7 +58,8 @@ export default {
     'player.repeat.rangeEnd': 'A',
     'player.repeat.times': 'Fois',
     'player.repeat.loop': 'boucle',
-    'player.scrollButtonTip': 'Défiler automatiquement jusqu’au verset en cours de lecture', // eslint-disable-line max-len
+    'player.scrollButtonTip':
+      'Défiler automatiquement jusqu’au verset en cours de lecture', // eslint-disable-line max-len
 
     'app.loading': 'Chargement...',
     'actions.copy': 'Copier',
@@ -72,7 +76,8 @@ export default {
     'nav.otherLinks': 'Autre liens',
     'nav.contactUs': 'Contacter nous',
     'nav.help': 'Aide et feedback',
-    'nav.aboutQuranProject': 'Quran.com (connu aussi sous le nom The Noble Quran, Al Quran, Holy Quran, Koran) est un projet à but non-lucratif.', // eslint-disable-line max-len
+    'nav.aboutQuranProject':
+      'Quran.com (connu aussi sous le nom The Noble Quran, Al Quran, Holy Quran, Koran) est un projet à but non-lucratif.', // eslint-disable-line max-len
     'nav.rightsReserved': 'Tous droits réservés',
     'nav.mobile': 'Applications Mobile',
     'nav.navigate': 'Naviguer',
@@ -80,8 +85,11 @@ export default {
 
     'juz.index.heading': 'Juz',
 
-    'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. ',
-    'error.invalid-surah': "La sourate est hors de portée. Accédez à <a href='/'> page d'accueil </a> et sélectionnez une Sourate",
-    'error.invalid-ayah': "Ayah est hors de portée. Accédez à la <a href='/'> page d'accueil </a> et sélectionnez un Surah / Ayah"
+    'login.message':
+      'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. ',
+    'error.invalid-surah':
+      "La sourate est hors de portée. Accédez à <a href='/'> page d'accueil </a> et sélectionnez une Sourate",
+    'error.invalid-ayah':
+      "Ayah est hors de portée. Accédez à la <a href='/'> page d'accueil </a> et sélectionnez un Surah / Ayah"
   }
 };

@@ -5,11 +5,14 @@ import styled from 'styled-components';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { Title } from 'containers/Home';
 
+import { QUICK_LINKS_EVENTS } from '../../../events';
+
 const Span = styled.span`
   &:after {
     content: '|';
   }
-  &:first-child, &:last-child {
+  &:first-child,
+  &:last-child {
     &:after {
       content: none;
     }
@@ -18,19 +21,20 @@ const Span = styled.span`
 
 const isFriday = new Date().getDay() === 5;
 
-export default () => (
+export default () =>
   <div className="">
     <Title className="text-muted">
       <LocaleFormattedMessage
         id="surah.index.quickLinks"
         defaultMessage="Quick links"
       />
-      {isFriday &&
+      {__CLIENT__ &&
+        isFriday &&
         <Span>
           <Link
             to="/18"
-            data-metrics-event-name="QuickLinks:Click"
-            data-metrics-surah-id="18"
+            {...QUICK_LINKS_EVENTS.CLICK.CHAPTER.PROPS}
+            data-metrics-chapter-id="18"
           >
             Surah Al-Kahf
           </Link>
@@ -38,8 +42,8 @@ export default () => (
       <Span>
         <Link
           to="/36"
-          data-metrics-event-name="QuickLinks:Click"
-          data-metrics-surah-id="36"
+          {...QUICK_LINKS_EVENTS.CLICK.CHAPTER.PROPS}
+          data-metrics-chapter-id="36"
         >
           Surah Yasin (Yaseen)
         </Link>
@@ -47,18 +51,17 @@ export default () => (
       <Span>
         <Link
           to="/55"
-          data-metrics-event-name="QuickLinks:Click"
-          data-metrics-surah-id="55"
+          {...QUICK_LINKS_EVENTS.CLICK.CHAPTER.PROPS}
+          data-metrics-chapter-id="55"
         >
           Surah Ar-Rahman
         </Link>
       </Span>
-
       <Span>
         <Link
           to="/67"
-          data-metrics-event-name="QuickLinks:Click"
-          data-metrics-surah-id="67"
+          {...QUICK_LINKS_EVENTS.CLICK.CHAPTER.PROPS}
+          data-metrics-chapter-id="67"
         >
           Surah Al Mulk
         </Link>
@@ -66,12 +69,11 @@ export default () => (
       <Span>
         <Link
           to="/ayatul-kursi"
-          data-metrics-event-name="QuickLinks:Click"
-          data-metrics-surah-id="ayatul-kursi"
+          {...QUICK_LINKS_EVENTS.CLICK.VERSE.PROPS}
+          data-metrics-verse-key="2:225"
         >
           Ayatul Kursi
         </Link>
       </Span>
     </Title>
-  </div>
-);
+  </div>;

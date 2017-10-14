@@ -8,8 +8,6 @@ import Checkbox from 'quran-components/lib/Checkbox';
 import Loader from 'quran-components/lib/Loader';
 import Icon from 'quran-components/lib/Icon';
 
-const style = require('./style.scss');
-
 const compareAlphabetically = property => (previous, next) => {
   const previousText = previous[property].toUpperCase();
   const nextText = next[property].toUpperCase();
@@ -59,7 +57,7 @@ class TranslationsDropdown extends Component {
       const checked = translations.find(option => option === translation.id);
 
       return (
-        <MenuItem key={translation.id} className={style.item}>
+        <MenuItem key={translation.id}>
           <Checkbox
             id={translation.id + translation.languageName}
             name="translation"
@@ -69,7 +67,9 @@ class TranslationsDropdown extends Component {
             }
             handleChange={() => this.handleOptionSelected(translation.id)}
           >
-            <span>{render(translation)}</span>
+            <span>
+              {render(translation)}
+            </span>
           </Checkbox>
         </MenuItem>
       );

@@ -12,6 +12,7 @@ import cookie from 'react-cookie';
 import Raven from 'raven';
 import errorhandler from 'errorhandler';
 import pdf from 'html-pdf';
+import { ThemeProvider } from 'styled-components';
 
 import config from 'config';
 import expressConfig from './server/config/express';
@@ -19,6 +20,7 @@ import routes from './routes';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import debug from './helpers/debug';
+import theme from './theme';
 
 import Html from './helpers/Html';
 import PdfHtml from './helpers/PdfHtml';
@@ -50,9 +52,11 @@ server.use((req, res, next) => {
 
   if (req.query.DISABLE_SSR) {
     return res.status(200).send(
-      `<!doctype html>\n${ReactDOM.renderToString(<IntlProvider locale="en" messages={localMessages}>
-        <Html store={store} assets={webpack_isomorphic_tools.assets()} />
-      </IntlProvider>)}`
+      `<!doctype html>\n${ReactDOM.renderToString(
+        <IntlProvider locale="en" messages={localMessages}>
+          <Html store={store} assets={webpack_isomorphic_tools.assets()} />
+        </IntlProvider>
+      )}`
     );
   }
 
@@ -71,17 +75,18 @@ server.use((req, res, next) => {
         console.error('ROUTER ERROR:', pretty.render(error));
         res.status(500).send(error);
       } else if (renderProps) {
-        const status = renderProps.location.pathname.indexOf('/error') > -1
-          ? 404
-          : 200;
+        const status =
+          renderProps.location.pathname.indexOf('/error') > -1 ? 404 : 200;
 
         loadOnServer({ ...renderProps, store, helpers: { client } })
           .then(() => {
             const component = (
               <IntlProvider messages={localMessages} locale="en">
-                <Provider store={store}>
-                  <ReduxAsyncConnect {...renderProps} />
-                </Provider>
+                <ThemeProvider theme={theme}>
+                  <Provider store={store}>
+                    <ReduxAsyncConnect {...renderProps} />
+                  </Provider>
+                </ThemeProvider>
               </IntlProvider>
             );
 
@@ -113,7 +118,13 @@ server.use((req, res, next) => {
             }
 
             const html = `<!doctype html>
-            ${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`;
+            ${ReactDOM.renderToString(
+              <Html
+                component={component}
+                store={store}
+                assets={webpack_isomorphic_tools.assets()}
+              />
+            )}`;
 
             return res.send(html);
           })

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
 
+import { CHAPTERS_LIST_EVENTS } from '../../../events';
+
 const Item = styled.li`
   color: ${props => props.theme.brandPrimary};
 
@@ -11,24 +13,24 @@ const Item = styled.li`
   }
 `;
 
-const Arabic = styled.div`
-  font-size: 14px;
-`;
+const Arabic = styled.div`font-size: 14px;`;
 
-const Translated = styled.div`
-  font-size: 10px;
-`;
+const Translated = styled.div`font-size: 10px;`;
 
 const StyledLink = styled(Link)`
   display: block;
   padding: 10px 10px;
 `;
 
-const SurahsList = props => (
+const SurahsList = props =>
   <ul className="col-md-4 list-unstyled">
-    {props.chapters.map(chapter => (
+    {props.chapters.map(chapter =>
       <Item key={chapter.id}>
-        <StyledLink to={`/${chapter.id}`} className="row">
+        <StyledLink
+          to={`/${chapter.id}`}
+          className="row"
+          {...CHAPTERS_LIST_EVENTS.CLICK.CHAPTER_LINK.PROPS}
+        >
           <div className="col-xs-2 text-muted">
             {chapter.chapterNumber}
           </div>
@@ -41,16 +43,16 @@ const SurahsList = props => (
 
           <Translated className="col-xs-10 col-xs-offset-2">
             <span
-              className={`text-uppercase ${chapter.translatedName.languageName}`}
+              className={`text-uppercase ${chapter.translatedName
+                .languageName}`}
             >
               {chapter.translatedName.name}
             </span>
           </Translated>
         </StyledLink>
       </Item>
-    ))}
-  </ul>
-);
+    )}
+  </ul>;
 
 SurahsList.propTypes = {
   chapters: customPropTypes.chapters.isRequired

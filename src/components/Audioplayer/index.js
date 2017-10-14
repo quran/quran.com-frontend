@@ -1,7 +1,7 @@
 /* global document */
 // TODO: This file is too too large.
 import React, { Component, PropTypes } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
@@ -19,8 +19,6 @@ import ComponentLoader from 'components/ComponentLoader';
 import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
-
-const style = require('./style.scss');
 
 const RepeatDropdown = Loadable({
   loader: () =>
@@ -40,6 +38,65 @@ const ControlItem = styled.li`
   vertical-align: middle;
   padding-right: 20px;
   color: #939598;
+`;
+
+const Container = styled.div`
+  position: fixed;
+  bottom: 15px;
+  display: block;
+  user-select: none;
+  height: auto;
+  z-index: 1;
+  padding: 10px 20px 5px;
+  background: ${props => props.theme.colors.white};
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+  min-width: 340px;
+
+  @media (max-width: ${props => props.theme.screen.sm}) {
+    bottom: 0;
+    width: 100%;
+  }
+`;
+
+const playingButton = css`
+  background: ${props => props.theme.brandPrimary};
+  color: #fff;
+  height: 32px;
+  width: 32px;
+  padding: 8px;
+  border-radius: 50%;
+  position: relative;
+  vertical-align: middle;
+  &:hover {
+    opacity: 0.75;
+  }
+`;
+
+const disabled = css`
+  opacity: 0.5;
+  cursor: not-allowed !important;
+  pointer-events: none;
+`;
+
+const isDisabledCss = props => (props.disabled ? disabled : '');
+const isPlayingCss = props => (props.playingButton ? playingButton : '');
+
+export const ControlButton = styled.a`
+  width: 100%;
+  display: inline-block;
+  cursor: pointer;
+  padding: 0 10px;
+  color: ${props => props.theme.textColor};
+  outline: none;
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  ${isPlayingCss} ${isDisabledCss} i.fa {
+    color: inherit;
+    font-size: 100%;
+  }
 `;
 
 export class Audioplayer extends Component {
@@ -64,12 +121,14 @@ export class Audioplayer extends Component {
       audio
     });
 
-    load({
-      chapterId: nextVerse.chapterId,
-      verseId: nextVerse.id,
-      verseKey: nextVerse.verseKey,
-      audio
-    });
+    if (nextVerse) {
+      load({
+        chapterId: nextVerse.chapterId,
+        verseId: nextVerse.id,
+        verseKey: nextVerse.verseKey,
+        audio
+      });
+    }
 
     return false;
   }
@@ -138,7 +197,12 @@ export class Audioplayer extends Component {
     if (!currentFile) return false;
 
     if (isPlaying) {
-      currentFile.play();
+      const playPromise = currentFile.play();
+      // Catch/silence error when a pause interrupts a play request
+      // on browsers which return a promise
+      if (playPromise !== undefined && typeof playPromise.then === 'function') {
+        playPromise.then(null, () => {});
+      }
     } else {
       currentFile.pause();
     }
@@ -374,7 +438,7 @@ export class Audioplayer extends Component {
     file.onloadeddata = null; // eslint-disable-line no-param-reassign
     file.ontimeupdate = null; // eslint-disable-line no-param-reassign
     file.onplay = null; // eslint-disable-line no-param-reassign
-    file.onPause = null; // eslint-disable-line no-param-reassign
+    file.onpause = null; // eslint-disable-line no-param-reassign
     file.onended = null; // eslint-disable-line no-param-reassign
     file.onprogress = null; // eslint-disable-line no-param-reassign
   };
@@ -393,13 +457,14 @@ export class Audioplayer extends Component {
     const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
 
     return (
-      <a
+      <ControlButton
         tabIndex="-1"
-        className={`pointer text-center ${style.playingButton} ${style.buttons}`}
+        className="pointer text-center"
         onClick={isPlaying ? pause : this.play}
+        playingButton
       >
         <i className={`ss-icon ${isPlaying ? 'ss-pause' : 'ss-play'}`} />
-      </a>
+      </ControlButton>
     );
   }
 
@@ -411,13 +476,14 @@ export class Audioplayer extends Component {
     );
 
     return (
-      <a
+      <ControlButton
         tabIndex="-1"
-        className={`pointer ${style.buttons} ${!index ? style.disabled : ''}`}
+        className="pointer"
         onClick={() => index && this.handleAyahChange('previous')}
+        disabled={!index}
       >
         <i className="ss-icon ss-skipback" />
-      </a>
+      </ControlButton>
     );
   }
 
@@ -428,13 +494,14 @@ export class Audioplayer extends Component {
       chapter.versesCount === parseInt(currentVerse.verseKey.split(':')[1], 10);
 
     return (
-      <a
+      <ControlButton
         tabIndex="-1"
-        className={`pointer ${style.buttons} ${isEnd ? style.disabled : ''}`}
+        className="pointer"
         onClick={() => !isEnd && this.handleAyahChange()}
+        disabled={isEnd}
       >
         <i className="ss-icon ss-skipforward" />
-      </a>
+      </ControlButton>
     );
   }
 
@@ -450,7 +517,6 @@ export class Audioplayer extends Component {
       currentTime,
       duration,
       chapter,
-      isPlaying,
       repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
       setRepeat // eslint-disable-line no-shadow
@@ -458,21 +524,19 @@ export class Audioplayer extends Component {
 
     if (isLoading || !currentFile) {
       return (
-        <li className={`${style.container} ${className}`}>
+        <Container className={className}>
           <div>
             <LocaleFormattedMessage
               id="app.loading"
               defaultMessage="Loading..."
             />
           </div>
-        </li>
+        </Container>
       );
     }
 
     return (
-      <div
-        className={`${isPlaying && style.isPlaying} ${style.container} ${className}`}
-      >
+      <Container className={className}>
         <Wrapper>
           {currentFile &&
             <Track
@@ -493,9 +557,7 @@ export class Audioplayer extends Component {
               id="player.currentVerse"
               defaultMessage="Ayah"
             />
-            :
-            {' '}
-            {currentVerse.verseKey.split(':')[1]}
+            : {currentVerse.verseKey.split(':')[1]}
           </ControlItem>
           <ControlItem>
             {this.renderPreviousButton()}
@@ -521,7 +583,7 @@ export class Audioplayer extends Component {
             />
           </ControlItem>
         </ul>
-      </div>
+      </Container>
     );
   }
 }

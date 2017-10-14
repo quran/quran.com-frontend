@@ -49,9 +49,9 @@ class Home extends Component {
 
     return (
       <div className="row">
-        <JuzList chapters={chapters} juzs={juzList.slice(0, 10)} />
-        <JuzList chapters={chapters} juzs={juzList.slice(10, 20)} />
-        <JuzList chapters={chapters} juzs={juzList.slice(20, 30)} />
+        <JuzList chapters={chapters} juzs={juzList.slice(0, 20)} />
+        <JuzList chapters={chapters} juzs={juzList.slice(20, 28)} />
+        <JuzList chapters={chapters} juzs={juzList.slice(28, 30)} />
       </div>
     );
   }
@@ -96,11 +96,12 @@ class Home extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              {lastVisit &&
+              {lastVisit && (
                 <LastVisit
                   chapter={chapters[lastVisit.chapterId]}
                   verse={lastVisit.verseId}
-                />}
+                />
+              )}
               <QuickSurahs />
 
               <Tabs>
@@ -108,9 +109,7 @@ class Home extends Component {
                   {this.renderChapterList(chaptersList)}
                 </Tab>
 
-                <Tab title={juzTitle}>
-                  {this.renderJuzList()}
-                </Tab>
+                <Tab title={juzTitle}>{this.renderJuzList()}</Tab>
               </Tabs>
             </div>
           </div>

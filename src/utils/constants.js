@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 
-const chapterToVersesMap = {
+export const chapterToVersesMap = {
   1: 7,
   2: 286,
   3: 200,

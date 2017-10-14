@@ -16,8 +16,7 @@ const Progress = styled.div`
   position: relative;
   padding-left: 12px;
 
-
-  &:after{
+  &:after {
     content: '';
     height: 12px;
     width: 12px;
@@ -27,7 +26,7 @@ const Progress = styled.div`
     display: block;
     background: #fff;
     top: -3px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.45);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
     transition: height 0.5s;
   }
 `;

@@ -15,7 +15,9 @@ const TopOptions = ({ title, chapter }) => (
     </div>
     <div className="col-md-8 text-right">
       <ul className="list-inline">
-        <li><Share chapter={chapter} /></li>
+        <li>
+          <Share chapter={chapter} />
+        </li>
       </ul>
     </div>
   </div>
