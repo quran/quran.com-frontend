@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import IndexHeader from 'components/IndexHeader';
 import Helmet from 'react-helmet';
 import { FormattedHTMLMessage } from 'react-intl';
