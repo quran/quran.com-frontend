@@ -1,9 +1,10 @@
 /* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { loadFootNote } from 'redux/actions/media';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
   ${props => (props.arabic ? 'text-align: right;' : '')} h4 {

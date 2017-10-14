@@ -1,13 +1,14 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import * as customProptypes from 'customPropTypes';
 import { connect } from 'react-redux';
-import Modal from 'react-bootstrap/lib/Modal';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import ReciterDropdown from 'components/ReciterDropdown';
 import ContentDropdown from 'components/ContentDropdown';
-import TooltipDropdown from 'components/TooltipDropdown';
-import { setOption } from 'redux/actions/options.js';
+import Modal from 'react-bootstrap/lib/Modal';
 import { load } from 'redux/actions/verses.js';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
+import ReciterDropdown from 'components/ReciterDropdown';
+import { setOption } from 'redux/actions/options.js';
+import TooltipDropdown from 'components/TooltipDropdown';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;

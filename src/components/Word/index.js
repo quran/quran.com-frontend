@@ -1,5 +1,6 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import bindTooltip from 'utils/bindTooltip';
+import PropTypes from 'prop-types';
 import { zeroPad } from 'helpers/StringHelpers';
 
 /* eslint-disable no-unused-vars */

@@ -1,5 +1,6 @@
 /* global window */
-import { Component, PropTypes } from 'react';
+import { Component } from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 
 import debug from 'helpers/debug';

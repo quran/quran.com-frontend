@@ -2,7 +2,6 @@ import React from 'react';
 import { ShareButtons, generateShareIcon } from 'react-share';
 import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
-
 import FbDefault from '../../../static/images/FB-grn.png';
 import TwitterDefault from '../../../static/images/Twitter-grn.png';
 

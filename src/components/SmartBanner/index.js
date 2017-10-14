@@ -1,8 +1,9 @@
 /* global window */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import useragent from 'express-useragent';
 import cookie from 'react-cookie';
+import PropTypes from 'prop-types';
 
 class SmartBanner extends Component {
   state = {

@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
 
 const ScrollLink = styled.a`
   width: 100%;

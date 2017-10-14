@@ -1,8 +1,9 @@
 /* global window */
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import cookie from 'react-cookie';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
+import PropTypes from 'prop-types';
 
 import Icon from 'quran-components/lib/Icon';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';

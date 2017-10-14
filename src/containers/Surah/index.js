@@ -1,7 +1,9 @@
 /* global window, document */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
+import PropTypes from 'prop-types';
+
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';

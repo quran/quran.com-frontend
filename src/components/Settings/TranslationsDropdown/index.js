@@ -1,12 +1,13 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import { connect } from 'react-redux';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { loadTranslations } from 'redux/actions/options';
-import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import Checkbox from 'quran-components/lib/Checkbox';
-import Loader from 'quran-components/lib/Loader';
+import { connect } from 'react-redux';
 import Icon from 'quran-components/lib/Icon';
+import { loadTranslations } from 'redux/actions/options';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import Menu, { MenuItem } from 'quran-components/lib/Menu';
+import Loader from 'quran-components/lib/Loader';
+import PropTypes from 'prop-types';
 
 const compareAlphabetically = property => (previous, next) => {
   const previousText = previous[property].toUpperCase();

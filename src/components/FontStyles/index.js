@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
 import { fontFaceStyle, fontFaceStyleLoaded } from 'helpers/buildFontFaces';
-import load from 'redux/actions/fontFace.js';
-
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import debug from 'helpers/debug';
+import load from 'redux/actions/fontFace.js';
+import PropTypes from 'prop-types';
 import selector from './selector';
 
 class FontStyles extends Component {

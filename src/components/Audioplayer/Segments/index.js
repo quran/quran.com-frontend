@@ -1,7 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import Helmet from 'react-helmet';
 import debug from 'helpers/debug';
+import Helmet from 'react-helmet';
+import PropTypes from 'prop-types';
 
 class Segments extends Component {
   shouldComponentUpdate(nextProps) {

@@ -1,5 +1,5 @@
 /* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
@@ -13,6 +13,7 @@ import config from 'config';
 import metricsConfig from 'helpers/metrics';
 import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
+import PropTypes from 'prop-types';
 import { removeMedia } from 'redux/actions/media';
 import Loader from 'quran-components/lib/Loader';
 import authConnect from './connect';

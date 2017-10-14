@@ -1,14 +1,13 @@
 /* global document */
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
 import Link from 'react-router/lib/Link';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
+import PropTypes from 'prop-types';
 import { SIDEBAR_EVENTS } from '../../events';
 
 const styles = require('./style.scss');
-
 const NavbarHeader = Navbar.Header;
 
 const List = styled.ul`
