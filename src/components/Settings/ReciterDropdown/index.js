@@ -21,7 +21,7 @@ class ReciterDropdown extends Component {
   renderMenu() {
     const { audio, onOptionChange, recitations } = this.props;
 
-    return recitations.map(slug => (
+    return recitations.map(slug =>
       <MenuItem key={slug.id}>
         <Radio
           checked={slug.id === audio}
@@ -34,7 +34,7 @@ class ReciterDropdown extends Component {
           </span>
         </Radio>
       </MenuItem>
-    ));
+    );
   }
 
   render() {
@@ -44,11 +44,11 @@ class ReciterDropdown extends Component {
       <MenuItem
         icon={<Icon type="mic" />}
         menu={
-          recitations.length ? (
-            <Menu>{this.renderMenu()}</Menu>
-          ) : (
-            <Loader isActive />
-          )
+          recitations.length
+            ? <Menu>
+              {this.renderMenu()}
+            </Menu>
+            : <Loader isActive />
         }
       >
         <LocaleFormattedMessage

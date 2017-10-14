@@ -41,9 +41,7 @@ class VersesDropdown extends Component {
 
   renderMenu() {
     const { chapter } = this.props;
-    const array = Array(chapter.versesCount)
-      .join()
-      .split(',');
+    const array = Array(chapter.versesCount).join().split(',');
 
     return array.map((ayah, index) => this.renderItem(ayah, index));
   }

@@ -37,9 +37,7 @@ class FontStyles extends Component {
             key={className}
             dangerouslySetInnerHTML={{
               __html: fontFaces[className]
-                ? `${fontFaceStyle(className)} ${fontFaceStyleLoaded(
-                    className
-                  )}`
+                ? `${fontFaceStyle(className)} ${fontFaceStyleLoaded(className)}`
                 : fontFaceStyle(className)
             }}
           />

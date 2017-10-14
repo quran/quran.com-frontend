@@ -66,8 +66,9 @@ class Word extends Component {
 
     let text;
     let spacer;
-    const highlight =
-      currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
+    const highlight = currentVerse === word.verseKey && isPlaying
+      ? 'highlight'
+      : '';
     const className = `${useTextFont
       ? 'text-'
       : ''}${word.className} ${word.charType} ${highlight} ${word.highlight

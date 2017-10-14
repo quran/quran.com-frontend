@@ -28,7 +28,14 @@ const TooltipOptions = ({ tooltip, onOptionChange }) => {
   ));
 
   return (
-    <MenuItem icon={<Icon type="globe" />} menu={<Menu>{list}</Menu>}>
+    <MenuItem
+      icon={<Icon type="globe" />}
+      menu={
+        <Menu>
+          {list}
+        </Menu>
+      }
+    >
       <LocaleFormattedMessage
         id="setting.tooltip.title"
         defaultMessage="Tooltip Content"

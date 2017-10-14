@@ -168,7 +168,7 @@ class SearchAutocomplete extends Component {
       return false;
     }
 
-    return this.getSuggestions().map(item => (
+    return this.getSuggestions().map(item =>
       <li // eslint-disable-line
         key={item.href}
         tabIndex="-1"
@@ -187,7 +187,7 @@ class SearchAutocomplete extends Component {
           />
         </div>
       </li>
-    ));
+    );
   }
 
   render() {

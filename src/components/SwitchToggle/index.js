@@ -7,9 +7,7 @@ const SwitchToggle = ({ id, flat, checked, onToggle }) => (
   <div className={`${styles.switch} switch`}>
     <input
       id={id}
-      className={`${styles.toggle} ${flat
-        ? styles.toggleFlat
-        : styles.toggleRound}`}
+      className={`${styles.toggle} ${flat ? styles.toggleFlat : styles.toggleRound}`}
       type="checkbox"
       checked={checked}
       onChange={onToggle}

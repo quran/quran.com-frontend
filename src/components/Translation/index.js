@@ -67,7 +67,9 @@ class Translation extends Component {
         id={`trans${index}`}
         className={`${isArabic && 'arabic'} translation`}
       >
-        <h4 className="montserrat">{translation.resourceName}</h4>
+        <h4 className="montserrat">
+          {translation.resourceName}
+        </h4>
         <h2
           className={`${isArabic
             ? 'text-right'

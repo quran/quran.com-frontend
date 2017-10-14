@@ -2,13 +2,7 @@ import React from 'react';
 import { intlShape, injectIntl, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-const LocaleFormattedMessage = ({
-  id,
-  defaultMessage,
-  intl,
-  values,
-  className
-}) => (
+const LocaleFormattedMessage = ({ id, defaultMessage, intl, values, className }) => (
   <span className={`${intl.messages.local} ${className}`}>
     <FormattedMessage id={id} defaultMessage={defaultMessage} values={values} />
   </span>
