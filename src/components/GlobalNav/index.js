@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import Link from 'react-router/lib/Link';
 import LocaleSwitcher from 'components/LocaleSwitcher';
 import Navbar from 'react-bootstrap/lib/Navbar';
-import { NAVBAR_EVENTS } from '../../events';
+import { NAVBAR_EVENTS } from 'events';
 import Nav from 'react-bootstrap/lib/Nav';
 import PropTypes from 'prop-types';
 

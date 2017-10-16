@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import copyToClipboard from 'copy-to-clipboard';
-import { COPY_EVENTS } from '../../events';
+import { COPY_EVENTS } from 'events';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import PropTypes from 'prop-types';
 
