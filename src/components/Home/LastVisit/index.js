@@ -3,30 +3,28 @@ import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { Title } from 'containers/Home';
+import Title from 'components/Home/Title';
 
-const LastVisit = (props) => {
+const LastVisit = ({ chapter, verse }) => {
   debug('component:Index', 'LastVisit');
-  if (!props.chapter) return false;
+  if (!chapter) return false;
 
   return (
-    <div>
-      <Title className="text-muted">
-        <LocaleFormattedMessage
-          id="surah.index.continue"
-          defaultMessage="Continue"
-        />{' '}
-        <Link to={`/${props.chapter.chapterNumber}/${props.verse}`}>
-          <span>
-            {props.chapter.nameSimple} (
-            {props.chapter.chapterNumber}
-            :
-            {props.verse}
-            )
-          </span>
-        </Link>
-      </Title>
-    </div>
+    <Title className="text-muted">
+      <LocaleFormattedMessage
+        id="surah.index.continue"
+        defaultMessage="Continue"
+      />{' '}
+      <Link to={`/${chapter.chapterNumber}/${verse}`}>
+        <span>
+          {chapter.nameSimple} (
+          {chapter.chapterNumber}
+          :
+          {verse}
+          )
+        </span>
+      </Link>
+    </Title>
   );
 };
 

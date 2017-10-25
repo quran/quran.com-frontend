@@ -1,4 +1,3 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { metrics } from 'react-metrics';
@@ -86,12 +85,10 @@ class App extends Component {
           <div className="row noscript-warning">
             <div className="col-md-12">
               <p>
-                Looks like either your browser does not support Javascript or its disabled.
-                Quran.com workes best with JavaScript enabled.
-                For more instruction on how to enable javascript
-                <a href="http://www.enable-javascript.com/">
-                  Click here
-                </a>
+                Looks like either your browser does not support Javascript or
+                its disabled. Quran.com workes best with JavaScript enabled. For
+                more instruction on how to enable javascript
+                <a href="http://www.enable-javascript.com/">Click here</a>
               </p>
             </div>
           </div>

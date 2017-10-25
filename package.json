@@ -21,7 +21,9 @@
     "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json",
     "lint:fix": "npm run test:dev:lint -- --fix",
     "prettier": "prettier --single-quote --write",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "pre-commit": [
     "test:stylelint",
@@ -155,6 +157,10 @@
     "winston": "1.1.2"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.2.13",
+    "@storybook/addon-info": "^3.2.13",
+    "@storybook/addon-links": "^3.2.13",
+    "@storybook/react": "^3.2.13",
     "babel-eslint": "7.1.1",
     "babel-plugin-react-transform": "2.0.2",
     "babel-preset-react-hmre": "1.1.1",

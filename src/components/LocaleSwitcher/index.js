@@ -13,6 +13,15 @@ import { NAVBAR_EVENTS } from '../../events';
 const { locales, defaultLocale } = config;
 
 class LocaleSwitcher extends Component {
+  static propTypes = {
+    className: PropTypes.string,
+    renderAs: PropTypes.string
+  };
+
+  static defaultProps = {
+    renderAs: 'dropdown'
+  };
+
   state = {
     currentLocale: defaultLocale
   };
@@ -101,14 +110,5 @@ class LocaleSwitcher extends Component {
     return this.renderAsMenu();
   }
 }
-
-LocaleSwitcher.propTypes = {
-  className: PropTypes.string,
-  renderAs: PropTypes.string
-};
-
-LocaleSwitcher.defaultProps = {
-  renderAs: 'dropdown'
-};
 
 export default LocaleSwitcher;

@@ -3,7 +3,7 @@ import Link from 'react-router/lib/Link';
 import styled from 'styled-components';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { Title } from 'containers/Home';
+import Title from 'components/Home/Title';
 
 import { QUICK_LINKS_EVENTS } from '../../../events';
 
@@ -22,7 +22,7 @@ const Span = styled.span`
 const isFriday = new Date().getDay() === 5;
 
 export default () =>
-  <div className="">
+  <div>
     <Title className="text-muted">
       <LocaleFormattedMessage
         id="surah.index.quickLinks"

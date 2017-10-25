@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
+import styled from 'styled-components';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -33,8 +34,6 @@ import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
 
 const LoaderStyle = {};
 
-const style = require('./style.scss');
-
 const PageView = Loadable({
   loader: () =>
     import(/* webpackChunkName: "pageview" */ 'components/PageView'),
@@ -56,6 +55,15 @@ const TopOptions = Loadable({
     import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
   LoadingComponent: ComponentLoader
 });
+
+const Container = styled.div`
+  padding-top: 70px;
+  min-height: 100vh;
+
+  @media (max-width: ${props => props.theme.screen.xs}) {
+    padding-top: 70px;
+  }
+`;
 
 class Surah extends Component {
   state = {
@@ -232,11 +240,9 @@ class Surah extends Component {
       </div>
     );
 
-    return isLoading ? (
-      <Loader isActive relative style={LoaderStyle} />
-    ) : (
-      noAyah
-    );
+    return isLoading
+      ? <Loader isActive relative style={LoaderStyle} />
+      : noAyah;
   }
 
   renderPagination() {
@@ -280,7 +286,7 @@ class Surah extends Component {
         isLoading={isLoading}
         endComponent={
           <ul className="pager">
-            {chapter.chapterNumber > 1 && (
+            {chapter.chapterNumber > 1 &&
               <li className="previous">
                 <Link
                   to={`/${chapter.chapterNumber * 1 -
@@ -292,8 +298,7 @@ class Surah extends Component {
                     defaultMessage="Previous Surah"
                   />
                 </Link>
-              </li>
-            )}
+              </li>}
             <li className="text-center">
               <Link
                 to={`/${chapter.chapterNumber}?translations=${translations}`}
@@ -308,7 +313,7 @@ class Surah extends Component {
                 />
               </Link>
             </li>
-            {chapter.chapterNumber < 114 && (
+            {chapter.chapterNumber < 114 &&
               <li className="next">
                 <Link
                   to={`/${chapter.chapterNumber * 1 +
@@ -320,8 +325,7 @@ class Surah extends Component {
                   />
                   →
                 </Link>
-              </li>
-            )}
+              </li>}
           </ul>
         }
         loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
@@ -341,7 +345,7 @@ class Surah extends Component {
       currentVerse
     } = this.props; // eslint-disable-line no-shadow
 
-    return Object.values(verses).map(verse => (
+    return Object.values(verses).map(verse =>
       <Verse
         verse={verse}
         chapter={chapter}
@@ -358,7 +362,7 @@ class Surah extends Component {
         userAgent={options.userAgent}
         audio={options.audio}
       />
-    ));
+    );
   }
 
   renderLines() {
@@ -390,9 +394,9 @@ class Surah extends Component {
 
     if (!this.hasVerses()) {
       return (
-        <div className={style.container} style={{ margin: '50px auto' }}>
+        <Container style={{ margin: '50px auto' }}>
           {this.renderNoAyah()}
-        </div>
+        </Container>
       );
     }
 
@@ -435,7 +439,7 @@ class Surah extends Component {
             }
           ]}
         />
-        <div className={`container-fluid ${style.container}`}>
+        <Container className="container-fluid">
           <div className="row">
             <SurahInfo
               chapter={chapter}
@@ -453,15 +457,14 @@ class Surah extends Component {
               {this.renderPagination()}
             </div>
           </div>
-        </div>
-        {__CLIENT__ && ( // eslint-disable-line
+        </Container>
+        {__CLIENT__ && // eslint-disable-line
           <Audioplayer
             chapter={chapter}
             verses={verses}
             currentVerse={verses[currentVerse]}
             onLoadAyahs={this.handleLazyLoadAyahs}
-          />
-        )}
+          />}
       </div>
     );
   }
