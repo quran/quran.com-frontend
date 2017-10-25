@@ -31,7 +31,7 @@ import * as MediaActions from 'redux/actions/media.js';
 
 import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
 
-const LoaderStyle = {};
+const LoaderStyle = { position: 'relative' };
 
 const style = require('./style.scss');
 
@@ -232,7 +232,11 @@ class Surah extends Component {
       </div>
     );
 
-    return isLoading ? <Loader isActive style={LoaderStyle} /> : noAyah;
+    return isLoading ? (
+      <Loader isActive relative style={LoaderStyle} />
+    ) : (
+      noAyah
+    );
   }
 
   renderPagination() {
@@ -320,7 +324,9 @@ class Surah extends Component {
             )}
           </ul>
         }
-        loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
+        loadingComponent={
+          <Loader relative isActive={isLoading} style={LoaderStyle} />
+        }
       />
     );
   }
