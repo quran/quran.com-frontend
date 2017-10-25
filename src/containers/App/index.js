@@ -54,7 +54,7 @@ class App extends Component {
     if (media.loading) {
       return (
         <div className="embed-responsive embed-responsive-16by9">
-          <Loader isActive relative />
+          <Loader isActive />
         </div>
       );
     }
@@ -86,12 +86,10 @@ class App extends Component {
           <div className="row noscript-warning">
             <div className="col-md-12">
               <p>
-                Looks like either your browser does not support Javascript or its disabled.
-                Quran.com workes best with JavaScript enabled.
-                For more instruction on how to enable javascript
-                <a href="http://www.enable-javascript.com/">
-                  Click here
-                </a>
+                Looks like either your browser does not support Javascript or
+                its disabled. Quran.com workes best with JavaScript enabled. For
+                more instruction on how to enable javascript
+                <a href="http://www.enable-javascript.com/">Click here</a>
               </p>
             </div>
           </div>
@@ -100,26 +98,26 @@ class App extends Component {
           handleSidebarToggle: () =>
             this.setState({ sidebarOpen: !this.state.sidebarOpen })
         })}
-        {__CLIENT__ &&
+        {__CLIENT__ && (
           <GlobalSidebar
             open={this.state.sidebarOpen}
             handleOpen={open => this.setState({ sidebarOpen: open })}
-          />}
+          />
+        )}
         {children || main}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         {footer || <Footer />}
         {__CLIENT__ &&
-          media.show &&
-          <Modal bsSize={media.size} show={media.show} onHide={removeMedia}>
-            <ModalHeader closeButton>
-              <ModalTitle className="montserrat">
-                {media.content.title}
-              </ModalTitle>
-            </ModalHeader>
-            <ModalBody>
-              {this.renderModalBody()}
-            </ModalBody>
-          </Modal>}
+          media.show && (
+            <Modal bsSize={media.size} show={media.show} onHide={removeMedia}>
+              <ModalHeader closeButton>
+                <ModalTitle className="montserrat">
+                  {media.content.title}
+                </ModalTitle>
+              </ModalHeader>
+              <ModalBody>{this.renderModalBody()}</ModalBody>
+            </Modal>
+          )}
       </div>
     );
   }

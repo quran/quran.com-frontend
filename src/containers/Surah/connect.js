@@ -84,8 +84,9 @@ export const chapterInfoConnect = ({
     dispatch(loadInfo(params));
     return true;
   }
+  return true;
 
-  return dispatch(loadInfo(params));
+  // return dispatch(loadInfo(params));
 };
 
 export const versesConnect = ({

@@ -7,19 +7,22 @@ const style = require('./style.scss');
 const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
-  if (!info) return <Loader isActive />;
+  if (!info) return <Loader isActive relative />;
 
   return (
     <div className={`col-xs-12 ${style.container} chapter-info ${style.show}`}>
-      {onClose &&
+      {onClose && (
         <button
           tabIndex="-1"
           className={`${style.close} ss-delete`}
           onClick={() => onClose({ isShowingSurahInfo: !isShowingSurahInfo })}
-        />}
+        />
+      )}
       <div className={`${style.row} row`}>
         <div
-          className={`col-md-3 col-xs-6 ${style.bg} ${style[chapter.revelationPlace]}`}
+          className={`col-md-3 col-xs-6 ${style.bg} ${style[
+            chapter.revelationPlace
+          ]}`}
         />
         <div className={`${style.list} col-md-1 col-xs-6`}>
           <dl>
@@ -35,9 +38,7 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
           <div dangerouslySetInnerHTML={{ __html: info.text }} />
           <div>
             <p>
-              <em>
-                Source: {info.source}
-              </em>
+              <em>Source: {info.source}</em>
             </p>
           </div>
         </div>

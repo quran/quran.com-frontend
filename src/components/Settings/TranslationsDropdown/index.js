@@ -129,7 +129,7 @@ class TranslationsDropdown extends Component {
               {this.renderLanguagesList()}
             </Menu>
           ) : (
-            <Loader isActive />
+            <Loader isActive relative />
           )
         }
       >

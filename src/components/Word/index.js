@@ -11,15 +11,17 @@ const CHAR_TYPE_SAJDAH = 'sajdah';
 
 class Word extends Component {
   buildTooltip = (word, tooltip) => {
-    let title;
+    let title = '';
+    let lang = '';
+
     if (word.charType === CHAR_TYPE_END) {
       title = `Verse ${word.verseKey.split(':')[1]}`;
     } else if (word.charType === CHAR_TYPE_WORD) {
       title = word[tooltip].text;
-    } else {
-      title = '';
+      lang = word[tooltip].languageName;
     }
-    return title;
+
+    return { title, lang };
   };
 
   handleWordPlay = () => {
@@ -65,9 +67,8 @@ class Word extends Component {
 
     let text;
     let spacer;
-    const highlight = currentVerse === word.verseKey && isPlaying
-      ? 'highlight'
-      : '';
+    const highlight =
+      currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
     const className = `${useTextFont
       ? 'text-'
       : ''}${word.className} ${word.charType} ${highlight} ${word.highlight
@@ -93,12 +94,12 @@ class Word extends Component {
       <span>
         <b // eslint-disable-line
           {...bindTooltip}
+          {...this.buildTooltip(word, tooltip)}
           key={word.code}
           id={id}
           onDoubleClick={this.handleSegmentPlay}
           onClick={this.handleWordPlay}
           className={`${className} pointer`}
-          title={this.buildTooltip(word, tooltip)}
           dangerouslySetInnerHTML={{ __html: text }}
         />
         <small

@@ -232,11 +232,7 @@ class Surah extends Component {
       </div>
     );
 
-    return isLoading ? (
-      <Loader isActive relative style={LoaderStyle} />
-    ) : (
-      noAyah
-    );
+    return isLoading ? <Loader isActive style={LoaderStyle} /> : noAyah;
   }
 
   renderPagination() {
