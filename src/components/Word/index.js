@@ -12,7 +12,7 @@ const CHAR_TYPE_SAJDAH = 'sajdah';
 class Word extends Component {
   buildTooltip = (word, tooltip) => {
     let title = '';
-    let lang = '';
+    let lang = 'en';
 
     if (word.charType === CHAR_TYPE_END) {
       title = `Verse ${word.verseKey.split(':')[1]}`;

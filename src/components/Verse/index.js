@@ -37,6 +37,21 @@ const Label = styled.span`
   }
 `;
 
+const MediaButton = styled.span`
+  display: inline-block;
+  padding: 5px 14px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 15px;
+  &:hover {
+    background: #2ca4ab;
+    color: #fff;
+  }
+  span {
+    float: none;
+  }
+`;
+
 class Verse extends Component {
   shouldComponentUpdate(nextProps) {
     const conditions = [
@@ -93,25 +108,23 @@ class Verse extends Component {
       <div>
         {verse.mediaContents.map((content, index) => (
           <div className={`${styles.translation} translation`} key={index}>
-            <h2 className="text-translation times-new">
-              <small>
-                <a
-                  tabIndex="-1"
-                  className="pointer"
-                  onClick={() => mediaActions.setMedia(content)}
-                  data-metrics-event-name="Media Click"
-                  data-metrics-media-content-url={content.url}
-                  data-metrics-media-content-id={content.id}
-                  data-metrics-media-content-verse-key={verse.verseKey}
-                >
-                  <LocaleFormattedMessage
-                    id="ayah.media.lectureFrom"
-                    defaultMessage="Watch lecture by {from}"
-                    values={{ from: content.authorName }}
-                  />
-                </a>
-              </small>
-            </h2>
+            <a
+              tabIndex="-1"
+              className="pointer"
+              onClick={() => mediaActions.setMedia(content)}
+              data-metrics-event-name="Media Click"
+              data-metrics-media-content-url={content.url}
+              data-metrics-media-content-id={content.id}
+              data-metrics-media-content-verse-key={verse.verseKey}
+            >
+              <MediaButton>
+                <LocaleFormattedMessage
+                  id="ayah.media.lectureFrom"
+                  defaultMessage="Watch lecture by {from}"
+                  values={{ from: content.authorName }}
+                />
+              </MediaButton>
+            </a>
           </div>
         ))}
       </div>

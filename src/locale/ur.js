@@ -26,7 +26,7 @@ export default {
     'setting.nightMode.dayTip': 'دن کے موڈ میں دیکھیں',
     'setting.nightMode.nightTip': 'رات کے موڈ میں دیکھیں',
 
-    'ayah.media.lectureFrom': 'کے لیکچر دیکھے  {from}',
+    'ayah.media.lectureFrom': 'کے لیکچر دیکھے {from}',
     'ayah.bookmarked': 'حوالہ ہے',
     'ayah.bookmark': 'حوالہ',
     'ayah.notFound': 'آیت نہیں ملا',
