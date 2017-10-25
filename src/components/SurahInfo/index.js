@@ -67,15 +67,16 @@ const Info = styled.div`
 const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
-  if (!info) return <Loader isActive />;
+  if (!info) return <Loader isActive relative />;
 
   const handleClose = () =>
     onClose({ isShowingSurahInfo: !isShowingSurahInfo });
 
   return (
     <div className={`col-xs-12 ${style.container} chapter-info ${style.show}`}>
-      {onClose &&
-        <Close tabIndex="-1" className="ss-delete" onClick={handleClose} />}
+      {onClose && (
+        <Close tabIndex="-1" className="ss-delete" onClick={handleClose} />
+      )}
       <div className="row" style={{ width: '100%' }}>
         <div
           className={`col-md-3 col-xs-6 ${style.bg} ${style[
@@ -85,22 +86,16 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
         <div className={`${style.list} col-md-1 col-xs-6`}>
           <List>
             <dt>VERSES</dt>
-            <dd className="text-uppercase">
-              {chapter.versesCount}
-            </dd>
+            <dd className="text-uppercase">{chapter.versesCount}</dd>
             <dt>PAGES</dt>
-            <dd className="text-uppercase">
-              {chapter.pages.join('-')}
-            </dd>
+            <dd className="text-uppercase">{chapter.pages.join('-')}</dd>
           </List>
         </div>
         <Info className={`${info.languageName} times-new col-md-8`}>
           <div dangerouslySetInnerHTML={{ __html: info.text }} />
           <div>
             <p>
-              <em>
-                Source: {info.source}
-              </em>
+              <em>Source: {info.source}</em>
             </p>
           </div>
         </Info>

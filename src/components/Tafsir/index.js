@@ -7,7 +7,7 @@ export default class Tafsir extends Component {
   render() {
     const { tafsir, verse } = this.props;
     if (!tafsir) {
-      return <Loader isActive relative />;
+      return <Loader isActive />;
     }
 
     return (
