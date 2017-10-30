@@ -13,7 +13,7 @@ import fs from 'fs';
 import support from './support';
 
 const proxyApi = httpProxy.createProxyServer({
-  target: process.env.API_URL,
+  target: process.env.INTERNAL_API_URL,
   secure: true
 });
 

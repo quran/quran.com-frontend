@@ -146,7 +146,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': true,
-      'process.env.API_URL': JSON.stringify(process.env.API_URL),
+      'process.env.PUBLIC_API_URL': JSON.stringify(process.env.PUBLIC_API_URL),
       'process.env.SEGMENTS_KEY': JSON.stringify(process.env.SEGMENTS_KEY),
       'process.env.SENTRY_KEY_CLIENT': JSON.stringify(
         process.env.SENTRY_KEY_CLIENT

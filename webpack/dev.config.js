@@ -145,7 +145,7 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       'process.env.BROWSER': true,
-      'process.env.API_URL': JSON.stringify(process.env.API_URL),
+      'process.env.PUBLIC_API_URL': JSON.stringify(process.env.PUBLIC_API_URL),
       'process.env.ONE_QURAN_URL': JSON.stringify(process.env.ONE_QURAN_URL),
       'process.env.FACEBOOK_APP_ID': JSON.stringify(
         process.env.FACEBOOK_APP_ID
