@@ -1,5 +1,13 @@
 # Docker instructions
 
+Before building frontend images, make sure you have ready images for the following:
+
+- quran.com-api-db
+- quran.com: elasticsearch
+- quran.com: api
+
+Tag these images to match the `image` settings in `docker-compose.yml` (or change the settings).
+
 ## Development
 
 To build for development:
