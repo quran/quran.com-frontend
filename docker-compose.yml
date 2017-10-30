@@ -1,0 +1,25 @@
+version: '3'
+services:
+  frontend:
+    build: .
+    ports:
+      - "8000:8000"
+  api:
+    image: qurancomapi_api:latest
+    environment:
+      - DATABASE_URL=postgres://quran_dev:quran_password@postgres:5432/quran_db
+      - ELASTICSEARCH_HOST=elasticsearch
+      - SENTRY_DSN=
+      - SECRET_KEY_BASE=abcdefa
+    ports:
+      - "3000:3000"
+  postgres:
+    image: qurandb:v102
+    ports:
+      - "5342:5432"
+  elasticsearch:
+    image: quran/quran.com-elasticsearch:5.6.3
+    ports:
+      - "9300:9300"
+      - "9200:9200"
+
