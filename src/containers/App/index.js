@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
@@ -37,6 +38,18 @@ const SmartBanner = Loadable({
     import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner'),
   LoadingComponent: ComponentLoader
 });
+
+const NoScriptWarning = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1201;
+  text-align: center;
+  color: #fff;
+  background-color: #ae0000;
+  padding: 5px 0 5px 0;
+`;
 
 class App extends Component {
   static contextTypes = {
@@ -82,7 +95,7 @@ class App extends Component {
       <div>
         <Helmet {...config.app.head} />
         <NoScript>
-          <div className="row noscript-warning">
+          <NoScriptWarning className="row">
             <div className="col-md-12">
               <p>
                 Looks like either your browser does not support Javascript or
@@ -91,7 +104,7 @@ class App extends Component {
                 <a href="http://www.enable-javascript.com/">Click here</a>
               </p>
             </div>
-          </div>
+          </NoScriptWarning>
         </NoScript>
         {React.cloneElement(nav || <GlobalNav isStatic {...props} />, {
           handleSidebarToggle: () =>

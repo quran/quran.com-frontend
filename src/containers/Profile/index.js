@@ -18,7 +18,7 @@ margin: -70px auto 40px;
   `;
 
 const Profile = ({ user }) =>
-  <div className="min-container">
+  <div className="container">
     <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
     <Header />
     <div className="container">

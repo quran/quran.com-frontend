@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
-import styled from 'styled-components';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -16,6 +15,7 @@ import Loadable from 'react-loadable';
 import Loader from 'quran-components/lib/Loader';
 import LazyLoad from 'components/LazyLoad';
 import Verse from 'components/Verse';
+import Container from 'components/Container';
 import ComponentLoader from 'components/ComponentLoader';
 import Bismillah from 'components/Bismillah';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -55,15 +55,6 @@ const TopOptions = Loadable({
     import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
   LoadingComponent: ComponentLoader
 });
-
-const Container = styled.div`
-  padding-top: 70px;
-  min-height: 100vh;
-
-  @media (max-width: ${props => props.theme.screen.xs}) {
-    padding-top: 70px;
-  }
-`;
 
 class Surah extends Component {
   state = {

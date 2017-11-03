@@ -1,18 +1,22 @@
 import React, { PropTypes } from 'react';
-import IndexHeader from 'components/IndexHeader';
 import Helmet from 'react-helmet';
 import { FormattedHTMLMessage } from 'react-intl';
 
+import IndexHeader from 'components/IndexHeader';
+import AboutText from 'components/AboutText';
+
 const error = {
-  'invalid-surah': "Surah is out of range. Please go to <a href='/'> home page</a> and select a Surah",
-  'invalid-ayah': "Ayah is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah"
+  'invalid-surah':
+    "Surah is out of range. Please go to <a href='/'> home page</a> and select a Surah",
+  'invalid-ayah':
+    "Ayah is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah"
 };
 
-const ErrorPage = ({ params }) => (
+const ErrorPage = ({ params }) =>
   <div>
     <Helmet title={`Error ${error[params.errorKey]}`} />
     <IndexHeader noSearch />
-    <div className="container-fluid about-text">
+    <AboutText className="container-fluid about-text">
       <div className="row">
         <div className="col-md-8 col-md-offset-2">
           <h4 className="source-sans text-center">
@@ -23,9 +27,8 @@ const ErrorPage = ({ params }) => (
           </h4>
         </div>
       </div>
-    </div>
-  </div>
-);
+    </AboutText>
+  </div>;
 
 ErrorPage.propTypes = {
   params: PropTypes.string.isRequired
