@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import React from 'react';
 
 import Line from 'components/Line';
 import PageBreak from 'components/PageBreak';

@@ -1,8 +1,9 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
 import Link from 'react-router/lib/Link';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
 import { Title } from 'containers/Home';
 
 const LastVisit = (props) => {

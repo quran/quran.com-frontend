@@ -1,12 +1,13 @@
 /* global document */
 // TODO: This file is too too large.
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
 import Loadable from 'react-loadable';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
 
 // Helpers
 import debug from 'helpers/debug';

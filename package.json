@@ -107,6 +107,7 @@
     "precss": "1.4.0",
     "pretty-error": "2.0.0",
     "promise": "7.1.1",
+    "prop-types": "15.6.0",
     "proxy-middleware": "0.14.0",
     "qs": "6.2.1",
     "quran-components": "^0.0.80",

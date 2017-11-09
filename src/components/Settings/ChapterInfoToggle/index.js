@@ -1,6 +1,7 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { MenuItem } from 'quran-components/lib/Menu';
+import PropTypes from 'prop-types';
 
 const InformationToggle = ({ isToggled, onToggle }) => (
   <MenuItem

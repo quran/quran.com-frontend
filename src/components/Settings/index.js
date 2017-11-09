@@ -1,20 +1,18 @@
-import React, { PropTypes, Component } from 'react';
-import * as OptionsActions from 'redux/actions/options.js';
-import { connect } from 'react-redux';
-import Menu from 'quran-components/lib/Menu';
-import { load } from 'redux/actions/verses.js';
-
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
+import * as OptionsActions from 'redux/actions/options.js';
+import ChapterInfoToggle from 'components/Settings/ChapterInfoToggle';
+import { connect } from 'react-redux';
+import FontSizeOptions from 'components/Settings/FontSizeOptions';
+import { load } from 'redux/actions/verses.js';
 import LocaleSwitcher from 'components/LocaleSwitcher';
-
-import FontSizeOptions from './FontSizeOptions';
-
-import ReadingModeToggle from './ReadingModeToggle';
-import NightModeToggle from './NightModeToggle';
-import ChapterInfoToggle from './ChapterInfoToggle';
-import ReciterDropdown from './ReciterDropdown';
-import TranslationsDropdown from './TranslationsDropdown';
-import TooltipOptions from './TooltipOptions';
+import Menu from 'quran-components/lib/Menu';
+import NightModeToggle from 'components/Settings/NightModeToggle';
+import PropTypes from 'prop-types';
+import ReadingModeToggle from 'components/Settings/ReadingModeToggle';
+import ReciterDropdown from 'components/Settings/ReciterDropdown';
+import TranslationsDropdown from 'components/Settings/TranslationsDropdown';
+import TooltipOptions from 'components/Settings/TooltipOptions';
 
 class Settings extends Component {
   handleOptionChange = (payload) => {

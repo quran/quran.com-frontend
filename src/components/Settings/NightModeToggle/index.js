@@ -1,7 +1,8 @@
 /* global document */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { MenuItem } from 'quran-components/lib/Menu';
+import PropTypes from 'prop-types';
 
 class NightModeToggle extends Component {
   componentDidMount() {

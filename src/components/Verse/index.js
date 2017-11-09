@@ -1,15 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
-import Element from 'react-scroll/lib/components/Element';
-import Loadable from 'react-loadable';
 import ComponentLoader from 'components/ComponentLoader';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import Word from 'components/Word';
-import Translation from 'components/Translation';
 import debug from 'helpers/debug';
+import Element from 'react-scroll/lib/components/Element';
+import Link from 'react-router/lib/Link';
+import Loadable from 'react-loadable';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import Translation from 'components/Translation';
+import Word from 'components/Word';
 
 import { loadTafsirs } from 'redux/actions/media';
 

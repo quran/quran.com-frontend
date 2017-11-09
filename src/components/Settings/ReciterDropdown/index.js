@@ -1,4 +1,4 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
@@ -7,6 +7,7 @@ import Loader from 'quran-components/lib/Loader';
 import Icon from 'quran-components/lib/Icon';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { loadRecitations } from 'redux/actions/options';
+import PropTypes from 'prop-types';
 
 class ReciterDropdown extends Component {
   componentDidMount() {

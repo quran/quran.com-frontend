@@ -1,16 +1,15 @@
 /* global window */
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
+import debug from 'helpers/debug';
 import styled from 'styled-components';
 import Link from 'react-router/lib/Link';
-import Navbar from 'react-bootstrap/lib/Navbar';
-import Nav from 'react-bootstrap/lib/Nav';
-
 import LocaleSwitcher from 'components/LocaleSwitcher';
-
-import debug from 'helpers/debug';
-import { NAVBAR_EVENTS } from '../../events';
+import Navbar from 'react-bootstrap/lib/Navbar';
+import { NAVBAR_EVENTS } from 'events';
+import Nav from 'react-bootstrap/lib/Nav';
+import PropTypes from 'prop-types';
 
 const scrolledStyle = {
   boxShadow:

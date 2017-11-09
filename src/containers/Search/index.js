@@ -1,10 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
+import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import { FormattedHTMLMessage } from 'react-intl';
 import IndexHeader from 'components/IndexHeader';
