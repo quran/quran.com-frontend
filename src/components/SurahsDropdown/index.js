@@ -11,7 +11,15 @@ const Arabic = styled.div`
   padding-right: 5px;
 `;
 
-const styles = require('./style.scss');
+const StyledDropdown = styled(NavDropdown)`
+  .dropdown-menu{
+    max-height: 400px;
+    max-height: 60vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+`;
 
 class SurahsDropdown extends Component {
   shouldComponentUpdate(nextProps) {
@@ -56,8 +64,7 @@ class SurahsDropdown extends Component {
     const { chapter } = this.props;
 
     return (
-      <NavDropdown
-        className={styles.dropdown}
+      <StyledDropdown
         id="chapters-dropdown"
         title={
           chapter.nameSimple ||
@@ -68,7 +75,7 @@ class SurahsDropdown extends Component {
         }
       >
         {this.renderList()}
-      </NavDropdown>
+      </StyledDropdown>
     );
   }
 }

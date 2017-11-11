@@ -1,9 +1,16 @@
 import React, { Component, PropTypes } from 'react';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import debug from 'helpers/debug';
 import Word from 'components/Word';
+import FontText from 'components/FontText';
 
-const styles = require('../Verse/style.scss');
+const StyledLine = styled.span`
+  line-height: 150%;
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+`;
 
 class Line extends Component {
   // NOTE: this is commented out as it caused problems with 55:31 with missing text.
@@ -32,7 +39,7 @@ class Line extends Component {
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
 
-    const text = line.map(word => // eslint-disable-line
+    const text = line.map(word =>
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -48,9 +55,9 @@ class Line extends Component {
     );
 
     return (
-      <span className={`${styles.line} text-center`}>
+      <StyledLine className="text-center">
         {text}
-      </span>
+      </StyledLine>
     );
   }
 
@@ -64,14 +71,14 @@ class Line extends Component {
     );
 
     return (
-      <div className={`row ${styles.font} text-justify text-arabic`}>
+      <FontText className="row text-justify text-arabic">
         <div
           className="col-md-12 line-container"
           name={`verse:${line[0].verseKey}`}
         >
           {this.renderText()}
         </div>
-      </div>
+      </FontText>
     );
   }
 }

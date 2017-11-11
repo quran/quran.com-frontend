@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import { asyncConnect } from 'redux-connect';
@@ -13,7 +14,65 @@ import Loader from 'quran-components/lib/Loader';
 import { search } from 'redux/actions/search.js';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-const style = require('./style.scss');
+const Header = styled.div`
+  background-color: #e7e6e6;
+  min-height: 50px;
+  padding: 15px 0;
+  color: #414141;
+  font-weight: 400;
+
+  .pagination {
+    margin: 0;
+
+    & > li:first-child > a,
+    & > li:last-child > a {
+      font-size: 14px;
+
+      &.disabled {
+        opacity: 0.5;
+      }
+    }
+
+    & > li {
+      &.active {
+        a {
+          color: $brand-primary;
+        }
+      }
+
+      &.disabled {
+        opacity: 0.5;
+      }
+    }
+
+    & > li > a {
+      background: transparent;
+      border: none;
+      color: #414141;
+      float: initial;
+      padding: 6px 18px;
+      font-weight: 300;
+      font-size: 14px;
+
+      &:hover,
+      &:focus {
+        background: initial;
+      }
+
+      i {
+        font-size: 12px;
+      }
+    }
+
+    .selected a {
+      color: ${props => props.theme.brandPrimary};
+    }
+
+    @media (max-width: ${props => props.theme.screen.sm}) {
+      padding-top: 5px;
+    }
+  }
+`;
 
 class Search extends Component {
   static contextTypes = {
@@ -47,7 +106,7 @@ class Search extends Component {
 
     if (totalPages) {
       return (
-        <div className={style.header}>
+        <Header>
           <div className="container">
             <div className="row">
               <div className="col-md-6 text-uppercase search-status">
@@ -79,13 +138,12 @@ class Search extends Component {
                   containerClassName="pagination"
                   subContainerClassName="pages pagination"
                   pageLinkClassName="pointer"
-                  activeClass={style.active}
                   pageCount={totalPages}
                 />
               </div>
             </div>
           </div>
-        </div>
+        </Header>
       );
     }
 
@@ -139,7 +197,7 @@ class Search extends Component {
       );
     }
 
-    return results.map(result => (
+    return results.map(result =>
       <Verse
         verse={entities[result]}
         match={entities[result].match}
@@ -148,7 +206,7 @@ class Search extends Component {
         userAgent={options.userAgent}
         isSearched
       />
-    ));
+    );
   }
 
   render() {

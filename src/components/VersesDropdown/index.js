@@ -1,11 +1,20 @@
 import React, { Component, PropTypes } from 'react';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { Link } from 'react-scroll';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-const style = require('./style.scss');
+const StyledDropdown = styled(NavDropdown)`
+  .dropdown-menu{
+    max-height: 400px;
+    max-height: 60vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden;
+  }
+`;
 
 class VersesDropdown extends Component {
   renderItem = (ayah, index) => {
@@ -56,13 +65,13 @@ class VersesDropdown extends Component {
     );
 
     return (
-      <NavDropdown
-        className={`dropdown ${className} ${style.dropdown}`}
+      <StyledDropdown
+        className={`dropdown ${className}`}
         id="verses-dropdown"
         title={title}
       >
         {this.renderMenu()}
-      </NavDropdown>
+      </StyledDropdown>
     );
   }
 }

@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 import makeHeadTags from 'helpers/makeHeadTags';
 
-const styles = require('./style.scss');
 const apple = require('../../../static/images/apple-white.svg');
 const play = require('../../../static/images/play-store.svg');
 const phones = require('../../../static/images/mockup-desktop@2x.png');
@@ -25,9 +24,19 @@ const Container = styled.div`
   }
 `;
 
+const StyledButton = styled(Button)`
+  border-radius: 50px;
+
+  @media(max-width: ${props => props.theme.screen.sm}){
+    &:last-child{
+      margin-top: 15px;
+    }
+  }
+`;
+
 const Title = styled.h1`color: #000000;`;
 
-export default () => (
+export default () =>
   <Container className="montserrat container">
     <Helmet
       {...makeHeadTags({
@@ -51,11 +60,10 @@ export default () => (
         </h3>
         <div className="row" style={{ paddingTop: 15 }}>
           <div className="col-md-6">
-            <Button
+            <StyledButton
               bsStyle="primary"
               bsSize="lg"
               href="https://itunes.apple.com/us/app/quran-by-quran.com-qran/id1118663303?mt=8"
-              className={styles.button}
               block
             >
               <img
@@ -65,12 +73,11 @@ export default () => (
                 style={{ paddingRight: 10, marginTop: -6 }}
               />
               Download
-            </Button>
+            </StyledButton>
           </div>
           <div className="col-md-6">
-            <Button
+            <StyledButton
               bsSize="lg"
-              className={styles.button}
               href="https://play.google.com/store/apps/details?id=com.quran.labs.androidquran&hl=en"
               block
             >
@@ -81,7 +88,7 @@ export default () => (
                 style={{ paddingRight: 10 }}
               />
               Download
-            </Button>
+            </StyledButton>
           </div>
         </div>
       </div>
@@ -89,5 +96,4 @@ export default () => (
         <img src={phones} width="100%" alt="Apps" />
       </div>
     </div>
-  </Container>
-);
+  </Container>;

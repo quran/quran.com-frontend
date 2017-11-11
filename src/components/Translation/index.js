@@ -1,30 +1,9 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { loadFootNote } from 'redux/actions/media';
 
-const Container = styled.div`
-  ${props => (props.arabic ? 'text-align: right;' : '')} h4 {
-    color: ${props => props.theme.brandPrimary};
-    margin-bottom: 5px;
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: 400;
-    @media (max-width: ${props => props.theme.screenMd}) {
-      font-size: 12px;
-    }
-  }
-  h2 {
-    margin-top: 5px;
-    margin-bottom: 25px;
-  }
-  sup {
-    color: ${props => props.theme.brandPrimary};
-    cursor: pointer;
-  }
-`;
+import Container from './Container';
 
 class Translation extends Component {
   componentDidMount() {
@@ -74,10 +53,9 @@ class Translation extends Component {
             ? 'text-right'
             : 'text-left'} text-translation times-new`}
         >
-          <small
-            dangerouslySetInnerHTML={{ __html: translation.text }}
-            className={`${lang || 'times-new'}`}
-          />
+          <small className={`${lang || 'times-new'}`}>
+            {translation.text}
+          </small>
         </h2>
       </Container>
     );
@@ -90,7 +68,4 @@ Translation.propTypes = {
   loadFootNote: PropTypes.func.isRequired
 };
 
-export default connect(
-  state => ({}), // eslint-disable-line no-unused-vars
-  { loadFootNote }
-)(Translation);
+export default connect(null, { loadFootNote })(Translation);
