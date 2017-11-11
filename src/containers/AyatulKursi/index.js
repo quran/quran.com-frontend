@@ -13,6 +13,7 @@ import Loadable from 'react-loadable';
 
 // components
 import Verse from 'components/Verse';
+import Container from 'components/Container';
 import ComponentLoader from 'components/ComponentLoader';
 import Bismillah from 'components/Bismillah';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -28,8 +29,6 @@ import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
 import { chaptersConnect, versesConnect } from 'containers/Surah/connect';
-
-const style = require('../Surah/style.scss');
 
 const PageView = Loadable({
   loader: () =>
@@ -89,7 +88,7 @@ class AyatulKursi extends Component {
       currentVerse
     } = this.props; // eslint-disable-line no-shadow
 
-    return Object.values(verses).map(verse => (
+    return Object.values(verses).map(verse =>
       <Verse
         verse={verse}
         chapter={chapter}
@@ -106,7 +105,7 @@ class AyatulKursi extends Component {
         userAgent={options.userAgent}
         audio={options.audio}
       />
-    ));
+    );
   }
 
   renderLines() {
@@ -168,12 +167,11 @@ class AyatulKursi extends Component {
             }
           ]}
         />
-        <div className={`container-fluid ${style.container}`}>
+        <Container className="container-fluid">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              {__CLIENT__ && (
-                <TopOptions title="Ayatul Kursi" chapter={chapter} />
-              )}
+              {__CLIENT__ &&
+                <TopOptions title="Ayatul Kursi" chapter={chapter} />}
               <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderVerses()}
             </div>
@@ -190,14 +188,13 @@ class AyatulKursi extends Component {
               </ul>
             </div>
           </div>
-        </div>
-        {__CLIENT__ && (
+        </Container>
+        {__CLIENT__ &&
           <Audioplayer
             chapter={chapter}
             startVerse={Object.values(verses)[0]}
             onLoadAyahs={this.handleLazyLoadAyahs}
-          />
-        )}
+          />}
       </div>
     );
   }
@@ -227,8 +224,8 @@ const AsyncAyatulKursi = asyncConnect([
 
 function mapStateToProps(state) {
   const chapterId = 2;
-  const chapter: Object = state.chapters.entities[chapterId];
-  const verses: Object = state.verses.entities[chapterId];
+  const chapter = state.chapters.entities[chapterId];
+  const verses = state.verses.entities[chapterId];
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {

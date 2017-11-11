@@ -12,17 +12,18 @@
     "test:ci:lint": "./node_modules/eslint/bin/eslint.js ./src",
     "test:dev:lint": "./node_modules/eslint/bin/eslint.js ./src",
     "test:stylelint": "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
-    "dev-old": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node ./webpack/webpack-dev-server.js & env NODE_PATH='./src' PORT=8000 node ./bin/server.js",
-    "dev": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress  & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
+    "dev": "cross-env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress  & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
     "build": "npm run build:client & npm run build:server",
     "build:server": "babel ./src -d ./dist -D",
     "build:client": "webpack --config ./webpack/prod.config.js",
     "validate": "npm ls",
-    "analyze:build": "env NODE_ENV=production webpack --json --config ./webpack/prod.config.js  > bundle-stats.json",
+    "analyze:build": "cross-env NODE_ENV=production webpack --json --config ./webpack/prod.config.js  > bundle-stats.json",
     "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json",
     "lint:fix": "npm run test:dev:lint -- --fix",
     "prettier": "prettier --single-quote --write",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "jest": {
     "moduleDirectories": [
@@ -86,6 +87,7 @@
     "cookie-parser": "1.4.3",
     "copy-to-clipboard": "3.0.5",
     "cors": "2.7.1",
+    "cross-env": "^5.1.1",
     "css-loader": "0.26.1",
     "cssnano": "3.10.0",
     "debug": "2.2.0",
@@ -162,6 +164,10 @@
     "winston": "1.1.2"
   },
   "devDependencies": {
+    "@storybook/addon-actions": "^3.2.13",
+    "@storybook/addon-info": "^3.2.13",
+    "@storybook/addon-links": "^3.2.13",
+    "@storybook/react": "^3.2.13",
     "babel-eslint": "7.1.1",
     "babel-jest": "^21.2.0",
     "babel-plugin-react-transform": "2.0.2",

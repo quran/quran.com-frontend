@@ -1,12 +1,13 @@
 import React from 'react';
-import IndexHeader from 'components/IndexHeader';
 import Helmet from 'react-helmet';
+import IndexHeader from 'components/IndexHeader';
+import AboutText from 'components/AboutText';
 
-export default () => (
+export default () =>
   <div>
     <Helmet title="About Quran.com" />
     <IndexHeader noSearch />
-    <div className="about-text container-fluid">
+    <AboutText className="container-fluid">
       <div className="row">
         <div className="col-md-8 col-md-offset-2">
           <h4 className="source-sans">
@@ -73,8 +74,7 @@ export default () => (
             <a href="http://www.tanzil.info">Tanzil</a>,
             <a href="http://www.qurancomplex.com"> Qur‘anComplex</a>,
             <a href="https://github.com/cpfair/quran-align">
-              {' '}
-              Colin Fair’s work on audio segments
+              {' '}Colin Fair’s work on audio segments
             </a>
             ,
             <a href="http://www.zekr.org"> Zekr</a> and
@@ -86,6 +86,5 @@ export default () => (
           </h4>
         </div>
       </div>
-    </div>
-  </div>
-);
+    </AboutText>
+  </div>;

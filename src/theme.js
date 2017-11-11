@@ -1,5 +1,6 @@
 const fonts = {
-  montserrat: 'Montserrat, sans-serif'
+  montserrat: 'Montserrat, sans-serif',
+  sourceSans: 'Source Sans Pro, sans-serif'
 };
 
 const colors = {
@@ -20,6 +21,7 @@ const theme = {
   colors,
   screen,
   brandPrimary: '#2CA4AB',
+  brandInfo: '#c4beb0',
   textMuted: '#d1d0d0',
   textColor: '#939598'
 };

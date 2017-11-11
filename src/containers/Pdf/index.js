@@ -8,6 +8,7 @@ import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 
 // components
+import Container from 'components/Container';
 import Verse from 'components/Verse';
 import Bismillah from 'components/Bismillah';
 
@@ -15,8 +16,6 @@ import Bismillah from 'components/Bismillah';
 import debug from 'helpers/debug';
 
 import { chaptersConnect, versesConnect } from '../Surah/connect';
-
-const style = require('../Surah/style.scss');
 
 class Pdf extends Component {
   hasVerses() {
@@ -33,7 +32,7 @@ class Pdf extends Component {
       currentVerse
     } = this.props; // eslint-disable-line no-shadow
 
-    return Object.values(verses).map(verse => (
+    return Object.values(verses).map(verse =>
       <Verse
         verse={verse}
         chapter={chapter}
@@ -47,7 +46,7 @@ class Pdf extends Component {
         audio={options.audio}
         isPdf
       />
-    ));
+    );
   }
 
   render() {
@@ -56,9 +55,9 @@ class Pdf extends Component {
 
     if (!this.hasVerses()) {
       return (
-        <div className={style.container} style={{ margin: '50px auto' }}>
+        <Container style={{ margin: '50px auto' }}>
           {this.renderNoAyah()}
-        </div>
+        </Container>
       );
     }
 
@@ -67,18 +66,20 @@ class Pdf extends Component {
         <Helmet
           style={[
             {
-              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${options.fontSize
+                .arabic}rem;} .text-translation{font-size: ${options.fontSize
+                .translation}rem;}` // eslint-disable-line max-len
             }
           ]}
         />
-        <div className={`container-fluid ${style.container}`}>
+        <Container className="container-fluid">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
               <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderVerses()}
             </div>
           </div>
-        </div>
+        </Container>
       </div>
     );
   }
@@ -101,8 +102,8 @@ const AsyncPdf = asyncConnect([
 
 function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
-  const chapter: Object = state.chapters.entities[chapterId];
-  const verses: Object = state.verses.entities[chapterId];
+  const chapter = state.chapters.entities[chapterId];
+  const verses = state.verses.entities[chapterId];
   const verseArray = verses
     ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
     : [];

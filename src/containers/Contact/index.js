@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import superagent from 'superagent';
 
 import IndexHeader from 'components/IndexHeader';
+import AboutText from 'components/AboutText';
 
 class Contact extends Component {
   state = {
@@ -21,16 +22,13 @@ class Contact extends Component {
       }
     };
 
-    superagent
-      .post('/support')
-      .send(form)
-      .end((err, { body }) => {
-        if (body.ticket) {
-          this.setState({
-            success: true
-          });
-        }
-      });
+    superagent.post('/support').send(form).end((err, { body }) => {
+      if (body.ticket) {
+        this.setState({
+          success: true
+        });
+      }
+    });
   };
 
   renderForm() {
@@ -113,13 +111,12 @@ class Contact extends Component {
     );
   }
 
-  renderSubmitSuccess = () => (
+  renderSubmitSuccess = () =>
     <h3 className="text-center form-success-message">
       Thank you for contacting us - we look forward to speaking with you. While
       this is a volunteer effort, we do experience many support tickets on a
       daily basis and would love to get back to everyone on a timely manner.
-    </h3>
-  );
+    </h3>;
 
   render() {
     let body;
@@ -133,7 +130,7 @@ class Contact extends Component {
     return (
       <div>
         <IndexHeader noSearch />
-        <div className="container-fluid about-text">
+        <AboutText className="container-fluid">
           <div className="row">
             <div className="col-md-6 col-md-offset-3">
               <h4>
@@ -144,9 +141,11 @@ class Contact extends Component {
                 <br />
               </h4>
             </div>
-            <div className="col-md-8 col-md-offset-2">{body}</div>
+            <div className="col-md-8 col-md-offset-2">
+              {body}
+            </div>
           </div>
-        </div>
+        </AboutText>
       </div>
     );
   }
