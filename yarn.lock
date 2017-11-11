@@ -6576,6 +6576,7 @@ humps@2.0.0:
   resolved "https://registry.yarnpkg.com/humps/-/humps-2.0.0.tgz#dd4a423e9784626fe7b9f19fde0baff659b40173"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 hyphenate-style-name@^1.0.1, hyphenate-style-name@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/hyphenate-style-name/-/hyphenate-style-name-1.0.2.tgz#31160a36930adaf1fc04c6074f7eb41465d4ec4b"
@@ -6583,12 +6584,11 @@ hyphenate-style-name@^1.0.1, hyphenate-style-name@^1.0.2:
 =======
 >>>>>>> Use cross-env for npm script envs
 i@0.3.6:
+=======
+i@0.3.6, i@0.3.x:
+>>>>>>> fix yarn.lock
   version "0.3.6"
   resolved "https://registry.yarnpkg.com/i/-/i-0.3.6.tgz#d96c92732076f072711b6b10fd7d4f65ad8ee23d"
-
-i@0.3.x:
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/i/-/i-0.3.5.tgz#1d2b854158ec8169113c6cb7f6b6801e99e211d5"
 
 iconv-lite@0.4.13, iconv-lite@^0.4.5:
   version "0.4.13"
