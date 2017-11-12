@@ -12,10 +12,10 @@ describe('<PageBreak />', () => {
   });
 
   it('should render', () => {
-    expect(wrapper).to.be.ok; // eslint-disable-line
+    expect(wrapper).toBeTruthy();
   });
 
   it('should show page number', () => {
-    expect(wrapper.html()).to.contain(`Page ${pageNum}`);
+    expect(wrapper.html()).toContain(`Page ${pageNum}`);
   });
 });
