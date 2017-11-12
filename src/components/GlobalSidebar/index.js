@@ -1,5 +1,6 @@
 /* global document */
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Link from 'react-router/lib/Link';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
