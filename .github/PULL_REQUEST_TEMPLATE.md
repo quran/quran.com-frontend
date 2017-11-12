@@ -6,7 +6,7 @@ _why the change and what has changed_
 - [ ] Unit tests written
 - [ ] Manually tested
 - [ ] New dependencies were added with `yarn`
-- [ ] Prettier was run
+- [ ] Prettier & ESLint were run
 
 ### Screenshot
 _insert screenshot if needed_
