@@ -1,15 +1,20 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Tooltip from 'react-bootstrap/lib/Tooltip';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
+// eslint-disable-next-line no-confusing-arrow
+const scrollColor = props =>
+  props.active ? props.theme.brandPrimary : props.theme.textColor;
 
 const ScrollLink = styled.a`
   width: 100%;
   display: inline-block;
   cursor: pointer;
   padding-right: 1.5%;
-  color: ${props => (props.active ? props.theme.brandPrimary : props.theme.textColor)};
+  color: ${scrollColor};
   outline: none;
   cursor: pointer;
   margin-bottom: 0;

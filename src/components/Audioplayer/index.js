@@ -1,6 +1,7 @@
 /* global document */
 // TODO: This file is too too large.
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';

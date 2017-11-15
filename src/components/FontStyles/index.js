@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fontFaceStyle, fontFaceStyleLoaded } from 'helpers/buildFontFaces';
 import load from 'redux/actions/fontFace.js';
@@ -32,16 +33,18 @@ class FontStyles extends Component {
 
     return (
       <div>
-        {Object.keys(fontFaces).map(className => (
+        {Object.keys(fontFaces).map(className =>
           <style
             key={className}
             dangerouslySetInnerHTML={{
               __html: fontFaces[className]
-                ? `${fontFaceStyle(className)} ${fontFaceStyleLoaded(className)}`
+                ? `${fontFaceStyle(className)} ${fontFaceStyleLoaded(
+                    className
+                  )}`
                 : fontFaceStyle(className)
             }}
           />
-        ))}
+        )}
       </div>
     );
   }
