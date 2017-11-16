@@ -2,13 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reactCookie from 'react-cookie';
-import Router from 'react-router/lib/Router';
-import match from 'react-router/lib/match';
-import browserHistory from 'react-router/lib/browserHistory';
-import applyRouterMiddleware from 'react-router/lib/applyRouterMiddleware';
-import useScroll from 'react-router-scroll';
-import { ReduxAsyncConnect } from 'redux-connect';
-import { syncHistoryWithStore } from 'react-router-redux';
+import { BrowserRouter } from 'react-router-dom';
 import { AppContainer } from 'react-hot-loader';
 import { ThemeProvider } from 'styled-components';
 
@@ -18,12 +12,11 @@ import config from './config';
 import theme from './theme';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
-import routes from './routes';
 import Root from './containers/Root';
+import App from './containers/App';
 
 const client = new ApiClient();
-const store = createStore(browserHistory, client, window.reduxData);
-const history = syncHistoryWithStore(browserHistory, store);
+const store = createStore(null, client, window.reduxData);
 
 try {
   Raven.config(config.sentryClient).install();
@@ -45,49 +38,37 @@ window.clearCookies = () => {
   reactCookie.remove('smartbanner-installed');
 };
 
-match(
-  { history, routes: routes(store) },
-  (error, redirectLocation, renderProps) => {
-    const component = (
-      <ThemeProvider theme={theme}>
-        <Router
-          {...renderProps}
-          render={props => (
-            <ReduxAsyncConnect
-              {...props}
-              helpers={{ client }}
-              render={applyRouterMiddleware(useScroll())}
-            />
-          )}
-        />
-      </ThemeProvider>
-    );
+const component = (
+  <ThemeProvider theme={theme}>
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </ThemeProvider>
+);
 
-    const mountNode = document.getElementById('app');
+const mountNode = document.getElementById('app');
 
-    debug('client', 'React Rendering');
+debug('client', 'React Rendering');
+
+ReactDOM.render(
+  <AppContainer>
+    <Root component={component} store={store} />
+  </AppContainer>,
+  mountNode,
+  () => {
+    debug('client', 'React Rendered');
+  }
+);
+
+if (module.hot) {
+  module.hot.accept('./containers/Root', () => {
+    const NextRoot = require('./containers/Root'); // eslint-disable-line global-require
 
     ReactDOM.render(
       <AppContainer>
-        <Root component={component} store={store} />
+        <NextRoot store={store} component={component} />
       </AppContainer>,
-      mountNode,
-      () => {
-        debug('client', 'React Rendered');
-      }
+      document.getElementById('root')
     );
-
-    if (module.hot) {
-      module.hot.accept('./containers/Root', () => {
-        const NextRoot = require('./containers/Root'); // eslint-disable-line global-require
-
-        ReactDOM.render(
-          <AppContainer>
-            <NextRoot store={store} component={component} />
-          </AppContainer>,
-          document.getElementById('root')
-        );
-      });
-    }
-  }
-);
+  });
+}

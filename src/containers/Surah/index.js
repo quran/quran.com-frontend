@@ -2,11 +2,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
 import Helmet from 'react-helmet';
@@ -30,8 +29,6 @@ import * as AyahActions from 'redux/actions/verses.js';
 import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
-
-import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
 
 const LoaderStyle = {};
 
@@ -484,12 +481,6 @@ Surah.propTypes = {
   isPlaying: PropTypes.bool
 };
 
-const AsyncSurah = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: chapterInfoConnect },
-  { promise: versesConnect }
-])(Surah);
-
 function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
@@ -537,4 +528,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AsyncSurah);
+export default connect(mapStateToProps, mapDispatchToProps)(Surah);

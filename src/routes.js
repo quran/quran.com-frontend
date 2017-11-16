@@ -1,218 +1,149 @@
 /* eslint-disable max-len, no-console */
 import React from 'react';
-import IndexRoute from 'react-router/lib/IndexRoute';
-import Route from 'react-router/lib/Route';
-import Redirect from 'react-router/lib/Redirect';
+import { Switch, Redirect, Route } from 'react-router';
 
-import {
-  isLoaded as isAuthLoaded,
-  load as loadAuth,
-  hasAccessToken
-} from 'redux/actions/auth';
-
-import checkValidChapterOrVerse from './utils/routeFilters';
-import App from './containers/App';
 import Home from './containers/Home';
 
-export default (store) => {
-  const requireLogin = (nextState, replace, cb) => {
-    function checkAuth() {
-      const { auth: { user } } = store.getState();
-      if (!user) {
-        // oops, not logged in, so can't be here!
-        replace('/');
+import {
+  chaptersConnect,
+  chapterInfoConnect,
+  versesConnect,
+  tafsirConnect,
+  juzsConnect
+} from './containers/Surah/connect';
+import { search } from './redux/actions/search.js';
+
+export const routes = [
+  {
+    path: '/',
+    component: Home,
+    loadData: [chaptersConnect, juzsConnect]
+  },
+  {
+    path: '/donations',
+    component: import(/* webpackChunkName: "donations" */ './containers/Donations')
+      .then(module => module.default)
+      .catch(err => console.trace(err))
+  },
+  {
+    path: '/contributions',
+    component: import(/* webpackChunkName: "donations" */ './containers/Donations')
+      .then(module => module.default)
+      .catch(err => console.trace(err))
+  },
+  {
+    path: '/about',
+    component: import(/* webpackChunkName: "about" */ './containers/About')
+      .then(module => module.default)
+      .catch(err => console.trace(err))
+  },
+  {
+    path: '/contact',
+    component: import(/* webpackChunkName: "contact" */ './containers/Contact')
+      .then(module => module.default)
+      .catch(err => console.trace(err))
+  },
+  {
+    path: '/contactus',
+    component: import(/* webpackChunkName: "contact" */ './containers/Contact')
+      .then(module => module.default)
+      .catch(err => console.trace(err))
+  },
+  {
+    path: '/mobile',
+    component: import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
+      .then(module => module.default)
+      .catch(err => console.trace(err))
+  },
+  {
+    path: '/apps',
+    component: import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
+      .then(module => module.default)
+      .catch(err => console.trace(err))
+  },
+  {
+    path: '/error/:errorKey',
+    component: import(/* webpackChunkName: "error" */ './containers/Error')
+      .then(module => module.default)
+      .catch(err => console.trace(err))
+  },
+  {
+    path: '/search',
+    component: import(/* webpackChunkName: "search" */ './containers/Search')
+      .then(module => module.default)
+      .catch(err => console.trace(err)),
+    loadData: [
+      ({ store: { dispatch }, location }) => {
+        if (__CLIENT__) {
+          dispatch(search(location.query || location.q));
+          return false;
+        }
+
+        return dispatch(search(location.query || location.q));
       }
-      cb();
-    }
+    ]
+  },
+  {
+    path: '/:chapterId/info(/:language)',
+    component: import(/* webpackChunkName: "chapterinfo" */ './containers/ChapterInfo')
+      .then(module => module.default)
+      .catch(err => console.trace(err)),
+    loadData: [chaptersConnect, chapterInfoConnect]
+  },
+  {
+    path: '/ayatul-kursi',
+    component: import(/* webpackChunkName: "ayatulkursi" */ './containers/AyatulKursi')
+      .then(module => module.default)
+      .catch(err => console.trace(err)),
+    loadData: [
+      chaptersConnect,
+      ({ store }) =>
+        versesConnect({ store, params: { chapterId: '2', range: '255' } })
+    ]
+  },
+  {
+    path: '/:chapterId/:range/tafsirs/:tafsirId',
+    component: import(/* webpackChunkName: "VerseTafsir" */ './containers/VerseTafsir')
+      .then(module => module.default)
+      .catch(err => console.trace(err)),
+    loadData: [versesConnect, tafsirConnect]
+  },
+  {
+    path: '/:chapterId/:range/:translations',
+    component: import('./containers/Surah')
+      .then(module => module.default)
+      .catch(err => console.trace(err)),
+    loadData: [chaptersConnect, chapterInfoConnect, versesConnect]
+    // import('./components/GlobalNav/Surah')
+    // onEnter={checkValidChapterOrVerse}
+  },
+  {
+    path: '/:chapterId(/:range).pdf',
+    component: import(/* webpackChunkName: "pdf" */ './containers/Pdf')
+      .then(module => module.default)
+      .catch(err => console.trace(err)),
+    loadData: [chaptersConnect, versesConnect]
+    // import(
+    //   /* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter'
+    // )
+    // onEnter={checkValidChapterOrVerse}
+  },
+  {
+    path: '/:chapterId(/:range)',
+    component: import(/* webpackChunkName: "surah" */ './containers/Surah')
+      .then(module => module.default)
+      .catch(err => console.trace(err)),
+    loadData: [chaptersConnect, chapterInfoConnect, versesConnect]
+    // import(
+    //   /* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah'
+    // )
+    // onEnter={checkValidChapterOrVerse}
+  }
+];
 
-    if (!isAuthLoaded(store.getState())) {
-      store.dispatch(loadAuth()).then(checkAuth);
-    } else {
-      checkAuth();
-    }
-  };
-
-  const shouldAuth = (nextState, replace, cb) => {
-    if (!isAuthLoaded(store.getState()) && hasAccessToken()) {
-      return store.dispatch(loadAuth()).then(() => cb());
-    }
-
-    return cb();
-  };
-
-  return (
-    <Route path="/" component={App} onEnter={shouldAuth}>
-      <IndexRoute components={Home} />
-      <Route
-        path="/donations"
-        getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "donations" */ './containers/Donations')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-      <Route
-        path="/contributions"
-        getComponent={(nextState, cb) =>
-          import(
-            /* webpackChunkName: "contributions" */ './containers/Donations'
-          )
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-
-      <Route
-        path="/about"
-        getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "about" */ './containers/About')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-
-      <Route
-        path="/contact"
-        getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "contact" */ './containers/Contact')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-      <Route
-        path="/contactus"
-        getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "contactus" */ './containers/Contact')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-
-      <Route
-        path="/mobile"
-        getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-      <Route
-        path="/apps"
-        getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "apps" */ './containers/MobileLanding')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-
-      <Route
-        path="/error/:errorKey"
-        getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "error" */ './containers/Error')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-
-      <Route
-        path="/search"
-        getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "search" */ './containers/Search')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-
-      <Route
-        path="/login"
-        getComponent={(nextState, cb) =>
-          import(/* webpackChunkName: "login" */ './containers/Login')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-
-      <Route onEnter={requireLogin}>
-        <Route
-          path="/profile"
-          getComponent={(nextState, cb) =>
-            import(/* webpackChunkName: "profile" */ './containers/Profile')
-              .then(module => cb(null, module.default))
-              .catch(err => console.trace(err))}
-        />
-      </Route>
-
-      <Route
-        path="/:chapterId/info(/:language)"
-        getComponents={(nextState, cb) =>
-          import(
-            /* webpackChunkName: "chapterinfo" */ './containers/ChapterInfo'
-          )
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-        onEnter={checkValidChapterOrVerse}
-      />
-
-      <Route
-        path="/ayatul-kursi"
-        getComponents={(nextState, cb) =>
-          import(
-            /* webpackChunkName: "ayatulkursi" */ './containers/AyatulKursi'
-          )
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-      />
-      <Route
-        path="/:chapterId/:range/tafsirs/:tafsirId"
-        getComponents={(nextState, cb) =>
-          import('./containers/VerseTafsir')
-            .then(module => cb(null, module.default))
-            .catch(err => console.trace(err))}
-        onEnter={checkValidChapterOrVerse}
-      />
-
-      <Route
-        path="/:chapterId/:range/:translations"
-        getComponents={(nextState, cb) =>
-          Promise.all([
-            import('./containers/Surah'),
-            import('./components/GlobalNav/Surah')
-          ])
-            .then(modules =>
-              cb(null, { main: modules[0].default, nav: modules[1].default })
-            )
-            .catch(err => console.trace(err))}
-        onEnter={checkValidChapterOrVerse}
-      />
-
-      <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
-      <Redirect from="/:chapterId/:from::to" to="/:chapterId/:from-:to" />
-
-      <Route
-        path="/:chapterId(/:range).pdf"
-        getComponents={(nextState, cb) =>
-          Promise.all([
-            import(/* webpackChunkName: "pdf" */ './containers/Pdf'),
-            import(
-              /* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter'
-            )
-          ])
-            .then(modules =>
-              cb(null, {
-                main: modules[0].default,
-                footer: modules[1].default,
-                nav: 'noscript'
-              })
-            )
-            .catch(err => console.trace(err))}
-        onEnter={checkValidChapterOrVerse}
-      />
-
-      <Route
-        path="/:chapterId(/:range)"
-        getComponents={(nextState, cb) =>
-          Promise.all([
-            import(/* webpackChunkName: "surah" */ './containers/Surah'),
-            import(
-              /* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah'
-            )
-          ])
-            .then(modules =>
-              cb(null, { main: modules[0].default, nav: modules[1].default })
-            )
-            .catch(err => console.trace(err))}
-        onEnter={checkValidChapterOrVerse}
-      />
-    </Route>
-  );
-};
+export default () =>
+  <Switch>
+    {routes.map(route => <Route {...route} />)}
+    <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
+    <Redirect from="/:chapterId/:from::to" to="/:chapterId/:from-:to" />
+  </Switch>;

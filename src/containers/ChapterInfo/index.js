@@ -1,7 +1,6 @@
 import * as customPropTypes from 'customPropTypes';
 import React from 'react';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 
 import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
@@ -10,20 +9,21 @@ import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
-import { chaptersConnect, chapterInfoConnect } from '../Surah/connect';
-
 const SurahInfo = Loadable({
   loader: () =>
     import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
   LoadingComponent: ComponentLoader
 });
 
-const ChapterInfo = ({ chapter, info }) => (
+const ChapterInfo = ({ chapter, info }) =>
   <div className="row" style={{ marginTop: 20 }}>
     <Helmet
       {...makeHeadTags({
         title: `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`,
-        description: `${info ? info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
+        description: `${info
+          ? info.shortText
+          : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter
+          .pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
       })}
       script={[
         {
@@ -59,18 +59,12 @@ const ChapterInfo = ({ chapter, info }) => (
         />
       </Button>
     </div>
-  </div>
-);
+  </div>;
 
 ChapterInfo.propTypes = {
   chapter: customPropTypes.surahType,
   info: customPropTypes.infoType
 };
-
-const AsyncChapterInfo = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: chapterInfoConnect }
-])(ChapterInfo);
 
 function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
@@ -82,4 +76,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(AsyncChapterInfo);
+export default connect(mapStateToProps)(ChapterInfo);

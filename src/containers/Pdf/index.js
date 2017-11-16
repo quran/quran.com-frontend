@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 // redux
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 
 import Helmet from 'react-helmet';
 
@@ -15,8 +14,6 @@ import Bismillah from 'components/Bismillah';
 
 // Helpers
 import debug from 'helpers/debug';
-
-import { chaptersConnect, versesConnect } from '../Surah/connect';
 
 class Pdf extends Component {
   hasVerses() {
@@ -96,11 +93,6 @@ Pdf.propTypes = {
   isPlaying: PropTypes.bool
 };
 
-const AsyncPdf = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: versesConnect }
-])(Pdf);
-
 function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.params.chapterId, 10);
   const chapter = state.chapters.entities[chapterId];
@@ -134,4 +126,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(AsyncPdf);
+export default connect(mapStateToProps)(Pdf);
