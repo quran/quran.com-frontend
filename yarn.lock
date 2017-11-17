@@ -7702,6 +7702,10 @@ load-json-file@^2.0.0:
     pify "^2.0.0"
     strip-bom "^3.0.0"
 
+loadable-components@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/loadable-components/-/loadable-components-0.3.0.tgz#19c8b2cf57c22a00090aa0563b43dd92e1473d82"
+
 loader-runner@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/loader-runner/-/loader-runner-2.3.0.tgz#f482aea82d543e07921700d5a46ef26fdac6b8a2"

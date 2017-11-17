@@ -55,7 +55,11 @@ class GlobalNav extends Component {
   };
 
   isHome() {
-    return this.props.location.pathname === '/';
+    if (this.props.location) {
+      return this.props.location.pathname === '/';
+    }
+
+    return true;
   }
 
   renderRightControls() {

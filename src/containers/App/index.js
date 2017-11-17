@@ -6,6 +6,7 @@ import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
+import { withRouter } from 'react-router';
 import Loadable from 'react-loadable';
 import ComponentLoader from 'components/ComponentLoader';
 import debug from 'helpers/debug';
@@ -15,6 +16,7 @@ import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
 import Loader from 'quran-components/lib/Loader';
+
 import Routes from '../../routes';
 
 const ModalHeader = Modal.Header;
@@ -114,7 +116,7 @@ class App extends Component {
             open={this.state.sidebarOpen}
             handleOpen={open => this.setState({ sidebarOpen: open })}
           />}
-        {children || <Routes />}
+        {children || <Routes store={this.context.store} />}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         {footer || <Footer />}
         {__CLIENT__ &&
@@ -148,9 +150,11 @@ App.propTypes = {
   loadingFootNote: PropTypes.bool
 };
 
-export default connect(
-  state => ({
-    media: state.media
-  }),
-  { removeMedia }
-)(MetricsApp);
+export default withRouter(
+  connect(
+    state => ({
+      media: state.media
+    }),
+    { removeMedia }
+  )(MetricsApp)
+);

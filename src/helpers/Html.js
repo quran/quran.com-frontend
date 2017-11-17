@@ -7,7 +7,7 @@ import serialize from 'serialize-javascript';
 
 import highlightStyles from 'helpers/highlightStyles';
 
-const Html = ({ store, component, assets }) => {
+const Html = ({ store, component, assets, loadableState }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
   const head = Helmet.rewind();
   return (
@@ -80,6 +80,7 @@ const Html = ({ store, component, assets }) => {
           }}
           charSet="UTF-8"
         />
+        <span dangerouslySetInnerHTML={{ __html: loadableState }} />
         {process.env.NODE_ENV === 'production' &&
           <script
             dangerouslySetInnerHTML={{
@@ -109,7 +110,8 @@ const Html = ({ store, component, assets }) => {
 Html.propTypes = {
   store: PropTypes.object, // eslint-disable-line
   assets: PropTypes.object, // eslint-disable-line
-  component: PropTypes.element
+  component: PropTypes.element,
+  loadableState: PropTypes.object // eslint-disable-line
 };
 
 export default Html;

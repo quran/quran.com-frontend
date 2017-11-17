@@ -11,6 +11,7 @@ import Raven from 'raven';
 import errorhandler from 'errorhandler';
 import pdf from 'html-pdf';
 import { ThemeProvider } from 'styled-components';
+import { getLoadableState } from 'loadable-components/server';
 
 import config from 'config';
 import expressConfig from './server/config/express';
@@ -70,7 +71,7 @@ server.use((req, res) => {
   routes.some((route) => {
     // use `matchPath` here
     const match = matchPath(req.url, route);
-    if (match) {
+    if (match && route.loadData) {
       route.loadData.forEach((connector) => {
         promises.push(
           connector({
@@ -126,16 +127,19 @@ server.use((req, res) => {
       });
     }
 
-    const html = `<!doctype html>
-  ${ReactDOM.renderToString(
-    <Html
-      component={component}
-      store={store}
-      assets={webpack_isomorphic_tools.assets()}
-    />
-  )}`;
+    return getLoadableState(component).then((loadableState) => {
+      const html = `<!doctype html>
+      ${ReactDOM.renderToString(
+        <Html
+          component={component}
+          store={store}
+          assets={webpack_isomorphic_tools.assets()}
+          loadableState={loadableState.getScriptTag()}
+        />
+      )}`;
 
-    return res.send(html);
+      return res.send(html);
+    });
   });
 
   return false;

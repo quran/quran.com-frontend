@@ -1,5 +1,6 @@
-/* eslint-disable max-len, no-console */
 import React from 'react';
+import PropTypes from 'prop-types';
+import loadable from 'loadable-components';
 import { Switch, Redirect, Route } from 'react-router';
 
 import Home from './containers/Home';
@@ -12,66 +13,68 @@ import {
   juzsConnect
 } from './containers/Surah/connect';
 import { search } from './redux/actions/search.js';
+import routePromises from './utils/routePromises';
 
 export const routes = [
   {
     path: '/',
+    exact: true,
     component: Home,
     loadData: [chaptersConnect, juzsConnect]
   },
   {
     path: '/donations',
-    component: import(/* webpackChunkName: "donations" */ './containers/Donations')
-      .then(module => module.default)
-      .catch(err => console.trace(err))
+    component: loadable(() =>
+      import(/* webpackChunkName: "donations" */ './containers/Donations')
+    )
   },
   {
     path: '/contributions',
-    component: import(/* webpackChunkName: "donations" */ './containers/Donations')
-      .then(module => module.default)
-      .catch(err => console.trace(err))
+    component: loadable(() =>
+      import(/* webpackChunkName: "donations" */ './containers/Donations')
+    )
   },
   {
     path: '/about',
-    component: import(/* webpackChunkName: "about" */ './containers/About')
-      .then(module => module.default)
-      .catch(err => console.trace(err))
+    component: loadable(() =>
+      import(/* webpackChunkName: "about" */ './containers/About')
+    )
   },
   {
     path: '/contact',
-    component: import(/* webpackChunkName: "contact" */ './containers/Contact')
-      .then(module => module.default)
-      .catch(err => console.trace(err))
+    component: loadable(() =>
+      import(/* webpackChunkName: "contact" */ './containers/Contact')
+    )
   },
   {
     path: '/contactus',
-    component: import(/* webpackChunkName: "contact" */ './containers/Contact')
-      .then(module => module.default)
-      .catch(err => console.trace(err))
+    component: loadable(() =>
+      import(/* webpackChunkName: "contact" */ './containers/Contact')
+    )
   },
   {
     path: '/mobile',
-    component: import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
-      .then(module => module.default)
-      .catch(err => console.trace(err))
+    component: loadable(() =>
+      import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
+    )
   },
   {
     path: '/apps',
-    component: import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
-      .then(module => module.default)
-      .catch(err => console.trace(err))
+    component: loadable(() =>
+      import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
+    )
   },
   {
     path: '/error/:errorKey',
-    component: import(/* webpackChunkName: "error" */ './containers/Error')
-      .then(module => module.default)
-      .catch(err => console.trace(err))
+    component: loadable(() =>
+      import(/* webpackChunkName: "error" */ './containers/Error')
+    )
   },
   {
     path: '/search',
-    component: import(/* webpackChunkName: "search" */ './containers/Search')
-      .then(module => module.default)
-      .catch(err => console.trace(err)),
+    component: loadable(() =>
+      import(/* webpackChunkName: "search" */ './containers/Search')
+    ),
     loadData: [
       ({ store: { dispatch }, location }) => {
         if (__CLIENT__) {
@@ -84,17 +87,17 @@ export const routes = [
     ]
   },
   {
-    path: '/:chapterId/info(/:language)',
-    component: import(/* webpackChunkName: "chapterinfo" */ './containers/ChapterInfo')
-      .then(module => module.default)
-      .catch(err => console.trace(err)),
+    path: '/:chapterId/info/:language?',
+    component: loadable(() =>
+      import(/* webpackChunkName: "chapterinfo" */ './containers/ChapterInfo')
+    ),
     loadData: [chaptersConnect, chapterInfoConnect]
   },
   {
     path: '/ayatul-kursi',
-    component: import(/* webpackChunkName: "ayatulkursi" */ './containers/AyatulKursi')
-      .then(module => module.default)
-      .catch(err => console.trace(err)),
+    component: loadable(() =>
+      import(/* webpackChunkName: "ayatulkursi" */ './containers/AyatulKursi')
+    ),
     loadData: [
       chaptersConnect,
       ({ store }) =>
@@ -102,26 +105,24 @@ export const routes = [
     ]
   },
   {
-    path: '/:chapterId/:range/tafsirs/:tafsirId',
-    component: import(/* webpackChunkName: "VerseTafsir" */ './containers/VerseTafsir')
-      .then(module => module.default)
-      .catch(err => console.trace(err)),
+    path: '/:chapterId(\\d+)/:range/tafsirs/:tafsirId',
+    component: loadable(() =>
+      import(/* webpackChunkName: "VerseTafsir" */ './containers/VerseTafsir')
+    ),
     loadData: [versesConnect, tafsirConnect]
   },
   {
-    path: '/:chapterId/:range/:translations',
-    component: import('./containers/Surah')
-      .then(module => module.default)
-      .catch(err => console.trace(err)),
+    path: '/:chapterId(\\d+)/:range/:translations',
+    component: loadable(() => import('./containers/Surah')),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect]
     // import('./components/GlobalNav/Surah')
     // onEnter={checkValidChapterOrVerse}
   },
   {
-    path: '/:chapterId(/:range).pdf',
-    component: import(/* webpackChunkName: "pdf" */ './containers/Pdf')
-      .then(module => module.default)
-      .catch(err => console.trace(err)),
+    path: '/:chapterId(\\d+)/:range?.pdf',
+    component: loadable(() =>
+      import(/* webpackChunkName: "pdf" */ './containers/Pdf')
+    ),
     loadData: [chaptersConnect, versesConnect]
     // import(
     //   /* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter'
@@ -129,10 +130,10 @@ export const routes = [
     // onEnter={checkValidChapterOrVerse}
   },
   {
-    path: '/:chapterId(/:range)',
-    component: import(/* webpackChunkName: "surah" */ './containers/Surah')
-      .then(module => module.default)
-      .catch(err => console.trace(err)),
+    path: '/:chapterId(\\d+)/:range?',
+    component: loadable(() =>
+      import(/* webpackChunkName: "surah" */ './containers/Surah')
+    ),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect]
     // import(
     //   /* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah'
@@ -141,9 +142,31 @@ export const routes = [
   }
 ];
 
-export default () =>
+const Routes = ({ store }) =>
   <Switch>
-    {routes.map(route => <Route {...route} />)}
+    {routes.map(({ component: Component, loadData, ...route }) =>
+      <Route
+        key={route.path}
+        {...route}
+        render={(routeProps) => {
+          if (__CLIENT__) {
+            routePromises({
+              store,
+              match: routeProps.match,
+              loadData
+            }).then(() => <Component {...routeProps} />);
+          }
+
+          return <Component {...routeProps} />;
+        }}
+      />
+    )}
     <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
     <Redirect from="/:chapterId/:from::to" to="/:chapterId/:from-:to" />
   </Switch>;
+
+Routes.propTypes = {
+  store: PropTypes.object.isRequired // eslint-disable-line
+};
+
+export default Routes;
