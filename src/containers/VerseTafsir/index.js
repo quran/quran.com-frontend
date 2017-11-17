@@ -75,9 +75,10 @@ VerseTafsir.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const verseKey = `${ownProps.params.chapterId}:${ownProps.params.range}`;
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
-  const tafsirId = ownProps.params.tafsirId;
+  const verseKey = `${ownProps.match.params.chapterId}:${ownProps.match.params
+    .range}`;
+  const chapterId = parseInt(ownProps.match.params.chapterId, 10);
+  const tafsirId = ownProps.match.params.tafsirId;
   const verse: Object = state.verses.entities[chapterId][verseKey];
 
   return {

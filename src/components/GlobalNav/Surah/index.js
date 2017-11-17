@@ -107,7 +107,7 @@ class GlobalNavSurah extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
+  const chapterId = parseInt(ownProps.match.params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
   const verses: Object = state.verses.entities[chapterId];
   const versesArray = verses

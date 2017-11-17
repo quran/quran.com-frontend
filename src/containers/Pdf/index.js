@@ -94,7 +94,7 @@ Pdf.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
+  const chapterId = parseInt(ownProps.match.params.chapterId, 10);
   const chapter = state.chapters.entities[chapterId];
   const verses = state.verses.entities[chapterId];
   const verseArray = verses
@@ -103,7 +103,7 @@ function mapStateToProps(state, ownProps) {
   const verseIds = new Set(verseArray);
   const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah =
-    !!ownProps.params.range && !ownProps.params.range.includes('-');
+    !!ownProps.match.params.range && !ownProps.match.params.range.includes('-');
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
@@ -112,7 +112,7 @@ function mapStateToProps(state, ownProps) {
     verseIds,
     isSingleAyah,
     currentVerse,
-    info: state.chapters.infos[ownProps.params.chapterId],
+    info: state.chapters.infos[ownProps.match.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
     isAuthenticated: state.auth.loaded,
