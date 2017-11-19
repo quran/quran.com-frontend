@@ -119,7 +119,7 @@
     "prop-types": "^15.6.0",
     "proxy-middleware": "0.14.0",
     "qs": "6.2.1",
-    "quran-components": "^0.0.80",
+    "quran-components": "^0.1.1",
     "raven": "1.1.1",
     "raw-loader": "0.5.1",
     "react": "15.4.1",

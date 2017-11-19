@@ -1,47 +1,42 @@
 import React from 'react';
 import { ShareButtons, generateShareIcon } from 'react-share';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
-
-import FbDefault from '../../../static/images/FB-grn.png';
-import TwitterDefault from '../../../static/images/Twitter-grn.png';
+import PropTypes from 'prop-types';
 
 const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 const FacebookIcon = generateShareIcon('facebook');
 const TwitterIcon = generateShareIcon('twitter');
+
+const inlineStyle = css`
+  display: inline-flex;
+`;
 
 const Container = styled.div`
   position: relative;
   top: 7px;
   display: inline-block;
 
-  .iconContainer {
-    display: inline-block;
-
-    &:last-child {
-      padding-left: 5px;
-    }
-
+  ${prop => prop.inline && inlineStyle} .social-icon {
     &:hover {
       cursor: pointer;
+      opacity: 0.8;
     }
   }
 `;
 
 const FacebookButton = styled(FacebookShareButton)`
-  background-image: url(${FbDefault});
   background-repeat: no-repeat;
   background-size: 12px;
   padding-top: 1px;
 `;
 
 const TwitterButton = styled(TwitterShareButton)`
-  background-image: url(${TwitterDefault});
   background-repeat: no-repeat;
   background-size: 21px;
 `;
 
-const Share = ({ chapter, verse }) => {
+const Share = ({ chapter, verse, inline }) => {
   // Fallback to Surah Id
   let path;
 
@@ -61,14 +56,14 @@ const Share = ({ chapter, verse }) => {
   const iconProps = verse ? { iconBgStyle: { fill: '#d1d0d0' } } : {};
 
   return (
-    <Container>
+    <Container inline={inline}>
       <FacebookButton
         url={shareUrl}
         title={title}
         windowWidth={670}
         windowHeight={540}
       >
-        <FacebookIcon size={24} round {...iconProps} />
+        <FacebookIcon size={24} round {...iconProps} class="sabeur" />
       </FacebookButton>
       <TwitterButton url={shareUrl} title={title}>
         <TwitterIcon size={24} round {...iconProps} />
@@ -79,7 +74,8 @@ const Share = ({ chapter, verse }) => {
 
 Share.propTypes = {
   chapter: customPropTypes.surahType.isRequired,
-  verse: customPropTypes.verseType
+  verse: customPropTypes.verseType,
+  inline: PropTypes.bool
 };
 
 export default Share;
