@@ -63,7 +63,7 @@ const Share = ({ chapter, verse, inline }) => {
         windowWidth={670}
         windowHeight={540}
       >
-        <FacebookIcon size={24} round {...iconProps} class="sabeur" />
+        <FacebookIcon size={24} round {...iconProps} />
       </FacebookButton>
       <TwitterButton url={shareUrl} title={title}>
         <TwitterIcon size={24} round {...iconProps} />
