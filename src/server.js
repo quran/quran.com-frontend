@@ -36,7 +36,7 @@ Raven.config(config.sentryServer, {
   autoBreadcrumbs: true
 }).install();
 
-/* allows us to handle unhandle promises, that might cause node crash */
+/* allows us to handle unhandled promises, that might cause node to crash */
 process.on('unhandledRejection', (err) => {
   console.log(err);
   debug('Server:unhandledRejection', err);
