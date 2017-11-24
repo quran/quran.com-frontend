@@ -13,7 +13,8 @@ import {
   LOAD,
   LOAD_SUCCESS,
   LOAD_FAIL,
-  UPDATE
+  UPDATE,
+  STOP
 } from 'redux/constants/audioplayer.js';
 
 export function setCurrentFile(file) {
@@ -40,6 +41,12 @@ export function playCurrentWord(payload) {
 export function play() {
   return {
     type: PLAY
+  };
+}
+
+export function stop() {
+  return {
+    type: STOP
   };
 }
 
