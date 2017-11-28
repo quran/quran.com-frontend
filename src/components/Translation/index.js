@@ -1,10 +1,10 @@
-/* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { loadFootNote } from 'redux/actions/media';
 
-const styles = require('./style.scss');
+import Container from './Container';
 
 class Translation extends Component {
   componentDidMount() {
@@ -42,20 +42,23 @@ class Translation extends Component {
     const isArabic = lang === 'arabic';
 
     return (
-      <div
+      <Container
         id={`trans${index}`}
-        className={`${styles.translation} ${isArabic && 'arabic'} translation`}
+        className={`${isArabic && 'arabic'} translation`}
       >
-        <h4 className="montserrat">{translation.resourceName}</h4>
+        <h4 className="montserrat">
+          {translation.resourceName}
+        </h4>
         <h2
-          className={`${isArabic ? 'text-right' : 'text-left'} text-translation times-new`}
+          className={`${isArabic
+            ? 'text-right'
+            : 'text-left'} text-translation times-new`}
         >
-          <small
-            dangerouslySetInnerHTML={{ __html: translation.text }}
-            className={`${lang || 'times-new'}`}
-          />
+          <small className={`${lang || 'times-new'}`}>
+            {translation.text}
+          </small>
         </h2>
-      </div>
+      </Container>
     );
   }
 }
@@ -66,7 +69,4 @@ Translation.propTypes = {
   loadFootNote: PropTypes.func.isRequired
 };
 
-export default connect(
-  state => ({}), // eslint-disable-line no-unused-vars
-  { loadFootNote }
-)(Translation);
+export default connect(null, { loadFootNote })(Translation);

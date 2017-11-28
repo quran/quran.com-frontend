@@ -1,144 +1,208 @@
 import React from 'react';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import { FOOTER_EVENTS } from '../../events';
 
-const styles = require('./style.scss');
+const Container = styled.footer`
+  background-color: ${props => props.theme.colors.tuatara};
+  padding: 3% 0 5% 0;
+  font-size: 14px;
+  margin-top: 50px;
 
-const Footer = () => (
-  <footer className={styles.footer}>
+  @media (max-width: ${props => props.theme.screen.lg}) {
+    padding-bottom: 7%;
+  }
+
+  @media (max-width: ${props => props.theme.screen.sm}) {
+    padding-bottom: 9%;
+  }
+`;
+
+const Section = styled.div`
+  padding-top: 30px;
+  text-transform: uppercase;
+`;
+
+const Header = styled.p`
+  line-height: 30px;
+  color: ${props => props.theme.colors.white};
+`;
+
+const List = styled.ul`
+  padding-left: 0;
+
+  li {
+    list-style: none;
+    padding: 5px 0;
+  }
+`;
+
+const StyledLink = styled.a`
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: color .15s ease-in-out;
+  -moz-transition: color .15s ease-in-out;
+  -o-transition: color .15s ease-in-out;
+  -ms-transition: color .15s ease-in-out;
+  transition: color .15s ease-in-out;
+
+  &:hover {
+    color: #fff;
+  }
+`;
+
+const StyledRouterLink = styled(Link)`
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  -webkit-transition: color .15s ease-in-out;
+  -moz-transition: color .15s ease-in-out;
+  -o-transition: color .15s ease-in-out;
+  -ms-transition: color .15s ease-in-out;
+  transition: color .15s ease-in-out;
+
+  &:hover {
+    color: #fff;
+  }
+`;
+
+const Footer = () =>
+  <Container>
     <div className="container">
       <div className="row">
         <div className="col-md-10 col-md-offset-1">
           <div className="row">
-            <div className={`${styles.about} col-md-2 col-sm-4 col-xs-12`}>
-              <p className={styles.header}>
+            <Section className="col-md-2 col-sm-4 col-xs-12">
+              <Header>
                 <LocaleFormattedMessage
                   id="nav.navigate"
                   defaultMessage="Navigate"
                 />
-              </p>
-              <ul className={`source-sans ${styles.list}`}>
+              </Header>
+              <List className="source-sans">
                 <li>
-                  <Link to="/about">
+                  <StyledRouterLink to="/about">
                     <LocaleFormattedMessage
                       id="nav.aboutUs"
                       defaultMessage="About Us"
                     />
-                  </Link>
+                  </StyledRouterLink>
                 </li>
                 <li>
-                  <a href="https://quran.zendesk.com/hc/en-us/requests/new">
+                  <StyledLink href="https://quran.zendesk.com/hc/en-us/requests/new">
                     <LocaleFormattedMessage
                       id="nav.contactUs"
                       defaultMessage="Contact Us"
                     />
-                  </a>
+                  </StyledLink>
                 </li>
                 <li>
-                  <a
+                  <StyledLink
                     href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help"
                     target="_blank"
                     rel="noopener noreferrer"
-                    data-metrics-event-name="Footer:Link:Developer"
+                    {...FOOTER_EVENTS.CLICK.DEVELOPERS_LINK.PROPS}
                   >
                     <LocaleFormattedMessage
                       id="nav.developers"
                       defaultMessage="Developers"
                     />
-                  </a>
+                  </StyledLink>
                 </li>
-              </ul>
-            </div>
-            <div className={`${styles.links} col-md-3 col-sm-4 col-xs-12`}>
-              <p className={styles.header}>
+              </List>
+            </Section>
+            <Section className="col-md-3 col-sm-4 col-xs-12">
+              <Header>
                 <LocaleFormattedMessage
                   id="nav.usefulSites"
                   defaultMessage="USEFUL SITES"
                 />
-              </p>
-              <ul className={`source-sans ${styles.list}`}>
+              </Header>
+              <List className="source-sans">
                 <li>
-                  <a
+                  <StyledLink
                     target="_blank"
                     rel="noopener noreferrer"
                     href="http://sunnah.com/"
-                    data-metrics-event-name="Footer:Link:Sunnah"
+                    {...FOOTER_EVENTS.CLICK.SUNNAH_LINK.PROPS}
                   >
                     Sunnah.com
-                  </a>
+                  </StyledLink>
                 </li>
                 <li>
-                  <a
+                  <StyledLink
                     target="_blank"
                     rel="noopener noreferrer"
                     href="http://salah.com/"
-                    data-metrics-event-name="Footer:Link:Salah"
+                    {...FOOTER_EVENTS.CLICK.SALAH_LINK.PROPS}
                   >
                     Salah.com
-                  </a>
+                  </StyledLink>
                 </li>
                 <li>
-                  <a
+                  <StyledLink
                     target="_blank"
                     rel="noopener noreferrer"
                     href="http://quranicaudio.com/"
-                    data-metrics-event-name="Footer:Link:QuranicAudio"
+                    {...FOOTER_EVENTS.CLICK.QURANICAUDIO_LINK.PROPS}
                   >
                     QuranicAudio.com
-                  </a>
+                  </StyledLink>
                 </li>
                 <li>
-                  <a
+                  <StyledLink
                     target="_blank"
                     rel="noopener noreferrer"
                     href="http://corpus.quran.com/wordbyword.jsp"
-                    data-metrics-event-name="Footer:Link:Corpus"
+                    {...FOOTER_EVENTS.CLICK.CORPUS_LINK.PROPS}
                   >
                     Corpus: Word by Word
-                  </a>
+                  </StyledLink>
                 </li>
-              </ul>
-            </div>
+              </List>
+            </Section>
 
-            <div className={`${styles.links} col-md-3 col-sm-4 col-xs-12`}>
-              <p className={styles.header}>
+            <Section className="col-md-3 col-sm-4 col-xs-12">
+              <Header>
                 <LocaleFormattedMessage
                   id="nav.otherLinks"
                   defaultMessage="Other links"
                 />
-              </p>
-              <ul className={`source-sans ${styles.list}`}>
+              </Header>
+              <List className="source-sans">
                 <li>
-                  <a
+                  <StyledLink
                     href="https://quran.com/sitemaps/sitemap.xml.gz"
                     target="_blank"
                     rel="noopener noreferrer"
+                    {...FOOTER_EVENTS.CLICK.SITEMAP_LINK.PROPS}
                   >
                     Sitemap
-                  </a>
+                  </StyledLink>
                 </li>
                 <li>
-                  <Link
+                  <StyledRouterLink
                     to="/36"
-                    data-metrics-event-name="Footer:Link:Click"
-                    data-metrics-surah-id="36"
+                    {...FOOTER_EVENTS.CLICK.CHAPTER_LINK.PROPS}
+                    data-metrics-chapter-id="36"
                   >
                     Surah Yasin, Yaseen (يس)
-                  </Link>
+                  </StyledRouterLink>
                 </li>
                 <li>
-                  <Link
+                  <StyledRouterLink
                     to="/2/255"
-                    data-metrics-event-name="Footer:Link:Click"
-                    data-metrics-surah-id="2/255"
+                    {...FOOTER_EVENTS.CLICK.CHAPTER_LINK.PROPS}
+                    data-metrics-chapter-id="2"
+                    data-metrics-verse-id="255"
                   >
                     Ayat Al-Kursi (آية الكرسي)
-                  </Link>
+                  </StyledRouterLink>
                 </li>
-              </ul>
-            </div>
-            <div className={`${styles.links} col-md-4 col-sm-12 col-xs-12`}>
+              </List>
+            </Section>
+            <Section className="col-md-4 col-sm-12 col-xs-12">
               <p className="monserrat">
                 <LocaleFormattedMessage
                   id="nav.aboutQuranProject"
@@ -154,12 +218,11 @@ const Footer = () => (
                 />
                 .
               </p>
-            </div>
+            </Section>
           </div>
         </div>
       </div>
     </div>
-  </footer>
-);
+  </Container>;
 
 export default Footer;

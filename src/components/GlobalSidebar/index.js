@@ -1,43 +1,17 @@
 /* global document */
-import React, { PropTypes, Component } from 'react';
-import styled from 'styled-components';
-import Link from 'react-router/lib/Link';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-const styles = require('./style.scss');
+import Container from './Container';
+import List from './List';
+import { SIDEBAR_EVENTS } from '../../events';
 
 const NavbarHeader = Navbar.Header;
 
-const List = styled.ul`
-  padding-left: 0;
-
-  li {
-    color: #777;
-
-    a {
-      color: #777;
-      padding: 10px 15px;
-      display: block;
-
-      .ss-icon {
-        font-size: 18px;
-        margin-right: 20px;
-      }
-
-      &:hover {
-        background: #f5f5f5;
-        color: #333;
-      }
-    }
-  }
-`;
-
 class GlobalSidebar extends Component {
-  state = {
-    settingsModalOpen: false
-  };
-
   componentDidMount() {
     document.body.addEventListener('click', this.onBodyClick.bind(this), true);
   }
@@ -64,7 +38,7 @@ class GlobalSidebar extends Component {
     const { open, handleOpen, children } = this.props;
 
     return (
-      <div className={`${styles.container} sidebar ${open && styles.open}`}>
+      <Container className="sidebar" open={open}>
         <Navbar static fluid>
           <NavbarHeader>
             <p // eslint-disable-line
@@ -72,7 +46,7 @@ class GlobalSidebar extends Component {
               onClick={() => handleOpen(false)}
             >
               <Link to="/">
-                <i className={`ss-icon ss-home ${styles.backToHome}`} />
+                <i className="ss-icon ss-home backToHome" />
                 <LocaleFormattedMessage id="nav.title" defaultMessage="Quran" />
               </Link>
             </p>
@@ -83,7 +57,7 @@ class GlobalSidebar extends Component {
           <li>
             <a
               href="https://quran.zendesk.com/hc/en-us"
-              data-metrics-event-name="Sidebar:Link:Help"
+              {...SIDEBAR_EVENTS.CLICK.HELP_LINK.PROPS}
             >
               <i className="ss-icon ss-help vertical-align-middle" />{' '}
               <LocaleFormattedMessage
@@ -93,7 +67,7 @@ class GlobalSidebar extends Component {
             </a>
           </li>
           <li>
-            <Link to="/apps" data-metrics-event-name="Sidebar:Link:Mobile">
+            <Link to="/apps" {...SIDEBAR_EVENTS.CLICK.APPS_LINK.PROPS}>
               <i className="ss-icon ss-cell vertical-align-middle" />{' '}
               <LocaleFormattedMessage id="nav.mobile" defaultMessage="Mobile" />
             </Link>
@@ -101,7 +75,7 @@ class GlobalSidebar extends Component {
           <li>
             <Link
               to="/donations"
-              data-metrics-event-name="Sidebar:Link:Contribute"
+              {...SIDEBAR_EVENTS.CLICK.DONATIONS_LINK.PROPS}
             >
               <i className="ss-icon ss-dollarsign vertical-align-middle" />{' '}
               <LocaleFormattedMessage
@@ -115,7 +89,7 @@ class GlobalSidebar extends Component {
               href="https://quran.zendesk.com/hc/en-us/articles/210090626-Development-help"
               target="_blank"
               rel="noopener noreferrer"
-              data-metrics-event-name="IndexHeader:Link:Developer"
+              {...SIDEBAR_EVENTS.CLICK.HELP_LINK.PROPS}
             >
               <i className="ss-icon ss-laptop vertical-align-middle" />{' '}
               <LocaleFormattedMessage
@@ -127,7 +101,7 @@ class GlobalSidebar extends Component {
           <li>
             <a
               href="http://legacy.quran.com"
-              data-metrics-event-name="Sidebar:Link:Legacy"
+              {...SIDEBAR_EVENTS.CLICK.LEGACY_LINK.PROPS}
             >
               <i className="ss-icon ss-alert vertical-align-middle" />{' '}
               <LocaleFormattedMessage
@@ -142,7 +116,7 @@ class GlobalSidebar extends Component {
               href="https://quranicaudio.com/"
               target="_blank"
               rel="noopener noreferrer"
-              data-metrics-event-name="Sites:Audio"
+              {...SIDEBAR_EVENTS.CLICK.QURANICAUDIO_LINK.PROPS}
             >
               Audio
             </a>
@@ -152,7 +126,7 @@ class GlobalSidebar extends Component {
               href="http://salah.com/"
               target="_blank"
               rel="noopener noreferrer"
-              data-metrics-event-name="Sites:Salah"
+              {...SIDEBAR_EVENTS.CLICK.SALAH_LINK.PROPS}
             >
               Salah
             </a>
@@ -162,13 +136,13 @@ class GlobalSidebar extends Component {
               href="http://sunnah.com/"
               target="_blank"
               rel="noopener noreferrer"
-              data-metrics-event-name="Sites:Sunnah"
+              {...SIDEBAR_EVENTS.CLICK.SUNNAH_LINK.PROPS}
             >
               Sunnah
             </a>
           </li>
         </List>
-      </div>
+      </Container>
     );
   }
 }
@@ -176,7 +150,6 @@ class GlobalSidebar extends Component {
 GlobalSidebar.propTypes = {
   open: PropTypes.bool.isRequired,
   handleOpen: PropTypes.func,
-  settingsModalProps: PropTypes.object, // eslint-disable-line
   children: PropTypes.node
 };
 

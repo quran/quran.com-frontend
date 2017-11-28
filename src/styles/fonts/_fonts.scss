@@ -75,6 +75,10 @@
   font-family: 'Times New Roman', sans-serif;
 }
 
+.word_font {
+  line-height: 150%;
+}
+
 @font-face {
   font-family: 'SSStandard';
   src: url('//quran-1f14.kxcdn.com/fonts/ss-standard/ss-standard.eot');
@@ -113,8 +117,6 @@
     url('//quran-1f14.kxcdn.com/fonts/divehi/divehi.ttf') format('truetype'),
     url('//quran-1f14.kxcdn.com/fonts/divehi/divehi.svg#dhivehiregular')
       format('svg');
-  font-weight: normal;
-  font-style: normal;
 }
 
 @font-face {

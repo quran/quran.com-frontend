@@ -1,42 +1,72 @@
 import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
+import styled from 'styled-components';
 import debug from 'helpers/debug';
-import Link from 'react-router/lib/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
-const styles = require('./styles.scss');
+import { JUZ_LIST_EVENTS } from '../../../events';
+
+const Link = styled(RouterLink)`
+  display: block;
+  padding: 10px 10px;
+
+  &:hover {
+    background: #f1f1f1;
+  }
+`;
+
+const Item = styled.li`color: ${props => props.theme.brandPrimary};`;
+
+const Name = styled.span`
+  margin-right: 5px;
+  font-size: 14px;
+`;
+
+const Arabic = styled.div`font-size: 14px;`;
+
+const Translated = styled.div`
+  font-size: 10px;
+  color: #777;
+`;
 
 class JuzList extends Component {
   renderJuz(juz) {
     const { chapters } = this.props;
     const juzzChapters = Object.keys(juz.verseMapping);
 
-    const list = juzzChapters.map(chapter => (
-      <div className={`col-md-12 ${styles.translated_name}`}>
+    const list = juzzChapters.map(chapter =>
+      <Translated className="col-md-12" key={chapter.id}>
         <Link
           to={`/${chapter}/${juz.verseMapping[chapter]}`}
-          className={`${styles.link} row`}
+          className="row"
+          {...JUZ_LIST_EVENTS.CLICK.JUZ_LINK.PROPS}
         >
           <div className="col-xs-9">
-            <span className={styles.chapterName}>
+            <Name>
               {chapters[chapter].nameSimple}
-            </span>
+            </Name>
 
             <span className="h5">
-              <small>{juz.verseMapping[chapter]}</small>
+              <small>
+                {juz.verseMapping[chapter]}
+              </small>
             </span>
           </div>
-          <div className={`col-xs-3 text-left ${styles.arabic}`}>
+          <Arabic className="col-xs-3 text-left">
             <span className={`icon-surah${chapters[chapter].id}`} />
-          </div>
+          </Arabic>
 
-          <div
-            className={`col-xs-10 text-uppercase ${styles.translated_name} ${chapters[chapter].languageName}`}
+          <Translated
+            className={`col-xs-10 text-uppercase ${chapters[chapter]
+              .languageName}`}
           >
-            <small>{chapters[chapter].translatedName.name}</small>
-          </div>
+            <small>
+              {chapters[chapter].translatedName.name}
+            </small>
+          </Translated>
         </Link>
-      </div>
-    ));
+      </Translated>
+    );
 
     return (
       <div className="col-md-10">
@@ -53,14 +83,14 @@ class JuzList extends Component {
 
     return (
       <ul className="col-md-4 list-unstyled">
-        {juzs.map(juz => (
-          <li className={`${styles.item} row`} key={juz.juzNumber}>
+        {juzs.map(juz =>
+          <Item key={juz.juzNumber}>
             <div className="col-xs-2 col-md-1 text-muted">
               {juz.juzNumber}
             </div>
             {this.renderJuz(juz)}
-          </li>
-        ))}
+          </Item>
+        )}
       </ul>
     );
   }

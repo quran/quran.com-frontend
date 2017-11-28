@@ -1,11 +1,20 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 
 import Line from 'components/Line';
 import PageBreak from 'components/PageBreak';
 
-const PageView = ({ lines, keys, currentVerse, options, isPlaying, audioActions, userAgent }) => { // eslint-disable-line
+const PageView = ({
+  lines,
+  keys,
+  currentVerse,
+  options,
+  isPlaying,
+  audioActions
+}) => {
+  // eslint-disable-line
   const elements = keys.map((lineNum, index) => {
     const nextNum = keys[index + 1];
     const pageNum = lineNum.split('-')[0];
@@ -41,7 +50,9 @@ const PageView = ({ lines, keys, currentVerse, options, isPlaying, audioActions,
   });
 
   return (
-    <div>{elements}</div>
+    <div>
+      {elements}
+    </div>
   );
 };
 
@@ -52,8 +63,7 @@ PageView.propTypes = {
   currentVerse: PropTypes.string,
   bookmarks: PropTypes.object.isRequired, // eslint-disable-line
   options: PropTypes.object.isRequired, // eslint-disable-line
-  isPlaying: PropTypes.bool,
-  userAgent: PropTypes.func
+  isPlaying: PropTypes.bool
 };
 
 export default connect(state => ({

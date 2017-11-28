@@ -1,6 +1,8 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Element from 'react-scroll/lib/components/Element';
 import Loadable from 'react-loadable';
@@ -8,11 +10,10 @@ import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
 import Translation from 'components/Translation';
+import FontText from 'components/FontText';
 import debug from 'helpers/debug';
 
 import { loadTafsirs } from 'redux/actions/media';
-
-const styles = require('./style.scss');
 
 const Copy = Loadable({
   loader: () => import('components/Copy'),
@@ -23,6 +24,86 @@ const Share = Loadable({
   loader: () => import('components/Share'),
   LoadingComponent: ComponentLoader
 });
+
+// TODO: Change this
+const Container = styled(Element)`
+  padding: 2.5% 0;
+  border-bottom: 1px solid rgba(${props => props.textMuted}, 0.5);
+
+  ${props => (props.highlight ? 'background-color: #F5FBF7;' : '')}
+
+  .text-info{
+    color: ${props => props.theme.brandInfo};
+    &:hover{
+      color: ${props => props.theme.brandPrimary};
+    }
+  }
+`;
+
+const Label = styled.span`
+  padding: 0.65em 1.1em;
+  border-radius: 0;
+  display: inline-block;
+  margin-bottom: 15px;
+  font-weight: 300;
+  color: ${props => props.theme.textColor};
+  &:hover {
+    opacity: 0.7;
+  }
+`;
+
+// TODO: Change this
+const StyledTranslation = styled.div`
+  h4 {
+    color: ${props => props.theme.brandPrimary};
+    margin-bottom: 5px;
+  }
+
+  h2 {
+    margin-top: 5px;
+    margin-bottom: 25px;
+  }
+`;
+
+const Controls = styled.div`
+  a {
+    margin-bottom: 15px;
+    display: block;
+    text-decoration: none;
+    font-size: 12px;
+    cursor: pointer;
+
+    &:focus {
+      color: ${props => props.textMuted};
+    }
+  }
+  .label {
+    padding: .65em 1.1em;
+    border-radius: 0;
+    display: inline-block;
+    margin-bottom: 15px;
+    font-weight: 300;
+    color: ${props => props.theme.textColor};
+
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+
+  @media (max-width: ${props => props.theme.screen.sm}) {
+    h4,
+    a {
+      display: inline-block;
+      margin: 0 10;
+    }
+
+    h4 {
+      margin: 0;
+    }
+
+    padding: 0;
+  }
+`;
 
 class Verse extends Component {
   shouldComponentUpdate(nextProps) {
@@ -61,13 +142,13 @@ class Verse extends Component {
     const { verse, match } = this.props;
     const array = match || verse.translations || [];
 
-    return array.map(translation => (
+    return array.map(translation =>
       <Translation
         translation={translation}
         index={translation.id}
         key={translation.id}
       />
-    ));
+    );
   }
 
   renderMedia() {
@@ -78,8 +159,8 @@ class Verse extends Component {
 
     return (
       <div>
-        {verse.mediaContents.map((content, index) => (
-          <div className={`${styles.translation} translation`} key={index}>
+        {verse.mediaContents.map((content, index) =>
+          <StyledTranslation className="translation" key={index}>
             <h2 className="text-translation times-new">
               <small>
                 <a
@@ -99,8 +180,8 @@ class Verse extends Component {
                 </a>
               </small>
             </h2>
-          </div>
-        ))}
+          </StyledTranslation>
+        )}
       </div>
     );
   }
@@ -118,7 +199,7 @@ class Verse extends Component {
     let wordAudioPosition = -1;
     const renderText = false; // userAgent.isBot;
 
-    const text = verse.words.map(word => (
+    const text = verse.words.map(word =>
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -132,12 +213,14 @@ class Verse extends Component {
         isSearched={isSearched}
         useTextFont={renderText}
       />
-    ));
+    );
 
     return (
-      <h1 className={`${styles.font} text-right text-arabic`}>
-        <p>{text}</p>
-      </h1>
+      <FontText className="text-right text-arabic">
+        <p>
+          {text}
+        </p>
+      </FontText>
     );
   }
 
@@ -257,9 +340,9 @@ class Verse extends Component {
 
     const content = (
       <h4>
-        <span className={`label label-default ${styles.label}`}>
+        <Label className="label label-default">
           {verse.verseKey}
-        </span>
+        </Label>
       </h4>
     );
 
@@ -291,14 +374,14 @@ class Verse extends Component {
     const { isPdf } = this.props;
 
     return (
-      <div className={`col-md-1 col-sm-1 ${styles.controls}`}>
+      <Controls className="col-md-1 col-sm-1">
         {this.renderBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderTafsirLink()}
         {this.renderBookmark()}
         {!isPdf && this.renderShare()}
-      </div>
+      </Controls>
     );
   }
 
@@ -307,9 +390,10 @@ class Verse extends Component {
     debug('component:Verse', `Render ${verse.verseKey}`);
 
     return (
-      <Element
+      <Container
         name={`verse:${verse.verseKey}`}
-        className={`row ${iscurrentVerse && 'highlight'} ${styles.container}`}
+        className="row"
+        highlight={iscurrentVerse}
       >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">
@@ -317,7 +401,7 @@ class Verse extends Component {
           {this.renderTranslations()}
           {this.renderMedia()}
         </div>
-      </Element>
+      </Container>
     );
   }
 }

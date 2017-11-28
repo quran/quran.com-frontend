@@ -1,5 +1,6 @@
 /* eslint-disable global-require, quotes, max-len */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 
@@ -17,14 +18,14 @@ const PdfHtml = ({ component, assets, url }) => {
         {head.style.toComponent()}
         <base href={url} />
 
-        {Object.keys(assets.styles).map((style, i) => (
+        {Object.keys(assets.styles).map((style, i) =>
           <link
             href={assets.styles[style]}
             key={i}
             rel="stylesheet"
             type="text/css"
           />
-        ))}
+        )}
         {Object.keys(assets.styles).length === 0
           ? <style
             dangerouslySetInnerHTML={{
@@ -32,9 +33,9 @@ const PdfHtml = ({ component, assets, url }) => {
             }}
           />
           : null}
-        {Object.keys(assets.javascript).map((script, i) => (
+        {Object.keys(assets.javascript).map((script, i) =>
           <script src={assets.javascript[script]} key={i} />
-        ))}
+        )}
 
         <style>{`
           body{ zoom: 75%;}

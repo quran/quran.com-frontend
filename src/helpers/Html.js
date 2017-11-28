@@ -1,10 +1,13 @@
 /* eslint-disable global-require, quotes, max-len */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
 
-const Html = ({ store, component, assets }) => {
+import highlightStyles from 'helpers/highlightStyles';
+
+const Html = ({ store, component, assets, loadableState }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
   const head = Helmet.rewind();
   return (
@@ -17,14 +20,14 @@ const Html = ({ store, component, assets }) => {
         {head.script.toComponent()}
         {head.style.toComponent()}
 
-        {Object.keys(assets.styles).map((style, i) => (
+        {Object.keys(assets.styles).map((style, i) =>
           <link
             href={assets.styles[style]}
             key={i}
             rel="stylesheet"
             type="text/css"
           />
-        ))}
+        )}
         {Object.keys(assets.styles).length === 0
           ? <style
             dangerouslySetInnerHTML={{
@@ -32,6 +35,9 @@ const Html = ({ store, component, assets }) => {
             }}
           />
           : null}
+        <style>
+          {highlightStyles}
+        </style>
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
@@ -74,6 +80,7 @@ const Html = ({ store, component, assets }) => {
           }}
           charSet="UTF-8"
         />
+        <span dangerouslySetInnerHTML={{ __html: loadableState }} />
         {process.env.NODE_ENV === 'production' &&
           <script
             dangerouslySetInnerHTML={{
@@ -92,9 +99,9 @@ const Html = ({ store, component, assets }) => {
           <script src="https://cdn.ravenjs.com/3.0.4/raven.min.js" />}
         {Object.keys(assets.javascript)
           .filter(script => !assets.javascript[script].includes('-chunk'))
-          .map((script, i) => (
+          .map((script, i) =>
             <script src={assets.javascript[script]} key={i} />
-          ))}
+          )}
       </body>
     </html>
   );
@@ -103,7 +110,8 @@ const Html = ({ store, component, assets }) => {
 Html.propTypes = {
   store: PropTypes.object, // eslint-disable-line
   assets: PropTypes.object, // eslint-disable-line
-  component: PropTypes.element
+  component: PropTypes.element,
+  loadableState: PropTypes.object // eslint-disable-line
 };
 
 export default Html;
