@@ -13,7 +13,7 @@ const error = {
     "Ayah is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah"
 };
 
-const ErrorPage = ({ params }) =>
+const ErrorPage = ({ match: { params } }) =>
   <div>
     <Helmet title={`Error ${error[params.errorKey]}`} />
     <IndexHeader noSearch />
@@ -32,7 +32,7 @@ const ErrorPage = ({ params }) =>
   </div>;
 
 ErrorPage.propTypes = {
-  params: PropTypes.string.isRequired
+  match: PropTypes.object.isRequired // eslint-disable-line
 };
 
 export default ErrorPage;

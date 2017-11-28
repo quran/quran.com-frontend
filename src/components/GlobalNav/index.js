@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 
@@ -55,7 +55,11 @@ class GlobalNav extends Component {
   };
 
   isHome() {
-    return this.props.location.pathname === '/';
+    if (this.props.location) {
+      return this.props.location.pathname === '/';
+    }
+
+    return true;
   }
 
   renderRightControls() {

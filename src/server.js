@@ -1,11 +1,9 @@
 /* global webpack_isomorphic_tools */
 import express from 'express';
-import PrettyError from 'pretty-error';
+// import PrettyError from 'pretty-error';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { match } from 'react-router';
-import { ReduxAsyncConnect, loadOnServer } from 'redux-connect';
-import createHistory from 'react-router/lib/createMemoryHistory';
+import { matchPath, StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import cookie from 'react-cookie';
@@ -13,10 +11,11 @@ import Raven from 'raven';
 import errorhandler from 'errorhandler';
 import pdf from 'html-pdf';
 import { ThemeProvider } from 'styled-components';
+import { getLoadableState } from 'loadable-components/server';
 
 import config from 'config';
 import expressConfig from './server/config/express';
-import routes from './routes';
+import { routes } from './routes';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import debug from './helpers/debug';
@@ -24,11 +23,12 @@ import theme from './theme';
 
 import Html from './helpers/Html';
 import PdfHtml from './helpers/PdfHtml';
+import App from './containers/App';
 
 import { setOption, setUserAgent } from './redux/actions/options.js';
 import getLocalMessages from './helpers/setLocal';
 
-const pretty = new PrettyError();
+// const pretty = new PrettyError();
 const server = express();
 Raven.config(config.sentryServer, {
   captureUnhandledRejections: true,
@@ -39,11 +39,11 @@ expressConfig(server);
 
 server.use(Raven.requestHandler());
 
-server.use((req, res, next) => {
+server.use((req, res) => {
   cookie.plugToRequest(req, res);
+  const context = {};
   const client = new ApiClient(req);
-  const history = createHistory(req.originalUrl);
-  const store = createStore(history, client);
+  const store = createStore(null, client);
   const localMessages = getLocalMessages(req);
 
   if (process.env.NODE_ENV === 'development') {
@@ -64,74 +64,83 @@ server.use((req, res, next) => {
   store.dispatch(setOption(cookie.load('options') || {}));
   debug('Server', 'Executing navigate action');
 
-  match(
-    { history, routes: routes(store), location: req.originalUrl },
-    (error, redirectLocation, renderProps) => {
-      debug('Server', 'Route match callback');
-
-      if (redirectLocation) {
-        res.redirect(redirectLocation.pathname + redirectLocation.search);
-      } else if (error) {
-        console.error('ROUTER ERROR:', pretty.render(error));
-        res.status(500).send(error);
-      } else if (renderProps) {
-        const status =
-          renderProps.location.pathname.indexOf('/error') > -1 ? 404 : 200;
-
-        loadOnServer({ ...renderProps, store, helpers: { client } })
-          .then(() => {
-            const component = (
-              <IntlProvider messages={localMessages} locale="en">
-                <ThemeProvider theme={theme}>
-                  <Provider store={store}>
-                    <ReduxAsyncConnect {...renderProps} />
-                  </Provider>
-                </ThemeProvider>
-              </IntlProvider>
-            );
-
-            res.type('html');
-            res.setHeader('Cache-Control', 'public, max-age=31557600');
-            res.status(status);
-            debug('Server', 'Sending markup');
-
-            if (req.originalUrl.includes('.pdf')) {
-              const body = ReactDOM.renderToString(
-                <PdfHtml
-                  url={`${req.protocol}://${req.get('host')}`}
-                  component={component}
-                  assets={webpack_isomorphic_tools.assets()}
-                />
-              );
-              const html = `<!doctype html>\n${body}`;
-
-              return pdf.create(html).toStream((err, stream) => {
-                if (err) {
-                  res.status(422).send(err);
-                }
-
-                res.set('Content-type', 'application/pdf');
-                // NOTE: If you want to export a file.
-                // res.set('Content-disposition', 'attachment; filename=pdf.pdf');
-                stream.pipe(res);
-              });
-            }
-
-            const html = `<!doctype html>
-            ${ReactDOM.renderToString(
-              <Html
-                component={component}
-                store={store}
-                assets={webpack_isomorphic_tools.assets()}
-              />
-            )}`;
-
-            return res.send(html);
+  // inside a request
+  const promises = [];
+  // use `some` to imitate `<Switch>` behavior of selecting only
+  // the first to match
+  routes.some((route) => {
+    // use `matchPath` here
+    const match = matchPath(req.url, route);
+    if (match && route.loadData) {
+      route.loadData.forEach((connector) => {
+        promises.push(
+          connector({
+            store,
+            match,
+            params: match.params,
+            location: match.location
           })
-          .catch(next);
-      }
+        );
+      });
     }
-  );
+
+    return match;
+  });
+
+  Promise.all(promises).then(() => {
+    const component = (
+      <IntlProvider messages={localMessages} locale="en">
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            <StaticRouter location={req.url} context={context}>
+              <App />
+            </StaticRouter>
+          </Provider>
+        </ThemeProvider>
+      </IntlProvider>
+    );
+
+    res.type('html');
+    res.setHeader('Cache-Control', 'public, max-age=31557600');
+    res.status(200);
+    debug('Server', 'Sending markup');
+
+    if (req.originalUrl.includes('.pdf')) {
+      const body = ReactDOM.renderToString(
+        <PdfHtml
+          url={`${req.protocol}://${req.get('host')}`}
+          component={component}
+          assets={webpack_isomorphic_tools.assets()}
+        />
+      );
+      const html = `<!doctype html>\n${body}`;
+
+      return pdf.create(html).toStream((err, stream) => {
+        if (err) {
+          res.status(422).send(err);
+        }
+
+        res.set('Content-type', 'application/pdf');
+        // NOTE: If you want to export a file.
+        // res.set('Content-disposition', 'attachment; filename=pdf.pdf');
+        stream.pipe(res);
+      });
+    }
+
+    return getLoadableState(component).then((loadableState) => {
+      const html = `<!doctype html>
+      ${ReactDOM.renderToString(
+        <Html
+          component={component}
+          store={store}
+          assets={webpack_isomorphic_tools.assets()}
+          loadableState={loadableState.getScriptTag()}
+        />
+      )}`;
+
+      return res.send(html);
+    });
+  });
 
   return false;
 });

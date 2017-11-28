@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import { surahType } from 'customPropTypes';
 
 import { CHAPTERS_LIST_EVENTS } from '../../../events';

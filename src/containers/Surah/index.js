@@ -2,11 +2,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
 import Helmet from 'react-helmet';
@@ -30,8 +29,6 @@ import * as AyahActions from 'redux/actions/verses.js';
 import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
-
-import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
 
 const LoaderStyle = {};
 
@@ -64,7 +61,7 @@ class Surah extends Component {
   };
 
   componentWillMount() {
-    const { params, chapter, actions } = this.props; // eslint-disable-line no-shadow
+    const { match: { params }, chapter, actions } = this.props; // eslint-disable-line no-shadow
 
     if (params.range && params.range.includes('-')) {
       const start = parseInt(params.range.split('-')[0], 10);
@@ -169,7 +166,7 @@ class Surah extends Component {
   };
 
   title() {
-    const { params, chapter } = this.props;
+    const { match: { params }, chapter } = this.props;
 
     if (params.range) {
       return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}:${params.range}]`;
@@ -179,7 +176,7 @@ class Surah extends Component {
   }
 
   description() {
-    const { params, verses, chapter, info } = this.props;
+    const { match: { params }, verses, chapter, info } = this.props;
 
     if (params.range) {
       if (params.range.includes('-')) {
@@ -477,21 +474,17 @@ Surah.propTypes = {
   isSingleAyah: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
   options: PropTypes.object.isRequired, // eslint-disable-line
-  params: PropTypes.shape({
-    chapterId: PropTypes.string.isRequired
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      chapterId: PropTypes.string.isRequired
+    })
   }).isRequired,
   verses: customPropTypes.verses,
   isPlaying: PropTypes.bool
 };
 
-const AsyncSurah = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: chapterInfoConnect },
-  { promise: versesConnect }
-])(Surah);
-
 function mapStateToProps(state, ownProps) {
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
+  const chapterId = parseInt(ownProps.match.params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
   const verses: Object = state.verses.entities[chapterId];
   const verseArray = verses
@@ -500,7 +493,7 @@ function mapStateToProps(state, ownProps) {
   const verseIds = new Set(verseArray);
   const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah =
-    !!ownProps.params.range && !ownProps.params.range.includes('-');
+    !!ownProps.match.params.range && !ownProps.match.params.range.includes('-');
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
@@ -509,7 +502,7 @@ function mapStateToProps(state, ownProps) {
     verseIds,
     isSingleAyah,
     currentVerse,
-    info: state.chapters.infos[ownProps.params.chapterId],
+    info: state.chapters.infos[ownProps.match.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
     isAuthenticated: state.auth.loaded,
@@ -537,4 +530,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AsyncSurah);
+export default connect(mapStateToProps, mapDispatchToProps)(Surah);

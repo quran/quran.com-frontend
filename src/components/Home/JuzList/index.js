@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import styled from 'styled-components';
 import debug from 'helpers/debug';
-import RouterLink from 'react-router/lib/Link';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { JUZ_LIST_EVENTS } from '../../../events';
 
