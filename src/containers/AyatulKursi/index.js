@@ -2,11 +2,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
 import Helmet from 'react-helmet';
@@ -28,8 +27,6 @@ import * as AyahActions from 'redux/actions/verses.js';
 import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
-
-import { chaptersConnect, versesConnect } from 'containers/Surah/connect';
 
 const PageView = Loadable({
   loader: () =>
@@ -215,14 +212,6 @@ AyatulKursi.propTypes = {
   isPlaying: PropTypes.bool
 };
 
-const AsyncAyatulKursi = asyncConnect([
-  { promise: chaptersConnect },
-  {
-    promise: ({ store }) =>
-      versesConnect({ store, params: { chapterId: '2', range: '255' } })
-  }
-])(AyatulKursi);
-
 function mapStateToProps(state) {
   const chapterId = 2;
   const chapter = state.chapters.entities[chapterId];
@@ -258,4 +247,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AsyncAyatulKursi);
+export default connect(mapStateToProps, mapDispatchToProps)(AyatulKursi);

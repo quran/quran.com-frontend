@@ -3,7 +3,6 @@ import * as customPropTypes from 'customPropTypes';
 import Helmet from 'react-helmet';
 import IndexHeader from 'components/IndexHeader';
 import cookie from 'react-cookie';
-import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
 import debug from 'helpers/debug';
 import LastVisit from 'components/Home/LastVisit';
@@ -14,8 +13,6 @@ import Title from 'components/Home/Title';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Tabs, { Tab } from 'quran-components/lib/Tabs';
 import Loader from 'quran-components/lib/Loader';
-
-import { chaptersConnect, juzsConnect } from '../Surah/connect';
 
 class Home extends Component {
   renderJuzList() {
@@ -109,11 +106,6 @@ Home.propTypes = {
   juzs: customPropTypes.juzs.isRequired
 };
 
-const AsyncHome = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: juzsConnect }
-])(Home);
-
 function mapStateToProps(state) {
   return {
     chapters: state.chapters.entities,
@@ -121,4 +113,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(AsyncHome);
+export default connect(mapStateToProps)(Home);
