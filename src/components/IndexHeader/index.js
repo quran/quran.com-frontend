@@ -1,5 +1,6 @@
-import React, { PropTypes } from 'react';
-import Link from 'react-router/lib/Link';
+import React from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import SearchInput from 'components/SearchInput';
 import Jumbotron from 'quran-components/lib/Jumbotron';
 import styled from 'styled-components';
@@ -25,7 +26,7 @@ const Title = styled.h4`
   padding-bottom: 3.5%;
 `;
 
-const IndexHeader = props =>
+const IndexHeader = props => (
   <Jumbotron>
     <div className="container">
       <div className="row">
@@ -38,7 +39,8 @@ const IndexHeader = props =>
         </div>
       </div>
     </div>
-  </Jumbotron>;
+  </Jumbotron>
+);
 
 IndexHeader.propTypes = {
   noSearch: PropTypes.bool

@@ -1,12 +1,11 @@
 // TODO: Should be handled by redux and not component states.
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 import { suggest } from 'redux/actions/suggest';
-
-const styles = require('./style.scss');
 
 const ayahRegex = /^(\d+)(?::(\d+))?$/;
 
@@ -15,6 +14,108 @@ const Container = styled.div`
   background-color: #ccc;
   position: absolute;
   z-index: 99;
+`;
+
+const List = styled.ul`
+  left: 0;
+  z-index: 1;
+  min-width: 100%;
+  box-sizing: border-box;
+  list-style: none;
+  padding: 0;
+  margin: 0.2em 0 0;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0.05em 0.2em 0.6em rgba(0, 0, 0, 0.2);
+  text-shadow: none;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: -0.23em;
+    left: 1em;
+    width: 0;
+    height: 0;
+    padding: 0.4em;
+    background: white;
+    border: inherit;
+    border-right: 0;
+    border-bottom: 0;
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+
+  & > li {
+    position: relative;
+    cursor: pointer;
+    text-align: left;
+  }
+
+  .text {
+    overflow: hidden;
+    word-wrap: break-word;
+    white-space: nowrap;
+    line-height: 28px;
+    padding-left: 10px;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    a {
+      display: block;
+    }
+  }
+
+  & > li:hover .text,
+  & > li:focus .text {
+    background-color: rgba(${props => props.theme.brandPrimary}, 0.5);
+    color: ${props => props.textColor};
+  }
+
+  & > li:hover .text a,
+  & > li:focus .text a {
+    color: #444;
+  }
+
+  & > li:hover .link a,
+  & > li:focus .link a {
+    color: #444;
+  }
+
+  & > li[aria-selected='true'] .text {
+    background: hsl(205, 40%, 40%);
+    color: white;
+  }
+
+  & li:hover mark,
+  & li:focus mark {
+    background: hsl(68, 100%, 41%);
+  }
+
+  li[aria-selected='true'] mark {
+    background: hsl(86, 100%, 21%);
+    color: inherit;
+  }
+
+  mark {
+    background: hsl(65, 100%, 50%);
+  }
+`;
+
+const StyledLink = styled.div`
+  position: absolute;
+  right: 0;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
+  padding-left: 70px;
+  padding-right: 10px;
+  line-height: 28px;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0),
+    white 40%,
+    rgba(255, 255, 255, 1)
+  );
+  z-index: 2;
+  text-align: right;
 `;
 
 class SearchAutocomplete extends Component {
@@ -167,18 +268,18 @@ class SearchAutocomplete extends Component {
       return false;
     }
 
-    return this.getSuggestions().map(item =>
+    return this.getSuggestions().map(item => (
       <li // eslint-disable-line
         key={item.href}
         tabIndex="-1"
         onKeyDown={event => this.handleItemKeyDown(event, item)}
       >
-        <div className={styles.link}>
+        <StyledLink>
           <a href={item.href} tabIndex="-1">
             {item.ayah}
           </a>
-        </div>
-        <div className={styles.text}>
+        </StyledLink>
+        <div className="text">
           <a
             href={item.href}
             tabIndex="-1"
@@ -186,21 +287,20 @@ class SearchAutocomplete extends Component {
           />
         </div>
       </li>
-    );
+    ));
   }
 
   render() {
     return (
       <Container className={!this.getSuggestions().length && 'hidden'}>
-        <ul
+        <List
           role="menu"
-          className={styles.list}
           ref={(ref) => {
             this.menu = ref;
           }}
         >
           {this.renderList()}
-        </ul>
+        </List>
       </Container>
     );
   }

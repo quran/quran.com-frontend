@@ -1,7 +1,6 @@
 import * as customPropTypes from 'customPropTypes';
 import React from 'react';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 
 import Helmet from 'react-helmet';
 import Loadable from 'react-loadable';
@@ -9,8 +8,6 @@ import Button from 'quran-components/lib/Button';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
-
-import { versesConnect, tafsirConnect } from '../Surah/connect';
 
 const Tafsir = Loadable({
   loader: () => import('components/Tafsir'),
@@ -21,8 +18,12 @@ const VerseTafsir = ({ verse, tafsir }) => (
   <div className="row" style={{ marginTop: 20 }}>
     <Helmet
       {...makeHeadTags({
-        title: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${verse.verseKey}`,
-        description: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${verse.verseKey} - ${verse.textMadani}` // eslint-disable-line max-len
+        title: `${tafsir
+          ? tafsir.resourceName
+          : 'Tafsir'} of ${verse.verseKey}`,
+        description: `${tafsir
+          ? tafsir.resourceName
+          : 'Tafsir'} of ${verse.verseKey} - ${verse.textMadani}` // eslint-disable-line max-len
       })}
       script={[
         {
@@ -74,15 +75,11 @@ VerseTafsir.propTypes = {
   tafsir: customPropTypes.tafsirType
 };
 
-const AsyncTafsir = asyncConnect([
-  { promise: versesConnect },
-  { promise: tafsirConnect }
-])(VerseTafsir);
-
 function mapStateToProps(state, ownProps) {
-  const verseKey = `${ownProps.params.chapterId}:${ownProps.params.range}`;
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
-  const tafsirId = ownProps.params.tafsirId;
+  const verseKey = `${ownProps.match.params.chapterId}:${ownProps.match.params
+    .range}`;
+  const chapterId = parseInt(ownProps.match.params.chapterId, 10);
+  const tafsirId = ownProps.match.params.tafsirId;
   const verse: Object = state.verses.entities[chapterId][verseKey];
 
   return {
@@ -91,4 +88,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(AsyncTafsir);
+export default connect(mapStateToProps)(VerseTafsir);

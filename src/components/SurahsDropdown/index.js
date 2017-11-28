@@ -11,7 +11,15 @@ const Arabic = styled.div`
   padding-right: 5px;
 `;
 
-const styles = require('./style.scss');
+const StyledDropdown = styled(NavDropdown)`
+  .dropdown-menu {
+    max-height: 400px;
+    max-height: 60vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+`;
 
 class SurahsDropdown extends Component {
   shouldComponentUpdate(nextProps) {
@@ -21,7 +29,7 @@ class SurahsDropdown extends Component {
   renderList() {
     const { chapters } = this.props;
 
-    return Object.values(chapters).map((chapter, index) =>
+    return Object.values(chapters).map((chapter, index) => (
       <LinkContainer
         to={`/${chapter.chapterNumber}`}
         activeClass="active"
@@ -30,14 +38,10 @@ class SurahsDropdown extends Component {
         <MenuItem>
           <div className="row">
             <div className="col-xs-2 col-md-2">
-              <span className="chapter-num">
-                {chapter.chapterNumber}
-              </span>
+              <span className="chapter-num">{chapter.chapterNumber}</span>
             </div>
             <div className="col-xs-7 col-md-7">
-              <span className="suran-name">
-                {chapter.nameSimple}
-              </span>
+              <span className="suran-name">{chapter.nameSimple}</span>
               <br />
               <span className="chapter-meaning">
                 {chapter.translatedName.name}
@@ -49,26 +53,26 @@ class SurahsDropdown extends Component {
           </div>
         </MenuItem>
       </LinkContainer>
-    );
+    ));
   }
 
   render() {
     const { chapter } = this.props;
 
     return (
-      <NavDropdown
-        className={styles.dropdown}
+      <StyledDropdown
         id="chapters-dropdown"
         title={
-          chapter.nameSimple ||
-          <LocaleFormattedMessage
-            id="setting.chapters"
-            defaultMessage="Surahs"
-          />
+          chapter.nameSimple || (
+            <LocaleFormattedMessage
+              id="setting.chapters"
+              defaultMessage="Surahs"
+            />
+          )
         }
       >
         {this.renderList()}
-      </NavDropdown>
+      </StyledDropdown>
     );
   }
 }

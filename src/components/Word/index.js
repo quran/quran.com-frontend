@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import bindTooltip from 'utils/bindTooltip';
 import { zeroPad } from 'helpers/StringHelpers';
 

@@ -1,10 +1,17 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import Loader from 'quran-components/lib/Loader';
 
-const style = require('./style.scss');
+import madinah from '../../../static/images/madinah.jpg';
+import makkah from '../../../static/images/makkah.jpg';
+
+const images = {
+  madinah,
+  makkah
+};
 
 const List = styled.dl`
   padding-top: 8px;
@@ -64,6 +71,45 @@ const Info = styled.div`
   }
 `;
 
+const Container = styled.div`
+  overflow-y: auto;
+  margin-bottom: 30px;
+  height: 0;
+  max-height: 0;
+  min-height: 0;
+  transition: max-height 0.75s, height 0.75s;
+  margin-top: -20px;
+  max-height: 600px;
+  max-height: 70vh;
+  height: 1000px;
+  padding: 0;
+
+  @media (max-width: ${props => props.theme.screen.sm}) {
+    margin-bottom: 0;
+  }
+`;
+
+const Image = styled.div`
+  height: 100%;
+  background-size: cover !important;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  background: url(${props => images[props.background]});
+  @media (max-width: ${props => props.theme.screen.sm}) {
+    height: 30%;
+  }
+`;
+
+const ListContainer = styled.div`
+  background: ${props => props.theme.textMuted};
+  height: 100%;
+
+  @media (max-width: ${props => props.theme.screen.sm}) {
+    height: 30%;
+  }
+`;
+
 const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
@@ -73,24 +119,23 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
     onClose({ isShowingSurahInfo: !isShowingSurahInfo });
 
   return (
-    <div className={`col-xs-12 ${style.container} chapter-info ${style.show}`}>
+    <Container className="col-xs-12 chapter-info">
       {onClose && (
         <Close tabIndex="-1" className="ss-delete" onClick={handleClose} />
       )}
-      <div className="row" style={{ width: '100%' }}>
-        <div
-          className={`col-md-3 col-xs-6 ${style.bg} ${style[
-            chapter.revelationPlace
-          ]}`}
+      <div className="row" style={{ width: '100%', height: '100%', margin: 0 }}>
+        <Image
+          className="col-md-3 col-xs-6"
+          background={chapter.revelationPlace}
         />
-        <div className={`${style.list} col-md-1 col-xs-6`}>
+        <ListContainer className="col-md-1 col-xs-6">
           <List>
             <dt>VERSES</dt>
             <dd className="text-uppercase">{chapter.versesCount}</dd>
             <dt>PAGES</dt>
             <dd className="text-uppercase">{chapter.pages.join('-')}</dd>
           </List>
-        </div>
+        </ListContainer>
         <Info className={`${info.languageName} times-new col-md-8`}>
           <div dangerouslySetInnerHTML={{ __html: info.text }} />
           <div>
@@ -100,7 +145,7 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
           </div>
         </Info>
       </div>
-    </div>
+    </Container>
   );
 };
 

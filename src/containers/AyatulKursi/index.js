@@ -1,11 +1,11 @@
 /* global window, document */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 import { push } from 'react-router-redux';
 
 import Helmet from 'react-helmet';
@@ -13,6 +13,7 @@ import Loadable from 'react-loadable';
 
 // components
 import Verse from 'components/Verse';
+import Container from 'components/Container';
 import ComponentLoader from 'components/ComponentLoader';
 import Bismillah from 'components/Bismillah';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -26,10 +27,6 @@ import * as AyahActions from 'redux/actions/verses.js';
 import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
-
-import { chaptersConnect, versesConnect } from 'containers/Surah/connect';
-
-const style = require('../Surah/style.scss');
 
 const PageView = Loadable({
   loader: () =>
@@ -168,7 +165,7 @@ class AyatulKursi extends Component {
             }
           ]}
         />
-        <div className={`container-fluid ${style.container}`}>
+        <Container className="container-fluid">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
               {__CLIENT__ && (
@@ -190,7 +187,7 @@ class AyatulKursi extends Component {
               </ul>
             </div>
           </div>
-        </div>
+        </Container>
         {__CLIENT__ && (
           <Audioplayer
             chapter={chapter}
@@ -217,18 +214,10 @@ AyatulKursi.propTypes = {
   isPlaying: PropTypes.bool
 };
 
-const AsyncAyatulKursi = asyncConnect([
-  { promise: chaptersConnect },
-  {
-    promise: ({ store }) =>
-      versesConnect({ store, params: { chapterId: '2', range: '255' } })
-  }
-])(AyatulKursi);
-
 function mapStateToProps(state) {
   const chapterId = 2;
-  const chapter: Object = state.chapters.entities[chapterId];
-  const verses: Object = state.verses.entities[chapterId];
+  const chapter = state.chapters.entities[chapterId];
+  const verses = state.verses.entities[chapterId];
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
@@ -260,4 +249,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(AsyncAyatulKursi);
+export default connect(mapStateToProps, mapDispatchToProps)(AyatulKursi);

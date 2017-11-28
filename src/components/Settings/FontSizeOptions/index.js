@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import styled from 'styled-components';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -136,9 +137,7 @@ class FontSizeOptions extends Component {
     return (
       <div>
         {this.renderTitle()}
-        <ItemLink>
-          {this.renderOptions()}
-        </ItemLink>
+        <ItemLink>{this.renderOptions()}</ItemLink>
       </div>
     );
   }

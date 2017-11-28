@@ -1,11 +1,12 @@
-/* eslint-disable react/prefer-stateless-function */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { metrics } from 'react-metrics';
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
+import { withRouter } from 'react-router';
 import Loadable from 'react-loadable';
 import ComponentLoader from 'components/ComponentLoader';
 import debug from 'helpers/debug';
@@ -15,7 +16,8 @@ import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
 import Loader from 'quran-components/lib/Loader';
-import authConnect from './connect';
+
+import Routes from '../../routes';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
@@ -38,6 +40,18 @@ const SmartBanner = Loadable({
     import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner'),
   LoadingComponent: ComponentLoader
 });
+
+const NoScriptWarning = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1201;
+  text-align: center;
+  color: #fff;
+  background-color: #ae0000;
+  padding: 5px 0 5px 0;
+`;
 
 class App extends Component {
   static contextTypes = {
@@ -69,7 +83,6 @@ class App extends Component {
 
   render() {
     const {
-      main,
       nav,
       footer,
       children,
@@ -83,7 +96,7 @@ class App extends Component {
       <div>
         <Helmet {...config.app.head} />
         <NoScript>
-          <div className="row noscript-warning">
+          <NoScriptWarning className="row">
             <div className="col-md-12">
               <p>
                 Looks like either your browser does not support Javascript or
@@ -92,7 +105,7 @@ class App extends Component {
                 <a href="http://www.enable-javascript.com/">Click here</a>
               </p>
             </div>
-          </div>
+          </NoScriptWarning>
         </NoScript>
         {React.cloneElement(nav || <GlobalNav isStatic {...props} />, {
           handleSidebarToggle: () =>
@@ -104,7 +117,7 @@ class App extends Component {
             handleOpen={open => this.setState({ sidebarOpen: open })}
           />
         )}
-        {children || main}
+        {children || <Routes store={this.context.store} />}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         {footer || <Footer />}
         {__CLIENT__ &&
@@ -123,8 +136,7 @@ class App extends Component {
   }
 }
 
-const metricsApp = metrics(metricsConfig)(App);
-const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
+const MetricsApp = metrics(metricsConfig)(App);
 
 App.propTypes = {
   media: customPropTypes.media.isRequired,
@@ -138,9 +150,11 @@ App.propTypes = {
   loadingFootNote: PropTypes.bool
 };
 
-export default connect(
-  state => ({
-    media: state.media
-  }),
-  { removeMedia }
-)(AsyncApp);
+export default withRouter(
+  connect(
+    state => ({
+      media: state.media
+    }),
+    { removeMedia }
+  )(MetricsApp)
+);

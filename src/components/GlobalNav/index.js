@@ -1,9 +1,10 @@
 /* global window */
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import styled from 'styled-components';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 
@@ -18,8 +19,8 @@ const scrolledStyle = {
 };
 
 const StyledNav = styled(Nav)`
-  @media(max-width: $screen-sm){
-    & > li{
+  @media (max-width: $screen-sm) {
+    & > li {
       display: inline-block;
     }
   }
@@ -54,7 +55,11 @@ class GlobalNav extends Component {
   };
 
   isHome() {
-    return this.props.location.pathname === '/';
+    if (this.props.location) {
+      return this.props.location.pathname === '/';
+    }
+
+    return true;
   }
 
   renderRightControls() {
@@ -93,13 +98,15 @@ class GlobalNav extends Component {
           </a>
         </li>,
         <LocaleSwitcher />,
-        user
-          ? <li>
+        user ? (
+          <li>
             <Link to="/profile" {...NAVBAR_EVENTS.CLICK.PROFILE_LINK.PROPS}>
               {user.firstName || user.name}
             </Link>
           </li>
-          : <noscript />
+        ) : (
+          <noscript />
+        )
       ]
     );
   }
@@ -128,14 +135,16 @@ class GlobalNav extends Component {
           <span className="icon-bar" />
         </button>
         <StyledNav>
-          {!this.isHome() &&
+          {!this.isHome() && (
             <li>
               <Link to="/" {...NAVBAR_EVENTS.CLICK.HOME_LINK.PROPS}>
                 <i className="ss-icon ss-home" />
               </Link>
-            </li>}
-          {this.isHome() &&
-            <LocaleSwitcher className="visible-xs-inline-block" />}
+            </li>
+          )}
+          {this.isHome() && (
+            <LocaleSwitcher className="visible-xs-inline-block" />
+          )}
           {leftControls &&
             leftControls.map((control, index) =>
               React.cloneElement(control, { key: index })

@@ -1,22 +1,19 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import * as customPropTypes from 'customPropTypes';
 // redux
 import { connect } from 'react-redux';
-import { asyncConnect } from 'redux-connect';
 
 import Helmet from 'react-helmet';
 
 // components
+import Container from 'components/Container';
 import Verse from 'components/Verse';
 import Bismillah from 'components/Bismillah';
 
 // Helpers
 import debug from 'helpers/debug';
-
-import { chaptersConnect, versesConnect } from '../Surah/connect';
-
-const style = require('../Surah/style.scss');
 
 class Pdf extends Component {
   hasVerses() {
@@ -56,9 +53,9 @@ class Pdf extends Component {
 
     if (!this.hasVerses()) {
       return (
-        <div className={style.container} style={{ margin: '50px auto' }}>
+        <Container style={{ margin: '50px auto' }}>
           {this.renderNoAyah()}
-        </div>
+        </Container>
       );
     }
 
@@ -67,18 +64,20 @@ class Pdf extends Component {
         <Helmet
           style={[
             {
-              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${options.fontSize
+                .arabic}rem;} .text-translation{font-size: ${options.fontSize
+                .translation}rem;}` // eslint-disable-line max-len
             }
           ]}
         />
-        <div className={`container-fluid ${style.container}`}>
+        <Container className="container-fluid">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
               <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderVerses()}
             </div>
           </div>
-        </div>
+        </Container>
       </div>
     );
   }
@@ -94,22 +93,17 @@ Pdf.propTypes = {
   isPlaying: PropTypes.bool
 };
 
-const AsyncPdf = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: versesConnect }
-])(Pdf);
-
 function mapStateToProps(state, ownProps) {
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
-  const chapter: Object = state.chapters.entities[chapterId];
-  const verses: Object = state.verses.entities[chapterId];
+  const chapterId = parseInt(ownProps.match.params.chapterId, 10);
+  const chapter = state.chapters.entities[chapterId];
+  const verses = state.verses.entities[chapterId];
   const verseArray = verses
     ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
     : [];
   const verseIds = new Set(verseArray);
   const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah =
-    !!ownProps.params.range && !ownProps.params.range.includes('-');
+    !!ownProps.match.params.range && !ownProps.match.params.range.includes('-');
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
@@ -118,7 +112,7 @@ function mapStateToProps(state, ownProps) {
     verseIds,
     isSingleAyah,
     currentVerse,
-    info: state.chapters.infos[ownProps.params.chapterId],
+    info: state.chapters.infos[ownProps.match.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
     isAuthenticated: state.auth.loaded,
@@ -132,4 +126,4 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-export default connect(mapStateToProps)(AsyncPdf);
+export default connect(mapStateToProps)(Pdf);

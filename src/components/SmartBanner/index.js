@@ -1,5 +1,6 @@
 /* global window */
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import useragent from 'express-useragent';
 import cookie from 'react-cookie';
@@ -108,7 +109,9 @@ class SmartBanner extends Component {
   retrieveInfo() {
     const link = this.state.settings.getStoreLink() + this.state.appId;
     const inStore = `
-      ${this.props.price[this.state.deviceType]} - ${this.props.storeText[this.state.deviceType]}`;
+      ${this.props.price[this.state.deviceType]} - ${this.props.storeText[
+      this.state.deviceType
+    ]}`;
     const icon = require(`../../../static/images/${this.state.settings.icon}`); // eslint-disable-line
 
     return {

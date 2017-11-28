@@ -1,6 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Element from 'react-scroll/lib/components/Element';
@@ -9,11 +10,10 @@ import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
 import Translation from 'components/Translation';
+import FontText from 'components/FontText';
 import debug from 'helpers/debug';
 
 import { loadTafsirs } from 'redux/actions/media';
-
-const styles = require('./style.scss');
 
 const Copy = Loadable({
   loader: () => import('components/Copy'),
@@ -24,6 +24,19 @@ const Share = Loadable({
   loader: () => import('components/Share'),
   LoadingComponent: ComponentLoader
 });
+
+// TODO: Change this
+const Container = styled(Element)`
+  padding: 2.5% 0;
+  border-bottom: 1px solid rgba(${props => props.textMuted}, 0.5);
+
+  ${props => (props.highlight ? 'background-color: #F5FBF7;' : '')} .text-info {
+    color: ${props => props.theme.brandInfo};
+    &:hover {
+      color: ${props => props.theme.brandPrimary};
+    }
+  }
+`;
 
 const Label = styled.span`
   padding: 0.65em 1.1em;
@@ -37,18 +50,50 @@ const Label = styled.span`
   }
 `;
 
-const MediaButton = styled.span`
-  display: inline-block;
-  padding: 5px 14px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 15px;
-  &:hover {
-    background: #2ca4ab;
-    color: #fff;
+const StyledTranslation = styled.div`
+  h4 {
+    color: ${props => props.theme.brandPrimary};
+    margin-bottom: 5px;
   }
-  span {
-    float: none;
+
+  h2 {
+    margin-top: 5px;
+    margin-bottom: 25px;
+  }
+`;
+
+const Controls = styled.div`
+  a {
+    margin-bottom: 15px;
+    display: block;
+    text-decoration: none;
+    font-size: 12px;
+    cursor: pointer;
+    &:focus {
+      color: ${props => props.textMuted};
+    }
+  }
+  .label {
+    padding: 0.65em 1.1em;
+    border-radius: 0;
+    display: inline-block;
+    margin-bottom: 15px;
+    font-weight: 300;
+    color: ${props => props.theme.textColor};
+    &:hover {
+      opacity: 0.7;
+    }
+  }
+  @media (max-width: ${props => props.theme.screen.sm}) {
+    h4,
+    a {
+      display: inline-block;
+      margin: 0 10;
+    }
+    h4 {
+      margin: 0;
+    }
+    padding: 0;
   }
 `;
 
@@ -107,25 +152,27 @@ class Verse extends Component {
     return (
       <div>
         {verse.mediaContents.map((content, index) => (
-          <div className={`${styles.translation} translation`} key={index}>
-            <a
-              tabIndex="-1"
-              className="pointer"
-              onClick={() => mediaActions.setMedia(content)}
-              data-metrics-event-name="Media Click"
-              data-metrics-media-content-url={content.url}
-              data-metrics-media-content-id={content.id}
-              data-metrics-media-content-verse-key={verse.verseKey}
-            >
-              <MediaButton>
-                <LocaleFormattedMessage
-                  id="ayah.media.lectureFrom"
-                  defaultMessage="Watch lecture by {from}"
-                  values={{ from: content.authorName }}
-                />
-              </MediaButton>
-            </a>
-          </div>
+          <StyledTranslation className="translation" key={index}>
+            <h2 className="text-translation times-new">
+              <small>
+                <a
+                  tabIndex="-1"
+                  className="pointer"
+                  onClick={() => mediaActions.setMedia(content)}
+                  data-metrics-event-name="Media Click"
+                  data-metrics-media-content-url={content.url}
+                  data-metrics-media-content-id={content.id}
+                  data-metrics-media-content-verse-key={verse.verseKey}
+                >
+                  <LocaleFormattedMessage
+                    id="verse.media.lectureFrom"
+                    defaultMessage="Watch lecture by {from}"
+                    values={{ from: content.authorName }}
+                  />
+                </a>
+              </small>
+            </h2>
+          </StyledTranslation>
         ))}
       </div>
     );
@@ -161,9 +208,9 @@ class Verse extends Component {
     ));
 
     return (
-      <h1 className={`${styles.font} text-right text-arabic`}>
+      <FontText className="text-right text-arabic">
         <p>{text}</p>
-      </h1>
+      </FontText>
     );
   }
 
@@ -315,14 +362,14 @@ class Verse extends Component {
     const { isPdf } = this.props;
 
     return (
-      <div className={`col-md-1 col-sm-1 ${styles.controls}`}>
+      <Controls className="col-md-1 col-sm-1">
         {this.renderBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderTafsirLink()}
         {this.renderBookmark()}
         {!isPdf && this.renderShare()}
-      </div>
+      </Controls>
     );
   }
 
@@ -331,9 +378,10 @@ class Verse extends Component {
     debug('component:Verse', `Render ${verse.verseKey}`);
 
     return (
-      <Element
+      <Container
         name={`verse:${verse.verseKey}`}
-        className={`row ${iscurrentVerse && 'highlight'} ${styles.container}`}
+        className="row"
+        highlight={iscurrentVerse}
       >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">
@@ -341,7 +389,7 @@ class Verse extends Component {
           {this.renderTranslations()}
           {this.renderMedia()}
         </div>
-      </Element>
+      </Container>
     );
   }
 }

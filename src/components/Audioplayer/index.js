@@ -1,6 +1,7 @@
 /* global document */
 // TODO: This file is too too large.
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
@@ -538,18 +539,20 @@ export class Audioplayer extends Component {
     return (
       <Container className={className}>
         <Wrapper>
-          {currentFile &&
+          {currentFile && (
             <Track
               progress={currentTime / duration * 100}
               onTrackChange={this.handleTrackChange}
-            />}
+            />
+          )}
           {segments &&
-            segments[currentVerse.verseKey] &&
-            <Segments
-              segments={segments[currentVerse.verseKey]}
-              currentVerse={currentVerse.verseKey}
-              currentTime={currentTime}
-            />}
+            segments[currentVerse.verseKey] && (
+              <Segments
+                segments={segments[currentVerse.verseKey]}
+                currentVerse={currentVerse.verseKey}
+                currentTime={currentTime}
+              />
+            )}
         </Wrapper>
         <ul className="list-inline" style={{ margin: 0 }}>
           <ControlItem>
@@ -559,15 +562,9 @@ export class Audioplayer extends Component {
             />
             : {currentVerse.verseKey.split(':')[1]}
           </ControlItem>
-          <ControlItem>
-            {this.renderPreviousButton()}
-          </ControlItem>
-          <ControlItem>
-            {this.renderPlayStopButtons()}
-          </ControlItem>
-          <ControlItem>
-            {this.renderNextButton()}
-          </ControlItem>
+          <ControlItem>{this.renderPreviousButton()}</ControlItem>
+          <ControlItem>{this.renderPlayStopButtons()}</ControlItem>
+          <ControlItem>{this.renderNextButton()}</ControlItem>
           <ControlItem>
             <RepeatDropdown
               repeat={repeat}

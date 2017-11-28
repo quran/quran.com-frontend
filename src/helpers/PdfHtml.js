@@ -1,5 +1,6 @@
 /* eslint-disable global-require, quotes, max-len */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 
@@ -25,13 +26,13 @@ const PdfHtml = ({ component, assets, url }) => {
             type="text/css"
           />
         ))}
-        {Object.keys(assets.styles).length === 0
-          ? <style
+        {Object.keys(assets.styles).length === 0 ? (
+          <style
             dangerouslySetInnerHTML={{
               __html: require('../../src/styles/bootstrap.config')
             }}
           />
-          : null}
+        ) : null}
         {Object.keys(assets.javascript).map((script, i) => (
           <script src={assets.javascript[script]} key={i} />
         ))}

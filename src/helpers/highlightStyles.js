@@ -1,5 +1,6 @@
+export default `
 .hlt1, .hlt10{
-  color: $light-green !important;
+  color: #2CA4AB !important;
 }
 .hlt2, .hlt9{
   color: #f1c40f !important;
@@ -22,3 +23,4 @@
 .hlt8{
   color: #e61e22 !important;
 }
+`;

@@ -1,4 +1,4 @@
-import { PropTypes } from 'react';
+import PropTypes from 'prop-types';
 
 export const bookmarkActions = PropTypes.shape({
   isLoaded: PropTypes.func.isRequired,

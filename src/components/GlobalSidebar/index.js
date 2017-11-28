@@ -1,45 +1,17 @@
 /* global document */
-import React, { PropTypes, Component } from 'react';
-import styled from 'styled-components';
-import Link from 'react-router/lib/Link';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
+import Container from './Container';
+import List from './List';
 import { SIDEBAR_EVENTS } from '../../events';
-
-const styles = require('./style.scss');
 
 const NavbarHeader = Navbar.Header;
 
-const List = styled.ul`
-  padding-left: 0;
-
-  li {
-    color: #777;
-
-    a {
-      color: #777;
-      padding: 10px 15px;
-      display: block;
-
-      .ss-icon {
-        font-size: 18px;
-        margin-right: 20px;
-      }
-
-      &:hover {
-        background: #f5f5f5;
-        color: #333;
-      }
-    }
-  }
-`;
-
 class GlobalSidebar extends Component {
-  state = {
-    settingsModalOpen: false
-  };
-
   componentDidMount() {
     document.body.addEventListener('click', this.onBodyClick.bind(this), true);
   }
@@ -66,7 +38,7 @@ class GlobalSidebar extends Component {
     const { open, handleOpen, children } = this.props;
 
     return (
-      <div className={`${styles.container} sidebar ${open && styles.open}`}>
+      <Container className="sidebar" open={open}>
         <Navbar static fluid>
           <NavbarHeader>
             <p // eslint-disable-line
@@ -74,7 +46,7 @@ class GlobalSidebar extends Component {
               onClick={() => handleOpen(false)}
             >
               <Link to="/">
-                <i className={`ss-icon ss-home ${styles.backToHome}`} />
+                <i className="ss-icon ss-home backToHome" />
                 <LocaleFormattedMessage id="nav.title" defaultMessage="Quran" />
               </Link>
             </p>
@@ -170,7 +142,7 @@ class GlobalSidebar extends Component {
             </a>
           </li>
         </List>
-      </div>
+      </Container>
     );
   }
 }
@@ -178,7 +150,6 @@ class GlobalSidebar extends Component {
 GlobalSidebar.propTypes = {
   open: PropTypes.bool.isRequired,
   handleOpen: PropTypes.func,
-  settingsModalProps: PropTypes.object, // eslint-disable-line
   children: PropTypes.node
 };
 

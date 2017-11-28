@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import superagent from 'superagent';
 
 import IndexHeader from 'components/IndexHeader';
+import AboutText from 'components/AboutText';
 
 class Contact extends Component {
   state = {
@@ -133,7 +134,7 @@ class Contact extends Component {
     return (
       <div>
         <IndexHeader noSearch />
-        <div className="container-fluid about-text">
+        <AboutText className="container-fluid">
           <div className="row">
             <div className="col-md-6 col-md-offset-3">
               <h4>
@@ -146,7 +147,7 @@ class Contact extends Component {
             </div>
             <div className="col-md-8 col-md-offset-2">{body}</div>
           </div>
-        </div>
+        </AboutText>
       </div>
     );
   }

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
@@ -106,8 +107,9 @@ class SearchInput extends Component {
           // onBlur={() => this.setState({ showAutocomplete: false })}
           onKeyUp={this.search}
         />
-        {showAutocomplete &&
-          <SearchAutocomplete value={this.state.value} input={this.input} />}
+        {showAutocomplete && (
+          <SearchAutocomplete value={this.state.value} input={this.input} />
+        )}
       </div>
     );
   }

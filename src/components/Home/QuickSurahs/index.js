@@ -1,9 +1,9 @@
 import React from 'react';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import { Title } from 'containers/Home';
+import Title from 'components/Home/Title';
 
 import { QUICK_LINKS_EVENTS } from '../../../events';
 
@@ -21,24 +21,25 @@ const Span = styled.span`
 
 const isFriday = new Date().getDay() === 5;
 
-export default () =>
-  <div className="">
+export default () => (
+  <div>
     <Title className="text-muted">
       <LocaleFormattedMessage
         id="surah.index.quickLinks"
         defaultMessage="Quick links"
       />
       {__CLIENT__ &&
-        isFriday &&
-        <Span>
-          <Link
-            to="/18"
-            {...QUICK_LINKS_EVENTS.CLICK.CHAPTER.PROPS}
-            data-metrics-chapter-id="18"
-          >
-            Surah Al-Kahf
-          </Link>
-        </Span>}
+        isFriday && (
+          <Span>
+            <Link
+              to="/18"
+              {...QUICK_LINKS_EVENTS.CLICK.CHAPTER.PROPS}
+              data-metrics-chapter-id="18"
+            >
+              Surah Al-Kahf
+            </Link>
+          </Span>
+        )}
       <Span>
         <Link
           to="/36"
@@ -76,4 +77,5 @@ export default () =>
         </Link>
       </Span>
     </Title>
-  </div>;
+  </div>
+);
