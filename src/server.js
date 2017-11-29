@@ -30,10 +30,17 @@ import getLocalMessages from './helpers/setLocal';
 
 // const pretty = new PrettyError();
 const server = express();
+
 Raven.config(config.sentryServer, {
   captureUnhandledRejections: true,
   autoBreadcrumbs: true
 }).install();
+
+/* allows us to handle unhandled promises, that might cause node to crash */
+process.on('unhandledRejection', (err) => {
+  console.log(err);
+  debug('Server:unhandledRejection', err);
+});
 
 expressConfig(server);
 
