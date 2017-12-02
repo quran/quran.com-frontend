@@ -93,6 +93,6 @@ export default (server) => {
   support(server);
 
   server.get(/^\/(images|fonts)\/.*/, (req, res) => {
-    res.redirect(301, `//quran-1f14.kxcdn.com${req.path}`);
+    res.redirect(301, `//${process.env.ASSET_HOST}${req.path}`);
   });
 };

@@ -302,12 +302,12 @@ const config = {
         },
         {
           rel: 'preconnect',
-          href: 'https://quran-1f14.kxcdn.com',
+          href: process.env.ASSET_HOST,
           crossOrigin: ''
         },
         {
           rel: 'preconnect',
-          href: 'https://assets-1f14.kxcdn.com',
+          href: process.env.ASSET_HOST,
           crossOrigin: ''
         },
         ...Object.keys(locales).map(key => ({
