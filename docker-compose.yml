@@ -1,25 +1,24 @@
 version: '3'
 services:
   frontend:
-    build: .
+    build:
+      context: .
+      args:
+        - node_env=development
+        - node_path=./src
     ports:
+      - "8080:8080"
       - "8000:8000"
-  api:
-    image: qurancomapi_api:latest
+    #volumes:
+    #  - ./src:/quran/src
     environment:
-      - DATABASE_URL=postgres://quran_dev:quran_password@postgres:5432/quran_db
-      - ELASTICSEARCH_HOST=elasticsearch
-      - SENTRY_DSN=
-      - SECRET_KEY_BASE=abcdefa
-    ports:
-      - "3000:3000"
-  postgres:
-    image: qurandb:v102
-    ports:
-      - "5342:5432"
-  elasticsearch:
-    image: quran/quran.com-elasticsearch:5.6.3
-    ports:
-      - "9300:9300"
-      - "9200:9200"
+      - PUBLIC_API_URL=http://localhost:3000
+      - INTERNAL_API_URL=http://api:3000
+      # - SENTRY_KEY_CLIENT=https://app.getsentry.com
+      # - SENTRY_KEY_SERVER=https://app.getsentry.com
+      - FACEBOOK_APP_ID=appid
+      - ONE_QURAN_URL=https://one.quran.com
+      - PORT=8000
+      # TODO get all vars from .env (and remove dotenv module?)
+
 

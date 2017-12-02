@@ -12,7 +12,11 @@ WORKDIR /quran
 # cache node_modules using docker layers
 # any change to package.json will rebuild modules
 ADD package.json /quran/package.json
-RUN npm install --silent
+RUN if [ "$NODE_ENV" = "production" ]; then \
+      npm install --silent --production; \
+    else \
+      npm install; \
+    fi
 
 # you would typically mount ./src:/quran/src during dev
 ADD . /quran/
