@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 
-var assetHost = process.env.ASSET_HOST;
+const assetHost = process.env.ASSET_HOST;
 
 export const fontFaceStyle = fontClassName => (
   `@font-face {font-family: '${fontClassName}';
