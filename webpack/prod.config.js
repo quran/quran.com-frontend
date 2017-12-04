@@ -103,24 +103,29 @@ module.exports = {
           //     },
           //     'sass-loader?sourceMap&sourceMapContents'
           //   ]
-          loader: 'css-loader?minimize&modules&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
+          loader:
+            'css-loader?minimize&modules&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
         })
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
@@ -128,7 +133,8 @@ module.exports = {
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
+        loader:
+          'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('images'),
@@ -157,6 +163,7 @@ module.exports = {
       'process.env.FACEBOOK_APP_ID': JSON.stringify(
         process.env.FACEBOOK_APP_ID
       ),
+      'process.env.FONTS_URL': JSON.stringify(process.env.FONTS_URL),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env': {
         NODE_ENV: JSON.stringify('production') // for reach
