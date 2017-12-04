@@ -59,6 +59,10 @@ class GlobalNavSurah extends Component {
   render() {
     const { chapter, chapters, versesIds, options, ...props } = this.props;
 
+    if (!chapter) {
+      return null;
+    }
+
     return (
       <GlobalNav
         {...props}
@@ -108,8 +112,8 @@ class GlobalNavSurah extends Component {
 
 function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.match.params.chapterId, 10);
-  const chapter: Object = state.chapters.entities[chapterId];
-  const verses: Object = state.verses.entities[chapterId];
+  const chapter = state.chapters.entities[chapterId];
+  const verses = state.verses.entities[chapterId];
   const versesArray = verses
     ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
     : [];

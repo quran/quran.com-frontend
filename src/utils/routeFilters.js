@@ -1,6 +1,6 @@
 import { chapterToVersesMap } from './constants';
 
-function replaceChapterOrRange(params) {
+const replaceChapterOrRange = (params) => {
   const chapterId = params.chapterId;
   const verseId = params.range;
 
@@ -8,15 +8,17 @@ function replaceChapterOrRange(params) {
     chapterId.length !== parseInt(chapterId, 10).toString().length ||
     (verseId && verseId.length !== parseInt(verseId, 10).toString().length)
   );
-}
+};
 
-function filterValidChapter(replaceState, chapterId) {
+const filterValidChapter = (chapterId) => {
   if (isNaN(chapterId) || chapterId < 1 || chapterId > 114) {
-    replaceState('/error/invalid-surah');
+    return { status: 400, url: '/error/invalid-surah' };
   }
-}
 
-function filterValidVerse(replaceState, chapterId, verseRange) {
+  return null;
+};
+
+const filterValidVerse = (chapterId, verseRange) => {
   if (verseRange) {
     if (verseRange.includes('-')) {
       const [from, to] = verseRange.split('-').map(num => parseInt(num, 10));
@@ -26,57 +28,72 @@ function filterValidVerse(replaceState, chapterId, verseRange) {
         from < 1 ||
         to > chapterToVersesMap[chapterId]
       ) {
-        replaceState('/error/invalid-ayah');
+        return { status: 400, url: '/error/invalid-ayah' };
       }
     } else {
       const verseNumber = parseInt(verseRange, 10);
+
       if (verseNumber > chapterToVersesMap[chapterId]) {
-        replaceState('/error/invalid-ayah');
+        return { status: 400, url: '/error/invalid-ayah' };
       }
     }
   }
-}
 
-export default function checkValidChapterOrVerse(nextState, replaceState) {
-  const chapterId = parseInt(nextState.params.chapterId, 10);
-  filterValidChapter(replaceState, chapterId);
+  return null;
+};
 
-  if (nextState.params.range) {
-    if (nextState.params.range.includes('-')) {
-      const [_from, _to] = nextState.params.range.split('-').map(num => num);
-      const [from, to] = nextState.params.range
-        .split('-')
-        .map(num => parseInt(num, 10));
+const checkValidChapterOrVerse = ({ params, location }) => {
+  const chapterId = parseInt(params.chapterId, 10);
+  const invalidChapter = filterValidChapter(chapterId);
+
+  if (invalidChapter) {
+    return invalidChapter;
+  }
+
+  if (params.range) {
+    if (params.range.includes('-')) {
+      const [_from, _to] = params.range.split('-').map(num => num);
+      const [from, to] = params.range.split('-').map(num => parseInt(num, 10));
 
       if (from > to) {
-        replaceState(`/${chapterId}/${to}-${from}${nextState.location.search}`);
+        return {
+          status: 400,
+          url: `/${chapterId}/${to}-${from}${location.search}`
+        };
       } else if (from === to) {
-        replaceState(`/${chapterId}/${from}`);
+        return { status: 400, url: `/${chapterId}/${from}` };
       } else if (
         _from.length !== from.toString().length ||
         _to.length !== to.toString().length
       ) {
-        replaceState(`/${chapterId}/${from}-${to}${nextState.location.search}`);
+        return {
+          status: 400,
+          url: `/${chapterId}/${from}-${to}${location.search}`
+        };
       }
       // TODO: Add check to make sure the range is within the ayah limit
     } else {
-      const verseId = parseInt(nextState.params.range, 10);
+      const verseId = parseInt(params.range, 10);
 
-      if (replaceChapterOrRange(nextState.params)) {
-        let location = `${nextState.location.pathname}${nextState.location
-          .search}`;
-        location = location.replace(
+      if (replaceChapterOrRange(params)) {
+        let scopedLocation = `${location.pathname}${location.search}`;
+        scopedLocation = scopedLocation.replace(
           /\/([0-9]+)\/([0-9]+)/,
           `/${chapterId}/${verseId}`
         );
-        replaceState(location);
+
+        return { status: 400, url: scopedLocation };
       }
     }
-  } else if (replaceChapterOrRange(nextState.params)) {
-    let location = `${nextState.location.pathname}${nextState.location.search}`;
-    location = location.replace(/\/([0-9]+)/, `/${chapterId}`);
-    replaceState(location);
+  } else if (replaceChapterOrRange(params)) {
+    let scopedLocation = `${location.pathname}${location.search}`;
+
+    scopedLocation = scopedLocation.replace(/\/([0-9]+)/, `/${chapterId}`);
+
+    return { status: 400, url: scopedLocation };
   }
 
-  filterValidVerse(replaceState, chapterId, nextState.params.range);
-}
+  return filterValidVerse(chapterId, params.range);
+};
+
+export default checkValidChapterOrVerse;

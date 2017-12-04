@@ -14,6 +14,16 @@ import {
 } from './containers/Surah/connect';
 import { search } from './redux/actions/search.js';
 import routePromises from './utils/routePromises';
+import checkValidChapterOrVerse from './utils/routeFilters';
+
+const GlobalNav = loadable(() =>
+  import(/* webpackChunkName: "globalnav" */ 'components/GlobalNav')
+);
+
+const defaultSetContext = context => ({
+  ...context,
+  status: 200
+});
 
 export const routes = [
   {
@@ -68,7 +78,11 @@ export const routes = [
     path: '/error/:errorKey',
     component: loadable(() =>
       import(/* webpackChunkName: "error" */ './containers/Error')
-    )
+    ),
+    setContext: context => ({
+      ...context,
+      status: 400
+    })
   },
   {
     path: '/search',
@@ -114,41 +128,49 @@ export const routes = [
   {
     path: '/:chapterId(\\d+)/:range/:translations',
     component: loadable(() => import('./containers/Surah')),
-    loadData: [chaptersConnect, chapterInfoConnect, versesConnect]
-    // import('./components/GlobalNav/Surah')
-    // onEnter={checkValidChapterOrVerse}
+    loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
+    navbar: loadable(() =>
+      import(/* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah')
+    ),
+    onEnter: checkValidChapterOrVerse
   },
   {
     path: '/:chapterId(\\d+)/:range?.pdf',
     component: loadable(() =>
       import(/* webpackChunkName: "pdf" */ './containers/Pdf')
     ),
-    loadData: [chaptersConnect, versesConnect]
-    // import(
-    //   /* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter'
-    // )
-    // onEnter={checkValidChapterOrVerse}
+    loadData: [chaptersConnect, versesConnect],
+    footer: loadable(() =>
+      import(/* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter')
+    ),
+    onEnter: checkValidChapterOrVerse
   },
   {
     path: '/:chapterId(\\d+)/:range?',
     component: loadable(() =>
       import(/* webpackChunkName: "surah" */ './containers/Surah')
     ),
-    loadData: [chaptersConnect, chapterInfoConnect, versesConnect]
-    // import(
-    //   /* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah'
-    // )
-    // onEnter={checkValidChapterOrVerse}
+    loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
+    navbar: loadable(() =>
+      import(/* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah')
+    ),
+    onEnter: checkValidChapterOrVerse
   }
 ];
 
 const Routes = ({ store }) =>
   <Switch>
-    {routes.map(({ component: Component, loadData, ...route }) =>
+    {routes.map(({ component: Component, loadData, setContext, ...route }) =>
       <Route
         key={route.path}
         {...route}
-        render={(routeProps) => {
+        render={({ staticContext, ...routeProps }) => {
+          if (staticContext) {
+            const contextFunction = setContext || defaultSetContext;
+
+            Object.assign(staticContext, contextFunction(staticContext));
+          }
+
           if (__CLIENT__) {
             routePromises({
               store,
@@ -163,6 +185,24 @@ const Routes = ({ store }) =>
     )}
     <Redirect from="/:chapterId:(:range)" to="/:chapterId(/:range)" />
     <Redirect from="/:chapterId/:from::to" to="/:chapterId/:from-:to" />
+  </Switch>;
+
+// eslint-disable-next-line no-unused-vars, react/prop-types
+export const Navbars = ({ match, ...props }) =>
+  <Switch>
+    {routes
+      .filter(route => route.navbar)
+      // eslint-disable-next-line no-unused-vars
+      .map(({ navbar: Navbar, component, ...route }) =>
+        <Route
+          key={route.path}
+          {...route}
+          render={routeProps => <Navbar {...routeProps} {...props} />}
+        />
+      )}
+    <Route
+      render={routeProps => <GlobalNav {...routeProps} {...props} isStatic />}
+    />
   </Switch>;
 
 Routes.propTypes = {
