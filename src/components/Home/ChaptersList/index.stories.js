@@ -2,9 +2,9 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 
-import SurahsList from './index';
+import ChaptersList from './index';
 import { chapters } from '../../../../tests/fixtures/chapters';
 
-storiesOf('Home/SurahsList', module).add('default', () =>
-  <SurahsList chapters={chapters} />
+storiesOf('Home/ChaptersList', module).add('default', () =>
+  <ChaptersList chapters={chapters} />
 );

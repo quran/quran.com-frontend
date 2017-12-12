@@ -11,7 +11,7 @@ const LastVisit = ({ chapter, verse }) => {
   if (!chapter) return false;
 
   return (
-    <Title className="text-muted">
+    <Title muted>
       <LocaleFormattedMessage
         id="surah.index.continue"
         defaultMessage="Continue"

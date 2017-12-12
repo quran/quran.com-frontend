@@ -6,7 +6,7 @@ import cookie from 'react-cookie';
 import { connect } from 'react-redux';
 import debug from 'helpers/debug';
 import LastVisit from 'components/Home/LastVisit';
-import SurahsList from 'components/Home/SurahsList';
+import ChaptersList from 'components/Home/ChaptersList';
 import JuzList from 'components/Home/JuzList';
 import QuickSurahs from 'components/Home/QuickSurahs';
 import Title from 'components/Home/Title';
@@ -41,9 +41,9 @@ class Home extends Component {
   renderChapterList(chaptersList) {
     return (
       <div className="row">
-        <SurahsList chapters={chaptersList.slice(0, 38)} />
-        <SurahsList chapters={chaptersList.slice(38, 76)} />
-        <SurahsList chapters={chaptersList.slice(76, 114)} />
+        <ChaptersList chapters={chaptersList.slice(0, 38)} />
+        <ChaptersList chapters={chaptersList.slice(38, 76)} />
+        <ChaptersList chapters={chaptersList.slice(76, 114)} />
       </div>
     );
   }
