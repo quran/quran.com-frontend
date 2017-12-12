@@ -58,16 +58,6 @@ server.use((req, res) => {
     webpack_isomorphic_tools.refresh();
   }
 
-  if (req.query.DISABLE_SSR) {
-    return res.status(200).send(
-      `<!doctype html>\n${ReactDOM.renderToString(
-        <IntlProvider locale="en" messages={localMessages}>
-          <Html store={store} assets={webpack_isomorphic_tools.assets()} />
-        </IntlProvider>
-      )}`
-    );
-  }
-
   store.dispatch(setUserAgent(req.useragent));
   store.dispatch(setOption(cookie.load('options') || {}));
   debug('Server', 'Executing navigate action');
