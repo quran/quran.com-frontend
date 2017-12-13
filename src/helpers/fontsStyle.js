@@ -1,23 +1,34 @@
-@mixin word_font($page) {
-  @font-face {
-    font-family: p#{$page};
-    src: url('//quran-1f14.kxcdn.com/fonts/ttf/p#{$page}.ttf')
-      format('truetype');
-  } // @font-face {
-  //   font-family: text#{$page};
-  //   src: url('../../static/fonts/embed_ttf/tp#{$page}.ttf') format('truetype');
-  // }
-  .p#{$page} {
-    font-family: p#{$page};
-  }
-  .text-p#{$page} {
-    font-family: text#{$page};
-  }
-}
+import range from 'lodash/range';
 
-@for $i from 1 through 604 {
-  @include word_font($i);
+import config from '../config';
+
+const baseUrl = config.fontsURL;
+
+const makeFont = pageNumber => `
+@font-face {
+  font-family: p${pageNumber};
+  src: url('${baseUrl}/fonts/ttf/p${pageNumber}.ttf')
+    format('truetype');
 }
+.p${pageNumber} {
+  font-family: p${pageNumber};
+}
+.text-p${pageNumber} {
+  font-family: text${pageNumber};
+}
+`;
+
+const makePageNumberFonts = () =>
+  range(604)
+    .map((number) => {
+      const pageNumber = number + 1;
+
+      return makeFont(pageNumber);
+    })
+    .join('');
+
+const fonts = `
+${makePageNumberFonts()}
 
 @font-face {
   font-family: quran-common;
@@ -36,30 +47,30 @@
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('//quran-1f14.kxcdn.com/fonts/montserrat/Montserrat-Regular.otf');
+  src: url('${baseUrl}/fonts/montserrat/Montserrat-Regular.otf');
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('//quran-1f14.kxcdn.com/fonts/montserrat/Montserrat-Bold.otf');
+  src: url('${baseUrl}/fonts/montserrat/Montserrat-Bold.otf');
   font-weight: 700;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('//quran-1f14.kxcdn.com/fonts/montserrat/Montserrat-Light.otf');
+  src: url('${baseUrl}/fonts/montserrat/Montserrat-Light.otf');
   font-weight: 300;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('//quran-1f14.kxcdn.com/fonts/montserrat/Montserrat-Hairline.otf');
+  src: url('${baseUrl}/fonts/montserrat/Montserrat-Hairline.otf');
   font-weight: 100;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('//quran-1f14.kxcdn.com/fonts/montserrat/Montserrat-Black.otf');
+  src: url('${baseUrl}/fonts/montserrat/Montserrat-Black.otf');
   font-weight: 600;
 }
 
@@ -81,14 +92,14 @@
 
 @font-face {
   font-family: 'SSStandard';
-  src: url('//quran-1f14.kxcdn.com/fonts/ss-standard/ss-standard.eot');
-  src: url('//quran-1f14.kxcdn.com/fonts/ss-standard/ss-standard.eot?#iefix')
+  src: url('${baseUrl}/fonts/ss-standard/ss-standard.eot');
+  src: url('${baseUrl}/fonts/ss-standard/ss-standard.eot?#iefix')
       format('embedded-opentype'),
-    url('//quran-1f14.kxcdn.com/fonts/ss-standard/ss-standard.woff')
+    url('${baseUrl}/fonts/ss-standard/ss-standard.woff')
       format('woff'),
-    url('//quran-1f14.kxcdn.com/fonts/ss-standard/ss-standard.ttf')
+    url('${baseUrl}/fonts/ss-standard/ss-standard.ttf')
       format('truetype'),
-    url('//quran-1f14.kxcdn.com/fonts/ss-standard/ss-standard.svg#SSStandard')
+    url('${baseUrl}/fonts/ss-standard/ss-standard.svg#SSStandard')
       format('svg');
   font-weight: normal;
   font-style: normal;
@@ -96,13 +107,13 @@
 
 @font-face {
   font-family: 'Nafees';
-  src: url('//quran-1f14.kxcdn.com/fonts/nafees/nafees-nastaleeq-webfont.eot?#iefix')
+  src: url('${baseUrl}/fonts/nafees/nafees-nastaleeq-webfont.eot?#iefix')
       format('embedded-opentype'),
-    url('//quran-1f14.kxcdn.com/fonts/nafees/nafees-nastaleeq-webfont.woff')
+    url('${baseUrl}/fonts/nafees/nafees-nastaleeq-webfont.woff')
       format('woff'),
-    url('//quran-1f14.kxcdn.com/fonts/nafees/nafees-nastaleeq-webfont.ttf')
+    url('${baseUrl}/fonts/nafees/nafees-nastaleeq-webfont.ttf')
       format('truetype'),
-    url('//quran-1f14.kxcdn.com/fonts/nafees/nafees-nastaleeq-webfont.svg#NafeesRegular')
+    url('${baseUrl}/fonts/nafees/nafees-nastaleeq-webfont.svg#NafeesRegular')
       format('svg');
   font-weight: normal;
   font-style: normal;
@@ -110,25 +121,25 @@
 
 @font-face {
   font-family: 'divehi';
-  src: url('//quran-1f14.kxcdn.com/fonts/divehi/divehi.eot?#iefix')
+  src: url('${baseUrl}/fonts/divehi/divehi.eot?#iefix')
       format('embedded-opentype'),
-    url('//quran-1f14.kxcdn.com/fonts/divehi/divehi.woff2') format('woff2'),
-    url('//quran-1f14.kxcdn.com/fonts/divehi/divehi.woff') format('woff'),
-    url('//quran-1f14.kxcdn.com/fonts/divehi/divehi.ttf') format('truetype'),
-    url('//quran-1f14.kxcdn.com/fonts/divehi/divehi.svg#dhivehiregular')
+    url('${baseUrl}/fonts/divehi/divehi.woff2') format('woff2'),
+    url('${baseUrl}/fonts/divehi/divehi.woff') format('woff'),
+    url('${baseUrl}/fonts/divehi/divehi.ttf') format('truetype'),
+    url('${baseUrl}/fonts/divehi/divehi.svg#dhivehiregular')
       format('svg');
 }
 
 @font-face {
   font-family: 'surah_names';
-  src: url('//quran-1f14.kxcdn.com/fonts/surah_names/surah_names.eot?yg3f94');
-  src: url('//quran-1f14.kxcdn.com/fonts/surah_names/surah_names.eot?yg3f94#iefix')
+  src: url('${baseUrl}/fonts/surah_names/surah_names.eot?yg3f94');
+  src: url('${baseUrl}/fonts/surah_names/surah_names.eot?yg3f94#iefix')
       format('embedded-opentype'),
-    url('//quran-1f14.kxcdn.com/fonts/surah_names/surah_names.ttf?yg3f94')
+    url('${baseUrl}/fonts/surah_names/surah_names.ttf?yg3f94')
       format('truetype'),
-    url('//quran-1f14.kxcdn.com/fonts/surah_names/surah_names.woff?yg3f94')
+    url('${baseUrl}/fonts/surah_names/surah_names.woff?yg3f94')
       format('woff'),
-    url('//quran-1f14.kxcdn.com/fonts/surah_names/surah_names.svg?yg3f94#surah_names')
+    url('${baseUrl}/fonts/surah_names/surah_names.svg?yg3f94#surah_names')
       format('svg');
   font-weight: normal;
   font-style: normal;
@@ -136,14 +147,14 @@
 
 @font-face {
   font-family: 'bismillah';
-  src: url('//quran-1f14.kxcdn.com/fonts/bismillah/bismillah.eot?yg3f94');
-  src: url('//quran-1f14.kxcdn.com/fonts/bismillah/bismillah.eot?yg3f94#iefix')
+  src: url('${baseUrl}/fonts/bismillah/bismillah.eot?yg3f94');
+  src: url('${baseUrl}/fonts/bismillah/bismillah.eot?yg3f94#iefix')
       format('embedded-opentype'),
-    url('//quran-1f14.kxcdn.com/fonts/bismillah/bismillah.ttf?yg3f94')
+    url('${baseUrl}/fonts/bismillah/bismillah.ttf?yg3f94')
       format('truetype'),
-    url('//quran-1f14.kxcdn.com/fonts/bismillah/bismillah.woff?yg3f94')
+    url('${baseUrl}/fonts/bismillah/bismillah.woff?yg3f94')
       format('woff'),
-    url('//quran-1f14.kxcdn.com/fonts/bismillah/bismillah.svg?yg3f94#bismillah')
+    url('${baseUrl}/fonts/bismillah/bismillah.svg?yg3f94#bismillah')
       format('svg');
   font-weight: normal;
   font-style: normal;
@@ -1119,3 +1130,8 @@ html:hover [class^='ss-'] {
 .ss-calendardelete.right:after {
   content: '';
 }
+`
+  .replace(/\n/g, '')
+  .replace(/\s/g, '');
+
+export default fonts;

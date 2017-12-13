@@ -6,6 +6,7 @@ import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
 
 import highlightStyles from 'helpers/highlightStyles';
+import fontsStyle from 'helpers/fontsStyle';
 
 const Html = ({ store, component, assets, loadableState }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
@@ -38,6 +39,7 @@ const Html = ({ store, component, assets, loadableState }) => {
         <style>
           {highlightStyles}
         </style>
+        <style dangerouslySetInnerHTML={{ __html: fontsStyle }} />
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
