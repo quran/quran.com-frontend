@@ -31,7 +31,7 @@ describe('action tests', () => {
     expect(audioplayerActions.buildOnClient('abc').type).toEqual(
       audioplayerConstant.BUILD_ON_CLIENT
     );
-    expect(audioplayerActions.update('abc').type).toEqual(
+    expect(audioplayerActions.update('abc').type.).toEqual(
       audioplayerConstant.UPDATE
     );
   });
@@ -56,7 +56,7 @@ describe('action tests', () => {
     expect(surahsActions.loadAll().types.length).toEqual(3);
     expect(surahsActions.load(1).types.length).toEqual(3);
     expect(surahsActions.loadInfo('url').types.length).toEqual(3);
-    expect(surahsActions.setCurrent(1).type).toEqual(
+    expect(surahsActions.setCurrent(1).type.ACTION).toEqual(
       surahsConstants.SET_CURRENT
     );
   });
