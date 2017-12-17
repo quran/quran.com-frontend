@@ -37,8 +37,12 @@ export default function reducer(state = initialState, action = {}) {
             const isInArray = lines[
               `${word.pageNumber}-${word.lineNumber}`
             ].find((item) => {
-              const itemChecksum = `${item.lineNumber}${item.code}${item.verseKey}${item.position}`;
-              const dataChecksum = `${word.lineNumber}${word.code}${word.verseKey}${item.position}`;
+              const itemChecksum = `${item.lineNumber}${item.code}${
+                item.verseKey
+              }${item.position}`;
+              const dataChecksum = `${word.lineNumber}${word.code}${
+                word.verseKey
+              }${item.position}`;
 
               return itemChecksum === dataChecksum;
             });

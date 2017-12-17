@@ -1,10 +1,10 @@
-import fontFaceConstant from 'redux/constants/fontFace.js';
-import fontFaceAction from '../../../src/redux/actions/fontFace.js';
+import LOAD from 'redux/constants/fontFace';
+import fontFaceAction from '../../../src/redux/actions/fontFace';
 
 describe('fontFace', () => {
   it('actions', () => {
     const className = 'className';
-    expect(fontFaceAction(className).type).toEqual(fontFaceConstant);
+    expect(fontFaceAction(className).type).toEqual(LOAD);
     expect(fontFaceAction(className).className).toEqual(className);
   });
 });

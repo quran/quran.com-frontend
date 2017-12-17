@@ -1,8 +1,4 @@
-import {
-  SEARCH,
-  SEARCH_SUCCESS,
-  SEARCH_FAIL
-} from 'redux/constants/search.js';
+import { SEARCH, SEARCH_SUCCESS, SEARCH_FAIL } from 'redux/constants/search.js';
 
 const initialState = {
   errored: false,
