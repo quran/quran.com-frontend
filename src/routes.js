@@ -4,7 +4,6 @@ import loadable from 'loadable-components';
 import { Switch, Route } from 'react-router';
 
 import Home from './containers/Home';
-import RedirectWithStatus from './components/RedirectWithStatus';
 
 import {
   chaptersConnect,
@@ -165,19 +164,9 @@ export const routes = [
   }
 ];
 
-const Routes = ({ store }) =>
+const Routes = ({ store }) => (
   <Switch>
-    <RedirectWithStatus
-      from="/:chapterId:(:range)"
-      to="/:chapterId(/:range)"
-      status={301}
-    />{' '}
-    <RedirectWithStatus
-      from="/:chapterId/:from::to"
-      to="/:chapterId/:from-:to"
-      status={301}
-    />{' '}
-    {routes.map(({ component: Component, loadData, setContext, ...route }) =>
+    {routes.map(({ component: Component, loadData, setContext, ...route }) => (
       <Route
         key={route.path}
         {...route}
@@ -199,26 +188,29 @@ const Routes = ({ store }) =>
           return <Component {...routeProps} />;
         }}
       />
-    )}{' '}
-  </Switch>;
+    ))}{' '}
+  </Switch>
+);
 
 // eslint-disable-next-line no-unused-vars, react/prop-types
-export const Navbars = ({ match, ...props }) =>
+export const Navbars = ({ match, ...props }) => (
   <Switch>
-    {' '}{routes
+    {' '}
+    {routes
       .filter(route => route.navbar)
       // eslint-disable-next-line no-unused-vars
-      .map(({ navbar: Navbar, component, ...route }) =>
+      .map(({ navbar: Navbar, component, ...route }) => (
         <Route
           key={route.path}
           {...route}
           render={routeProps => <Navbar {...routeProps} {...props} />}
         />
-      )}{' '}
+      ))}{' '}
     <Route
       render={routeProps => <GlobalNav {...routeProps} {...props} isStatic />}
     />{' '}
-  </Switch>;
+  </Switch>
+);
 
 Routes.propTypes = {
   store: PropTypes.object.isRequired // eslint-disable-line
