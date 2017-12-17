@@ -47,7 +47,7 @@
     ]
   },
   "engines": {
-    "node": ">= 6.3.0"
+    "node": ">= 8.9.1"
   },
   "dependencies": {
     "app-module-path": "1.0.2",
