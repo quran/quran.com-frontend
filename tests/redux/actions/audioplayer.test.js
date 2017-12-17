@@ -1,11 +1,8 @@
 import * as audioplayerConstant from 'redux/constants/audioplayer.js';
-import * as ayahsConstants from 'redux/constants/verses.js';
-
 import * as audioplayerActions from '../../../src/redux/actions/audioplayer';
-import * as ayahsActions from '../../../src/redux/actions/verses.js';
 
-describe('action tests', () => {
-  it('audioplayer actions', () => {
+describe('audoplayer', () => {
+  it('actions', () => {
     expect(audioplayerActions.setCurrentFile('fil').type).toEqual(
       audioplayerConstant.SET_CURRENT_FILE
     );
@@ -31,22 +28,6 @@ describe('action tests', () => {
     );
     expect(audioplayerActions.update('abc').type).toEqual(
       audioplayerConstant.UPDATE
-    );
-  });
-
-  it('ayahs actions', () => {
-    expect(ayahsActions.load(1, 2, 4).types.length).toEqual(3);
-    expect(ayahsActions.clearCurrent().type).toEqual(
-      ayahsConstants.CLEAR_CURRENT
-    );
-    expect(ayahsActions.clearCurrentWord(1).type).toEqual(
-      ayahsConstants.CLEAR_CURRENT_WORD
-    );
-    expect(ayahsActions.setCurrentVerse(1).type).toEqual(
-      ayahsConstants.SET_CURRENT_VERSE
-    );
-    expect(ayahsActions.setCurrentWord(1).type).toEqual(
-      ayahsConstants.SET_CURRENT_WORD
     );
   });
 });

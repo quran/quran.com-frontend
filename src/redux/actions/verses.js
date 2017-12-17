@@ -81,7 +81,7 @@ export function setCurrentWord(id) {
   };
 }
 
-export function isLoaded(globalState, chapterId, paging) {
+export function isLoaded(globalState, chapterId, paging = {}) {
   if (paging.offset) {
     return (
       globalState.verses.entities[chapterId] &&
@@ -89,9 +89,9 @@ export function isLoaded(globalState, chapterId, paging) {
         `${chapterId}:${paging.offset ? paging.offset + 1 : 1}`
       ] &&
       globalState.verses.entities[chapterId][
-        `${chapterId}:${paging.offset && paging.limit
-          ? paging.offset + paging.limit
-          : perPage}`
+        `${chapterId}:${
+          paging.offset && paging.limit ? paging.offset + paging.limit : perPage
+        }`
       ]
     );
   }
@@ -119,5 +119,5 @@ export function isTafsirLoaded(globalState, chapterId, verseId, tafsirId) {
   const verses = globalState.verses.entities[chapterId];
   const verseKey = `${chapterId}:${verseId}`;
 
-  return verses && globalState.verses.tafsirs[`${verseKey}-${tafsirId}`];
+  return !!verses && globalState.verses.tafsirs[`${verseKey}-${tafsirId}`];
 }

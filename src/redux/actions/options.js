@@ -11,17 +11,19 @@ import {
 } from 'redux/constants/options.js';
 
 export function isReadingMode(globalState) {
-  return globalState.options.isReadingMode;
+  return !!globalState.options.isReadingMode;
 }
 
 export function isNightMode(globalState) {
-  return globalState.options.isNightMode;
+  return !!globalState.options.isNightMode;
 }
 
 export function setOption(payload) {
   const options = cookie.load('options') || {}; // protect against first timers.
 
-  Object.keys(payload).forEach((option) => { options[option] = payload[option]; });
+  Object.keys(payload).forEach((option) => {
+    options[option] = payload[option];
+  });
   cookie.save('options', JSON.stringify(options));
 
   return {
