@@ -1,10 +1,8 @@
 import * as audioplayerConstant from 'redux/constants/audioplayer.js';
 import * as ayahsConstants from 'redux/constants/verses.js';
-import * as surahsConstants from 'redux/constants/chapters.js';
 
-import * as audioplayerActions from './audioplayer.js';
-import * as ayahsActions from './verses.js';
-import * as surahsActions from './chapters.js';
+import * as audioplayerActions from '../../../src/redux/actions/audioplayer';
+import * as ayahsActions from '../../../src/redux/actions/verses.js';
 
 describe('action tests', () => {
   it('audioplayer actions', () => {
@@ -31,7 +29,7 @@ describe('action tests', () => {
     expect(audioplayerActions.buildOnClient('abc').type).toEqual(
       audioplayerConstant.BUILD_ON_CLIENT
     );
-    expect(audioplayerActions.update('abc').type.).toEqual(
+    expect(audioplayerActions.update('abc').type).toEqual(
       audioplayerConstant.UPDATE
     );
   });
@@ -49,15 +47,6 @@ describe('action tests', () => {
     );
     expect(ayahsActions.setCurrentWord(1).type).toEqual(
       ayahsConstants.SET_CURRENT_WORD
-    );
-  });
-
-  it('surahs actions', () => {
-    expect(surahsActions.loadAll().types.length).toEqual(3);
-    expect(surahsActions.load(1).types.length).toEqual(3);
-    expect(surahsActions.loadInfo('url').types.length).toEqual(3);
-    expect(surahsActions.setCurrent(1).type.ACTION).toEqual(
-      surahsConstants.SET_CURRENT
     );
   });
 });
