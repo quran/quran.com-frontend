@@ -78,19 +78,23 @@ module.exports = {
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader:
+          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
@@ -98,7 +102,8 @@ module.exports = {
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
+        loader:
+          'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('images'),
@@ -150,6 +155,7 @@ module.exports = {
       'process.env.FACEBOOK_APP_ID': JSON.stringify(
         process.env.FACEBOOK_APP_ID
       ),
+      'process.env.FONTS_URL': JSON.stringify(process.env.FONTS_URL),
       'process.env.SEGMENTS_KEY': JSON.stringify(process.env.SEGMENTS_KEY),
       'process.env.SENTRY_KEY_CLIENT': JSON.stringify(
         process.env.SENTRY_KEY_CLIENT

@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as OptionsActions from 'redux/actions/options.js';
 import { connect } from 'react-redux';
 import Menu from 'quran-components/lib/Menu';

@@ -9,17 +9,15 @@ let component;
 describe('<Segments />', () => {
   describe('when are an empty object', () => {
     beforeEach(() => {
-      component = mount(
-        <Segments segments={{}} />
-      );
+      component = mount(<Segments segments={{}} />);
     });
 
     it('should not have add any styles', () => {
-      expect(component.props()).to.eql({ segments: {} });
+      expect(component.props()).toEqual({ segments: {} });
     });
 
     it('should return noscript', () => {
-      expect(component.find('noscript').length).to.eql(1);
+      expect(component.find('noscript').length).toEqual(1);
     });
   });
 
@@ -27,7 +25,12 @@ describe('<Segments />', () => {
     beforeEach(() => {
       component = mount(
         <Segments
-          segments={{ words: { 0: { startTime: 0, endTime: 1 }, 1: { startTime: 1, endTime: 2 } } }}
+          segments={{
+            words: {
+              0: { startTime: 0, endTime: 1 },
+              1: { startTime: 1, endTime: 2 }
+            }
+          }}
           currentTime={1.5}
           currentVerse="1:1"
         />
@@ -35,15 +38,17 @@ describe('<Segments />', () => {
     });
 
     it('should not contain noscript', () => {
-      expect(component.find('noscript').length).to.eql(0);
+      expect(component.find('noscript').length).toEqual(0);
     });
 
     it('should render Helmet', () => {
-      expect(component.find(Helmet).length).to.eql(1);
+      expect(component.find(Helmet).length).toEqual(1);
     });
 
     it('should have style for the second word', () => {
-      expect(component.find(Helmet).first().props().style[0].cssText).to.contain('#word-1-1-1');
+      expect(component.find(Helmet).first().props().style[0].cssText).toContain(
+        '#word-1-1-1'
+      );
     });
   });
 
@@ -70,15 +75,15 @@ describe('<Segments />', () => {
     });
 
     it('should not contain noscript', () => {
-      expect(component.find('noscript').length).to.eql(0);
+      expect(component.find('noscript').length).toEqual(0);
     });
 
     it('should render Helmet', () => {
-      expect(component.find(Helmet).length).to.eql(1);
+      expect(component.find(Helmet).length).toEqual(1);
     });
 
     it('should not have style words', () => {
-      expect(component.find(Helmet).first().props().style).to.have.lengthOf(0);
+      expect(component.find(Helmet).first().props().style).toHaveLength(0);
     });
   });
 });

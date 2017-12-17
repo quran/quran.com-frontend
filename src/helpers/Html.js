@@ -1,10 +1,14 @@
 /* eslint-disable global-require, quotes, max-len */
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom/server';
 import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
 
-const Html = ({ store, component, assets }) => {
+import highlightStyles from 'helpers/highlightStyles';
+import fontsStyle from 'helpers/fontsStyle';
+
+const Html = ({ store, component, assets, loadableState }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
   const head = Helmet.rewind();
   return (
@@ -32,6 +36,10 @@ const Html = ({ store, component, assets }) => {
             }}
           />
           : null}
+        <style>
+          {highlightStyles}
+        </style>
+        <style dangerouslySetInnerHTML={{ __html: fontsStyle }} />
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
@@ -74,6 +82,7 @@ const Html = ({ store, component, assets }) => {
           }}
           charSet="UTF-8"
         />
+        <span dangerouslySetInnerHTML={{ __html: loadableState }} />
         {process.env.NODE_ENV === 'production' &&
           <script
             dangerouslySetInnerHTML={{
@@ -103,7 +112,8 @@ const Html = ({ store, component, assets }) => {
 Html.propTypes = {
   store: PropTypes.object, // eslint-disable-line
   assets: PropTypes.object, // eslint-disable-line
-  component: PropTypes.element
+  component: PropTypes.element,
+  loadableState: PropTypes.object // eslint-disable-line
 };
 
 export default Html;

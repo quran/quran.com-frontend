@@ -1,26 +1,25 @@
-
 // Dropdown icon
-.options .dropdown{
+.options .dropdown {
   height: 100%;
 
-  .dropdown-icon.ss-icon:before{
-    content:"▾";
+  .dropdown-icon.ss-icon:before {
+    content: "▾";
   }
 }
 
-.dropdown-menu{
+.dropdown-menu {
   margin-top: 0;
   border-radius: 0;
-  @extend .montserrat;
+  font-family: 'Montserrat';
   min-width: 100%;
 
   width: auto;
-  &.audio{
+  &.audio {
     padding-top: 25px;
   }
 
-  &.dropdown-content{
-    .languages{
+  &.dropdown-content {
+    .languages {
       padding: 15px 0;
     }
   }

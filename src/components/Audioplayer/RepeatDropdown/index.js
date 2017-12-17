@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import styled, { css } from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
@@ -7,7 +8,7 @@ import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import { intlShape, injectIntl } from 'react-intl';
-import SwitchToggle from 'components/SwitchToggle';
+import Checkbox from 'quran-components/lib/Checkbox';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import { ControlButton } from '../index';
@@ -272,11 +273,11 @@ class RepeatButton extends Component {
                 defaultMessage="TOGGLE REPEAT"
               />
               {'  '}
-              <SwitchToggle
-                checked={!!repeat.from}
-                onToggle={this.handleToggle}
+              <Checkbox
+                checked={repeat.from}
+                handleChange={this.handleToggle}
                 id="repeat-toggle"
-                flat
+                name="repeat-toggle"
               />
             </div>
           </div>

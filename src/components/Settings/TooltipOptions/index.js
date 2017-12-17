@@ -1,4 +1,5 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import Radio from 'quran-components/lib/Radio';
 import Icon from 'quran-components/lib/Icon';
@@ -10,7 +11,7 @@ const TooltipOptions = ({ tooltip, onOptionChange }) => {
       tooltip: type
     });
 
-  const list = ['translation', 'transliteration'].map(type => (
+  const list = ['translation', 'transliteration'].map(type =>
     <MenuItem key={type}>
       <Radio
         id={type}
@@ -24,7 +25,7 @@ const TooltipOptions = ({ tooltip, onOptionChange }) => {
         />
       </Radio>
     </MenuItem>
-  ));
+  );
 
   return (
     <MenuItem

@@ -8,10 +8,10 @@ let wrapper;
 
 describe('<Copy />', () => {
   beforeEach(() => {
-    wrapper = shallow(<Copy text={text} />);
+    wrapper = shallow(<Copy text={text} verseKey="1:1" />);
   });
 
   it('should render', () => {
-    expect(wrapper).to.be.ok; // eslint-disable-line
+    expect(wrapper).toBeTruthy();
   });
 });

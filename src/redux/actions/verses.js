@@ -40,9 +40,6 @@ function prepareParams(params, options) {
 export function load(id, paging, params, options = defaultOptions) {
   const apiOptions = prepareParams(params, options);
 
-  // TODO: move this to module/verses
-  // cookie.save('lastVisit', JSON.stringify({ chapterId: id, verseId: from }));
-
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: { verses: [versesSchema] },

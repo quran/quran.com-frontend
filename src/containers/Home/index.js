@@ -1,37 +1,19 @@
 import React, { Component } from 'react';
-import * as customPropTypes from 'customPropTypes';
-import styled from 'styled-components';
 import Helmet from 'react-helmet';
-import IndexHeader from 'components/IndexHeader';
-import cookie from 'react-cookie';
-import { asyncConnect } from 'redux-connect';
 import { connect } from 'react-redux';
-import debug from 'helpers/debug';
-import LastVisit from 'components/Home/LastVisit';
-import SurahsList from 'components/Home/SurahsList';
-import JuzList from 'components/Home/JuzList';
-import QuickSurahs from 'components/Home/QuickSurahs';
-import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 import Tabs, { Tab } from 'quran-components/lib/Tabs';
 import Loader from 'quran-components/lib/Loader';
 
-import { chaptersConnect, juzsConnect } from '../Surah/connect';
+import debug from 'helpers/debug';
+import * as customPropTypes from 'customPropTypes';
 
-export const Title = styled.h4`
-  font-size: 14px;
-
-  span {
-    margin: 0;
-    line-height: 2;
-    a {
-      padding: 0 15px;
-    }
-  }
-
-  &:last-child {
-    margin-top: 25px;
-  }
-`;
+import IndexHeader from 'components/IndexHeader';
+import SurahsList from 'components/Home/SurahsList';
+import JuzList from 'components/Home/JuzList';
+import QuickSurahs from 'components/Home/QuickSurahs';
+import Title from 'components/Home/Title';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 class Home extends Component {
   renderJuzList() {
@@ -56,8 +38,10 @@ class Home extends Component {
     );
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  renderChapterList(chaptersList) {
+  renderChapterList() {
+    const { chapters } = this.props;
+    const chaptersList = Object.values(chapters);
+
     return (
       <div className="row">
         <SurahsList chapters={chaptersList.slice(0, 38)} />
@@ -69,10 +53,6 @@ class Home extends Component {
 
   render() {
     debug('component:Home', 'Render');
-
-    const lastVisit = cookie.load('lastVisit') || null;
-    const { chapters } = this.props;
-    const chaptersList = Object.values(chapters);
 
     const chapterTitle = (
       <Title className="text-muted">
@@ -96,20 +76,15 @@ class Home extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              {lastVisit && (
-                <LastVisit
-                  chapter={chapters[lastVisit.chapterId]}
-                  verse={lastVisit.verseId}
-                />
-              )}
               <QuickSurahs />
-
               <Tabs>
                 <Tab title={chapterTitle}>
-                  {this.renderChapterList(chaptersList)}
+                  {this.renderChapterList()}
                 </Tab>
 
-                <Tab title={juzTitle}>{this.renderJuzList()}</Tab>
+                <Tab title={juzTitle}>
+                  {this.renderJuzList()}
+                </Tab>
               </Tabs>
             </div>
           </div>
@@ -124,16 +99,9 @@ Home.propTypes = {
   juzs: customPropTypes.juzs.isRequired
 };
 
-const AsyncHome = asyncConnect([
-  { promise: chaptersConnect },
-  { promise: juzsConnect }
-])(Home);
+const mapStateToProps = state => ({
+  chapters: state.chapters.entities,
+  juzs: state.juzs
+});
 
-function mapStateToProps(state) {
-  return {
-    chapters: state.chapters.entities,
-    juzs: state.juzs
-  };
-}
-
-export default connect(mapStateToProps)(AsyncHome);
+export default connect(mapStateToProps)(Home);

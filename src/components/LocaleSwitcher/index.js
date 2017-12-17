@@ -1,5 +1,6 @@
 /* global window */
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import cookie from 'react-cookie';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import Menu, { MenuItem } from 'quran-components/lib/Menu';
@@ -13,6 +14,15 @@ import { NAVBAR_EVENTS } from '../../events';
 const { locales, defaultLocale } = config;
 
 class LocaleSwitcher extends Component {
+  static propTypes = {
+    className: PropTypes.string,
+    renderAs: PropTypes.string
+  };
+
+  static defaultProps = {
+    renderAs: 'dropdown'
+  };
+
   state = {
     currentLocale: defaultLocale
   };
@@ -101,14 +111,5 @@ class LocaleSwitcher extends Component {
     return this.renderAsMenu();
   }
 }
-
-LocaleSwitcher.propTypes = {
-  className: PropTypes.string,
-  renderAs: PropTypes.string
-};
-
-LocaleSwitcher.defaultProps = {
-  renderAs: 'dropdown'
-};
 
 export default LocaleSwitcher;

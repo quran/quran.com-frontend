@@ -49,6 +49,7 @@ const config = {
   sentryClient: process.env.SENTRY_KEY_CLIENT,
   sentryServer: process.env.SENTRY_KEY_SERVER,
   facebookAppId: process.env.FACEBOOK_APP_ID,
+  fontsURL: process.env.FONTS_URL,
   locales,
   defaultLocale: 'en',
   app: {

@@ -1,8 +1,9 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
-import Link from 'react-router/lib/Link';
+import { Link } from 'react-router-dom';
 import Drawer from 'quran-components/lib/Drawer';
 import SearchInput from 'components/SearchInput';
 import SurahsDropdown from 'components/SurahsDropdown';
@@ -106,7 +107,7 @@ class GlobalNavSurah extends Component {
 }
 
 function mapStateToProps(state, ownProps) {
-  const chapterId = parseInt(ownProps.params.chapterId, 10);
+  const chapterId = parseInt(ownProps.match.params.chapterId, 10);
   const chapter: Object = state.chapters.entities[chapterId];
   const verses: Object = state.verses.entities[chapterId];
   const versesArray = verses
