@@ -1,7 +1,10 @@
-export const LOAD = '@@quran/surahs/LOAD';
-export const LOAD_SUCCESS = '@@quran/surahs/LOAD_SUCCESS';
-export const LOAD_FAIL = '@@quran/surahs/LOAD_FAIL';
-export const LOAD_INFO = '@@quran/surahs/LOAD_INFO';
-export const LOAD_INFO_SUCCESS = '@@quran/surahs/LOAD_INFO_SUCCESS';
-export const LOAD_INFO_FAIL = '@@quran/surahs/LOAD_INFO_FAIL';
-export const SET_CURRENT = '@@quran/surahs/SET_CURRENT';
+import { defineAction } from 'redux-define';
+import states from './states';
+
+export const FETCH_CHAPTERS = defineAction('FETCH_CHAPTERS', states, 'quran');
+export const FETCH_CHAPTER_INFO = defineAction(
+  'FETCH_CHAPTER_INFO',
+  states,
+  'quran'
+);
+export const SET_CURRENT = defineAction('SET_CURRENT', [], 'quran');
