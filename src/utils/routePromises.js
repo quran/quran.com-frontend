@@ -1,6 +1,6 @@
 const routePromises = ({ match, loadData, store }) => {
   const promises = [];
-  console.log(match, loadData, store);
+
   if (match && loadData) {
     loadData.forEach((connector) => {
       promises.push(
@@ -14,9 +14,7 @@ const routePromises = ({ match, loadData, store }) => {
     });
   }
 
-  return Promise.all(promises)
-    .then(data => data)
-    .catch(error => console.error(error));
+  return Promise.all(promises).then(data => data);
 };
 
 export default routePromises;

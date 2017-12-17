@@ -17,17 +17,11 @@ import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
 import Loader from 'quran-components/lib/Loader';
 
-import Routes from '../../routes';
+import Routes, { Navbars } from '../../routes';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
-
-const GlobalNav = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "globalnav" */ 'components/GlobalNav'),
-  LoadingComponent: ComponentLoader
-});
 
 const GlobalSidebar = Loadable({
   loader: () =>
@@ -83,7 +77,6 @@ class App extends Component {
 
   render() {
     const {
-      nav,
       footer,
       children,
       media,
@@ -107,10 +100,11 @@ class App extends Component {
             </div>
           </NoScriptWarning>
         </NoScript>
-        {React.cloneElement(nav || <GlobalNav isStatic {...props} />, {
-          handleSidebarToggle: () =>
-            this.setState({ sidebarOpen: !this.state.sidebarOpen })
-        })}
+        <Navbars
+          {...props}
+          handleSidebarToggle={() =>
+            this.setState({ sidebarOpen: !this.state.sidebarOpen })}
+        />
         {__CLIENT__ &&
           <GlobalSidebar
             open={this.state.sidebarOpen}

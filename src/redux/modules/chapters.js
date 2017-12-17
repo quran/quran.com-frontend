@@ -1,12 +1,12 @@
-import {
-  LOAD_SUCCESS,
-  LOAD_FAIL,
-  LOAD_INFO,
-  LOAD_INFO_SUCCESS,
-  SET_CURRENT
-} from 'redux/constants/chapters.js';
+import { handleActions } from 'redux-actions';
 
-const initialState = {
+import {
+  FETCH_CHAPTERS,
+  FETCH_CHAPTER_INFO,
+  SET_CURRENT
+} from 'redux/constants/chapters';
+
+const INITIAL_STATE = {
   errored: false,
   loaded: false,
   loading: false,
@@ -16,14 +16,9 @@ const initialState = {
   infos: {}
 };
 
-export default function reducer(state = initialState, action = {}) {
-  switch (action.type) {
-    case SET_CURRENT:
-      return {
-        ...state,
-        current: action.current
-      };
-    case LOAD_SUCCESS: {
+export default handleActions(
+  {
+    [FETCH_CHAPTERS.SUCCESS]: (state, action) => {
       const entities = state.entities;
       const { chapters } = action.result.entities;
       return {
@@ -35,23 +30,23 @@ export default function reducer(state = initialState, action = {}) {
           ...chapters
         }
       };
-    }
-    case LOAD_FAIL:
-      return state;
-    case LOAD_INFO:
-      return {
-        ...state,
-        infoLoading: true
-      };
-    case LOAD_INFO_SUCCESS:
-      return {
-        ...state,
-        infos: {
-          ...state.entities,
-          [action.id]: action.result.chapterInfo
-        }
-      };
-    default:
-      return state;
-  }
-}
+    },
+    [FETCH_CHAPTERS.SUCCESS]: state => state,
+    [FETCH_CHAPTER_INFO.ACTION]: state => ({
+      ...state,
+      infoLoading: true
+    }),
+    [FETCH_CHAPTER_INFO.SUCCESS]: (state, action) => ({
+      ...state,
+      infos: {
+        ...state.entities,
+        [action.id]: action.result.chapterInfo
+      }
+    }),
+    [SET_CURRENT.ACTION]: (state, action) => ({
+      ...state,
+      current: action.current
+    })
+  },
+  INITIAL_STATE
+);
