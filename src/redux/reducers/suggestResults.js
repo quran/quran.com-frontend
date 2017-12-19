@@ -4,13 +4,13 @@ import {
   SUGGEST_FAIL
 } from 'redux/constants/suggest.js';
 
-const initialState = {
+export const INITIAL_STATE = {
   errored: false,
   loaded: false,
   results: {}
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
     case SUGGEST:
       return {
@@ -23,6 +23,8 @@ export default function reducer(state = initialState, action = {}) {
     case SUGGEST_SUCCESS:
       return {
         ...state,
+        loading: false,
+        loaded: true,
         results: {
           ...state.results,
           [action.query]: action.result

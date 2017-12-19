@@ -17,17 +17,17 @@ import {
   // LOAD,
   LOAD_SUCCESS
   // LOAD_FAIL
-} from 'redux/constants/audioplayer.js';
+} from 'redux/constants/audioplayer';
 
 import {
   LOAD as VERSES_LOAD,
   CLEAR_CURRENT as VERSES_CLEAR_CURRENT,
   SET_CURRENT_VERSE
-} from './verses';
+} from 'redux/constants/verses';
 
 export { NEXT, SET_AYAH };
 
-const initialState = {
+export const INITIAL_STATE = {
   files: {},
   currentFile: null,
   currentVerse: null,
@@ -45,7 +45,7 @@ const initialState = {
   segments: {}
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
     case VERSES_CLEAR_CURRENT: {
       const stateFilesCurrent = state.files;
