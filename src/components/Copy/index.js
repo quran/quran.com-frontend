@@ -11,7 +11,9 @@ class Copy extends Component {
   };
 
   handleCopy = () => {
-    copyToClipboard(`${this.props.text} - ${this.props.verseKey}`);
+    const { text, verseKey } = this.props;
+
+    copyToClipboard(`${text} - ${verseKey}`);
     this.setState({ isCopied: true });
 
     setTimeout(() => this.setState({ isCopied: false }), 1000);
