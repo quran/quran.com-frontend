@@ -14,13 +14,14 @@ services:
     environment:
       - PUBLIC_API_URL=http://localhost:3000
       - INTERNAL_API_URL=http://api:3000
+      # - SEGMENTS_KEY=
       # - SENTRY_KEY_CLIENT=https://app.getsentry.com
       # - SENTRY_KEY_SERVER=https://app.getsentry.com
       - FACEBOOK_APP_ID=appid
       - ONE_QURAN_URL=https://one.quran.com
       - PORT=8000
-      - ASSET_HOST=localhost:8000
-      #- ASSET_HOST=assets-1f14.kxcdn.com
-      # TODO get all vars from .env (and remove dotenv module?)
+      - ASSET_HOST=//localhost:8000
+      #- ASSET_HOST=//assets-1f14.kxcdn.com
+      - FONTS_URL=//quran-1f14.kxcdn.com
 
 

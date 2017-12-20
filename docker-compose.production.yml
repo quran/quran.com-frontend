@@ -11,13 +11,15 @@ services:
       - PUBLIC_API_URL=http://api.quran.com
       - INTERNAL_API_URL=http://api.quran.com
       #- INTERNAL_API_URL=http://api:3000
+      # - SEGMENTS_KEY=
       # - SENTRY_KEY_CLIENT=https://app.getsentry.com
       # - SENTRY_KEY_SERVER=https://app.getsentry.com
       - FACEBOOK_APP_ID=appid
       - ONE_QURAN_URL=https://one.quran.com
       - PORT=8000
-      - ASSET_HOST=localhost:8000
-      #- ASSET_HOST=assets-1f14.kxcdn.com
+      #- ASSET_HOST=//localhost:8000
+      - ASSET_HOST=//assets-1f14.kxcdn.com
+      - FONTS_URL=//quran-1f14.kxcdn.com
     ports:
       - "8000:8000"
 
