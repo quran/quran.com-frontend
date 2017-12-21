@@ -1,18 +1,16 @@
 import React from 'react';
-import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 
 import ChapterItem from 'components/Home/ChapterItem';
+import List from 'components/List';
 
-const List = styled.ul`padding-left: 0px;`;
-
-const SurahsList = ({ chapters }) =>
+const ChaptersList = ({ chapters }) =>
   <List className="col-md-4">
     {chapters.map(chapter => <ChapterItem chapter={chapter} />)}
   </List>;
 
-SurahsList.propTypes = {
+ChaptersList.propTypes = {
   chapters: customPropTypes.chapters.isRequired
 };
 
-export default SurahsList;
+export default ChaptersList;
