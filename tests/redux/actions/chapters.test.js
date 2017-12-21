@@ -2,7 +2,7 @@ import {
   FETCH_CHAPTERS,
   FETCH_CHAPTER_INFO,
   SET_CURRENT
-} from 'redux/constants/chapters.js';
+} from '../../../src/redux/constants/chapters.js';
 
 import {
   loadAll,

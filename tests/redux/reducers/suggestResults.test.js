@@ -1,30 +1,26 @@
 import searchResultsReducer, {
   INITIAL_STATE
 } from '../../../src/redux/reducers/suggestResults';
-import {
-  SUGGEST,
-  SUGGEST_SUCCESS,
-  SUGGEST_FAIL
-} from '../../../src/redux/constants/suggest';
+import { SUGGEST } from '../../../src/redux/constants/suggest';
 
 describe('searchResults reducer', () => {
   describe('SUGGEST', () => {
     it('reduces', () => {
       expect(
         searchResultsReducer(INITIAL_STATE, {
-          type: SUGGEST
+          type: SUGGEST.ACTION
         })
       ).toEqual({ ...INITIAL_STATE, loaded: false, loading: true });
     });
   });
 
-  describe('SUGGEST_SUCCESS', () => {
+  describe('SUGGEST.SUCCESS', () => {
     it('reduces', () => {
       const result = [{ text: '1' }, { text: '2' }];
       const query = 'query';
       expect(
         searchResultsReducer(INITIAL_STATE, {
-          type: SUGGEST_SUCCESS,
+          type: SUGGEST.SUCCESS,
           result,
           query
         })
@@ -39,11 +35,11 @@ describe('searchResults reducer', () => {
     });
   });
 
-  describe('SUGGEST_FAIL', () => {
+  describe('SUGGEST.FAILURE', () => {
     it('reduces', () => {
       expect(
         searchResultsReducer(INITIAL_STATE, {
-          type: SUGGEST_FAIL
+          type: SUGGEST.FAILURE
         })
       ).toEqual({ ...INITIAL_STATE, errored: true });
     });

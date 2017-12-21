@@ -1,9 +1,9 @@
-import { juzsSchema } from 'redux/schemas';
-import { LOAD, LOAD_SUCCESS, LOAD_FAIL } from 'redux/constants/juzs.js';
+import { juzsSchema } from '../schemas';
+import { FETCH_JUZS } from '../constants/juzs';
 
 export function loadJuzs() {
   return {
-    types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
+    types: [FETCH_JUZS.ACTION, FETCH_JUZS.SUCCESS, FETCH_JUZS.FAILURE],
     schema: { juzs: [juzsSchema] },
     promise: client => client.get('/api/v3/juzs')
   };

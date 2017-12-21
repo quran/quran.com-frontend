@@ -1,4 +1,6 @@
-import { LOAD, LOAD_SUCCESS, LOAD_FAIL } from '..//constants/juzs';
+import { handleActions } from 'redux-actions';
+
+import { FETCH_JUZS } from '..//constants/juzs';
 
 export const INITIAL_STATE = {
   errored: false,
@@ -7,9 +9,9 @@ export const INITIAL_STATE = {
   entities: {}
 };
 
-export default function reducer(state = INITIAL_STATE, action = {}) {
-  switch (action.type) {
-    case LOAD_SUCCESS: {
+export default handleActions(
+  {
+    [FETCH_JUZS.SUCCESS]: (state, action) => {
       const entities = state.entities;
       const { juzs } = action.result.entities;
       return {
@@ -21,19 +23,16 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
           ...juzs
         }
       };
-    }
-    case LOAD_FAIL:
-      return {
-        ...state,
-        errored: true,
-        loading: false
-      };
-    case LOAD:
-      return {
-        ...state,
-        loading: true
-      };
-    default:
-      return state;
-  }
-}
+    },
+    [FETCH_JUZS.FAILURE]: state => ({
+      ...state,
+      errored: true,
+      loading: false
+    }),
+    [FETCH_JUZS.ACTION]: state => ({
+      ...state,
+      loading: true
+    })
+  },
+  INITIAL_STATE
+);
