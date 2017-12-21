@@ -1,6 +1,6 @@
-import { LOAD_SUCCESS } from 'redux/constants/verses.js';
-import { SEARCH_SUCCESS } from 'redux/constants/search.js';
-import LOAD from 'redux/constants/fontFace.js';
+import { LOAD_SUCCESS } from '../constants/verses';
+import { SEARCH_SUCCESS } from '../constants/search';
+import LOAD from '../constants/fontFace';
 
 export default function reducer(state = {}, action = {}) {
   switch (action.type) {

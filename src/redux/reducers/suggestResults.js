@@ -2,7 +2,7 @@ import {
   SUGGEST,
   SUGGEST_SUCCESS,
   SUGGEST_FAIL
-} from 'redux/constants/suggest.js';
+} from '../constants/suggest.js';
 
 export const INITIAL_STATE = {
   errored: false,

@@ -8,7 +8,7 @@ import {
   CLEAR_CURRENT_WORD,
   LOAD_TAFSIR,
   LOAD_TAFSIR_SUCCESS
-} from 'redux/constants/verses';
+} from '../constants/verses';
 
 export const INITIAL_STATE = {
   current: null,

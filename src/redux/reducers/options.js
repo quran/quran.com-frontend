@@ -7,7 +7,7 @@ import {
   SET_USER_AGENT,
   LOAD_TRANSLATIONS,
   LOAD_TRANSLATIONS_SUCCESS
-} from 'redux/constants/options.js';
+} from '../constants/options.js';
 
 const options = cookie.load('options') || {};
 

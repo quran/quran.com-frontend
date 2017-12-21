@@ -1,4 +1,4 @@
-import { LOAD, LOAD_SUCCESS, LOAD_FAIL } from 'redux/constants/juzs.js';
+import { LOAD, LOAD_SUCCESS, LOAD_FAIL } from '..//constants/juzs';
 
 export const INITIAL_STATE = {
   errored: false,

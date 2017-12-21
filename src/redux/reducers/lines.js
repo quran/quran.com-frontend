@@ -3,9 +3,9 @@ import {
   LOAD as AYAHS_LOAD,
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
   LOAD_FAIL as AYAHS_LOAD_FAIL
-} from 'redux/constants/verses.js';
+} from '../constants/verses';
 
-import { SET_CURRENT as SURAHS_SET_CURRENT } from 'redux/constants/chapters.js';
+import { SET_CURRENT as SURAHS_SET_CURRENT } from '../constants/chapters';
 
 const initialState = {
   lines: {}

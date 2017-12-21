@@ -4,7 +4,7 @@ import {
   FETCH_CHAPTERS,
   FETCH_CHAPTER_INFO,
   SET_CURRENT
-} from 'redux/constants/chapters';
+} from '../constants/chapters';
 
 export const INITIAL_STATE = {
   errored: false,
