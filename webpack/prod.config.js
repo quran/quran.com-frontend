@@ -22,7 +22,7 @@ module.exports = {
     path: assetsPath,
     publicPath: process.env.USE_LOCAL_ASSETS
       ? '/public/'
-      : '//assets-1f14.kxcdn.com/',
+      : process.env.ASSET_HOST,
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[chunkhash]-chunk.js',
     sourceMapFilename: '[name]-[chunkhash].map.js'
