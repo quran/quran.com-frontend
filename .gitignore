@@ -15,3 +15,4 @@ selenium-debug.log
 webpack-stats.debug.json
 *.DS_Store
 .vscode
+coverage/

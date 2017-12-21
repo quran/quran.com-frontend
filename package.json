@@ -11,13 +11,16 @@
     "jest": "jest",
     "test:ci:lint": "./node_modules/eslint/bin/eslint.js ./src",
     "test:dev:lint": "./node_modules/eslint/bin/eslint.js ./src",
-    "test:stylelint": "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
-    "dev": "cross-env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress  & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
+    "test:stylelint":
+      "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
+    "dev":
+      "cross-env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress  & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
     "build": "npm run build:client & npm run build:server",
     "build:server": "babel ./src -d ./dist -D",
     "build:client": "webpack --config ./webpack/prod.config.js",
     "validate": "npm ls",
-    "analyze:build": "cross-env NODE_ENV=production webpack --json --config ./webpack/prod.config.js  > bundle-stats.json",
+    "analyze:build":
+      "cross-env NODE_ENV=production webpack --json --config ./webpack/prod.config.js  > bundle-stats.json",
     "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json",
     "lint:fix": "npm run test:dev:lint -- --fix",
     "prettier": "prettier --single-quote --write",
@@ -26,25 +29,14 @@
     "build-storybook": "build-storybook"
   },
   "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "src"
-    ]
+    "moduleDirectories": ["node_modules", "src"],
+    "coveragePathIgnorePatterns": ["/node_modules/", "/dist/"],
+    "testPathIgnorePatterns": ["/node_modules/", "/dist/"]
   },
-  "pre-commit": [
-    "test:stylelint",
-    "precommit"
-  ],
+  "pre-commit": ["test:stylelint", "precommit"],
   "lint-staged": {
-    "*.js": [
-      "npm run prettier",
-      "npm run lint:fix",
-      "git add"
-    ],
-    "*.scss": [
-      "npm run prettier",
-      "git add"
-    ]
+    "*.js": ["npm run prettier", "npm run lint:fix", "git add"],
+    "*.scss": ["npm run prettier", "git add"]
   },
   "engines": {
     "node": ">= 6.3.0"
