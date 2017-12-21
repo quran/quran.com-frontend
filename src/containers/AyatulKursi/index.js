@@ -24,7 +24,6 @@ import debug from 'helpers/debug';
 
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/verses.js';
-import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
@@ -61,7 +60,6 @@ class AyatulKursi extends Component {
     const conditions = [
       this.state.sidebarOpen !== nextState.sidebarOpen,
       this.props.chapter !== nextProps.chapter,
-      this.props.bookmarks !== nextProps.bookmarks,
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
       this.props.options !== nextProps.options,
@@ -80,21 +78,18 @@ class AyatulKursi extends Component {
       verses,
       actions,
       options,
-      bookmarks,
       isPlaying,
       isAuthenticated,
       currentVerse
     } = this.props; // eslint-disable-line no-shadow
 
-    return Object.values(verses).map(verse =>
+    return Object.values(verses).map(verse => (
       <Verse
         verse={verse}
         chapter={chapter}
         currentVerse={currentVerse}
         iscurrentVerse={isPlaying && verse.verseKey === currentVerse}
-        bookmarked={!!bookmarks[verse.verseKey]}
         tooltip={options.tooltip}
-        bookmarkActions={actions.bookmark}
         audioActions={actions.audio}
         mediaActions={actions.media}
         isPlaying={isPlaying}
@@ -103,7 +98,7 @@ class AyatulKursi extends Component {
         userAgent={options.userAgent}
         audio={options.audio}
       />
-    );
+    ));
   }
 
   renderLines() {
@@ -159,17 +154,20 @@ class AyatulKursi extends Component {
           ]}
           style={[
             {
-              cssText: `.text-arabic{font-size: ${options.fontSize
-                .arabic}rem;} .text-translation{font-size: ${options.fontSize
-                .translation}rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${
+                options.fontSize.arabic
+              }rem;} .text-translation{font-size: ${
+                options.fontSize.translation
+              }rem;}` // eslint-disable-line max-len
             }
           ]}
         />
         <Container className="container-fluid">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              {__CLIENT__ &&
-                <TopOptions title="Ayatul Kursi" chapter={chapter} />}
+              {__CLIENT__ && (
+                <TopOptions title="Ayatul Kursi" chapter={chapter} />
+              )}
               <Bismillah chapter={chapter} />
               {options.isReadingMode ? this.renderLines() : this.renderVerses()}
             </div>
@@ -187,12 +185,13 @@ class AyatulKursi extends Component {
             </div>
           </div>
         </Container>
-        {__CLIENT__ &&
+        {__CLIENT__ && (
           <Audioplayer
             chapter={chapter}
             startVerse={Object.values(verses)[0]}
             onLoadAyahs={this.handleLazyLoadAyahs}
-          />}
+          />
+        )}
       </div>
     );
   }
@@ -203,7 +202,6 @@ AyatulKursi.propTypes = {
   actions: PropTypes.object.isRequired, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line
   currentVerse: PropTypes.string,
-  bookmarks: PropTypes.object.isRequired, // eslint-disable-line
   isLoading: PropTypes.bool.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -226,7 +224,6 @@ function mapStateToProps(state) {
     isPlaying: state.audioplayer.isPlaying,
     isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
-    bookmarks: state.bookmarks.entities,
     isLoading: state.verses.loading,
     isLoaded: state.verses.loaded,
     lines: state.lines.lines,
@@ -240,7 +237,6 @@ function mapDispatchToProps(dispatch) {
       options: bindActionCreators(OptionsActions, dispatch),
       verse: bindActionCreators(AyahActions, dispatch),
       audio: bindActionCreators(AudioActions, dispatch),
-      bookmark: bindActionCreators(BookmarkActions, dispatch),
       media: bindActionCreators(MediaActions, dispatch),
       push: bindActionCreators(push, dispatch)
     }
