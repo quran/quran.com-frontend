@@ -8,11 +8,9 @@ import {
   CLEAR_CURRENT_WORD,
   LOAD_TAFSIR,
   LOAD_TAFSIR_SUCCESS
-} from 'redux/constants/verses.js';
+} from '../constants/verses';
 
-export { LOAD, LOAD_SUCCESS, CLEAR_CURRENT, SET_CURRENT_VERSE };
-
-const initialState = {
+export const INITIAL_STATE = {
   current: null,
   currentWord: null,
   errored: false,
@@ -24,7 +22,7 @@ const initialState = {
   tafsirs: []
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
     case SET_CURRENT_VERSE: {
       return {
@@ -105,6 +103,7 @@ export default function reducer(state = initialState, action = {}) {
 
       return {
         ...state,
+        tafsirLoading: false,
         tafsirs: {
           ...state.entities,
           [`${tafsir.verseKey}-${action.tafsirId}`]: tafsir

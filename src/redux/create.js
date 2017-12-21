@@ -3,7 +3,7 @@
 import { createStore as _createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
 import createMiddleware from './middleware/clientMiddleware';
-import reducer from './modules/reducer';
+import reducer from './reducers/index';
 
 export default function createStore(history, client, data) {
   const middleware = [createMiddleware(client), routerMiddleware(history)];
@@ -15,7 +15,9 @@ export default function createStore(history, client, data) {
 
     finalCreateStore = compose(
       applyMiddleware(...middleware),
-      window.devToolsExtension ? window.devToolsExtension() : DevTools.instrument(),
+      window.devToolsExtension
+        ? window.devToolsExtension()
+        : DevTools.instrument(),
       persistState(window.location.href.match(/[?&]debug_session=([^&]+)\b/))
     )(_createStore);
   } else {

@@ -9,15 +9,11 @@ import options from './options';
 import searchResults from './searchResults';
 import suggestResults from './suggestResults';
 import fontFaces from './fontFaces';
-import auth from './auth';
-import bookmarks from './bookmarks';
 import media from './media';
 import juzs from './juzs';
 
 export default combineReducers({
   routing: routerReducer,
-  auth,
-  bookmarks,
   media,
   chapters,
   verses,

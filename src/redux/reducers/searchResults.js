@@ -1,16 +1,12 @@
-import {
-  SEARCH,
-  SEARCH_SUCCESS,
-  SEARCH_FAIL
-} from 'redux/constants/search.js';
+import { SEARCH, SEARCH_SUCCESS, SEARCH_FAIL } from '../constants/search.js';
 
-const initialState = {
+export const INITIAL_STATE = {
   errored: false,
   loaded: false,
   results: []
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
     case SEARCH:
       return {

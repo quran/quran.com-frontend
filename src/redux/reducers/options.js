@@ -7,11 +7,11 @@ import {
   SET_USER_AGENT,
   LOAD_TRANSLATIONS,
   LOAD_TRANSLATIONS_SUCCESS
-} from 'redux/constants/options.js';
+} from '../constants/options.js';
 
 const options = cookie.load('options') || {};
 
-const initialState = {
+export const INITIAL_STATE = {
   isReadingMode: options.isReadingMode || false,
   isNightMode: options.isNightMode || false,
   isShowingSurahInfo: options.isShowingSurahInfo || false,
@@ -31,7 +31,7 @@ const initialState = {
   loadingTranslations: false
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
     case SET_OPTION: {
       const payload = action.payload;
