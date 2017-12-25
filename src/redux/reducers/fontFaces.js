@@ -1,35 +1,38 @@
+import { handleActions } from 'redux-actions';
+
 import { LOAD_SUCCESS } from '../constants/verses';
-import { SEARCH_SUCCESS } from '../constants/search';
-import LOAD from '../constants/fontFace';
+import { SEARCH } from '../constants/search';
+import FONT_FACE from '../constants/fontFace';
+import { INITIAL_STATE } from './juzs';
 
-export default function reducer(state = {}, action = {}) {
-  switch (action.type) {
-    case LOAD_SUCCESS:
-    case SEARCH_SUCCESS: {
-      const verses = action.result.entities.verses;
-      const classNames = {};
+const success = (state, action) => {
+  const verses = action.result.entities.verses;
+  const classNames = {};
 
-      if (verses) {
-        Object.keys(verses).forEach((ayahId) => {
-          const verse = verses[ayahId];
+  if (verses) {
+    Object.keys(verses).forEach((ayahId) => {
+      const verse = verses[ayahId];
 
-          if (!state[`p${verse.pageNumber}`]) {
-            classNames[`p${verse.pageNumber}`] = false;
-          }
-        });
+      if (!state[`p${verse.pageNumber}`]) {
+        classNames[`p${verse.pageNumber}`] = false;
       }
-
-      return {
-        ...state,
-        ...classNames
-      };
-    }
-    case LOAD:
-      return {
-        ...state,
-        [action.className]: true
-      };
-    default:
-      return state;
+    });
   }
-}
+
+  return {
+    ...state,
+    ...classNames
+  };
+};
+
+export default handleActions(
+  {
+    [LOAD_SUCCESS]: success,
+    [SEARCH.SUCCESS]: success,
+    [FONT_FACE.ACTION]: (state, action) => ({
+      ...state,
+      [action.className]: true
+    })
+  },
+  INITIAL_STATE
+);

@@ -1,7 +1,7 @@
 import fontFaceReducer from '../../../src/redux/reducers/fontFaces';
 import { LOAD_SUCCESS } from '../../../src/redux/constants/verses';
-import { SEARCH_SUCCESS } from '../../../src/redux/constants/search';
-import LOAD from '../../../src/redux/constants/fontFace';
+import { SEARCH } from '../../../src/redux/constants/search';
+import FONT_FACE from '../../../src/redux/constants/fontFace';
 
 describe('fontFace', () => {
   describe('LOAD_SUCCESS', () => {
@@ -81,7 +81,7 @@ describe('fontFace', () => {
     });
   });
 
-  describe('SEARCH_SUCCESS', () => {
+  describe('SEARCH.SUCCESS', () => {
     it('should reduce', () => {
       const pageNumber1 = 1;
       const pageNumber2 = 2;
@@ -90,7 +90,7 @@ describe('fontFace', () => {
         fontFaceReducer(
           {},
           {
-            type: SEARCH_SUCCESS,
+            type: SEARCH.SUCCESS,
             result: {
               entities: {
                 verses: {
@@ -108,10 +108,10 @@ describe('fontFace', () => {
     });
   });
 
-  describe('LOAD', () => {
+  describe('FONT_FACE', () => {
     it('should reduce', () => {
       expect(
-        fontFaceReducer({}, { type: LOAD, className: 'className' })
+        fontFaceReducer({}, { type: FONT_FACE.ACTION, className: 'className' })
       ).toEqual({
         className: true
       });

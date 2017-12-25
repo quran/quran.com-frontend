@@ -1,3 +1,5 @@
+import { handleActions } from 'redux-actions';
+
 import {
   LOAD,
   LOAD_SUCCESS,
@@ -22,16 +24,14 @@ export const INITIAL_STATE = {
   tafsirs: []
 };
 
-export default function reducer(state = INITIAL_STATE, action = {}) {
-  switch (action.type) {
-    case SET_CURRENT_VERSE: {
-      return {
-        ...state,
-        current: action.id,
-        currentWord: state.current === action.id ? state.currentWord : null
-      };
-    }
-    case SET_CURRENT_WORD: {
+export default handleActions(
+  {
+    [SET_CURRENT_VERSE]: (state, action) => ({
+      ...state,
+      current: action.id,
+      currentWord: state.current === action.id ? state.currentWord : null
+    }),
+    [SET_CURRENT_WORD]: (state, action) => {
       let currentVerse = state.current;
       if (action.id && currentVerse) {
         if (!new RegExp(`^${currentVerse}:`).test(action.id)) {
@@ -43,14 +43,12 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
         current: currentVerse,
         currentWord: action.id
       };
-    }
-    case CLEAR_CURRENT_WORD: {
-      return {
-        ...state,
-        currentWord: null
-      };
-    }
-    case CLEAR_CURRENT: {
+    },
+    [CLEAR_CURRENT_WORD]: state => ({
+      ...state,
+      currentWord: null
+    }),
+    [CLEAR_CURRENT]: (state, action) => {
       const entities = state.entities;
       return {
         ...state,
@@ -61,15 +59,13 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
           [action.id]: {}
         }
       };
-    }
-    case LOAD: {
-      return {
-        ...state,
-        loaded: false,
-        loading: true
-      };
-    }
-    case LOAD_SUCCESS: {
+    },
+    [LOAD]: state => ({
+      ...state,
+      loaded: false,
+      loading: true
+    }),
+    [LOAD_SUCCESS]: (state, action) => {
       const current = state.current ? state.current : action.result.result[0];
       const stateEntities = state.entities;
 
@@ -89,16 +85,13 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
         },
         result: Object.assign({}, state.result, action.result.result)
       };
-    }
-    case LOAD_FAIL: {
-      return state;
-    }
-    case LOAD_TAFSIR:
-      return {
-        ...state,
-        tafsirLoading: true
-      };
-    case LOAD_TAFSIR_SUCCESS: {
+    },
+    [LOAD_FAIL]: state => state,
+    [LOAD_TAFSIR]: state => ({
+      ...state,
+      tafsirLoading: true
+    }),
+    [LOAD_TAFSIR_SUCCESS]: (state, action) => {
       const tafsir = action.result.tafsirs[0];
 
       return {
@@ -110,7 +103,6 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
         }
       };
     }
-    default:
-      return state;
-  }
-}
+  },
+  INITIAL_STATE
+);

@@ -1,24 +1,20 @@
 import searchReducer, {
   INITIAL_STATE
 } from '../../../src/redux/reducers/searchResults';
-import {
-  SEARCH,
-  SEARCH_SUCCESS,
-  SEARCH_FAIL
-} from '../../../src/redux/constants/search';
+import { SEARCH } from '../../../src/redux/constants/search';
 
 describe('searchReducer reducer', () => {
-  describe('SEARCH', () => {
+  describe('SEARCH.ACTION', () => {
     it('reduces', () => {
       expect(
         searchReducer(INITIAL_STATE, {
-          type: SEARCH
+          type: SEARCH.ACTION
         })
       ).toEqual({ ...INITIAL_STATE, loaded: false, loading: true });
     });
   });
 
-  describe('SEARCH_SUCCESS', () => {
+  describe('SEARCH.SUCCESS', () => {
     it('reduces', () => {
       const result = {
         result: {
@@ -35,7 +31,7 @@ describe('searchReducer reducer', () => {
 
       expect(
         searchReducer(INITIAL_STATE, {
-          type: SEARCH_SUCCESS,
+          type: SEARCH.SUCCESS,
           result
         })
       ).toEqual({
@@ -48,11 +44,11 @@ describe('searchReducer reducer', () => {
     });
   });
 
-  describe('SEARCH_FAIL', () => {
+  describe('SEARCH.FAILURE', () => {
     it('reduces', () => {
       expect(
         searchReducer(INITIAL_STATE, {
-          type: SEARCH_FAIL
+          type: SEARCH.FAILURE
         })
       ).toEqual({ ...INITIAL_STATE, errored: true });
     });

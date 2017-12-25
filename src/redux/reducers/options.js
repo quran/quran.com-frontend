@@ -1,12 +1,11 @@
 import cookie from 'react-cookie';
+import { handleActions } from 'redux-actions';
 
 import {
   SET_OPTION,
-  LOAD_RECITERS,
-  LOAD_RECITERS_SUCCESS,
   SET_USER_AGENT,
-  LOAD_TRANSLATIONS,
-  LOAD_TRANSLATIONS_SUCCESS
+  FETCH_RECITERS,
+  FETCH_TRANSLATIONS
 } from '../constants/options.js';
 
 const options = cookie.load('options') || {};
@@ -31,55 +30,46 @@ export const INITIAL_STATE = {
   loadingTranslations: false
 };
 
-export default function reducer(state = INITIAL_STATE, action = {}) {
-  switch (action.type) {
-    case SET_OPTION: {
+export default handleActions(
+  {
+    [SET_OPTION]: (state, action) => {
       const payload = action.payload;
       return {
         ...state,
         ...payload
       };
-    }
-    case LOAD_RECITERS: {
-      return {
-        ...state,
-        loadingRecitations: true
-      };
-    }
-    case LOAD_RECITERS_SUCCESS: {
-      return {
-        ...state,
-        loadingRecitations: false,
-        options: {
-          ...state.options,
-          recitations: action.result.recitations
-        }
-      };
-    }
-    case SET_USER_AGENT: {
+    },
+    [FETCH_RECITERS.ACTION]: state => ({
+      ...state,
+      loadingRecitations: true
+    }),
+    [FETCH_RECITERS.SUCCESS]: (state, action) => ({
+      ...state,
+      loadingRecitations: false,
+      options: {
+        ...state.options,
+        recitations: action.result.recitations
+      }
+    }),
+    [SET_USER_AGENT]: (state, action) => {
       const { userAgent } = action;
       return {
         ...state,
         userAgent
       };
-    }
-    case LOAD_TRANSLATIONS: {
-      return {
-        ...state,
-        loadingTranslations: true
-      };
-    }
-    case LOAD_TRANSLATIONS_SUCCESS: {
-      return {
-        ...state,
-        loadingTranslations: false,
-        options: {
-          ...state.options,
-          translations: action.result.translations
-        }
-      };
-    }
-    default:
-      return state;
-  }
-}
+    },
+    [FETCH_TRANSLATIONS.ACTION]: state => ({
+      ...state,
+      loadingTranslations: true
+    }),
+    [FETCH_TRANSLATIONS.SUCCESS]: (state, action) => ({
+      ...state,
+      loadingTranslations: false,
+      options: {
+        ...state.options,
+        translations: action.result.translations
+      }
+    })
+  },
+  INITIAL_STATE
+);

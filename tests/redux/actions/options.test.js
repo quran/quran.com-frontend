@@ -1,12 +1,8 @@
 import {
   SET_OPTION,
-  LOAD_RECITERS,
-  LOAD_RECITERS_SUCCESS,
-  LOAD_RECITERS_FAIL,
   SET_USER_AGENT,
-  LOAD_TRANSLATIONS,
-  LOAD_TRANSLATIONS_SUCCESS,
-  LOAD_TRANSLATIONS_FAIL
+  FETCH_RECITERS,
+  FETCH_TRANSLATIONS
 } from 'redux/constants/options.js';
 
 import {
@@ -91,16 +87,16 @@ describe('options', () => {
 
   it('loadTranslations', () => {
     expect(loadTranslations().types).toEqual([
-      LOAD_TRANSLATIONS,
-      LOAD_TRANSLATIONS_SUCCESS,
-      LOAD_TRANSLATIONS_FAIL
+      FETCH_TRANSLATIONS.ACTION,
+      FETCH_TRANSLATIONS.SUCCESS,
+      FETCH_TRANSLATIONS.FAILURE
     ]);
   });
   it('loadRecitations', () => {
     expect(loadRecitations().types).toEqual([
-      LOAD_RECITERS,
-      LOAD_RECITERS_SUCCESS,
-      LOAD_RECITERS_FAIL
+      FETCH_RECITERS.ACTION,
+      FETCH_RECITERS.SUCCESS,
+      FETCH_RECITERS.FAILURE
     ]);
   });
 });

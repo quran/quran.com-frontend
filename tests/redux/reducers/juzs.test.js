@@ -1,22 +1,18 @@
 import juzsReducer, { INITIAL_STATE } from '../../../src/redux/reducers/juzs';
-import {
-  LOAD,
-  LOAD_SUCCESS,
-  LOAD_FAIL
-} from '../../../src/redux/constants/juzs';
+import { FETCH_JUZS } from '../../../src/redux/constants/juzs';
 
 describe('juzs reducer', () => {
-  describe('LOAD', () => {
+  describe('FETCH_JUZS.ACTION', () => {
     it('reduces', () => {
       expect(
         juzsReducer(INITIAL_STATE, {
-          type: LOAD
+          type: FETCH_JUZS.ACTION
         })
       ).toEqual({ ...INITIAL_STATE, loaded: false, loading: true });
     });
   });
 
-  describe('LOAD_SUCCESS', () => {
+  describe('FETCH_JUZS.SUCCESS', () => {
     it('reduces', () => {
       const juzs = {
         1: { id: 1 }
@@ -24,7 +20,7 @@ describe('juzs reducer', () => {
 
       expect(
         juzsReducer(INITIAL_STATE, {
-          type: LOAD_SUCCESS,
+          type: FETCH_JUZS.SUCCESS,
           result: {
             entities: { juzs }
           }
@@ -40,11 +36,11 @@ describe('juzs reducer', () => {
     });
   });
 
-  describe('LOAD_FAIL', () => {
+  describe('FETCH_JUZS.FAILURE', () => {
     it('reduces', () => {
       expect(
         juzsReducer(INITIAL_STATE, {
-          type: LOAD_FAIL
+          type: FETCH_JUZS.FAILURE
         })
       ).toEqual({ ...INITIAL_STATE, errored: true, loading: false });
     });

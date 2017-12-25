@@ -1,3 +1,3 @@
-const LOAD = '@@quran/fontFaces/LOAD';
+import { defineAction } from 'redux-define';
 
-export default LOAD;
+export default defineAction('FONT_FACE', [], 'quran');

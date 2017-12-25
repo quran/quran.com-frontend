@@ -1,13 +1,9 @@
 import cookie from 'react-cookie';
 import {
   SET_OPTION,
-  LOAD_RECITERS,
-  LOAD_RECITERS_SUCCESS,
-  LOAD_RECITERS_FAIL,
   SET_USER_AGENT,
-  LOAD_TRANSLATIONS,
-  LOAD_TRANSLATIONS_SUCCESS,
-  LOAD_TRANSLATIONS_FAIL
+  FETCH_RECITERS,
+  FETCH_TRANSLATIONS
 } from 'redux/constants/options.js';
 
 export function isReadingMode(globalState) {
@@ -40,11 +36,19 @@ export function setUserAgent(userAgent) {
 }
 
 export const loadTranslations = () => ({
-  types: [LOAD_TRANSLATIONS, LOAD_TRANSLATIONS_SUCCESS, LOAD_TRANSLATIONS_FAIL],
+  types: [
+    FETCH_TRANSLATIONS.ACTION,
+    FETCH_TRANSLATIONS.SUCCESS,
+    FETCH_TRANSLATIONS.FAILURE
+  ],
   promise: client => client.get('/api/v3/options/translations')
 });
 
 export const loadRecitations = () => ({
-  types: [LOAD_RECITERS, LOAD_RECITERS_SUCCESS, LOAD_RECITERS_FAIL],
+  types: [
+    FETCH_RECITERS.ACTION,
+    FETCH_RECITERS.SUCCESS,
+    FETCH_RECITERS.FAILURE
+  ],
   promise: client => client.get('/api/v3/options/recitations')
 });

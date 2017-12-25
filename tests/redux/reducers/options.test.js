@@ -4,11 +4,9 @@ import optionsReducer, {
 
 import {
   SET_OPTION,
-  LOAD_RECITERS,
-  LOAD_RECITERS_SUCCESS,
   SET_USER_AGENT,
-  LOAD_TRANSLATIONS,
-  LOAD_TRANSLATIONS_SUCCESS
+  FETCH_RECITERS,
+  FETCH_TRANSLATIONS
 } from '../../../src/redux/constants/options';
 
 describe('options reducer', () => {
@@ -26,24 +24,24 @@ describe('options reducer', () => {
     });
   });
 
-  describe('LOAD_RECITERS', () => {
+  describe('FETCH_RECITERS.ACTION', () => {
     it('should reduce', () => {
       expect(
         optionsReducer(INITIAL_STATE, {
-          type: LOAD_RECITERS
+          type: FETCH_RECITERS.ACTION
         })
       ).toEqual({ ...INITIAL_STATE, loadingRecitations: true });
     });
   });
 
-  describe('LOAD_RECITERS_SUCCESS', () => {
+  describe('FETCH_RECITERS.SUCCESS', () => {
     it('should reduce', () => {
       const recitations = { id: 1 };
       expect(
         optionsReducer(
           { ...INITIAL_STATE, loadingRecitations: true },
           {
-            type: LOAD_RECITERS_SUCCESS,
+            type: FETCH_RECITERS.SUCCESS,
             result: { recitations }
           }
         )
@@ -72,23 +70,23 @@ describe('options reducer', () => {
     });
   });
 
-  describe('LOAD_TRANSLATIONS', () => {
+  describe('FETCH_TRANSLATIONS.ACTION', () => {
     it('should reduce', () => {
       expect(
         optionsReducer(INITIAL_STATE, {
-          type: LOAD_TRANSLATIONS
+          type: FETCH_TRANSLATIONS.ACTION
         })
       ).toEqual({ ...INITIAL_STATE, loadingTranslations: true });
     });
   });
 
-  describe('LOAD_TRANSLATIONS_SUCCESS', () => {
+  describe('FETCH_TRANSLATIONS.SUCCESS', () => {
     it('should reduce', () => {
       const translations = { id: 1 };
       expect(
         optionsReducer(
           { ...INITIAL_STATE, loadingTranslations: true },
-          { type: LOAD_TRANSLATIONS_SUCCESS, result: { translations } }
+          { type: FETCH_TRANSLATIONS.SUCCESS, result: { translations } }
         )
       ).toEqual({
         ...INITIAL_STATE,
