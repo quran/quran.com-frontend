@@ -27,8 +27,8 @@ export default function createStore(history, client, data) {
   const store = finalCreateStore(reducer, data);
 
   if (__DEVELOPMENT__ && module.hot) {
-    module.hot.accept('./modules/reducer', () => {
-      store.replaceReducer(require('./modules/reducer'));
+    module.hot.accept('./reducers', () => {
+      store.replaceReducer(require('./reducers'));
     });
   }
 
