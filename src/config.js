@@ -44,7 +44,9 @@ const locales = {
 const config = {
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
-  api: process.env.API_URL,
+  api: process.env.PUBLIC_API_URL,
+  apiInternal: process.env.INTERNAL_API_URL,
+  apiPublic: process.env.PUBLIC_API_URL,
   oneQuran: process.env.ONE_QURAN_URL,
   sentryClient: process.env.SENTRY_KEY_CLIENT,
   sentryServer: process.env.SENTRY_KEY_SERVER,

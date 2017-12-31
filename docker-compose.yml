@@ -13,7 +13,8 @@ services:
     #  - ./src:/quran/src
     environment:
       - PUBLIC_API_URL=http://localhost:3000
-      - INTERNAL_API_URL=http://api:3000
+      - INTERNAL_API_URL=http://staging.quran.com:3000
+      # - INTERNAL_API_URL=http://api:3000
       # - SEGMENTS_KEY=
       # - SENTRY_KEY_CLIENT=https://app.getsentry.com
       # - SENTRY_KEY_SERVER=https://app.getsentry.com
