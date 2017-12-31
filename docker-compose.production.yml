@@ -17,9 +17,10 @@ services:
       - FACEBOOK_APP_ID=appid
       - ONE_QURAN_URL=https://one.quran.com
       - PORT=8000
-      #- ASSET_HOST=//localhost:8000
-      - ASSET_HOST=//assets-1f14.kxcdn.com
-      - FONTS_URL=//quran-1f14.kxcdn.com
+      - ASSET_HOST=//localhost:8000
+      #- ASSET_HOST=//assets-1f14.kxcdn.com
+      #- FONTS_URL=//quran-1f14.kxcdn.com
+      - FONTS_URL=//localhost:8000
     ports:
       - "8000:8000"
 
