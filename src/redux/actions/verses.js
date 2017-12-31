@@ -11,7 +11,10 @@ import {
   LOAD_TAFSIR,
   LOAD_TAFSIR_SUCCESS,
   LOAD_TAFSIR_FAIL
-} from 'redux/constants/verses.js';
+} from '../constants/verses.js';
+import ApiClient from '../../helpers/ApiClient';
+
+const client = new ApiClient();
 
 // NOTE: For safe measure
 const defaultOptions = {
@@ -43,13 +46,12 @@ export function load(id, paging, params, options = defaultOptions) {
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: { verses: [versesSchema] },
-    promise: client =>
-      client.get(`/api/v3/chapters/${id}/verses`, {
-        params: {
-          ...paging,
-          ...apiOptions
-        }
-      }),
+    promise: client.get(`/api/v3/chapters/${id}/verses`, {
+      params: {
+        ...paging,
+        ...apiOptions
+      }
+    }),
     chapterId: id
   };
 }
@@ -105,12 +107,14 @@ export function isLoaded(globalState, chapterId, paging = {}) {
 export function loadTafsir(chapterId, verseId, tafsirId) {
   return {
     types: [LOAD_TAFSIR, LOAD_TAFSIR_SUCCESS, LOAD_TAFSIR_FAIL],
-    promise: client =>
-      client.get(`/api/v3/chapters/${chapterId}/verses/${verseId}/tafsirs`, {
+    promise: client.get(
+      `/api/v3/chapters/${chapterId}/verses/${verseId}/tafsirs`,
+      {
         params: {
           tafsirs: tafsirId
         }
-      }),
+      }
+    ),
     tafsirId
   };
 }

@@ -4,7 +4,10 @@ import {
   SET_USER_AGENT,
   FETCH_RECITERS,
   FETCH_TRANSLATIONS
-} from 'redux/constants/options.js';
+} from '../constants/options.js';
+import ApiClient from '../../helpers/ApiClient';
+
+const client = new ApiClient();
 
 export function isReadingMode(globalState) {
   return !!globalState.options.isReadingMode;
@@ -41,7 +44,7 @@ export const loadTranslations = () => ({
     FETCH_TRANSLATIONS.SUCCESS,
     FETCH_TRANSLATIONS.FAILURE
   ],
-  promise: client => client.get('/api/v3/options/translations')
+  promise: client.get('/api/v3/options/translations')
 });
 
 export const loadRecitations = () => ({
@@ -50,5 +53,5 @@ export const loadRecitations = () => ({
     FETCH_RECITERS.SUCCESS,
     FETCH_RECITERS.FAILURE
   ],
-  promise: client => client.get('/api/v3/options/recitations')
+  promise: client.get('/api/v3/options/recitations')
 });

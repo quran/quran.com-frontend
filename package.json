@@ -11,8 +11,7 @@
     "jest": "jest",
     "test:ci:lint": "./node_modules/eslint/bin/eslint.js ./src",
     "test:dev:lint": "./node_modules/eslint/bin/eslint.js ./src",
-    "test:stylelint":
-      "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
+    "test:stylelint": "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
     "dev":
       "cross-env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress  & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
     "build": "npm run build:client & npm run build:server",
@@ -31,7 +30,9 @@
   "jest": {
     "moduleDirectories": ["node_modules", "src"],
     "coveragePathIgnorePatterns": ["/node_modules/", "/dist/"],
-    "testPathIgnorePatterns": ["/node_modules/", "/dist/"]
+    "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
+    "automock": false,
+    "setupFiles": ["./setupJest.js"]
   },
   "pre-commit": ["test:stylelint", "precommit"],
   "lint-staged": {
@@ -99,6 +100,7 @@
     "i": "0.3.6",
     "image-webpack-loader": "3.1.0",
     "imports-loader": "0.6.5",
+    "isomorphic-fetch": "2.2.1",
     "json-loader": "0.5.4",
     "loadable-components": "^0.3.0",
     "lodash": "^4.17.4",
@@ -152,7 +154,6 @@
     "strip-loader": "0.1.2",
     "style-loader": "0.13.1",
     "styled-components": "^2.1.0",
-    "superagent": "3.3.1",
     "url": "0.11.0",
     "url-loader": "0.5.7",
     "webpack": "^2.5.1",
@@ -182,6 +183,7 @@
     "eslint-plugin-mocha": "4.8.0",
     "eslint-plugin-react": "6.8.0",
     "jest": "^21.2.1",
+    "jest-fetch-mock": "1.4.0",
     "jscs": "2.1.1",
     "lint-staged": "^3.4.0",
     "mocha": "2.2.5",

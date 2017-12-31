@@ -30,7 +30,7 @@ class Pdf extends Component {
       currentVerse
     } = this.props; // eslint-disable-line no-shadow
 
-    return Object.values(verses).map(verse =>
+    return Object.values(verses).map(verse => (
       <Verse
         verse={verse}
         chapter={chapter}
@@ -44,7 +44,7 @@ class Pdf extends Component {
         audio={options.audio}
         isPdf
       />
-    );
+    ));
   }
 
   render() {
@@ -64,9 +64,11 @@ class Pdf extends Component {
         <Helmet
           style={[
             {
-              cssText: `.text-arabic{font-size: ${options.fontSize
-                .arabic}rem;} .text-translation{font-size: ${options.fontSize
-                .translation}rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${
+                options.fontSize.arabic
+              }rem;} .text-translation{font-size: ${
+                options.fontSize.translation
+              }rem;}` // eslint-disable-line max-len
             }
           ]}
         />
@@ -115,7 +117,6 @@ function mapStateToProps(state, ownProps) {
     info: state.chapters.infos[ownProps.match.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
-    isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
     isEndOfSurah: lastAyahInArray === chapter.versesCount,
     chapters: state.chapters.entities,

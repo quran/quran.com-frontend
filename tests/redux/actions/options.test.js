@@ -86,13 +86,16 @@ describe('options', () => {
   });
 
   it('loadTranslations', () => {
+    fetch.mockResponse(JSON.stringify({}));
     expect(loadTranslations().types).toEqual([
       FETCH_TRANSLATIONS.ACTION,
       FETCH_TRANSLATIONS.SUCCESS,
       FETCH_TRANSLATIONS.FAILURE
     ]);
   });
+
   it('loadRecitations', () => {
+    fetch.mockResponse(JSON.stringify({}));
     expect(loadRecitations().types).toEqual([
       FETCH_RECITERS.ACTION,
       FETCH_RECITERS.SUCCESS,

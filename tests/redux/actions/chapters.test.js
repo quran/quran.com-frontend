@@ -14,6 +14,7 @@ import {
 describe('chapters', () => {
   describe('loadAll', () => {
     it('correct constants', () => {
+      fetch.mockResponse(JSON.stringify({}));
       expect(loadAll().types.length).toEqual(3);
       expect(loadAll().types).toEqual([
         FETCH_CHAPTERS.ACTION,
@@ -25,6 +26,7 @@ describe('chapters', () => {
 
   describe('load', () => {
     it('correct constants', () => {
+      fetch.mockResponse(JSON.stringify({}));
       expect(load(1).types.length).toEqual(3);
       expect(load(1).types).toEqual([
         FETCH_CHAPTERS.ACTION,
@@ -36,6 +38,7 @@ describe('chapters', () => {
 
   describe('loadInfo', () => {
     it('correct constants', () => {
+      fetch.mockResponse(JSON.stringify({}));
       expect(loadInfo('url').types.length).toEqual(3);
       expect(loadInfo('url').types).toEqual([
         FETCH_CHAPTER_INFO.ACTION,

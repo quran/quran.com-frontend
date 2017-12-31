@@ -1,10 +1,16 @@
-import { SEARCH } from 'redux/constants/search.js';
-import { search } from '../../../src/redux/actions/search.js';
+import { SEARCH } from 'redux/constants/search';
+import { search } from '../../../src/redux/actions/search';
+
+const params = {
+  q: 'query',
+  p: 1
+};
 
 describe('search', () => {
   it('actions', () => {
-    expect(search().types.length).toEqual(3);
-    expect(search().types).toEqual([
+    fetch.mockResponse(JSON.stringify({}));
+    expect(search(params).types.length).toEqual(3);
+    expect(search(params).types).toEqual([
       SEARCH.ACTION,
       SEARCH.SUCCESS,
       SEARCH.FAILURE
