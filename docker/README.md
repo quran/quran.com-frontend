@@ -12,11 +12,6 @@ Then navigate to `http://localhost:8000`
 
 To build for production:
 
-    docker-compose -f docker-compose.production.yml up
+    docker-compose -f docker-compose.production.yml build
 
-Then push the resulting `frontend-prod:latest` image to a docker registry.
-
-[Pending] To deploy a swarm stack:
-
-    docker-compose -f docker-compose.production.yml config | docker stack deploy -c- <stack-name>
-
+Then tag and push the resulting `frontend-prod:latest` image to a docker registry.
