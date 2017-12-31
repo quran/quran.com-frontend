@@ -1,4 +1,3 @@
-require('dotenv').load();
 const webpack = require('webpack');
 const path = require('path');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
