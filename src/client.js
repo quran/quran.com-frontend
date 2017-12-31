@@ -2,7 +2,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reactCookie from 'react-cookie';
-import { AppContainer } from 'react-hot-loader';
 import { loadComponents } from 'loadable-components';
 import 'isomorphic-fetch';
 
@@ -43,26 +42,7 @@ loadComponents().then(() => {
 
   debug('client', 'React Rendering');
 
-  ReactDOM.render(
-    <AppContainer>
-      <Root store={store} />
-    </AppContainer>,
-    mountNode,
-    () => {
-      debug('client', 'React Rendered');
-    }
-  );
-
-  // if (module.hot) {
-  //   module.hot.accept('./containers/Root', () => {
-  //     const NextRoot = require('./containers/Root'); // eslint-disable-line global-require
-
-  //     ReactDOM.render(
-  //       <AppContainer>
-  //         <NextRoot store={store} />
-  //       </AppContainer>,
-  //       document.getElementById('root')
-  //     );
-  //   });
-  // }
+  ReactDOM.render(<Root store={store} />, mountNode, () => {
+    debug('client', 'React Rendered');
+  });
 });
