@@ -16,7 +16,7 @@
     "classes": true,
     "jsx": true
   },
-  "plugins": ["react", "mocha"],
+  "plugins": ["react"],
   "settings": {
     "import/resolver": "webpack"
   },

@@ -121,9 +121,7 @@ export const surahType = PropTypes.shape({
 export const juzType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   juzNumber: PropTypes.number.isRequired,
-  nameArabic: PropTypes.string,
-  nameSimple: PropTypes.string,
-  verseMapping: PropTypes.object
+  verseMapping: PropTypes.object.isRequired
 });
 
 export const timeInterval = PropTypes.shape({
