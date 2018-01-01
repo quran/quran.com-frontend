@@ -30,11 +30,9 @@ const Container = styled(Element)`
   padding: 2.5% 0;
   border-bottom: 1px solid rgba(${props => props.textMuted}, 0.5);
 
-  ${props => (props.highlight ? 'background-color: #F5FBF7;' : '')}
-
-  .text-info{
+  ${props => (props.highlight ? 'background-color: #F5FBF7;' : '')} .text-info {
     color: ${props => props.theme.brandInfo};
-    &:hover{
+    &:hover {
       color: ${props => props.theme.brandPrimary};
     }
   }
@@ -78,7 +76,7 @@ const Controls = styled.div`
     }
   }
   .label {
-    padding: .65em 1.1em;
+    padding: 0.65em 1.1em;
     border-radius: 0;
     display: inline-block;
     margin-bottom: 15px;
@@ -109,7 +107,6 @@ class Verse extends Component {
   shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.verse !== nextProps.verse,
-      this.props.bookmarked !== nextProps.bookmarked,
       this.props.tooltip !== nextProps.tooltip,
       this.props.currentWord !== nextProps.currentWord,
       this.props.iscurrentVerse !== nextProps.iscurrentVerse
@@ -142,13 +139,13 @@ class Verse extends Component {
     const { verse, match } = this.props;
     const array = match || verse.translations || [];
 
-    return array.map(translation =>
+    return array.map(translation => (
       <Translation
         translation={translation}
         index={translation.id}
         key={translation.id}
       />
-    );
+    ));
   }
 
   renderMedia() {
@@ -159,7 +156,7 @@ class Verse extends Component {
 
     return (
       <div>
-        {verse.mediaContents.map((content, index) =>
+        {verse.mediaContents.map((content, index) => (
           <StyledTranslation className="translation" key={index}>
             <h2 className="text-translation times-new">
               <small>
@@ -181,7 +178,7 @@ class Verse extends Component {
               </small>
             </h2>
           </StyledTranslation>
-        )}
+        ))}
       </div>
     );
   }
@@ -199,7 +196,7 @@ class Verse extends Component {
     let wordAudioPosition = -1;
     const renderText = false; // userAgent.isBot;
 
-    const text = verse.words.map(word =>
+    const text = verse.words.map(word => (
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -213,13 +210,11 @@ class Verse extends Component {
         isSearched={isSearched}
         useTextFont={renderText}
       />
-    );
+    ));
 
     return (
       <FontText className="text-right text-arabic">
-        <p>
-          {text}
-        </p>
+        <p>{text}</p>
       </FontText>
     );
   }
@@ -238,9 +233,9 @@ class Verse extends Component {
           className="text-muted"
         >
           <i
-            className={`ss-icon ${playing
-              ? 'ss-pause'
-              : 'ss-play'} vertical-align-middle`}
+            className={`ss-icon ${
+              playing ? 'ss-pause' : 'ss-play'
+            } vertical-align-middle`}
           />{' '}
           <LocaleFormattedMessage
             id={playing ? 'actions.pause' : 'actions.play'}
@@ -267,7 +262,8 @@ class Verse extends Component {
               id="tafsir.select"
               defaultMessage={'Select a tafsir'}
             />
-          )}
+          )
+        }
       >
         <i className="ss-book vertical-align-middle" />{' '}
         <LocaleFormattedMessage
@@ -290,47 +286,6 @@ class Verse extends Component {
     return false;
   }
 
-  renderBookmark() {
-    const {
-      verse,
-      bookmarked,
-      isAuthenticated,
-      bookmarkActions,
-      isSearched
-    } = this.props;
-
-    if (isSearched || !isAuthenticated) return false;
-
-    if (bookmarked) {
-      return (
-        <a
-          tabIndex="-1"
-          onClick={() => bookmarkActions.removeBookmark(verse.verseKey)}
-          className="text-muted"
-        >
-          <strong>
-            <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
-            <LocaleFormattedMessage
-              id="verse.bookmarked"
-              defaultMessage="Bookmarked"
-            />
-          </strong>
-        </a>
-      );
-    }
-
-    return (
-      <a
-        tabIndex="-1"
-        onClick={() => bookmarkActions.addBookmark(verse.verseKey)}
-        className="text-muted"
-      >
-        <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
-        <LocaleFormattedMessage id="verse.bookmark" defaultMessage="Bookmark" />
-      </a>
-    );
-  }
-
   renderBadge() {
     const { isSearched, verse } = this.props;
     const translations = (verse.translations || [])
@@ -340,9 +295,7 @@ class Verse extends Component {
 
     const content = (
       <h4>
-        <Label className="label label-default">
-          {verse.verseKey}
-        </Label>
+        <Label className="label label-default">{verse.verseKey}</Label>
       </h4>
     );
 
@@ -354,7 +307,9 @@ class Verse extends Component {
 
     return (
       <Link
-        to={`/${verse.chapterId}/${verse.verseNumber}?translations=${translations}`}
+        to={`/${verse.chapterId}/${
+          verse.verseNumber
+        }?translations=${translations}`}
         data-metrics-event-name={metric}
       >
         {content}
@@ -379,7 +334,6 @@ class Verse extends Component {
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderTafsirLink()}
-        {this.renderBookmark()}
         {!isPdf && this.renderShare()}
       </Controls>
     );
@@ -410,13 +364,10 @@ Verse.propTypes = {
   isSearched: PropTypes.bool,
   verse: customPropTypes.verseType.isRequired,
   chapter: customPropTypes.surahType.isRequired,
-  bookmarked: PropTypes.bool, // TODO: Add this for search
-  bookmarkActions: customPropTypes.bookmarkActions,
   mediaActions: customPropTypes.mediaActions,
   audioActions: customPropTypes.audioActions,
   match: customPropTypes.match,
   isPlaying: PropTypes.bool,
-  isAuthenticated: PropTypes.bool,
   tooltip: PropTypes.string,
   currentWord: PropTypes.number, // gets passed in an integer, null by default
   iscurrentVerse: PropTypes.bool,
@@ -432,4 +383,4 @@ Verse.defaultProps = {
   isPdf: false
 };
 
-export default connect(() => ({}), { loadTafsirs })(Verse);
+export default connect(null, { loadTafsirs })(Verse);

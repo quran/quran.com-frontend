@@ -69,7 +69,9 @@ server.use((req, res) => {
       const result = route.onEnter({
         match,
         params: match.params,
-        location: match.location
+        location: {
+          pathname: req.url
+        }
       });
 
       if (result) {

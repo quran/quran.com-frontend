@@ -24,11 +24,13 @@ import {
 
 describe('verses', () => {
   it('load', () => {
+    fetch.mockResponse(JSON.stringify({}));
     expect(load(1, 2, 4).types.length).toEqual(3);
     expect(load(1, 2, 4).types).toEqual([LOAD, LOAD_SUCCESS, LOAD_FAIL]);
   });
 
   it('loadTafsir', () => {
+    fetch.mockResponse(JSON.stringify({}));
     expect(loadTafsir(1, 2, 4).types.length).toEqual(3);
     expect(loadTafsir(1, 2, 4).types).toEqual([
       LOAD_TAFSIR,

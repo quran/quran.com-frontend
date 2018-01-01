@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
@@ -19,8 +18,8 @@ const scrolledStyle = {
 };
 
 const StyledNav = styled(Nav)`
-  @media(max-width: $screen-sm){
-    & > li{
+  @media (max-width: $screen-sm) {
+    & > li {
       display: inline-block;
     }
   }
@@ -63,7 +62,7 @@ class GlobalNav extends Component {
   }
 
   renderRightControls() {
-    const { user, rightControls } = this.props;
+    const { rightControls } = this.props;
 
     return (
       rightControls || [
@@ -97,14 +96,7 @@ class GlobalNav extends Component {
             Sunnah
           </a>
         </li>,
-        <LocaleSwitcher />,
-        user
-          ? <li>
-            <Link to="/profile" {...NAVBAR_EVENTS.CLICK.PROFILE_LINK.PROPS}>
-              {user.firstName || user.name}
-            </Link>
-          </li>
-          : <noscript />
+        <LocaleSwitcher />
       ]
     );
   }
@@ -133,14 +125,16 @@ class GlobalNav extends Component {
           <span className="icon-bar" />
         </button>
         <StyledNav>
-          {!this.isHome() &&
+          {!this.isHome() && (
             <li>
               <Link to="/" {...NAVBAR_EVENTS.CLICK.HOME_LINK.PROPS}>
                 <i className="ss-icon ss-home" />
               </Link>
-            </li>}
-          {this.isHome() &&
-            <LocaleSwitcher className="visible-xs-inline-block" />}
+            </li>
+          )}
+          {this.isHome() && (
+            <LocaleSwitcher className="visible-xs-inline-block" />
+          )}
           {leftControls &&
             leftControls.map((control, index) =>
               React.cloneElement(control, { key: index })
@@ -162,7 +156,6 @@ GlobalNav.propTypes = {
   rightControls: PropTypes.arrayOf(PropTypes.element),
   handleSidebarToggle: PropTypes.func.isRequired,
   isStatic: PropTypes.bool.isRequired,
-  user: customPropTypes.userType,
   location: customPropTypes.location
 };
 
@@ -170,6 +163,4 @@ GlobalNav.defaultProps = {
   isStatic: false
 };
 
-export default connect(state => ({
-  user: state.auth.user
-}))(GlobalNav);
+export default GlobalNav;

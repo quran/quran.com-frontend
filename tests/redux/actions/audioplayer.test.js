@@ -26,6 +26,7 @@ import {
 
 describe('audoplayer', () => {
   it('actions', () => {
+    fetch.mockResponse(JSON.stringify({}));
     expect(setCurrentFile('fil').type).toEqual(SET_CURRENT_FILE);
     expect(setCurrentWord('word').type).toEqual(SET_CURRENT_WORD);
     expect(play().type).toEqual(PLAY);

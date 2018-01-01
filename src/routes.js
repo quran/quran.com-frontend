@@ -14,7 +14,7 @@ import {
 } from './containers/Surah/connect';
 import { search } from './redux/actions/search.js';
 import routePromises from './utils/routePromises';
-import checkValidChapterOrVerse from './utils/routeFilters';
+import validators from './utils/routeFilters';
 
 const GlobalNav = loadable(() =>
   import(/* webpackChunkName: "globalnav" */ 'components/GlobalNav')
@@ -138,7 +138,7 @@ export const routes = [
     navbar: loadable(() =>
       import(/* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah')
     ),
-    onEnter: checkValidChapterOrVerse
+    onEnter: validators
   },
   {
     path: '/:chapterId(\\d+)/:range?.pdf',
@@ -149,7 +149,7 @@ export const routes = [
     footer: loadable(() =>
       import(/* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter')
     ),
-    onEnter: checkValidChapterOrVerse
+    onEnter: validators
   },
   {
     path: '/:chapterId(\\d+)/:range?',
@@ -160,7 +160,7 @@ export const routes = [
     navbar: loadable(() =>
       import(/* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah')
     ),
-    onEnter: checkValidChapterOrVerse
+    onEnter: validators
   }
 ];
 

@@ -3,6 +3,7 @@ import { loadJuzs } from '../../../src/redux/actions/juzs.js';
 
 describe('juzs', () => {
   it('actions', () => {
+    fetch.mockResponse(JSON.stringify({}));
     expect(loadJuzs().types.length).toEqual(3);
     expect(loadJuzs().types).toEqual([
       FETCH_JUZS.ACTION,

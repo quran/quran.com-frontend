@@ -3,7 +3,10 @@ import {
   FETCH_CHAPTERS,
   FETCH_CHAPTER_INFO,
   SET_CURRENT
-} from 'redux/constants/chapters.js';
+} from '../constants/chapters.js';
+import ApiClient from '../../helpers/ApiClient';
+
+const client = new ApiClient();
 
 export function loadAll() {
   return {
@@ -13,7 +16,7 @@ export function loadAll() {
       FETCH_CHAPTERS.FAILURE
     ],
     schema: { chapters: [chaptersSchema] },
-    promise: client => client.get('/api/v3/chapters')
+    promise: client.get('/api/v3/chapters')
   };
 }
 
@@ -25,7 +28,7 @@ export function load(id) {
       FETCH_CHAPTERS.FAILURE
     ],
     schema: { chapter: chaptersSchema },
-    promise: client => client.get(`/api/v3/chapters/${id}`)
+    promise: client.get(`/api/v3/chapters/${id}`)
   };
 }
 
@@ -35,12 +38,11 @@ export const loadInfo = params => ({
     FETCH_CHAPTER_INFO.SUCCESS,
     FETCH_CHAPTER_INFO.FAIL
   ],
-  promise: client =>
-    client.get(`/api/v3/chapters/${params.chapterId}/info`, {
-      params: {
-        language: params.language || 'en'
-      }
-    }),
+  promise: client.get(`/api/v3/chapters/${params.chapterId}/info`, {
+    params: {
+      language: params.language || 'en'
+    }
+  }),
   id: params.chapterId
 });
 

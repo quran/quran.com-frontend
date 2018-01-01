@@ -222,7 +222,6 @@ function mapStateToProps(state) {
     currentVerse,
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
-    isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
     isLoading: state.verses.loading,
     isLoaded: state.verses.loaded,

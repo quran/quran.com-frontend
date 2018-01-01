@@ -19,7 +19,7 @@ module.exports = {
   entry: [
     'babel-polyfill',
 
-    'react-hot-loader/patch',
+    // 'react-hot-loader/patch',
     // 'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
