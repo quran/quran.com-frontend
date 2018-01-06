@@ -5,8 +5,8 @@ _why the change and what has changed_
 
 - [ ] Unit tests written
 - [ ] Manually tested
-- [ ] New dependencies were added with `yarn`
 - [ ] Prettier & ESLint were run
+- [ ] New dependencies are included in `package-lock.json`
 
 ### Screenshot
 _insert screenshot if needed_

@@ -1,6 +1,6 @@
-import LOAD from 'redux/constants/fontFace.js';
+import FONT_FACE from '../constants/fontFace';
 
 export default className => ({
-  type: LOAD,
+  type: FONT_FACE.ACTION,
   className
 });

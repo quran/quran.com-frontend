@@ -14,7 +14,10 @@ import {
   LOAD_SUCCESS,
   LOAD_FAIL,
   UPDATE
-} from 'redux/constants/audioplayer.js';
+} from '../constants/audioplayer.js';
+import ApiClient from '../../helpers/ApiClient';
+
+const client = new ApiClient();
 
 export function setCurrentFile(file) {
   return {
@@ -101,15 +104,14 @@ export function load({ chapterId, verseId, verseKey, audio }) {
   // eslint-disable-line
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
-    promise: client =>
-      client.get(
-        `/api/v3/chapters/${chapterId}/verses/${verseId}/audio_files`,
-        {
-          params: {
-            recitation: audio || 7 // NOTE: default, but should never be used
-          }
+    promise: client.get(
+      `/api/v3/chapters/${chapterId}/verses/${verseId}/audio_files`,
+      {
+        params: {
+          recitation: audio || 7 // NOTE: default, but should never be used
         }
-      ),
+      }
+    ),
     verseKey,
     chapterId
   };

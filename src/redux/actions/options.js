@@ -1,27 +1,28 @@
 import cookie from 'react-cookie';
 import {
   SET_OPTION,
-  LOAD_RECITERS,
-  LOAD_RECITERS_SUCCESS,
-  LOAD_RECITERS_FAIL,
   SET_USER_AGENT,
-  LOAD_TRANSLATIONS,
-  LOAD_TRANSLATIONS_SUCCESS,
-  LOAD_TRANSLATIONS_FAIL
-} from 'redux/constants/options.js';
+  FETCH_RECITERS,
+  FETCH_TRANSLATIONS
+} from '../constants/options.js';
+import ApiClient from '../../helpers/ApiClient';
+
+const client = new ApiClient();
 
 export function isReadingMode(globalState) {
-  return globalState.options.isReadingMode;
+  return !!globalState.options.isReadingMode;
 }
 
 export function isNightMode(globalState) {
-  return globalState.options.isNightMode;
+  return !!globalState.options.isNightMode;
 }
 
 export function setOption(payload) {
   const options = cookie.load('options') || {}; // protect against first timers.
 
-  Object.keys(payload).forEach((option) => { options[option] = payload[option]; });
+  Object.keys(payload).forEach((option) => {
+    options[option] = payload[option];
+  });
   cookie.save('options', JSON.stringify(options));
 
   return {
@@ -38,11 +39,19 @@ export function setUserAgent(userAgent) {
 }
 
 export const loadTranslations = () => ({
-  types: [LOAD_TRANSLATIONS, LOAD_TRANSLATIONS_SUCCESS, LOAD_TRANSLATIONS_FAIL],
-  promise: client => client.get('/api/v3/options/translations')
+  types: [
+    FETCH_TRANSLATIONS.ACTION,
+    FETCH_TRANSLATIONS.SUCCESS,
+    FETCH_TRANSLATIONS.FAILURE
+  ],
+  promise: client.get('/api/v3/options/translations')
 });
 
 export const loadRecitations = () => ({
-  types: [LOAD_RECITERS, LOAD_RECITERS_SUCCESS, LOAD_RECITERS_FAIL],
-  promise: client => client.get('/api/v3/options/recitations')
+  types: [
+    FETCH_RECITERS.ACTION,
+    FETCH_RECITERS.SUCCESS,
+    FETCH_RECITERS.FAILURE
+  ],
+  promise: client.get('/api/v3/options/recitations')
 });

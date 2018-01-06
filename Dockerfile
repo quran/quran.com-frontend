@@ -1,4 +1,4 @@
-FROM node:6.3
+FROM node:8.9
 
 ARG node_env=production
 ARG node_path=./dist

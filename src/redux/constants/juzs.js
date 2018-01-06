@@ -1,3 +1,4 @@
-export const LOAD = '@@quran/juzs/LOAD';
-export const LOAD_SUCCESS = '@@quran/juzs/LOAD_SUCCESS';
-export const LOAD_FAIL = '@@quran/juzs/LOAD_FAIL';
+import { defineAction } from 'redux-define';
+import states from './states';
+
+export const FETCH_JUZS = defineAction('FETCH_JUZS', states, 'quran');

@@ -1,17 +1,14 @@
-import superagent from 'superagent';
+/* global fetch */
 import qs from 'qs';
 import { decamelizeKeys } from 'humps';
 import cookie from 'react-cookie';
 
-import config from 'config';
+import config from '../config';
 
-const methods = ['get', 'post', 'put', 'patch', 'del'];
+const contentLanguage = () =>
+  cookie.load('currentLocale') || config.defaultLocale;
 
-function contentLanguage() {
-  return cookie.load('currentLocale') || config.defaultLocale;
-}
-
-function formatUrl(path) {
+const formatUrl = (path) => {
   const adjustedPath = path[0] !== '/' ? `/${path}` : path;
 
   if (__SERVER__) {
@@ -27,54 +24,28 @@ function formatUrl(path) {
   }
 
   return `/api${adjustedPath}`;
-}
+};
 
-export default class {
-  constructor(req) {
-    methods.forEach((method) => {
-      this[method] = (path, { params, data, arrayFormat } = {}) =>
-      new Promise((resolve, reject) => {
-        const request = superagent[method](formatUrl(path));
+class ApiClient {
+  constructor() {
+    this.language = contentLanguage();
+  }
 
-        params = params || {}; // eslint-disable-line no-param-reassign
+  // eslint-disable-next-line
+  get(path, { params = {}, data, arrayFormat } = {}) {
+    const options = { method: 'get' };
+    const queryParams = params;
 
-        params.language = params.language || contentLanguage(); // eslint-disable-line
+    queryParams.language = params.language || this.language;
 
-        request.query(qs.stringify(decamelizeKeys(params), {
-          arrayFormat: arrayFormat || 'brackets'
-        }));
-
-        if (cookie.load('auth')) {
-          const headers = cookie.load('auth');
-          Object.keys(headers).forEach(key => request.set(key, headers[key]));
-        }
-
-        if (__SERVER__ && req.get('cookie')) {
-          request.set('cookie', req.get('cookie'));
-        }
-
-        if (data) {
-          request.send(decamelizeKeys(data));
-        }
-
-        request.end((err, { header, body } = {}) => {
-          if (err) {
-            return reject(body || err);
-          }
-
-          if (header['access-token']) {
-            cookie.save('auth', {
-              'access-token': header['access-token'],
-              client: header.client,
-              expiry: header.expiry,
-              uid: header.uid,
-              'token-type': 'Bearer'
-            });
-          }
-
-          return resolve(body);
-        });
-      });
+    const query = qs.stringify(decamelizeKeys(params), {
+      arrayFormat: arrayFormat || 'brackets'
     });
+
+    const request = fetch(formatUrl(`${path}?${query}`), options);
+
+    return request.then(response => response.json());
   }
 }
+
+export default ApiClient;

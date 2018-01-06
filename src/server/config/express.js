@@ -10,8 +10,6 @@ import cors from 'cors';
 import httpProxy from 'http-proxy';
 import fs from 'fs';
 
-import support from './support';
-
 const proxyApi = httpProxy.createProxyServer({
   target: process.env.INTERNAL_API_URL,
   secure: true
@@ -89,8 +87,6 @@ export default (server) => {
       path.join(process.env.PWD || process.env.pm_cwd, '/static/dist')
     )
   );
-
-  support(server);
 
   server.get(/^\/(images|fonts)\/.*/, (req, res) => {
     res.redirect(301, `${process.env.FONTS_URL}${req.path}`);
