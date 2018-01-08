@@ -7,7 +7,7 @@ const baseUrl = config.fontsURL;
 const makeFont = pageNumber => `
 @font-face {
   font-family: p${pageNumber};
-  src: url('${baseUrl}/fonts/ttf/p${pageNumber}.ttf')
+  src: url('${baseUrl}fonts/ttf/p${pageNumber}.ttf')
     format('truetype');
 }
 .p${pageNumber} {
@@ -47,30 +47,30 @@ ${makePageNumberFonts()}
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('${baseUrl}/fonts/montserrat/Montserrat-Regular.otf');
+  src: url('${baseUrl}fonts/montserrat/Montserrat-Regular.otf');
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('${baseUrl}/fonts/montserrat/Montserrat-Bold.otf');
+  src: url('${baseUrl}fonts/montserrat/Montserrat-Bold.otf');
   font-weight: 700;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('${baseUrl}/fonts/montserrat/Montserrat-Light.otf');
+  src: url('${baseUrl}fonts/montserrat/Montserrat-Light.otf');
   font-weight: 300;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('${baseUrl}/fonts/montserrat/Montserrat-Hairline.otf');
+  src: url('${baseUrl}fonts/montserrat/Montserrat-Hairline.otf');
   font-weight: 100;
 }
 
 @font-face {
   font-family: 'Montserrat';
-  src: url('${baseUrl}/fonts/montserrat/Montserrat-Black.otf');
+  src: url('${baseUrl}fonts/montserrat/Montserrat-Black.otf');
   font-weight: 600;
 }
 
@@ -92,14 +92,14 @@ ${makePageNumberFonts()}
 
 @font-face {
   font-family: 'SSStandard';
-  src: url('${baseUrl}/fonts/ss-standard/ss-standard.eot');
-  src: url('${baseUrl}/fonts/ss-standard/ss-standard.eot?#iefix')
+  src: url('${baseUrl}fonts/ss-standard/ss-standard.eot');
+  src: url('${baseUrl}fonts/ss-standard/ss-standard.eot?#iefix')
       format('embedded-opentype'),
-    url('${baseUrl}/fonts/ss-standard/ss-standard.woff')
+    url('${baseUrl}fonts/ss-standard/ss-standard.woff')
       format('woff'),
-    url('${baseUrl}/fonts/ss-standard/ss-standard.ttf')
+    url('${baseUrl}fonts/ss-standard/ss-standard.ttf')
       format('truetype'),
-    url('${baseUrl}/fonts/ss-standard/ss-standard.svg#SSStandard')
+    url('${baseUrl}fonts/ss-standard/ss-standard.svg#SSStandard')
       format('svg');
   font-weight: normal;
   font-style: normal;
@@ -107,13 +107,13 @@ ${makePageNumberFonts()}
 
 @font-face {
   font-family: 'Nafees';
-  src: url('${baseUrl}/fonts/nafees/nafees-nastaleeq-webfont.eot?#iefix')
+  src: url('${baseUrl}fonts/nafees/nafees-nastaleeq-webfont.eot?#iefix')
       format('embedded-opentype'),
-    url('${baseUrl}/fonts/nafees/nafees-nastaleeq-webfont.woff')
+    url('${baseUrl}fonts/nafees/nafees-nastaleeq-webfont.woff')
       format('woff'),
-    url('${baseUrl}/fonts/nafees/nafees-nastaleeq-webfont.ttf')
+    url('${baseUrl}fonts/nafees/nafees-nastaleeq-webfont.ttf')
       format('truetype'),
-    url('${baseUrl}/fonts/nafees/nafees-nastaleeq-webfont.svg#NafeesRegular')
+    url('${baseUrl}fonts/nafees/nafees-nastaleeq-webfont.svg#NafeesRegular')
       format('svg');
   font-weight: normal;
   font-style: normal;
@@ -121,25 +121,25 @@ ${makePageNumberFonts()}
 
 @font-face {
   font-family: 'divehi';
-  src: url('${baseUrl}/fonts/divehi/divehi.eot?#iefix')
+  src: url('${baseUrl}fonts/divehi/divehi.eot?#iefix')
       format('embedded-opentype'),
-    url('${baseUrl}/fonts/divehi/divehi.woff2') format('woff2'),
-    url('${baseUrl}/fonts/divehi/divehi.woff') format('woff'),
-    url('${baseUrl}/fonts/divehi/divehi.ttf') format('truetype'),
-    url('${baseUrl}/fonts/divehi/divehi.svg#dhivehiregular')
+    url('${baseUrl}fonts/divehi/divehi.woff2') format('woff2'),
+    url('${baseUrl}fonts/divehi/divehi.woff') format('woff'),
+    url('${baseUrl}fonts/divehi/divehi.ttf') format('truetype'),
+    url('${baseUrl}fonts/divehi/divehi.svg#dhivehiregular')
       format('svg');
 }
 
 @font-face {
   font-family: 'surah_names';
-  src: url('${baseUrl}/fonts/surah_names/surah_names.eot?yg3f94');
-  src: url('${baseUrl}/fonts/surah_names/surah_names.eot?yg3f94#iefix')
+  src: url('${baseUrl}fonts/surah_names/surah_names.eot?yg3f94');
+  src: url('${baseUrl}fonts/surah_names/surah_names.eot?yg3f94#iefix')
       format('embedded-opentype'),
-    url('${baseUrl}/fonts/surah_names/surah_names.ttf?yg3f94')
+    url('${baseUrl}fonts/surah_names/surah_names.ttf?yg3f94')
       format('truetype'),
-    url('${baseUrl}/fonts/surah_names/surah_names.woff?yg3f94')
+    url('${baseUrl}fonts/surah_names/surah_names.woff?yg3f94')
       format('woff'),
-    url('${baseUrl}/fonts/surah_names/surah_names.svg?yg3f94#surah_names')
+    url('${baseUrl}fonts/surah_names/surah_names.svg?yg3f94#surah_names')
       format('svg');
   font-weight: normal;
   font-style: normal;
@@ -147,14 +147,14 @@ ${makePageNumberFonts()}
 
 @font-face {
   font-family: 'bismillah';
-  src: url('${baseUrl}/fonts/bismillah/bismillah.eot?yg3f94');
-  src: url('${baseUrl}/fonts/bismillah/bismillah.eot?yg3f94#iefix')
+  src: url('${baseUrl}fonts/bismillah/bismillah.eot?yg3f94');
+  src: url('${baseUrl}fonts/bismillah/bismillah.eot?yg3f94#iefix')
       format('embedded-opentype'),
-    url('${baseUrl}/fonts/bismillah/bismillah.ttf?yg3f94')
+    url('${baseUrl}fonts/bismillah/bismillah.ttf?yg3f94')
       format('truetype'),
-    url('${baseUrl}/fonts/bismillah/bismillah.woff?yg3f94')
+    url('${baseUrl}fonts/bismillah/bismillah.woff?yg3f94')
       format('woff'),
-    url('${baseUrl}/fonts/bismillah/bismillah.svg?yg3f94#bismillah')
+    url('${baseUrl}fonts/bismillah/bismillah.svg?yg3f94#bismillah')
       format('svg');
   font-weight: normal;
   font-style: normal;

@@ -2,9 +2,9 @@
 
 export const fontFaceStyle = fontClassName => (
   `@font-face {font-family: '${fontClassName}';
-  src: url('${config.fontsURL}/fonts/compressed/eot/${fontClassName}.eot?#iefix') format('embedded-opentype'),
-  url('${config.fontsURL}/fonts/ttf/${fontClassName}.ttf') format('truetype'),
-  url('${config.fontsURL}/fonts/woff/${fontClassName}.woff?-snx2rh') format('woff');}
+  src: url('${config.fontsURL}fonts/compressed/eot/${fontClassName}.eot?#iefix') format('embedded-opentype'),
+  url('${config.fontsURL}fonts/ttf/${fontClassName}.ttf') format('truetype'),
+  url('${config.fontsURL}fonts/woff/${fontClassName}.woff?-snx2rh') format('woff');}
   .${fontClassName} {font-family: '${fontClassName}';}
   .${fontClassName} {display: none;}`
 );
@@ -25,9 +25,9 @@ export function createFontFacesArray(verses) {
       fontFaces.push(font);
       fontFacesArray.push(
         `@font-face {font-family: '${font}';
-        src: url('${config.fontsURL}/fonts/compressed/eot/${font}.eot?#iefix') format('embedded-opentype'),
-        url('${config.fontsURL}/fonts/ttf/${font}.ttf') format('truetype'),
-        url('${config.fontsURL}/fonts/woff/${font}.woff?-snx2rh') format('woff');}
+        src: url('${config.fontsURL}fonts/compressed/eot/${font}.eot?#iefix') format('embedded-opentype'),
+        url('${config.fontsURL}fonts/ttf/${font}.ttf') format('truetype'),
+        url('${config.fontsURL}fonts/woff/${font}.woff?-snx2rh') format('woff');}
         .${font} {font-family: '${font}';}`
       );
     }
