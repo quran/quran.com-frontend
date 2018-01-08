@@ -5,22 +5,22 @@ services:
       context: .
       args:
         - node_env=production
-        - node_path=./dist
+        - facebook_app_id=appid
+        #- use_local_assets=1 # or set ASSET_HOST to //localhost:8000/public
+        - asset_host=//localhost:8000/public/
+        #- asset_host=//assets-1f14.kxcdn.com
+        - fonts_url=//localhost:8000/public/
+        #- fonts_url=//quran-1f14.kxcdn.com
+        - public_api_url=http://api.quran.com
+        - one_quran_url=https://one.quran.com
+        - sentry_key_client=https://app.getsentry.com
     image: frontend-prod:latest
     environment:
-      - PUBLIC_API_URL=http://api.quran.com
       - INTERNAL_API_URL=http://api.quran.com
       #- INTERNAL_API_URL=http://api:3000
-      # - SEGMENTS_KEY=
-      # - SENTRY_KEY_CLIENT=https://app.getsentry.com
       # - SENTRY_KEY_SERVER=https://app.getsentry.com
-      - FACEBOOK_APP_ID=appid
-      - ONE_QURAN_URL=https://one.quran.com
       - PORT=8000
-      - ASSET_HOST=//localhost:8000
-      #- ASSET_HOST=//assets-1f14.kxcdn.com
-      #- FONTS_URL=//quran-1f14.kxcdn.com
-      - FONTS_URL=//localhost:8000
+      - NODE_PATH=./dist
     ports:
       - "8000:8000"
 

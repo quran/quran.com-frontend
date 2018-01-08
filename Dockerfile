@@ -1,10 +1,9 @@
 FROM node:8.9
 
 ARG node_env=production
-ARG node_path=./dist
 
 ENV NODE_ENV $node_env
-ENV NODE_PATH $node_path
+ENV NODE_PATH ./src
 
 RUN mkdir /quran
 WORKDIR /quran
@@ -20,6 +19,22 @@ RUN if [ "$NODE_ENV" = "production" ]; then \
 
 # you would typically mount ./src:/quran/src during dev
 ADD . /quran/
+
+ARG facebook_app_id
+ARG use_local_assets
+ARG asset_host
+ARG fonts_url
+ARG public_api_url
+ARG one_quran_url
+ARG sentry_key_client
+
+ENV FACEBOOK_APP_ID $facebook_app_id
+ENV USE_LOCAL_ASSETS $use_local_assets
+ENV ASSET_HOST $asset_host
+ENV FONTS_URL $fonts_url
+ENV PUBLIC_API_URL $public_api_url
+ENV ONE_QURAN_URL $one_quran_url
+ENV SENTRY_KEY_CLIENT $sentry_key_client
 
 RUN if [ "$NODE_ENV" = "production" ]; then \
       npm run build:client && \
