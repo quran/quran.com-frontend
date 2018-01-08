@@ -22,7 +22,7 @@ module.exports = {
     path: assetsPath,
     publicPath: process.env.USE_LOCAL_ASSETS
       ? '/public/'
-      : process.env.ASSET_HOST,
+      : process.env.ASSETS_URL,
     filename: '[name]-[hash].js',
     chunkFilename: '[name]-[chunkhash]-chunk.js',
     sourceMapFilename: '[name]-[chunkhash].map.js'
@@ -163,8 +163,7 @@ module.exports = {
       'process.env.FACEBOOK_APP_ID': JSON.stringify(
         process.env.FACEBOOK_APP_ID
       ),
-      'process.env.FONTS_URL': JSON.stringify(process.env.FONTS_URL),
-      'process.env.ASSET_HOST': JSON.stringify(process.env.ASSET_HOST),
+      'process.env.ASSETS_URL': JSON.stringify(process.env.ASSETS_URL),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env': {
         NODE_ENV: JSON.stringify('production') // for reach

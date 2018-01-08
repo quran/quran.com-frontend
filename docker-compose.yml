@@ -6,11 +6,8 @@ services:
       args:
         - node_env=development
         - facebook_app_id=appid
-        #- use_local_assets=1 # or set ASSET_HOST to //localhost:8000/public
-        - asset_host=//localhost:8000/public/
-        #- asset_host=//assets-1f14.kxcdn.com
-        - fonts_url=//localhost:8000/public/
-        #- fonts_url=//quran-1f14.kxcdn.com
+        - assets_url=/public/
+        #- assets_url=//assets-1f14.kxcdn.com
         - public_api_url=http://api.quran.com
         - one_quran_url=https://one.quran.com
         - sentry_key_client=https://app.getsentry.com
@@ -26,5 +23,4 @@ services:
       # - SENTRY_KEY_CLIENT=https://app.getsentry.com
       # - SENTRY_KEY_SERVER=https://app.getsentry.com
       - PORT=8000
-
 

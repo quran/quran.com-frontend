@@ -94,6 +94,6 @@ export default (server) => {
     )
   );
   server.get(/^\/(images|fonts)\/.*/, (req, res) => {
-    res.redirect(301, `${process.env.FONTS_URL}${req.path}`);
+    res.redirect(301, `${process.env.ASSETS_URL}${req.path}`);
   });
 };

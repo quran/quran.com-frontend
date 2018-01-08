@@ -50,8 +50,7 @@ const config = {
   sentryClient: process.env.SENTRY_KEY_CLIENT,
   sentryServer: process.env.SENTRY_KEY_SERVER,
   facebookAppId: process.env.FACEBOOK_APP_ID,
-  assetHost: process.env.ASSET_HOST,
-  fontsURL: process.env.FONTS_URL,
+  assetsURL: process.env.ASSETS_URL,
   locales,
   defaultLocale: 'en',
   app: {
@@ -305,12 +304,7 @@ const config = {
         },
         {
           rel: 'preconnect',
-          href: process.env.FONTS_URL,
-          crossOrigin: ''
-        },
-        {
-          rel: 'preconnect',
-          href: process.env.ASSET_HOST,
+          href: process.env.ASSETS_URL,
           crossOrigin: ''
         },
         ...Object.keys(locales).map(key => ({
