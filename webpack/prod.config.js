@@ -164,6 +164,7 @@ module.exports = {
         process.env.FACEBOOK_APP_ID
       ),
       'process.env.FONTS_URL': JSON.stringify(process.env.FONTS_URL),
+      'process.env.ASSET_HOST': JSON.stringify(process.env.ASSET_HOST),
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env': {
         NODE_ENV: JSON.stringify('production') // for reach
