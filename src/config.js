@@ -44,7 +44,6 @@ const locales = {
 const config = {
   host: process.env.HOST || 'localhost',
   port: process.env.PORT,
-  api: process.env.PUBLIC_API_URL,
   apiInternal: process.env.INTERNAL_API_URL,
   apiPublic: process.env.PUBLIC_API_URL,
   oneQuran: process.env.ONE_QURAN_URL,

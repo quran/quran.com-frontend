@@ -16,14 +16,14 @@ const formatUrl = (path) => {
       return config.oneQuran + adjustedPath.replace('/onequran', '');
     }
 
-    return `${config.api}${adjustedPath}`;
+    return `${config.apiInternal}${adjustedPath}`;
   }
 
   if (adjustedPath.startsWith('/onequran')) {
     return adjustedPath;
   }
 
-  return `/api${adjustedPath}`;
+  return `${config.apiPublic}${adjustedPath}`;
 };
 
 class ApiClient {
