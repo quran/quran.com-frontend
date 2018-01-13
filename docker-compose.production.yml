@@ -5,17 +5,17 @@ services:
       context: .
       args:
         - node_env=production
-        - facebook_app_id=appid
-        - assets_url=/public/
-        #- assets_url=//assets-1f14.kxcdn.com
-        - public_api_url=http://api.quran.com
-        - one_quran_url=https://one.quran.com
-        - sentry_key_client=https://app.getsentry.com
+        - facebook_app_id=1557596491207315
+        # - assets_url=/public/
+        - assets_url=//azurequrancom-a79c.kxcdn.com/
+        - public_api_url=//azure.quran.com
+        - one_quran_url=//one.quran.com
+        - sentry_key_client=https://8e999457253744dda16b4d3eff70049a@sentry.io/271092
     image: frontend-prod:latest
     environment:
-      - INTERNAL_API_URL=http://api.quran.com
-      #- INTERNAL_API_URL=http://api:3000
-      # - SENTRY_KEY_SERVER=https://app.getsentry.com
+      # - INTERNAL_API_URL=http://api.quran.com
+      - INTERNAL_API_URL=http://api:3000
+      - SENTRY_KEY_SERVER=
       - PORT=8000
       - NODE_PATH=./dist
     ports:
