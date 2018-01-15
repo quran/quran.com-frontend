@@ -53,15 +53,15 @@ const Container = styled.div`
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
   width: 100%;
 
-  @media (max-width: ${props => props.theme.screen.sm}) {
-    bottom: 0;
-    width: 100%;
-  }
-
   .list-inline {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  @media (max-width: ${props => props.theme.screen.sm}) {
+    bottom: 0;
+    width: 100%;
   }
 `;
 
