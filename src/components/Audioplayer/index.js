@@ -43,19 +43,25 @@ const ControlItem = styled.li`
 
 const Container = styled.div`
   position: fixed;
-  bottom: 15px;
+  bottom: 0;
   display: block;
   user-select: none;
   height: auto;
   z-index: 1;
-  padding: 10px 20px 5px;
+  padding: 20px 20px 10px;
   background: ${props => props.theme.colors.white};
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
-  min-width: 340px;
+  width: 100%;
 
   @media (max-width: ${props => props.theme.screen.sm}) {
     bottom: 0;
     width: 100%;
+  }
+
+  .list-inline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -65,6 +71,7 @@ const playingButton = css`
   height: 32px;
   width: 32px;
   padding: 8px;
+  padding-left: 9px;
   border-radius: 50%;
   position: relative;
   vertical-align: middle;
@@ -539,18 +546,20 @@ export class Audioplayer extends Component {
     return (
       <Container className={className}>
         <Wrapper>
-          {currentFile &&
+          {currentFile && (
             <Track
               progress={currentTime / duration * 100}
               onTrackChange={this.handleTrackChange}
-            />}
+            />
+          )}
           {segments &&
-            segments[currentVerse.verseKey] &&
-            <Segments
-              segments={segments[currentVerse.verseKey]}
-              currentVerse={currentVerse.verseKey}
-              currentTime={currentTime}
-            />}
+            segments[currentVerse.verseKey] && (
+              <Segments
+                segments={segments[currentVerse.verseKey]}
+                currentVerse={currentVerse.verseKey}
+                currentTime={currentTime}
+              />
+            )}
         </Wrapper>
         <ul className="list-inline" style={{ margin: 0 }}>
           <ControlItem>
@@ -560,15 +569,9 @@ export class Audioplayer extends Component {
             />
             : {currentVerse.verseKey.split(':')[1]}
           </ControlItem>
-          <ControlItem>
-            {this.renderPreviousButton()}
-          </ControlItem>
-          <ControlItem>
-            {this.renderPlayStopButtons()}
-          </ControlItem>
-          <ControlItem>
-            {this.renderNextButton()}
-          </ControlItem>
+          <ControlItem>{this.renderPreviousButton()}</ControlItem>
+          <ControlItem>{this.renderPlayStopButtons()}</ControlItem>
+          <ControlItem>{this.renderNextButton()}</ControlItem>
           <ControlItem>
             <RepeatDropdown
               repeat={repeat}
