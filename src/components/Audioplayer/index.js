@@ -32,7 +32,7 @@ const Wrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  height: 10%;
+  height: 20%;
 `;
 
 const ControlItem = styled.li`
@@ -117,6 +117,7 @@ export class Audioplayer extends Component {
     const nextVerse = verses[this.getNext()];
 
     debug('component:Audioplayer', 'componentDidMount');
+    document.addEventListener('keydown', this.handleKeyboardEvent);
 
     if (currentFile) {
       return this.handleAddFileListeners(currentFile);
@@ -221,6 +222,7 @@ export class Audioplayer extends Component {
   componentWillUnmount() {
     const { files, currentFile } = this.props;
     debug('component:Audioplayer', 'componentWillUnmount');
+    document.removeEventListener('keydown', this.handleKeyboardEvent);
 
     if (files[currentFile]) {
       return this.handleRemoveFileListeners(files[currentFile]);
@@ -253,6 +255,26 @@ export class Audioplayer extends Component {
 
     return verseIds[index + 1];
   }
+
+  handleKeyboardEvent = (event) => {
+    const { code } = event;
+    const { isPlaying, pause } = this.props;
+
+    if (code === 'Space') {
+      event.preventDefault();
+      if (isPlaying) {
+        pause();
+        return;
+      }
+      this.play();
+    } else if (code === 'ArrowRight' || code === 'ArrowDown') {
+      event.preventDefault();
+      this.handleAyahChange('next');
+    } else if (code === 'ArrowLeft' || code === 'ArrowUp') {
+      event.preventDefault();
+      this.handleAyahChange('previous');
+    }
+  };
 
   handleAyahChange = (direction = 'next') => {
     const { isPlaying, play, pause, currentVerse } = this.props; // eslint-disable-line no-shadow, max-len
