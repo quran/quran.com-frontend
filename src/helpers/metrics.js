@@ -15,16 +15,18 @@ export default {
         pageView() {
           debug('metrics:pageView', window.location);
 
-          if (window.mixpanel)
+          if (window.mixpanel) {
             mixpanel.track('Pageview', window.location);
+          }
 
           return ga('send', 'pageview');
         },
         track(eventCategory, params = DEFAULT_PARAMS) {
           debug('metrics:track', { eventCategory, ...params });
 
-          if (window.mixpanel)
+          if (window.mixpanel) {
             mixpanel.track(eventCategory, params);
+          }
 
           const { eventAction, eventLabel } = params;
 
