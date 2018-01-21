@@ -1,0 +1,15 @@
+
+sudo: false
+language: node_js
+env: TEST_SUITE=unit
+# Node version is handled inside `.nvmrc` file & travis picks it up automatically because it uses `nvm`
+# https://docs.travis-ci.com/user/languages/javascript-with-nodejs#Using-.nvmrc
+cache:
+  directories:
+    - node_modules
+install:
+  - npm install
+notifications:
+  email: false
+
+script: "npm run test:ci:$TEST_SUITE"
