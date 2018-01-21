@@ -1,14 +1,13 @@
 ---
 dependencies:
-  cache_directories:
-    - ~/.cache/yarn
   override:
     - npm install
   pre:
-    - ls
+    - Running tests...
 machine:
   node:
     version: "8.0.0"
 test:
   override:
+    - npm run test:ci:lint
     - npm run test:ci:unit
