@@ -188,7 +188,7 @@ export default function serve(cb) {
     console.info(`==> 🎯  INTERNAL API at ${process.env.INTERNAL_API_URL}`);
     Object.keys(config).forEach(
       key =>
-        typeof config[key] != 'object' &&
+        typeof config[key] !== 'object' &&
         console.info(`==> ${key}`, config[key])
     );
 
