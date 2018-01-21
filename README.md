@@ -1,4 +1,4 @@
-# Quran.com [![SLACK](http://i.imgur.com/Lk5HsBo.png)](https://quranslack.herokuapp.com)
+# Quran.com [![CircleCI](https://circleci.com/gh/quran/quran.com-frontend.svg?style=svg)](https://circleci.com/gh/quran/common-components) [![SLACK](http://i.imgur.com/Lk5HsBo.png)](https://quranslack.herokuapp.com)
 
 This project is the frontend for Quran.com. It is built using
 [Reactjs] + [Redux] + [Expressjs] + [Webpack]. It is isomorphic (javascript shared
