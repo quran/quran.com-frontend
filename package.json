@@ -5,6 +5,7 @@
   "repository": "https://github.com/quran/quran.com-frontend",
   "scripts": {
     "test": "npm run test:dev:unit",
+    "test:ci": "npm run test:ci:unit && npm run test:ci:lint",
     "test:ci:unit": "jest src",
     "pretest:ci:unit": "npm run test:ci:lint",
     "test:dev:unit": "jest src",

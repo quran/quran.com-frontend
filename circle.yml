@@ -2,11 +2,9 @@
 dependencies:
   override:
     - npm install
-  pre:
-    - Running tests...
 machine:
   node:
     version: "8.0.0"
 test:
   override:
-    - npm run test:ci:unit && npm run test:ci:lint
+    - npm run test:ci
