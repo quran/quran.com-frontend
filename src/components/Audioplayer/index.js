@@ -57,6 +57,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 5px;
   }
 
   @media (max-width: ${props => props.theme.screen.sm}) {
@@ -583,7 +584,7 @@ export class Audioplayer extends Component {
               />
             )}
         </Wrapper>
-        <ul className="list-inline" style={{ margin: 0 }}>
+        <ul className="list-inline">
           <ControlItem>
             <LocaleFormattedMessage
               id="player.currentVerse"
