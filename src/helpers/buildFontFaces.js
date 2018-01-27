@@ -1,5 +1,7 @@
 /* eslint-disable max-len */
 
+import config from 'config';
+
 export const fontFaceStyle = fontClassName => (
   `@font-face {font-family: '${fontClassName}';
   src: url('${config.assetssURL}fonts/compressed/eot/${fontClassName}.eot?#iefix') format('embedded-opentype'),
