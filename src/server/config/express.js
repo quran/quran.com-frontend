@@ -82,18 +82,12 @@ export default (server) => {
     express.static(path.join(process.env.PWD || process.env.pm_cwd, '/static'))
   );
   server.use(
-      '/public/fonts',
-      express.static(
-        path.join(process.env.PWD || process.env.pm_cwd, '/static/fonts')
-      )
-    );
-  server.use(
     '/public',
     express.static(
       path.join(process.env.PWD || process.env.pm_cwd, '/static/dist')
     )
   );
-  server.get(/^\/(images|fonts)\/.*/, (req, res) => {
+  server.get(/^\/images\/.*/, (req, res) => {
     res.redirect(301, `${process.env.ASSETS_URL}${req.path}`);
   });
 };

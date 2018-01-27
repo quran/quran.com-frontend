@@ -155,6 +155,7 @@ module.exports = {
         process.env.FACEBOOK_APP_ID
       ),
       'process.env.ASSETS_URL': JSON.stringify(process.env.ASSETS_URL),
+      'process.env.FONTS_URL': JSON.stringify(process.env.FONTS_URL),
       'process.env.SEGMENTS_KEY': JSON.stringify(process.env.SEGMENTS_KEY),
       'process.env.SENTRY_KEY_CLIENT': JSON.stringify(
         process.env.SENTRY_KEY_CLIENT

@@ -6,8 +6,8 @@ services:
       args:
         - node_env=production
         - facebook_app_id=1557596491207315
-        # - assets_url=/public/
         - assets_url=//azurequrancom-a79c.kxcdn.com/
+        - fonts_url=//azurequrancom-a79c.kxcdn.com/
         - public_api_url=//azure.quran.com
         - one_quran_url=//one.quran.com
         - sentry_key_client=https://8e999457253744dda16b4d3eff70049a@sentry.io/271092

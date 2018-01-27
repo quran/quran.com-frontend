@@ -22,12 +22,14 @@ ADD . /quran/
 
 ARG facebook_app_id
 ARG assets_url
+ARG fonts_url
 ARG public_api_url
 ARG one_quran_url
 ARG sentry_key_client
 
 ENV FACEBOOK_APP_ID $facebook_app_id
 ENV ASSETS_URL $assets_url
+ENV FONTS_URL $fonts_url
 ENV PUBLIC_API_URL $public_api_url
 ENV ONE_QURAN_URL $one_quran_url
 ENV SENTRY_KEY_CLIENT $sentry_key_client

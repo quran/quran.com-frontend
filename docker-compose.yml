@@ -7,7 +7,7 @@ services:
         - node_env=development
         - facebook_app_id=appid
         - assets_url=/public/
-        #- assets_url=//assets-1f14.kxcdn.com
+        - fonts_url=//localhost:3100/
         - public_api_url=http://api.quran.com
         - one_quran_url=https://one.quran.com
         - sentry_key_client=https://app.getsentry.com
@@ -23,4 +23,7 @@ services:
       # - SENTRY_KEY_CLIENT=https://app.getsentry.com
       # - SENTRY_KEY_SERVER=https://app.getsentry.com
       - PORT=8000
-
+  fonts:
+    image: quran/fonts:latest
+    ports:
+      - "3100:3000"
