@@ -11,19 +11,20 @@ import makeHeadTags from 'helpers/makeHeadTags';
 
 const SurahInfo = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
+    import(/* webpackChunkName: "SurahInfo" */ 'components/SurahInfo'),
   LoadingComponent: ComponentLoader
 });
 
-const ChapterInfo = ({ chapter, info }) =>
+const ChapterInfo = ({ chapter, info }) => (
   <div className="row" style={{ marginTop: 20 }}>
     <Helmet
       {...makeHeadTags({
         title: `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`,
-        description: `${info
-          ? info.shortText
-          : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter
-          .pages[0]} to ${chapter.pages[1]} in the Quran.` // eslint-disable-line max-len
+        description: `${info ? info.shortText : ''} This Surah has ${
+          chapter.versesCount
+        } verses and resides between pages ${chapter.pages[0]} to ${
+          chapter.pages[1]
+        } in the Quran.` // eslint-disable-line max-len
       })}
       script={[
         {
@@ -59,7 +60,8 @@ const ChapterInfo = ({ chapter, info }) =>
         />
       </Button>
     </div>
-  </div>;
+  </div>
+);
 
 ChapterInfo.propTypes = {
   chapter: customPropTypes.surahType,

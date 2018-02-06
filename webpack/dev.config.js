@@ -15,6 +15,9 @@ module.exports = {
   resolve: {
     extensions: ['.js'],
     modules: ['src', 'node_modules']
+    // alias: {
+    //   'react-bootstrap/lib': 'react-bootstrap/es',
+    // },
   },
   entry: [
     'babel-polyfill',
