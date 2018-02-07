@@ -17,7 +17,7 @@ import routePromises from './utils/routePromises';
 import validators from './utils/routeFilters';
 
 const GlobalNav = loadable(() =>
-  import(/* webpackChunkName: "globalnav" */ 'components/GlobalNav')
+  import(/* webpackChunkName: "GlobalNav" */ 'components/GlobalNav')
 );
 
 const defaultSetContext = context => ({
@@ -35,49 +35,49 @@ export const routes = [
   {
     path: '/donations',
     component: loadable(() =>
-      import(/* webpackChunkName: "donations" */ './containers/Donations')
+      import(/* webpackChunkName: "Donations" */ './containers/Donations')
     )
   },
   {
     path: '/contributions',
     component: loadable(() =>
-      import(/* webpackChunkName: "donations" */ './containers/Donations')
+      import(/* webpackChunkName: "Donations" */ './containers/Donations')
     )
   },
   {
     path: '/about',
     component: loadable(() =>
-      import(/* webpackChunkName: "about" */ './containers/About')
+      import(/* webpackChunkName: "About" */ './containers/About')
     )
   },
   {
     path: '/contact',
     component: loadable(() =>
-      import(/* webpackChunkName: "contact" */ './containers/Contact')
+      import(/* webpackChunkName: "Contact" */ './containers/Contact')
     )
   },
   {
     path: '/contactus',
     component: loadable(() =>
-      import(/* webpackChunkName: "contact" */ './containers/Contact')
+      import(/* webpackChunkName: "Contact" */ './containers/Contact')
     )
   },
   {
     path: '/mobile',
     component: loadable(() =>
-      import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
+      import(/* webpackChunkName: "Mobile" */ './containers/MobileLanding')
     )
   },
   {
     path: '/apps',
     component: loadable(() =>
-      import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
+      import(/* webpackChunkName: "Mobile" */ './containers/MobileLanding')
     )
   },
   {
     path: '/error/:errorKey',
     component: loadable(() =>
-      import(/* webpackChunkName: "error" */ './containers/Error')
+      import(/* webpackChunkName: "Error" */ './containers/Error')
     ),
     setContext: context => ({
       ...context,
@@ -87,7 +87,7 @@ export const routes = [
   {
     path: '/search',
     component: loadable(() =>
-      import(/* webpackChunkName: "search" */ './containers/Search')
+      import(/* webpackChunkName: "Search" */ './containers/Search')
     ),
     loadData: [
       ({ store: { dispatch }, location }) => {
@@ -103,14 +103,14 @@ export const routes = [
   {
     path: '/:chapterId/info/:language?',
     component: loadable(() =>
-      import(/* webpackChunkName: "chapterinfo" */ './containers/ChapterInfo')
+      import(/* webpackChunkName: "ChapterInfo" */ './containers/ChapterInfo')
     ),
     loadData: [chaptersConnect, chapterInfoConnect]
   },
   {
     path: '/ayatul-kursi',
     component: loadable(() =>
-      import(/* webpackChunkName: "ayatulkursi" */ './containers/AyatulKursi')
+      import(/* webpackChunkName: "AyatulKursi" */ './containers/AyatulKursi')
     ),
     loadData: [
       chaptersConnect,
@@ -133,32 +133,34 @@ export const routes = [
   },
   {
     path: '/:chapterId(\\d+)/:range/:translations',
-    component: loadable(() => import('./containers/Surah')),
+    component: loadable(() =>
+      import(/* webpackChunkName: "Surah" */ './containers/Surah')
+    ),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
     navbar: loadable(() =>
-      import(/* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah')
+      import(/* webpackChunkName: "GlobalNavSurah" */ './components/GlobalNav/Surah')
     ),
     onEnter: validators
   },
   {
     path: '/:chapterId(\\d+)/:range?.pdf',
     component: loadable(() =>
-      import(/* webpackChunkName: "pdf" */ './containers/Pdf')
+      import(/* webpackChunkName: "Pdf" */ './containers/Pdf')
     ),
     loadData: [chaptersConnect, versesConnect],
     footer: loadable(() =>
-      import(/* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter')
+      import(/* webpackChunkName: "PdfFooter" */ './components/Footer/PdfFooter')
     ),
     onEnter: validators
   },
   {
     path: '/:chapterId(\\d+)/:range?',
     component: loadable(() =>
-      import(/* webpackChunkName: "surah" */ './containers/Surah')
+      import(/* webpackChunkName: "Surah" */ './containers/Surah')
     ),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
     navbar: loadable(() =>
-      import(/* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah')
+      import(/* webpackChunkName: "GlobalNavSurah" */ './components/GlobalNav/Surah')
     ),
     onEnter: validators
   }

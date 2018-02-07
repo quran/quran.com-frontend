@@ -16,12 +16,12 @@ import debug from 'helpers/debug';
 import { loadTafsirs } from 'redux/actions/media';
 
 const Copy = Loadable({
-  loader: () => import('components/Copy'),
+  loader: () => import(/* webpackChunkName: "Copy" */ 'components/Copy'),
   LoadingComponent: ComponentLoader
 });
 
 const Share = Loadable({
-  loader: () => import('components/Share'),
+  loader: () => import(/* webpackChunkName: "Share" */ 'components/Share'),
   LoadingComponent: ComponentLoader
 });
 

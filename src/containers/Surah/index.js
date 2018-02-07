@@ -33,23 +33,23 @@ const LoaderStyle = {};
 
 const PageView = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pageview" */ 'components/PageView'),
+    import(/* webpackChunkName: "PageView" */ 'components/PageView'),
   LoadingComponent: ComponentLoader
 });
 
 const Audioplayer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
+    import(/* webpackChunkName: "Audioplayer" */ 'components/Audioplayer'),
   LoadingComponent: ComponentLoader
 });
 const SurahInfo = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
+    import(/* webpackChunkName: "SurahInfo" */ 'components/SurahInfo'),
   LoadingComponent: ComponentLoader
 });
 const TopOptions = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
+    import(/* webpackChunkName: "TopOptions" */ 'components/TopOptions'),
   LoadingComponent: ComponentLoader
 });
 
