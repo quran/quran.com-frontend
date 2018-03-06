@@ -16,14 +16,11 @@
     "classes": true,
     "jsx": true
   },
-  "plugins": [
-    "react",
-    "mocha"
-  ],
+  "plugins": ["react"],
   "settings": {
     "import/resolver": "webpack"
   },
-  "parserOptions":{
+  "parserOptions": {
     "ecmaFeatures": {
       "experimentalObjectRestSpread": true
     }
@@ -44,7 +41,8 @@
     "import": true,
     "FB": true,
     "window": true,
-    "sinon": true
+    "sinon": true,
+    "fetch": true
   },
   "env": {
     "mocha": true,

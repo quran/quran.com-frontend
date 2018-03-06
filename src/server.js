@@ -30,10 +30,17 @@ import getLocalMessages from './helpers/setLocal';
 
 // const pretty = new PrettyError();
 const server = express();
+
 Raven.config(config.sentryServer, {
   captureUnhandledRejections: true,
   autoBreadcrumbs: true
 }).install();
+
+/* allows us to handle unhandled promises, that might cause node to crash */
+process.on('unhandledRejection', (err) => {
+  console.log(err);
+  debug('Server:unhandledRejection', err);
+});
 
 expressConfig(server);
 
@@ -41,6 +48,7 @@ server.use(Raven.requestHandler());
 
 server.use((req, res) => {
   cookie.plugToRequest(req, res);
+
   const context = {};
   const client = new ApiClient(req);
   const store = createStore(null, client);
@@ -50,19 +58,31 @@ server.use((req, res) => {
     webpack_isomorphic_tools.refresh();
   }
 
-  if (req.query.DISABLE_SSR) {
-    return res.status(200).send(
-      `<!doctype html>\n${ReactDOM.renderToString(
-        <IntlProvider locale="en" messages={localMessages}>
-          <Html store={store} assets={webpack_isomorphic_tools.assets()} />
-        </IntlProvider>
-      )}`
-    );
-  }
-
   store.dispatch(setUserAgent(req.useragent));
   store.dispatch(setOption(cookie.load('options') || {}));
   debug('Server', 'Executing navigate action');
+
+  routes.forEach((route) => {
+    const match = matchPath(req.url, route);
+
+    if (match && route.onEnter) {
+      const result = route.onEnter({
+        match,
+        params: match.params,
+        location: {
+          pathname: req.url
+        }
+      });
+
+      if (result) {
+        return res.status(result.status).redirect(result.url);
+      }
+
+      return null;
+    }
+
+    return null;
+  });
 
   // inside a request
   const promises = [];
@@ -100,9 +120,6 @@ server.use((req, res) => {
       </IntlProvider>
     );
 
-    res.type('html');
-    res.setHeader('Cache-Control', 'public, max-age=31557600');
-    res.status(200);
     debug('Server', 'Sending markup');
 
     if (req.originalUrl.includes('.pdf')) {
@@ -137,6 +154,11 @@ server.use((req, res) => {
           loadableState={loadableState.getScriptTag()}
         />
       )}`;
+
+      res.type('html');
+      res.setHeader('Cache-Control', 'public, max-age=31557600');
+
+      res.status(context.status || 200);
 
       return res.send(html);
     });

@@ -11,7 +11,10 @@ import {
   LOAD_TAFSIR,
   LOAD_TAFSIR_SUCCESS,
   LOAD_TAFSIR_FAIL
-} from 'redux/constants/verses.js';
+} from '../constants/verses.js';
+import ApiClient from '../../helpers/ApiClient';
+
+const client = new ApiClient();
 
 // NOTE: For safe measure
 const defaultOptions = {
@@ -40,19 +43,15 @@ function prepareParams(params, options) {
 export function load(id, paging, params, options = defaultOptions) {
   const apiOptions = prepareParams(params, options);
 
-  // TODO: move this to module/verses
-  // cookie.save('lastVisit', JSON.stringify({ chapterId: id, verseId: from }));
-
   return {
     types: [LOAD, LOAD_SUCCESS, LOAD_FAIL],
     schema: { verses: [versesSchema] },
-    promise: client =>
-      client.get(`/api/v3/chapters/${id}/verses`, {
-        params: {
-          ...paging,
-          ...apiOptions
-        }
-      }),
+    promise: client.get(`/api/v3/chapters/${id}/verses`, {
+      params: {
+        ...paging,
+        ...apiOptions
+      }
+    }),
     chapterId: id
   };
 }
@@ -84,7 +83,7 @@ export function setCurrentWord(id) {
   };
 }
 
-export function isLoaded(globalState, chapterId, paging) {
+export function isLoaded(globalState, chapterId, paging = {}) {
   if (paging.offset) {
     return (
       globalState.verses.entities[chapterId] &&
@@ -108,12 +107,14 @@ export function isLoaded(globalState, chapterId, paging) {
 export function loadTafsir(chapterId, verseId, tafsirId) {
   return {
     types: [LOAD_TAFSIR, LOAD_TAFSIR_SUCCESS, LOAD_TAFSIR_FAIL],
-    promise: client =>
-      client.get(`/api/v3/chapters/${chapterId}/verses/${verseId}/tafsirs`, {
+    promise: client.get(
+      `/api/v3/chapters/${chapterId}/verses/${verseId}/tafsirs`,
+      {
         params: {
           tafsirs: tafsirId
         }
-      }),
+      }
+    ),
     tafsirId
   };
 }
@@ -122,5 +123,5 @@ export function isTafsirLoaded(globalState, chapterId, verseId, tafsirId) {
   const verses = globalState.verses.entities[chapterId];
   const verseKey = `${chapterId}:${verseId}`;
 
-  return verses && globalState.verses.tafsirs[`${verseKey}-${tafsirId}`];
+  return !!verses && globalState.verses.tafsirs[`${verseKey}-${tafsirId}`];
 }

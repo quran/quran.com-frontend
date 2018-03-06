@@ -115,7 +115,6 @@ function mapStateToProps(state, ownProps) {
     info: state.chapters.infos[ownProps.match.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
-    isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
     isEndOfSurah: lastAyahInArray === chapter.versesCount,
     chapters: state.chapters.entities,

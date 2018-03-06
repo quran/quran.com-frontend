@@ -6,6 +6,7 @@ import Helmet from 'react-helmet';
 import serialize from 'serialize-javascript';
 
 import highlightStyles from 'helpers/highlightStyles';
+import fontsStyle from 'helpers/fontsStyle';
 
 const Html = ({ store, component, assets, loadableState }) => {
   const content = component ? ReactDOM.renderToString(component) : '';
@@ -36,6 +37,7 @@ const Html = ({ store, component, assets, loadableState }) => {
           />
         ) : null}
         <style>{highlightStyles}</style>
+        <style dangerouslySetInnerHTML={{ __html: fontsStyle }} />
       </head>
       <body>
         <div id="app" dangerouslySetInnerHTML={{ __html: content }} />
@@ -112,7 +114,7 @@ Html.propTypes = {
   store: PropTypes.object, // eslint-disable-line
   assets: PropTypes.object, // eslint-disable-line
   component: PropTypes.element,
-  loadableState: PropTypes.object // eslint-disable-line
+  loadableState: PropTypes.string // eslint-disable-line
 };
 
 export default Html;

@@ -16,12 +16,12 @@ import debug from 'helpers/debug';
 import { loadTafsirs } from 'redux/actions/media';
 
 const Copy = Loadable({
-  loader: () => import('components/Copy'),
+  loader: () => import(/* webpackChunkName: "Copy" */ 'components/Copy'),
   LoadingComponent: ComponentLoader
 });
 
 const Share = Loadable({
-  loader: () => import('components/Share'),
+  loader: () => import(/* webpackChunkName: "Share" */ 'components/Share'),
   LoadingComponent: ComponentLoader
 });
 
@@ -101,7 +101,6 @@ class Verse extends Component {
   shouldComponentUpdate(nextProps) {
     const conditions = [
       this.props.verse !== nextProps.verse,
-      this.props.bookmarked !== nextProps.bookmarked,
       this.props.tooltip !== nextProps.tooltip,
       this.props.currentWord !== nextProps.currentWord,
       this.props.iscurrentVerse !== nextProps.iscurrentVerse
@@ -280,47 +279,6 @@ class Verse extends Component {
     return false;
   }
 
-  renderBookmark() {
-    const {
-      verse,
-      bookmarked,
-      isAuthenticated,
-      bookmarkActions,
-      isSearched
-    } = this.props;
-
-    if (isSearched || !isAuthenticated) return false;
-
-    if (bookmarked) {
-      return (
-        <a
-          tabIndex="-1"
-          onClick={() => bookmarkActions.removeBookmark(verse.verseKey)}
-          className="text-muted"
-        >
-          <strong>
-            <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
-            <LocaleFormattedMessage
-              id="verse.bookmarked"
-              defaultMessage="Bookmarked"
-            />
-          </strong>
-        </a>
-      );
-    }
-
-    return (
-      <a
-        tabIndex="-1"
-        onClick={() => bookmarkActions.addBookmark(verse.verseKey)}
-        className="text-muted"
-      >
-        <i className="ss-icon ss-bookmark vertical-align-middle" />{' '}
-        <LocaleFormattedMessage id="verse.bookmark" defaultMessage="Bookmark" />
-      </a>
-    );
-  }
-
   renderBadge() {
     const { isSearched, verse } = this.props;
     const translations = (verse.translations || [])
@@ -367,7 +325,6 @@ class Verse extends Component {
         {this.renderPlayLink()}
         {this.renderCopyLink()}
         {this.renderTafsirLink()}
-        {this.renderBookmark()}
         {!isPdf && this.renderShare()}
       </Controls>
     );
@@ -398,13 +355,10 @@ Verse.propTypes = {
   isSearched: PropTypes.bool,
   verse: customPropTypes.verseType.isRequired,
   chapter: customPropTypes.surahType.isRequired,
-  bookmarked: PropTypes.bool, // TODO: Add this for search
-  bookmarkActions: customPropTypes.bookmarkActions,
   mediaActions: customPropTypes.mediaActions,
   audioActions: customPropTypes.audioActions,
   match: customPropTypes.match,
   isPlaying: PropTypes.bool,
-  isAuthenticated: PropTypes.bool,
   tooltip: PropTypes.string,
   currentWord: PropTypes.number, // gets passed in an integer, null by default
   iscurrentVerse: PropTypes.bool,
@@ -420,4 +374,4 @@ Verse.defaultProps = {
   isPdf: false
 };
 
-export default connect(() => ({}), { loadTafsirs })(Verse);
+export default connect(null, { loadTafsirs })(Verse);

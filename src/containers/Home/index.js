@@ -1,18 +1,26 @@
 import React, { Component } from 'react';
-import * as customPropTypes from 'customPropTypes';
 import Helmet from 'react-helmet';
-import IndexHeader from 'components/IndexHeader';
-import cookie from 'react-cookie';
 import { connect } from 'react-redux';
+import Loadable from 'react-loadable';
+import Tabs, { Tab } from 'quran-components/lib/Tabs';
+import Loader from 'quran-components/lib/Loader';
+
 import debug from 'helpers/debug';
-import LastVisit from 'components/Home/LastVisit';
-import SurahsList from 'components/Home/SurahsList';
-import JuzList from 'components/Home/JuzList';
+import ChaptersList from 'components/Home/ChaptersList';
+import * as customPropTypes from 'customPropTypes';
+
+import IndexHeader from 'components/IndexHeader';
 import QuickSurahs from 'components/Home/QuickSurahs';
 import Title from 'components/Home/Title';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import Tabs, { Tab } from 'quran-components/lib/Tabs';
-import Loader from 'quran-components/lib/Loader';
+import ComponentLoader from '../../components/ComponentLoader';
+
+// noinspection JSAnnotator
+const JuzList = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "JuzList" */ '../../components/Home/JuzList'),
+  LoadingComponent: ComponentLoader
+});
 
 class Home extends Component {
   renderJuzList() {
@@ -37,23 +45,21 @@ class Home extends Component {
     );
   }
 
-  // eslint-disable-next-line class-methods-use-this
-  renderChapterList(chaptersList) {
+  renderChapterList() {
+    const { chapters } = this.props;
+    const chaptersList = Object.values(chapters);
+
     return (
       <div className="row">
-        <SurahsList chapters={chaptersList.slice(0, 38)} />
-        <SurahsList chapters={chaptersList.slice(38, 76)} />
-        <SurahsList chapters={chaptersList.slice(76, 114)} />
+        <ChaptersList chapters={chaptersList.slice(0, 38)} />
+        <ChaptersList chapters={chaptersList.slice(38, 76)} />
+        <ChaptersList chapters={chaptersList.slice(76, 114)} />
       </div>
     );
   }
 
   render() {
     debug('component:Home', 'Render');
-
-    const lastVisit = cookie.load('lastVisit') || null;
-    const { chapters } = this.props;
-    const chaptersList = Object.values(chapters);
 
     const chapterTitle = (
       <Title className="text-muted">
@@ -77,18 +83,9 @@ class Home extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              {lastVisit && (
-                <LastVisit
-                  chapter={chapters[lastVisit.chapterId]}
-                  verse={lastVisit.verseId}
-                />
-              )}
               <QuickSurahs />
-
               <Tabs>
-                <Tab title={chapterTitle}>
-                  {this.renderChapterList(chaptersList)}
-                </Tab>
+                <Tab title={chapterTitle}>{this.renderChapterList()}</Tab>
 
                 <Tab title={juzTitle}>{this.renderJuzList()}</Tab>
               </Tabs>
@@ -105,11 +102,9 @@ Home.propTypes = {
   juzs: customPropTypes.juzs.isRequired
 };
 
-function mapStateToProps(state) {
-  return {
-    chapters: state.chapters.entities,
-    juzs: state.juzs
-  };
-}
+const mapStateToProps = state => ({
+  chapters: state.chapters.entities,
+  juzs: state.juzs
+});
 
 export default connect(mapStateToProps)(Home);

@@ -52,7 +52,10 @@ class Translation extends Component {
             ? 'text-right'
             : 'text-left'} text-translation times-new`}
         >
-          <small className={`${lang || 'times-new'}`}>{translation.text}</small>
+          <small
+            className={`${lang || 'times-new'}`}
+            dangerouslySetInnerHTML={{ __html: translation.text }}
+          />
         </h2>
       </Container>
     );

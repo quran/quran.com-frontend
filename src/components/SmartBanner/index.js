@@ -5,6 +5,14 @@ import * as customPropTypes from 'customPropTypes';
 import useragent from 'express-useragent';
 import cookie from 'react-cookie';
 
+const appleIcon = require('../../../static/images/app-banner-ios.jpg');
+const androidIcon = require('../../../static/images/app-banner-android.png');
+
+const ICONS = {
+  apple: appleIcon,
+  android: androidIcon
+};
+
 class SmartBanner extends Component {
   state = {
     settings: {},
@@ -112,7 +120,7 @@ class SmartBanner extends Component {
       ${this.props.price[this.state.deviceType]} - ${this.props.storeText[
       this.state.deviceType
     ]}`;
-    const icon = require(`../../../static/images/${this.state.settings.icon}`); // eslint-disable-line
+    const icon = ICONS[this.state.deviceType];
 
     return {
       icon,

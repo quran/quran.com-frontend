@@ -10,7 +10,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
 const Tafsir = Loadable({
-  loader: () => import('components/Tafsir'),
+  loader: () => import(/* webpackChunkName: "Tafsir" */ 'components/Tafsir'),
   LoadingComponent: ComponentLoader
 });
 

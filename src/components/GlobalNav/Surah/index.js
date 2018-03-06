@@ -4,16 +4,32 @@ import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import { Link } from 'react-router-dom';
+import Loadable from 'react-loadable';
 import Drawer from 'quran-components/lib/Drawer';
 import SearchInput from 'components/SearchInput';
-import SurahsDropdown from 'components/SurahsDropdown';
-import Settings from 'components/Settings';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import VersesDropdown from 'components/VersesDropdown';
 
 import { load, setCurrentVerse } from 'redux/actions/verses.js';
+import ComponentLoader from '../../ComponentLoader';
 
 import GlobalNav from '../index';
+
+const SurahsDropdown = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "SurahsDropdown" */ '../../SurahsDropdown'),
+  LoadingComponent: ComponentLoader
+});
+
+const VersesDropdown = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "VersesDropdown" */ '../../VersesDropdown'),
+  LoadingComponent: ComponentLoader
+});
+
+const Settings = Loadable({
+  loader: () => import(/* webpackChunkName: "Settings" */ '../../Settings'),
+  LoadingComponent: ComponentLoader
+});
 
 class GlobalNavSurah extends Component {
   state = {
@@ -58,6 +74,10 @@ class GlobalNavSurah extends Component {
 
   render() {
     const { chapter, chapters, versesIds, options, ...props } = this.props;
+
+    if (!chapter) {
+      return null;
+    }
 
     return (
       <GlobalNav
@@ -108,8 +128,8 @@ class GlobalNavSurah extends Component {
 
 function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.match.params.chapterId, 10);
-  const chapter: Object = state.chapters.entities[chapterId];
-  const verses: Object = state.verses.entities[chapterId];
+  const chapter = state.chapters.entities[chapterId];
+  const verses = state.verses.entities[chapterId];
   const versesArray = verses
     ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
     : [];

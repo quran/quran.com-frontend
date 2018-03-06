@@ -2,7 +2,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
-import { connect } from 'react-redux';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Navbar from 'react-bootstrap/lib/Navbar';
@@ -63,7 +62,7 @@ class GlobalNav extends Component {
   }
 
   renderRightControls() {
-    const { user, rightControls } = this.props;
+    const { rightControls } = this.props;
 
     return (
       rightControls || [
@@ -97,16 +96,7 @@ class GlobalNav extends Component {
             Sunnah
           </a>
         </li>,
-        <LocaleSwitcher />,
-        user ? (
-          <li>
-            <Link to="/profile" {...NAVBAR_EVENTS.CLICK.PROFILE_LINK.PROPS}>
-              {user.firstName || user.name}
-            </Link>
-          </li>
-        ) : (
-          <noscript />
-        )
+        <LocaleSwitcher />
       ]
     );
   }
@@ -166,7 +156,6 @@ GlobalNav.propTypes = {
   rightControls: PropTypes.arrayOf(PropTypes.element),
   handleSidebarToggle: PropTypes.func.isRequired,
   isStatic: PropTypes.bool.isRequired,
-  user: customPropTypes.userType,
   location: customPropTypes.location
 };
 
@@ -174,6 +163,4 @@ GlobalNav.defaultProps = {
   isStatic: false
 };
 
-export default connect(state => ({
-  user: state.auth.user
-}))(GlobalNav);
+export default GlobalNav;

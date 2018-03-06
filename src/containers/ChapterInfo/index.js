@@ -11,7 +11,7 @@ import makeHeadTags from 'helpers/makeHeadTags';
 
 const SurahInfo = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
+    import(/* webpackChunkName: "SurahInfo" */ 'components/SurahInfo'),
   LoadingComponent: ComponentLoader
 });
 

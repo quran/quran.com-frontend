@@ -26,7 +26,6 @@ import debug from 'helpers/debug';
 
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/verses.js';
-import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
@@ -36,23 +35,23 @@ const LoaderStyle = { position: 'relative' };
 
 const PageView = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pageview" */ 'components/PageView'),
+    import(/* webpackChunkName: "PageView" */ 'components/PageView'),
   LoadingComponent: ComponentLoader
 });
 
 const Audioplayer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
+    import(/* webpackChunkName: "Audioplayer" */ 'components/Audioplayer'),
   LoadingComponent: ComponentLoader
 });
 const SurahInfo = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
+    import(/* webpackChunkName: "SurahInfo" */ 'components/SurahInfo'),
   LoadingComponent: ComponentLoader
 });
 const TopOptions = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
+    import(/* webpackChunkName: "TopOptions" */ 'components/TopOptions'),
   LoadingComponent: ComponentLoader
 });
 
@@ -115,7 +114,6 @@ class Surah extends Component {
       this.props.isEndOfSurah !== nextProps.isEndOfSurah,
       this.props.verseIds.length !== nextProps.verseIds.length,
       this.props.chapters !== nextProps.chapters,
-      this.props.bookmarks !== nextProps.bookmarks,
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
       this.props.options !== nextProps.options,
@@ -336,7 +334,6 @@ class Surah extends Component {
       verses,
       actions,
       options,
-      bookmarks,
       isPlaying,
       isAuthenticated,
       currentVerse
@@ -348,9 +345,7 @@ class Surah extends Component {
         chapter={chapter}
         currentVerse={currentVerse}
         iscurrentVerse={isPlaying && verse.verseKey === currentVerse}
-        bookmarked={!!bookmarks[verse.verseKey]}
         tooltip={options.tooltip}
-        bookmarkActions={actions.bookmark}
         audioActions={actions.audio}
         mediaActions={actions.media}
         isPlaying={isPlaying}
@@ -477,7 +472,6 @@ Surah.propTypes = {
   verseIds: PropTypes.instanceOf(Set),
   currentVerse: PropTypes.string,
   info: customPropTypes.infoType,
-  bookmarks: PropTypes.object.isRequired, // eslint-disable-line
   isLoading: PropTypes.bool.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   isSingleAyah: PropTypes.bool.isRequired,
@@ -514,11 +508,9 @@ function mapStateToProps(state, ownProps) {
     info: state.chapters.infos[ownProps.match.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
-    isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
     isEndOfSurah: lastAyahInArray === chapter.versesCount,
     chapters: state.chapters.entities,
-    bookmarks: state.bookmarks.entities,
     isLoading: state.verses.loading,
     isLoaded: state.verses.loaded,
     lines: state.lines.lines,
@@ -532,7 +524,6 @@ function mapDispatchToProps(dispatch) {
       options: bindActionCreators(OptionsActions, dispatch),
       verse: bindActionCreators(AyahActions, dispatch),
       audio: bindActionCreators(AudioActions, dispatch),
-      bookmark: bindActionCreators(BookmarkActions, dispatch),
       media: bindActionCreators(MediaActions, dispatch),
       push: bindActionCreators(push, dispatch)
     }

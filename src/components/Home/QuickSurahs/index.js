@@ -23,7 +23,7 @@ const isFriday = new Date().getDay() === 5;
 
 export default () => (
   <div>
-    <Title className="text-muted">
+    <Title muted>
       <LocaleFormattedMessage
         id="surah.index.quickLinks"
         defaultMessage="Quick links"

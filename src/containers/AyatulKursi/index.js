@@ -24,25 +24,24 @@ import debug from 'helpers/debug';
 
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/verses.js';
-import * as BookmarkActions from 'redux/actions/bookmarks.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
 const PageView = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pageview" */ 'components/PageView'),
+    import(/* webpackChunkName: "PageView" */ 'components/PageView'),
   LoadingComponent: ComponentLoader
 });
 
 const Audioplayer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
+    import(/* webpackChunkName: "Audioplayer" */ 'components/Audioplayer'),
   LoadingComponent: ComponentLoader
 });
 
 const TopOptions = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
+    import(/* webpackChunkName: "TopOptions" */ 'components/TopOptions'),
   LoadingComponent: ComponentLoader
 });
 
@@ -61,7 +60,6 @@ class AyatulKursi extends Component {
     const conditions = [
       this.state.sidebarOpen !== nextState.sidebarOpen,
       this.props.chapter !== nextProps.chapter,
-      this.props.bookmarks !== nextProps.bookmarks,
       this.props.isLoading !== nextProps.isLoading,
       this.props.isLoaded !== nextProps.isLoaded,
       this.props.options !== nextProps.options,
@@ -80,7 +78,6 @@ class AyatulKursi extends Component {
       verses,
       actions,
       options,
-      bookmarks,
       isPlaying,
       isAuthenticated,
       currentVerse
@@ -92,9 +89,7 @@ class AyatulKursi extends Component {
         chapter={chapter}
         currentVerse={currentVerse}
         iscurrentVerse={isPlaying && verse.verseKey === currentVerse}
-        bookmarked={!!bookmarks[verse.verseKey]}
         tooltip={options.tooltip}
-        bookmarkActions={actions.bookmark}
         audioActions={actions.audio}
         mediaActions={actions.media}
         isPlaying={isPlaying}
@@ -205,7 +200,6 @@ AyatulKursi.propTypes = {
   actions: PropTypes.object.isRequired, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line
   currentVerse: PropTypes.string,
-  bookmarks: PropTypes.object.isRequired, // eslint-disable-line
   isLoading: PropTypes.bool.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   isAuthenticated: PropTypes.bool.isRequired,
@@ -226,9 +220,7 @@ function mapStateToProps(state) {
     currentVerse,
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
-    isAuthenticated: state.auth.loaded,
     currentWord: state.verses.currentWord,
-    bookmarks: state.bookmarks.entities,
     isLoading: state.verses.loading,
     isLoaded: state.verses.loaded,
     lines: state.lines.lines,
@@ -242,7 +234,6 @@ function mapDispatchToProps(dispatch) {
       options: bindActionCreators(OptionsActions, dispatch),
       verse: bindActionCreators(AyahActions, dispatch),
       audio: bindActionCreators(AudioActions, dispatch),
-      bookmark: bindActionCreators(BookmarkActions, dispatch),
       media: bindActionCreators(MediaActions, dispatch),
       push: bindActionCreators(push, dispatch)
     }

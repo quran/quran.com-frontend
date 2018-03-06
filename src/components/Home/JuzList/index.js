@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import styled from 'styled-components';
 import debug from 'helpers/debug';
@@ -88,7 +89,7 @@ class JuzList extends Component {
 
 JuzList.propTypes = {
   chapters: customPropTypes.chapters.isRequired,
-  juzs: customPropTypes.juzs.isRequired
+  juzs: PropTypes.arrayOf(customPropTypes.juzType).isRequired
 };
 
 export default JuzList;
