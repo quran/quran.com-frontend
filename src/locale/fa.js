@@ -3,7 +3,8 @@ export default {
   messages: {
     local: 'persian',
     'local.siteLocale': 'زبان سایت',
-    'local.changeLocal': 'زبانی که می خواهید سایت را با آن مشاهده کنید انتخاب نمایید',
+    'local.changeLocal':
+      'زبانی که می خواهید سایت را با آن مشاهده کنید انتخاب نمایید',
     'local.nativeName': 'فارسی',
     'local.selectLabel': 'زبان',
     'setting.title': 'تنظیمات',

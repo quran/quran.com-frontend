@@ -107,8 +107,9 @@ class SearchInput extends Component {
           // onBlur={() => this.setState({ showAutocomplete: false })}
           onKeyUp={this.search}
         />
-        {showAutocomplete &&
-          <SearchAutocomplete value={this.state.value} input={this.input} />}
+        {showAutocomplete && (
+          <SearchAutocomplete value={this.state.value} input={this.input} />
+        )}
       </div>
     );
   }

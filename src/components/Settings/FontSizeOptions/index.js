@@ -137,9 +137,7 @@ class FontSizeOptions extends Component {
     return (
       <div>
         {this.renderTitle()}
-        <ItemLink>
-          {this.renderOptions()}
-        </ItemLink>
+        <ItemLink>{this.renderOptions()}</ItemLink>
       </div>
     );
   }

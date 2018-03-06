@@ -9,7 +9,7 @@ import getLocalMessages from 'helpers/setLocal';
 import App from '../App';
 import theme from '../../theme';
 
-const Root = ({ store }) =>
+const Root = ({ store }) => (
   <IntlProvider locale="en" messages={getLocalMessages()}>
     <Provider store={store} key="provider">
       <ThemeProvider theme={theme}>
@@ -18,7 +18,8 @@ const Root = ({ store }) =>
         </BrowserRouter>
       </ThemeProvider>
     </Provider>
-  </IntlProvider>;
+  </IntlProvider>
+);
 
 Root.propTypes = {
   store: PropTypes.object // eslint-disable-line

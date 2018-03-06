@@ -55,7 +55,7 @@ class LocaleSwitcher extends Component {
   renderList() {
     const keys = Object.keys(locales);
 
-    return keys.map(key =>
+    return keys.map(key => (
       <MenuItem
         key={key}
         className={key === this.state.currentLocale && 'active'} // NOTE: if you use key `active` it will make all dropdown active
@@ -64,7 +64,7 @@ class LocaleSwitcher extends Component {
       >
         {locales[key]}
       </MenuItem>
-    );
+    ));
   }
 
   renderAsDropdown() {
@@ -87,11 +87,7 @@ class LocaleSwitcher extends Component {
     return (
       <MenuItem
         icon={<Icon type="globe" />}
-        menu={
-          <Menu>
-            {this.renderList()}
-          </Menu>
-        }
+        menu={<Menu>{this.renderList()}</Menu>}
       >
         <LocaleFormattedMessage
           id="local.siteLocale"

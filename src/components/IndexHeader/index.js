@@ -26,7 +26,7 @@ const Title = styled.h4`
   padding-bottom: 3.5%;
 `;
 
-const IndexHeader = props =>
+const IndexHeader = props => (
   <Jumbotron>
     <div className="container">
       <div className="row">
@@ -39,7 +39,8 @@ const IndexHeader = props =>
         </div>
       </div>
     </div>
-  </Jumbotron>;
+  </Jumbotron>
+);
 
 IndexHeader.propTypes = {
   noSearch: PropTypes.bool

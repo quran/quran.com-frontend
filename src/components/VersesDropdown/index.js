@@ -8,7 +8,7 @@ import { Link } from 'react-scroll';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 const StyledDropdown = styled(NavDropdown)`
-  .dropdown-menu{
+  .dropdown-menu {
     max-height: 400px;
     max-height: 60vh;
     overflow-y: scroll;
@@ -50,7 +50,9 @@ class VersesDropdown extends Component {
 
   renderMenu() {
     const { chapter } = this.props;
-    const array = Array(chapter.versesCount).join().split(',');
+    const array = Array(chapter.versesCount)
+      .join()
+      .split(',');
 
     return array.map((ayah, index) => this.renderItem(ayah, index));
   }

@@ -33,7 +33,7 @@ class FontStyles extends Component {
 
     return (
       <div>
-        {Object.keys(fontFaces).map(className =>
+        {Object.keys(fontFaces).map(className => (
           <style
             key={className}
             dangerouslySetInnerHTML={{
@@ -44,7 +44,7 @@ class FontStyles extends Component {
                 : fontFaceStyle(className)
             }}
           />
-        )}
+        ))}
       </div>
     );
   }

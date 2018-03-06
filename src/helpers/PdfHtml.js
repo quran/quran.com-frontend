@@ -18,24 +18,24 @@ const PdfHtml = ({ component, assets, url }) => {
         {head.style.toComponent()}
         <base href={url} />
 
-        {Object.keys(assets.styles).map((style, i) =>
+        {Object.keys(assets.styles).map((style, i) => (
           <link
             href={assets.styles[style]}
             key={i}
             rel="stylesheet"
             type="text/css"
           />
-        )}
-        {Object.keys(assets.styles).length === 0
-          ? <style
+        ))}
+        {Object.keys(assets.styles).length === 0 ? (
+          <style
             dangerouslySetInnerHTML={{
               __html: require('../../src/styles/bootstrap.config')
             }}
           />
-          : null}
-        {Object.keys(assets.javascript).map((script, i) =>
+        ) : null}
+        {Object.keys(assets.javascript).map((script, i) => (
           <script src={assets.javascript[script]} key={i} />
-        )}
+        ))}
 
         <style>{`
           body{ zoom: 75%;}

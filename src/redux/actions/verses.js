@@ -91,9 +91,9 @@ export function isLoaded(globalState, chapterId, paging = {}) {
         `${chapterId}:${paging.offset ? paging.offset + 1 : 1}`
       ] &&
       globalState.verses.entities[chapterId][
-        `${chapterId}:${
-          paging.offset && paging.limit ? paging.offset + paging.limit : perPage
-        }`
+        `${chapterId}:${paging.offset && paging.limit
+          ? paging.offset + paging.limit
+          : perPage}`
       ]
     );
   }

@@ -24,13 +24,19 @@ describe('<ScrollButton />', () => {
   it('should not indicate that shouldScroll', () => {
     makeComponent(false);
 
-    expect(component.find('a').first().props().className).not.toContain(
-      'scroll'
-    );
+    expect(
+      component
+        .find('a')
+        .first()
+        .props().className
+    ).not.toContain('scroll');
   });
 
   it('should call onScrollToggle when clicked', () => {
-    component.find('a').first().simulate('click');
+    component
+      .find('a')
+      .first()
+      .simulate('click');
 
     expect(onScrollToggle.callCount).toEqual(1);
   });

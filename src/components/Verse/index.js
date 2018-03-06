@@ -50,7 +50,6 @@ const Label = styled.span`
   }
 `;
 
-// TODO: Change this
 const StyledTranslation = styled.div`
   h4 {
     color: ${props => props.theme.brandPrimary};
@@ -70,7 +69,6 @@ const Controls = styled.div`
     text-decoration: none;
     font-size: 12px;
     cursor: pointer;
-
     &:focus {
       color: ${props => props.textMuted};
     }
@@ -82,23 +80,19 @@ const Controls = styled.div`
     margin-bottom: 15px;
     font-weight: 300;
     color: ${props => props.theme.textColor};
-
     &:hover {
       opacity: 0.7;
     }
   }
-
   @media (max-width: ${props => props.theme.screen.sm}) {
     h4,
     a {
       display: inline-block;
       margin: 0 10;
     }
-
     h4 {
       margin: 0;
     }
-
     padding: 0;
   }
 `;
@@ -233,9 +227,9 @@ class Verse extends Component {
           className="text-muted"
         >
           <i
-            className={`ss-icon ${
-              playing ? 'ss-pause' : 'ss-play'
-            } vertical-align-middle`}
+            className={`ss-icon ${playing
+              ? 'ss-pause'
+              : 'ss-play'} vertical-align-middle`}
           />{' '}
           <LocaleFormattedMessage
             id={playing ? 'actions.pause' : 'actions.play'}
@@ -262,8 +256,7 @@ class Verse extends Component {
               id="tafsir.select"
               defaultMessage={'Select a tafsir'}
             />
-          )
-        }
+          )}
       >
         <i className="ss-book vertical-align-middle" />{' '}
         <LocaleFormattedMessage
@@ -307,9 +300,7 @@ class Verse extends Component {
 
     return (
       <Link
-        to={`/${verse.chapterId}/${
-          verse.verseNumber
-        }?translations=${translations}`}
+        to={`/${verse.chapterId}/${verse.verseNumber}?translations=${translations}`}
         data-metrics-event-name={metric}
       >
         {content}

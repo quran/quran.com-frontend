@@ -15,6 +15,7 @@ import Title from 'components/Home/Title';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import ComponentLoader from '../../components/ComponentLoader';
 
+// noinspection JSAnnotator
 const JuzList = Loadable({
   loader: () =>
     import(/* webpackChunkName: "JuzList" */ '../../components/Home/JuzList'),

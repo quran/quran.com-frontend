@@ -16,18 +16,14 @@ const Link = styled(RouterLink)`
   }
 `;
 
-const Item = styled.li`
-  color: ${props => props.theme.brandPrimary};
-`;
+const Item = styled.li`color: ${props => props.theme.brandPrimary};`;
 
 const Name = styled.span`
   margin-right: 5px;
   font-size: 14px;
 `;
 
-const Arabic = styled.div`
-  font-size: 14px;
-`;
+const Arabic = styled.div`font-size: 14px;`;
 
 const Translated = styled.div`
   font-size: 10px;
@@ -58,9 +54,8 @@ class JuzList extends Component {
           </Arabic>
 
           <Translated
-            className={`col-xs-10 text-uppercase ${
-              chapters[chapter].languageName
-            }`}
+            className={`col-xs-10 text-uppercase ${chapters[chapter]
+              .languageName}`}
           >
             <small>{chapters[chapter].translatedName.name}</small>
           </Translated>

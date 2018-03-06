@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import IndexHeader from 'components/IndexHeader';
 import AboutText from 'components/AboutText';
 
-export default () =>
+export default () => (
   <div>
     <Helmet title="About Quran.com" />
     <IndexHeader noSearch />
@@ -74,7 +74,8 @@ export default () =>
             <a href="http://www.tanzil.info">Tanzil</a>,
             <a href="http://www.qurancomplex.com"> Qur‘anComplex</a>,
             <a href="https://github.com/cpfair/quran-align">
-              {' '}Colin Fair’s work on audio segments
+              {' '}
+              Colin Fair’s work on audio segments
             </a>
             ,
             <a href="http://www.zekr.org"> Zekr</a> and
@@ -87,4 +88,5 @@ export default () =>
         </div>
       </div>
     </AboutText>
-  </div>;
+  </div>
+);

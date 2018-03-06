@@ -64,11 +64,9 @@ class Pdf extends Component {
         <Helmet
           style={[
             {
-              cssText: `.text-arabic{font-size: ${
-                options.fontSize.arabic
-              }rem;} .text-translation{font-size: ${
-                options.fontSize.translation
-              }rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${options.fontSize
+                .arabic}rem;} .text-translation{font-size: ${options.fontSize
+                .translation}rem;}` // eslint-disable-line max-len
             }
           ]}
         />

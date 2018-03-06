@@ -49,11 +49,7 @@ const PageView = ({
     );
   });
 
-  return (
-    <div>
-      {elements}
-    </div>
-  );
+  return <div>{elements}</div>;
 };
 
 PageView.propTypes = {

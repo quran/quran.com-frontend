@@ -11,7 +11,7 @@ const TooltipOptions = ({ tooltip, onOptionChange }) => {
       tooltip: type
     });
 
-  const list = ['translation', 'transliteration'].map(type =>
+  const list = ['translation', 'transliteration'].map(type => (
     <MenuItem key={type}>
       <Radio
         id={type}
@@ -25,17 +25,10 @@ const TooltipOptions = ({ tooltip, onOptionChange }) => {
         />
       </Radio>
     </MenuItem>
-  );
+  ));
 
   return (
-    <MenuItem
-      icon={<Icon type="globe" />}
-      menu={
-        <Menu>
-          {list}
-        </Menu>
-      }
-    >
+    <MenuItem icon={<Icon type="globe" />} menu={<Menu>{list}</Menu>}>
       <LocaleFormattedMessage
         id="setting.tooltip.title"
         defaultMessage="Tooltip Content"

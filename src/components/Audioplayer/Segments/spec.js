@@ -46,9 +46,12 @@ describe('<Segments />', () => {
     });
 
     it('should have style for the second word', () => {
-      expect(component.find(Helmet).first().props().style[0].cssText).toContain(
-        '#word-1-1-1'
-      );
+      expect(
+        component
+          .find(Helmet)
+          .first()
+          .props().style[0].cssText
+      ).toContain('#word-1-1-1');
     });
   });
 
@@ -83,7 +86,12 @@ describe('<Segments />', () => {
     });
 
     it('should not have style words', () => {
-      expect(component.find(Helmet).first().props().style).toHaveLength(0);
+      expect(
+        component
+          .find(Helmet)
+          .first()
+          .props().style
+      ).toHaveLength(0);
     });
   });
 });

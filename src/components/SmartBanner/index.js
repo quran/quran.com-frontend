@@ -117,9 +117,9 @@ class SmartBanner extends Component {
   retrieveInfo() {
     const link = this.state.settings.getStoreLink() + this.state.appId;
     const inStore = `
-      ${this.props.price[this.state.deviceType]} - ${
-      this.props.storeText[this.state.deviceType]
-    }`;
+      ${this.props.price[this.state.deviceType]} - ${this.props.storeText[
+      this.state.deviceType
+    ]}`;
     const icon = ICONS[this.state.deviceType];
 
     return {

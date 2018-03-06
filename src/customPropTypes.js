@@ -202,9 +202,9 @@ export const tafsirType = PropTypes.shape({
 });
 
 export const words = PropTypes.shape({
-  startTime: PropTypes.number.isRequired,
-  endTime: PropTypes.number.isRequired,
-  duration: PropTypes.number.isRequired
+  startTime: PropTypes.number,
+  endTime: PropTypes.number,
+  duration: PropTypes.number
 });
 
 export const segmentType = PropTypes.shape({

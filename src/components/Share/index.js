@@ -8,9 +8,7 @@ const { FacebookShareButton, TwitterShareButton } = ShareButtons;
 const FacebookIcon = generateShareIcon('facebook');
 const TwitterIcon = generateShareIcon('twitter');
 
-const inlineStyle = css`
-  display: inline-flex;
-`;
+const inlineStyle = css`display: inline-flex;`;
 
 const Container = styled.div`
   position: relative;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const PdfFooter = () =>
+const PdfFooter = () => (
   <footer>
     <div className="container">
       <div className="row">
@@ -13,6 +13,7 @@ const PdfFooter = () =>
         </div>
       </div>
     </div>
-  </footer>;
+  </footer>
+);
 
 export default PdfFooter;

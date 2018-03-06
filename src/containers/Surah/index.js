@@ -29,7 +29,9 @@ import * as AyahActions from 'redux/actions/verses.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
-const LoaderStyle = {};
+// import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
+
+const LoaderStyle = { position: 'relative' };
 
 const PageView = Loadable({
   loader: () =>
@@ -167,9 +169,7 @@ class Surah extends Component {
     const { match: { params }, chapter } = this.props;
 
     if (params.range) {
-      return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}:${
-        params.range
-      }]`;
+      return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}:${params.range}]`;
     }
 
     return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`;
@@ -196,27 +196,23 @@ class Surah extends Component {
 
         const content = translations.join(' - ').slice(0, 250);
 
-        return `Surat ${chapter.nameSimple} [verse ${
-          params.range
-        }] - ${content}`;
+        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${content}`;
       }
 
       const verse = verses[`${chapter.chapterNumber}:${params.range}`];
 
       if (verse && verse.content && verse.content[0]) {
-        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${
-          verse.content[0].text
-        }`;
+        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${verse
+          .content[0].text}`;
       }
 
       return `Surat ${chapter.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${info ? info.shortText : ''} This Surah has ${
-      chapter.versesCount
-    } verses and resides between pages ${chapter.pages[0]} to ${
-      chapter.pages[1]
-    } in the Quran.`; // eslint-disable-line max-len
+    return `${info
+      ? info.shortText
+      : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter
+      .pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderNoAyah() {
@@ -262,9 +258,7 @@ class Surah extends Component {
         <ul className="pager">
           <li className="text-center">
             <Link
-              to={`/${
-                chapter.chapterNumber
-              }/${this.getFirst()}-${to}?translations=${translations}`}
+              to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}?translations=${translations}`}
             >
               <LocaleFormattedMessage
                 id="chapter.index.continue"
@@ -303,8 +297,7 @@ class Surah extends Component {
                 onClick={() =>
                   actions.verse.setCurrentVerse(
                     `${chapter.chapterNumber}:${this.getFirst()}`
-                  )
-                }
+                  )}
               >
                 <LocaleFormattedMessage
                   id="chapter.goToBeginning"
@@ -328,7 +321,9 @@ class Surah extends Component {
             )}
           </ul>
         }
-        loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
+        loadingComponent={
+          <Loader relative isActive={isLoading} style={LoaderStyle} />
+        }
       />
     );
   }
@@ -430,11 +425,9 @@ class Surah extends Component {
           ]}
           style={[
             {
-              cssText: `.text-arabic{font-size: ${
-                options.fontSize.arabic
-              }rem;} .text-translation{font-size: ${
-                options.fontSize.translation
-              }rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${options.fontSize
+                .arabic}rem;} .text-translation{font-size: ${options.fontSize
+                .translation}rem;}` // eslint-disable-line max-len
             }
           ]}
         />

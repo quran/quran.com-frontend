@@ -69,9 +69,7 @@ class App extends Component {
 
     return (
       <div
-        className={`embed-responsive embed-responsive-16by9 ${
-          media.wrapperClass
-        }`}
+        className={`embed-responsive embed-responsive-16by9 ${media.wrapperClass}`}
         dangerouslySetInnerHTML={{ __html: media.content.body }}
       />
     );
@@ -105,8 +103,7 @@ class App extends Component {
         <Navbars
           {...props}
           handleSidebarToggle={() =>
-            this.setState({ sidebarOpen: !this.state.sidebarOpen })
-          }
+            this.setState({ sidebarOpen: !this.state.sidebarOpen })}
         />
         {__CLIENT__ && (
           <GlobalSidebar

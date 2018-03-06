@@ -12,13 +12,13 @@ global.__CLIENT__ = true;
 
 addDecorator((story, context) => withInfo('common info')(story)(context));
 
-addDecorator(story =>
+addDecorator(story => (
   <ThemeProvider theme={theme}>
     <IntlProvider locale="en" messages={getLocalMessages()}>
       {story()}
     </IntlProvider>
   </ThemeProvider>
-);
+));
 
 const req = require.context('../src/components', true, /\.stories\.js$/);
 
