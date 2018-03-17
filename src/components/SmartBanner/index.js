@@ -5,6 +5,14 @@ import * as customPropTypes from 'customPropTypes';
 import useragent from 'express-useragent';
 import cookie from 'react-cookie';
 
+const appleIcon = require('../../../static/images/app-banner-ios.jpg');
+const androidIcon = require('../../../static/images/app-banner-android.png');
+
+const ICONS = {
+  apple: appleIcon,
+  android: androidIcon
+};
+
 class SmartBanner extends Component {
   state = {
     settings: {},
@@ -109,10 +117,10 @@ class SmartBanner extends Component {
   retrieveInfo() {
     const link = this.state.settings.getStoreLink() + this.state.appId;
     const inStore = `
-      ${this.props.price[this.state.deviceType]} - ${this.props.storeText[
-      this.state.deviceType
-    ]}`;
-    const icon = require(`../../../static/images/${this.state.settings.icon}`); // eslint-disable-line
+      ${this.props.price[this.state.deviceType]} - ${
+      this.props.storeText[this.state.deviceType]
+    }`;
+    const icon = ICONS[this.state.deviceType];
 
     return {
       icon,
@@ -162,15 +170,9 @@ class SmartBanner extends Component {
           </a>
           <span className="smartbanner-icon" style={iconStyle} />
           <div className="smartbanner-info">
-            <div className="smartbanner-title">
-              {this.props.title}
-            </div>
-            <div>
-              {this.props.author}
-            </div>
-            <span>
-              {inStore}
-            </span>
+            <div className="smartbanner-title">{this.props.title}</div>
+            <div>{this.props.author}</div>
+            <span>{inStore}</span>
           </div>
 
           <a
@@ -179,9 +181,7 @@ class SmartBanner extends Component {
             className="smartbanner-button"
             data-metrics-event-name="SmartBanner:InstallAapp"
           >
-            <span className="smartbanner-button-text">
-              {this.props.button}
-            </span>
+            <span className="smartbanner-button-text">{this.props.button}</span>
           </a>
         </div>
       </div>

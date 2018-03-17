@@ -13,15 +13,14 @@
     "test:ci:lint": "./node_modules/eslint/bin/eslint.js ./src",
     "test:dev:lint": "./node_modules/eslint/bin/eslint.js ./src",
     "test:stylelint": "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
-    "dev":
-      "cross-env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress  & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
+    "dev": "cross-env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress  & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
     "build": "npm run build:client & npm run build:server",
     "build:server": "babel ./src -d ./dist -D",
     "build:client": "webpack --config ./webpack/prod.config.js",
     "validate": "npm ls",
-    "analyze:build":
-      "cross-env NODE_ENV=production webpack --json --config ./webpack/prod.config.js  > bundle-stats.json",
-    "analyze:json": "webpack-bundle-size-analyzer bundle-stats.json",
+    "analyze:build": "cross-env NODE_ENV=production webpack --json --config ./webpack/prod.config.js  > bundle-stats.json",
+    "analyze:json": "webpack-bundle-analyzer bundle-stats.json",
+    "analyze": "npm run analyze:build; npm run analyze:json",
     "lint:fix": "npm run test:dev:lint -- --fix",
     "prettier": "prettier --single-quote --write",
     "precommit": "lint-staged",
@@ -29,16 +28,37 @@
     "build-storybook": "build-storybook"
   },
   "jest": {
-    "moduleDirectories": ["node_modules", "src"],
-    "coveragePathIgnorePatterns": ["/node_modules/", "/dist/"],
-    "testPathIgnorePatterns": ["/node_modules/", "/dist/"],
+    "moduleDirectories": [
+      "node_modules",
+      "src"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ],
     "automock": false,
-    "setupFiles": ["./setupJest.js"]
+    "setupFiles": [
+      "./setupJest.js"
+    ]
   },
-  "pre-commit": ["test:stylelint", "precommit"],
+  "pre-commit": [
+    "test:stylelint",
+    "precommit"
+  ],
   "lint-staged": {
-    "*.js": ["npm run prettier", "npm run lint:fix", "git add"],
-    "*.scss": ["npm run prettier", "git add"]
+    "*.js": [
+      "npm run prettier",
+      "npm run lint:fix",
+      "git add"
+    ],
+    "*.scss": [
+      "npm run prettier",
+      "git add"
+    ]
   },
   "engines": {
     "node": ">= 8.9.1"
@@ -126,7 +146,7 @@
     "react-cookie": "1.0.4",
     "react-dom": "15.4.1",
     "react-helmet": "3.1.0",
-    "react-hot-loader": "next",
+    "react-hot-loader": "3.1.3",
     "react-inlinesvg": "0.5.4",
     "react-intl": "2.1.5",
     "react-loadable": "^3.3.1",
@@ -206,7 +226,7 @@
     "sinon-chai": "2.8.0",
     "stylelint": "7.1.0",
     "stylelint-webpack-plugin": "0.2.0",
-    "webpack-bundle-analyzer": "2.2.1",
+    "webpack-bundle-analyzer": "2.10.0",
     "webpack-dashboard": "^0.4.0",
     "webpack-dev-server": "2.1.0-beta.0",
     "webpack-hot-middleware": "2.12.2"

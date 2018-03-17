@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-
+import Loadable from 'react-loadable';
 import Tabs, { Tab } from 'quran-components/lib/Tabs';
 import Loader from 'quran-components/lib/Loader';
 
@@ -10,10 +10,16 @@ import ChaptersList from 'components/Home/ChaptersList';
 import * as customPropTypes from 'customPropTypes';
 
 import IndexHeader from 'components/IndexHeader';
-import JuzList from 'components/Home/JuzList';
 import QuickSurahs from 'components/Home/QuickSurahs';
 import Title from 'components/Home/Title';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import ComponentLoader from '../../components/ComponentLoader';
+
+const JuzList = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "JuzList" */ '../../components/Home/JuzList'),
+  LoadingComponent: ComponentLoader
+});
 
 class Home extends Component {
   renderJuzList() {
@@ -78,13 +84,9 @@ class Home extends Component {
             <div className="col-md-10 col-md-offset-1">
               <QuickSurahs />
               <Tabs>
-                <Tab title={chapterTitle}>
-                  {this.renderChapterList()}
-                </Tab>
+                <Tab title={chapterTitle}>{this.renderChapterList()}</Tab>
 
-                <Tab title={juzTitle}>
-                  {this.renderJuzList()}
-                </Tab>
+                <Tab title={juzTitle}>{this.renderJuzList()}</Tab>
               </Tabs>
             </div>
           </div>
