@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { lighten } from 'polished';
 import Loader from 'quran-components/lib/Loader';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 import madinah from '../../../static/images/madinah.jpg';
 import makkah from '../../../static/images/makkah.jpg';
 
@@ -110,10 +112,10 @@ const ListContainer = styled.div`
   }
 `;
 
-const SurahInfo = ({ chapter, info, isShowingSurahInfo, setOption }) => {
+const SurahInfo = ({ chapter, chapterInfo, isShowingSurahInfo, setOption }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
-  if (!info) return <Loader isActive />;
+  if (!chapterInfo) return <Loader isActive />;
 
   const handleClose = () =>
     setOption({ isShowingSurahInfo: !isShowingSurahInfo });
@@ -130,17 +132,27 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, setOption }) => {
         />
         <ListContainer className="col-md-1 col-xs-6">
           <List>
-            <dt>VERSES</dt>
+            <dt>
+              <LocaleFormattedMessage
+                id="chapterInfo.verses"
+                defaultMessage="VERSES"
+              />
+            </dt>
             <dd className="text-uppercase">{chapter.versesCount}</dd>
-            <dt>PAGES</dt>
+            <dt>
+              <LocaleFormattedMessage
+                id="chapterInfo.pages"
+                defaultMessage="PAGES"
+              />
+            </dt>
             <dd className="text-uppercase">{chapter.pages.join('-')}</dd>
           </List>
         </ListContainer>
-        <Info className={`${info.languageName} times-new col-md-8`}>
-          <div dangerouslySetInnerHTML={{ __html: info.text }} />
+        <Info className={`${chapterInfo.languageName} times-new col-md-8`}>
+          <div dangerouslySetInnerHTML={{ __html: chapterInfo.text }} />
           <div>
             <p>
-              <em>Source: {info.source}</em>
+              <em>Source: {chapterInfo.source}</em>
             </p>
           </div>
         </Info>
@@ -153,7 +165,7 @@ SurahInfo.propTypes = {
   setOption: PropTypes.func.isRequired,
   isShowingSurahInfo: PropTypes.bool.isRequired,
   chapter: customPropTypes.surahType,
-  info: customPropTypes.infoType
+  chapterInfo: customPropTypes.infoType
 };
 
 export default SurahInfo;

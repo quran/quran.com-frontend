@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 
-import SurahInfo from 'components/SurahInfo';
+import ChapterInfoPanel from 'components/ChapterInfoPanel';
 import { setOption } from 'redux/actions/options';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -8,4 +8,4 @@ const mapStateToProps = (state, ownProps) => ({
   isShowingSurahInfo: state.options.isShowingSurahInfo
 });
 
-export default connect(mapStateToProps, { setOption })(SurahInfo);
+export default connect(mapStateToProps, { setOption })(ChapterInfoPanel);

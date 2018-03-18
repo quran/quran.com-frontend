@@ -1,4 +1,4 @@
-import { FETCH_CHAPTER_INFO } from '../constants/chapters.js';
+import { FETCH_CHAPTER_INFO } from '../constants/chapterInfos';
 import ApiClient from '../../helpers/ApiClient';
 
 const client = new ApiClient();

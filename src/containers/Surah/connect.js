@@ -1,10 +1,12 @@
 import {
   isAllLoaded,
   loadAll,
-  loadChapterInfo,
   setCurrent as setCurrentSurah
 } from 'redux/actions/chapters.js';
-import { isChapterInfoLoaded } from 'redux/actions/chapterInfos';
+import {
+  isChapterInfoLoaded,
+  loadChapterInfo
+} from 'redux/actions/chapterInfos';
 
 import {
   clearCurrent,

@@ -9,18 +9,20 @@ import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
-const SurahInfo = Loadable({
+const ChapterInfoPanel = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "SurahInfo" */ 'components/SurahInfo'),
+    import(/* webpackChunkName: "ChapterInfoPanel" */ 'components/ChapterInfoPanel'),
   LoadingComponent: ComponentLoader
 });
 
-const ChapterInfo = ({ chapter, info }) => (
+const ChapterInfo = ({ chapter, chapterInfo }) => (
   <div className="row" style={{ marginTop: 20 }}>
     <Helmet
       {...makeHeadTags({
         title: `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`,
-        description: `${info ? info.shortText : ''} This Surah has ${
+        description: `${
+          chapterInfo ? chapterInfo.shortText : ''
+        } This Surah has ${
           chapter.versesCount
         } verses and resides between pages ${chapter.pages[0]} to ${
           chapter.pages[1]
@@ -51,7 +53,11 @@ const ChapterInfo = ({ chapter, info }) => (
         }
       ]}
     />
-    <SurahInfo chapter={chapter} info={info} isShowingSurahInfo />
+    <ChapterInfoPanel
+      chapter={chapter}
+      chapterInfo={chapterInfo}
+      isShowingSurahInfo
+    />
     <div className="text-center">
       <Button href={`/${chapter.id}`}>
         <LocaleFormattedMessage
@@ -65,7 +71,7 @@ const ChapterInfo = ({ chapter, info }) => (
 
 ChapterInfo.propTypes = {
   chapter: customPropTypes.surahType,
-  info: customPropTypes.infoType
+  chapterInfo: customPropTypes.infoType
 };
 
 function mapStateToProps(state, ownProps) {
@@ -73,8 +79,8 @@ function mapStateToProps(state, ownProps) {
   const chapter = state.chapters.entities[chapterId];
 
   return {
-    chapter,
-    info: state.chapters.infos[chapterId]
+    chapter: state.chapters.entities[chapterId],
+    chapterInfo: state.chapterinfos.entities[chapterId]
   };
 }
 

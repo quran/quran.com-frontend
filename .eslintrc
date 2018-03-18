@@ -16,7 +16,7 @@
     "classes": true,
     "jsx": true
   },
-  "plugins": ["react"],
+  "plugins": ["react", "jest"],
   "settings": {
     "import/resolver": "webpack"
   },
@@ -46,6 +46,7 @@
   },
   "env": {
     "mocha": true,
-    "amd": true
+    "amd": true,
+    "jest/globals": true
   }
 }
