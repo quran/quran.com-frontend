@@ -1,10 +1,10 @@
 import {
   isAllLoaded,
   loadAll,
-  loadInfo,
-  setCurrent as setCurrentSurah,
-  isInfoLoaded
+  loadChapterInfo,
+  setCurrent as setCurrentSurah
 } from 'redux/actions/chapters.js';
+import { isChapterInfoLoaded } from 'redux/actions/chapterInfos';
 
 import {
   clearCurrent,
@@ -78,14 +78,14 @@ export const chapterInfoConnect = ({
   store: { dispatch, getState },
   params
 }) => {
-  if (isInfoLoaded(getState(), params.chapterId)) return false;
+  if (isChapterInfoLoaded(getState(), params.chapterId)) return false;
 
   if (__CLIENT__) {
-    dispatch(loadInfo(params));
+    dispatch(loadChapterInfo(params));
     return true;
   }
 
-  return dispatch(loadInfo(params));
+  return dispatch(loadChapterInfo(params));
 };
 
 export const versesConnect = ({

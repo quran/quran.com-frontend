@@ -110,18 +110,19 @@ const ListContainer = styled.div`
   }
 `;
 
-const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
+const SurahInfo = ({ chapter, info, isShowingSurahInfo, setOption }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingSurahInfo) return <noscript />;
   if (!info) return <Loader isActive />;
 
   const handleClose = () =>
-    onClose({ isShowingSurahInfo: !isShowingSurahInfo });
+    setOption({ isShowingSurahInfo: !isShowingSurahInfo });
 
   return (
     <Container className="col-xs-12 chapter-info">
-      {onClose &&
-        <Close tabIndex="-1" className="ss-delete" onClick={handleClose} />}
+      {setOption && (
+        <Close tabIndex="-1" className="ss-delete" onClick={handleClose} />
+      )}
       <div className="row" style={{ width: '100%', height: '100%', margin: 0 }}>
         <Image
           className="col-md-3 col-xs-6"
@@ -130,22 +131,16 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
         <ListContainer className="col-md-1 col-xs-6">
           <List>
             <dt>VERSES</dt>
-            <dd className="text-uppercase">
-              {chapter.versesCount}
-            </dd>
+            <dd className="text-uppercase">{chapter.versesCount}</dd>
             <dt>PAGES</dt>
-            <dd className="text-uppercase">
-              {chapter.pages.join('-')}
-            </dd>
+            <dd className="text-uppercase">{chapter.pages.join('-')}</dd>
           </List>
         </ListContainer>
         <Info className={`${info.languageName} times-new col-md-8`}>
           <div dangerouslySetInnerHTML={{ __html: info.text }} />
           <div>
             <p>
-              <em>
-                Source: {info.source}
-              </em>
+              <em>Source: {info.source}</em>
             </p>
           </div>
         </Info>
@@ -155,8 +150,8 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
 };
 
 SurahInfo.propTypes = {
-  onClose: PropTypes.func,
-  isShowingSurahInfo: PropTypes.bool,
+  setOption: PropTypes.func.isRequired,
+  isShowingSurahInfo: PropTypes.bool.isRequired,
   chapter: customPropTypes.surahType,
   info: customPropTypes.infoType
 };
