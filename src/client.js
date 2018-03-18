@@ -7,6 +7,7 @@ import 'isomorphic-fetch';
 
 import debug from 'debug';
 
+import './styles/main.global.scss';
 import config from './config';
 
 import ApiClient from './helpers/ApiClient';

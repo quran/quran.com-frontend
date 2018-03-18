@@ -29,13 +29,6 @@ const Html = ({ store, component, assets, loadableState }) => {
             type="text/css"
           />
         ))}
-        {Object.keys(assets.styles).length === 0 ? (
-          <style
-            dangerouslySetInnerHTML={{
-              __html: require('../../src/styles/bootstrap.config')
-            }}
-          />
-        ) : null}
         <style>{highlightStyles}</style>
         <style dangerouslySetInnerHTML={{ __html: fontsStyle }} />
       </head>
