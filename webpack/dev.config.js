@@ -66,9 +66,7 @@ module.exports = {
               plugins: [
                 'react-hot-loader/babel',
                 'transform-runtime',
-                // 'add-module-exports',
                 'transform-react-display-name',
-                'typecheck',
                 'react-hot-loader/babel',
                 'syntax-dynamic-import'
               ],

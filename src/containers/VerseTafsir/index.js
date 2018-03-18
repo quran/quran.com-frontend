@@ -81,7 +81,7 @@ function mapStateToProps(state, ownProps) {
   }`;
   const chapterId = parseInt(ownProps.match.params.chapterId, 10);
   const tafsirId = ownProps.match.params.tafsirId;
-  const verse: Object = state.verses.entities[chapterId][verseKey];
+  const verse = state.verses.entities[chapterId][verseKey];
 
   return {
     verse,
