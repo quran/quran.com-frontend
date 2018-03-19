@@ -26,7 +26,6 @@ module.exports = {
     // 'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
-    `bootstrap-loader/lib/bootstrap.loader?configFilePath=${root}/src/styles/bootstrap.config.json!bootstrap-loader/no-op.js`,
     './src/client.js'
   ],
   devServer: {
@@ -67,9 +66,7 @@ module.exports = {
               plugins: [
                 'react-hot-loader/babel',
                 'transform-runtime',
-                // 'add-module-exports',
                 'transform-react-display-name',
-                'typecheck',
                 'react-hot-loader/babel',
                 'syntax-dynamic-import'
               ],
@@ -114,6 +111,7 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: /\.global.scss$/,
         use: [
           'style-loader',
           {
@@ -123,6 +121,31 @@ module.exports = {
               importLoaders: 2,
               sourceMap: true,
               localIdentName: '[path][name]__[local]--[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins() {
+                return [
+                  require('precss'), // eslint-disable-line
+                  require('autoprefixer') // eslint-disable-line
+                ];
+              }
+            }
+          },
+          'sass-loader?outputStyle=expanded&sourceMap'
+        ]
+      },
+      {
+        test: /\.global.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              sourceMap: true
             }
           },
           {
