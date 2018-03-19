@@ -495,8 +495,8 @@ Surah.propTypes = {
 
 function mapStateToProps(state, ownProps) {
   const chapterId = parseInt(ownProps.match.params.chapterId, 10);
-  const chapter: Object = state.chapters.entities[chapterId];
-  const verses: Object = state.verses.entities[chapterId];
+  const chapter = state.chapters.entities[chapterId];
+  const verses = state.verses.entities[chapterId];
   const verseArray = verses
     ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
     : [];

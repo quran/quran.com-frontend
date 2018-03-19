@@ -1,4 +1,4 @@
-# Quran.com [![CircleCI](https://circleci.com/gh/quran/quran.com-frontend.svg?style=svg)](https://circleci.com/gh/quran/common-components) [![SLACK](http://i.imgur.com/Lk5HsBo.png)](https://quranslack.herokuapp.com)
+# Quran.com [![CircleCI](https://circleci.com/gh/quran/quran.com-frontend.svg?style=svg)](https://circleci.com/gh/quran/common-components)
 
 This project is the frontend for Quran.com. It is built using
 [Reactjs] + [Redux] + [Expressjs] + [Webpack]. It is isomorphic (javascript shared
@@ -29,7 +29,7 @@ DB is private, message @mmahalwy for access.
 The dev server uses the staging API by default. If you want to use a local API server, follow the instructions in the API repo and run the server locally then update the API_URL field in app.json to point to the local address.
 
 ## Slack
-Signup at https://quranslack.herokuapp.com to be added to the Slack group
+Create an issue with your email for us to add you to the Slack group
 
 ## Design
 We currently use InvisionApp. Again, contact me if you'd like access to it.

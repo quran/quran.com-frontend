@@ -7,11 +7,6 @@
     ["system-import-transformer", {"modules": "common"}]
   ],
   "env": {
-    "development": {
-      "plugins": [
-        "typecheck"
-      ]
-    },
     "production": {
       "plugins": [
         "transform-react-inline-elements",
