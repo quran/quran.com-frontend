@@ -45,7 +45,6 @@ const Share = ({ chapter, verse, inline }) => {
     const translations = (verse.translations || [])
       .map(translation => translation.resourceId)
       .join(',');
-    
     path = `${verse.chapterId}/${
       verse.verseNumber
     }?translations=${translations}`;
