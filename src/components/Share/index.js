@@ -1,12 +1,13 @@
 import React from 'react';
-import { ShareButtons, generateShareIcon } from 'react-share';
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon
+} from 'react-share';
 import styled, { css } from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import PropTypes from 'prop-types';
-
-const { FacebookShareButton, TwitterShareButton } = ShareButtons;
-const FacebookIcon = generateShareIcon('facebook');
-const TwitterIcon = generateShareIcon('twitter');
 
 const inlineStyle = css`
   display: inline-flex;
@@ -44,7 +45,9 @@ const Share = ({ chapter, verse, inline }) => {
     const translations = (verse.translations || [])
       .map(translation => translation.resourceId)
       .join(',');
-    path = `${verse.chapterId}/${verse.verseNumber}?translations=${translations}`;
+    path = `${verse.chapterId}/${
+      verse.verseNumber
+    }?translations=${translations}`;
   } else {
     path = chapter.chapterNumber;
   }
@@ -59,7 +62,7 @@ const Share = ({ chapter, verse, inline }) => {
     <Container inline={inline}>
       <FacebookButton
         url={shareUrl}
-        title={title}
+        quote={title}
         windowWidth={670}
         windowHeight={540}
       >
