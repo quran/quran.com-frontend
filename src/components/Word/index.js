@@ -86,7 +86,6 @@ class Word extends Component {
     if (word.charType === CHAR_TYPE_WORD) {
       spacer = '&nbsp;';
     }
-    if (word.charType === CHAR_TYPE_RUB) return <span />;
 
     return (
       <span>
