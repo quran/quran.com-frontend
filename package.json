@@ -16,7 +16,7 @@
     "analyze:build": "cross-env NODE_ENV=production webpack --json --config ./webpack/prod.web.config.js  > bundle-stats.json",
     "analyze:json": "webpack-bundle-analyzer bundle-stats.json",
     "analyze": "npm run analyze:build; npm run analyze:json",
-    "lint:fix": "npm run test:dev:lint -- --fix",
+    "lint:fix": "npm run lint -- --fix",
     "prettier": "prettier --single-quote --write",
     "precommit": "lint-staged",
     "storybook": "start-storybook -p 6006",

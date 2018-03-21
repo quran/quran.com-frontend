@@ -73,7 +73,7 @@ module.exports = {
         test: /\.scss$/,
         exclude: /\.global.scss$/,
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
+          fallback: 'style-loader',
           use: [
             {
               loader: 'css-loader',
@@ -103,7 +103,7 @@ module.exports = {
       {
         test: /\.global.scss$/,
         use: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
+          fallback: 'style-loader',
           use: [
             {
               loader: 'css-loader',
