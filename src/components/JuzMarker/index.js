@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import styled from 'styled-components';
+import Element from 'react-scroll/lib/components/Element';
+
 const juzStart = {
   1: [1],
   2: [142, 253],
@@ -32,30 +35,32 @@ const juzStart = {
   78: [1]
 };
 
-const ShowJuzMarkAndAyah = ({ chapterId, verseNumber, text }) => {
+const StyledJuzMark = styled(Element)`
+  padding: 0em;
+  float: right;
+  /*width:20%;*/
+`;
+
+const ShowJuzMark = ({ chapterId, verseNumber }) => {
   if (juzStart[chapterId] && juzStart[chapterId].includes(verseNumber)) {
     return (
       <div>
-        <p>
-          <b
-            id={`Juz mark ${chapterId}-${verseNumber}`}
-            className="p22 rub-el-hizb   pointer"
-            title="juz mark"
-          >
-            ﭑ
-          </b>
-          {text}
-        </p>
+        <StyledJuzMark
+          id={`Juz mark ${chapterId}-${verseNumber}`}
+          className="col-xs-1 text-right text-arabic p22 rub-el-hizb   pointer"
+          title="juz mark"
+        >
+          ﭑ
+        </StyledJuzMark>
       </div>
     );
   }
-  return <p>{text}</p>;
+  return <div />;
 };
 
-ShowJuzMarkAndAyah.propTypes = {
+ShowJuzMark.propTypes = {
   chapterId: PropTypes.number.isRequired,
-  verseNumber: PropTypes.number.isRequired,
-  text: PropTypes.instanceOf(Array)
+  verseNumber: PropTypes.number.isRequired
 };
 
-export default ShowJuzMarkAndAyah;
+export default ShowJuzMark;

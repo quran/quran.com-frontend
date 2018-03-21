@@ -9,7 +9,7 @@ import Loadable from 'react-loadable';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
-import ShowJuzMarkAndAyah from 'components/JuzMarker';
+import ShowJuzMark from 'components/JuzMarker';
 import Translation from 'components/Translation';
 import FontText from 'components/FontText';
 import debug from 'helpers/debug';
@@ -214,20 +214,11 @@ class Verse extends Component {
     ));
 
     return (
-<<<<<<< HEAD
-      <FontText className="row text-right text-arabic">
-        <ShowAyahAndJuzMark
-          chapterId={verse.chapterId}
-          verseNumber={verse.verseNumber}
-          text={text}
-          juzNumber={verse.juzNumber}
-=======
       <FontText className="text-right text-arabic">
-        <ShowJuzMarkAndAyah
+        <ShowJuzMark
           chapterId={verse.chapterId}
           verseNumber={verse.verseNumber}
           text={text}
->>>>>>> #652 show start juz sign for every new juz beginning
         />
       </FontText>
     );
