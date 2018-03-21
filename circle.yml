@@ -8,3 +8,4 @@ machine:
 test:
   override:
     - npm run test:ci
+    - npm run build:ci
