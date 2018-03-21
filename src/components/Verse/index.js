@@ -9,7 +9,7 @@ import Loadable from 'react-loadable';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
-import ShowJuzMarkAndAyah from 'components/JuzMarker';
+import ShowJuzMark from 'components/JuzMarker';
 import Translation from 'components/Translation';
 import FontText from 'components/FontText';
 import debug from 'helpers/debug';
@@ -215,11 +215,13 @@ class Verse extends Component {
 
     return (
       <FontText className="text-right text-arabic">
-        <ShowJuzMarkAndAyah
-          chapterId={verse.chapterId}
-          verseNumber={verse.verseNumber}
-          text={text}
-        />
+        <div className="row">
+          <ShowJuzMark
+            chapterId={verse.chapterId}
+            verseNumber={verse.verseNumber}
+          />
+          <div className="col-xs-11">{text}</div>
+        </div>
       </FontText>
     );
   }
