@@ -7,6 +7,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import 'partials/tooltip';
 @import 'nightmode';
 @import 'partials/surah_names';
+@import 'partials/juz_marker';
 @import 'partials/_tooltip';
 html,
 body {
@@ -18,6 +19,9 @@ body {
   }
 }
 
+.row {
+  margin-right: 0em !important;
+}
 .highlight {
   background-color: #f5fbf7;
 }

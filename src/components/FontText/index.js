@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
-export default styled.h1`
+export default styled.div`
   white-space: pre-line;
   color: #000;
   width: 100%;
