@@ -219,6 +219,7 @@ class Verse extends Component {
           chapterId={verse.chapterId}
           verseNumber={verse.verseNumber}
           text={text}
+          juzNumber={verse.juzNumber}
         />
       </FontText>
     );
