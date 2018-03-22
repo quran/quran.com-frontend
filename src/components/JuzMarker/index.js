@@ -1,58 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import styled from 'styled-components';
-import Element from 'react-scroll/lib/components/Element';
+import bindTooltip from 'utils/bindTooltip';
 
-const juzStart = {
-  1: [1],
-  2: [142, 253],
-  3: [92],
-  4: [24, 148],
-  5: [82],
-  6: [111],
-  7: [88],
-  8: [41],
-  9: [93],
-  11: [6],
-  12: [53],
-  15: [1],
-  17: [1],
-  18: [75],
-  21: [1],
-  23: [1],
-  25: [22],
-  27: [56],
-  29: [46],
-  33: [31],
-  36: [28],
-  39: [32],
-  41: [47],
-  46: [1],
-  51: [31],
-  58: [1],
-  67: [1],
-  78: [1]
-};
+import { juzStart, juzAndHizbArabicNum } from './markNumbers';
 
-const StyledJuzMark = styled(Element)`
-  padding: 0em;
-  float: right;
+const juzMarkTop = require('../../../static/images/juzTopArt.svg');
+const juzMarkBottom = require('../../../static/images/juzBottomArt.svg');
+
+const StyledContainer = styled.div`
+  padding: 0.05em;
+  border: solid 1px #2CA4AB;
+  width: 0.659em;
+  margin-left: calc((100% - 0.659em) / 2);
+  margin-top: 0.055em;
+  margin-bottom: 0.055em;
+}
+`;
+
+const StyledJuzArt = styled.img`
+  height: 30px;
+  width: 0.659em;
+  margin-left: calc((100% - 0.659em) / 2);
+  display: block;
+`;
+
+const StyledJuzNumber = styled.div`
+  font-size: 10px;
+  width: 100%;
+  text-align: center;
+  display: block;
 `;
 
 const StyledAyah = styled.div`
-  margin-top: 1.5em;
+  margin-top: 3%;
 `;
 
-const ShowAyahAndJuzMark = ({ chapterId, verseNumber, text }) => {
+const ShowAyahAndJuzMark = ({ chapterId, verseNumber, text, juzNumber }) => {
   if (juzStart[chapterId] && juzStart[chapterId].includes(verseNumber)) {
     return (
       <div>
-        <StyledJuzMark
+        <b
+          {...bindTooltip}
           id={`Juz mark ${chapterId}-${verseNumber}`}
           className="col-xs-1 icon-juzMarker"
-          title="juz mark"
-        />
+          title={`juz ${juzNumber}, جزء ${juzAndHizbArabicNum[juzNumber]}`}
+        >
+          <StyledJuzArt src={juzMarkTop} alt="juz top Art" />
+          <StyledContainer>
+            <StyledJuzNumber>جزء</StyledJuzNumber>
+            <StyledJuzNumber>{juzAndHizbArabicNum[juzNumber]}</StyledJuzNumber>
+            <StyledJuzNumber>حزب</StyledJuzNumber>
+            <StyledJuzNumber>
+              {juzAndHizbArabicNum[juzNumber * 2 - 1]}
+            </StyledJuzNumber>
+          </StyledContainer>
+          <StyledJuzArt src={juzMarkBottom} alt="juz top Art" />
+        </b>
         <StyledAyah className="col-xs-11">
           <p>{text}</p>
         </StyledAyah>
@@ -65,6 +69,7 @@ const ShowAyahAndJuzMark = ({ chapterId, verseNumber, text }) => {
 ShowAyahAndJuzMark.propTypes = {
   chapterId: PropTypes.number.isRequired,
   verseNumber: PropTypes.number.isRequired,
+  juzNumber: PropTypes.number.isRequired,
   text: PropTypes.instanceOf(Array)
 };
 
