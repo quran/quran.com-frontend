@@ -38,29 +38,34 @@ const juzStart = {
 const StyledJuzMark = styled(Element)`
   padding: 0em;
   float: right;
-  /*width:20%;*/
 `;
 
-const ShowJuzMark = ({ chapterId, verseNumber }) => {
+const StyledAyah = styled.div`
+  margin-top: 1.5em;
+`;
+
+const ShowAyahAndJuzMark = ({ chapterId, verseNumber, text }) => {
   if (juzStart[chapterId] && juzStart[chapterId].includes(verseNumber)) {
     return (
       <div>
         <StyledJuzMark
           id={`Juz mark ${chapterId}-${verseNumber}`}
-          className="col-xs-1 text-right text-arabic p22 rub-el-hizb   pointer"
+          className="col-xs-1 icon-juzMarker"
           title="juz mark"
-        >
-          ﭑ
-        </StyledJuzMark>
+        />
+        <StyledAyah className="col-xs-11">
+          <p>{text}</p>
+        </StyledAyah>
       </div>
     );
   }
-  return <div />;
+  return <p>{text}</p>;
 };
 
-ShowJuzMark.propTypes = {
+ShowAyahAndJuzMark.propTypes = {
   chapterId: PropTypes.number.isRequired,
-  verseNumber: PropTypes.number.isRequired
+  verseNumber: PropTypes.number.isRequired,
+  text: PropTypes.instanceOf(Array)
 };
 
-export default ShowJuzMark;
+export default ShowAyahAndJuzMark;
