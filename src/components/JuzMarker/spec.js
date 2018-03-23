@@ -1,25 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import ShowAyahAndJuzMark from './index';
+import { Decoration } from './index';
 
-const text = ['Some text', 'some more text'];
-const chapterId = 1;
-const verseNumber = 1;
 const juzNumber = 1;
 
 let wrapper;
 
-describe('<ShowAyahAndJuzMark />', () => {
+describe('<Decoration />', () => {
   beforeEach(() => {
-    wrapper = shallow(
-      <ShowAyahAndJuzMark
-        text={text}
-        chapterId={chapterId}
-        juzNumber={juzNumber}
-        verseNumber={verseNumber}
-      />
-    );
+    wrapper = shallow(<Decoration juzNumber={juzNumber} />);
   });
 
   it('should render without crashing', () => {
