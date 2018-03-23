@@ -3,23 +3,18 @@ jobs:
   build:
     docker:
       - image: circleci/node:latest
+    working_directory: ~/repo
     steps:
     - checkout
+    - run:
+        name: updatenpm
+        command: 'sudo npm install -g npm@latest'
     - run:
         name: install
         command: npm install
     - run:
         name: test
-        command: npm run test
-    - run:
-        name: rebuildSass
-        command: npm rebuild node-sass
-    - run:
-        name: buildClient
-        command: npm run build:client
-    - run:
-        name: buildServer
-        command: npm run build:server
+        command: npm run test:ci
 workflows:
   version: 2
   test_and_build:
