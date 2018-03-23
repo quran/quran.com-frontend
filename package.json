@@ -114,6 +114,7 @@
     "html-pdf": "^2.1.0",
     "html-webpack-plugin": "1.7.0",
     "http-proxy": "1.14.0",
+    "http-signature": "1.2.0",
     "humps": "2.0.0",
     "i": "0.3.6",
     "isomorphic-fetch": "2.2.1",
