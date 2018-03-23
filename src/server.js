@@ -62,30 +62,23 @@ server.use((req, res) => {
   store.dispatch(setOption(cookie.load('options') || {}));
   debug('Server', 'Executing navigate action');
 
-  console.log('req.url', req.url);
-  routes.forEach((route) => {
-    const match = matchPath(req.url, route);
+  const matchedRoute = routes.find(route => matchPath(req.url, route));
 
-    if (match && route.onEnter) {
-      const result = route.onEnter({
-        match,
-        params: match.params,
-        location: {
-          pathname: req.url
-        }
-      });
-      console.log('result', result);
-      console.log('match', match);
+  if (matchedRoute && matchedRoute.onEnter) {
+    const match = matchPath(req.url, matchedRoute);
 
-      if (result) {
-        return res.status(result.status).redirect(result.url);
+    const result = matchedRoute.onEnter({
+      match,
+      params: match.params,
+      location: {
+        pathname: req.url
       }
+    });
 
-      return null;
+    if (result) {
+      return res.status(result.status).redirect(result.url);
     }
-
-    return null;
-  });
+  }
 
   // inside a request
   const promises = [];
