@@ -1,4 +1,5 @@
 export const juzStart = {
+  /* Find juzs in chapters */
   1: [1],
   2: [142, 253],
   3: [92],
@@ -30,6 +31,7 @@ export const juzStart = {
 };
 
 export const juzAndHizbArabicNum = [
+  /* Juz and hizb numbers in arabic ~zero - sixty~ */
   '٠',
   '١',
 
