@@ -63,10 +63,9 @@ server.use((req, res) => {
   debug('Server', 'Executing navigate action');
 
   const matchedRoute = routes.find(route => matchPath(req.url, route));
+  const match = matchPath(req.url, matchedRoute);
 
   if (matchedRoute && matchedRoute.onEnter) {
-    const match = matchPath(req.url, matchedRoute);
-
     const result = matchedRoute.onEnter({
       match,
       params: match.params,
@@ -82,26 +81,19 @@ server.use((req, res) => {
 
   // inside a request
   const promises = [];
-  // use `some` to imitate `<Switch>` behavior of selecting only
-  // the first to match
-  routes.some((route) => {
-    // use `matchPath` here
-    const match = matchPath(req.url, route);
-    if (match && route.loadData) {
-      route.loadData.forEach((connector) => {
-        promises.push(
-          connector({
-            store,
-            match,
-            params: match.params,
-            location: match.location
-          })
-        );
-      });
-    }
 
-    return match;
-  });
+  if (matchedRoute && matchedRoute.loadData) {
+    matchedRoute.loadData.forEach((connector) => {
+      promises.push(
+        connector({
+          store,
+          match,
+          params: match.params,
+          location: match.location
+        })
+      );
+    });
+  }
 
   Promise.all(promises).then(() => {
     const component = (
