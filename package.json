@@ -94,6 +94,7 @@
     "clean-webpack-plugin": "0.1.10",
     "compression": "1.6.2",
     "compression-webpack-plugin": "0.3.2",
+    "concat-map": "0.0.1",
     "cookie-parser": "1.4.3",
     "copy-to-clipboard": "3.0.5",
     "cors": "2.7.1",
