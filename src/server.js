@@ -62,6 +62,7 @@ server.use((req, res) => {
   store.dispatch(setOption(cookie.load('options') || {}));
   debug('Server', 'Executing navigate action');
 
+  console.log('req.url', req.url);
   routes.forEach((route) => {
     const match = matchPath(req.url, route);
 
@@ -73,6 +74,8 @@ server.use((req, res) => {
           pathname: req.url
         }
       });
+      console.log('result', result);
+      console.log('match', match);
 
       if (result) {
         return res.status(result.status).redirect(result.url);

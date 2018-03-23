@@ -92,6 +92,7 @@ export const routes = [
     ),
     loadData: [
       ({ store: { dispatch }, location }) => {
+        console.log(location);
         if (__CLIENT__) {
           dispatch(search(location.query || location.q));
           return false;
@@ -100,13 +101,6 @@ export const routes = [
         return dispatch(search(location.query || location.q));
       }
     ]
-  },
-  {
-    path: '/:chapterId/info/:language?',
-    component: loadable(() =>
-      import(/* webpackChunkName: "ChapterInfo" */ './containers/ChapterInfo')
-    ),
-    loadData: [chaptersConnect, chapterInfoConnect]
   },
   {
     path: '/ayatul-kursi',
@@ -124,6 +118,13 @@ export const routes = [
           }
         })
     ]
+  },
+  {
+    path: '/:chapterId/info/:language?',
+    component: loadable(() =>
+      import(/* webpackChunkName: "ChapterInfo" */ './containers/ChapterInfo')
+    ),
+    loadData: [chaptersConnect, chapterInfoConnect]
   },
   {
     path: '/:chapterId(\\d+)/:range/tafsirs/:tafsirId',
