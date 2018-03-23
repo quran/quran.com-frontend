@@ -73,51 +73,122 @@ module.exports = {
         test: /\.scss$/,
         exclude: /\.global.scss$/,
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader:
-            'css-loader?minimize&modules&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true,
+                importLoaders: 2,
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'autoprefixer-loader',
+              options: {
+                browsers: 'last 2 version'
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                outputStyle: 'compressed',
+                sourceMap: true,
+                sourceMapContents: true
+              }
+            }
+          ]
         })
       },
       {
         test: /\.global.scss$/,
-        loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          loader:
-            'css-loader?minimize&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true,
+                importLoaders: 2,
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'autoprefixer-loader',
+              options: {
+                browsers: 'last 2 version'
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                outputStyle: 'compressed',
+                sourceMap: true,
+                sourceMapContents: true
+              }
+            }
+          ]
         })
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/font-woff'
+        }
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/font-woff'
+        }
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/octet-stream'
+        }
       },
       {
         test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/octet-stream'
+        }
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file-loader?name=fonts/[name].[ext]'
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[ext]'
+        }
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
+        loader: 'url-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          limit: 10000,
+          mimetype: 'image/svg+xml'
+        }
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('images'),
-        loader: 'url-loader?name=images/[name].[ext]&limit=10240'
+        loader: 'url-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          limit: 10240
+        }
       }
     ]
   },

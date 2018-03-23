@@ -70,7 +70,16 @@ module.exports = {
                 'react-hot-loader/babel',
                 'syntax-dynamic-import'
               ],
-              presets: [['es2015', { modules: false }], 'stage-2', 'react'],
+              presets: [
+                [
+                  'es2015',
+                  {
+                    modules: false
+                  }
+                ],
+                'stage-2',
+                'react'
+              ],
               cacheDirectory: true
             }
           }
@@ -78,36 +87,63 @@ module.exports = {
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/font-woff'
+        }
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/font-woff'
+        }
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/octet-stream'
+        }
       },
       {
         test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/octet-stream'
+        }
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file-loader?name=fonts/[name].[ext]'
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[ext]'
+        }
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
+        loader: 'url-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          limit: 10000,
+          mimetype: 'image/svg+xml'
+        }
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('images'),
-        loader: 'url-loader?name=images/[name].[ext]&limit=10240'
+        loader: 'url-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          limit: '10240'
+        }
       },
       {
         test: /\.scss$/,
@@ -134,7 +170,13 @@ module.exports = {
               }
             }
           },
-          'sass-loader?outputStyle=expanded&sourceMap'
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+              sourceMap: true
+            }
+          }
         ]
       },
       {
@@ -159,7 +201,13 @@ module.exports = {
               }
             }
           },
-          'sass-loader?outputStyle=expanded&sourceMap'
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+              sourceMap: true
+            }
+          }
         ]
       }
     ]

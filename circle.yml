@@ -7,4 +7,6 @@ machine:
     version: "8.0.0"
 test:
   override:
-    - npm run test:ci
+    - npm run test
+    - npm run build:client
+    - npm run build:server
