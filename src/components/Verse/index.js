@@ -215,7 +215,7 @@ class Verse extends Component {
 
     return (
       <FontText className="row text-right text-arabic">
-        <ShowAyahAndJuzMark
+        <ShowAyahAndJuzMark // Migrate text rendering to ShowAyahAndJuzMark Component
           chapterId={verse.chapterId}
           verseNumber={verse.verseNumber}
           text={text}
