@@ -1,0 +1,12 @@
+---
+dependencies:
+  override:
+    - npm install
+machine:
+  node:
+    version: "9.0.0"
+test:
+  override:
+    - npm run test
+    - npm run build:client
+    - npm run build:server
