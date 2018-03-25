@@ -27,6 +27,10 @@
       "node_modules",
       "src"
     ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "identity-obj-proxy",
+      "\\.(css|less)$": "identity-obj-proxy"
+    },
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/dist/"
@@ -90,6 +94,7 @@
     "clean-webpack-plugin": "0.1.10",
     "compression": "1.6.2",
     "compression-webpack-plugin": "0.3.2",
+    "concat-map": "0.0.1",
     "cookie-parser": "1.4.3",
     "copy-to-clipboard": "3.0.5",
     "cors": "2.7.1",
@@ -109,6 +114,7 @@
     "html-pdf": "^2.1.0",
     "html-webpack-plugin": "1.7.0",
     "http-proxy": "1.14.0",
+    "http-signature": "1.2.0",
     "humps": "2.0.0",
     "i": "0.3.6",
     "isomorphic-fetch": "2.2.1",
@@ -189,6 +195,7 @@
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-mocha": "4.8.0",
     "eslint-plugin-react": "6.8.0",
+    "identity-obj-proxy": "3.0.0",
     "jest": "21.2.1",
     "jest-fetch-mock": "1.4.0",
     "jscs": "2.1.1",
