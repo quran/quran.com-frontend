@@ -1,15 +1,9 @@
 import {
   FETCH_CHAPTERS,
-  FETCH_CHAPTER_INFO,
   SET_CURRENT
 } from '../../../src/redux/constants/chapters.js';
 
-import {
-  loadAll,
-  load,
-  loadInfo,
-  setCurrent
-} from '../../../src/redux/actions/chapters';
+import { loadAll, load, setCurrent } from '../../../src/redux/actions/chapters';
 
 describe('chapters', () => {
   describe('loadAll', () => {
@@ -32,18 +26,6 @@ describe('chapters', () => {
         FETCH_CHAPTERS.ACTION,
         FETCH_CHAPTERS.SUCCESS,
         FETCH_CHAPTERS.FAILURE
-      ]);
-    });
-  });
-
-  describe('loadInfo', () => {
-    it('correct constants', () => {
-      fetch.mockResponse(JSON.stringify({}));
-      expect(loadInfo('url').types.length).toEqual(3);
-      expect(loadInfo('url').types).toEqual([
-        FETCH_CHAPTER_INFO.ACTION,
-        FETCH_CHAPTER_INFO.SUCCESS,
-        FETCH_CHAPTER_INFO.FAIL
       ]);
     });
   });
