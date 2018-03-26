@@ -157,4 +157,46 @@ const routes = [
 export const getMatchedRoute = url =>
   routes.find(route => matchPath(url, route));
 
+export const checkOnEnterResult = (url) => {
+  const matchedRoute = getMatchedRoute(url);
+  const match = matchPath(url, matchedRoute);
+
+  if (matchedRoute && matchedRoute.onEnter) {
+    const result = matchedRoute.onEnter({
+      match,
+      params: match.params,
+      location: {
+        pathname: url
+      }
+    });
+
+    if (result) {
+      return result;
+    }
+  }
+
+  return null;
+};
+
+export const getPromises = (url, store) => {
+  const matchedRoute = getMatchedRoute(url);
+  const match = matchPath(url, matchedRoute);
+  const promises = [];
+
+  if (matchedRoute && matchedRoute.loadData) {
+    matchedRoute.loadData.forEach((connector) => {
+      promises.push(
+        connector({
+          store,
+          match,
+          params: match.params,
+          location: match.location
+        })
+      );
+    });
+  }
+
+  return promises;
+};
+
 export default routes;
