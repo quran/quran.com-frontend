@@ -1,10 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import loadable from 'loadable-components';
-import { Switch, Route } from 'react-router';
+import { matchPath } from 'react-router';
 
 import Home from './containers/Home';
-import NotFound from './components/NotFound';
 
 import {
   chaptersConnect,
@@ -14,19 +11,9 @@ import {
   juzsConnect
 } from './containers/Surah/connect';
 import { search } from './redux/actions/search.js';
-import routePromises from './utils/routePromises';
 import validators from './utils/routeFilters';
 
-const GlobalNav = loadable(() =>
-  import(/* webpackChunkName: "GlobalNav" */ 'components/GlobalNav')
-);
-
-const defaultSetContext = context => ({
-  ...context,
-  status: 200
-});
-
-export const routes = [
+const routes = [
   {
     path: '/',
     exact: true,
@@ -102,13 +89,6 @@ export const routes = [
     ]
   },
   {
-    path: '/:chapterId/info/:language?',
-    component: loadable(() =>
-      import(/* webpackChunkName: "ChapterInfo" */ './containers/ChapterInfo')
-    ),
-    loadData: [chaptersConnect, chapterInfoConnect]
-  },
-  {
     path: '/ayatul-kursi',
     component: loadable(() =>
       import(/* webpackChunkName: "AyatulKursi" */ './containers/AyatulKursi')
@@ -124,6 +104,13 @@ export const routes = [
           }
         })
     ]
+  },
+  {
+    path: '/:chapterId/info/:language?',
+    component: loadable(() =>
+      import(/* webpackChunkName: "ChapterInfo" */ './containers/ChapterInfo')
+    ),
+    loadData: [chaptersConnect, chapterInfoConnect]
   },
   {
     path: '/:chapterId(\\d+)/:range/tafsirs/:tafsirId',
@@ -167,57 +154,49 @@ export const routes = [
   }
 ];
 
-const Routes = ({ store }) => (
-  <Switch>
-    {routes.map(({ component: Component, loadData, setContext, ...route }) => (
-      <Route
-        key={route.path}
-        {...route}
-        render={({ staticContext, ...routeProps }) => {
-          if (staticContext) {
-            const contextFunction = setContext || defaultSetContext;
+export const getMatchedRoute = url =>
+  routes.find(route => matchPath(url, route));
 
-            Object.assign(staticContext, contextFunction(staticContext));
-          }
+export const checkOnEnterResult = (url) => {
+  const matchedRoute = getMatchedRoute(url);
+  const match = matchPath(url, matchedRoute);
 
-          if (__CLIENT__) {
-            routePromises({
-              store,
-              match: routeProps.match,
-              loadData
-            }).then(() => <Component {...routeProps} />);
-          }
+  if (matchedRoute && matchedRoute.onEnter) {
+    const result = matchedRoute.onEnter({
+      match,
+      params: match.params,
+      location: {
+        pathname: url
+      }
+    });
 
-          return <Component {...routeProps} />;
-        }}
-      />
-    ))}{' '}
-    <Route component={NotFound} />
-  </Switch>
-);
+    if (result) {
+      return result;
+    }
+  }
 
-// eslint-disable-next-line no-unused-vars, react/prop-types
-export const Navbars = ({ match, ...props }) => (
-  <Switch>
-    {' '}
-    {routes
-      .filter(route => route.navbar)
-      // eslint-disable-next-line no-unused-vars
-      .map(({ navbar: Navbar, component, ...route }) => (
-        <Route
-          key={route.path}
-          {...route}
-          render={routeProps => <Navbar {...routeProps} {...props} />}
-        />
-      ))}{' '}
-    <Route
-      render={routeProps => <GlobalNav {...routeProps} {...props} isStatic />}
-    />{' '}
-  </Switch>
-);
-
-Routes.propTypes = {
-  store: PropTypes.object.isRequired // eslint-disable-line
+  return null;
 };
 
-export default Routes;
+export const getPromises = (url, store) => {
+  const matchedRoute = getMatchedRoute(url);
+  const match = matchPath(url, matchedRoute);
+  const promises = [];
+
+  if (matchedRoute && matchedRoute.loadData) {
+    matchedRoute.loadData.forEach((connector) => {
+      promises.push(
+        connector({
+          store,
+          match,
+          params: match.params,
+          location: match.location
+        })
+      );
+    });
+  }
+
+  return promises;
+};
+
+export default routes;

@@ -1,10 +1,6 @@
 import { handleActions } from 'redux-actions';
 
-import {
-  FETCH_CHAPTERS,
-  FETCH_CHAPTER_INFO,
-  SET_CURRENT
-} from '../constants/chapters';
+import { FETCH_CHAPTERS, SET_CURRENT } from '../constants/chapters';
 
 export const INITIAL_STATE = {
   errored: false,
@@ -29,17 +25,6 @@ export default handleActions(
       };
     },
     [FETCH_CHAPTERS.FAILURE]: state => ({ ...state, errored: true }),
-    [FETCH_CHAPTER_INFO.ACTION]: state => ({
-      ...state,
-      infoLoading: true
-    }),
-    [FETCH_CHAPTER_INFO.SUCCESS]: (state, { id, result }) => ({
-      ...state,
-      infos: {
-        ...state.entities,
-        [id]: result.chapterInfo
-      }
-    }),
     [SET_CURRENT.ACTION]: (state, { current }) => ({
       ...state,
       current

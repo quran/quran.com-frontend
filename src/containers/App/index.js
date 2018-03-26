@@ -17,7 +17,8 @@ import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
 import Loader from 'quran-components/lib/Loader';
 
-import Routes, { Navbars } from '../../routes';
+import Routes from '../../components/Routes';
+import Navbars from '../../components/Navbars';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;

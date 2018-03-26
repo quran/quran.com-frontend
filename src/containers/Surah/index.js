@@ -42,9 +42,9 @@ const Audioplayer = Loadable({
     import(/* webpackChunkName: "Audioplayer" */ 'components/Audioplayer'),
   LoadingComponent: ComponentLoader
 });
-const SurahInfo = Loadable({
+const ChapterInfoPanelContainer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "SurahInfo" */ 'components/SurahInfo'),
+    import(/* webpackChunkName: "SurahInfo" */ 'containers/ChapterInfoPanelContainer'),
   LoadingComponent: ComponentLoader
 });
 const TopOptions = Loadable({
@@ -155,12 +155,6 @@ class Surah extends Component {
     }
 
     return false;
-  };
-
-  handleSurahInfoToggle = (payload) => {
-    const { actions } = this.props; // eslint-disable-line no-shadow
-
-    return actions.options.setOption(payload);
   };
 
   title() {
@@ -379,14 +373,7 @@ class Surah extends Component {
   }
 
   render() {
-    const {
-      chapter,
-      verses,
-      options,
-      info,
-      actions,
-      currentVerse
-    } = this.props; // eslint-disable-line no-shadow
+    const { chapter, verses, options, currentVerse } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
     if (!this.hasVerses()) {
@@ -440,13 +427,7 @@ class Surah extends Component {
         />
         <Container className="container-fluid">
           <div className="row">
-            <SurahInfo
-              chapter={chapter}
-              info={info}
-              loadInfo={actions.loadInfo}
-              isShowingSurahInfo={options.isShowingSurahInfo}
-              onClose={this.handleSurahInfoToggle}
-            />
+            <ChapterInfoPanelContainer chapter={chapter} />
             <div className="col-md-10 col-md-offset-1">
               {__CLIENT__ && <TopOptions chapter={chapter} />}
               <Bismillah chapter={chapter} />
@@ -512,7 +493,6 @@ function mapStateToProps(state, ownProps) {
     verseIds,
     isSingleAyah,
     currentVerse,
-    info: state.chapters.infos[ownProps.match.params.chapterId],
     isStarted: state.audioplayer.isStarted,
     isPlaying: state.audioplayer.isPlaying,
     currentWord: state.verses.currentWord,

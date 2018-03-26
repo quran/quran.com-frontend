@@ -11,7 +11,8 @@ export const chapter = {
   translatedName: {
     languageName: 'english',
     name: 'The Opener'
-  }
+  },
+  pages: [1, 2]
 };
 
 export const chapter2 = {

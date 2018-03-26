@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { routerReducer } from 'react-router-redux';
 
 import chapters from './chapters';
+import chapterInfos from './chapterInfos';
 import verses from './verses';
 import audioplayer from './audioplayer';
 import lines from './lines';
@@ -13,15 +14,16 @@ import media from './media';
 import juzs from './juzs';
 
 export default combineReducers({
-  routing: routerReducer,
-  media,
-  chapters,
-  verses,
   audioplayer,
+  chapterInfos,
+  chapters,
   fontFaces,
+  juzs,
   lines,
+  media,
+  options,
+  routing: routerReducer,
   searchResults,
   suggestResults,
-  options,
-  juzs
+  verses
 });
