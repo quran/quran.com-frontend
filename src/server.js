@@ -15,7 +15,7 @@ import { getLoadableState } from 'loadable-components/server';
 
 import config from 'config';
 import expressConfig from './server/config/express';
-import { routes } from './routes';
+import { getMatchedRoute } from './routes';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import debug from './helpers/debug';
@@ -62,7 +62,7 @@ server.use((req, res) => {
   store.dispatch(setOption(cookie.load('options') || {}));
   debug('Server', 'Executing navigate action');
 
-  const matchedRoute = routes.find(route => matchPath(req.url, route));
+  const matchedRoute = getMatchedRoute(req.url);
   const match = matchPath(req.url, matchedRoute);
 
   if (matchedRoute && matchedRoute.onEnter) {

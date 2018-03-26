@@ -1,10 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import loadable from 'loadable-components';
-import { Switch, Route } from 'react-router';
+import { matchPath } from 'react-router';
 
 import Home from './containers/Home';
-import NotFound from './components/NotFound';
 
 import {
   chaptersConnect,
@@ -14,19 +11,9 @@ import {
   juzsConnect
 } from './containers/Surah/connect';
 import { search } from './redux/actions/search.js';
-import routePromises from './utils/routePromises';
 import validators from './utils/routeFilters';
 
-const GlobalNav = loadable(() =>
-  import(/* webpackChunkName: "GlobalNav" */ 'components/GlobalNav')
-);
-
-const defaultSetContext = context => ({
-  ...context,
-  status: 200
-});
-
-export const routes = [
+const routes = [
   {
     path: '/',
     exact: true,
@@ -92,7 +79,6 @@ export const routes = [
     ),
     loadData: [
       ({ store: { dispatch }, location }) => {
-        console.log(location);
         if (__CLIENT__) {
           dispatch(search(location.query || location.q));
           return false;
@@ -168,57 +154,7 @@ export const routes = [
   }
 ];
 
-const Routes = ({ store }) => (
-  <Switch>
-    {routes.map(({ component: Component, loadData, setContext, ...route }) => (
-      <Route
-        key={route.path}
-        {...route}
-        render={({ staticContext, ...routeProps }) => {
-          if (staticContext) {
-            const contextFunction = setContext || defaultSetContext;
+export const getMatchedRoute = url =>
+  routes.find(route => matchPath(url, route));
 
-            Object.assign(staticContext, contextFunction(staticContext));
-          }
-
-          if (__CLIENT__) {
-            routePromises({
-              store,
-              match: routeProps.match,
-              loadData
-            }).then(() => <Component {...routeProps} />);
-          }
-
-          return <Component {...routeProps} />;
-        }}
-      />
-    ))}{' '}
-    <Route component={NotFound} />
-  </Switch>
-);
-
-// eslint-disable-next-line no-unused-vars, react/prop-types
-export const Navbars = ({ match, ...props }) => (
-  <Switch>
-    {' '}
-    {routes
-      .filter(route => route.navbar)
-      // eslint-disable-next-line no-unused-vars
-      .map(({ navbar: Navbar, component, ...route }) => (
-        <Route
-          key={route.path}
-          {...route}
-          render={routeProps => <Navbar {...routeProps} {...props} />}
-        />
-      ))}{' '}
-    <Route
-      render={routeProps => <GlobalNav {...routeProps} {...props} isStatic />}
-    />{' '}
-  </Switch>
-);
-
-Routes.propTypes = {
-  store: PropTypes.object.isRequired // eslint-disable-line
-};
-
-export default Routes;
+export default routes;
