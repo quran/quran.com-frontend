@@ -38,7 +38,14 @@
     "automock": false,
     "setupFiles": [
       "./setupJest.js"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js",
+      "\\.(css|scss)$": "<rootDir>/tests/__mocks__/styleMock.js"
+    },
+    "globals": {
+      "__CLIENT__": true
+    }
   },
   "pre-commit": [
     "test:stylelint",
@@ -186,6 +193,7 @@
     "eslint": "3.12.2",
     "eslint-config-airbnb": "13.0.0",
     "eslint-plugin-import": "2.2.0",
+    "eslint-plugin-jest": "21.15.0",
     "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-mocha": "4.8.0",
     "eslint-plugin-react": "6.8.0",

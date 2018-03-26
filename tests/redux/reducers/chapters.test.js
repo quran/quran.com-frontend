@@ -4,7 +4,6 @@ import chaptersReducer, {
 
 import {
   FETCH_CHAPTERS,
-  FETCH_CHAPTER_INFO,
   SET_CURRENT
 } from '../../../src/redux/constants/chapters';
 
@@ -41,35 +40,6 @@ describe('chapters reducer', () => {
       ).toEqual({
         ...INITIAL_STATE,
         errored: true
-      });
-    });
-  });
-
-  describe('FETCH_CHAPTER_INFO.ACTION', () => {
-    it('should reduce', () => {
-      expect(
-        chaptersReducer(INITIAL_STATE, {
-          type: FETCH_CHAPTER_INFO.ACTION
-        })
-      ).toEqual({ ...INITIAL_STATE, infoLoading: true });
-    });
-  });
-
-  describe('FETCH_CHAPTER_INFO.SUCCESS', () => {
-    it('should reduce', () => {
-      const chapterInfo = { id: 1 };
-
-      expect(
-        chaptersReducer(INITIAL_STATE, {
-          type: FETCH_CHAPTER_INFO.SUCCESS,
-          id: chapterInfo.id,
-          result: {
-            chapterInfo
-          }
-        })
-      ).toEqual({
-        ...INITIAL_STATE,
-        infos: { [chapterInfo.id]: chapterInfo }
       });
     });
   });
