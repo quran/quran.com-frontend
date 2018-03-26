@@ -3,7 +3,7 @@ import express from 'express';
 // import PrettyError from 'pretty-error';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
-import { matchPath, StaticRouter } from 'react-router';
+import { StaticRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import cookie from 'react-cookie';
@@ -15,7 +15,7 @@ import { getLoadableState } from 'loadable-components/server';
 
 import config from 'config';
 import expressConfig from './server/config/express';
-import { routes } from './routes';
+import { getPromises, checkOnEnterResult } from './routes';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import debug from './helpers/debug';
@@ -38,6 +38,7 @@ Raven.config(config.sentryServer, {
 
 /* allows us to handle unhandled promises, that might cause node to crash */
 process.on('unhandledRejection', (err) => {
+  // eslint-disable-next-line no-console
   console.log(err);
   debug('Server:unhandledRejection', err);
 });
@@ -62,50 +63,14 @@ server.use((req, res) => {
   store.dispatch(setOption(cookie.load('options') || {}));
   debug('Server', 'Executing navigate action');
 
-  routes.forEach((route) => {
-    const match = matchPath(req.url, route);
+  const result = checkOnEnterResult(req.url);
 
-    if (match && route.onEnter) {
-      const result = route.onEnter({
-        match,
-        params: match.params,
-        location: {
-          pathname: req.url
-        }
-      });
-
-      if (result) {
-        return res.status(result.status).redirect(result.url);
-      }
-
-      return null;
-    }
-
-    return null;
-  });
+  if (result) {
+    return res.status(result.status).redirect(result.url);
+  }
 
   // inside a request
-  const promises = [];
-  // use `some` to imitate `<Switch>` behavior of selecting only
-  // the first to match
-  routes.some((route) => {
-    // use `matchPath` here
-    const match = matchPath(req.url, route);
-    if (match && route.loadData) {
-      route.loadData.forEach((connector) => {
-        promises.push(
-          connector({
-            store,
-            match,
-            params: match.params,
-            location: match.location
-          })
-        );
-      });
-    }
-
-    return match;
-  });
+  const promises = getPromises(req.url, store);
 
   Promise.all(promises).then(() => {
     const component = (
@@ -183,12 +148,16 @@ const port = process.env.PORT || 8000;
 
 export default function serve(cb) {
   return server.listen(port, () => {
+    // eslint-disable-next-line no-console
     console.info(`==> 🌎  ENV=${process.env.NODE_ENV}`);
+    // eslint-disable-next-line no-console
     console.info(`==> ✅  Server is listening at http://localhost:${port}`);
+    // eslint-disable-next-line no-console
     console.info(`==> 🎯  API at ${process.env.API_URL}`);
     Object.keys(config).forEach(
       key =>
         config[key].constructor.name !== 'Object' &&
+        // eslint-disable-next-line no-console
         console.info(`==> ${key}`, config[key])
     );
 
