@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { Decoration } from './index';
+import Decoration from './decoration';
 
 const juzNumber = 1;
 
