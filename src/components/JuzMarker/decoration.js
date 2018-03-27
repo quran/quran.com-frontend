@@ -7,19 +7,19 @@ const juzMarkTop = require('../../../static/images/juzTopArt.svg');
 const juzMarkBottom = require('../../../static/images/juzBottomArt.svg');
 
 const StyledContainer = styled.div`
-  padding: 0.8px;
+  padding: 1px;
   border: solid 1px #2CA4AB;
-  width: 32px;
-  margin-left: calc((100% - 32px) / 2);
-  margin-top: 0.88px;
-  margin-bottom: 0.88px;
+  width: 31px;
+  margin-left: calc((100% - 31px) / 2);
+  margin-top: 0.6px;
+  margin-bottom: 1.4px;
 }
 `;
 
 const StyledJuzArt = styled.img`
   height: 30px;
-  width: 32px;
-  margin-left: calc((100% - 32px) / 2);
+  width: 31px;
+  margin-left: calc((100% - 31px) / 2);
   display: block;
 `;
 
