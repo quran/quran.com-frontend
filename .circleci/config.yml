@@ -19,7 +19,7 @@ jobs:
         command: npm run build:client
     - run:
         name: buildServer
-        command: npm run build:server   
+        command: npm run build:server
 workflows:
   version: 2
   test_and_build:
