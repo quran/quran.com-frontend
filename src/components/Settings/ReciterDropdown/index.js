@@ -9,6 +9,8 @@ import Icon from 'quran-components/lib/Icon';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { loadRecitations } from 'redux/actions/options';
 
+const LoaderStyle = { position: 'relative' };
+
 class ReciterDropdown extends Component {
   componentDidMount() {
     if (!this.props.recitations.length) {
@@ -21,7 +23,11 @@ class ReciterDropdown extends Component {
   renderMenu() {
     const { audio, onOptionChange, recitations } = this.props;
 
-    return recitations.map(slug =>
+    if (!recitations.length) {
+      return <Loader isActive relative style={LoaderStyle} />;
+    }
+
+    return recitations.map(slug => (
       <MenuItem key={slug.id}>
         <Radio
           checked={slug.id === audio}
@@ -34,22 +40,14 @@ class ReciterDropdown extends Component {
           </span>
         </Radio>
       </MenuItem>
-    );
+    ));
   }
 
   render() {
-    const { recitations } = this.props;
-
     return (
       <MenuItem
         icon={<Icon type="mic" />}
-        menu={
-          recitations.length
-            ? <Menu>
-              {this.renderMenu()}
-            </Menu>
-            : <Loader isActive />
-        }
+        menu={<Menu>{this.renderMenu()}</Menu>}
       >
         <LocaleFormattedMessage
           id="setting.reciters.title"

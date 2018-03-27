@@ -9,6 +9,8 @@ import Checkbox from 'quran-components/lib/Checkbox';
 import Loader from 'quran-components/lib/Loader';
 import Icon from 'quran-components/lib/Icon';
 
+const LoaderStyle = { position: 'relative' };
+
 const compareAlphabetically = property => (previous, next) => {
   const previousText = previous[property].toUpperCase();
   const nextText = next[property].toUpperCase();
@@ -68,9 +70,7 @@ class TranslationsDropdown extends Component {
             }
             handleChange={() => this.handleOptionSelected(translation.id)}
           >
-            <span>
-              {render(translation)}
-            </span>
+            <span>{render(translation)}</span>
           </Checkbox>
         </MenuItem>
       );
@@ -96,39 +96,46 @@ class TranslationsDropdown extends Component {
     );
   }
 
+  renderMenu() {
+    const { loadingTranslations } = this.props;
+
+    if (loadingTranslations) {
+      return <Loader isActive relative style={LoaderStyle} />;
+    }
+
+    return (
+      <div>
+        <MenuItem onClick={this.handleRemoveContent}>
+          <LocaleFormattedMessage
+            id="setting.translations.removeAll"
+            defaultMessage="Remove all"
+          />
+        </MenuItem>
+
+        <MenuItem divider>
+          <LocaleFormattedMessage
+            id="setting.translations.english"
+            defaultMessage="English"
+          />
+        </MenuItem>
+
+        {this.renderEnglishList()}
+        <MenuItem divider>
+          <LocaleFormattedMessage
+            id="setting.translations.other"
+            defaultMessage="Other Languages"
+          />
+        </MenuItem>
+        {this.renderLanguagesList()}
+      </div>
+    );
+  }
+
   render() {
-    const { translations, translationOptions } = this.props;
     return (
       <MenuItem
         icon={<Icon type="list" />}
-        menu={
-          translationOptions.length
-            ? <Menu>
-              {translations && translations.length
-                  ? <MenuItem onClick={this.handleRemoveContent}>
-                    <LocaleFormattedMessage
-                      id="setting.translations.removeAll"
-                      defaultMessage="Remove all"
-                    />
-                  </MenuItem>
-                  : <span />}
-              <MenuItem divider>
-                <LocaleFormattedMessage
-                  id="setting.translations.english"
-                  defaultMessage="English"
-                />
-              </MenuItem>
-              {this.renderEnglishList()}
-              <MenuItem divider>
-                <LocaleFormattedMessage
-                  id="setting.translations.other"
-                  defaultMessage="Other Languages"
-                />
-              </MenuItem>
-              {this.renderLanguagesList()}
-            </Menu>
-            : <Loader isActive />
-        }
+        menu={<Menu>{this.renderMenu()}</Menu>}
       >
         <LocaleFormattedMessage
           id="setting.translations.title"
@@ -143,7 +150,8 @@ TranslationsDropdown.propTypes = {
   onOptionChange: PropTypes.func.isRequired,
   translations: PropTypes.arrayOf(PropTypes.number).isRequired,
   translationOptions: customPropTypes.translationOptions,
-  loadTranslations: PropTypes.func.isRequired
+  loadTranslations: PropTypes.func.isRequired,
+  loadingTranslations: PropTypes.bool.isRequired
 };
 
 export default connect(

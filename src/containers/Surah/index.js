@@ -228,7 +228,7 @@ class Surah extends Component {
     );
 
     return isLoading ? (
-      <Loader isActive relative style={LoaderStyle} />
+      <Loader isActive style={LoaderStyle} relative />
     ) : (
       noAyah
     );
@@ -322,7 +322,9 @@ class Surah extends Component {
             )}
           </ul>
         }
-        loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
+        loadingComponent={
+          <Loader isActive={isLoading} relative style={LoaderStyle} />
+        }
       />
     );
   }
