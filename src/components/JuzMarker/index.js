@@ -25,7 +25,7 @@ export const ShowAyahAndJuzMark = ({
           {...bindTooltip}
           id={`Juz-mark-${chapterId}-${verseNumber}`}
           key={`Juz-${juzNumber}`}
-          className="col-xs-1 icon-juzMarker"
+          className="col-xs-1"
           title={`${intl.formatMessage({
             id: 'juz.index.heading',
             defaultMessage: 'juz'
