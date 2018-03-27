@@ -9,7 +9,7 @@ import Checkbox from 'quran-components/lib/Checkbox';
 import Loader from 'quran-components/lib/Loader';
 import Icon from 'quran-components/lib/Icon';
 
-const LoaderStyle = { position: 'relative' };
+const LoaderStyle = { position: 'relative', overflow: 'hidden' };
 
 const compareAlphabetically = property => (previous, next) => {
   const previousText = previous[property].toUpperCase();

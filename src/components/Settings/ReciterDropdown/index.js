@@ -9,7 +9,7 @@ import Icon from 'quran-components/lib/Icon';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import { loadRecitations } from 'redux/actions/options';
 
-const LoaderStyle = { position: 'relative' };
+const LoaderStyle = { position: 'relative', overflow: 'hidden' };
 
 class ReciterDropdown extends Component {
   componentDidMount() {

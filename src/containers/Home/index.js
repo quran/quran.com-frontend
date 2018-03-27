@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import Loadable from 'react-loadable';
 import Tabs, { Tab } from 'quran-components/lib/Tabs';
 import Loader from 'quran-components/lib/Loader';
+import PropTypes from 'prop-types';
 
 import debug from 'helpers/debug';
 import ChaptersList from 'components/Home/ChaptersList';
@@ -15,6 +16,8 @@ import Title from 'components/Home/Title';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import ComponentLoader from '../../components/ComponentLoader';
 
+const LoaderStyle = { position: 'relative', overflow: 'hidden' };
+
 const JuzList = Loadable({
   loader: () =>
     import(/* webpackChunkName: "JuzList" */ '../../components/Home/JuzList'),
@@ -23,17 +26,17 @@ const JuzList = Loadable({
 
 class Home extends Component {
   renderJuzList() {
-    const { chapters, juzs } = this.props;
+    const { chapters, juzs, loadingJuzs } = this.props;
 
-    if (juzs.loading) {
+    if (loadingJuzs) {
       return (
         <div className="row">
-          <Loader isActive relative />
+          <Loader isActive relative style={LoaderStyle} />
         </div>
       );
     }
 
-    const juzList = Object.values(juzs.entities);
+    const juzList = Object.values(juzs);
 
     return (
       <div className="row">
@@ -45,8 +48,16 @@ class Home extends Component {
   }
 
   renderChapterList() {
-    const { chapters } = this.props;
+    const { chapters, loadingChapters } = this.props;
     const chaptersList = Object.values(chapters);
+
+    if (loadingChapters) {
+      return (
+        <div className="row">
+          <Loader isActive relative style={LoaderStyle} />
+        </div>
+      );
+    }
 
     return (
       <div className="row">
@@ -98,12 +109,16 @@ class Home extends Component {
 
 Home.propTypes = {
   chapters: customPropTypes.chapters.isRequired,
-  juzs: customPropTypes.juzs.isRequired
+  juzs: customPropTypes.juzs.isRequired,
+  loadingChapters: PropTypes.bool.isRequired,
+  loadingJuzs: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = state => ({
+  loadingChapters: !state.chapters.loaded,
+  loadingJuzs: !state.juzs.loaded,
   chapters: state.chapters.entities,
-  juzs: state.juzs
+  juzs: state.juzs.entities
 });
 
 export default connect(mapStateToProps)(Home);
