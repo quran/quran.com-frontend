@@ -17,6 +17,8 @@ import scroller from 'utils/scroller';
 import * as AudioActions from 'redux/actions/audioplayer';
 
 import ComponentLoader from 'components/ComponentLoader';
+import Popover from 'react-bootstrap/lib/Popover';
+
 import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
@@ -87,7 +89,7 @@ export const ControlButton = styled.a`
   display: inline-block;
   cursor: pointer;
   padding: 0 10px;
-  color: ${props => props.theme.textColor};
+  color: ${props => (props.active ? props.theme.brandPrimary : props.theme.textColor)};
   outline: none;
   &:focus,
   &:active {
@@ -97,6 +99,23 @@ export const ControlButton = styled.a`
   ${isPlayingCss} ${isDisabledCss} i.fa {
     color: inherit;
     font-size: 100%;
+  }
+`;
+
+export const StyledPopover = styled(Popover)`
+  .popover-title {
+    font-family: ${props => props.theme.fonts.montserrat};
+    text-transform: uppercase;
+    color: ${props => props.theme.brandPrimary};
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-size: 0.75em;
+  }
+  .popover-content {
+    text-align: center;
+    a {
+      font-size: 0.8em;
+    }
   }
 `;
 
@@ -363,9 +382,7 @@ export class Audioplayer extends Component {
     return false;
   };
 
-  handleScrollToggle = (event) => {
-    event.preventDefault();
-
+  handleScrollToggle = () => {
     const { shouldScroll, currentVerse } = this.props;
 
     if (!shouldScroll) {
@@ -632,7 +649,7 @@ Audioplayer.propTypes = {
   currentFile: PropTypes.any, // eslint-disable-line
   audio: PropTypes.number.isRequired,
   verses: customPropTypes.verses,
-  verseIds: PropTypes.arrayOf(PropTypes.number) // eslint-disable-line
+  verseIds: PropTypes.arrayOf(PropTypes.string) // eslint-disable-line
 };
 
 export default connect(mapStateToProps, AudioActions)(Audioplayer);

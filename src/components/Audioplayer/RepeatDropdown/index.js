@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import styled, { css } from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import Popover from 'react-bootstrap/lib/Popover';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import FormControl from 'react-bootstrap/lib/FormControl';
@@ -11,23 +10,7 @@ import { intlShape, injectIntl } from 'react-intl';
 import SwitchToggle from 'quran-components/lib/Toggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-import { ControlButton } from '../index';
-
-export const StyledPopover = styled(Popover)`
-  .popover-title {
-    font-family: ${props => props.theme.fonts.montserrat};
-    text-transform: uppercase;
-    color: ${props => props.theme.brandPrimary};
-    padding-top: 15px;
-    padding-bottom: 15px;
-    font-size: 0.75em;
-  }
-  .popover-content {
-    a {
-      font-size: 0.8em;
-    }
-  }
-`;
+import { ControlButton, StyledPopover } from '../index';
 
 const Pill = styled(NavItem)`
   a {
@@ -309,7 +292,7 @@ class RepeatButton extends Component {
           trigger="click"
           rootClose
         >
-          <ControlButton>
+          <ControlButton active={!!repeat.from}>
             <i className="ss-icon ss-repeat" />
           </ControlButton>
         </OverlayTrigger>
