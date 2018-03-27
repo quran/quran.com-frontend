@@ -21,9 +21,14 @@ class ReciterDropdown extends Component {
   }
 
   renderMenu() {
-    const { audio, onOptionChange, recitations } = this.props;
+    const {
+      audio,
+      onOptionChange,
+      recitations,
+      loadingRecitations
+    } = this.props;
 
-    if (!recitations.length) {
+    if (loadingRecitations) {
       return <Loader isActive relative style={LoaderStyle} />;
     }
 
@@ -62,7 +67,8 @@ ReciterDropdown.propTypes = {
   onOptionChange: PropTypes.func,
   audio: PropTypes.number,
   loadRecitations: PropTypes.func.isRequired,
-  recitations: customPropTypes.recitations
+  recitations: customPropTypes.recitations,
+  loadingRecitations: PropTypes.bool
 };
 
 export default connect(

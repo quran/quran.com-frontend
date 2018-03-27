@@ -213,7 +213,7 @@ export const segmentType = PropTypes.shape({
   intervals: PropTypes.oneOfType([PropTypes.array, PropTypes.object]) // TODO: This should be done a better way.
 });
 
-export const segments = PropTypes.objectOf(segmentType);
+export const segments = PropTypes.arrayOf(segmentType);
 
 export const match = PropTypes.arrayOf(matchType);
 

@@ -632,7 +632,7 @@ Audioplayer.propTypes = {
   currentFile: PropTypes.any, // eslint-disable-line
   audio: PropTypes.number.isRequired,
   verses: customPropTypes.verses,
-  verseIds: PropTypes.object // eslint-disable-line
+  verseIds: PropTypes.arrayOf(PropTypes.number) // eslint-disable-line
 };
 
 export default connect(mapStateToProps, AudioActions)(Audioplayer);

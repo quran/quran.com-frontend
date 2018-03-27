@@ -29,7 +29,7 @@ import * as AyahActions from 'redux/actions/verses.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
-const LoaderStyle = {};
+const LoaderStyle = { position: 'relative', overflow: 'hidden' };
 
 const PageView = Loadable({
   loader: () =>
@@ -134,10 +134,6 @@ class Surah extends Component {
     return [...verseIds][0];
   }
 
-  hasVerses() {
-    return Object.keys(this.props.verses).length;
-  }
-
   handleLazyLoadAyahs = (callback) => {
     const { verseIds, chapter, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     const range = [this.getFirst(), this.getLast()];
@@ -211,27 +207,6 @@ class Surah extends Component {
     } verses and resides between pages ${chapter.pages[0]} to ${
       chapter.pages[1]
     } in the Quran.`; // eslint-disable-line max-len
-  }
-
-  renderNoAyah() {
-    const { isLoading } = this.props;
-
-    const noAyah = (
-      <div className="text-center">
-        <h2>
-          <LocaleFormattedMessage
-            id="ayah.notFound"
-            defaultMessage="Ayah not found."
-          />
-        </h2>
-      </div>
-    );
-
-    return isLoading ? (
-      <Loader isActive style={LoaderStyle} relative />
-    ) : (
-      noAyah
-    );
   }
 
   renderPagination() {
@@ -378,14 +353,6 @@ class Surah extends Component {
     const { chapter, verses, options, currentVerse } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
-    if (!this.hasVerses()) {
-      return (
-        <Container style={{ margin: '50px auto' }}>
-          {this.renderNoAyah()}
-        </Container>
-      );
-    }
-
     return (
       <div className="chapter-body">
         <Helmet
@@ -465,7 +432,7 @@ Surah.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   isSingleAyah: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   options: PropTypes.object.isRequired, // eslint-disable-line
   match: PropTypes.shape({
     params: PropTypes.shape({

@@ -204,7 +204,7 @@ AyatulKursi.propTypes = {
   currentVerse: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,
   isLoaded: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   options: PropTypes.object.isRequired, // eslint-disable-line
   verses: customPropTypes.verses,
   isPlaying: PropTypes.bool

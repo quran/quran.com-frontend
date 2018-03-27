@@ -89,7 +89,7 @@ Pdf.propTypes = {
   chapter: customPropTypes.surahType.isRequired,
   lines: PropTypes.object.isRequired, // eslint-disable-line
   currentVerse: PropTypes.string,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   options: PropTypes.object.isRequired, // eslint-disable-line
   verses: customPropTypes.verses,
   isPlaying: PropTypes.bool

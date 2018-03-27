@@ -111,7 +111,6 @@ class GlobalNav extends Component {
         style={this.state.scrolled ? scrolledStyle : {}}
         fixedTop={!isStatic}
         fluid
-        static={isStatic}
       >
         <button
           type="button"
