@@ -2,8 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import Tooltip from 'react-bootstrap/lib/Tooltip';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
+import { StyledPopover } from '../RepeatDropdown/index';
 
 // eslint-disable-next-line no-confusing-arrow
 const scrollColor = props =>
@@ -22,12 +23,12 @@ const ScrollLink = styled.a`
 
 const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
   const tooltip = (
-    <Tooltip id="scroll-button-tooltip" placement="bottom">
+    <StyledPopover id="scroll-popover">
       <LocaleFormattedMessage
         id="player.scrollButtonTip"
         defaultMessage="Automatically scrolls to the currently playing ayah on transitions..."
       />
-    </Tooltip>
+    </StyledPopover>
   );
 
   return (
@@ -36,6 +37,7 @@ const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
         overlay={tooltip}
         placement="top"
         trigger={['hover', 'focus']}
+        delayHide={150}
       >
         <ScrollLink
           tabIndex="-1"

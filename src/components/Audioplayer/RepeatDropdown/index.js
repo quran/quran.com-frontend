@@ -8,12 +8,12 @@ import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
 import FormControl from 'react-bootstrap/lib/FormControl';
 import { intlShape, injectIntl } from 'react-intl';
-import Checkbox from 'quran-components/lib/Checkbox';
+import SwitchToggle from 'quran-components/lib/Toggle';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import { ControlButton } from '../index';
 
-const StyledPopover = styled(Popover)`
+export const StyledPopover = styled(Popover)`
   .popover-title {
     font-family: ${props => props.theme.fonts.montserrat};
     text-transform: uppercase;
@@ -275,7 +275,7 @@ class RepeatButton extends Component {
 
     const popover = (
       <StyledPopover
-        id="FontSizeDropdown"
+        id="repeat-toggle-popover"
         title={
           <div className="row">
             <div className="col-md-12 text-center">
@@ -284,11 +284,12 @@ class RepeatButton extends Component {
                 defaultMessage="TOGGLE REPEAT"
               />
               {'  '}
-              <Checkbox
+              <SwitchToggle
                 checked={repeat.from}
-                handleChange={this.handleToggle}
+                onToggle={this.handleToggle}
                 id="repeat-toggle"
                 name="repeat-toggle"
+                flat
               />
             </div>
           </div>
