@@ -410,15 +410,14 @@ class Chapter extends Component {
           </div>
         </Container>
 
-        {__CLIENT__ &&
-        currentVerse && ( // eslint-disable-line
-        <Audioplayer
-          chapter={chapter}
-          verses={verses}
-          currentVerse={verses[currentVerse]}
-          onLoadAyahs={this.handleLazyLoadAyahs}
-        />
-          )}
+        {__CLIENT__ && ( // eslint-disable-line
+          <Audioplayer
+            chapter={chapter}
+            verses={verses}
+            currentVerse={verses[currentVerse]}
+            onLoadAyahs={this.handleLazyLoadAyahs}
+          />
+        )}
       </div>
     );
   }
