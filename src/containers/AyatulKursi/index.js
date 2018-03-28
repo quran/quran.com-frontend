@@ -185,10 +185,12 @@ class AyatulKursi extends Component {
             </div>
           </div>
         </Container>
+
         {__CLIENT__ && (
           <Audioplayer
+            verses
             chapter={chapter}
-            startVerse={Object.values(verses)[0]}
+            currentVerse={Object.values(verses)[0]}
             onLoadAyahs={this.handleLazyLoadAyahs}
           />
         )}
@@ -198,7 +200,7 @@ class AyatulKursi extends Component {
 }
 
 AyatulKursi.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   actions: PropTypes.object.isRequired, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line
   currentVerse: PropTypes.string,

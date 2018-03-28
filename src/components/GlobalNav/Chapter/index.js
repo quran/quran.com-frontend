@@ -14,9 +14,9 @@ import ComponentLoader from '../../ComponentLoader';
 
 import GlobalNav from '../index';
 
-const SurahsDropdown = Loadable({
+const ChaptersDropdown = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "SurahsDropdown" */ '../../SurahsDropdown'),
+    import(/* webpackChunkName: "ChaptersDropdown" */ '../../ChaptersDropdown'),
   LoadingComponent: ComponentLoader
 });
 
@@ -31,7 +31,7 @@ const Settings = Loadable({
   LoadingComponent: ComponentLoader
 });
 
-class GlobalNavSurah extends Component {
+class GlobalNavChapter extends Component {
   state = {
     drawerOpen: false
   };
@@ -83,7 +83,7 @@ class GlobalNavSurah extends Component {
       <GlobalNav
         {...props}
         leftControls={[
-          <SurahsDropdown chapter={chapter} chapters={chapters} />,
+          <ChaptersDropdown chapter={chapter} chapters={chapters} />,
           <VersesDropdown
             chapter={chapter}
             isReadingMode={options.isReadingMode}
@@ -143,8 +143,8 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-GlobalNavSurah.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+GlobalNavChapter.propTypes = {
+  chapter: customPropTypes.chapterType.isRequired,
   chapters: customPropTypes.chapters.isRequired,
   options: customPropTypes.optionsType.isRequired,
   versesIds: PropTypes.instanceOf(Set),
@@ -157,4 +157,4 @@ export default connect(mapStateToProps, {
   load,
   replace,
   setCurrentVerse
-})(GlobalNavSurah);
+})(GlobalNavChapter);

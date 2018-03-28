@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { surahType } from 'customPropTypes';
+import { chapterType } from 'customPropTypes';
 
 import { CHAPTERS_LIST_EVENTS } from '../../../events';
 
@@ -14,7 +14,9 @@ const Item = styled.li`
   }
 `;
 
-const Arabic = styled.div`font-size: 14px;`;
+const Arabic = styled.div`
+  font-size: 14px;
+`;
 
 const Translated = styled.div`
   font-size: 10px;
@@ -40,7 +42,7 @@ const TableItem = styled.div`
   ${props => props.textMuted && `text-color: ${props.theme.textMuted};`};
 `;
 
-const ChapterItem = ({ chapter }) =>
+const ChapterItem = ({ chapter }) => (
   <Item key={chapter.id}>
     <StyledLink
       to={`/${chapter.id}`}
@@ -50,9 +52,7 @@ const ChapterItem = ({ chapter }) =>
         <TableItem className="text-muted" width={2 / 12}>
           {chapter.chapterNumber}
         </TableItem>
-        <TableItem width={7 / 12}>
-          {chapter.nameSimple}
-        </TableItem>
+        <TableItem width={7 / 12}>{chapter.nameSimple}</TableItem>
         <TableItem width={3 / 12} className="text-left">
           <Arabic>
             <span className={`icon-surah${chapter.id}`} />
@@ -67,10 +67,11 @@ const ChapterItem = ({ chapter }) =>
         </span>
       </Translated>
     </StyledLink>
-  </Item>;
+  </Item>
+);
 
 ChapterItem.propTypes = {
-  chapter: surahType.isRequired
+  chapter: chapterType.isRequired
 };
 
 export default ChapterItem;

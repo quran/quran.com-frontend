@@ -11,7 +11,7 @@ import ChaptersList from 'components/Home/ChaptersList';
 import * as customPropTypes from 'customPropTypes';
 
 import IndexHeader from 'components/IndexHeader';
-import QuickSurahs from 'components/Home/QuickSurahs';
+import QuickChapters from 'components/Home/QuickChapters';
 import Title from 'components/Home/Title';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import ComponentLoader from '../../components/ComponentLoader';
@@ -93,7 +93,7 @@ class Home extends Component {
         <div className="container">
           <div className="row">
             <div className="col-md-10 col-md-offset-1">
-              <QuickSurahs />
+              <QuickChapters />
               <Tabs>
                 <Tab title={chapterTitle}>{this.renderChapterList()}</Tab>
 

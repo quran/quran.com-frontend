@@ -302,7 +302,7 @@ class RepeatButton extends Component {
 }
 
 RepeatButton.propTypes = {
-  chapter: customPropTypes.surahType,
+  chapter: customPropTypes.chapterType,
   repeat: customPropTypes.timeInterval,
   setRepeat: PropTypes.func.isRequired,
   current: PropTypes.number.isRequired,

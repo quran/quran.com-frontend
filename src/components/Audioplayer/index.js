@@ -7,6 +7,7 @@ import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
 import Loadable from 'react-loadable';
+import Loader from 'quran-components/lib/Loader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 // Helpers
@@ -28,6 +29,15 @@ const RepeatDropdown = Loadable({
     import(/* webpackChunkName: "RepeatDropdown" */ './RepeatDropdown'),
   LoadingComponent: ComponentLoader
 });
+
+const LoaderStyle = {
+  position: 'relative',
+  overflow: 'hidden',
+  width: '32px',
+  height: '32px',
+  margin: '-8px',
+  background: '#ffffff'
+};
 
 const Wrapper = styled.div`
   width: 100%;
@@ -89,7 +99,8 @@ export const ControlButton = styled.a`
   display: inline-block;
   cursor: pointer;
   padding: 0 10px;
-  color: ${props => (props.active ? props.theme.brandPrimary : props.theme.textColor)};
+  color: ${props =>
+    props.active ? props.theme.brandPrimary : props.theme.textColor};
   outline: none;
   &:focus,
   &:active {
@@ -383,9 +394,9 @@ export class Audioplayer extends Component {
   };
 
   handleScrollToggle = () => {
-    const { shouldScroll, currentVerse } = this.props;
+    const { shouldScroll, currentVerse, isPlaying } = this.props;
 
-    if (!shouldScroll) {
+    if (!shouldScroll && isPlaying) {
       // we use the inverse (!) here because we're toggling, so false is true
       this.scrollToVerse(currentVerse.verseKey);
     }
@@ -473,6 +484,8 @@ export class Audioplayer extends Component {
 
   renderPlayStopButtons() {
     const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
+    // if(true)
+    // return <Loader isActive relative style={LoaderStyle} />
 
     return (
       <ControlButton
@@ -488,6 +501,7 @@ export class Audioplayer extends Component {
 
   renderPreviousButton() {
     const { currentVerse, files } = this.props;
+
     if (!files) return false;
     const index = Object.keys(files).findIndex(
       id => id === currentVerse.verseKey
@@ -624,7 +638,7 @@ const mapStateToProps = (state, ownProps) => {
 
 Audioplayer.propTypes = {
   className: PropTypes.string,
-  chapter: customPropTypes.surahType,
+  chapter: customPropTypes.chapterType.isRequired,
   onLoadAyahs: PropTypes.func.isRequired,
   segments: customPropTypes.segments,
   // NOTE: should be PropTypes.instanceOf(Audio) but not on server.

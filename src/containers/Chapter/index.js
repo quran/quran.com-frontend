@@ -44,7 +44,7 @@ const Audioplayer = Loadable({
 });
 const ChapterInfoPanelContainer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "SurahInfo" */ 'containers/ChapterInfoPanelContainer'),
+    import(/* webpackChunkName: "ChapterInfo" */ 'containers/ChapterInfoPanelContainer'),
   LoadingComponent: ComponentLoader
 });
 const TopOptions = Loadable({
@@ -53,27 +53,29 @@ const TopOptions = Loadable({
   LoadingComponent: ComponentLoader
 });
 
-class Surah extends Component {
+class Chapter extends Component {
   state = {
     lazyLoading: false,
     sidebarOpen: false
   };
 
-  componentWillMount() {
-    const { match: { params }, chapter, actions } = this.props; // eslint-disable-line no-shadow
-
-    if (params.range && params.range.includes('-')) {
-      const start = parseInt(params.range.split('-')[0], 10);
-
-      if (start > chapter.versesCount || isNaN(start)) {
-        return actions.push.push('/error/invalid-verse-range');
-      }
-
-      return false;
-    }
-
-    return false;
-  }
+  //
+  // See utils/routeFilters, we're already making sure surah and ayah are valid on router level
+  // componentWillMount() {
+  //   const { match: { params }, chapter, actions } = this.props; // eslint-disable-line no-shadow
+  //
+  //   if (params.range && params.range.includes('-')) {
+  //     const start = parseInt(params.range.split('-')[0], 10);
+  //
+  //     if (start > chapter.versesCount || isNaN(start)) {
+  //       return actions.push.push('/error/invalid-verse-range');
+  //     }
+  //
+  //     return false;
+  //   }
+  //
+  //   return false;
+  // }
 
   // componentDidMount() {
   //   const { verses, options: { audio } } = this.props;
@@ -204,9 +206,9 @@ class Surah extends Component {
 
     return `${info ? info.shortText : ''} This Surah has ${
       chapter.versesCount
-    } verses and resides between pages ${chapter.pages[0]} to ${
+    } ayah and resides between pages ${chapter.pages[0]} to ${
       chapter.pages[1]
-    } in the Quran.`; // eslint-disable-line max-len
+    } in the Holly Quran.`; // eslint-disable-line max-len
   }
 
   renderPagination() {
@@ -351,7 +353,7 @@ class Surah extends Component {
 
   render() {
     const { chapter, verses, options, currentVerse } = this.props; // eslint-disable-line no-shadow
-    debug('component:Surah', 'Render');
+    debug('component:Chapter', 'Render');
 
     return (
       <div className="chapter-body">
@@ -407,21 +409,23 @@ class Surah extends Component {
             </div>
           </div>
         </Container>
-        {__CLIENT__ && ( // eslint-disable-line
-          <Audioplayer
-            chapter={chapter}
-            verses={verses}
-            currentVerse={verses[currentVerse]}
-            onLoadAyahs={this.handleLazyLoadAyahs}
-          />
-        )}
+
+        {__CLIENT__ &&
+        currentVerse && ( // eslint-disable-line
+        <Audioplayer
+          chapter={chapter}
+          verses={verses}
+          currentVerse={verses[currentVerse]}
+          onLoadAyahs={this.handleLazyLoadAyahs}
+        />
+          )}
       </div>
     );
   }
 }
 
-Surah.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+Chapter.propTypes = {
+  chapter: customPropTypes.chapterType.isRequired,
   chapters: customPropTypes.chapters.isRequired,
   actions: PropTypes.object.isRequired, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line
@@ -454,7 +458,10 @@ function mapStateToProps(state, ownProps) {
   const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah =
     !!ownProps.match.params.range && !ownProps.match.params.range.includes('-');
-  const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
+
+  const currentVerse = state.audioplayer.currentVerse
+    ? state.audioplayer.currentVerse.verseKey
+    : Object.keys(verses)[0];
 
   return {
     chapter,
@@ -486,4 +493,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Surah);
+export default connect(mapStateToProps, mapDispatchToProps)(Chapter);
