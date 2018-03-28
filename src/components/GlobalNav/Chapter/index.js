@@ -47,7 +47,10 @@ class GlobalNavChapter extends Component {
 
     const to = Math.min(...[verseNum + 10, chapter.versesCount]);
 
-    return this.props.replace(`/${chapter.chapterNumber}/${verseNum}-${to}`);
+    // eslint-disable-next-line react/prop-types
+    return this.props.history.push(
+      `/${chapter.chapterNumber}/${verseNum}-${to}`
+    );
   };
 
   handleDrawerToggle = (open) => {

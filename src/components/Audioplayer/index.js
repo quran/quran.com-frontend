@@ -99,8 +99,7 @@ export const ControlButton = styled.a`
   display: inline-block;
   cursor: pointer;
   padding: 0 10px;
-  color: ${props =>
-    props.active ? props.theme.brandPrimary : props.theme.textColor};
+  color: ${props => (props.active ? props.theme.brandPrimary : props.theme.textColor)};
   outline: none;
   &:focus,
   &:active {
@@ -483,9 +482,11 @@ export class Audioplayer extends Component {
   };
 
   renderPlayStopButtons() {
-    const { isPlaying, pause } = this.props; // eslint-disable-line no-shadow
-    // if(true)
-    // return <Loader isActive relative style={LoaderStyle} />
+    const { isPlaying, pause, currentVerse } = this.props; // eslint-disable-line no-shadow
+    const playPauseBtn = (
+      <i className={`ss-icon ${isPlaying ? 'ss-pause' : 'ss-play'}`} />
+    );
+    const loader = <Loader isActive relative style={LoaderStyle} />;
 
     return (
       <ControlButton
@@ -494,7 +495,7 @@ export class Audioplayer extends Component {
         onClick={isPlaying ? pause : this.play}
         playingButton
       >
-        <i className={`ss-icon ${isPlaying ? 'ss-pause' : 'ss-play'}`} />
+        {currentVerse ? playPauseBtn : loader}
       </ControlButton>
     );
   }

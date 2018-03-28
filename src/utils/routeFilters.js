@@ -94,18 +94,6 @@ const validateRange = ({ params: { range, chapterId }, location }) => {
         url: location.pathname.replace(/\b0+/g, '')
       };
     }
-
-    if (!isNaN(parseInt(range, 10))) {
-      return {
-        status: REDIRECT_STATUS,
-        url: `/${chapterId}/${range}`
-      };
-    }
-
-    return {
-      status: BAD_REQUEST_STATUS,
-      url: '/error/invalid-ayah'
-    };
   }
 
   return null;
