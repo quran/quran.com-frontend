@@ -29,7 +29,7 @@ import * as AyahActions from 'redux/actions/verses.js';
 import * as OptionsActions from 'redux/actions/options.js';
 import * as MediaActions from 'redux/actions/media.js';
 
-const LoaderStyle = {};
+const LoaderStyle = { position: 'relative', overflow: 'hidden' };
 
 const PageView = Loadable({
   loader: () =>
@@ -44,7 +44,7 @@ const Audioplayer = Loadable({
 });
 const ChapterInfoPanelContainer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "SurahInfo" */ 'containers/ChapterInfoPanelContainer'),
+    import(/* webpackChunkName: "ChapterInfo" */ 'containers/ChapterInfoPanelContainer'),
   LoadingComponent: ComponentLoader
 });
 const TopOptions = Loadable({
@@ -53,27 +53,29 @@ const TopOptions = Loadable({
   LoadingComponent: ComponentLoader
 });
 
-class Surah extends Component {
+class Chapter extends Component {
   state = {
     lazyLoading: false,
     sidebarOpen: false
   };
 
-  componentWillMount() {
-    const { match: { params }, chapter, actions } = this.props; // eslint-disable-line no-shadow
-
-    if (params.range && params.range.includes('-')) {
-      const start = parseInt(params.range.split('-')[0], 10);
-
-      if (start > chapter.versesCount || isNaN(start)) {
-        return actions.push.push('/error/invalid-verse-range');
-      }
-
-      return false;
-    }
-
-    return false;
-  }
+  //
+  // See utils/routeFilters, we're already making sure surah and ayah are valid on router level
+  // componentWillMount() {
+  //   const { match: { params }, chapter, actions } = this.props; // eslint-disable-line no-shadow
+  //
+  //   if (params.range && params.range.includes('-')) {
+  //     const start = parseInt(params.range.split('-')[0], 10);
+  //
+  //     if (start > chapter.versesCount || isNaN(start)) {
+  //       return actions.push.push('/error/invalid-verse-range');
+  //     }
+  //
+  //     return false;
+  //   }
+  //
+  //   return false;
+  // }
 
   // componentDidMount() {
   //   const { verses, options: { audio } } = this.props;
@@ -132,10 +134,6 @@ class Surah extends Component {
     const { verseIds } = this.props;
 
     return [...verseIds][0];
-  }
-
-  hasVerses() {
-    return Object.keys(this.props.verses).length;
   }
 
   handleLazyLoadAyahs = (callback) => {
@@ -208,30 +206,9 @@ class Surah extends Component {
 
     return `${info ? info.shortText : ''} This Surah has ${
       chapter.versesCount
-    } verses and resides between pages ${chapter.pages[0]} to ${
+    } ayah and resides between pages ${chapter.pages[0]} to ${
       chapter.pages[1]
-    } in the Quran.`; // eslint-disable-line max-len
-  }
-
-  renderNoAyah() {
-    const { isLoading } = this.props;
-
-    const noAyah = (
-      <div className="text-center">
-        <h2>
-          <LocaleFormattedMessage
-            id="ayah.notFound"
-            defaultMessage="Ayah not found."
-          />
-        </h2>
-      </div>
-    );
-
-    return isLoading ? (
-      <Loader isActive relative style={LoaderStyle} />
-    ) : (
-      noAyah
-    );
+    } in the Holly Quran.`; // eslint-disable-line max-len
   }
 
   renderPagination() {
@@ -322,7 +299,9 @@ class Surah extends Component {
             )}
           </ul>
         }
-        loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
+        loadingComponent={
+          <Loader isActive={isLoading} relative style={LoaderStyle} />
+        }
       />
     );
   }
@@ -374,15 +353,7 @@ class Surah extends Component {
 
   render() {
     const { chapter, verses, options, currentVerse } = this.props; // eslint-disable-line no-shadow
-    debug('component:Surah', 'Render');
-
-    if (!this.hasVerses()) {
-      return (
-        <Container style={{ margin: '50px auto' }}>
-          {this.renderNoAyah()}
-        </Container>
-      );
-    }
+    debug('component:Chapter', 'Render');
 
     return (
       <div className="chapter-body">
@@ -438,6 +409,7 @@ class Surah extends Component {
             </div>
           </div>
         </Container>
+
         {__CLIENT__ && ( // eslint-disable-line
           <Audioplayer
             chapter={chapter}
@@ -451,8 +423,8 @@ class Surah extends Component {
   }
 }
 
-Surah.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+Chapter.propTypes = {
+  chapter: customPropTypes.chapterType.isRequired,
   chapters: customPropTypes.chapters.isRequired,
   actions: PropTypes.object.isRequired, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line
@@ -463,7 +435,7 @@ Surah.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   isLoaded: PropTypes.bool.isRequired,
   isSingleAyah: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   options: PropTypes.object.isRequired, // eslint-disable-line
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -485,7 +457,10 @@ function mapStateToProps(state, ownProps) {
   const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah =
     !!ownProps.match.params.range && !ownProps.match.params.range.includes('-');
-  const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
+
+  const currentVerse = state.audioplayer.currentVerse
+    ? state.audioplayer.currentVerse.verseKey
+    : Object.keys(verses)[0];
 
   return {
     chapter,
@@ -517,4 +492,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Surah);
+export default connect(mapStateToProps, mapDispatchToProps)(Chapter);

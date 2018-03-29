@@ -42,11 +42,11 @@ const List = styled.ul`
 const StyledLink = styled.a`
   font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
-  -webkit-transition: color .15s ease-in-out;
-  -moz-transition: color .15s ease-in-out;
-  -o-transition: color .15s ease-in-out;
-  -ms-transition: color .15s ease-in-out;
-  transition: color .15s ease-in-out;
+  -webkit-transition: color 0.15s ease-in-out;
+  -moz-transition: color 0.15s ease-in-out;
+  -o-transition: color 0.15s ease-in-out;
+  -ms-transition: color 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out;
 
   &:hover {
     color: #fff;
@@ -56,18 +56,18 @@ const StyledLink = styled.a`
 const StyledRouterLink = styled(Link)`
   font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
-  -webkit-transition: color .15s ease-in-out;
-  -moz-transition: color .15s ease-in-out;
-  -o-transition: color .15s ease-in-out;
-  -ms-transition: color .15s ease-in-out;
-  transition: color .15s ease-in-out;
+  -webkit-transition: color 0.15s ease-in-out;
+  -moz-transition: color 0.15s ease-in-out;
+  -o-transition: color 0.15s ease-in-out;
+  -ms-transition: color 0.15s ease-in-out;
+  transition: color 0.15s ease-in-out;
 
   &:hover {
     color: #fff;
   }
 `;
 
-const Footer = () =>
+const Footer = () => (
   <Container>
     <div className="container">
       <div className="row">
@@ -192,7 +192,7 @@ const Footer = () =>
                 </li>
                 <li>
                   <StyledRouterLink
-                    to="/2/255"
+                    to="/ayatul-kursi"
                     {...FOOTER_EVENTS.CLICK.CHAPTER_LINK.PROPS}
                     data-metrics-chapter-id="2"
                     data-metrics-verse-id="255"
@@ -223,6 +223,7 @@ const Footer = () =>
         </div>
       </div>
     </div>
-  </Container>;
+  </Container>
+);
 
 export default Footer;

@@ -2,10 +2,10 @@ import React from 'react';
 
 import { storiesOf } from '@storybook/react';
 import { MemoryRouter } from 'react-router-dom';
-import QuickSurahs from 'components/Home/QuickSurahs';
+import QuickChapters from 'components/Home/QuickChapters';
 
-storiesOf('Home/QuickSurahs', module).add('default', () => (
+storiesOf('Home/QuickChapters', module).add('default', () => (
   <MemoryRouter>
-    <QuickSurahs />
+    <QuickChapters />
   </MemoryRouter>
 ));

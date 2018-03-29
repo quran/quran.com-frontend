@@ -363,7 +363,7 @@ class Verse extends Component {
 Verse.propTypes = {
   isSearched: PropTypes.bool,
   verse: customPropTypes.verseType.isRequired,
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   mediaActions: customPropTypes.mediaActions,
   audioActions: customPropTypes.audioActions,
   match: customPropTypes.match,

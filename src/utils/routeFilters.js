@@ -48,10 +48,22 @@ const validateVerse = ({ params: { chapterId, range } }) => {
   return null;
 };
 
-const validateRange = ({ params: { range, chapterId }, location }) => {
+const validateRange = ({ params, location }) => {
+  const chapterId = params.chapterId;
+  const range = params.range;
+  const splitter = params['0'];
+
+  if (splitter) {
+    return {
+      status: REDIRECT_STATUS,
+      url: `/${chapterId}/${range}`
+    };
+  }
+
   if (range) {
     // Maybe use:
     // range.match(/\d+:\d+$/g)
+
     if (range.includes('-') || range.includes(':')) {
       const splitType = range.includes('-') ? '-' : ':';
       const [_from, _to] = range.split(splitType).map(num => num);
@@ -70,6 +82,10 @@ const validateRange = ({ params: { range, chapterId }, location }) => {
         return { status: REDIRECT_STATUS, url: `/${chapterId}/${from}` };
       }
 
+      if (from > to) {
+        return { status: REDIRECT_STATUS, url: `/${chapterId}/${to}-${from}` };
+      }
+
       if (
         _from.length !== from.toString().length ||
         _to.length !== to.toString().length
@@ -83,7 +99,9 @@ const validateRange = ({ params: { range, chapterId }, location }) => {
       if (range.includes(':')) {
         return {
           status: REDIRECT_STATUS,
-          url: `/${chapterId}/${range.split(':').join('-')}${location.search}`
+          url: `/${chapterId}/${range.replace(':', '-')}${
+            location.search ? location.search : ''
+          }`
         };
       }
     }
@@ -94,18 +112,6 @@ const validateRange = ({ params: { range, chapterId }, location }) => {
         url: location.pathname.replace(/\b0+/g, '')
       };
     }
-
-    if (!isNaN(parseInt(range, 10))) {
-      return {
-        status: REDIRECT_STATUS,
-        url: `/${chapterId}/${range}`
-      };
-    }
-
-    return {
-      status: BAD_REQUEST_STATUS,
-      url: '/error/invalid-ayah'
-    };
   }
 
   return null;
@@ -146,6 +152,22 @@ const validators = [
 ];
 
 const validate = ({ params, location }) => {
+  /*
+   validation & redirection rules
+
+   /2:2 => /2/2
+   /2:2:3 => 1/2-3
+   /2-2-3 => 1/2-3
+   /1-1 => /1/1
+   /002 => /2
+   /002/002 => /2/2
+   /02:02 => /2:2
+   /2/20-2 => 2/2-20
+   /2:20:2 => /2/2-20
+   /120 => invalid-surah
+   /1/8 => invalid ayah
+
+  */
   const trigger = validators.find(validator => validator({ params, location }));
 
   if (trigger) {

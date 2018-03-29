@@ -9,7 +9,7 @@ import {
   versesConnect,
   tafsirConnect,
   juzsConnect
-} from './containers/Surah/connect';
+} from './containers/Chapter/connect';
 import { search } from './redux/actions/search.js';
 import validators from './utils/routeFilters';
 
@@ -122,11 +122,11 @@ const routes = [
   {
     path: '/:chapterId(\\d+)/:range/:translations',
     component: loadable(() =>
-      import(/* webpackChunkName: "Surah" */ './containers/Surah')
+      import(/* webpackChunkName: "Chapter" */ './containers/Chapter')
     ),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
     navbar: loadable(() =>
-      import(/* webpackChunkName: "GlobalNavSurah" */ './components/GlobalNav/Surah')
+      import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
     ),
     onEnter: validators
   },
@@ -144,11 +144,22 @@ const routes = [
   {
     path: '/:chapterId(\\d+)/:range?',
     component: loadable(() =>
-      import(/* webpackChunkName: "Surah" */ './containers/Surah')
+      import(/* webpackChunkName: "Chapter" */ './containers/Chapter')
     ),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
     navbar: loadable(() =>
-      import(/* webpackChunkName: "GlobalNavSurah" */ './components/GlobalNav/Surah')
+      import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
+    ),
+    onEnter: validators
+  },
+  {
+    path: '/:chapterId(\\d+)(:|-)?:range?',
+    component: loadable(() =>
+      import(/* webpackChunkName: "Chapter" */ './containers/Chapter')
+    ),
+    loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
+    navbar: loadable(() =>
+      import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
     ),
     onEnter: validators
   }

@@ -112,13 +112,18 @@ const ListContainer = styled.div`
   }
 `;
 
-const SurahInfo = ({ chapter, chapterInfo, isShowingSurahInfo, setOption }) => {
+const ChapterInfo = ({
+  chapter,
+  chapterInfo,
+  isShowingChapterInfo,
+  setOption
+}) => {
   // So we don't need to load images and files unless needed
-  if (!isShowingSurahInfo) return <noscript />;
+  if (!isShowingChapterInfo) return <noscript />;
   if (!chapterInfo) return <Loader isActive />;
 
   const handleClose = () =>
-    setOption({ isShowingSurahInfo: !isShowingSurahInfo });
+    setOption({ isShowingChapterInfo: !isShowingChapterInfo });
 
   return (
     <Container className="col-xs-12 chapter-info">
@@ -161,11 +166,11 @@ const SurahInfo = ({ chapter, chapterInfo, isShowingSurahInfo, setOption }) => {
   );
 };
 
-SurahInfo.propTypes = {
+ChapterInfo.propTypes = {
   setOption: PropTypes.func.isRequired,
-  isShowingSurahInfo: PropTypes.bool.isRequired,
-  chapter: customPropTypes.surahType,
+  isShowingChapterInfo: PropTypes.bool.isRequired,
+  chapter: customPropTypes.chapterType,
   chapterInfo: customPropTypes.infoType
 };
 
-export default SurahInfo;
+export default ChapterInfo;
