@@ -8,7 +8,7 @@ describe('juzs reducer', () => {
         juzsReducer(INITIAL_STATE, {
           type: FETCH_JUZS.ACTION
         })
-      ).toEqual({ ...INITIAL_STATE, loaded: false, loading: true });
+      ).toEqual({ ...INITIAL_STATE, loaded: false });
     });
   });
 
@@ -28,7 +28,6 @@ describe('juzs reducer', () => {
       ).toEqual({
         ...INITIAL_STATE,
         loaded: true,
-        loading: false,
         entities: {
           ...juzs
         }
@@ -42,7 +41,7 @@ describe('juzs reducer', () => {
         juzsReducer(INITIAL_STATE, {
           type: FETCH_JUZS.FAILURE
         })
-      ).toEqual({ ...INITIAL_STATE, errored: true, loading: false });
+      ).toEqual({ ...INITIAL_STATE, errored: true });
     });
   });
 });

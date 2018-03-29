@@ -99,7 +99,8 @@ export const ControlButton = styled.a`
   display: inline-block;
   cursor: pointer;
   padding: 0 10px;
-  color: ${props => (props.active ? props.theme.brandPrimary : props.theme.textColor)};
+  color: ${props =>
+    props.active ? props.theme.brandPrimary : props.theme.textColor};
   outline: none;
   &:focus,
   &:active {
@@ -114,7 +115,6 @@ export const ControlButton = styled.a`
 
 export const StyledPopover = styled(Popover)`
   .popover-title {
-    font-family: ${props => props.theme.fonts.montserrat};
     text-transform: uppercase;
     color: ${props => props.theme.brandPrimary};
     padding-top: 15px;

@@ -151,6 +151,17 @@ const routes = [
       import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
     ),
     onEnter: validators
+  },
+  {
+    path: '/:chapterId(\\d+)(:|-)?:range?',
+    component: loadable(() =>
+      import(/* webpackChunkName: "Chapter" */ './containers/Chapter')
+    ),
+    loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
+    navbar: loadable(() =>
+      import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
+    ),
+    onEnter: validators
   }
 ];
 
