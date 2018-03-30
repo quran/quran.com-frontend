@@ -76,7 +76,7 @@ const Share = ({ chapter, verse, inline }) => {
 };
 
 Share.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   verse: customPropTypes.verseType,
   inline: PropTypes.bool
 };

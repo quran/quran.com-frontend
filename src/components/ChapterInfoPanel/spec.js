@@ -12,7 +12,7 @@ describe('<ChapterInfoPanel />', () => {
   beforeEach(() => {
     props = {
       setOption: jest.fn(),
-      isShowingSurahInfo: true,
+      isShowingChapterInfo: true,
       chapter,
       chapterInfo
     };

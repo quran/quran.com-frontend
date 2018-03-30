@@ -4,7 +4,7 @@ export default {
     local: 'urdu',
     'local.siteLocale': 'سائٹ کی زبان',
     'local.changeLocal':
-      'جس زبان میں سایٹ دیکہنا چاہتے ہیں اس زبان کا انتخاب کریں',
+      'جس زبان میں سایٹ دیکھنا چاہتے ہیں اس زبان کا انتخاب کریں',
     'local.nativeName': 'اردو',
     'local.selectLabel': 'زبان',
     'setting.title': 'اختیارات',
@@ -29,7 +29,7 @@ export default {
     'ayah.media.lectureFrom': 'کے لیکچر دیکھے  {from}',
     'ayah.bookmarked': 'حوالہ ہے',
     'ayah.bookmark': 'حوالہ',
-    'ayah.notFound': 'آیت نہیں ملا',
+    'ayah.notFound': 'آیت نہیں ملی۔',
 
     'search.placeholder': 'تلاش کر یں',
     'search.resultHeading':
@@ -57,7 +57,7 @@ export default {
     'player.repeat.rangeEnd': 'تک',
     'player.repeat.times': 'کتنی بار',
     'player.repeat.loop': 'چلاتے رہو',
-    'player.scrollButtonTip': 'جو آیت چل رہیی ہو اس کو  صفہ پر سامنے رکھو',
+    'player.scrollButtonTip': 'جو آیت چل رہی ہو اس کو  صفہ پر سامنے رکھو',
 
     'app.loading': 'لوڈ ہو رہا ہے',
     'actions.copy': 'کاپی',

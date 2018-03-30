@@ -13,9 +13,9 @@ const options = cookie.load('options') || {};
 export const INITIAL_STATE = {
   isReadingMode: options.isReadingMode || false,
   isNightMode: options.isNightMode || false,
-  isShowingSurahInfo: options.isShowingSurahInfo || false,
+  isShowingChapterInfo: options.isShowingChapterInfo || false,
   audio: options.audio || 7, // Mishari Rashid al-`Afasy
-  translations: options.translations || [101], // Clear Quran
+  translations: options.translations || [102], // Clear Quran with footnotes
   tooltip: options.tooltip || 'translation',
   fontSize: options.fontSize || {
     arabic: 3.5,

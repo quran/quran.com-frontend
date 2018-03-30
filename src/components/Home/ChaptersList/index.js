@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { surahType } from 'customPropTypes';
+import { chapterType } from 'customPropTypes';
 
 import ChapterItem from 'components/Home/ChapterItem';
 import List from 'components/List';
@@ -14,7 +14,7 @@ const ChaptersList = ({ chapters }) => (
 );
 
 ChaptersList.propTypes = {
-  chapters: PropTypes.arrayOf(surahType).isRequired
+  chapters: PropTypes.arrayOf(chapterType).isRequired
 };
 
 export default ChaptersList;

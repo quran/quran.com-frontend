@@ -1,33 +1,32 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import Tooltip from 'react-bootstrap/lib/Tooltip';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
-// eslint-disable-next-line no-confusing-arrow
-const scrollColor = props =>
-  props.active ? props.theme.brandPrimary : props.theme.textColor;
+import SwitchToggle from 'quran-components/lib/Toggle';
 
-const ScrollLink = styled.a`
-  width: 100%;
-  display: inline-block;
-  cursor: pointer;
-  padding-right: 1.5%;
-  color: ${scrollColor};
-  outline: none;
-  cursor: pointer;
-  margin-bottom: 0;
-`;
+import { ControlButton, StyledPopover } from '../index';
 
 const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
   const tooltip = (
-    <Tooltip id="scroll-button-tooltip" placement="bottom">
-      <LocaleFormattedMessage
-        id="player.scrollButtonTip"
-        defaultMessage="Automatically scrolls to the currently playing ayah on transitions..."
+    <StyledPopover
+      id="scroll-toggle-popoverr"
+      title={
+        <LocaleFormattedMessage
+          id="player.scrollButtonTip"
+          defaultMessage="Automatically scrolls to the currently playing ayah on transitions..."
+        />
+      }
+    >
+      {'  '}
+      <SwitchToggle
+        checked={shouldScroll}
+        onToggle={onScrollToggle}
+        id="scroll-toggle"
+        name="scroll-toggle"
+        flat
       />
-    </Tooltip>
+    </StyledPopover>
   );
 
   return (
@@ -35,15 +34,12 @@ const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
       <OverlayTrigger
         overlay={tooltip}
         placement="top"
-        trigger={['hover', 'focus']}
+        trigger="click"
+        rootClose
       >
-        <ScrollLink
-          tabIndex="-1"
-          active={shouldScroll}
-          onClick={onScrollToggle}
-        >
+        <ControlButton active={shouldScroll}>
           <i className="ss-icon ss-link" />
-        </ScrollLink>
+        </ControlButton>
       </OverlayTrigger>
     </div>
   );

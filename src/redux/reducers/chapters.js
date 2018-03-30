@@ -6,7 +6,6 @@ export const INITIAL_STATE = {
   errored: false,
   loaded: false,
   loading: false,
-  infoLoading: false,
   current: null,
   entities: {},
   infos: {}

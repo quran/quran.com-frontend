@@ -5,7 +5,7 @@ import { setOption } from 'redux/actions/options';
 
 const mapStateToProps = (state, ownProps) => ({
   chapterInfo: state.chapterInfos.entities[ownProps.chapter.id],
-  isShowingSurahInfo: state.options.isShowingSurahInfo
+  isShowingChapterInfo: state.options.isShowingChapterInfo
 });
 
 export default connect(mapStateToProps, { setOption })(ChapterInfoPanel);

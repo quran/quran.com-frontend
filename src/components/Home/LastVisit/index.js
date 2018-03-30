@@ -30,7 +30,7 @@ const LastVisit = ({ chapter, verse }) => {
 };
 
 LastVisit.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   verse: PropTypes.number.isRequired
 };
 

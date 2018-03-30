@@ -56,7 +56,7 @@ const ChapterInfo = ({ chapter, chapterInfo }) => (
     <ChapterInfoPanel
       chapter={chapter}
       chapterInfo={chapterInfo}
-      isShowingSurahInfo
+      isShowingChapterInfo
     />
     <div className="text-center">
       <Button href={`/${chapter.id}`}>
@@ -70,7 +70,7 @@ const ChapterInfo = ({ chapter, chapterInfo }) => (
 );
 
 ChapterInfo.propTypes = {
-  chapter: customPropTypes.surahType,
+  chapter: customPropTypes.chapterType,
   chapterInfo: customPropTypes.infoType
 };
 

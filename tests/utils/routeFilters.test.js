@@ -139,8 +139,20 @@ describe('routeFilters', () => {
   test('should validate /1:1', () => {
     expect(
       routeFilters({
-        params: { chapterId: '1', range: '1' },
+        params: { chapterId: '1', range: '1', 0: ':' },
         location: { pathname: '/1:1', search: '' }
+      })
+    ).toEqual({
+      status: 301,
+      url: '/1/1'
+    });
+  });
+
+  test('should validate /1-1', () => {
+    expect(
+      routeFilters({
+        params: { chapterId: '1', range: '1', 0: '-' },
+        location: { pathname: '/1-1', search: '' }
       })
     ).toEqual({
       status: 301,
@@ -157,6 +169,42 @@ describe('routeFilters', () => {
     ).toEqual({
       status: 301,
       url: '/1/1-2'
+    });
+  });
+
+  test('should validate /1:1:2', () => {
+    expect(
+      routeFilters({
+        params: { chapterId: '1', range: '1:2' },
+        location: { pathname: '/1:1:2', search: '' }
+      })
+    ).toEqual({
+      status: 301,
+      url: '/1/1-2'
+    });
+  });
+
+  test('should be valid /1-1-2', () => {
+    expect(
+      routeFilters({
+        params: { chapterId: '1', range: '1-2', 0: '-' },
+        location: { pathname: '/1-1-2', search: '' }
+      })
+    ).toEqual({
+      status: 301,
+      url: '/1/1-2'
+    });
+  });
+
+  test('should be valid /1:1:2', () => {
+    expect(
+      routeFilters({
+        params: { chapterId: '1', range: '1:2', 0: ':' },
+        location: { pathname: '/1:1:2', search: '' }
+      })
+    ).toEqual({
+      status: 301,
+      url: '/1/1:2'
     });
   });
 });
