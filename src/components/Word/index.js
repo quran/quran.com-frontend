@@ -7,7 +7,7 @@ import { zeroPad } from 'helpers/StringHelpers';
 const CHAR_TYPE_WORD = 'word';
 const CHAR_TYPE_END = 'end';
 const CHAR_TYPE_PAUSE = 'pause';
-const CHAR_TYPE_RUB = 'rub';
+const CHAR_TYPE_RUB = 'rub-el-hizb';
 const CHAR_TYPE_SAJDAH = 'sajdah';
 
 class Word extends Component {
@@ -68,11 +68,9 @@ class Word extends Component {
     let spacer;
     const highlight =
       currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
-    const className = `${useTextFont
-      ? 'text-'
-      : ''}${word.className} ${word.charType} ${highlight} ${word.highlight
-      ? word.highlight
-      : ''}`;
+    const className = `${useTextFont ? 'text-' : ''}${word.className} ${
+      word.charType
+    } ${highlight} ${word.highlight ? word.highlight : ''}`;
     const id = `word-${word.verseKey.replace(/:/, '-')}-${word.position}`;
 
     if (useTextFont) {

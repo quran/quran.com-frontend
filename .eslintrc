@@ -12,6 +12,9 @@
     "no-mixed-operators": 0,
     "strict": 0
   },
+  "no-confusing-arrow": [2, {
+    "allowParens": true
+  }],
   "ecmaFeatures": {
     "classes": true,
     "jsx": true
