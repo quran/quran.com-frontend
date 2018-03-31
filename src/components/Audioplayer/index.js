@@ -44,7 +44,7 @@ const Wrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  height: 10%;
+  height: 20%;
 `;
 
 const ControlItem = styled.li`
@@ -55,15 +55,22 @@ const ControlItem = styled.li`
 
 const Container = styled.div`
   position: fixed;
-  bottom: 15px;
+  bottom: 0;
   display: block;
   user-select: none;
   height: auto;
   z-index: 1;
-  padding: 10px 20px 5px;
+  padding: 20px 20px 10px;
   background: ${props => props.theme.colors.white};
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
-  min-width: 340px;
+  width: 100%;
+
+  .list-inline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+  }
 
   @media (max-width: ${props => props.theme.screen.sm}) {
     bottom: 0;
@@ -77,6 +84,7 @@ const playingButton = css`
   height: 32px;
   width: 32px;
   padding: 8px;
+  padding-left: 9px;
   border-radius: 50%;
   position: relative;
   vertical-align: middle;
@@ -138,6 +146,7 @@ export class Audioplayer extends Component {
     const nextVerse = verses[this.getNext()];
 
     debug('component:Audioplayer', 'componentDidMount');
+    document.addEventListener('keydown', this.handleKeyboardEvent);
 
     if (currentFile) {
       return this.handleAddFileListeners(currentFile);
@@ -242,6 +251,7 @@ export class Audioplayer extends Component {
   componentWillUnmount() {
     const { files, currentFile } = this.props;
     debug('component:Audioplayer', 'componentWillUnmount');
+    document.removeEventListener('keydown', this.handleKeyboardEvent);
 
     if (files[currentFile]) {
       return this.handleRemoveFileListeners(files[currentFile]);
@@ -274,6 +284,26 @@ export class Audioplayer extends Component {
 
     return verseIds[index + 1];
   }
+
+  handleKeyboardEvent = (event) => {
+    const { code } = event;
+    const { isPlaying, pause } = this.props;
+
+    if (code === 'Space') {
+      event.preventDefault();
+      if (isPlaying) {
+        pause();
+        return;
+      }
+      this.play();
+    } else if (code === 'ArrowRight' || code === 'ArrowDown') {
+      event.preventDefault();
+      this.handleAyahChange('next');
+    } else if (code === 'ArrowLeft' || code === 'ArrowUp') {
+      event.preventDefault();
+      this.handleAyahChange('previous');
+    }
+  };
 
   handleAyahChange = (direction = 'next') => {
     const { isPlaying, play, pause, currentVerse } = this.props; // eslint-disable-line no-shadow, max-len
@@ -585,7 +615,7 @@ export class Audioplayer extends Component {
               />
             )}
         </Wrapper>
-        <ul className="list-inline" style={{ margin: 0 }}>
+        <ul className="list-inline">
           <ControlItem>
             <LocaleFormattedMessage
               id="player.currentVerse"

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  height: 6px;
+  height: 10px;
   width: 100%;
   background-color: #f7f7f7;
   cursor: pointer;
@@ -19,16 +19,16 @@ const Progress = styled.div`
 
   &:after {
     content: '';
-    height: 12px;
-    width: 12px;
+    height: 20px;
+    width: 20px;
     border-radius: 10px;
     position: absolute;
-    right: 0;
+    right: -3px;
     display: block;
     background: #fff;
-    top: -3px;
+    top: -5px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
-    transition: height 0.5s;
+    transition: opacity 0.1s ease-in-out;
   }
 `;
 
@@ -37,6 +37,11 @@ export default class Track extends Component {
     progress: PropTypes.number.isRequired,
     onTrackChange: PropTypes.func.isRequired
   };
+
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
   handleClick = (event) => {
     const { onTrackChange } = this.props;
@@ -52,7 +57,7 @@ export default class Track extends Component {
 
     return (
       <Container
-        ref={(container) => {
+        innerRef={(container) => {
           this.container = container;
         }}
         onClick={this.handleClick}
