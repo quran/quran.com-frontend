@@ -15,7 +15,6 @@ const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(
 
 const relativeAssetsPath = '../static/dist';
 const assetsPath = path.join(__dirname, relativeAssetsPath);
-const root = path.resolve(__dirname, '..');
 
 module.exports = {
   output: {
@@ -31,10 +30,7 @@ module.exports = {
   devtool: 'cheap-module-source-map',
   target: 'web',
   cache: false,
-  entry: [
-    `bootstrap-loader/lib/bootstrap.loader?extractStyles&configFilePath=${root}/src/styles/bootstrap.config.prod.json!bootstrap-loader/no-op.js`,
-    './client.js'
-  ],
+  entry: ['./client.js'],
   stats: {
     colors: true,
     reasons: false
@@ -75,70 +71,124 @@ module.exports = {
       },
       {
         test: /\.scss$/,
+        exclude: /\.global.scss$/,
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
-          //   loader: [
-          //     {
-          //       loader: 'css-loader',
-          //       options: {
-          //         modules: true,
-          //         importLoaders: 2,
-          //         sourceMap: true,
-          //         minimize: true,
-          //         localIdentName: '[path][name]__[local]--[hash:base64:5]'
-          //       }
-          //     },
-          //     {
-          //       loader: 'postcss-loader',
-          //       options: {
-          //         sourceMap: 'inline',
-          //         plugins() {
-          //           return [
-          //             require('precss'), // eslint-disable-line
-          //             require('autoprefixer'), // eslint-disable-line
-          //             require('cssnano'), // eslint-disable-line
-          //           ];
-          //         }
-          //       }
-          //     },
-          //     'sass-loader?sourceMap&sourceMapContents'
-          //   ]
-          loader:
-            'css-loader?minimize&modules&importLoaders=2&sourceMap!autoprefixer-loader?browsers=last 2 version!sass-loader?outputStyle=compressed&sourceMap=true&sourceMapContents=true' // eslint-disable-line max-len
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true,
+                importLoaders: 2,
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'autoprefixer-loader',
+              options: {
+                browsers: 'last 2 version'
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                outputStyle: 'compressed',
+                sourceMap: true,
+                sourceMapContents: true
+              }
+            }
+          ]
+        })
+      },
+      {
+        test: /\.global.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true,
+                importLoaders: 2,
+                sourceMap: true
+              }
+            },
+            {
+              loader: 'autoprefixer-loader',
+              options: {
+                browsers: 'last 2 version'
+              }
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                outputStyle: 'compressed',
+                sourceMap: true,
+                sourceMapContents: true
+              }
+            }
+          ]
         })
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/font-woff'
+        }
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/font-woff'
+        }
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/octet-stream'
+        }
       },
       {
         test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/octet-stream'
+        }
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file-loader?name=fonts/[name].[ext]'
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[ext]'
+        }
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
+        loader: 'url-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          limit: 10000,
+          mimetype: 'image/svg+xml'
+        }
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('images'),
-        loader: 'url-loader?name=images/[name].[ext]&limit=10240'
+        loader: 'url-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          limit: 10240
+        }
       }
     ]
   },

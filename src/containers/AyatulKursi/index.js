@@ -29,19 +29,19 @@ import * as MediaActions from 'redux/actions/media.js';
 
 const PageView = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pageview" */ 'components/PageView'),
+    import(/* webpackChunkName: "PageView" */ 'components/PageView'),
   LoadingComponent: ComponentLoader
 });
 
 const Audioplayer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
+    import(/* webpackChunkName: "Audioplayer" */ 'components/Audioplayer'),
   LoadingComponent: ComponentLoader
 });
 
 const TopOptions = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
+    import(/* webpackChunkName: "TopOptions" */ 'components/TopOptions'),
   LoadingComponent: ComponentLoader
 });
 
@@ -185,10 +185,12 @@ class AyatulKursi extends Component {
             </div>
           </div>
         </Container>
+
         {__CLIENT__ && (
           <Audioplayer
+            verses
             chapter={chapter}
-            startVerse={Object.values(verses)[0]}
+            currentVerse={Object.values(verses)[0]}
             onLoadAyahs={this.handleLazyLoadAyahs}
           />
         )}
@@ -198,13 +200,13 @@ class AyatulKursi extends Component {
 }
 
 AyatulKursi.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   actions: PropTypes.object.isRequired, // eslint-disable-line
   lines: PropTypes.object.isRequired, // eslint-disable-line
   currentVerse: PropTypes.string,
   isLoading: PropTypes.bool.isRequired,
   isLoaded: PropTypes.bool.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool,
   options: PropTypes.object.isRequired, // eslint-disable-line
   verses: customPropTypes.verses,
   isPlaying: PropTypes.bool

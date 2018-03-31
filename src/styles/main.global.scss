@@ -1,4 +1,5 @@
-$icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import 'bootstrap';
 @import 'components/MasterHeader';
 @import 'components/SmartBanner';
 @import 'partials/search-input';
@@ -7,6 +8,7 @@ $icon-font-path: "~bootstrap-sass/assets/fonts/bootstrap/";
 @import 'nightmode';
 @import 'partials/surah_names';
 @import 'partials/_tooltip';
+
 html,
 body {
   height: 100%;
@@ -17,6 +19,9 @@ body {
   }
 }
 
+.row {
+  margin-right: 0em !important;
+}
 .highlight {
   background-color: #f5fbf7;
 }
@@ -104,6 +109,7 @@ li em {
     font-family: monospace;
   }
 }
+
 .divehi {
   font-family: 'divehi';
 }

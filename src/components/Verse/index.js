@@ -9,6 +9,7 @@ import Loadable from 'react-loadable';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
+import ShowAyahAndJuzMark from 'components/JuzMarker';
 import Translation from 'components/Translation';
 import FontText from 'components/FontText';
 import debug from 'helpers/debug';
@@ -16,12 +17,12 @@ import debug from 'helpers/debug';
 import { loadTafsirs } from 'redux/actions/media';
 
 const Copy = Loadable({
-  loader: () => import('components/Copy'),
+  loader: () => import(/* webpackChunkName: "Copy" */ 'components/Copy'),
   LoadingComponent: ComponentLoader
 });
 
 const Share = Loadable({
-  loader: () => import('components/Share'),
+  loader: () => import(/* webpackChunkName: "Share" */ 'components/Share'),
   LoadingComponent: ComponentLoader
 });
 
@@ -213,8 +214,13 @@ class Verse extends Component {
     ));
 
     return (
-      <FontText className="text-right text-arabic">
-        <p>{text}</p>
+      <FontText className="row text-right text-arabic">
+        <ShowAyahAndJuzMark // Migrate text rendering to ShowAyahAndJuzMark Component
+          chapterId={verse.chapterId}
+          verseNumber={verse.verseNumber}
+          text={text}
+          juzNumber={verse.juzNumber}
+        />
       </FontText>
     );
   }
@@ -363,7 +369,7 @@ class Verse extends Component {
 Verse.propTypes = {
   isSearched: PropTypes.bool,
   verse: customPropTypes.verseType.isRequired,
-  chapter: customPropTypes.surahType.isRequired,
+  chapter: customPropTypes.chapterType.isRequired,
   mediaActions: customPropTypes.mediaActions,
   audioActions: customPropTypes.audioActions,
   match: customPropTypes.match,

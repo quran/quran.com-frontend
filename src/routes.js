@@ -1,7 +1,5 @@
-import React from 'react';
-import PropTypes from 'prop-types';
 import loadable from 'loadable-components';
-import { Switch, Route } from 'react-router';
+import { matchPath } from 'react-router';
 
 import Home from './containers/Home';
 
@@ -11,21 +9,11 @@ import {
   versesConnect,
   tafsirConnect,
   juzsConnect
-} from './containers/Surah/connect';
+} from './containers/Chapter/connect';
 import { search } from './redux/actions/search.js';
-import routePromises from './utils/routePromises';
 import validators from './utils/routeFilters';
 
-const GlobalNav = loadable(() =>
-  import(/* webpackChunkName: "globalnav" */ 'components/GlobalNav')
-);
-
-const defaultSetContext = context => ({
-  ...context,
-  status: 200
-});
-
-export const routes = [
+const routes = [
   {
     path: '/',
     exact: true,
@@ -35,49 +23,49 @@ export const routes = [
   {
     path: '/donations',
     component: loadable(() =>
-      import(/* webpackChunkName: "donations" */ './containers/Donations')
+      import(/* webpackChunkName: "Donations" */ './containers/Donations')
     )
   },
   {
     path: '/contributions',
     component: loadable(() =>
-      import(/* webpackChunkName: "donations" */ './containers/Donations')
+      import(/* webpackChunkName: "Donations" */ './containers/Donations')
     )
   },
   {
     path: '/about',
     component: loadable(() =>
-      import(/* webpackChunkName: "about" */ './containers/About')
+      import(/* webpackChunkName: "About" */ './containers/About')
     )
   },
   {
     path: '/contact',
     component: loadable(() =>
-      import(/* webpackChunkName: "contact" */ './containers/Contact')
+      import(/* webpackChunkName: "Contact" */ './containers/Contact')
     )
   },
   {
     path: '/contactus',
     component: loadable(() =>
-      import(/* webpackChunkName: "contact" */ './containers/Contact')
+      import(/* webpackChunkName: "Contact" */ './containers/Contact')
     )
   },
   {
     path: '/mobile',
     component: loadable(() =>
-      import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
+      import(/* webpackChunkName: "Mobile" */ './containers/MobileLanding')
     )
   },
   {
     path: '/apps',
     component: loadable(() =>
-      import(/* webpackChunkName: "mobile" */ './containers/MobileLanding')
+      import(/* webpackChunkName: "Mobile" */ './containers/MobileLanding')
     )
   },
   {
     path: '/error/:errorKey',
     component: loadable(() =>
-      import(/* webpackChunkName: "error" */ './containers/Error')
+      import(/* webpackChunkName: "Error" */ './containers/Error')
     ),
     setContext: context => ({
       ...context,
@@ -87,7 +75,7 @@ export const routes = [
   {
     path: '/search',
     component: loadable(() =>
-      import(/* webpackChunkName: "search" */ './containers/Search')
+      import(/* webpackChunkName: "Search" */ './containers/Search')
     ),
     loadData: [
       ({ store: { dispatch }, location }) => {
@@ -101,16 +89,9 @@ export const routes = [
     ]
   },
   {
-    path: '/:chapterId/info/:language?',
-    component: loadable(() =>
-      import(/* webpackChunkName: "chapterinfo" */ './containers/ChapterInfo')
-    ),
-    loadData: [chaptersConnect, chapterInfoConnect]
-  },
-  {
     path: '/ayatul-kursi',
     component: loadable(() =>
-      import(/* webpackChunkName: "ayatulkursi" */ './containers/AyatulKursi')
+      import(/* webpackChunkName: "AyatulKursi" */ './containers/AyatulKursi')
     ),
     loadData: [
       chaptersConnect,
@@ -125,6 +106,13 @@ export const routes = [
     ]
   },
   {
+    path: '/:chapterId/info/:language?',
+    component: loadable(() =>
+      import(/* webpackChunkName: "ChapterInfo" */ './containers/ChapterInfo')
+    ),
+    loadData: [chaptersConnect, chapterInfoConnect]
+  },
+  {
     path: '/:chapterId(\\d+)/:range/tafsirs/:tafsirId',
     component: loadable(() =>
       import(/* webpackChunkName: "VerseTafsir" */ './containers/VerseTafsir')
@@ -133,87 +121,93 @@ export const routes = [
   },
   {
     path: '/:chapterId(\\d+)/:range/:translations',
-    component: loadable(() => import('./containers/Surah')),
+    component: loadable(() =>
+      import(/* webpackChunkName: "Chapter" */ './containers/Chapter')
+    ),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
     navbar: loadable(() =>
-      import(/* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah')
+      import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
     ),
     onEnter: validators
   },
   {
     path: '/:chapterId(\\d+)/:range?.pdf',
     component: loadable(() =>
-      import(/* webpackChunkName: "pdf" */ './containers/Pdf')
+      import(/* webpackChunkName: "Pdf" */ './containers/Pdf')
     ),
     loadData: [chaptersConnect, versesConnect],
     footer: loadable(() =>
-      import(/* webpackChunkName: "pdf-footer" */ './components/Footer/PdfFooter')
+      import(/* webpackChunkName: "PdfFooter" */ './components/Footer/PdfFooter')
     ),
     onEnter: validators
   },
   {
     path: '/:chapterId(\\d+)/:range?',
     component: loadable(() =>
-      import(/* webpackChunkName: "surah" */ './containers/Surah')
+      import(/* webpackChunkName: "Chapter" */ './containers/Chapter')
     ),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
     navbar: loadable(() =>
-      import(/* webpackChunkName: "globalnav-surah" */ './components/GlobalNav/Surah')
+      import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
+    ),
+    onEnter: validators
+  },
+  {
+    path: '/:chapterId(\\d+)(:|-)?:range?',
+    component: loadable(() =>
+      import(/* webpackChunkName: "Chapter" */ './containers/Chapter')
+    ),
+    loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
+    navbar: loadable(() =>
+      import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
     ),
     onEnter: validators
   }
 ];
 
-const Routes = ({ store }) => (
-  <Switch>
-    {routes.map(({ component: Component, loadData, setContext, ...route }) => (
-      <Route
-        key={route.path}
-        {...route}
-        render={({ staticContext, ...routeProps }) => {
-          if (staticContext) {
-            const contextFunction = setContext || defaultSetContext;
+export const getMatchedRoute = url =>
+  routes.find(route => matchPath(url, route));
 
-            Object.assign(staticContext, contextFunction(staticContext));
-          }
+export const checkOnEnterResult = (url) => {
+  const matchedRoute = getMatchedRoute(url);
+  const match = matchPath(url, matchedRoute);
 
-          if (__CLIENT__) {
-            routePromises({
-              store,
-              match: routeProps.match,
-              loadData
-            }).then(() => <Component {...routeProps} />);
-          }
+  if (matchedRoute && matchedRoute.onEnter) {
+    const result = matchedRoute.onEnter({
+      match,
+      params: match.params,
+      location: {
+        pathname: url
+      }
+    });
 
-          return <Component {...routeProps} />;
-        }}
-      />
-    ))}{' '}
-  </Switch>
-);
+    if (result) {
+      return result;
+    }
+  }
 
-// eslint-disable-next-line no-unused-vars, react/prop-types
-export const Navbars = ({ match, ...props }) => (
-  <Switch>
-    {' '}
-    {routes
-      .filter(route => route.navbar)
-      // eslint-disable-next-line no-unused-vars
-      .map(({ navbar: Navbar, component, ...route }) => (
-        <Route
-          key={route.path}
-          {...route}
-          render={routeProps => <Navbar {...routeProps} {...props} />}
-        />
-      ))}{' '}
-    <Route
-      render={routeProps => <GlobalNav {...routeProps} {...props} isStatic />}
-    />{' '}
-  </Switch>
-);
-
-Routes.propTypes = {
-  store: PropTypes.object.isRequired // eslint-disable-line
+  return null;
 };
 
-export default Routes;
+export const getPromises = (url, store) => {
+  const matchedRoute = getMatchedRoute(url);
+  const match = matchPath(url, matchedRoute);
+  const promises = [];
+
+  if (matchedRoute && matchedRoute.loadData) {
+    matchedRoute.loadData.forEach((connector) => {
+      promises.push(
+        connector({
+          store,
+          match,
+          params: match.params,
+          location: match.location
+        })
+      );
+    });
+  }
+
+  return promises;
+};
+
+export default routes;

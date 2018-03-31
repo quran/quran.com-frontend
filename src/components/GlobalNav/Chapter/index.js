@@ -4,18 +4,34 @@ import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import { Link } from 'react-router-dom';
+import Loadable from 'react-loadable';
 import Drawer from 'quran-components/lib/Drawer';
 import SearchInput from 'components/SearchInput';
-import SurahsDropdown from 'components/SurahsDropdown';
-import Settings from 'components/Settings';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-import VersesDropdown from 'components/VersesDropdown';
 
 import { load, setCurrentVerse } from 'redux/actions/verses.js';
+import ComponentLoader from '../../ComponentLoader';
 
 import GlobalNav from '../index';
 
-class GlobalNavSurah extends Component {
+const ChaptersDropdown = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "ChaptersDropdown" */ '../../ChaptersDropdown'),
+  LoadingComponent: ComponentLoader
+});
+
+const VersesDropdown = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "VersesDropdown" */ '../../VersesDropdown'),
+  LoadingComponent: ComponentLoader
+});
+
+const Settings = Loadable({
+  loader: () => import(/* webpackChunkName: "Settings" */ '../../Settings'),
+  LoadingComponent: ComponentLoader
+});
+
+class GlobalNavChapter extends Component {
   state = {
     drawerOpen: false
   };
@@ -31,7 +47,10 @@ class GlobalNavSurah extends Component {
 
     const to = Math.min(...[verseNum + 10, chapter.versesCount]);
 
-    return this.props.replace(`/${chapter.chapterNumber}/${verseNum}-${to}`);
+    // eslint-disable-next-line react/prop-types
+    return this.props.history.push(
+      `/${chapter.chapterNumber}/${verseNum}-${to}`
+    );
   };
 
   handleDrawerToggle = (open) => {
@@ -67,7 +86,7 @@ class GlobalNavSurah extends Component {
       <GlobalNav
         {...props}
         leftControls={[
-          <SurahsDropdown chapter={chapter} chapters={chapters} />,
+          <ChaptersDropdown chapter={chapter} chapters={chapters} />,
           <VersesDropdown
             chapter={chapter}
             isReadingMode={options.isReadingMode}
@@ -127,8 +146,8 @@ function mapStateToProps(state, ownProps) {
   };
 }
 
-GlobalNavSurah.propTypes = {
-  chapter: customPropTypes.surahType.isRequired,
+GlobalNavChapter.propTypes = {
+  chapter: customPropTypes.chapterType.isRequired,
   chapters: customPropTypes.chapters.isRequired,
   options: customPropTypes.optionsType.isRequired,
   versesIds: PropTypes.instanceOf(Set),
@@ -141,4 +160,4 @@ export default connect(mapStateToProps, {
   load,
   replace,
   setCurrentVerse
-})(GlobalNavSurah);
+})(GlobalNavChapter);

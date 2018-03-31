@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import { lighten } from 'polished';
 import Loader from 'quran-components/lib/Loader';
 
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 import madinah from '../../../static/images/madinah.jpg';
 import makkah from '../../../static/images/makkah.jpg';
 
@@ -110,18 +112,24 @@ const ListContainer = styled.div`
   }
 `;
 
-const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
+const ChapterInfo = ({
+  chapter,
+  chapterInfo,
+  isShowingChapterInfo,
+  setOption
+}) => {
   // So we don't need to load images and files unless needed
-  if (!isShowingSurahInfo) return <noscript />;
-  if (!info) return <Loader isActive />;
+  if (!isShowingChapterInfo) return <noscript />;
+  if (!chapterInfo) return <Loader isActive />;
 
   const handleClose = () =>
-    onClose({ isShowingSurahInfo: !isShowingSurahInfo });
+    setOption({ isShowingChapterInfo: !isShowingChapterInfo });
 
   return (
     <Container className="col-xs-12 chapter-info">
-      {onClose &&
-        <Close tabIndex="-1" className="ss-delete" onClick={handleClose} />}
+      {setOption && (
+        <Close tabIndex="-1" className="ss-delete" onClick={handleClose} />
+      )}
       <div className="row" style={{ width: '100%', height: '100%', margin: 0 }}>
         <Image
           className="col-md-3 col-xs-6"
@@ -129,23 +137,27 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
         />
         <ListContainer className="col-md-1 col-xs-6">
           <List>
-            <dt>VERSES</dt>
-            <dd className="text-uppercase">
-              {chapter.versesCount}
-            </dd>
-            <dt>PAGES</dt>
-            <dd className="text-uppercase">
-              {chapter.pages.join('-')}
-            </dd>
+            <dt>
+              <LocaleFormattedMessage
+                id="chapterInfo.verses"
+                defaultMessage="VERSES"
+              />
+            </dt>
+            <dd className="text-uppercase">{chapter.versesCount}</dd>
+            <dt>
+              <LocaleFormattedMessage
+                id="chapterInfo.pages"
+                defaultMessage="PAGES"
+              />
+            </dt>
+            <dd className="text-uppercase">{chapter.pages.join('-')}</dd>
           </List>
         </ListContainer>
-        <Info className={`${info.languageName} times-new col-md-8`}>
-          <div dangerouslySetInnerHTML={{ __html: info.text }} />
+        <Info className={`${chapterInfo.languageName} times-new col-md-8`}>
+          <div dangerouslySetInnerHTML={{ __html: chapterInfo.text }} />
           <div>
             <p>
-              <em>
-                Source: {info.source}
-              </em>
+              <em>Source: {chapterInfo.source}</em>
             </p>
           </div>
         </Info>
@@ -154,11 +166,11 @@ const SurahInfo = ({ chapter, info, isShowingSurahInfo, onClose }) => {
   );
 };
 
-SurahInfo.propTypes = {
-  onClose: PropTypes.func,
-  isShowingSurahInfo: PropTypes.bool,
-  chapter: customPropTypes.surahType,
-  info: customPropTypes.infoType
+ChapterInfo.propTypes = {
+  setOption: PropTypes.func.isRequired,
+  isShowingChapterInfo: PropTypes.bool.isRequired,
+  chapter: customPropTypes.chapterType,
+  chapterInfo: customPropTypes.infoType
 };
 
-export default SurahInfo;
+export default ChapterInfo;

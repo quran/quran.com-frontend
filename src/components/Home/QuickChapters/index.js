@@ -21,7 +21,7 @@ const Span = styled.span`
 
 const isFriday = new Date().getDay() === 5;
 
-export default () =>
+export default () => (
   <div>
     <Title muted>
       <LocaleFormattedMessage
@@ -29,16 +29,17 @@ export default () =>
         defaultMessage="Quick links"
       />
       {__CLIENT__ &&
-        isFriday &&
-        <Span>
-          <Link
-            to="/18"
-            {...QUICK_LINKS_EVENTS.CLICK.CHAPTER.PROPS}
-            data-metrics-chapter-id="18"
-          >
-            Surah Al-Kahf
-          </Link>
-        </Span>}
+        isFriday && (
+          <Span>
+            <Link
+              to="/18"
+              {...QUICK_LINKS_EVENTS.CLICK.CHAPTER.PROPS}
+              data-metrics-chapter-id="18"
+            >
+              Surah Al-Kahf
+            </Link>
+          </Span>
+        )}
       <Span>
         <Link
           to="/36"
@@ -76,4 +77,5 @@ export default () =>
         </Link>
       </Span>
     </Title>
-  </div>;
+  </div>
+);

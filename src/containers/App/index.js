@@ -17,7 +17,8 @@ import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
 import Loader from 'quran-components/lib/Loader';
 
-import Routes, { Navbars } from '../../routes';
+import Routes from '../../components/Routes';
+import Navbars from '../../components/Navbars';
 
 const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
@@ -25,13 +26,13 @@ const ModalBody = Modal.Body;
 
 const GlobalSidebar = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "globalsidebar" */ 'components/GlobalSidebar'),
+    import(/* webpackChunkName: "GlobalSidebar" */ 'components/GlobalSidebar'),
   LoadingComponent: ComponentLoader
 });
 
 const SmartBanner = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "smartbanner" */ 'components/SmartBanner'),
+    import(/* webpackChunkName: "SmartBanner" */ 'components/SmartBanner'),
   LoadingComponent: ComponentLoader
 });
 
@@ -69,7 +70,9 @@ class App extends Component {
 
     return (
       <div
-        className={`embed-responsive embed-responsive-16by9 ${media.wrapperClass}`}
+        className={`embed-responsive embed-responsive-16by9 ${
+          media.wrapperClass
+        }`}
         dangerouslySetInnerHTML={{ __html: media.content.body }}
       />
     );
@@ -103,28 +106,29 @@ class App extends Component {
         <Navbars
           {...props}
           handleSidebarToggle={() =>
-            this.setState({ sidebarOpen: !this.state.sidebarOpen })}
+            this.setState({ sidebarOpen: !this.state.sidebarOpen })
+          }
         />
-        {__CLIENT__ &&
+        {__CLIENT__ && (
           <GlobalSidebar
             open={this.state.sidebarOpen}
             handleOpen={open => this.setState({ sidebarOpen: open })}
-          />}
+          />
+        )}
         {children || <Routes store={this.context.store} />}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         {footer || <Footer />}
         {__CLIENT__ &&
-          media.show &&
-          <Modal bsSize={media.size} show={media.show} onHide={removeMedia}>
-            <ModalHeader closeButton>
-              <ModalTitle className="montserrat">
-                {media.content.title}
-              </ModalTitle>
-            </ModalHeader>
-            <ModalBody>
-              {this.renderModalBody()}
-            </ModalBody>
-          </Modal>}
+          media.show && (
+            <Modal bsSize={media.size} show={media.show} onHide={removeMedia}>
+              <ModalHeader closeButton>
+                <ModalTitle className="montserrat">
+                  {media.content.title}
+                </ModalTitle>
+              </ModalHeader>
+              <ModalBody>{this.renderModalBody()}</ModalBody>
+            </Modal>
+          )}
       </div>
     );
   }

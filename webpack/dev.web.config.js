@@ -15,6 +15,9 @@ module.exports = {
   resolve: {
     extensions: ['.js'],
     modules: ['src', 'node_modules']
+    // alias: {
+    //   'react-bootstrap/lib': 'react-bootstrap/es',
+    // },
   },
   entry: [
     'babel-polyfill',
@@ -23,7 +26,6 @@ module.exports = {
     // 'webpack-hot-middleware/client?path=http://localhost:8080/__webpack_hmr',
     'webpack-dev-server/client?http://localhost:8080',
     'webpack/hot/only-dev-server',
-    `bootstrap-loader/lib/bootstrap.loader?configFilePath=${root}/src/styles/bootstrap.config.json!bootstrap-loader/no-op.js`,
     './src/client.js'
   ],
   devServer: {
@@ -64,13 +66,20 @@ module.exports = {
               plugins: [
                 'react-hot-loader/babel',
                 'transform-runtime',
-                // 'add-module-exports',
                 'transform-react-display-name',
-                'typecheck',
                 'react-hot-loader/babel',
                 'syntax-dynamic-import'
               ],
-              presets: [['es2015', { modules: false }], 'stage-2', 'react'],
+              presets: [
+                [
+                  'es2015',
+                  {
+                    modules: false
+                  }
+                ],
+                'stage-2',
+                'react'
+              ],
               cacheDirectory: true
             }
           }
@@ -78,39 +87,67 @@ module.exports = {
       },
       {
         test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/font-woff'
+        }
       },
       {
         test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/font-woff'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/font-woff'
+        }
       },
       {
         test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/octet-stream'
+        }
       },
       {
         test: /\.otf(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=fonts/[name].[ext]&limit=10000&mimetype=application/octet-stream'
+        loader: 'url-loader',
+        options: {
+          name: 'fonts/[name].[ext]',
+          limit: 10000,
+          mimetype: 'application/octet-stream'
+        }
       },
       {
         test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
-        loader: 'file-loader?name=fonts/[name].[ext]'
+        loader: 'file-loader',
+        options: {
+          name: 'fonts/[name].[ext]'
+        }
       },
       {
         test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        loader:
-          'url-loader?name=images/[name].[ext]&limit=10000&mimetype=image/svg+xml'
+        loader: 'url-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          limit: 10000,
+          mimetype: 'image/svg+xml'
+        }
       },
       {
         test: webpackIsomorphicToolsPlugin.regular_expression('images'),
-        loader: 'url-loader?name=images/[name].[ext]&limit=10240'
+        loader: 'url-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          limit: '10240'
+        }
       },
       {
         test: /\.scss$/,
+        exclude: /\.global.scss$/,
         use: [
           'style-loader',
           {
@@ -133,7 +170,44 @@ module.exports = {
               }
             }
           },
-          'sass-loader?outputStyle=expanded&sourceMap'
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+              sourceMap: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.global.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 2,
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins() {
+                return [
+                  require('precss'), // eslint-disable-line
+                  require('autoprefixer') // eslint-disable-line
+                ];
+              }
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+              sourceMap: true
+            }
+          }
         ]
       }
     ]
