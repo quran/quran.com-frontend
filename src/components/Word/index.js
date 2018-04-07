@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import bindTooltip from 'utils/bindTooltip';
+import { Tooltip } from 'react-tippy';
 import { zeroPad } from 'helpers/StringHelpers';
 
 /* eslint-disable no-unused-vars */
@@ -89,16 +89,16 @@ class Word extends Component {
 
     return (
       <span>
-        <b // eslint-disable-line
-          {...bindTooltip}
-          key={word.code}
-          id={id}
-          onDoubleClick={this.handleSegmentPlay}
-          onClick={this.handleWordPlay}
-          className={`${className} pointer`}
-          title={this.buildTooltip(word, tooltip)}
-          dangerouslySetInnerHTML={{ __html: text }}
-        />
+        <Tooltip arrow title={this.buildTooltip(word, tooltip)}>
+          <a // eslint-disable-line
+            key={word.code}
+            id={id}
+            onDoubleClick={this.handleSegmentPlay}
+            onClick={this.handleWordPlay}
+            className={`${className} pointer`}
+            dangerouslySetInnerHTML={{ __html: text }}
+          />
+        </Tooltip>
         <small
           dangerouslySetInnerHTML={{ __html: spacer }}
           style={{ letterSpacing: -15 }}
