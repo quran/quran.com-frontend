@@ -16,7 +16,61 @@ class SearchInput extends Component {
 
   state = {
     value: '',
-    showAutocomplete: false
+    showAutocomplete: false,
+    listening: false,
+    voiceEnabled: false
+  };
+
+  componentDidMount() {
+    if (__CLIENT__) {
+      // eslint-disable-next-line react/no-did-mount-set-state
+      this.setState({ voiceEnabled: !!this.getSpeechRecognizer() });
+    }
+  }
+
+  shouldComponentUpdate(nextProps, newState) {
+    return [
+      this.state.voiceEnabled !== newState.voiceEnabled,
+      this.state.newState !== newState.showAutocomplete
+    ].some(test => test);
+  }
+
+  onSpeechResult = (event) => {
+    const input = this.input;
+    const text = event.results[0][0].transcript;
+
+    input.value = text;
+    this.setState({ value: text, showAutocomplete: true });
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  onSpeechEnd = (event) => {
+    this.setState({ listening: false });
+    // TODO: search ?
+  };
+
+  // eslint-disable-next-line no-unused-vars
+  onSpeechError = (event) => {
+    // TODO: should we show err to user?
+  };
+
+  getSpeechRecognizer = () =>
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+
+  initSpeechRecongination = () => {
+    if (this.state.listening) {
+      return false;
+    }
+    const recognizer = new (this.getSpeechRecognizer())();
+
+    recognizer.lang = 'ar';
+    recognizer.interimResults = true;
+    recognizer.onresult = this.onSpeechResult;
+    recognizer.onend = this.onSpeechEnd;
+
+    this.setState({ listening: true });
+    recognizer.start();
+    return false;
   };
 
   search = (event) => {
@@ -25,9 +79,11 @@ class SearchInput extends Component {
     const splitSearch = /[\.,\:,\,,\\,//]/g; // eslint-disable-line no-useless-escape
 
     if (
-      event.key === 'Enter' ||
-      event.keyCode === 13 ||
-      event.type === 'click'
+      event && (
+        event.key === 'Enter' ||
+        event.keyCode === 13 ||
+        event.type === 'click'
+       )
     ) {
       const inputEl = this.input;
       const searching = inputEl.value.trim();
@@ -82,8 +138,16 @@ class SearchInput extends Component {
     return false;
   };
 
+  renderVoiceSearch() {
+    return (
+      <a tabIndex="-1" onClick={this.initSpeechRecongination}>
+        <i className="ss-icon ss-mic" />
+      </a>
+    );
+  }
+
   render() {
-    const { showAutocomplete } = this.state;
+    const { showAutocomplete, voiceEnabled } = this.state;
     const { className, intl } = this.props;
     const placeholder = intl.formatMessage({
       id: 'search.placeholder',
@@ -97,6 +161,7 @@ class SearchInput extends Component {
         <a tabIndex="-1" onClick={this.search}>
           <i className="ss-icon ss-search" />
         </a>
+        {voiceEnabled && this.renderVoiceSearch()}
         <input
           type="search"
           placeholder={placeholder}
