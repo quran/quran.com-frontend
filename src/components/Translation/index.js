@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
-import { loadFootNote } from '../../redux/actions/media';
+import { loadFootNote } from 'redux/actions/media';
 
 import Container from './Container';
 

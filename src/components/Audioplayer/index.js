@@ -101,14 +101,16 @@ const disabled = css`
 
 const isDisabledCss = props => (props.disabled ? disabled : '');
 const isPlayingCss = props => (props.playingButton ? playingButton : '');
+// eslint-disable-next-line
+const colorCss = props =>
+  props.active ? props.theme.brandPrimary : props.theme.textColor;
 
 export const ControlButton = styled.a`
   width: 100%;
   display: inline-block;
   cursor: pointer;
   padding: 0 10px;
-  color: ${props =>
-    props.active ? props.theme.brandPrimary : props.theme.textColor};
+  color: ${colorCss};
   outline: none;
   &:focus,
   &:active {

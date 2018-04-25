@@ -11,7 +11,7 @@ import ChaptersList from 'components/Home/ChaptersList';
 import * as customPropTypes from 'customPropTypes';
 
 import IndexHeader from 'components/IndexHeader';
-import QuickChapters from 'components/Home/QuickSurahs';
+import QuickChapters from 'components/Home/QuickChapters';
 import Title from 'components/Home/Title';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import ComponentLoader from '../../components/ComponentLoader';
