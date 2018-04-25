@@ -17,7 +17,7 @@ import getLocalMessages from '../helpers/setLocal';
 import App from '../containers/App';
 import theme from '../theme';
 
-import './styles/main.global.scss';
+import '../styles/main.global.scss';
 import config from '../config';
 
 import ApiClient from '../helpers/ApiClient';
