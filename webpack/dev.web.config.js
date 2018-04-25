@@ -2,6 +2,8 @@ require('dotenv').load();
 const webpack = require('webpack');
 const path = require('path');
 const IsomorphicPlugin = require('webpack-isomorphic-tools/plugin');
+const nodeExternals = require('webpack-node-externals');
+const Nodemon = require('nodemon-webpack-plugin');
 const isomorphicToolsConfig = require('./isomorphic-tools-configuration');
 
 const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(
@@ -10,14 +12,12 @@ const webpackIsomorphicToolsPlugin = new IsomorphicPlugin(
 
 const root = path.resolve(__dirname, '..');
 
-module.exports = {
+// eslint-disable-next-line
+const clientConfig = {
   context: root,
   resolve: {
     extensions: ['.js'],
     modules: ['src', 'node_modules']
-    // alias: {
-    //   'react-bootstrap/lib': 'react-bootstrap/es',
-    // },
   },
   entry: [
     'babel-polyfill',
@@ -138,7 +138,7 @@ module.exports = {
         }
       },
       {
-        test: webpackIsomorphicToolsPlugin.regular_expression('images'),
+        test: /\.(jpeg|jpg|png|gif)$/,
         loader: 'url-loader',
         options: {
           name: 'images/[name].[ext]',
@@ -266,3 +266,153 @@ module.exports = {
     tls: 'empty'
   }
 };
+const serverConfig = {
+  target: 'node',
+  devtool: 'sourcemap',
+  externals: [nodeExternals()],
+  context: root,
+  resolve: {
+    extensions: ['.js'],
+    modules: ['src', 'node_modules']
+  },
+  entry: ['./src/server.js'],
+  output: {
+    path: __dirname,
+    filename: '[name].bundle.js',
+    libraryTarget: 'commonjs2'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              [
+                'env',
+                {
+                  targets: {
+                    node: 'current'
+                  }
+                }
+              ]
+            ]
+          }
+        }
+      },
+      {
+        test: /\.scss$/,
+        exclude: /\.global.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader/locals',
+            options: {
+              modules: true,
+              importLoaders: 2,
+              sourceMap: true,
+              localIdentName: '[path][name]__[local]--[hash:base64:5]'
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins() {
+                return [
+                  require('precss'), // eslint-disable-line
+                  require('autoprefixer') // eslint-disable-line
+                ];
+              }
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+              sourceMap: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.global.scss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader/locals',
+            options: {
+              importLoaders: 2,
+              sourceMap: true
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins() {
+                return [
+                  require('precss'), // eslint-disable-line
+                  require('autoprefixer') // eslint-disable-line
+                ];
+              }
+            }
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              outputStyle: 'expanded',
+              sourceMap: true
+            }
+          }
+        ]
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url-loader',
+        options: {
+          name: 'images/[name].[ext]',
+          limit: 10000,
+          mimetype: 'image/svg+xml'
+        }
+      },
+      {
+        test: /\.(jpeg|jpg|png|gif)$/,
+        loader: 'url-loader',
+        options: {
+          name: 'images/[name].[ext]'
+        }
+      }
+    ]
+  },
+  plugins: [
+    new Nodemon(),
+    new webpack.BannerPlugin({
+      banner: 'require("source-map-support").install();',
+      raw: true,
+      entryOnly: false
+    }),
+    new webpack.DefinePlugin({
+      'process.env.BROWSER': false,
+      'process.env.API_URL': JSON.stringify(process.env.API_URL),
+      'process.env.ONE_QURAN_URL': JSON.stringify(process.env.ONE_QURAN_URL),
+      'process.env.FACEBOOK_APP_ID': JSON.stringify(
+        process.env.FACEBOOK_APP_ID
+      ),
+      'process.env.FONTS_URL': JSON.stringify(process.env.FONTS_URL),
+      'process.env.SEGMENTS_KEY': JSON.stringify(process.env.SEGMENTS_KEY),
+      'process.env.SENTRY_KEY_CLIENT': JSON.stringify(
+        process.env.SENTRY_KEY_CLIENT
+      ),
+      'process.env.SENTRY_KEY_SERVER': JSON.stringify(
+        process.env.SENTRY_KEY_SERVER
+      ),
+      __SERVER__: true,
+      __CLIENT__: false,
+      __DEVELOPMENT__: true,
+      __DEVTOOLS__: true
+    }),
+    new webpack.EnvironmentPlugin(['NODE_ENV'])
+  ]
+};
+
+module.exports = [serverConfig];
