@@ -25,7 +25,7 @@
     "prettier": "prettier --single-quote --write",
     "start": "cross-env NODE_ENV=production node build/server",
     "storybook": "start-storybook -p 6006",
-    "test:stylelint": "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
+    "test:stylelint": "stylelint './src/**/*.scss' --config ./.stylelintrc",
     "test": "npm run lint; npm run jest",
     "validate": "npm ls"
   },
