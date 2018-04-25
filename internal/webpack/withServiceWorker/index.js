@@ -38,15 +38,15 @@ export default function withServiceWorker(webpackConfig, bundleConfig) {
         keepClosingSlash: true,
         minifyJS: true,
         minifyCSS: true,
-        minifyURLs: true
+        minifyURLs: true,
       },
       inject: true,
       // We pass our config and client config script compoent as it will
       // be needed by the offline template.
       custom: {
         config,
-        ClientConfig
-      }
+        ClientConfig,
+      },
     })
   );
 
@@ -102,7 +102,7 @@ export default function withServiceWorker(webpackConfig, bundleConfig) {
         // information on this page.
         navigateFallbackURL: `${bundleConfig.webPath}${config(
           'serviceWorker.offlinePageFileName'
-        )}`
+        )}`,
       },
       // According to the Mozilla docs, AppCache is considered deprecated.
       // @see https://mzl.la/1pOZ5wF
@@ -116,7 +116,7 @@ export default function withServiceWorker(webpackConfig, bundleConfig) {
         ? [
           `${config('polyfillIO.url')}?features=${config(
               'polyfillIO.features'
-            ).join(',')}`
+            ).join(',')}`,
         ]
         : []
       )
@@ -145,7 +145,7 @@ export default function withServiceWorker(webpackConfig, bundleConfig) {
             );
             return publicFileWebPaths;
           }, [])
-        )
+        ),
     })
   );
 

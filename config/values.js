@@ -16,7 +16,7 @@ const locales = {
   sq: 'Shqip',
   tr: 'Türkçe',
   fr: 'Français',
-  nl: 'Dutch'
+  nl: 'Dutch',
 };
 
 const values = {
@@ -39,12 +39,12 @@ const values = {
     welcomeMessage: true,
     // We only need to expose the enabled flag of the service worker.
     serviceWorker: {
-      enabled: true
+      enabled: true,
     },
     // We need to expose all the polyfill.io settings.
     polyfillIO: true,
     // We need to expose all the htmlPage settings.
-    htmlPage: true
+    htmlPage: true,
   },
 
   // The host on which the server should run.
@@ -84,12 +84,12 @@ const values = {
     features: [
       // The default list.
       'default',
-      'es6'
-    ]
+      'es6',
+    ],
   },
 
   sentry: {
-    url: 'https://cdn.ravenjs.com/3.0.4/raven.min.js'
+    url: 'https://cdn.ravenjs.com/3.0.4/raven.min.js',
   },
 
   // Basic configuration for the HTML page that hosts our application.
@@ -99,7 +99,7 @@ const values = {
     titleTemplate: 'Quran.com - %s',
     defaultTitle: 'Quran.com',
     description:
-      'The Quran translated into many languages in a simple and easy interface.'
+      'The Quran translated into many languages in a simple and easy interface.',
   },
 
   // Content Security Policy (CSP)
@@ -111,7 +111,7 @@ const values = {
     fontSrc: [
       'fonts.googleapis.com/css',
       'fonts.gstatic.com',
-      'quran-1f14.kxcdn.com'
+      'quran-1f14.kxcdn.com',
     ],
     imgSrc: ["'self' data:"],
     mediaSrc: [],
@@ -121,12 +121,12 @@ const values = {
       // Allow scripts from cdn.polyfill.io so that we can import the
       // polyfill.
       'cdn.polyfill.io',
-      'cdn.ravenjs.com'
+      'cdn.ravenjs.com',
     ],
     styleSrc: [
       'cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css',
-      'fonts.googleapis.com/css'
-    ]
+      'fonts.googleapis.com/css',
+    ],
   },
 
   // Path to the public assets that will be served off the root of the
@@ -157,7 +157,7 @@ const values = {
     /\.(eot|woff|woff2|ttf|otf)$/,
     /\.(svg|png|jpg|jpeg|gif|ico)$/,
     /\.(mp4|mp3|ogg|swf|webp)$/,
-    /\.(css|scss|sass|sss|less)$/
+    /\.(css|scss|sass|sss|less)$/,
   ],
 
   // Note: you can only have a single service worker instance.  Our service
@@ -179,10 +179,10 @@ const values = {
       // You may or may not want to be including these assets.  Feel free
       // to remove this or instead include only a very specific set of
       // assets.
-      './**/*'
+      './**/*',
     ],
     // Offline page file name.
-    offlinePageFileName: 'offline.html'
+    offlinePageFileName: 'offline.html',
   },
 
   bundles: {
@@ -197,7 +197,7 @@ const values = {
         // The service worker offline page generation needs access to the
         // config folder.  Don't worry we have guards within the config files
         // to ensure they never get included in a client bundle.
-        './config'
+        './config',
       ],
 
       // Where does the client bundle output live?
@@ -228,12 +228,14 @@ const values = {
           'react',
           'react-dom',
           'react-helmet',
-          'react-router-dom'
+          'react-router-dom',
+          'styled-components',
+          'react-bootstrap',
         ],
 
         // The name of the vendor DLL.
-        name: '__dev_vendor_dll__'
-      }
+        name: '__dev_vendor_dll__',
+      },
     },
 
     server: {
@@ -244,8 +246,8 @@ const values = {
       srcPaths: ['./src', './shared', './config'],
 
       // Where does the server bundle output live?
-      outputPath: './build/server'
-    }
+      outputPath: './build/server',
+    },
   },
 
   additionalNodeBundles: {
@@ -329,8 +331,8 @@ const values = {
       */
 
       return webpackConfig;
-    }
-  }
+    },
+  },
 };
 
 // This protects us from accidentally including this configuration in our

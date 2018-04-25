@@ -1,10 +1,20 @@
 {
-  "presets": ["react", "es2015", "stage-0"],
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": true
+      }
+    }],
+    "stage-3",
+    "react"
+  ],
   "plugins": [
     "transform-runtime",
     "transform-decorators-legacy",
-    "transform-react-display-name",
-    ["system-import-transformer", {"modules": "common"}]
+    "transform-react-display-name", ["system-import-transformer", {
+      "modules": "common"
+    }],
+    "transform-react-require", "external-helpers", "transform-export-extensions"
   ],
   "env": {
     "production": {

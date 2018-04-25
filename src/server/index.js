@@ -57,7 +57,7 @@ app.use(
 
 Raven.config(config('sentryServer'), {
   captureUnhandledRejections: true,
-  autoBreadcrumbs: true
+  autoBreadcrumbs: true,
 }).install();
 app.use(Raven.requestHandler());
 
@@ -66,7 +66,7 @@ app.get('*', (request, response) => {
   log({
     title: 'Request',
     level: 'special',
-    message: `Received for "${request.url}"`
+    message: `Received for "${request.url}"`,
   });
 
   return reactApplication(request, response);
@@ -103,7 +103,7 @@ const listener = app.listen(config('port'), () =>
 
 
 
-    `
+    `,
   })
 );
 
