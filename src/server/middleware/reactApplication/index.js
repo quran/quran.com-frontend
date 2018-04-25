@@ -4,11 +4,15 @@ import { renderToString, renderToStaticMarkup } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import {
   AsyncComponentProvider,
-  createAsyncContext
+  createAsyncContext,
 } from 'react-async-component';
 import Provider from 'react-redux/lib/components/Provider';
 import { IntlProvider } from 'react-intl';
-import { ThemeProvider } from 'styled-components';
+import {
+  ThemeProvider,
+  ServerStyleSheet,
+  StyleSheetManager,
+} from 'styled-components';
 import cookie from 'react-cookie';
 
 import getLocalMessages from '../../../helpers/setLocal';
@@ -51,7 +55,7 @@ export default function reactApplicationMiddleware(request, response) {
       log({
         title: 'Server',
         level: 'info',
-        message: `Handling react route without SSR: ${request.url}`
+        message: `Handling react route without SSR: ${request.url}`,
       });
     }
     // SSR is disabled so we will return an "empty" html page and
@@ -70,6 +74,7 @@ export default function reactApplicationMiddleware(request, response) {
   const localMessages = getLocalMessages(request);
   const client = new ApiClient(request);
   const store = createStore(null, client);
+  const sheet = new ServerStyleSheet();
 
   // setup store dispatches
   store.dispatch(setUserAgent(request.useragent));
@@ -77,17 +82,19 @@ export default function reactApplicationMiddleware(request, response) {
 
   // Declare our React application.
   const app = (
-    <AsyncComponentProvider asyncContext={asyncComponentsContext}>
-      <IntlProvider locale="en" messages={localMessages}>
-        <Provider store={store} key="provider">
-          <ThemeProvider theme={theme}>
-            <StaticRouter location={request.url} context={reactRouterContext}>
-              <App />
-            </StaticRouter>
-          </ThemeProvider>
-        </Provider>
-      </IntlProvider>
-    </AsyncComponentProvider>
+    <StyleSheetManager sheet={sheet.instance}>
+      <AsyncComponentProvider asyncContext={asyncComponentsContext}>
+        <IntlProvider locale="en" messages={localMessages}>
+          <Provider store={store} key="provider">
+            <ThemeProvider theme={theme}>
+              <StaticRouter location={request.url} context={reactRouterContext}>
+                <App />
+              </StaticRouter>
+            </ThemeProvider>
+          </Provider>
+        </IntlProvider>
+      </AsyncComponentProvider>
+    </StyleSheetManager>
   );
 
   // Pass our app into the react-async-component helper so that any async
@@ -101,6 +108,7 @@ export default function reactApplicationMiddleware(request, response) {
   return Promise.all(promises)
     .then(() => {
       const appString = renderToString(app);
+      const styleTags = sheet.getStyleElement();
 
       // Generate the html response.
       const html = renderToStaticMarkup(
@@ -110,6 +118,7 @@ export default function reactApplicationMiddleware(request, response) {
           helmet={Helmet.rewind()}
           asyncComponentsState={asyncComponentsContext.getState()}
           reduxData={store.getState()}
+          styleTags={styleTags}
         />
       );
 

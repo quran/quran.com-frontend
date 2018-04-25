@@ -1,24 +1,24 @@
 import {
   isAllLoaded,
   loadAll,
-  setCurrent as setCurrentSurah
-} from 'redux/actions/chapters.js';
+  setCurrent as setCurrentSurah,
+} from '../../redux/actions/chapters.js';
 import {
   isChapterInfoLoaded,
-  loadChapterInfo
-} from 'redux/actions/chapterInfos';
+  loadChapterInfo,
+} from '../../redux/actions/chapterInfos';
 
 import {
   clearCurrent,
   load as loadVerses,
   isLoaded,
   loadTafsir,
-  isTafsirLoaded
-} from 'redux/actions/verses.js';
+  isTafsirLoaded,
+} from '../../redux/actions/verses.js';
 
-import { isJuzsLoaded, loadJuzs } from 'redux/actions/juzs.js';
+import { isJuzsLoaded, loadJuzs } from '../../redux/actions/juzs.js';
 
-import { debug } from 'helpers';
+import { debug } from '../../helpers';
 
 const determinePage = (range) => {
   let from;
@@ -32,7 +32,7 @@ const determinePage = (range) => {
 
       return {
         offset: from - 1,
-        limit: to - from
+        limit: to - from,
       };
     }
 
@@ -42,7 +42,7 @@ const determinePage = (range) => {
 
     return {
       offset: offset - 1,
-      limit: 1
+      limit: 1,
     };
   }
 
@@ -78,7 +78,7 @@ export const juzsConnect = ({ store: { getState, dispatch } }) => {
 
 export const chapterInfoConnect = ({
   store: { dispatch, getState },
-  params
+  params,
 }) => {
   if (isChapterInfoLoaded(getState(), params.chapterId)) return false;
 
@@ -93,7 +93,7 @@ export const chapterInfoConnect = ({
 export const versesConnect = ({
   store: { dispatch, getState },
   params,
-  location
+  location,
 }) => {
   debug('component:Surah:versesConnect', 'Init');
 
