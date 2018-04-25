@@ -11,19 +11,16 @@ import { IntlProvider } from 'react-intl';
 import { ThemeProvider } from 'styled-components';
 import cookie from 'react-cookie';
 
-import getLocalMessages from '../../../shared/helpers/setLocal';
-import theme from '../../../shared/theme';
+import getLocalMessages from '../../../helpers/setLocal';
+import theme from '../../../theme';
 import config from '../../../../config';
-import ApiClient from '../../../shared/helpers/ApiClient';
-import createStore from '../../../shared/redux/create';
+import ApiClient from '../../../helpers/ApiClient';
+import createStore from '../../../redux/create';
 
 import ServerHTML from './ServerHTML';
-import App from '../../../shared/containers/App';
-import {
-  setOption,
-  setUserAgent
-} from '../../../shared/redux/actions/options.js';
-import { getPromises, checkOnEnterResult } from '../../../shared/routes';
+import App from '../../../containers/App';
+import { setOption, setUserAgent } from '../../../redux/actions/options.js';
+import { getPromises, checkOnEnterResult } from '../../../routes';
 import { log } from '../../../../internal/utils';
 
 /**

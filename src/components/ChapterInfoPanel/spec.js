@@ -1,8 +1,8 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 
-import { chapter } from '../../../tests/fixtures/chapters';
-import { chapterInfo } from '../../../tests/fixtures/chapterInfos';
+import { chapter } from '../../../../tests/fixtures/chapters';
+import { chapterInfo } from '../../../../tests/fixtures/chapterInfos';
 import ChapterInfoPanel from './index';
 
 let wrapper;

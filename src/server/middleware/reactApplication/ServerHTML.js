@@ -16,9 +16,9 @@ import removeNil from '../../../../shared/utils/arrays/removeNil';
 import getClientBundleEntryAssets from './getClientBundleEntryAssets';
 
 import ClientConfig from '../../../../config/components/ClientConfig';
-import HTML from '../../../../shared/components/HTML';
-import highlightStyles from '../../../shared/helpers/highlightStyles';
-import fontsStyle from '../../../shared/helpers/fontsStyle';
+import HTML from '../../../../components/HTML';
+import highlightStyles from '../../../helpers/highlightStyles';
+import fontsStyle from '../../../helpers/fontsStyle';
 
 // PRIVATES
 
@@ -52,7 +52,7 @@ function ServerHTML(props) {
     helmet,
     nonce,
     reactAppString,
-    reduxData
+    reduxData,
   } = props;
 
   // Creates an inline script definition that is protected by the nonce.
@@ -76,7 +76,7 @@ function ServerHTML(props) {
     ifElse(clientEntryAssets && clientEntryAssets.css)(() =>
       stylesheetTag(clientEntryAssets.css)
     ),
-    ...ifElse(helmet)(() => helmet.style.toComponent(), [])
+    ...ifElse(helmet)(() => helmet.style.toComponent(), []),
   ]);
 
   const bodyElements = removeNil([
@@ -126,7 +126,7 @@ function ServerHTML(props) {
     ifElse(clientEntryAssets && clientEntryAssets.js)(() =>
       scriptTag(clientEntryAssets.js)
     ),
-    ...ifElse(helmet)(() => helmet.script.toComponent(), [])
+    ...ifElse(helmet)(() => helmet.script.toComponent(), []),
   ]);
 
   return (
@@ -154,7 +154,7 @@ ServerHTML.propTypes = {
   // eslint-disable-next-line react/forbid-prop-types
   helmet: PropTypes.object,
   nonce: PropTypes.string,
-  reactAppString: PropTypes.string
+  reactAppString: PropTypes.string,
 };
 
 // EXPORT

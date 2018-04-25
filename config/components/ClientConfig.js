@@ -29,14 +29,14 @@ function ClientConfig({ nonce }) {
       nonce={nonce}
       // eslint-disable-next-line react/no-danger
       dangerouslySetInnerHTML={{
-        __html: `window.__CLIENT_CONFIG__=${serializedClientConfig}`
+        __html: `window.__CLIENT_CONFIG__=${serializedClientConfig}`,
       }}
     />
   );
 }
 
 ClientConfig.propTypes = {
-  nonce: PropTypes.string.isRequired
+  nonce: PropTypes.string.isRequired,
 };
 
 export default ClientConfig;

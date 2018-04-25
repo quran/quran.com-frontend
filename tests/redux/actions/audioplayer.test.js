@@ -9,7 +9,7 @@ import {
   TOGGLE_SCROLL,
   BUILD_ON_CLIENT,
   UPDATE
-} from '../constants/audioplayer.js';
+} from '../../../src/redux/constants/audioplayer';
 
 import {
   setCurrentFile,

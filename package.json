@@ -32,7 +32,8 @@
   "jest": {
     "moduleDirectories": [
       "node_modules",
-      "src"
+      "src",
+      "src/shared"
     ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",

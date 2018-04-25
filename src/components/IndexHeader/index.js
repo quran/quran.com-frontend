@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import SearchInput from 'components/SearchInput';
 import styled from 'styled-components';
 
-import backgroundImage from '../../../../static/images/background.jpg';
-import logo from '../../../../static/images/logo-lg-w.png';
+import backgroundImage from '../../../static/images/background.jpg';
+import logo from '../../../static/images/logo-lg-w.png';
 
 const StyledLink = styled(Link)`
   display: inline-block;

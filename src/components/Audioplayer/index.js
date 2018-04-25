@@ -107,7 +107,8 @@ export const ControlButton = styled.a`
   display: inline-block;
   cursor: pointer;
   padding: 0 10px;
-  color: ${props => (props.active ? props.theme.brandPrimary : props.theme.textColor)};
+  color: ${props =>
+    props.active ? props.theme.brandPrimary : props.theme.textColor};
   outline: none;
   &:focus,
   &:active {

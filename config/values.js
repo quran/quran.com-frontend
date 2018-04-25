@@ -30,7 +30,7 @@ const values = {
   defaultLocale: 'en',
 
   // The configuration values that should be exposed to our client bundle.
-  // This value gets passed through the /shared/utils/objects/filterWithRules
+  // This value gets passed through the /utils/objects/filterWithRules
   // util to create a filter object that can be serialised and included
   // with our client bundle.
   clientConfigFilter: {

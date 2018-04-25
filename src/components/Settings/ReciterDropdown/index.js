@@ -25,7 +25,7 @@ class ReciterDropdown extends Component {
       audio,
       onOptionChange,
       recitations,
-      loadingRecitations,
+      loadingRecitations
     } = this.props;
 
     if (loadingRecitations) {
@@ -68,14 +68,14 @@ ReciterDropdown.propTypes = {
   audio: PropTypes.number,
   loadRecitations: PropTypes.func.isRequired,
   recitations: customPropTypes.recitations,
-  loadingRecitations: PropTypes.bool,
+  loadingRecitations: PropTypes.bool
 };
 
 export default connect(
   state => ({
     recitations: state.options.options.recitations,
     loadingRecitations: state.options.loadingRecitations,
-    audio: state.options.audio,
+    audio: state.options.audio
   }),
   { loadRecitations }
 )(ReciterDropdown);

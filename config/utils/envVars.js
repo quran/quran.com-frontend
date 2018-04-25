@@ -34,7 +34,7 @@ function registerEnvFile() {
     // e.g. /projects/react-universally/.env.staging
     ifElse(DEPLOYMENT)(
       path.resolve(appRootDir.get(), `${envFile}.${DEPLOYMENT}`)
-    )
+    ),
   ]);
 
   // Find the first env file path match.
@@ -48,7 +48,7 @@ function registerEnvFile() {
     log({
       title: 'server',
       level: 'special',
-      message: `Registering environment variables from: ${envFilePath}`
+      message: `Registering environment variables from: ${envFilePath}`,
     });
     dotenv.config({ path: envFilePath });
   }

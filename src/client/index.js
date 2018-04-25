@@ -12,16 +12,16 @@ import { BrowserRouter } from 'react-router-dom';
 import 'isomorphic-fetch';
 
 import ReactHotLoader from './components/ReactHotLoader';
-import debug from '../shared/helpers/debug';
-import getLocalMessages from '../shared/helpers/setLocal';
-import App from '../shared/containers/App';
-import theme from '../shared/theme';
+import debug from '../helpers/debug';
+import getLocalMessages from '../helpers/setLocal';
+import App from '../containers/App';
+import theme from '../theme';
 
 import './styles/main.global.scss';
-import config from '../shared/config';
+import config from '../config';
 
-import ApiClient from '../shared/helpers/ApiClient';
-import createStore from '../shared/redux/create';
+import ApiClient from '../helpers/ApiClient';
+import createStore from '../redux/create';
 
 try {
   Raven.config(config.sentryClient).install();
@@ -108,7 +108,7 @@ if (process.env.BUILD_FLAG_IS_DEV === 'true' && module.hot) {
   // Accept changes to this file for hot reloading.
   module.hot.accept('./index.js');
   // Any changes to our App will cause a hotload re-render.
-  module.hot.accept('../shared/containers/App', () => {
-    renderApp(require('../shared/containers/App').default);
+  module.hot.accept('../containers/App', () => {
+    renderApp(require('../containers/App').default);
   });
 }
