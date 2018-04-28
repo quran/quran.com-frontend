@@ -113,6 +113,7 @@ function ServerHTML(props) {
       stylesheetTag(clientEntryAssets.css)
     ),
     ...ifElse(helmet)(() => helmet.style.toComponent(), []),
+    ...styleTags,
   ]);
 
   const bodyElements = removeNil([
@@ -163,7 +164,6 @@ function ServerHTML(props) {
       scriptTag(clientEntryAssets.js)
     ),
     ...ifElse(helmet)(() => helmet.script.toComponent(), []),
-    ...styleTags,
     ...thirdPartyTags,
   ]);
 
