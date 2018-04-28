@@ -28,7 +28,6 @@ export function buildAudioFromHash(ayahsObject = {}) {
   return audioFromHash;
 }
 
-
 export default function buildAudio(ayahs) {
   if (!ayahs.length) {
     return false;

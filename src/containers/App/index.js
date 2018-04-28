@@ -8,14 +8,14 @@ import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import { withRouter } from 'react-router';
 import Loadable from 'react-loadable';
+import Loader from 'quran-components/lib/Loader';
 import ComponentLoader from 'components/ComponentLoader';
 import debug from 'helpers/debug';
 import config from 'config';
 import metricsConfig from 'helpers/metrics';
 import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
-import { removeMedia } from 'redux/actions/media';
-import Loader from 'quran-components/lib/Loader';
+import { removeMedia } from '../../redux/actions/media';
 
 import Routes from '../../components/Routes';
 import Navbars from '../../components/Navbars';

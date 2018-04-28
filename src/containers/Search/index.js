@@ -196,7 +196,7 @@ class Search extends Component {
       );
     }
 
-    return results.map(result =>
+    return results.map(result => (
       <Verse
         verse={entities[result]}
         match={entities[result].match}
@@ -205,7 +205,7 @@ class Search extends Component {
         userAgent={options.userAgent}
         isSearched
       />
-    );
+    ));
   }
 
   render() {
@@ -226,9 +226,7 @@ class Search extends Component {
         {this.renderStatsBar()}
         <div className="container surah-list">
           <div className="row">
-            <div className="col-md-12">
-              {this.renderBody()}
-            </div>
+            <div className="col-md-12">{this.renderBody()}</div>
           </div>
         </div>
       </div>

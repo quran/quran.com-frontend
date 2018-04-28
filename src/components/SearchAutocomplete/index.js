@@ -5,7 +5,7 @@ import styled from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
-import { suggest } from 'redux/actions/suggest';
+import { suggest } from '../../redux/actions/suggest';
 
 const ayahRegex = /^(\d+)(?::(\d+))?$/;
 
@@ -23,20 +23,20 @@ const List = styled.ul`
   box-sizing: border-box;
   list-style: none;
   padding: 0;
-  margin: .2em 0 0;
+  margin: 0.2em 0 0;
   background: white;
-  border: 1px solid rgba(0, 0, 0, .3);
-  box-shadow: .05em .2em .6em rgba(0, 0, 0, .2);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0.05em 0.2em 0.6em rgba(0, 0, 0, 0.2);
   text-shadow: none;
 
   &:before {
-    content: "";
+    content: '';
     position: absolute;
-    top: -.23em;
+    top: -0.23em;
     left: 1em;
     width: 0;
     height: 0;
-    padding: .4em;
+    padding: 0.4em;
     background: white;
     border: inherit;
     border-right: 0;
@@ -57,8 +57,8 @@ const List = styled.ul`
     white-space: nowrap;
     line-height: 28px;
     padding-left: 10px;
-    padding-top: .2em;
-    padding-bottom: .2em;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
     a {
       display: block;
     }
@@ -80,7 +80,7 @@ const List = styled.ul`
     color: #444;
   }
 
-  & > li[aria-selected="true"] .text {
+  & > li[aria-selected='true'] .text {
     background: hsl(205, 40%, 40%);
     color: white;
   }
@@ -90,7 +90,7 @@ const List = styled.ul`
     background: hsl(68, 100%, 41%);
   }
 
-  li[aria-selected="true"] mark {
+  li[aria-selected='true'] mark {
     background: hsl(86, 100%, 21%);
     color: inherit;
   }
@@ -103,8 +103,8 @@ const List = styled.ul`
 const StyledLink = styled.div`
   position: absolute;
   right: 0;
-  padding-top: .2em;
-  padding-bottom: .2em;
+  padding-top: 0.2em;
+  padding-bottom: 0.2em;
   padding-left: 70px;
   padding-right: 10px;
   line-height: 28px;
@@ -268,7 +268,7 @@ class SearchAutocomplete extends Component {
       return false;
     }
 
-    return this.getSuggestions().map(item =>
+    return this.getSuggestions().map(item => (
       <li // eslint-disable-line
         key={item.href}
         tabIndex="-1"
@@ -287,7 +287,7 @@ class SearchAutocomplete extends Component {
           />
         </div>
       </li>
-    );
+    ));
   }
 
   render() {

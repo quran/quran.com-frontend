@@ -1,4 +1,4 @@
-import { versesSchema } from 'redux/schemas';
+import { versesSchema } from '../schemas';
 
 import {
   LOAD,

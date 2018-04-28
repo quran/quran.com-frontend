@@ -27,16 +27,18 @@ const Container = styled.div`
 const StyledButton = styled(Button)`
   border-radius: 50px;
 
-  @media(max-width: ${props => props.theme.screen.sm}){
-    &:last-child{
+  @media (max-width: ${props => props.theme.screen.sm}) {
+    &:last-child {
       margin-top: 15px;
     }
   }
 `;
 
-const Title = styled.h1`color: #000000;`;
+const Title = styled.h1`
+  color: #000000;
+`;
 
-export default () =>
+export default () => (
   <Container className="montserrat container">
     <Helmet
       {...makeHeadTags({
@@ -96,4 +98,5 @@ export default () =>
         <img src={phones} width="100%" alt="Apps" />
       </div>
     </div>
-  </Container>;
+  </Container>
+);

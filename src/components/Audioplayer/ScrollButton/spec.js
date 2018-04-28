@@ -34,7 +34,10 @@ describe('<ScrollButton />', () => {
 
   /*
   it('should call onScrollToggle when clicked', () => {
-    component.find('a').first().simulate('click');
+    component
+      .find('a')
+      .first()
+      .simulate('click');
 
     expect(onScrollToggle.callCount).toEqual(1);
   });  */

@@ -13,7 +13,12 @@ describe.skip('<Track />', () => {
   });
 
   it('should show the progress to be 50%', () => {
-    expect(component.children().first().props().style.width).toEqual('50%');
+    expect(
+      component
+        .children()
+        .first()
+        .props().style.width
+    ).toEqual('50%');
   });
 
   it('should return click progress', () => {

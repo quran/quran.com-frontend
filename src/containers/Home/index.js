@@ -21,7 +21,7 @@ const LoaderStyle = { position: 'relative', overflow: 'hidden' };
 const JuzList = Loadable({
   loader: () =>
     import(/* webpackChunkName: "JuzList" */ '../../components/Home/JuzList'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
 class Home extends Component {
@@ -111,14 +111,14 @@ Home.propTypes = {
   chapters: customPropTypes.chapters.isRequired,
   juzs: customPropTypes.juzs.isRequired,
   loadingChapters: PropTypes.bool.isRequired,
-  loadingJuzs: PropTypes.bool.isRequired
+  loadingJuzs: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = state => ({
   loadingChapters: !state.chapters.loaded,
   loadingJuzs: !state.juzs.loaded,
   chapters: state.chapters.entities,
-  juzs: state.juzs.entities
+  juzs: state.juzs.entities,
 });
 
 export default connect(mapStateToProps)(Home);

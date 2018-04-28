@@ -48,9 +48,9 @@ class Translation extends Component {
       >
         <h4 className="montserrat">{translation.resourceName}</h4>
         <h2
-          className={`${isArabic
-            ? 'text-right'
-            : 'text-left'} text-translation times-new`}
+          className={`${
+            isArabic ? 'text-right' : 'text-left'
+          } text-translation times-new`}
         >
           <small
             className={`${lang || 'times-new'}`}

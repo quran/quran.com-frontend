@@ -5,7 +5,9 @@ import styled from 'styled-components';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Icon from 'quran-components/lib/Icon';
 
-const Title = styled.div`padding: 10px 15px;`;
+const Title = styled.div`
+  padding: 10px 15px;
+`;
 
 const List = styled.ul`
   display: table;
@@ -137,9 +139,7 @@ class FontSizeOptions extends Component {
     return (
       <div>
         {this.renderTitle()}
-        <ItemLink>
-          {this.renderOptions()}
-        </ItemLink>
+        <ItemLink>{this.renderOptions()}</ItemLink>
       </div>
     );
   }

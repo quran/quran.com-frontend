@@ -14,7 +14,7 @@ describe('<ChapterInfoPanel />', () => {
       setOption: jest.fn(),
       isShowingChapterInfo: true,
       chapter,
-      chapterInfo
+      chapterInfo,
     };
 
     wrapper = shallow(<ChapterInfoPanel {...props} />);

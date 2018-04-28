@@ -1,4 +1,4 @@
-import { versesSchema } from 'redux/schemas';
+import { versesSchema } from '../schemas';
 
 import { SEARCH } from '../constants/search.js';
 import ApiClient from '../../helpers/ApiClient';

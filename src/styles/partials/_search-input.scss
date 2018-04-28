@@ -1,28 +1,32 @@
-.right-inner-addon.search-input{
+.right-inner-addon.search-input {
   padding: 0;
   margin-bottom: 0;
   width: auto;
 
-  input{
+  input {
     padding: 10px 15px;
     height: 100%;
     padding-right: 48px;
     background: #f1f1f1;
   }
 
-  input::-webkit-input-placeholder { /* WebKit browsers */
+  input::-webkit-input-placeholder {
+    /* WebKit browsers */
     color: $olive;
   }
-  input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  input:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
     color: $olive;
   }
-  input::-moz-placeholder { /* Mozilla Firefox 19+ */
+  input::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
     color: $olive;
   }
-  input:-ms-input-placeholder { /* Internet Explorer 10+ */
+  input:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
     color: $olive;
   }
-  i.ss-icon{
+  i.ss-icon {
     font-size: 90%;
     padding: 12px;
     height: 100%;
@@ -36,7 +40,7 @@
   margin: 0 auto;
   margin-bottom: 50px;
 
-  input{
+  input {
     width: 100%;
     padding: 20px 30px;
     padding-right: 60px;
@@ -50,12 +54,14 @@
       font-weight: 300;
     }
 
-    &:-moz-placeholder { /* Firefox 18- */
+    &:-moz-placeholder {
+      /* Firefox 18- */
       color: $brand-primary;
       font-weight: 300;
     }
 
-    &::-moz-placeholder {  /* Firefox 19+ */
+    &::-moz-placeholder {
+      /* Firefox 19+ */
       color: $brand-primary;
       font-weight: 300;
     }
@@ -77,13 +83,14 @@
     height: 100%;
     border: 3px solid #fff;
 
-    &:hover{
+    &:hover {
       background-color: lighten($brand-primary, 10%);
     }
   }
 }
 
-
-.search-status{
-  span span{color: #2CA4AB}
+.search-status {
+  span span {
+    color: #2ca4ab;
+  }
 }

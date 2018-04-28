@@ -1,8 +1,8 @@
 import range from 'lodash/range';
 
-import config from '../config';
+import config from '../../config';
 
-const baseUrl = config.fontsURL;
+const baseUrl = config('fontsURL');
 
 const makeFont = pageNumber => `
 @font-face {

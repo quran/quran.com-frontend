@@ -40,7 +40,7 @@ class Line extends Component {
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
 
-    const text = line.map(word =>
+    const text = line.map(word => (
       <Word
         word={word}
         key={`${word.position}-${word.code}-${word.lineNum}`}
@@ -53,13 +53,9 @@ class Line extends Component {
         }
         useTextFont={useTextFont}
       />
-    );
+    ));
 
-    return (
-      <StyledLine className="text-center">
-        {text}
-      </StyledLine>
-    );
+    return <StyledLine className="text-center">{text}</StyledLine>;
   }
 
   render() {
@@ -67,8 +63,9 @@ class Line extends Component {
 
     debug(
       'component:Line',
-      `Page: ${line[0].pageNum} - Line: ${line[0].lineNum} - Ayah: ${line[0]
-        .verseKey}`
+      `Page: ${line[0].pageNum} - Line: ${line[0].lineNum} - Ayah: ${
+        line[0].verseKey
+      }`
     );
 
     return (

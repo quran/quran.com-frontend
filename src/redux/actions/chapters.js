@@ -1,4 +1,4 @@
-import { chaptersSchema } from 'redux/schemas';
+import { chaptersSchema } from '../schemas';
 import { FETCH_CHAPTERS, SET_CURRENT } from '../constants/chapters.js';
 import ApiClient from '../../helpers/ApiClient';
 

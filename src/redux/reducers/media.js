@@ -1,3 +1,4 @@
+import { buildTafsirList } from 'helpers/tafsirs';
 import {
   SET_MEDIA,
   REMOVE_MEDIA,
@@ -5,9 +6,7 @@ import {
   LOAD_TAFISRS_SUCCESS,
   LOAD_FOOT_NOTE,
   LOAD_FOOT_NOTE_SUCCESS
-} from 'redux/constants/media';
-
-import { buildTafsirList } from 'helpers/tafsirs';
+} from '../constants/media';
 
 const initialState = {
   content: { title: null, body: null },

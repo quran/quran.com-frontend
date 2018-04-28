@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import SearchInput from 'components/SearchInput';
-import Jumbotron from 'quran-components/lib/Jumbotron';
 import styled from 'styled-components';
 
-const logo = require('../../../static/images/logo-lg-w.png');
+import backgroundImage from '../../../static/images/background.jpg';
+import logo from '../../../static/images/logo-lg-w.png';
 
 const StyledLink = styled(Link)`
   display: inline-block;
@@ -26,8 +26,18 @@ const Title = styled.h4`
   padding-bottom: 3.5%;
 `;
 
-const IndexHeader = props =>
-  <Jumbotron>
+const Container = styled.div`
+  text-align: center;
+  background-color: ${props => props.theme.brandPrimary || '#2CA4AB'};
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 1rem 0rem;
+  color: #fff;
+`;
+
+const IndexHeader = props => (
+  <Container style={{ backgroundImage: `url(${backgroundImage})` }}>
     <div className="container">
       <div className="row">
         <div className="col-md-10 col-md-offset-1 text-center">
@@ -39,7 +49,8 @@ const IndexHeader = props =>
         </div>
       </div>
     </div>
-  </Jumbotron>;
+  </Container>
+);
 
 IndexHeader.propTypes = {
   noSearch: PropTypes.bool

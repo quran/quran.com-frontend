@@ -8,10 +8,11 @@ const LocaleFormattedMessage = ({
   intl,
   values,
   className
-}) =>
+}) => (
   <span className={`${intl.messages.local} ${className}`}>
     <FormattedMessage id={id} defaultMessage={defaultMessage} values={values} />
-  </span>;
+  </span>
+);
 
 LocaleFormattedMessage.propTypes = {
   id: PropTypes.string.isRequired,

@@ -27,7 +27,7 @@ import ScrollButton from './ScrollButton';
 const RepeatDropdown = Loadable({
   loader: () =>
     import(/* webpackChunkName: "RepeatDropdown" */ './RepeatDropdown'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
 const LoaderStyle = {
@@ -36,7 +36,7 @@ const LoaderStyle = {
   width: '32px',
   height: '32px',
   margin: '-8px',
-  background: '#ffffff'
+  background: '#ffffff',
 };
 
 const Wrapper = styled.div`
@@ -101,13 +101,16 @@ const disabled = css`
 
 const isDisabledCss = props => (props.disabled ? disabled : '');
 const isPlayingCss = props => (props.playingButton ? playingButton : '');
+// eslint-disable-next-line
+const colorCss = props =>
+  props.active ? props.theme.brandPrimary : props.theme.textColor;
 
 export const ControlButton = styled.a`
   width: 100%;
   display: inline-block;
   cursor: pointer;
   padding: 0 10px;
-  color: ${props => (props.active ? props.theme.brandPrimary : props.theme.textColor)};
+  color: ${colorCss};
   outline: none;
   &:focus,
   &:active {
@@ -138,7 +141,7 @@ export const StyledPopover = styled(Popover)`
 
 export class Audioplayer extends Component {
   state = {
-    loadingFile: false
+    loadingFile: false,
   };
 
   componentDidMount() {
@@ -156,7 +159,7 @@ export class Audioplayer extends Component {
       chapterId: currentVerse.chapterId,
       verseId: currentVerse.id,
       verseKey: currentVerse.verseKey,
-      audio
+      audio,
     });
 
     if (nextVerse) {
@@ -164,7 +167,7 @@ export class Audioplayer extends Component {
         chapterId: nextVerse.chapterId,
         verseId: nextVerse.id,
         verseKey: nextVerse.verseKey,
-        audio
+        audio,
       });
     }
 
@@ -201,7 +204,7 @@ export class Audioplayer extends Component {
           chapterId: this.props.verses[key].chapterId,
           verseId: this.props.verses[key].id,
           verseKey: this.props.verses[key].verseKey,
-          audio: nextProps.audio
+          audio: nextProps.audio,
         })
       );
     }
@@ -216,7 +219,7 @@ export class Audioplayer extends Component {
       verses,
       audio,
       currentVerse,
-      load
+      load,
     } = this.props;
 
     if (
@@ -228,7 +231,7 @@ export class Audioplayer extends Component {
         chapterId: verse.chapterId,
         verseId: verse.id,
         verseKey: verse.verseKey,
-        audio
+        audio,
       });
     }
 
@@ -365,7 +368,7 @@ export class Audioplayer extends Component {
       repeat,
       currentVerse,
       setRepeat, // eslint-disable-line no-shadow
-      setAyah // eslint-disable-line no-shadow
+      setAyah, // eslint-disable-line no-shadow
     } = this.props;
     const [chapter, ayah] = currentVerse.verseKey
       .split(':')
@@ -449,14 +452,14 @@ export class Audioplayer extends Component {
 
       return update({
         duration: file.duration,
-        isLoading: false
+        isLoading: false,
       });
     };
 
     const onTimeupdate = () =>
       update({
         currentTime: file.currentTime,
-        duration: file.duration
+        duration: file.duration,
       });
 
     const onEnded = () => {
@@ -504,7 +507,7 @@ export class Audioplayer extends Component {
     const { currentFile, update } = this.props; // eslint-disable-line no-shadow
 
     update({
-      currentTime: fraction * currentFile.duration
+      currentTime: fraction * currentFile.duration,
     });
 
     currentFile.currentTime = fraction * currentFile.duration;
@@ -581,7 +584,7 @@ export class Audioplayer extends Component {
       chapter,
       repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
-      setRepeat // eslint-disable-line no-shadow
+      setRepeat, // eslint-disable-line no-shadow
     } = this.props;
 
     if (isLoading || !currentFile) {
@@ -662,7 +665,7 @@ const mapStateToProps = (state, ownProps) => {
     shouldScroll: state.audioplayer.shouldScroll,
     duration: state.audioplayer.duration,
     currentTime: state.audioplayer.currentTime,
-    audio: state.options.audio
+    audio: state.options.audio,
   };
 };
 
@@ -693,7 +696,7 @@ Audioplayer.propTypes = {
   currentFile: PropTypes.any, // eslint-disable-line
   audio: PropTypes.number.isRequired,
   verses: customPropTypes.verses,
-  verseIds: PropTypes.arrayOf(PropTypes.string) // eslint-disable-line
+  verseIds: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
 };
 
 export default connect(mapStateToProps, AudioActions)(Audioplayer);

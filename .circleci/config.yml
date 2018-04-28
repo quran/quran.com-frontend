@@ -15,11 +15,11 @@ jobs:
         name: rebuildSass
         command: npm rebuild node-sass
     - run:
-        name: buildClient
-        command: npm run build:client
+        name: build
+        command: npm run build
     - run:
-        name: buildServer
-        command: npm run build:server
+        name: bundlesize
+        command: npm run bundlesize
 workflows:
   version: 2
   test_and_build:

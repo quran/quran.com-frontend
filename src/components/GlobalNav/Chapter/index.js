@@ -17,23 +17,23 @@ import GlobalNav from '../index';
 const ChaptersDropdown = Loadable({
   loader: () =>
     import(/* webpackChunkName: "ChaptersDropdown" */ '../../ChaptersDropdown'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
 const VersesDropdown = Loadable({
   loader: () =>
     import(/* webpackChunkName: "VersesDropdown" */ '../../VersesDropdown'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
 const Settings = Loadable({
   loader: () => import(/* webpackChunkName: "Settings" */ '../../Settings'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
 class GlobalNavChapter extends Component {
   state = {
-    drawerOpen: false
+    drawerOpen: false,
   };
 
   handleVerseDropdownClick = (verseNum) => {
@@ -121,7 +121,7 @@ class GlobalNavChapter extends Component {
             }
           >
             <Settings chapter={chapter} versesIds={versesIds} />
-          </Drawer>
+          </Drawer>,
         ]}
         rightControls={[this.renderDrawerToggle()]}
       />
@@ -142,7 +142,7 @@ function mapStateToProps(state, ownProps) {
     chapter,
     chapters: state.chapters.entities,
     options: state.options,
-    versesIds
+    versesIds,
   };
 }
 
@@ -153,11 +153,11 @@ GlobalNavChapter.propTypes = {
   versesIds: PropTypes.instanceOf(Set),
   load: PropTypes.func.isRequired,
   setCurrentVerse: PropTypes.func.isRequired,
-  replace: PropTypes.func.isRequired
+  replace: PropTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, {
   load,
   replace,
-  setCurrentVerse
+  setCurrentVerse,
 })(GlobalNavChapter);

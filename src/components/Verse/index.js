@@ -14,7 +14,7 @@ import Translation from 'components/Translation';
 import FontText from 'components/FontText';
 import debug from 'helpers/debug';
 
-import { loadTafsirs } from 'redux/actions/media';
+import { loadTafsirs } from '../../redux/actions/media';
 
 const Copy = Loadable({
   loader: () => import(/* webpackChunkName: "Copy" */ 'components/Copy'),

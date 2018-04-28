@@ -17,13 +17,13 @@ import {
   // LOAD,
   LOAD_SUCCESS
   // LOAD_FAIL
-} from 'redux/constants/audioplayer';
+} from '../constants/audioplayer';
 
 import {
   LOAD as VERSES_LOAD,
   CLEAR_CURRENT as VERSES_CLEAR_CURRENT,
   SET_CURRENT_VERSE
-} from 'redux/constants/verses';
+} from '../constants/verses';
 
 export { NEXT, SET_AYAH };
 

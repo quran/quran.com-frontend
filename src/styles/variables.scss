@@ -2,17 +2,16 @@
 $proportion-factor: 0.5;
 
 // Colors
-$brand-primary: #2CA4AB;
+$brand-primary: #2ca4ab;
 $brand-primary-darker-5: darken($brand-primary, 5%);
 $brand-primary-darker-10: darken($brand-primary, 10%);
 $brand-primary-darker-15: darken($brand-primary, 15%);
 $brand-primary-darker-35: darken($brand-primary, 35%);
 $light-green: $brand-primary;
 
-$beige: #F1ECD8;
+$beige: #f1ecd8;
 $cream: #c4bda1;
 $olive: #635e49;
-
 
 $peach: #e29467;
 
@@ -32,7 +31,7 @@ $navbar-margin-bottom: 0px;
 $navbar-default-bg: #fff;
 $navbar-default-link-active-bg: transparent;
 $navbar-default-link-active-color: $brand-primary;
-$navbar-default-border: rgba(0,0,0,0.12);
+$navbar-default-border: rgba(0, 0, 0, 0.12);
 
 $navbar-inverse-bg: $brand-primary;
 $navbar-inverse-link-color: #fff;
@@ -57,10 +56,12 @@ $track-bg: $brand-primary;
 $tracker-width: 4px;
 $tracker-height: 4px;
 $tracker-height-hundred-boolean: false;
-@if $tracker-height-hundred-boolean {$tracker-height: 100%;}
+@if $tracker-height-hundred-boolean {
+  $tracker-height: 100%;
+}
 
 $font-family-sans-serif: 'Montserrat', sans-serif;
 $font-montserrat: $font-family-sans-serif;
-$icon-font-path: "bootstrap-sass/assets/fonts";
+$icon-font-path: 'bootstrap-sass/assets/fonts';
 
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import 'node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables';
