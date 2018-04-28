@@ -44,13 +44,6 @@ function scriptTag(jsFilePath) {
   return <script type="text/javascript" src={jsFilePath} />;
 }
 
-// Creates an inline script definition that is protected by the nonce.
-function inlineScript(body) {
-  return (
-    <script type="text/javascript" dangerouslySetInnerHTML={{ __html: body }} />
-  );
-}
-
 function inlineStyle(body) {
   return <style dangerouslySetInnerHTML={{ __html: body }} />;
 }
@@ -68,6 +61,15 @@ function ServerHTML(props) {
   } = props;
 
   const isProd = process.env.NODE_ENV === 'production';
+
+  // Creates an inline script definition that is protected by the nonce.
+  const inlineScript = body => (
+    <script
+      nonce={nonce}
+      type="text/javascript"
+      dangerouslySetInnerHTML={{ __html: body }}
+    />
+  );
 
   const thirdPartyTags = [
     ifElse(isProd)(() =>
