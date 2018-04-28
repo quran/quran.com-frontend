@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { forbidExtraProps } from 'airbnb-prop-types';
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import Loader from 'quran-components/lib/Loader';
@@ -168,12 +167,12 @@ const ChapterInfo = ({
   );
 };
 
-ChapterInfo.propTypes = forbidExtraProps({
+ChapterInfo.propTypes = {
   setOption: PropTypes.func.isRequired,
   isShowingChapterInfo: PropTypes.bool.isRequired,
   chapter: ChapterShape,
   chapterInfo: ChapterInfoShape,
-});
+};
 
 ChapterInfo.defaultProps = {
   chapter: null,

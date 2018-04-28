@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { forbidExtraProps } from 'airbnb-prop-types';
 
 const ComponentLoader = ({ isLoading, error, pastDelay }) => {
   if (isLoading) {
@@ -12,11 +11,11 @@ const ComponentLoader = ({ isLoading, error, pastDelay }) => {
   return null;
 };
 
-ComponentLoader.propTypes = forbidExtraProps({
+ComponentLoader.propTypes = {
   isLoading: PropTypes.bool,
   error: PropTypes.any, // eslint-disable-line
   pastDelay: PropTypes.bool,
-});
+};
 
 ComponentLoader.defaultProps = {
   error: null,

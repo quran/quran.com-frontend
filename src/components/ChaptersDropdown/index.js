@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { forbidExtraProps } from 'airbnb-prop-types';
 import LinkContainer from 'react-router-bootstrap/lib/LinkContainer';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
@@ -68,9 +67,9 @@ function ChaptersDropdown({ chapters, chapter }) {
   );
 }
 
-ChaptersDropdown.propTypes = forbidExtraProps({
+ChaptersDropdown.propTypes = {
   chapters: PropTypes.objectOf(ChapterShape).isRequired,
   chapter: ChapterShape.isRequired,
-});
+};
 
 export default ChaptersDropdown;
