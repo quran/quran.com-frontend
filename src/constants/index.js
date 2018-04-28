@@ -114,5 +114,5 @@ export const chapterToVersesMap = {
   111: 5,
   112: 4,
   113: 5,
-  114: 6
+  114: 6,
 };
