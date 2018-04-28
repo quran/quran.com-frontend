@@ -24,14 +24,13 @@
     "test": "npm run lint; npm run jest",
     "validate": "npm ls"
   },
-  "bundlesize": [
-    {
+  "bundlesize": [{
       "path": "./build/client/index-*.js",
       "maxSize": "210 kB"
     },
     {
       "path": "./build/client/Chapter-*.js",
-      "maxSize": "50 kB"
+      "maxSize": "40 kB"
     },
     {
       "path": "./build/client/index-*.css",
