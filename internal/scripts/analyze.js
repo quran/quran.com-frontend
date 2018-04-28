@@ -32,7 +32,14 @@ const anaylzeFilePath = pathResolve(
 );
 
 const clientCompiler = webpack(
-  webpackConfigFactory({ target, optimize: true })
+  webpackConfigFactory({
+    target,
+    optimize: true,
+    stats: {
+      colors: true,
+      reasons: false,
+    },
+  })
 );
 
 clientCompiler.run((err, stats) => {

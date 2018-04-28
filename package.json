@@ -258,7 +258,7 @@
     "sinon-chai": "2.8.0",
     "stylelint": "7.1.0",
     "stylelint-webpack-plugin": "0.2.0",
-    "webpack-bundle-analyzer": "2.10.0",
+    "webpack-bundle-analyzer": "2.11.1",
     "webpack-dashboard": "^0.4.0",
     "webpack-hot-middleware": "2.12.2"
   }

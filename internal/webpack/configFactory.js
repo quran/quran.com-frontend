@@ -5,6 +5,7 @@ import nodeExternals from 'webpack-node-externals';
 import path from 'path';
 import webpack from 'webpack';
 import WebpackMd5Hash from 'webpack-md5-hash';
+import strip from 'strip-loader';
 
 import { happyPackPlugin, log } from '../utils';
 import { ifElse } from '../../shared/utils/logic';
@@ -363,6 +364,7 @@ export default function webpackConfigFactory(buildOptions) {
         name: 'happypack-javascript',
         // We will use babel to do all our JS processing.
         loaders: [
+          ifProd(() => strip.loader('debug')),
           {
             path: 'babel-loader',
             // We will create a babel config and pass it through the plugin
