@@ -114,7 +114,7 @@ const values = {
       'quran-1f14.kxcdn.com',
     ],
     imgSrc: ["'self' data:"],
-    mediaSrc: [],
+    mediaSrc: ['verses.quran.com'],
     manifestSrc: [],
     objectSrc: [],
     scriptSrc: [
