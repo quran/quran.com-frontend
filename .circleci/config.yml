@@ -16,7 +16,7 @@ jobs:
         command: npm rebuild node-sass
     - run:
         name: build
-        command: npm run build
+        command: npm run build && npm run bundlesize
 workflows:
   version: 2
   test_and_build:

@@ -9,6 +9,7 @@
     "build-storybook": "build-storybook",
     "build:dev": "babel-node internal/scripts/build",
     "build": "babel-node internal/scripts/build --optimize",
+    "bundlesize": "bundlesize",
     "clean": "cross-env babel-node internal/scripts/clean",
     "dev": "cross-env DEPLOYMENT=development babel-node internal/development",
     "jest": "jest",
@@ -23,6 +24,19 @@
     "test": "npm run lint; npm run jest",
     "validate": "npm ls"
   },
+  "bundlesize": [{
+      "path": "./build/client/index-*.js",
+      "maxSize": "210 kB"
+    },
+    {
+      "path": "./build/client/Chapter-*.js",
+      "maxSize": "50 kB"
+    },
+    {
+      "path": "./build/client/index-*.css",
+      "maxSize": "20 kB"
+    }
+  ],
   "jest": {
     "moduleDirectories": [
       "node_modules",
@@ -210,6 +224,7 @@
     "babel-jest": "^21.2.0",
     "babel-plugin-react-transform": "2.0.2",
     "babel-preset-react-hmre": "1.1.1",
+    "bundlesize": "0.17.0",
     "chai": "3.0.0",
     "chromedriver": "2.22.2",
     "del": "2.0.2",
