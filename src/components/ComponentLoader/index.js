@@ -18,4 +18,10 @@ ComponentLoader.propTypes = forbidExtraProps({
   pastDelay: PropTypes.bool,
 });
 
+ComponentLoader.defaultProps = {
+  error: null,
+  isLoading: false,
+  pastDelay: false,
+};
+
 export default ComponentLoader;
