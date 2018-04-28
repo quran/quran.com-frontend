@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
 import Element from 'react-scroll/lib/components/Element';
-import Loadable from 'react-loadable';
+import { asyncComponent } from 'react-async-component';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
@@ -16,14 +16,14 @@ import debug from 'helpers/debug';
 
 import { loadTafsirs } from '../../redux/actions/media';
 
-const Copy = Loadable({
-  loader: () => import(/* webpackChunkName: "Copy" */ 'components/Copy'),
-  LoadingComponent: ComponentLoader
+const Copy = asyncComponent({
+  resolve: () => import(/* webpackChunkName: "Copy" */ 'components/Copy'),
+  LoadingComponent: ComponentLoader,
 });
 
-const Share = Loadable({
-  loader: () => import(/* webpackChunkName: "Share" */ 'components/Share'),
-  LoadingComponent: ComponentLoader
+const Share = asyncComponent({
+  resolve: () => import(/* webpackChunkName: "Share" */ 'components/Share'),
+  LoadingComponent: ComponentLoader,
 });
 
 // TODO: Change this
@@ -110,7 +110,7 @@ class Verse extends Component {
       this.props.verse !== nextProps.verse,
       this.props.tooltip !== nextProps.tooltip,
       this.props.currentWord !== nextProps.currentWord,
-      this.props.iscurrentVerse !== nextProps.iscurrentVerse
+      this.props.iscurrentVerse !== nextProps.iscurrentVerse,
     ];
 
     if (this.props.match) {
@@ -191,7 +191,7 @@ class Verse extends Component {
       currentVerse,
       isPlaying,
       audioActions,
-      isSearched
+      isSearched,
     } = this.props; // eslint-disable-line max-len
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
     let wordAudioPosition = -1;
@@ -380,13 +380,13 @@ Verse.propTypes = {
   currentVerse: PropTypes.string,
   userAgent: PropTypes.object, // eslint-disable-line
   loadTafsirs: PropTypes.func.isRequired,
-  isPdf: PropTypes.bool
+  isPdf: PropTypes.bool,
 };
 
 Verse.defaultProps = {
   currentWord: null,
   isSearched: false,
-  isPdf: false
+  isPdf: false,
 };
 
 export default connect(null, { loadTafsirs })(Verse);

@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import Modal from 'react-bootstrap/lib/Modal';
 import { withRouter } from 'react-router';
-import Loadable from 'react-loadable';
+import { asyncComponent } from 'react-async-component';
 import Loader from 'quran-components/lib/Loader';
 import ComponentLoader from 'components/ComponentLoader';
 import debug from 'helpers/debug';
@@ -24,16 +24,16 @@ const ModalHeader = Modal.Header;
 const ModalTitle = Modal.Title;
 const ModalBody = Modal.Body;
 
-const GlobalSidebar = Loadable({
-  loader: () =>
+const GlobalSidebar = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "GlobalSidebar" */ 'components/GlobalSidebar'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
-const SmartBanner = Loadable({
-  loader: () =>
+const SmartBanner = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "SmartBanner" */ 'components/SmartBanner'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
 const NoScriptWarning = styled.div`
@@ -50,11 +50,11 @@ const NoScriptWarning = styled.div`
 
 class App extends Component {
   static contextTypes = {
-    store: PropTypes.object.isRequired
+    store: PropTypes.object.isRequired,
   };
 
   state = {
-    sidebarOpen: false
+    sidebarOpen: false,
   };
 
   renderModalBody() {
@@ -145,13 +145,13 @@ App.propTypes = {
   footer: PropTypes.element,
   sidebar: PropTypes.element,
   footNote: customPropTypes.footNoteType,
-  loadingFootNote: PropTypes.bool
+  loadingFootNote: PropTypes.bool,
 };
 
 export default withRouter(
   connect(
     state => ({
-      media: state.media
+      media: state.media,
     }),
     { removeMedia }
   )(MetricsApp)

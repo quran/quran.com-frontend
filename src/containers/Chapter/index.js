@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import Helmet from 'react-helmet';
-import Loadable from 'react-loadable';
+import { asyncComponent } from 'react-async-component';
 
 // components
 import Loader from 'quran-components/lib/Loader';
@@ -31,32 +31,32 @@ import * as MediaActions from 'redux/actions/media.js';
 
 const LoaderStyle = { position: 'relative', overflow: 'hidden' };
 
-const PageView = Loadable({
-  loader: () =>
+const PageView = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "PageView" */ 'components/PageView'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
-const Audioplayer = Loadable({
-  loader: () =>
+const Audioplayer = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "Audioplayer" */ 'components/Audioplayer'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
-const ChapterInfoPanelContainer = Loadable({
-  loader: () =>
+const ChapterInfoPanelContainer = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "ChapterInfo" */ 'containers/ChapterInfoPanelContainer'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
-const TopOptions = Loadable({
-  loader: () =>
+const TopOptions = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "TopOptions" */ 'components/TopOptions'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
 class Chapter extends Component {
   state = {
     lazyLoading: false,
-    sidebarOpen: false
+    sidebarOpen: false,
   };
 
   //
@@ -118,7 +118,7 @@ class Chapter extends Component {
       this.props.isLoaded !== nextProps.isLoaded,
       this.props.options !== nextProps.options,
       this.props.currentVerse !== nextProps.currentVerse,
-      this.props.isPlaying !== nextProps.isPlaying
+      this.props.isPlaying !== nextProps.isPlaying,
     ];
 
     return conditions.some(condition => condition);
@@ -218,7 +218,7 @@ class Chapter extends Component {
       isEndOfSurah,
       chapter,
       options,
-      actions
+      actions,
     } = this.props;
     const translations = (options.translations || []).join(',');
 
@@ -314,7 +314,7 @@ class Chapter extends Component {
       options,
       isPlaying,
       isAuthenticated,
-      currentVerse
+      currentVerse,
     } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(verses).map(verse => (
@@ -360,7 +360,7 @@ class Chapter extends Component {
         <Helmet
           {...makeHeadTags({
             title: this.title(),
-            description: this.description()
+            description: this.description(),
           })}
           script={[
             {
@@ -383,8 +383,8 @@ class Chapter extends Component {
                   "name": "${chapter.nameSimple}"
                 }
               }]
-            }`
-            }
+            }`,
+            },
           ]}
           style={[
             {
@@ -392,8 +392,8 @@ class Chapter extends Component {
                 options.fontSize.arabic
               }rem;} .text-translation{font-size: ${
                 options.fontSize.translation
-              }rem;}` // eslint-disable-line max-len
-            }
+              }rem;}`, // eslint-disable-line max-len
+            },
           ]}
         />
         <Container className="container-fluid">
@@ -439,11 +439,11 @@ Chapter.propTypes = {
   options: PropTypes.object.isRequired, // eslint-disable-line
   match: PropTypes.shape({
     params: PropTypes.shape({
-      chapterId: PropTypes.string.isRequired
-    })
+      chapterId: PropTypes.string.isRequired,
+    }),
   }).isRequired,
   verses: customPropTypes.verses,
-  isPlaying: PropTypes.bool
+  isPlaying: PropTypes.bool,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -476,7 +476,7 @@ function mapStateToProps(state, ownProps) {
     isLoading: state.verses.loading,
     isLoaded: state.verses.loaded,
     lines: state.lines.lines,
-    options: state.options
+    options: state.options,
   };
 }
 
@@ -487,8 +487,8 @@ function mapDispatchToProps(dispatch) {
       verse: bindActionCreators(AyahActions, dispatch),
       audio: bindActionCreators(AudioActions, dispatch),
       media: bindActionCreators(MediaActions, dispatch),
-      push: bindActionCreators(push, dispatch)
-    }
+      push: bindActionCreators(push, dispatch),
+    },
   };
 }
 

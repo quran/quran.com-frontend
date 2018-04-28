@@ -6,6 +6,8 @@ import {
   AsyncComponentProvider,
   createAsyncContext,
 } from 'react-async-component';
+import asyncBootstrapper from 'react-async-bootstrapper';
+
 import Provider from 'react-redux/lib/components/Provider';
 import { IntlProvider } from 'react-intl';
 import {
@@ -104,6 +106,7 @@ export default function reactApplicationMiddleware(request, response) {
 
   // inside a request
   const promises = getPromises(request.url, store);
+  promises.push(asyncBootstrapper(app));
 
   return Promise.all(promises)
     .then(() => {

@@ -92,6 +92,15 @@ const values = {
     url: 'https://cdn.ravenjs.com/3.0.4/raven.min.js',
   },
 
+  google: {
+    analytics: {
+      id: 'UA-8496014-1',
+    },
+    optimize: {
+      id: 'GTM-PNMFTW3',
+    },
+  },
+
   // Basic configuration for the HTML page that hosts our application.
   // We make use of react-helmet to consume the values below.
   // @see https://github.com/nfl/react-helmet

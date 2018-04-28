@@ -8,6 +8,7 @@ import Provider from 'react-redux/lib/components/Provider';
 import { IntlProvider } from 'react-intl';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
+import asyncBootstrapper from 'react-async-bootstrapper';
 
 import 'isomorphic-fetch';
 
@@ -90,8 +91,10 @@ function renderApp(TheApp) {
   // @see https://github.com/ctrlplusb/react-async-component
   // TODO: Add this later
   // asyncBootstrapper(app).then(() => {
-  ReactDOM.render(app, mountNode, () => {
-    debug('client', 'React Rendered');
+  asyncBootstrapper(app).then(() => {
+    ReactDOM.render(app, mountNode, () => {
+      debug('client', 'React Rendered');
+    });
   });
 }
 

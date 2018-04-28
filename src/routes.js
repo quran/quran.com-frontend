@@ -1,4 +1,4 @@
-import loadable from 'loadable-components';
+import { asyncComponent } from 'react-async-component';
 import { matchPath } from 'react-router';
 
 import Home from './containers/Home';
@@ -22,51 +22,59 @@ const routes = [
   },
   {
     path: '/donations',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Donations" */ './containers/Donations')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Donations" */ './containers/Donations'),
+    }),
   },
   {
     path: '/contributions',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Donations" */ './containers/Donations')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Donations" */ './containers/Donations'),
+    }),
   },
   {
     path: '/about',
-    component: loadable(() =>
-      import(/* webpackChunkName: "About" */ './containers/About')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "About" */ './containers/About'),
+    }),
   },
   {
     path: '/contact',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Contact" */ './containers/Contact')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Contact" */ './containers/Contact'),
+    }),
   },
   {
     path: '/contactus',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Contact" */ './containers/Contact')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Contact" */ './containers/Contact'),
+    }),
   },
   {
     path: '/mobile',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Mobile" */ './containers/MobileLanding')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Mobile" */ './containers/MobileLanding'),
+    }),
   },
   {
     path: '/apps',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Mobile" */ './containers/MobileLanding')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Mobile" */ './containers/MobileLanding'),
+    }),
   },
   {
     path: '/error/:errorKey',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Error" */ './containers/Error')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Error" */ './containers/Error'),
+    }),
     setContext: context => ({
       ...context,
       status: 400,
@@ -74,9 +82,10 @@ const routes = [
   },
   {
     path: '/search',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Search" */ './containers/Search')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Search" */ './containers/Search'),
+    }),
     loadData: [
       ({ store: { dispatch }, location }) => {
         if (__CLIENT__) {
@@ -90,9 +99,10 @@ const routes = [
   },
   {
     path: '/ayatul-kursi',
-    component: loadable(() =>
-      import(/* webpackChunkName: "AyatulKursi" */ './containers/AyatulKursi')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "AyatulKursi" */ './containers/AyatulKursi'),
+    }),
     loadData: [
       chaptersConnect,
       ({ store }) =>
@@ -107,60 +117,69 @@ const routes = [
   },
   {
     path: '/:chapterId/info/:language?',
-    component: loadable(() =>
-      import(/* webpackChunkName: "ChapterInfo" */ './containers/ChapterInfo')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "ChapterInfo" */ './containers/ChapterInfo'),
+    }),
     loadData: [chaptersConnect, chapterInfoConnect],
   },
   {
     path: '/:chapterId(\\d+)/:range/tafsirs/:tafsirId',
-    component: loadable(() =>
-      import(/* webpackChunkName: "VerseTafsir" */ './containers/VerseTafsir')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "VerseTafsir" */ './containers/VerseTafsir'),
+    }),
     loadData: [versesConnect, tafsirConnect],
   },
   {
     path: '/:chapterId(\\d+)/:range/:translations',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Chapter" */ './containers/Chapter')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Chapter" */ './containers/Chapter'),
+    }),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
-    navbar: loadable(() =>
-      import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
-    ),
+    navbar: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter'),
+    }),
     onEnter: validators,
   },
   {
     path: '/:chapterId(\\d+)/:range?.pdf',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Pdf" */ './containers/Pdf')
-    ),
+    component: asyncComponent({
+      resolve: () => import(/* webpackChunkName: "Pdf" */ './containers/Pdf'),
+    }),
     loadData: [chaptersConnect, versesConnect],
-    footer: loadable(() =>
-      import(/* webpackChunkName: "PdfFooter" */ './components/Footer/PdfFooter')
-    ),
+    footer: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "PdfFooter" */ './components/Footer/PdfFooter'),
+    }),
     onEnter: validators,
   },
   {
     path: '/:chapterId(\\d+)/:range?',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Chapter" */ './containers/Chapter')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Chapter" */ './containers/Chapter'),
+    }),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
-    navbar: loadable(() =>
-      import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
-    ),
+    navbar: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter'),
+    }),
     onEnter: validators,
   },
   {
     path: '/:chapterId(\\d+)(:|-)?:range?',
-    component: loadable(() =>
-      import(/* webpackChunkName: "Chapter" */ './containers/Chapter')
-    ),
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Chapter" */ './containers/Chapter'),
+    }),
     loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
-    navbar: loadable(() =>
-      import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter')
-    ),
+    navbar: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter'),
+    }),
     onEnter: validators,
   },
 ];

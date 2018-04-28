@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
-import Loadable from 'react-loadable';
+import { asyncComponent } from 'react-async-component';
 import Tabs, { Tab } from 'quran-components/lib/Tabs';
 import Loader from 'quran-components/lib/Loader';
 import PropTypes from 'prop-types';
@@ -18,8 +18,8 @@ import ComponentLoader from '../../components/ComponentLoader';
 
 const LoaderStyle = { position: 'relative', overflow: 'hidden' };
 
-const JuzList = Loadable({
-  loader: () =>
+const JuzList = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "JuzList" */ '../../components/Home/JuzList'),
   LoadingComponent: ComponentLoader,
 });

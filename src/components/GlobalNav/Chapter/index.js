@@ -4,7 +4,8 @@ import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { replace } from 'react-router-redux';
 import { Link } from 'react-router-dom';
-import Loadable from 'react-loadable';
+import { asyncComponent } from 'react-async-component';
+
 import Drawer from 'quran-components/lib/Drawer';
 import SearchInput from 'components/SearchInput';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -14,20 +15,20 @@ import ComponentLoader from '../../ComponentLoader';
 
 import GlobalNav from '../index';
 
-const ChaptersDropdown = Loadable({
-  loader: () =>
+const ChaptersDropdown = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "ChaptersDropdown" */ '../../ChaptersDropdown'),
   LoadingComponent: ComponentLoader,
 });
 
-const VersesDropdown = Loadable({
-  loader: () =>
+const VersesDropdown = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "VersesDropdown" */ '../../VersesDropdown'),
   LoadingComponent: ComponentLoader,
 });
 
-const Settings = Loadable({
-  loader: () => import(/* webpackChunkName: "Settings" */ '../../Settings'),
+const Settings = asyncComponent({
+  resolve: () => import(/* webpackChunkName: "Settings" */ '../../Settings'),
   LoadingComponent: ComponentLoader,
 });
 
