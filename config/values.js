@@ -126,12 +126,7 @@ const values = {
     mediaSrc: ['verses.quran.com'],
     manifestSrc: [],
     objectSrc: [],
-    scriptSrc: [
-      // Allow scripts from cdn.polyfill.io so that we can import the
-      // polyfill.
-      'cdn.polyfill.io',
-      'cdn.ravenjs.com',
-    ],
+    scriptSrc: ["'self'", 'cdn.polyfill.io', 'cdn.ravenjs.com'],
     styleSrc: [
       'cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css',
       'fonts.googleapis.com/css',

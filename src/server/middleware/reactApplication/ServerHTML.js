@@ -84,8 +84,8 @@ function ServerHTML(props) {
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', ${config('google.analytics.id')}, 'auto');
-      ga('require', ${config('google.optimize.id')});
+      ga('create', '${config('google.analytics.id')}', 'auto');
+      ga('require', '${config('google.optimize.id')}');
       `)
     ),
 
