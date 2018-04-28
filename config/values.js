@@ -126,7 +126,12 @@ const values = {
     mediaSrc: ['verses.quran.com'],
     manifestSrc: [],
     objectSrc: [],
-    scriptSrc: ["'self'", 'cdn.polyfill.io', 'cdn.ravenjs.com'],
+    scriptSrc: [
+      'cdn.polyfill.io',
+      'cdn.ravenjs.com',
+      'mxpnl.com',
+      'google-analytics.com',
+    ],
     styleSrc: [
       'cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css',
       'fonts.googleapis.com/css',
