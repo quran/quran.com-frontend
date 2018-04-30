@@ -14,7 +14,13 @@ const ComponentLoader = ({ isLoading, error, pastDelay }) => {
 ComponentLoader.propTypes = {
   isLoading: PropTypes.bool,
   error: PropTypes.any, // eslint-disable-line
-  pastDelay: PropTypes.bool
+  pastDelay: PropTypes.bool,
+};
+
+ComponentLoader.defaultProps = {
+  error: null,
+  isLoading: false,
+  pastDelay: false,
 };
 
 export default ComponentLoader;

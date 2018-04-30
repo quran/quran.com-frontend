@@ -1,18 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import * as customPropTypes from 'customPropTypes';
 import styled from 'styled-components';
 import { lighten } from 'polished';
 import Loader from 'quran-components/lib/Loader';
 
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
+import ChapterShape from '../../shapes/ChapterShape';
+import ChapterInfoShape from '../../shapes/ChapterInfoShape';
 import madinah from '../../../static/images/madinah.jpg';
 import makkah from '../../../static/images/makkah.jpg';
 
 const images = {
   madinah,
-  makkah
+  makkah,
 };
 
 const List = styled.dl`
@@ -116,7 +117,7 @@ const ChapterInfo = ({
   chapter,
   chapterInfo,
   isShowingChapterInfo,
-  setOption
+  setOption,
 }) => {
   // So we don't need to load images and files unless needed
   if (!isShowingChapterInfo) return <noscript />;
@@ -169,8 +170,13 @@ const ChapterInfo = ({
 ChapterInfo.propTypes = {
   setOption: PropTypes.func.isRequired,
   isShowingChapterInfo: PropTypes.bool.isRequired,
-  chapter: customPropTypes.chapterType,
-  chapterInfo: customPropTypes.infoType
+  chapter: ChapterShape,
+  chapterInfo: ChapterInfoShape,
+};
+
+ChapterInfo.defaultProps = {
+  chapter: null,
+  chapterInfo: null,
 };
 
 export default ChapterInfo;
