@@ -3,15 +3,15 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Helmet from 'react-helmet';
-import Loadable from 'react-loadable';
+import { asyncComponent } from 'react-async-component';
 import Button from 'quran-components/lib/Button';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
-const Tafsir = Loadable({
-  loader: () => import(/* webpackChunkName: "Tafsir" */ 'components/Tafsir'),
-  LoadingComponent: ComponentLoader
+const Tafsir = asyncComponent({
+  resolve: () => import(/* webpackChunkName: "Tafsir" */ 'components/Tafsir'),
+  LoadingComponent: ComponentLoader,
 });
 
 const VerseTafsir = ({ verse, tafsir }) => (
@@ -23,7 +23,7 @@ const VerseTafsir = ({ verse, tafsir }) => (
         }`,
         description: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${
           verse.verseKey
-        } - ${verse.textMadani}` // eslint-disable-line max-len
+        } - ${verse.textMadani}`, // eslint-disable-line max-len
       })}
       script={[
         {
@@ -46,8 +46,8 @@ const VerseTafsir = ({ verse, tafsir }) => (
               "name": "${verse.verseKey}"
             }
           }]
-        }`
-        }
+        }`,
+        },
       ]}
     />
 
@@ -72,7 +72,7 @@ const VerseTafsir = ({ verse, tafsir }) => (
 
 VerseTafsir.propTypes = {
   verse: customPropTypes.verseType,
-  tafsir: customPropTypes.tafsirType
+  tafsir: customPropTypes.tafsirType,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -85,7 +85,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     verse,
-    tafsir: state.verses.tafsirs[`${verseKey}-${tafsirId}`]
+    tafsir: state.verses.tafsirs[`${verseKey}-${tafsirId}`],
   };
 }
 

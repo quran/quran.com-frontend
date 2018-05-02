@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import loadable from 'loadable-components';
+import { asyncComponent } from 'react-async-component';
+
 import { Switch, Route } from 'react-router';
 
 import routes from '../../routes';
 
-const GlobalNav = loadable(() =>
-  import(/* webpackChunkName: "GlobalNav" */ 'components/GlobalNav')
-);
+const GlobalNav = asyncComponent({
+  resolve: () =>
+    import(/* webpackChunkName: "GlobalNav" */ 'components/GlobalNav'),
+});
 
 // eslint-disable-next-line no-unused-vars
 const Navbars = ({ match, ...props }) => (
@@ -31,7 +33,7 @@ const Navbars = ({ match, ...props }) => (
 
 Navbars.propTypes = {
   // eslint-disable-next-line
-  match: PropTypes.object
+  match: PropTypes.object,
 };
 
 export default Navbars;

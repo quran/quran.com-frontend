@@ -6,7 +6,8 @@ import styled, { css } from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
-import Loadable from 'react-loadable';
+import { asyncComponent } from 'react-async-component';
+
 import Loader from 'quran-components/lib/Loader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
@@ -24,8 +25,8 @@ import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
 
-const RepeatDropdown = Loadable({
-  loader: () =>
+const RepeatDropdown = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "RepeatDropdown" */ './RepeatDropdown'),
   LoadingComponent: ComponentLoader,
 });

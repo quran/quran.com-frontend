@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { push } from 'react-router-redux';
 
 import Helmet from 'react-helmet';
-import Loadable from 'react-loadable';
+import { asyncComponent } from 'react-async-component';
 
 // components
 import Verse from 'components/Verse';
@@ -27,22 +27,22 @@ import * as AyahActions from '../../redux/actions/verses.js';
 import * as OptionsActions from '../../redux/actions/options.js';
 import * as MediaActions from '../../redux/actions/media.js';
 
-const PageView = Loadable({
-  loader: () =>
+const PageView = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "PageView" */ 'components/PageView'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
-const Audioplayer = Loadable({
-  loader: () =>
+const Audioplayer = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "Audioplayer" */ 'components/Audioplayer'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
-const TopOptions = Loadable({
-  loader: () =>
+const TopOptions = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "TopOptions" */ 'components/TopOptions'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
 const title = 'Ayatul Kursi';
@@ -53,7 +53,7 @@ const description =
 
 class AyatulKursi extends Component {
   state = {
-    sidebarOpen: false
+    sidebarOpen: false,
   };
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -64,7 +64,7 @@ class AyatulKursi extends Component {
       this.props.isLoaded !== nextProps.isLoaded,
       this.props.options !== nextProps.options,
       this.props.currentVerse !== nextProps.currentVerse,
-      this.props.isPlaying !== nextProps.isPlaying
+      this.props.isPlaying !== nextProps.isPlaying,
     ];
 
     return conditions.some(condition => condition);
@@ -80,7 +80,7 @@ class AyatulKursi extends Component {
       options,
       isPlaying,
       isAuthenticated,
-      currentVerse
+      currentVerse,
     } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(verses).map(verse => (
@@ -126,7 +126,7 @@ class AyatulKursi extends Component {
         <Helmet
           {...makeHeadTags({
             title,
-            description
+            description,
           })}
           script={[
             {
@@ -149,8 +149,8 @@ class AyatulKursi extends Component {
                   "name": "Ayatul Kursi"
                 }
               }]
-            }`
-            }
+            }`,
+            },
           ]}
           style={[
             {
@@ -158,8 +158,8 @@ class AyatulKursi extends Component {
                 options.fontSize.arabic
               }rem;} .text-translation{font-size: ${
                 options.fontSize.translation
-              }rem;}` // eslint-disable-line max-len
-            }
+              }rem;}`, // eslint-disable-line max-len
+            },
           ]}
         />
         <Container className="container-fluid">
@@ -209,7 +209,7 @@ AyatulKursi.propTypes = {
   isAuthenticated: PropTypes.bool,
   options: PropTypes.object.isRequired, // eslint-disable-line
   verses: customPropTypes.verses,
-  isPlaying: PropTypes.bool
+  isPlaying: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
@@ -228,7 +228,7 @@ function mapStateToProps(state) {
     isLoading: state.verses.loading,
     isLoaded: state.verses.loaded,
     lines: state.lines.lines,
-    options: state.options
+    options: state.options,
   };
 }
 
@@ -239,8 +239,8 @@ function mapDispatchToProps(dispatch) {
       verse: bindActionCreators(AyahActions, dispatch),
       audio: bindActionCreators(AudioActions, dispatch),
       media: bindActionCreators(MediaActions, dispatch),
-      push: bindActionCreators(push, dispatch)
-    }
+      push: bindActionCreators(push, dispatch),
+    },
   };
 }
 

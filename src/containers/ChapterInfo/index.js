@@ -3,16 +3,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import Helmet from 'react-helmet';
-import Loadable from 'react-loadable';
+import { asyncComponent } from 'react-async-component';
 import Button from 'quran-components/lib/Button';
 import ComponentLoader from 'components/ComponentLoader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 
-const ChapterInfoPanel = Loadable({
-  loader: () =>
+const ChapterInfoPanel = asyncComponent({
+  resolve: () =>
     import(/* webpackChunkName: "ChapterInfoPanel" */ 'components/ChapterInfoPanel'),
-  LoadingComponent: ComponentLoader
+  LoadingComponent: ComponentLoader,
 });
 
 const ChapterInfo = ({ chapter, chapterInfo }) => (
@@ -26,7 +26,7 @@ const ChapterInfo = ({ chapter, chapterInfo }) => (
           chapter.versesCount
         } verses and resides between pages ${chapter.pages[0]} to ${
           chapter.pages[1]
-        } in the Quran.` // eslint-disable-line max-len
+        } in the Quran.`, // eslint-disable-line max-len
       })}
       script={[
         {
@@ -49,8 +49,8 @@ const ChapterInfo = ({ chapter, chapterInfo }) => (
               "name": "${chapter.nameSimple}"
             }
           }]
-        }`
-        }
+        }`,
+        },
       ]}
     />
     <ChapterInfoPanel
@@ -71,7 +71,7 @@ const ChapterInfo = ({ chapter, chapterInfo }) => (
 
 ChapterInfo.propTypes = {
   chapter: customPropTypes.chapterType,
-  chapterInfo: customPropTypes.infoType
+  chapterInfo: customPropTypes.infoType,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -79,7 +79,7 @@ function mapStateToProps(state, ownProps) {
 
   return {
     chapter: state.chapters.entities[chapterId],
-    chapterInfo: state.chapterInfos.entities[chapterId]
+    chapterInfo: state.chapterInfos.entities[chapterId],
   };
 }
 
