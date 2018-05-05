@@ -16,7 +16,7 @@ jobs:
         command: npm rebuild node-sass
     - run:
         name: build
-        command: npm run build
+        command: npm run build:dev
     - run:
         name: bundlesize
         command: npm run bundlesize
