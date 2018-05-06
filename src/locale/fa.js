@@ -81,7 +81,7 @@ export default {
     'nav.mobile': 'اپلیکیشن های موبایل',
     'nav.navigate': 'انتقال',
     'nav.legacySite': 'Quran.com قدیمی',
-    'nav.blog': 'Blog',
+    'nav.blog': 'وبلاگ',
 
     'juz.index.heading': 'جزء',
 
