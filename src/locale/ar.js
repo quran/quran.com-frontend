@@ -80,7 +80,7 @@ export default {
     'nav.mobile': 'التليفون المحمول',
     'nav.navigate': 'انتقل',
     'nav.legacySite': 'الموقع القديم',
-    'nav.blog': 'Blog',
+    'nav.blog': 'مدونة',
 
     'juz.index.heading': 'الجوز',
 
