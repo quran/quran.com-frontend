@@ -364,7 +364,7 @@ export default function webpackConfigFactory(buildOptions) {
         name: 'happypack-javascript',
         // We will use babel to do all our JS processing.
         loaders: [
-          ifProd(() => strip.loader('debug')),
+          ...ifProd(() => [strip.loader('debug')], []),
           {
             path: 'babel-loader',
             // We will create a babel config and pass it through the plugin
