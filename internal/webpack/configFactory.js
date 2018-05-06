@@ -5,6 +5,7 @@ import nodeExternals from 'webpack-node-externals';
 import path from 'path';
 import webpack from 'webpack';
 import WebpackMd5Hash from 'webpack-md5-hash';
+import strip from 'strip-loader';
 
 import { happyPackPlugin, log } from '../utils';
 import { ifElse } from '../../shared/utils/logic';
@@ -53,9 +54,11 @@ export default function webpackConfigFactory(buildOptions) {
   });
 
   const bundleConfig =
-    isServer || isClient // This is either our "server" or "client" bundle.
-      ? config(['bundles', target]) // Otherwise it must be an additional node bundle.
-      : config(['additionalNodeBundles', target]);
+    isServer || isClient
+      ? // This is either our "server" or "client" bundle.
+        config(['bundles', target])
+      : // Otherwise it must be an additional node bundle.
+        config(['additionalNodeBundles', target]);
 
   if (!bundleConfig) {
     throw new Error('No bundle configuration exists for target:', target);
@@ -122,9 +125,11 @@ export default function webpackConfigFactory(buildOptions) {
       ),
     },
 
-    target: isClient // Only our client bundle will target the web as a runtime.
-      ? 'web' // Any other bundle must be targetting node as a runtime.
-      : 'node',
+    target: isClient
+      ? // Only our client bundle will target the web as a runtime.
+        'web'
+      : // Any other bundle must be targetting node as a runtime.
+        'node',
 
     // Ensure that webpack polyfills the following node features for use
     // within any bundles that are targetting node as a runtime. This will be
@@ -160,9 +165,7 @@ export default function webpackConfigFactory(buildOptions) {
     // https://webpack.js.org/configuration/performance/
     performance: ifProdClient(
       // Enable webpack's performance hints for production client builds.
-      {
-        hints: 'warning',
-      },
+      { hints: 'warning' },
       // Else we have to set a value of "false" if we don't want the feature.
       false
     ),
@@ -361,6 +364,7 @@ export default function webpackConfigFactory(buildOptions) {
         name: 'happypack-javascript',
         // We will use babel to do all our JS processing.
         loaders: [
+          ...ifProd(() => [strip.loader('debug')], []),
           {
             path: 'babel-loader',
             // We will create a babel config and pass it through the plugin
@@ -380,25 +384,11 @@ export default function webpackConfigFactory(buildOptions) {
                   // ES201X code into ES5, safe for browsers.  We exclude module
                   // transilation as webpack takes care of this for us, doing
                   // tree shaking in the process.
-                  ifClient([
-                    'env',
-                    {
-                      es2015: {
-                        modules: false,
-                      },
-                    },
-                  ]),
+                  ifClient(['env', { es2015: { modules: false } }]),
                   // For a node bundle we use the specific target against
                   // babel-preset-env so that only the unsupported features of
                   // our target node version gets transpiled.
-                  ifNode([
-                    'env',
-                    {
-                      targets: {
-                        node: true,
-                      },
-                    },
-                  ]),
+                  ifNode(['env', { targets: { node: true } }]),
                   // Stage 3 javascript syntax.
                   // "Candidate: complete spec and initial browser implementations."
                   // Add anything lower than stage 3 at your own risk. :)
@@ -429,12 +419,7 @@ export default function webpackConfigFactory(buildOptions) {
                   ifProd('transform-react-constant-elements'),
 
                   ifClient('syntax-dynamic-import'),
-                  ifNode([
-                    'system-import-transformer',
-                    {
-                      modules: 'common',
-                    },
-                  ]),
+                  ifNode(['system-import-transformer', { modules: 'common' }]),
                 ].filter(x => x != null),
               },
               buildOptions
@@ -477,10 +462,7 @@ export default function webpackConfigFactory(buildOptions) {
             {
               path: 'css-loader',
               // Include sourcemaps for dev experience++.
-              query: {
-                sourceMap: true,
-                importLoaders: 2,
-              },
+              query: { sourceMap: true, importLoaders: 2 },
             },
             {
               loader: 'sass-loader',
@@ -651,12 +633,14 @@ export default function webpackConfigFactory(buildOptions) {
                 // server bundles in order to ensure that SSR paths match the
                 // paths used on the client.
                 name: 'files/[name].[ext]',
-                publicPath: isDev // When running in dev mode the client bundle runs on a
-                  ? // seperate port so we need to put an absolute path here.
+                publicPath: isDev
+                  ? // When running in dev mode the client bundle runs on a
+                    // seperate port so we need to put an absolute path here.
                     `http://${config('host')}:${config(
                       'clientDevServerPort'
-                    )}${config('bundles.client.webPath')}` // Otherwise we just use the configured web path for the client.
-                  : config('bundles.client.webPath'),
+                    )}${config('bundles.client.webPath')}`
+                  : // Otherwise we just use the configured web path for the client.
+                    config('bundles.client.webPath'),
                 // We only emit files when building a web bundle, for the server
                 // bundle we only care about the file loader being able to create
                 // the correct asset URLs.
