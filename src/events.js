@@ -23,7 +23,7 @@ const makeObject = (name, action, labels) => {
       PROPS: {
         'data-metrics-event-label': LABEL,
         'data-metrics-event-action': ACTION,
-        'data-metrics-event-name': NAME,
+        'data-metrics-event-name': NAME
       }
     };
   });
@@ -37,7 +37,7 @@ const makeConfig = (name, config) =>
   Object.keys(config).reduce(
     (obj, key) => ({
       ...obj,
-      ...makeObject(name, key, config[key]),
+      ...makeObject(name, key, config[key])
     }),
     {}
   );
@@ -55,7 +55,7 @@ const EXTERNAL_LINKS = {
     'blog link',
     'chapter link',
     'donations link',
-    'help link',
+    'help link'
   ]
 };
 
@@ -76,7 +76,7 @@ export const NAVBAR_EVENTS = makeConfig('navbar', {
     ...EXTERNAL_LINKS[CLICK],
     ...INTERNAL_LINKS[CLICK],
     'sidebar toggle',
-    'locale switcher toggle',
+    'locale switcher toggle'
   ]
 });
 
