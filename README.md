@@ -48,6 +48,6 @@ analyze-bundle-size bundle-stats.json
 [Expressjs]: http://expressjs.com/en/starter/hello-world.html
 [Webpack]: http://webpack.github.io/docs/what-is-webpack.html
 [nodejs]: https://nodejs.org/en/
-[contributing]: CONTRIBUTING.md
+[contributing]: .github/CONTRIBUTING.md
 [fork]: https://help.github.com/articles/fork-a-repo/
 [staging]: https://staging.quran.com
