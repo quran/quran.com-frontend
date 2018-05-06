@@ -84,6 +84,7 @@ export default {
     'nav.mobile': 'Aplikacionet Mobile',
     'nav.navigate': 'Navigoni',
     'nav.legacySite': 'Legacy Quran.com',
+    'nav.blog': 'Blog',
 
     'juz.index.heading': 'Xhuzi',
 
@@ -92,6 +93,6 @@ export default {
     'error.invalid-surah':
       "Surja është jashtë intervalit. Ju lutemi, shkoni te <a href='/'> faqja fillestare </a> dhe zgjidhni një Sure.",
     'error.invalid-ayah':
-      "Ajeti është jashtë intervalit. Ju lutemi, shkloni te <a href='/'> faqja fillestare </a> dhe zgjidhni një Sure/Ajet."
-  }
+      "Ajeti është jashtë intervalit. Ju lutemi, shkloni te <a href='/'> faqja fillestare </a> dhe zgjidhni një Sure/Ajet.",
+  },
 };

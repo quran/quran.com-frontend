@@ -80,6 +80,7 @@ export default {
     'nav.mobile': 'Aplikasi Ponsel',
     'nav.navigate': 'Telusuri',
     'nav.legacySite': 'Quran.com versi lama',
+    'nav.blog': 'Blog',
 
     'juz.index.heading': 'Juz',
 
@@ -88,6 +89,6 @@ export default {
     'error.invalid-surah':
       "Surah berada di luar jangkauan. Silahkan pergi ke <a href='/'> halaman rumah </a> dan pilih sebuah Surah",
     'error.invalid-ayah':
-      "Ayah berada di luar jangkauan. Silahkan pergi ke <a href='/'> halaman rumah </a> dan pilih Surah / Ayah"
-  }
+      "Ayah berada di luar jangkauan. Silahkan pergi ke <a href='/'> halaman rumah </a> dan pilih Surah / Ayah",
+  },
 };

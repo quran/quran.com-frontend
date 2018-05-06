@@ -79,6 +79,7 @@ export default {
     'nav.mobile': 'Mobiele apps',
     'nav.navigate': 'Navigeer',
     'nav.legacySite': 'Nalatenschap Quran.com',
+    'nav.blog': 'Blog',
 
     'juz.index.heading': 'Juz',
 
@@ -87,6 +88,6 @@ export default {
     'error.invalid-surah':
       "Soera is buiten bereik. Ga aub naar de <a href='/'> startpagina</a> en selecteer een Soera",
     'error.invalid-ayah':
-      "Ayah is buiten bereik. Ga aub naar de <a href='/'> startpagina </a> en selecteer een Soera/Ayah"
-  }
+      "Ayah is buiten bereik. Ga aub naar de <a href='/'> startpagina </a> en selecteer een Soera/Ayah",
+  },
 };

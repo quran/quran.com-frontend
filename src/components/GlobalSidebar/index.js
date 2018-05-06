@@ -110,6 +110,15 @@ class GlobalSidebar extends Component {
               />
             </a>
           </li>
+          <li>
+            <a
+              href="https://medium.com/the-quran-com"
+              {...SIDEBAR_EVENTS.CLICK.BLOG_LINK.PROPS}
+            >
+              <i className="ss-icon ss-compose vertical-align-middle" />{' '}
+              <LocaleFormattedMessage id="nav.blog" defaultMessage="Blog" />
+            </a>
+          </li>
           <hr />
           <li>
             <a
@@ -150,11 +159,11 @@ class GlobalSidebar extends Component {
 GlobalSidebar.propTypes = {
   open: PropTypes.bool.isRequired,
   handleOpen: PropTypes.func,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 GlobalSidebar.defaultProps = {
-  open: false
+  open: false,
 };
 
 export default GlobalSidebar;

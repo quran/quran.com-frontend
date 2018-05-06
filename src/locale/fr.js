@@ -82,6 +82,7 @@ export default {
     'nav.mobile': 'Applications Mobile',
     'nav.navigate': 'Naviguer',
     'nav.legacySite': 'Version précédente de Quran.com',
+    'nav.blog': 'Blog',
 
     'juz.index.heading': 'Juz',
 
@@ -90,6 +91,6 @@ export default {
     'error.invalid-surah':
       "La sourate est hors de portée. Accédez à <a href='/'> page d'accueil </a> et sélectionnez une Sourate",
     'error.invalid-ayah':
-      "Ayah est hors de portée. Accédez à la <a href='/'> page d'accueil </a> et sélectionnez un Surah / Ayah"
-  }
+      "Ayah est hors de portée. Accédez à la <a href='/'> page d'accueil </a> et sélectionnez un Surah / Ayah",
+  },
 };
