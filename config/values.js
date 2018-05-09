@@ -121,6 +121,7 @@ const values = {
       'fonts.googleapis.com/css',
       'fonts.gstatic.com',
       'quran-1f14.kxcdn.com',
+      'assets-1f14.kxcdn.com',
     ],
     imgSrc: ["'self' data:"],
     mediaSrc: ['verses.quran.com'],
