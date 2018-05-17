@@ -69,9 +69,9 @@ export default () => (
       </Span>
       <Span>
         <Link
-          to="/ayatul-kursi"
+          to="/2/255"
           {...QUICK_LINKS_EVENTS.CLICK.VERSE.PROPS}
-          data-metrics-verse-key="2:225"
+          data-metrics-verse-key="2:255"
         >
           Ayatul Kursi
         </Link>
