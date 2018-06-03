@@ -42,10 +42,6 @@ const List = styled.ul`
 const StyledLink = styled.a`
   font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
-  -webkit-transition: color 0.15s ease-in-out;
-  -moz-transition: color 0.15s ease-in-out;
-  -o-transition: color 0.15s ease-in-out;
-  -ms-transition: color 0.15s ease-in-out;
   transition: color 0.15s ease-in-out;
 
   &:hover {
@@ -56,10 +52,6 @@ const StyledLink = styled.a`
 const StyledRouterLink = styled(Link)`
   font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
-  -webkit-transition: color 0.15s ease-in-out;
-  -moz-transition: color 0.15s ease-in-out;
-  -o-transition: color 0.15s ease-in-out;
-  -ms-transition: color 0.15s ease-in-out;
   transition: color 0.15s ease-in-out;
 
   &:hover {
