@@ -80,6 +80,7 @@ export default {
     'nav.mobile': 'موبائل',
     'nav.navigate': 'تشریف لے جائیں',
     'nav.legacySite': 'پرانی سائٹ',
+    'nav.blog': 'بلاگ',
 
     'juz.index.heading': 'سپارے',
 

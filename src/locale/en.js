@@ -80,6 +80,7 @@ export default {
     'nav.mobile': 'Mobile Apps',
     'nav.navigate': 'Navigate',
     'nav.legacySite': 'Legacy Quran.com',
+    'nav.blog': 'Blog',
 
     'juz.index.heading': 'Juz',
 

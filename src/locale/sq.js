@@ -84,6 +84,7 @@ export default {
     'nav.mobile': 'Aplikacionet Mobile',
     'nav.navigate': 'Navigoni',
     'nav.legacySite': 'Legacy Quran.com',
+    'nav.blog': 'Blog',
 
     'juz.index.heading': 'Xhuzi',
 

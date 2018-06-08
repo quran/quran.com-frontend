@@ -79,6 +79,7 @@ export default {
     'nav.mobile': 'Mobiele apps',
     'nav.navigate': 'Navigeer',
     'nav.legacySite': 'Nalatenschap Quran.com',
+    'nav.blog': 'Blog',
 
     'juz.index.heading': 'Juz',
 

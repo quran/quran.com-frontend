@@ -82,6 +82,7 @@ export default {
     'nav.mobile': 'Applications Mobile',
     'nav.navigate': 'Naviguer',
     'nav.legacySite': 'Version précédente de Quran.com',
+    'nav.blog': 'Blog',
 
     'juz.index.heading': 'Juz',
 

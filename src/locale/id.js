@@ -80,6 +80,7 @@ export default {
     'nav.mobile': 'Aplikasi Ponsel',
     'nav.navigate': 'Telusuri',
     'nav.legacySite': 'Quran.com versi lama',
+    'nav.blog': 'Blog',
 
     'juz.index.heading': 'Juz',
 

@@ -52,6 +52,7 @@ const EXTERNAL_LINKS = {
     'sunnah link',
     'developers link',
     'legacy link',
+    'blog link',
     'chapter link',
     'donations link',
     'help link'

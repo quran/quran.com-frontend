@@ -79,6 +79,7 @@ export default {
     'nav.mobile': 'Mobil Uygulamalar',
     'nav.navigate': 'Bağlantılar', // there is no exact translation for Navigate in Turkish
     'nav.legacySite': 'Eski Siteye Git Quran.com',
+    'nav.blog': 'Blog',
 
     'juz.index.heading': 'Juza',
 
