@@ -50,14 +50,7 @@ export default () => (
         <div className="col-md-4 col-md-offset-4 text-center">
           <br />
           <br />
-          <a
-            target="_blank"
-            rel="noopener noreferrer"
-            href="https://quran.tilt.com/support-quran-com-preorder/checkout/payment"
-            className="btn btn-lg btn-block btn-primary"
-          >
-            Support Quran.com
-          </a>
+          Coming soon...
           <br />
           <br />
           If you have any questions, please do not hesitate to contact us at{' '}
