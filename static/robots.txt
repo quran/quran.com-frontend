@@ -1,0 +1,3 @@
+User-agent: *
+
+SITEMAP: https://quran.com/sitemap.xml
