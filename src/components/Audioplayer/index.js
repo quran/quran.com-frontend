@@ -177,6 +177,7 @@ export class Audioplayer extends Component {
 
   componentWillReceiveProps(nextProps) {
     // Make sure we have a current ayah to mount it to Audio
+    // console.log("nexT: ", nextProps)
     if (!this.props.currentVerse && !nextProps.currentFile) {
       return false;
     }

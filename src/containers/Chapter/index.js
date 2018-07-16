@@ -80,14 +80,14 @@ class Chapter extends Component {
   // componentDidMount() {
   //   const { verses, options: { audio } } = this.props;
 
-  //   Object.values(verses).forEach((verse) => {
-  //     this.props.actions.audio.load({
-  //       chapterId: verse.chapterId,
-  //       verseId: verse.id,
-  //       verseKey: verse.verseKey,
-  //       audio
-  //     });
-  //   });
+    // Object.values(verses).forEach((verse) => {
+    //   this.props.actions.audio.load({
+    //     chapterId: verse.chapterId,
+    //     verseId: verse.id,
+    //     verseKey: verse.verseKey,
+    //     audio
+    //   });
+    // });
   // }
 
   // // TODO: Should this belong here?
@@ -139,9 +139,8 @@ class Chapter extends Component {
   handleLazyLoadAyahs = (callback) => {
     const { verseIds, chapter, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     // if(__CLIENT__)
-    //   console.log(this.props)
     const range = [this.getFirst(), this.getLast()];
-
+    // console.log("first: ", this.getFirst())
     const size = 10;
     const from = range[1];
     const to = from + size;
