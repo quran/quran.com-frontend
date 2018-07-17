@@ -1,4 +1,12 @@
 /* global Audio */
+const AUDIO_CDN = '//audio.qurancdn.com/';
+
+export function buildAudioURL(audio) {
+  if (audio.url.startsWith('//')) return audio.url;
+
+  return `${AUDIO_CDN}${audio.url}`;
+}
+
 export function buildAudioForAyah(audio) {
   const scopedAudio = new Audio();
   let segments = null;
@@ -6,7 +14,7 @@ export function buildAudioForAyah(audio) {
   scopedAudio.preload = 'none';
 
   if (audio.url) {
-    scopedAudio.src = audio.url;
+    scopedAudio.src = buildAudioURL(audio);
     segments = audio.segments;
     return { audio: scopedAudio, segments };
   }
