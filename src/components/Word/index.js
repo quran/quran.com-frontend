@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import { zeroPad } from 'helpers/StringHelpers';
+import { buildAudioURL } from 'helpers/buildAudio';
 
 /* eslint-disable no-unused-vars */
 const CHAR_TYPE_WORD = 'word';
@@ -26,7 +27,7 @@ class Word extends Component {
   handleWordPlay = () => {
     const { word } = this.props;
     if (word.audio) {
-      const audio = new Audio(word.audio.url); // eslint-disable-line
+      const audio = new Audio(buildAudioURL(word.audio)); // eslint-disable-line
       audio.play();
     }
   };
@@ -38,7 +39,7 @@ class Word extends Component {
       audioActions,
       audioPosition,
       isPlaying,
-      isSearched
+      isSearched,
     } = this.props;
 
     if (isSearched || !word.audio) {
@@ -61,7 +62,7 @@ class Word extends Component {
       currentVerse,
       isPlaying,
       audioPosition,
-      useTextFont
+      useTextFont,
     } = this.props;
 
     let text;
@@ -116,7 +117,7 @@ Word.propTypes = {
   currentVerse: PropTypes.string,
   isPlaying: PropTypes.bool,
   isSearched: PropTypes.bool,
-  useTextFont: PropTypes.bool // tmp change to compare text and code based rendering
+  useTextFont: PropTypes.bool, // tmp change to compare text and code based rendering
 };
 
 export default Word;
