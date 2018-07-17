@@ -26,6 +26,7 @@ const values = {
   sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
   facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
   fontsURL: EnvVars.string('FONTS_URL'),
+  audioCDN: EnvVars.string('AUDIO_CDN'),
   locales,
   defaultLocale: 'en',
 
@@ -124,7 +125,11 @@ const values = {
       'assets-1f14.kxcdn.com',
     ],
     imgSrc: ["'self' data:"],
-    mediaSrc: ['verses.quran.com'],
+    mediaSrc: [
+      'verses.quran.com',
+      'audio.qurancdn.com',
+      'mirrors.quranicaudio.com',
+    ],
     manifestSrc: [],
     objectSrc: [],
     scriptSrc: [
