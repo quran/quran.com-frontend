@@ -92,9 +92,10 @@ class Chapter extends Component {
 
   // // TODO: Should this belong here?
   // componentWillReceiveProps(nextProps) {
-  //   if (this.props.options.audio !== nextProps.options.audio) {
-  //     const { verses, options: { audio } } = nextProps;
-
+    // console.log("nextProps: ", nextProps)
+    // if (this.props.options.audio !== nextProps.options.audio) {
+    //   const { verses, options: { audio } } = nextProps;
+  //
   //     Object.values(verses).forEach((verse) => {
   //       this.props.actions.audio.load({
   //         chapterId: verse.chapterId,
@@ -288,6 +289,11 @@ class Chapter extends Component {
                 <Link
                   to={`/${chapter.chapterNumber * 1 +
                     1}?translations=${translations}`}
+                  onClick={() =>
+                    actions.verse.setCurrentVerse(
+                      `${chapter.chapterNumber + 1}:1`
+                    )
+                  }
                 >
                   <LocaleFormattedMessage
                     id="chapter.next"

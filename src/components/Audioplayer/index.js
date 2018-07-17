@@ -148,7 +148,7 @@ export class Audioplayer extends Component {
   componentDidMount() {
     const { currentFile, currentVerse, audio, verses, load } = this.props; // eslint-disable-line no-shadow, max-len
     const nextVerse = verses[this.getNext()];
-
+    console.log("ComponentDidMount: ", this.props)
     debug('component:Audioplayer', 'componentDidMount');
     document.addEventListener('keydown', this.handleKeyboardEvent);
 
@@ -176,6 +176,7 @@ export class Audioplayer extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("componentWillReceiveProps: ", this.props);
     // Make sure we have a current ayah to mount it to Audio
     if (!this.props.currentVerse && !nextProps.currentFile) {
       return false;
@@ -214,6 +215,8 @@ export class Audioplayer extends Component {
   }
 
   componentDidUpdate(previousProps) {
+    console.log("componentDidUpdate: ", this.props)
+
     const {
       currentFile,
       isPlaying,
@@ -221,9 +224,40 @@ export class Audioplayer extends Component {
       audio,
       currentVerse,
       load,
+      verseIds,
+      files
     } = this.props;
 
-    if (
+    const firstVerse = verseIds[0]
+    if(!files[firstVerse]) {
+      console.log("id: ", firstVerse)
+      console.log("Verse: ", files[firstVerse])
+      const nextVerse = verses[this.getNext()];
+      // this.handleScrollTo(currentVerse.verseKey);
+      if(__CLIENT__) {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        })
+      }
+
+      load({
+        chapterId: currentVerse.chapterId,
+        verseId: currentVerse.id,
+        verseKey: currentVerse.verseKey,
+        audio,
+      });
+
+      if (nextVerse) {
+        load({
+          chapterId: nextVerse.chapterId,
+          verseId: nextVerse.id,
+          verseKey: nextVerse.verseKey,
+          audio,
+        });
+      }
+    }
+    else if (
       currentVerse.verseKey !== previousProps.currentVerse.verseKey &&
       verses[this.getNext()]
     ) {
@@ -288,7 +322,23 @@ export class Audioplayer extends Component {
 
     return verseIds[index + 1];
   }
+  handleStop = (direction = 'previous') => {
+    const { isPlaying, play, pause, setAyah, verses } = this.props; // eslint-disable-line no-shadow, max-len
+    const previouslyPlaying = isPlaying;
+    if (isPlaying) pause();
 
+    const firstAyahKey = Object.keys(verses)[0]
+
+    setAyah(verses[firstAyahKey].verseKey)
+
+    this.handleScrollTo(verses[firstAyahKey].verseKey);
+
+    this.preloadNext();
+
+    if (previouslyPlaying) play();
+
+    return false;
+  };
   handleKeyboardEvent = (event) => {
     const { code } = event;
     const { isPlaying, pause } = this.props;
