@@ -166,7 +166,7 @@
     "proxy-middleware": "0.14.0",
     "qs": "6.2.1",
     "quran-components": "^0.1.8",
-    "raven": "1.1.1",
+    "raven": "2.6.2",
     "react": "15.4.1",
     "react-a11y": "0.3.3",
     "react-addons-create-fragment": "15.4.1",

@@ -41,6 +41,8 @@ const values = {
     serviceWorker: {
       enabled: true,
     },
+    // Expose audio cdn path
+    audioCDN: true,
     // We need to expose all the polyfill.io settings.
     polyfillIO: true,
     // We need to expose all the htmlPage settings.
@@ -87,7 +89,7 @@ const values = {
       'es6',
     ],
   },
-
+  audioCDN: EnvVars.string('AUDIO_CDN'),
   sentry: {
     url: 'https://cdn.ravenjs.com/3.0.4/raven.min.js',
   },
@@ -124,7 +126,11 @@ const values = {
       'assets-1f14.kxcdn.com',
     ],
     imgSrc: ["'self' data:"],
-    mediaSrc: ['verses.quran.com'],
+    mediaSrc: [
+      'verses.quran.com',
+      'audio.qurancdn.com',
+      'mirrors.quranicaudio.com',
+    ],
     manifestSrc: [],
     objectSrc: [],
     scriptSrc: [
