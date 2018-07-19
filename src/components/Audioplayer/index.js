@@ -221,9 +221,36 @@ export class Audioplayer extends Component {
       audio,
       currentVerse,
       load,
+      verseIds,
+      files
     } = this.props;
 
-    if (
+    const firstVerse = verseIds[0]
+    if(!files[firstVerse]) {
+      const nextVerse = verses[this.getNext()];
+      if(__CLIENT__) {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        })
+      }
+
+      load({
+        chapterId: currentVerse.chapterId,
+        verseId: currentVerse.id,
+        verseKey: currentVerse.verseKey,
+        audio,
+      });
+
+      if (nextVerse) {
+        load({
+          chapterId: nextVerse.chapterId,
+          verseId: nextVerse.id,
+          verseKey: nextVerse.verseKey,
+          audio,
+        });
+      }
+    } else if (
       currentVerse.verseKey !== previousProps.currentVerse.verseKey &&
       verses[this.getNext()]
     ) {
