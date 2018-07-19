@@ -1,10 +1,10 @@
 /* global Audio */
-const AUDIO_CDN = '//audio.qurancdn.com/';
+import config from '../../config';
 
 export function buildAudioURL(audio) {
   if (audio.url.startsWith('//')) return audio.url;
 
-  return `${AUDIO_CDN}${audio.url}`;
+  return `${config('audioCDN')}/${audio.url}`;
 }
 
 export function buildAudioForAyah(audio) {

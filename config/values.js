@@ -26,7 +26,6 @@ const values = {
   sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
   facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
   fontsURL: EnvVars.string('FONTS_URL'),
-  audioCDN: EnvVars.string('AUDIO_CDN'),
   locales,
   defaultLocale: 'en',
 
@@ -42,6 +41,8 @@ const values = {
     serviceWorker: {
       enabled: true,
     },
+    // Expose audio cdn path
+    audioCDN: true,
     // We need to expose all the polyfill.io settings.
     polyfillIO: true,
     // We need to expose all the htmlPage settings.
@@ -88,7 +89,7 @@ const values = {
       'es6',
     ],
   },
-
+  audioCDN: EnvVars.string('AUDIO_CDN'),
   sentry: {
     url: 'https://cdn.ravenjs.com/3.0.4/raven.min.js',
   },
