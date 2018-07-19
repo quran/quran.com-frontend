@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import * as OptionsActions from 'redux/actions/options.js';
 import { connect } from 'react-redux';
 import Menu from 'quran-components/lib/Menu';
-import { load } from 'redux/actions/verses.js';
 
 import * as customPropTypes from 'customPropTypes';
 import LocaleSwitcher from 'components/LocaleSwitcher';
@@ -17,6 +15,9 @@ import ReciterDropdown from './ReciterDropdown';
 import TranslationsDropdown from './TranslationsDropdown';
 import TooltipOptions from './TooltipOptions';
 
+import { load } from '../../redux/actions/verses.js';
+import * as OptionsActions from '../../redux/actions/options.js';
+
 class Settings extends Component {
   handleOptionChange = (payload) => {
     const { chapter, setOption, options, versesIds } = this.props;
@@ -29,7 +30,7 @@ class Settings extends Component {
       const paging = { offset: from - 1, limit: to - from + 1 };
       this.props.load(chapter.chapterNumber, paging, {
         ...options,
-        ...payload
+        ...payload,
       });
     }
   };
@@ -72,16 +73,16 @@ Settings.propTypes = {
   load: PropTypes.func.isRequired,
   chapter: customPropTypes.chapterType.isRequired,
   options: customPropTypes.optionsType.isRequired,
-  versesIds: PropTypes.instanceOf(Set)
+  versesIds: PropTypes.instanceOf(Set),
 };
 
 function mapStateToProps(state) {
   return {
-    options: state.options
+    options: state.options,
   };
 }
 
 export default connect(mapStateToProps, {
   ...OptionsActions,
-  load
+  load,
 })(Settings);
