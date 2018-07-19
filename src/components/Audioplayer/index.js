@@ -148,7 +148,6 @@ export class Audioplayer extends Component {
   componentDidMount() {
     const { currentFile, currentVerse, audio, verses, load } = this.props; // eslint-disable-line no-shadow, max-len
     const nextVerse = verses[this.getNext()];
-
     debug('component:Audioplayer', 'componentDidMount');
     document.addEventListener('keydown', this.handleKeyboardEvent);
 
@@ -214,6 +213,7 @@ export class Audioplayer extends Component {
   }
 
   componentDidUpdate(previousProps) {
+
     const {
       currentFile,
       isPlaying,
@@ -221,9 +221,38 @@ export class Audioplayer extends Component {
       audio,
       currentVerse,
       load,
+      verseIds,
+      files
     } = this.props;
 
-    if (
+    const firstVerse = verseIds[0]
+    if(!files[firstVerse]) {
+      const nextVerse = verses[this.getNext()];
+      // this.handleScrollTo(currentVerse.verseKey);
+      if(__CLIENT__) {
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        })
+      }
+
+      load({
+        chapterId: currentVerse.chapterId,
+        verseId: currentVerse.id,
+        verseKey: currentVerse.verseKey,
+        audio,
+      });
+
+      if (nextVerse) {
+        load({
+          chapterId: nextVerse.chapterId,
+          verseId: nextVerse.id,
+          verseKey: nextVerse.verseKey,
+          audio,
+        });
+      }
+    }
+    else if (
       currentVerse.verseKey !== previousProps.currentVerse.verseKey &&
       verses[this.getNext()]
     ) {
@@ -288,7 +317,6 @@ export class Audioplayer extends Component {
 
     return verseIds[index + 1];
   }
-
   handleKeyboardEvent = (event) => {
     const { code } = event;
     const { isPlaying, pause } = this.props;
