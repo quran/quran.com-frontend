@@ -39,7 +39,7 @@ class GlobalSidebar extends Component {
 
     return (
       <Container className="sidebar" open={open}>
-        <Navbar static fluid>
+        <Navbar fluid>
           <NavbarHeader>
             <p // eslint-disable-line
               className="navbar-text"
@@ -159,11 +159,11 @@ class GlobalSidebar extends Component {
 GlobalSidebar.propTypes = {
   open: PropTypes.bool.isRequired,
   handleOpen: PropTypes.func,
-  children: PropTypes.node
+  children: PropTypes.node,
 };
 
 GlobalSidebar.defaultProps = {
-  open: false
+  open: false,
 };
 
 export default GlobalSidebar;
