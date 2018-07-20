@@ -120,9 +120,9 @@ class Verse extends Component {
     return conditions.some(condition => condition);
   }
 
-  handlePlay(verse) {
-    const { isPlaying, audioActions, iscurrentVerse } = this.props;
-    const { pause, setAyah, play } = audioActions;
+  async handlePlay(verse) {
+    const { isPlaying, audioActions, iscurrentVerse, files, currentVerse, audio } = this.props;
+    const { pause, setAyah, play, load } = audioActions;
 
     if (isPlaying) {
       pause();
@@ -132,7 +132,17 @@ class Verse extends Component {
       return;
     }
 
-    setAyah(verse.verseKey);
+    await setAyah(verse.verseKey);
+
+    if(!files[verse.verseKey]) {
+      load({
+        chapterId: verse.chapterId,
+        verseId: verse.id,
+        verseKey: verse.verseKey,
+        audio,
+      });
+    }
+
     play();
   }
 
@@ -366,6 +376,15 @@ class Verse extends Component {
   }
 }
 
+const mapStateToProps = (state, ownProps) => {
+  const files = state.audioplayer.files[ownProps.chapter.id];
+
+  return {
+    files,
+    audio: state.options.audio,
+  };
+};
+
 Verse.propTypes = {
   isSearched: PropTypes.bool,
   verse: customPropTypes.verseType.isRequired,
@@ -389,4 +408,4 @@ Verse.defaultProps = {
   isPdf: false,
 };
 
-export default connect(null, { loadTafsirs })(Verse);
+export default connect(mapStateToProps, { loadTafsirs })(Verse);
