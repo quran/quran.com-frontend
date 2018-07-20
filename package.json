@@ -182,7 +182,7 @@
     "react-metrics": "2.4.1",
     "react-paginate": "4.1.0",
     "react-redux": "5.0.1",
-    "react-router": "^4",
+    "react-router": "4.3.1",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "4.0.7",

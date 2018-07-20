@@ -116,7 +116,7 @@ const routes = [
     ],
   },
   {
-    path: '/:chapterId/info/:language?',
+    path: '/:chapterId(\\d+)/info/:language?',
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "ChapterInfo" */ './containers/ChapterInfo'),
@@ -157,7 +157,7 @@ const routes = [
     onEnter: validators,
   },
   {
-    path: '/:chapterId(\\d+)/:range?',
+    path: '/:chapterId/:range?',
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "Chapter" */ './containers/Chapter'),
@@ -170,7 +170,7 @@ const routes = [
     onEnter: validators,
   },
   {
-    path: '/:chapterId(\\d+)(:|-)?:range?',
+    path: '/:chapterId(\\d+)(:|-)?(/)?:range?',
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "Chapter" */ './containers/Chapter'),
@@ -189,8 +189,7 @@ export const getMatchedRoute = url =>
 
 export const checkOnEnterResult = (url) => {
   const matchedRoute = getMatchedRoute(url);
-  const match = matchPath(url, matchedRoute);
-
+  const match = matchPath(url.split('?')[0], matchedRoute);
   if (matchedRoute && matchedRoute.onEnter) {
     const result = matchedRoute.onEnter({
       match,
