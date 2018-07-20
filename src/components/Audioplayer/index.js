@@ -372,7 +372,6 @@ export class Audioplayer extends Component {
     this.handleScrollTo();
 
     this.props.play();
-    this.preloadNext();
   };
 
   preloadNext() {
@@ -506,6 +505,7 @@ export class Audioplayer extends Component {
 
     const onPlay = () => {
       file.ontimeupdate = onTimeupdate; // eslint-disable-line no-param-reassign
+      this.preloadNext()
     };
 
     const onPause = () => {
