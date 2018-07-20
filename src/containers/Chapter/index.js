@@ -27,7 +27,7 @@ import debug from 'helpers/debug';
 import * as AudioActions from 'redux/actions/audioplayer.js';
 import * as AyahActions from 'redux/actions/verses.js';
 import * as OptionsActions from 'redux/actions/options.js';
-import * as MediaActions from 'redux/actions/media.js';
+import * as MediaActions from '../../redux/actions/media.js';
 
 const LoaderStyle = { position: 'relative', overflow: 'hidden' };
 
