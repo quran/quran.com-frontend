@@ -11,7 +11,7 @@ import SearchInput from 'components/SearchInput';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 import ComponentLoader from '../../ComponentLoader';
-import { load, setCurrentVerse } from '../../../redux/actions/verses.js';
+import { load, setCurrentVerse } from '../../../redux/actions/verses';
 
 import GlobalNav from '../index';
 
@@ -87,16 +87,22 @@ class GlobalNavChapter extends Component {
       <GlobalNav
         {...props}
         leftControls={[
-          <ChaptersDropdown chapter={chapter} chapters={chapters} />,
+          <ChaptersDropdown
+            chapter={chapter}
+            chapters={chapters}
+            onClick={this.handleVerseDropdownClick}
+          />,
           <VersesDropdown
             chapter={chapter}
             isReadingMode={options.isReadingMode}
             loadedVerses={versesIds}
             onClick={this.handleVerseDropdownClick}
           />,
-          <div className="navbar-form navbar-left hidden-xs hidden-sm">
-            <SearchInput className="search-input" />
-          </div>,
+          <li>
+            <div className="navbar-form navbar-left hidden-xs hidden-sm">
+              <SearchInput className="search-input" />
+            </div>,
+          </li>,
           <li className="visible-xs-inline-block visible-sm-inline-block">
             <Link to="/search">
               <i

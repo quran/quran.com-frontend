@@ -24,10 +24,10 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
-import * as AudioActions from 'redux/actions/audioplayer.js';
-import * as AyahActions from 'redux/actions/verses.js';
-import * as OptionsActions from 'redux/actions/options.js';
-import * as MediaActions from '../../redux/actions/media.js';
+import * as MediaActions from 'redux/actions/media.js';
+import * as AudioActions from '../../redux/actions/audioplayer';
+import * as AyahActions from '../../redux/actions/verses';
+import * as OptionsActions from '../../redux/actions/options.js';
 
 const LoaderStyle = { position: 'relative', overflow: 'hidden' };
 
