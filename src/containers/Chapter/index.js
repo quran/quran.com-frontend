@@ -288,6 +288,11 @@ class Chapter extends Component {
                 <Link
                   to={`/${chapter.chapterNumber * 1 +
                     1}?translations=${translations}`}
+                  onClick={() =>
+                    actions.verse.setCurrentVerse(
+                      `${chapter.chapterNumber + 1}:1`
+                    )
+                  }
                 >
                   <LocaleFormattedMessage
                     id="chapter.next"
