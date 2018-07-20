@@ -9,9 +9,9 @@ import { asyncComponent } from 'react-async-component';
 import Drawer from 'quran-components/lib/Drawer';
 import SearchInput from 'components/SearchInput';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
-
-import { load, setCurrentVerse } from 'redux/actions/verses.js';
 import ComponentLoader from '../../ComponentLoader';
+
+import { load, setCurrentVerse } from '../../../redux/actions/verses.js';
 
 import GlobalNav from '../index';
 
