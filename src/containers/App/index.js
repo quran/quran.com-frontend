@@ -86,7 +86,22 @@ class App extends Component {
       removeMedia, // eslint-disable-line no-shadow
       ...props
     } = this.props;
+    // let sidebar;
     debug('component:APPLICATION', 'Render');
+
+    /*
+    if (__CLIENT__) {
+      sidebar = (
+        <GlobalSidebar
+          open={this.state.sidebarOpen}
+          handleOpen={open => this.setState({ sidebarOpen: open })}
+        />
+      );
+    }
+    else {
+      sidebar = <div className='sidebar'/>;
+    }
+    */
 
     return (
       <div>
@@ -109,12 +124,12 @@ class App extends Component {
             this.setState({ sidebarOpen: !this.state.sidebarOpen })
           }
         />
-        {__CLIENT__ && (
+        {
           <GlobalSidebar
             open={this.state.sidebarOpen}
             handleOpen={open => this.setState({ sidebarOpen: open })}
           />
-        )}
+        }
         {children || <Routes store={this.context.store} />}
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         {footer || <Footer />}

@@ -31,7 +31,7 @@ const Container = styled(Element)`
   padding: 2.5% 0;
   border-bottom: 1px solid rgba(${props => props.textMuted}, 0.5);
 
-  ${props => (props.highlight ? 'background-color: #F5FBF7;' : '')} .text-info {
+  ${props => (props.active ? 'background-color: #F5FBF7;' : '')} .text-info {
     color: ${props => props.theme.brandInfo};
     &:hover {
       color: ${props => props.theme.brandPrimary};
@@ -353,7 +353,7 @@ class Verse extends Component {
       <Container
         name={`verse:${verse.verseKey}`}
         className="row"
-        highlight={iscurrentVerse}
+        active={iscurrentVerse}
       >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">

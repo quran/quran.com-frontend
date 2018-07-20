@@ -1,10 +1,10 @@
+import { debug } from 'helpers';
+
 import {
   clearCurrent,
   load as loadVerses,
-  isLoaded
-} from 'redux/actions/verses.js';
-
-import { debug } from 'helpers';
+  isLoaded,
+} from '../../redux/actions/verses.js';
 
 export default ({ store: { dispatch, getState } }) => {
   debug('component:AyatulKursi:versesConnect', 'Init');

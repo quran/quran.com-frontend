@@ -16,15 +16,15 @@ const { locales, defaultLocale } = config;
 class LocaleSwitcher extends Component {
   static propTypes = {
     className: PropTypes.string,
-    renderAs: PropTypes.string
+    renderAs: PropTypes.string,
   };
 
   static defaultProps = {
-    renderAs: 'dropdown'
+    renderAs: 'dropdown',
   };
 
   state = {
-    currentLocale: defaultLocale
+    currentLocale: defaultLocale,
   };
 
   componentDidMount() {
@@ -32,7 +32,7 @@ class LocaleSwitcher extends Component {
       // TODO: This should be passed in as a prop!
       // eslint-disable-next-line
       this.setState({
-        currentLocale: cookie.load('currentLocale') || defaultLocale
+        currentLocale: cookie.load('currentLocale') || defaultLocale,
       });
     }
   }
@@ -46,7 +46,7 @@ class LocaleSwitcher extends Component {
 
     cookie.save('currentLocale', locale, {
       path: '/',
-      expires: new Date(expireDate)
+      expires: new Date(expireDate),
     });
 
     window.location.reload();
@@ -58,7 +58,7 @@ class LocaleSwitcher extends Component {
     return keys.map(key => (
       <MenuItem
         key={key}
-        className={key === this.state.currentLocale && 'active'} // NOTE: if you use key `active` it will make all dropdown active
+        className={key === this.state.currentLocale ? 'active' : ''} // NOTE: if you use key `active` it will make all dropdown active
         onClick={e => this.handleLocaleClick(key, e)}
         href={`?local=${key}`}
       >

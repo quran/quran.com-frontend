@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
-import { loadFootNote } from 'redux/actions/media';
+import { loadFootNote } from '../../redux/actions/media';
 
 import Container from './Container';
 
@@ -65,7 +65,7 @@ class Translation extends Component {
 Translation.propTypes = {
   translation: customPropTypes.translationType.isRequired,
   index: PropTypes.number,
-  loadFootNote: PropTypes.func.isRequired
+  loadFootNote: PropTypes.func.isRequired,
 };
 
 export default connect(null, { loadFootNote })(Translation);
