@@ -7,6 +7,7 @@ import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
 import { asyncComponent } from 'react-async-component';
+import cookies from 'react-cookie';
 
 import Loader from 'quran-components/lib/Loader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -24,6 +25,7 @@ import Popover from 'react-bootstrap/lib/Popover';
 import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
+import SpeedButton from './SpeedButton';
 
 const RepeatDropdown = asyncComponent({
   resolve: () =>
@@ -131,6 +133,7 @@ export const StyledPopover = styled(Popover)`
     padding-top: 15px;
     padding-bottom: 15px;
     font-size: 0.75em;
+    text-align: center;
   }
   .popover-content {
     text-align: center;
@@ -143,6 +146,7 @@ export const StyledPopover = styled(Popover)`
 export class Audioplayer extends Component {
   state = {
     loadingFile: false,
+    currentSpeed: cookies.load("speed") || "1.",
   };
 
   componentDidMount() {
@@ -483,11 +487,14 @@ export class Audioplayer extends Component {
       });
     };
 
-    const onTimeupdate = () =>
+    const onTimeupdate = () =>{
       update({
         currentTime: file.currentTime,
         duration: file.duration,
       });
+      file.playbackRate = parseFloat(this.state.currentSpeed)
+    }
+
 
     const onEnded = () => {
       const { repeat } = this.props;
@@ -505,6 +512,7 @@ export class Audioplayer extends Component {
 
     const onPlay = () => {
       file.ontimeupdate = onTimeupdate; // eslint-disable-line no-param-reassign
+
       this.preloadNext()
     };
 
@@ -540,7 +548,13 @@ export class Audioplayer extends Component {
 
     currentFile.currentTime = fraction * currentFile.duration;
   };
-
+  handleSpeedChange = (speed) => {
+    this.setState({
+      currentSpeed: speed
+    }, () => {
+      cookies.save("speed", speed)
+    })
+  }
   renderPlayStopButtons() {
     const { isPlaying, pause, currentVerse } = this.props; // eslint-disable-line no-shadow
     const playPauseBtn = (
@@ -621,6 +635,7 @@ export class Audioplayer extends Component {
       verses
     } = this.props;
 
+    const { currentSpeed } = this.state
     if (isLoading || !currentFile) {
       return (
         <Container className={className}>
@@ -682,6 +697,9 @@ export class Audioplayer extends Component {
               shouldScroll={shouldScroll}
               onScrollToggle={this.handleScrollToggle}
             />
+          </ControlItem>
+          <ControlItem>
+            <SpeedButton onChange={this.handleSpeedChange} currentSpeed={currentSpeed} />
           </ControlItem>
         </ul>
       </Container>
