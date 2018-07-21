@@ -613,6 +613,12 @@ export class Audioplayer extends Component {
       repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
       setRepeat, // eslint-disable-line no-shadow
+      setAyah,
+      load,
+      audio,
+      files,
+      isPlaying,
+      verses
     } = this.props;
 
     if (isLoading || !currentFile) {
@@ -663,6 +669,12 @@ export class Audioplayer extends Component {
               setRepeat={setRepeat}
               current={parseInt(currentVerse.verseKey.split(':')[1], 10)}
               chapter={chapter}
+              setAyah={setAyah}
+              load={load}
+              audio={audio}
+              files={files}
+              isPlaying={isPlaying}
+              verses={verses}
             />
           </ControlItem>
           <ControlItem>
