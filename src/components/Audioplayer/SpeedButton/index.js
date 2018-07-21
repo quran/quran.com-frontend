@@ -29,16 +29,13 @@ const SpeedList = styled.ul`
 class SpeedButton extends React.Component {
   state = {
     speedsList: ["0.25", "0.5", "0.75", "1.", "1.25", "1.5", "2" ],
-    showTooltip: false
   }
   handleChange = (index) => {
-    this.setState({ showTooltip: false })
     this.tooltip.handleHide()
     this.props.onChange(this.state.speedsList[index])
   }
   render() {
     const { currentSpeed } = this.props
-    const { showTooltip } = this.state
 
     return (
       <div className="text-center">
@@ -67,14 +64,12 @@ class SpeedButton extends React.Component {
               </SpeedList>
             </StyledPopover>
           }
-          show={showTooltip}
-          onClick={() => this.setState({showTooltip: !showTooltip})}
           ref={C => this.tooltip = C}
           placement="top"
           trigger="click"
           rootClose
         >
-          <ControlButton active={ currentSpeed !== "1." }>
+          <ControlButton active={ currentSpeed !== "1." } style={{ lineHeight: 2 }}>
             <span>{ currentSpeed }x</span>
           </ControlButton>
         </OverlayTrigger>

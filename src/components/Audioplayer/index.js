@@ -26,6 +26,7 @@ import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
 import SpeedButton from './SpeedButton';
+import VolumeButton from './VolumeButton';
 
 const RepeatDropdown = asyncComponent({
   resolve: () =>
@@ -147,6 +148,7 @@ export class Audioplayer extends Component {
   state = {
     loadingFile: false,
     currentSpeed: cookies.load("speed") || "1.",
+    currentVolume: cookies.load("volume") || "0.75",
   };
 
   componentDidMount() {
@@ -493,6 +495,7 @@ export class Audioplayer extends Component {
         duration: file.duration,
       });
       file.playbackRate = parseFloat(this.state.currentSpeed)
+      file.volume = parseFloat(this.state.currentVolume)
     }
 
 
@@ -512,6 +515,9 @@ export class Audioplayer extends Component {
 
     const onPlay = () => {
       file.ontimeupdate = onTimeupdate; // eslint-disable-line no-param-reassign
+
+      file.playbackRate = parseFloat(this.state.currentSpeed)
+      file.volume = parseFloat(this.state.currentVolume)
 
       this.preloadNext()
     };
@@ -553,6 +559,13 @@ export class Audioplayer extends Component {
       currentSpeed: speed
     }, () => {
       cookies.save("speed", speed)
+    })
+  }
+  handleVolumeChange = (volume) => {
+    this.setState({
+      currentVolume: volume
+    }, () => {
+      cookies.save("volume", volume)
     })
   }
   renderPlayStopButtons() {
@@ -635,7 +648,8 @@ export class Audioplayer extends Component {
       verses
     } = this.props;
 
-    const { currentSpeed } = this.state
+    const { currentSpeed, currentVolume } = this.state
+
     if (isLoading || !currentFile) {
       return (
         <Container className={className}>
@@ -700,6 +714,9 @@ export class Audioplayer extends Component {
           </ControlItem>
           <ControlItem>
             <SpeedButton onChange={this.handleSpeedChange} currentSpeed={currentSpeed} />
+          </ControlItem>
+          <ControlItem>
+            <VolumeButton onChange={this.handleVolumeChange} currentVolume={currentVolume} />
           </ControlItem>
         </ul>
       </Container>
