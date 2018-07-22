@@ -147,8 +147,12 @@ class Verse extends Component {
   }
 
   renderTranslations() {
-    const { verse, match } = this.props;
-    const array = match || verse.translations || [];
+    const { verse, match, translations } = this.props;
+    let array = match || verse.translations || [];
+
+    if (translations.length === 0) {
+      array = []
+    }
 
     return array.map(translation => (
       <Translation
@@ -382,6 +386,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     files,
     audio: state.options.audio,
+    translations: state.options.translations,
   };
 };
 
