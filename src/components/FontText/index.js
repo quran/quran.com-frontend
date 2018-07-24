@@ -50,7 +50,7 @@ export default styled.div`
     direction: rtl;
     float: right;
   }
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     font-size: 300%;
     line-height: 130%;
   }

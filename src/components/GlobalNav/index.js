@@ -18,9 +18,15 @@ const scrolledStyle = {
 };
 
 const StyledNav = styled(Nav)`
-  @media (max-width: $screen-sm) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     & > li {
-      display: inline-block;
+      display: inline-block !important;
+      i[class*="ss-settings"] ~ span {
+        display: none;
+      }
+      a {
+        padding: 10px !important;
+      }
     }
   }
 `;

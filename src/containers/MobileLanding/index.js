@@ -27,7 +27,7 @@ const Container = styled.div`
 const StyledButton = styled(Button)`
   border-radius: 50px;
 
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     &:last-child {
       margin-top: 15px;
     }

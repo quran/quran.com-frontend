@@ -11,7 +11,19 @@ const Slider = styled.div`
   width: 5px;
   height: 150px;
   padding: 0;
-
+  position: relative;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #ccc;
+    height: 150px;
+    width: 5px;
+    display: block;
+  }
   input[type='range'] {
     width: 150px;
     height: 5px;
@@ -24,6 +36,8 @@ const Slider = styled.div`
     background-repeat: no-repeat;
     border-radius: 10px;
     cursor: pointer;
+    position:relative;
+    z-index: 5;
     &:focus {
     outline: none;
     }

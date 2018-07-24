@@ -31,7 +31,7 @@ const Container = styled(Element)`
   padding: 2.5% 0;
   border-bottom: 1px solid rgba(${props => props.textMuted}, 0.5);
 
-  ${props => (props.highlight ? 'background-color: #F5FBF7;' : '')} .text-info {
+  ${props => (props["data-highlight"] ? 'background-color: #F5FBF7;' : '')} .text-info {
     color: ${props => props.theme.brandInfo};
     &:hover {
       color: ${props => props.theme.brandPrimary};
@@ -89,11 +89,11 @@ const Controls = styled.div`
     }
   }
 
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     h4,
     a {
       display: inline-block;
-      margin: 0 10;
+      margin: 0 10px;
     }
 
     h4 {
@@ -367,7 +367,7 @@ class Verse extends Component {
       <Container
         name={`verse:${verse.verseKey}`}
         className="row"
-        highlight={iscurrentVerse}
+        data-highlight={iscurrentVerse}
       >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">

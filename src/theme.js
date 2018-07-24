@@ -23,7 +23,7 @@ const theme = {
   brandPrimary: '#2CA4AB',
   brandInfo: '#c4beb0',
   textMuted: '#d1d0d0',
-  textColor: '#939598'
+  textColor: '#939598',
 };
 
 export default theme;

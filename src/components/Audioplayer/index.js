@@ -76,7 +76,7 @@ const Container = styled.div`
     margin: 5px;
   }
 
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     bottom: 0;
     width: 100%;
   }
