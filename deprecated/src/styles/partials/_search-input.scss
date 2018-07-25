@@ -1,0 +1,96 @@
+.right-inner-addon.search-input {
+  padding: 0;
+  margin-bottom: 0;
+  width: auto;
+
+  input {
+    padding: 10px 15px;
+    height: 100%;
+    padding-right: 48px;
+    background: #f1f1f1;
+  }
+
+  input::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: $olive;
+  }
+  input:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: $olive;
+  }
+  input::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: $olive;
+  }
+  input:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: $olive;
+  }
+  i.ss-icon {
+    font-size: 90%;
+    padding: 12px;
+    height: 100%;
+    text-align: center;
+    border: 0;
+    right: 0;
+  }
+}
+.right-inner-addon {
+  position: relative;
+  margin: 0 auto;
+  margin-bottom: 50px;
+
+  input {
+    width: 100%;
+    padding: 20px 30px;
+    padding-right: 60px;
+    outline: none;
+    border: none;
+    background-color: #fff;
+    color: $brand-primary;
+
+    &::-webkit-input-placeholder {
+      color: $brand-primary;
+      font-weight: 300;
+    }
+
+    &:-moz-placeholder {
+      /* Firefox 18- */
+      color: $brand-primary;
+      font-weight: 300;
+    }
+
+    &::-moz-placeholder {
+      /* Firefox 19+ */
+      color: $brand-primary;
+      font-weight: 300;
+    }
+
+    &:-ms-input-placeholder {
+      color: $brand-primary;
+      font-weight: 300;
+    }
+  }
+
+  i.ss-icon {
+    position: absolute;
+    right: 0;
+    padding: 15px 15px;
+    font-size: 150%;
+    background-color: $brand-primary;
+    color: #fff;
+    cursor: pointer;
+    height: 100%;
+    border: 3px solid #fff;
+
+    &:hover {
+      background-color: lighten($brand-primary, 10%);
+    }
+  }
+}
+
+.search-status {
+  span span {
+    color: #2ca4ab;
+  }
+}

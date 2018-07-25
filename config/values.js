@@ -157,7 +157,7 @@ const values = {
   includeSourceMapsForOptimisedClientBundle: false,
 
   // These extensions are tried when resolving src files for our bundles..
-  bundleSrcTypes: ['js', 'jsx', 'json'],
+  bundleSrcTypes: ['js', 'jsx', 'json', 'tsx', 'ts'],
 
   // What should we name the json output file that webpack generates
   // containing details of all output files for a bundle?
@@ -204,7 +204,7 @@ const values = {
   bundles: {
     client: {
       // Src entry file.
-      srcEntryFile: './src/client/index.js',
+      srcEntryFile: './src/client/index.tsx',
 
       // Src paths.
       srcPaths: [

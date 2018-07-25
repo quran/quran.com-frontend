@@ -6,6 +6,8 @@ import path from 'path';
 import webpack from 'webpack';
 import WebpackMd5Hash from 'webpack-md5-hash';
 import strip from 'strip-loader';
+import { CheckerPlugin } from 'awesome-typescript-loader'
+
 
 import { happyPackPlugin, log } from '../utils';
 import { ifElse } from '../../shared/utils/logic';
@@ -89,6 +91,8 @@ export default function webpackConfigFactory(buildOptions) {
         path.resolve(appRootDir.get(), bundleConfig.srcEntryFile),
       ]),
     },
+
+    mode: isProd ? 'production' : 'development',
 
     // Bundle output configuration.
     output: {
@@ -285,6 +289,8 @@ export default function webpackConfigFactory(buildOptions) {
         __DEVTOOLS__: true,
       }),
 
+      new CheckerPlugin(),
+
       // Generates a JSON file containing a map of all the output files for
       // our webpack bundle.  A necessisty for our server rendering process
       // as we need to interogate these files in order to know what JS/CSS
@@ -420,10 +426,26 @@ export default function webpackConfigFactory(buildOptions) {
 
                   ifClient('syntax-dynamic-import'),
                   ifNode(['system-import-transformer', { modules: 'common' }]),
-                ].filter(x => x != null),
+                ].filter(x => x !== null),
               },
               buildOptions
             ),
+          },
+        ],
+      }),
+
+      // HappyPack 'typescript' instance.
+      happyPackPlugin({
+        name: 'happypack-typescript',
+        // We will use babel to do all our JS processing.
+        loaders: [
+          ...ifProd(() => [strip.loader('debug')], []),
+          {
+            path: 'awesome-typescript-loader',
+            exclude: /node_modules/,
+            query: {
+              happyPackMode: true,
+            },
           },
         ],
       }),
@@ -495,6 +517,21 @@ export default function webpackConfigFactory(buildOptions) {
               // See the respective plugin within the plugins section for full
               // details on what loader is being implemented.
               loader: 'happypack/loader?id=happypack-javascript',
+              include: removeNil([
+                ...bundleConfig.srcPaths.map(srcPath =>
+                  path.resolve(appRootDir.get(), srcPath)
+                ),
+                ifProdClient(path.resolve(appRootDir.get(), 'src/html')),
+              ]),
+            },
+            // TYPESCRIPT
+            {
+              test: /\.tsx?$/,
+              // We will defer all our js processing to the happypack plugin
+              // named "happypack-typescript".
+              // See the respective plugin within the plugins section for full
+              // details on what loader is being implemented.
+              loader: 'awesome-typescript-loader',
               include: removeNil([
                 ...bundleConfig.srcPaths.map(srcPath =>
                   path.resolve(appRootDir.get(), srcPath)
