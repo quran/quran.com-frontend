@@ -27,7 +27,7 @@ class Translation extends Component {
     // }
   }
 
-  fetchFootNote = (event) => {
+  fetchFootNote = event => {
     const { loadFootNote } = this.props; // eslint-disable-line no-shadow
 
     if (event.target.nodeName === 'SUP' && event.target.attributes.foot_note) {
@@ -65,7 +65,10 @@ class Translation extends Component {
 Translation.propTypes = {
   translation: customPropTypes.translationType.isRequired,
   index: PropTypes.number,
-  loadFootNote: PropTypes.func.isRequired
+  loadFootNote: PropTypes.func.isRequired,
 };
 
-export default connect(null, { loadFootNote })(Translation);
+export default connect(
+  null,
+  { loadFootNote }
+)(Translation);

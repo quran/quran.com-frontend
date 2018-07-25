@@ -8,7 +8,7 @@ export function loadJuzs() {
   return {
     types: [FETCH_JUZS.ACTION, FETCH_JUZS.SUCCESS, FETCH_JUZS.FAILURE],
     schema: { juzs: [juzsSchema] },
-    promise: client.get('/api/v3/juzs')
+    promise: client.get('/api/v3/juzs'),
   };
 }
 

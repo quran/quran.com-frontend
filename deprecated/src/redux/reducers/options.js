@@ -5,7 +5,7 @@ import {
   SET_OPTION,
   SET_USER_AGENT,
   FETCH_RECITERS,
-  FETCH_TRANSLATIONS
+  FETCH_TRANSLATIONS,
 } from '../constants/options.js';
 
 const options = cookie.load('options') || {};
@@ -19,15 +19,15 @@ export const INITIAL_STATE = {
   tooltip: options.tooltip || 'translation',
   fontSize: options.fontSize || {
     arabic: 3.5,
-    translation: 2
+    translation: 2,
   },
   userAgent: null,
   options: {
     recitations: [],
-    translations: []
+    translations: [],
   },
   loadingRecitations: false,
-  loadingTranslations: false
+  loadingTranslations: false,
 };
 
 export default handleActions(
@@ -36,40 +36,40 @@ export default handleActions(
       const payload = action.payload;
       return {
         ...state,
-        ...payload
+        ...payload,
       };
     },
     [FETCH_RECITERS.ACTION]: state => ({
       ...state,
-      loadingRecitations: true
+      loadingRecitations: true,
     }),
     [FETCH_RECITERS.SUCCESS]: (state, action) => ({
       ...state,
       loadingRecitations: false,
       options: {
         ...state.options,
-        recitations: action.result.recitations
-      }
+        recitations: action.result.recitations,
+      },
     }),
     [SET_USER_AGENT]: (state, action) => {
       const { userAgent } = action;
       return {
         ...state,
-        userAgent
+        userAgent,
       };
     },
     [FETCH_TRANSLATIONS.ACTION]: state => ({
       ...state,
-      loadingTranslations: true
+      loadingTranslations: true,
     }),
     [FETCH_TRANSLATIONS.SUCCESS]: (state, action) => ({
       ...state,
       loadingTranslations: false,
       options: {
         ...state.options,
-        translations: action.result.translations
-      }
-    })
+        translations: action.result.translations,
+      },
+    }),
   },
   INITIAL_STATE
 );

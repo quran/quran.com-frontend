@@ -150,7 +150,7 @@ class SearchAutocomplete extends Component {
     return suggestions;
   }
 
-  getSurahSuggestions = (value) => {
+  getSurahSuggestions = value => {
     const matches = [];
 
     if (!value) return matches;
@@ -164,12 +164,12 @@ class SearchAutocomplete extends Component {
       const chapter = this.props.chapters[chapterId];
       matches.push([
         chapter.nameSimple,
-        chapter.chapterNumber + (ayahNum ? `/${ayahNum}` : '')
+        chapter.chapterNumber + (ayahNum ? `/${ayahNum}` : ''),
       ]);
     } else if (value.length >= 2) {
       const escaped = value.replace(/[-\\^$*+?.()|[\]{}]/g, '\\$&');
 
-      Object.keys(this.props.chapters).forEach((chapterId) => {
+      Object.keys(this.props.chapters).forEach(chapterId => {
         const chapter = this.props.chapters[chapterId];
         if (
           RegExp(escaped, 'i').test(chapter.nameSimple.replace(/['-]/g, ''))
@@ -184,12 +184,12 @@ class SearchAutocomplete extends Component {
     return matches
       .map(match => ({
         text: `<b>${match[0]}</b>`,
-        href: `/${match[1]}`
+        href: `/${match[1]}`,
       }))
       .slice(0, 5);
   };
 
-  suggest = (query) => {
+  suggest = query => {
     const { lang } = this.props;
 
     if (!query || ayahRegex.test(query)) return false;
@@ -197,7 +197,7 @@ class SearchAutocomplete extends Component {
     return this.props.suggest(query, lang);
   };
 
-  handleInputKeyDown = (event) => {
+  handleInputKeyDown = event => {
     if (
       !(event.keyCode === 9 || event.keyCode === 40 || event.keyCode === 27)
     ) {
@@ -295,7 +295,7 @@ class SearchAutocomplete extends Component {
       <Container className={!this.getSuggestions().length && 'hidden'}>
         <List
           role="menu"
-          ref={(ref) => {
+          ref={ref => {
             this.menu = ref;
           }}
         >
@@ -332,7 +332,7 @@ function mapStateToProps(state, ownProps) {
   return {
     chapters,
     suggestions,
-    lang
+    lang,
   };
 }
 
@@ -345,11 +345,14 @@ SearchAutocomplete.propTypes = {
   suggest: PropTypes.func.isRequired,
   suggestions: customPropTypes.suggestions,
   lang: PropTypes.string,
-  delay: PropTypes.number
+  delay: PropTypes.number,
 };
 
 SearchAutocomplete.defaultProps = {
-  delay: 200
+  delay: 200,
 };
 
-export default connect(mapStateToProps, { push, suggest })(SearchAutocomplete);
+export default connect(
+  mapStateToProps,
+  { push, suggest }
+)(SearchAutocomplete);

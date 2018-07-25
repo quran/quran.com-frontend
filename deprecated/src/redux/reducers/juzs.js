@@ -5,7 +5,7 @@ import { FETCH_JUZS } from '../constants/juzs';
 export const INITIAL_STATE = {
   errored: false,
   loaded: false,
-  entities: {}
+  entities: {},
 };
 
 export default handleActions(
@@ -18,17 +18,17 @@ export default handleActions(
         loaded: true,
         entities: {
           ...state.entities,
-          ...juzs
-        }
+          ...juzs,
+        },
       };
     },
     [FETCH_JUZS.FAILURE]: state => ({
       ...state,
-      errored: true
+      errored: true,
     }),
     [FETCH_JUZS.ACTION]: state => ({
-      ...state
-    })
+      ...state,
+    }),
   },
   INITIAL_STATE
 );

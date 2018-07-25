@@ -13,6 +13,6 @@ export default function getOffset(element) {
 
   return {
     left: offsetLeft,
-    top: offsetTop
+    top: offsetTop,
   };
 }

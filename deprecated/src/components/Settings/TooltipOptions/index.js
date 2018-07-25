@@ -8,7 +8,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 const TooltipOptions = ({ tooltip, onOptionChange }) => {
   const handleOptionChange = type =>
     onOptionChange({
-      tooltip: type
+      tooltip: type,
     });
 
   const list = ['translation', 'transliteration'].map(type => (
@@ -39,7 +39,7 @@ const TooltipOptions = ({ tooltip, onOptionChange }) => {
 
 TooltipOptions.propTypes = {
   onOptionChange: PropTypes.func,
-  tooltip: PropTypes.string.isRequired
+  tooltip: PropTypes.string.isRequired,
 };
 
 export default TooltipOptions;

@@ -187,7 +187,7 @@ const routes = [
 export const getMatchedRoute = url =>
   routes.find(route => matchPath(url, route));
 
-export const checkOnEnterResult = (url) => {
+export const checkOnEnterResult = url => {
   const matchedRoute = getMatchedRoute(url);
   const match = matchPath(url, matchedRoute);
 
@@ -214,7 +214,7 @@ export const getPromises = (url, store) => {
   const promises = [];
 
   if (matchedRoute && matchedRoute.loadData) {
-    matchedRoute.loadData.forEach((connector) => {
+    matchedRoute.loadData.forEach(connector => {
       promises.push(
         connector({
           store,

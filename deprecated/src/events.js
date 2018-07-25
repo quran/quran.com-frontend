@@ -11,7 +11,7 @@ const makeObject = (name, action, labels) => {
   const obj = {};
   const actionObj = {};
 
-  labels.forEach((label) => {
+  labels.forEach(label => {
     const LABEL = inflect.titleize(label);
     const ACTION = inflect.titleize(action);
     const NAME = inflect.titleize(name);
@@ -23,8 +23,8 @@ const makeObject = (name, action, labels) => {
       PROPS: {
         'data-metrics-event-label': LABEL,
         'data-metrics-event-action': ACTION,
-        'data-metrics-event-name': NAME
-      }
+        'data-metrics-event-name': NAME,
+      },
     };
   });
 
@@ -37,7 +37,7 @@ const makeConfig = (name, config) =>
   Object.keys(config).reduce(
     (obj, key) => ({
       ...obj,
-      ...makeObject(name, key, config[key])
+      ...makeObject(name, key, config[key]),
     }),
     {}
   );
@@ -55,20 +55,20 @@ const EXTERNAL_LINKS = {
     'blog link',
     'chapter link',
     'donations link',
-    'help link'
-  ]
+    'help link',
+  ],
 };
 
 const INTERNAL_LINKS = {
-  [CLICK]: ['apps link', 'home link', 'sitemap link', 'profile link']
+  [CLICK]: ['apps link', 'home link', 'sitemap link', 'profile link'],
 };
 
 export const FOOTER_EVENTS = makeConfig('footer', {
-  [CLICK]: [...EXTERNAL_LINKS[CLICK], ...INTERNAL_LINKS[CLICK]]
+  [CLICK]: [...EXTERNAL_LINKS[CLICK], ...INTERNAL_LINKS[CLICK]],
 });
 
 export const SIDEBAR_EVENTS = makeConfig('sidebar', {
-  [CLICK]: [...EXTERNAL_LINKS[CLICK], ...INTERNAL_LINKS[CLICK]]
+  [CLICK]: [...EXTERNAL_LINKS[CLICK], ...INTERNAL_LINKS[CLICK]],
 });
 
 export const NAVBAR_EVENTS = makeConfig('navbar', {
@@ -76,26 +76,26 @@ export const NAVBAR_EVENTS = makeConfig('navbar', {
     ...EXTERNAL_LINKS[CLICK],
     ...INTERNAL_LINKS[CLICK],
     'sidebar toggle',
-    'locale switcher toggle'
-  ]
+    'locale switcher toggle',
+  ],
 });
 
 export const SITES_EVENTS = makeConfig('sites', {
-  [CLICK]: [...EXTERNAL_LINKS[CLICK], ...INTERNAL_LINKS[CLICK]]
+  [CLICK]: [...EXTERNAL_LINKS[CLICK], ...INTERNAL_LINKS[CLICK]],
 });
 
 export const COPY_EVENTS = makeConfig('copy', {
-  [CLICK]: ['verse']
+  [CLICK]: ['verse'],
 });
 
 export const QUICK_LINKS_EVENTS = makeConfig('quick links', {
-  [CLICK]: ['verse', 'chapter']
+  [CLICK]: ['verse', 'chapter'],
 });
 
 export const CHAPTERS_LIST_EVENTS = makeConfig('chapters list', {
-  [CLICK]: ['chapter link']
+  [CLICK]: ['chapter link'],
 });
 
 export const JUZ_LIST_EVENTS = makeConfig('juz list', {
-  [CLICK]: ['juz link']
+  [CLICK]: ['juz link'],
 });

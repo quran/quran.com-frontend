@@ -15,14 +15,14 @@ import {
   TOGGLE_SCROLL,
   UPDATE,
   // LOAD,
-  LOAD_SUCCESS
+  LOAD_SUCCESS,
   // LOAD_FAIL
 } from '../constants/audioplayer';
 
 import {
   LOAD as VERSES_LOAD,
   CLEAR_CURRENT as VERSES_CLEAR_CURRENT,
-  SET_CURRENT_VERSE
+  SET_CURRENT_VERSE,
 } from '../constants/verses';
 
 export { NEXT, SET_AYAH };
@@ -38,11 +38,11 @@ export const INITIAL_STATE = {
   repeat: {
     from: undefined,
     to: undefined,
-    times: Infinity
+    times: Infinity,
   },
   shouldScroll: true,
   isLoading: true,
-  segments: {}
+  segments: {},
 };
 
 export default function reducer(state = INITIAL_STATE, action = {}) {
@@ -54,14 +54,14 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
         ...state,
         files: {
           ...stateFilesCurrent,
-          [action.id]: {}
-        }
+          [action.id]: {},
+        },
       };
     }
     case VERSES_LOAD: {
       return {
         ...state,
-        isLoading: false
+        isLoading: false,
       };
     }
     case LOAD_SUCCESS: {
@@ -76,35 +76,35 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
           ...state.files,
           [action.chapterId]: {
             ...state.files[action.chapterId],
-            [action.verseKey]: data.audio
-          }
+            [action.verseKey]: data.audio,
+          },
         },
         segments: {
           ...state.segments,
           [action.chapterId]: {
             ...state.segments[action.chapterId],
-            [action.verseKey]: buildSegments(data.segments)
-          }
-        }
+            [action.verseKey]: buildSegments(data.segments),
+          },
+        },
       };
     }
     case UPDATE: {
       const { payload } = action;
       return {
         ...state,
-        ...payload
+        ...payload,
       };
     }
     case PLAY: {
       return {
         ...state,
-        isPlaying: true
+        isPlaying: true,
       };
     }
     case PAUSE: {
       return {
         ...state,
-        isPlaying: false
+        isPlaying: false,
       };
     }
     case NEXT: {
@@ -115,7 +115,7 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
         ...state,
         currentVerse: nextId,
         currentFile: state.files[chapterId][nextId],
-        currentTime: 0
+        currentTime: 0,
       };
     }
     case PREVIOUS: {
@@ -126,7 +126,7 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
         ...state,
         currentVerse: nextId,
         currentFile: state.files[chapterId][nextId],
-        currentTime: 0
+        currentTime: 0,
       };
     }
     case SET_AYAH: {
@@ -138,26 +138,26 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
         ...state,
         currentVerse,
         currentFile,
-        currentTime: 0
+        currentTime: 0,
       };
     }
     case SET_REPEAT: {
       const { repeat } = action;
       return {
         ...state,
-        repeat
+        repeat,
       };
     }
     case TOGGLE_SCROLL: {
       return {
         ...state,
-        shouldScroll: !state.shouldScroll
+        shouldScroll: !state.shouldScroll,
       };
     }
     case SET_CURRENT_FILE: {
       return {
         ...state,
-        currentFile: action.file
+        currentFile: action.file,
       };
     }
     case SET_CURRENT_WORD: {
@@ -174,7 +174,7 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
         return {
           ...state,
           currentWord: action.word,
-          currentTime
+          currentTime,
         };
       }
 
@@ -197,9 +197,9 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
           ...stateSegments,
           [chapterId]: {
             ...stateSegmentsId,
-            [nextId]: segment
-          }
-        }
+            [nextId]: segment,
+          },
+        },
       };
     }
     case PLAY_CURRENT_WORD: {
@@ -228,13 +228,13 @@ export default function reducer(state = INITIAL_STATE, action = {}) {
 
       return {
         ...state,
-        currentWord: word
+        currentWord: word,
       };
     }
     case SET_CURRENT_VERSE: {
       return {
         ...state,
-        currentVerse: action.id
+        currentVerse: action.id,
       };
     }
     default: {

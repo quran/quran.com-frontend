@@ -22,7 +22,7 @@ const validateChapter = ({ params: { chapterId }, location }) => {
   if (location.pathname.match(/\b0+/g)) {
     return {
       status: REDIRECT_STATUS,
-      url: location.pathname.replace(/\b0+/g, '')
+      url: location.pathname.replace(/\b0+/g, ''),
     };
   }
 
@@ -56,7 +56,7 @@ const validateRange = ({ params, location }) => {
   if (splitter) {
     return {
       status: REDIRECT_STATUS,
-      url: `/${chapterId}/${range}`
+      url: `/${chapterId}/${range}`,
     };
   }
 
@@ -92,7 +92,7 @@ const validateRange = ({ params, location }) => {
       ) {
         return {
           status: REDIRECT_STATUS,
-          url: `/${chapterId}/${from}-${to}${location.search}`
+          url: `/${chapterId}/${from}-${to}${location.search}`,
         };
       }
 
@@ -101,7 +101,7 @@ const validateRange = ({ params, location }) => {
           status: REDIRECT_STATUS,
           url: `/${chapterId}/${range.replace(':', '-')}${
             location.search ? location.search : ''
-          }`
+          }`,
         };
       }
     }
@@ -109,7 +109,7 @@ const validateRange = ({ params, location }) => {
     if (location.pathname.match(/\b0+/g)) {
       return {
         status: REDIRECT_STATUS,
-        url: location.pathname.replace(/\b0+/g, '')
+        url: location.pathname.replace(/\b0+/g, ''),
       };
     }
   }
@@ -136,7 +136,7 @@ const validateEmptyRange = ({ location }) => {
   if (location.pathname.match(/\/\d+:$/g)) {
     return {
       status: REDIRECT_STATUS,
-      url: location.pathname.replace(':', '')
+      url: location.pathname.replace(':', ''),
     };
   }
 
@@ -148,7 +148,7 @@ const validators = [
   validateEmptyRange,
   validateVerse,
   validateRange,
-  validateRangeLimit
+  validateRangeLimit,
 ];
 
 const validate = ({ params, location }) => {

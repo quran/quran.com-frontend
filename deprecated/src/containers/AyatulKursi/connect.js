@@ -1,7 +1,7 @@
 import {
   clearCurrent,
   load as loadVerses,
-  isLoaded
+  isLoaded,
 } from 'redux/actions/verses.js';
 
 import { debug } from 'helpers';

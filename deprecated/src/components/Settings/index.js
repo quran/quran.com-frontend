@@ -18,7 +18,7 @@ import TranslationsDropdown from './TranslationsDropdown';
 import TooltipOptions from './TooltipOptions';
 
 class Settings extends Component {
-  handleOptionChange = (payload) => {
+  handleOptionChange = payload => {
     const { chapter, setOption, options, versesIds } = this.props;
 
     setOption(payload);
@@ -29,7 +29,7 @@ class Settings extends Component {
       const paging = { offset: from - 1, limit: to - from + 1 };
       this.props.load(chapter.chapterNumber, paging, {
         ...options,
-        ...payload
+        ...payload,
       });
     }
   };
@@ -72,16 +72,19 @@ Settings.propTypes = {
   load: PropTypes.func.isRequired,
   chapter: customPropTypes.chapterType.isRequired,
   options: customPropTypes.optionsType.isRequired,
-  versesIds: PropTypes.instanceOf(Set)
+  versesIds: PropTypes.instanceOf(Set),
 };
 
 function mapStateToProps(state) {
   return {
-    options: state.options
+    options: state.options,
   };
 }
 
-export default connect(mapStateToProps, {
-  ...OptionsActions,
-  load
-})(Settings);
+export default connect(
+  mapStateToProps,
+  {
+    ...OptionsActions,
+    load,
+  }
+)(Settings);

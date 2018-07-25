@@ -24,7 +24,7 @@ class FontStyles extends Component {
 
       Object.keys(fontFaces)
         .filter(className => !fontFaces[className])
-        .forEach((className) => {
+        .forEach(className => {
           const font = new FontFaceObserver(className);
 
           font.load().then(() => load(className), () => load(className));
@@ -41,7 +41,7 @@ class FontStyles extends Component {
                 ? `${fontFaceStyle(className)} ${fontFaceStyleLoaded(
                     className
                   )}`
-                : fontFaceStyle(className)
+                : fontFaceStyle(className),
             }}
           />
         ))}
@@ -52,12 +52,12 @@ class FontStyles extends Component {
 
 FontStyles.propTypes = {
   fontFaces: PropTypes.objectOf(PropTypes.bool).isRequired,
-  load: PropTypes.func.isRequired
+  load: PropTypes.func.isRequired,
 };
 
 export default connect(
   state => ({
-    fontFaces: selector(state)
+    fontFaces: selector(state),
   }),
   { load }
 )(FontStyles);

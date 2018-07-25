@@ -10,7 +10,7 @@ import {
   CLEAR_CURRENT_WORD,
   LOAD_TAFSIR,
   LOAD_TAFSIR_SUCCESS,
-  LOAD_TAFSIR_FAIL
+  LOAD_TAFSIR_FAIL,
 } from '../constants/verses.js';
 import ApiClient from '../../helpers/ApiClient';
 
@@ -18,7 +18,7 @@ const client = new ApiClient();
 
 // NOTE: For safe measure
 const defaultOptions = {
-  translations: [102]
+  translations: [102],
 };
 
 // NOTE: From the API!
@@ -49,37 +49,37 @@ export function load(id, paging, params, options = defaultOptions) {
     promise: client.get(`/api/v3/chapters/${id}/verses`, {
       params: {
         ...paging,
-        ...apiOptions
-      }
+        ...apiOptions,
+      },
     }),
-    chapterId: id
+    chapterId: id,
   };
 }
 
 export function clearCurrent(id) {
   return {
     type: CLEAR_CURRENT,
-    id
+    id,
   };
 }
 
 export function clearCurrentWord() {
   return {
-    type: CLEAR_CURRENT_WORD
+    type: CLEAR_CURRENT_WORD,
   };
 }
 
 export function setCurrentVerse(id) {
   return {
     type: SET_CURRENT_VERSE,
-    id
+    id,
   };
 }
 
 export function setCurrentWord(id) {
   return {
     type: SET_CURRENT_WORD,
-    id
+    id,
   };
 }
 
@@ -111,11 +111,11 @@ export function loadTafsir(chapterId, verseId, tafsirId) {
       `/api/v3/chapters/${chapterId}/verses/${verseId}/tafsirs`,
       {
         params: {
-          tafsirs: tafsirId
-        }
+          tafsirs: tafsirId,
+        },
       }
     ),
-    tafsirId
+    tafsirId,
   };
 }
 

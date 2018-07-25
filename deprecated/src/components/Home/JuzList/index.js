@@ -94,7 +94,7 @@ class JuzList extends Component {
 
 JuzList.propTypes = {
   chapters: customPropTypes.chapters.isRequired,
-  juzs: PropTypes.arrayOf(customPropTypes.juzType).isRequired
+  juzs: PropTypes.arrayOf(customPropTypes.juzType).isRequired,
 };
 
 export default JuzList;

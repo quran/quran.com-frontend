@@ -21,8 +21,8 @@ const Arabic = styled.div`
 const Translated = styled.div`
   font-size: 10px;
   text-transform: uppercase;
-  width: ${10 / 12 * 100}%;
-  margin-left: ${2 / 12 * 100}%;
+  width: ${(10 / 12) * 100}%;
+  margin-left: ${(2 / 12) * 100}%;
 `;
 
 const StyledLink = styled(Link)`
@@ -71,7 +71,7 @@ const ChapterItem = ({ chapter }) => (
 );
 
 ChapterItem.propTypes = {
-  chapter: chapterType.isRequired
+  chapter: chapterType.isRequired,
 };
 
 export default ChapterItem;

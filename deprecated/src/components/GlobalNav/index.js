@@ -14,7 +14,7 @@ import { NAVBAR_EVENTS } from '../../events';
 
 const scrolledStyle = {
   boxShadow:
-    '0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.2)'
+    '0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.2)',
 };
 
 const StyledNav = styled(Nav)`
@@ -27,7 +27,7 @@ const StyledNav = styled(Nav)`
 
 class GlobalNav extends Component {
   state = {
-    scrolled: false
+    scrolled: false,
   };
 
   componentDidMount() {
@@ -96,7 +96,7 @@ class GlobalNav extends Component {
             Sunnah
           </a>
         </li>,
-        <LocaleSwitcher />
+        <LocaleSwitcher />,
       ]
     );
   }
@@ -155,11 +155,11 @@ GlobalNav.propTypes = {
   rightControls: PropTypes.arrayOf(PropTypes.element),
   handleSidebarToggle: PropTypes.func.isRequired,
   isStatic: PropTypes.bool.isRequired,
-  location: customPropTypes.location
+  location: customPropTypes.location,
 };
 
 GlobalNav.defaultProps = {
-  isStatic: false
+  isStatic: false,
 };
 
 export default GlobalNav;

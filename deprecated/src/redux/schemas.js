@@ -21,7 +21,7 @@ const schemas = {
   chaptersSchema,
   versesSchema,
   bookmarksSchema,
-  juzsSchema
+  juzsSchema,
 };
 
 export default schemas;

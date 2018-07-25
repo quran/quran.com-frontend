@@ -29,7 +29,7 @@ export const juzStart = {
   51: [31],
   58: [1],
   67: [1],
-  78: [1]
+  78: [1],
 };
 
 export const juzAndHizbArabicNum = [
@@ -94,5 +94,5 @@ export const juzAndHizbArabicNum = [
   '٥٧',
   '٥٨',
   '٥٩',
-  '٦٠'
+  '٦٠',
 ];

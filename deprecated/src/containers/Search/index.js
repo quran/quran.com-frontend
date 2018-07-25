@@ -75,22 +75,22 @@ const Header = styled.div`
 
 class Search extends Component {
   static contextTypes = {
-    metrics: MetricsPropTypes.metrics
+    metrics: MetricsPropTypes.metrics,
   };
 
-  handlePageChange = (payload) => {
+  handlePageChange = payload => {
     const { push, query, currentPage } = this.props; // eslint-disable-line no-shadow
     const selectedPage = payload.selected + 1;
 
     if (currentPage !== selectedPage) {
       this.context.metrics.track('Search', {
         action: 'paginate',
-        label: `${query} - ${selectedPage}`
+        label: `${query} - ${selectedPage}`,
       });
 
       return push({
         pathname: '/search',
-        query: { p: selectedPage, q: query }
+        query: { p: selectedPage, q: query },
       });
     }
 
@@ -156,7 +156,7 @@ class Search extends Component {
       results,
       entities,
       options,
-      location: { query }
+      location: { query },
     } = this.props;
 
     if (!query || !query.q) {
@@ -218,8 +218,8 @@ class Search extends Component {
           style={[
             {
               cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;}
-            .text-translation{font-size: ${options.fontSize.translation}rem;}`
-            }
+            .text-translation{font-size: ${options.fontSize.translation}rem;}`,
+            },
           ]}
         />
         <IndexHeader />
@@ -248,13 +248,13 @@ Search.propTypes = {
   location: PropTypes.shape({
     // eslint-disable-line
     q: PropTypes.string,
-    p: PropTypes.string
+    p: PropTypes.string,
   }),
-  options: customPropTypes.optionsType
+  options: customPropTypes.optionsType,
 };
 
 Search.defaultProps = {
-  results: []
+  results: [],
 };
 
 function mapStateToProps(state) {
@@ -269,8 +269,11 @@ function mapStateToProps(state) {
     query: state.searchResults.query,
     results: state.searchResults.results,
     entities: state.searchResults.entities,
-    options: state.options
+    options: state.options,
   };
 }
 
-export default connect(mapStateToProps, { push })(Search);
+export default connect(
+  mapStateToProps,
+  { push }
+)(Search);

@@ -28,8 +28,8 @@ describe('<Segments />', () => {
           segments={{
             words: {
               0: { startTime: 0, endTime: 1 },
-              1: { startTime: 1, endTime: 2 }
-            }
+              1: { startTime: 1, endTime: 2 },
+            },
           }}
           currentTime={1.5}
           currentVerse="1:1"
@@ -63,13 +63,13 @@ describe('<Segments />', () => {
             words: {
               0: {
                 startTime: 0,
-                endTime: 1
+                endTime: 1,
               },
               1: {
                 startTime: 2,
-                endTime: 3
-              }
-            }
+                endTime: 3,
+              },
+            },
           }}
           currentTime={1.5}
           currentVerse="1:1"

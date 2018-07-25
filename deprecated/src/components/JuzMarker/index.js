@@ -15,7 +15,7 @@ export const ShowAyahAndJuzMark = ({
   verseNumber,
   text,
   juzNumber,
-  intl
+  intl,
 }) => {
   if (juzStart[chapterId] && juzStart[chapterId].includes(verseNumber)) {
     return (
@@ -29,7 +29,7 @@ export const ShowAyahAndJuzMark = ({
             arrow
             title={`${intl.formatMessage({
               id: 'juz.index.heading',
-              defaultMessage: 'juz'
+              defaultMessage: 'juz',
             })} ${juzNumber}`}
           >
             <Decoration juzNumber={juzNumber} />
@@ -49,7 +49,7 @@ ShowAyahAndJuzMark.propTypes = {
   verseNumber: PropTypes.number.isRequired,
   juzNumber: PropTypes.number.isRequired,
   text: PropTypes.instanceOf(Array),
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
 };
 
 export default injectIntl(ShowAyahAndJuzMark);

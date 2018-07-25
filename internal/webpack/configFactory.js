@@ -6,8 +6,7 @@ import path from 'path';
 import webpack from 'webpack';
 import WebpackMd5Hash from 'webpack-md5-hash';
 import strip from 'strip-loader';
-import { CheckerPlugin } from 'awesome-typescript-loader'
-
+import { CheckerPlugin } from 'awesome-typescript-loader';
 
 import { happyPackPlugin, log } from '../utils';
 import { ifElse } from '../../shared/utils/logic';

@@ -88,6 +88,6 @@ export default {
     'error.invalid-surah':
       "Soera is buiten bereik. Ga aub naar de <a href='/'> startpagina</a> en selecteer een Soera",
     'error.invalid-ayah':
-      "Ayah is buiten bereik. Ga aub naar de <a href='/'> startpagina </a> en selecteer een Soera/Ayah"
-  }
+      "Ayah is buiten bereik. Ga aub naar de <a href='/'> startpagina </a> en selecteer een Soera/Ayah",
+  },
 };

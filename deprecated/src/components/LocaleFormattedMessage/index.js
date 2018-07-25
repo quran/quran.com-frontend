@@ -7,7 +7,7 @@ const LocaleFormattedMessage = ({
   defaultMessage,
   intl,
   values,
-  className
+  className,
 }) => (
   <span className={`${intl.messages.local} ${className}`}>
     <FormattedMessage id={id} defaultMessage={defaultMessage} values={values} />
@@ -19,11 +19,11 @@ LocaleFormattedMessage.propTypes = {
   className: PropTypes.string,
   defaultMessage: PropTypes.string,
   intl: intlShape.isRequired,
-  values: PropTypes.object // eslint-disable-line
+  values: PropTypes.object, // eslint-disable-line
 };
 
 LocaleFormattedMessage.defaultPropTypes = {
-  className: ''
+  className: '',
 };
 
 export default injectIntl(LocaleFormattedMessage);

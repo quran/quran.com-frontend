@@ -25,5 +25,5 @@ export default combineReducers({
   routing: routerReducer,
   searchResults,
   suggestResults,
-  verses
+  verses,
 });

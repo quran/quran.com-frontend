@@ -38,24 +38,24 @@ class RepeatButton extends Component {
 
     return setRepeat({
       from: current,
-      to: current
+      to: current,
     });
   };
 
-  handleNavChange = (nav) => {
+  handleNavChange = nav => {
     const { setRepeat, current } = this.props;
 
     if (nav === 1) {
       // Should set single ayah
       return setRepeat({
         from: current,
-        to: current
+        to: current,
       });
     }
 
     return setRepeat({
       from: current,
-      to: current + 3
+      to: current + 3,
     });
   };
 
@@ -78,13 +78,13 @@ class RepeatButton extends Component {
             <FormControl
               componentClass="select"
               value={repeat.from}
-              onChange={(event) => {
+              onChange={event => {
                 let to = parseInt(event.target.value, 10) + 3;
                 to = to < chapter.versesCount ? to : chapter.versesCount;
                 setRepeat({
                   ...repeat,
                   from: parseInt(event.target.value, 10),
-                  to
+                  to,
                 });
               }}
             >
@@ -157,7 +157,7 @@ class RepeatButton extends Component {
             setRepeat({
               ...repeat,
               from: parseInt(event.target.value, 10),
-              to: parseInt(event.target.value, 10)
+              to: parseInt(event.target.value, 10),
             })
           }
         >
@@ -232,14 +232,14 @@ class RepeatButton extends Component {
             onChange={event =>
               setRepeat({
                 ...repeat,
-                times: parseInt(event.target.value, 10)
+                times: parseInt(event.target.value, 10),
               })
             }
           >
             <option value={'Infinity'}>
               {intl.formatMessage({
                 id: 'player.repeat.loop',
-                defaultMessage: 'Loop'
+                defaultMessage: 'Loop',
               })}
             </option>
             {times.map((ayah, index) => (
@@ -306,7 +306,7 @@ RepeatButton.propTypes = {
   repeat: customPropTypes.timeInterval,
   setRepeat: PropTypes.func.isRequired,
   current: PropTypes.number.isRequired,
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
 };
 
 export default injectIntl(RepeatButton);

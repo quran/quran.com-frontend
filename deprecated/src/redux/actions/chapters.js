@@ -9,10 +9,10 @@ export function loadAll() {
     types: [
       FETCH_CHAPTERS.ACTION,
       FETCH_CHAPTERS.SUCCESS,
-      FETCH_CHAPTERS.FAILURE
+      FETCH_CHAPTERS.FAILURE,
     ],
     schema: { chapters: [chaptersSchema] },
-    promise: client.get('/api/v3/chapters')
+    promise: client.get('/api/v3/chapters'),
   };
 }
 
@@ -21,16 +21,16 @@ export function load(id) {
     types: [
       FETCH_CHAPTERS.ACTION,
       FETCH_CHAPTERS.SUCCESS,
-      FETCH_CHAPTERS.FAILURE
+      FETCH_CHAPTERS.FAILURE,
     ],
     schema: { chapter: chaptersSchema },
-    promise: client.get(`/api/v3/chapters/${id}`)
+    promise: client.get(`/api/v3/chapters/${id}`),
   };
 }
 
 export const setCurrent = id => ({
   type: SET_CURRENT.ACTION,
-  current: id
+  current: id,
 });
 
 export function isSingleLoaded(globalState, id) {

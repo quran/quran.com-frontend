@@ -3,7 +3,7 @@ import {
   SET_OPTION,
   SET_USER_AGENT,
   FETCH_RECITERS,
-  FETCH_TRANSLATIONS
+  FETCH_TRANSLATIONS,
 } from '../constants/options.js';
 import ApiClient from '../../helpers/ApiClient';
 
@@ -20,21 +20,21 @@ export function isNightMode(globalState) {
 export function setOption(payload) {
   const options = cookie.load('options') || {}; // protect against first timers.
 
-  Object.keys(payload).forEach((option) => {
+  Object.keys(payload).forEach(option => {
     options[option] = payload[option];
   });
   cookie.save('options', JSON.stringify(options));
 
   return {
     type: SET_OPTION,
-    payload
+    payload,
   };
 }
 
 export function setUserAgent(userAgent) {
   return {
     type: SET_USER_AGENT,
-    userAgent
+    userAgent,
   };
 }
 
@@ -42,16 +42,16 @@ export const loadTranslations = () => ({
   types: [
     FETCH_TRANSLATIONS.ACTION,
     FETCH_TRANSLATIONS.SUCCESS,
-    FETCH_TRANSLATIONS.FAILURE
+    FETCH_TRANSLATIONS.FAILURE,
   ],
-  promise: client.get('/api/v3/options/translations')
+  promise: client.get('/api/v3/options/translations'),
 });
 
 export const loadRecitations = () => ({
   types: [
     FETCH_RECITERS.ACTION,
     FETCH_RECITERS.SUCCESS,
-    FETCH_RECITERS.FAILURE
+    FETCH_RECITERS.FAILURE,
   ],
-  promise: client.get('/api/v3/options/recitations')
+  promise: client.get('/api/v3/options/recitations'),
 });

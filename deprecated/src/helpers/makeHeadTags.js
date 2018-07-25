@@ -1,6 +1,6 @@
 export default function makeHeadTags({ title, description, url, image }) {
   const tags = {
-    meta: []
+    meta: [],
   };
 
   if (title) {

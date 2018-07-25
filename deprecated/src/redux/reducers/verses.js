@@ -9,7 +9,7 @@ import {
   SET_CURRENT_WORD,
   CLEAR_CURRENT_WORD,
   LOAD_TAFSIR,
-  LOAD_TAFSIR_SUCCESS
+  LOAD_TAFSIR_SUCCESS,
 } from '../constants/verses';
 
 export const INITIAL_STATE = {
@@ -21,7 +21,7 @@ export const INITIAL_STATE = {
   entities: {},
   result: [],
   tafsirLoading: false,
-  tafsirs: []
+  tafsirs: [],
 };
 
 export default handleActions(
@@ -29,7 +29,7 @@ export default handleActions(
     [SET_CURRENT_VERSE]: (state, action) => ({
       ...state,
       current: action.id,
-      currentWord: state.current === action.id ? state.currentWord : null
+      currentWord: state.current === action.id ? state.currentWord : null,
     }),
     [SET_CURRENT_WORD]: (state, action) => {
       let currentVerse = state.current;
@@ -41,12 +41,12 @@ export default handleActions(
       return {
         ...state,
         current: currentVerse,
-        currentWord: action.id
+        currentWord: action.id,
       };
     },
     [CLEAR_CURRENT_WORD]: state => ({
       ...state,
-      currentWord: null
+      currentWord: null,
     }),
     [CLEAR_CURRENT]: (state, action) => {
       const entities = state.entities;
@@ -56,14 +56,14 @@ export default handleActions(
         currentWord: null,
         entities: {
           ...entities,
-          [action.id]: {}
-        }
+          [action.id]: {},
+        },
       };
     },
     [LOAD]: state => ({
       ...state,
       loaded: false,
-      loading: true
+      loading: true,
     }),
     [LOAD_SUCCESS]: (state, action) => {
       const current = state.current ? state.current : action.result.result[0];
@@ -81,15 +81,15 @@ export default handleActions(
             {},
             state.entities[action.chapterId],
             action.result.entities.verses
-          )
+          ),
         },
-        result: Object.assign({}, state.result, action.result.result)
+        result: Object.assign({}, state.result, action.result.result),
       };
     },
     [LOAD_FAIL]: state => state,
     [LOAD_TAFSIR]: state => ({
       ...state,
-      tafsirLoading: true
+      tafsirLoading: true,
     }),
     [LOAD_TAFSIR_SUCCESS]: (state, action) => {
       const tafsir = action.result.tafsirs[0];
@@ -99,10 +99,10 @@ export default handleActions(
         tafsirLoading: false,
         tafsirs: {
           ...state.entities,
-          [`${tafsir.verseKey}-${action.tafsirId}`]: tafsir
-        }
+          [`${tafsir.verseKey}-${action.tafsirId}`]: tafsir,
+        },
       };
-    }
+    },
   },
   INITIAL_STATE
 );

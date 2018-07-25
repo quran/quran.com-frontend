@@ -8,7 +8,7 @@ import routePromises from '../../utils/routePromises';
 
 const defaultSetContext = context => ({
   ...context,
-  status: 200
+  status: 200,
 });
 
 const Routes = ({ store }) => (
@@ -28,7 +28,7 @@ const Routes = ({ store }) => (
             routePromises({
               store,
               match: routeProps.match,
-              loadData
+              loadData,
             }).then(() => <Component {...routeProps} />);
           }
 
@@ -41,7 +41,7 @@ const Routes = ({ store }) => (
 );
 
 Routes.propTypes = {
-  store: PropTypes.object.isRequired // eslint-disable-line
+  store: PropTypes.object.isRequired, // eslint-disable-line
 };
 
 export default Routes;

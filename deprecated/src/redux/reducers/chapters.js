@@ -8,7 +8,7 @@ export const INITIAL_STATE = {
   loading: false,
   current: null,
   entities: {},
-  infos: {}
+  infos: {},
 };
 
 export default handleActions(
@@ -20,14 +20,14 @@ export default handleActions(
         ...state,
         loaded: true,
         errored: false,
-        entities: { ...state.entities, ...chapters }
+        entities: { ...state.entities, ...chapters },
       };
     },
     [FETCH_CHAPTERS.FAILURE]: state => ({ ...state, errored: true }),
     [SET_CURRENT.ACTION]: (state, { current }) => ({
       ...state,
-      current
-    })
+      current,
+    }),
   },
   INITIAL_STATE
 );

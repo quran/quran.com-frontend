@@ -8,7 +8,7 @@ class Segments extends Component {
   shouldComponentUpdate(nextProps) {
     return [
       this.props.currentVerse !== nextProps.currentVerse,
-      this.props.currentTime !== nextProps.currentTime
+      this.props.currentTime !== nextProps.currentTime,
     ].some(test => test);
   }
 
@@ -19,7 +19,7 @@ class Segments extends Component {
 
     if (!Object.keys(segments).length) return <noscript />;
 
-    Object.keys(segments.words).forEach((wordIndex) => {
+    Object.keys(segments.words).forEach(wordIndex => {
       const word = segments.words[wordIndex];
 
       if (currentTime >= word.startTime && currentTime < word.endTime) {
@@ -34,7 +34,7 @@ class Segments extends Component {
         cssText: `#word-${currentWord.replace(/:/g, '-')}{
           color: #279197;
           border-color: #279197;
-        }`
+        }`,
       });
     } else {
       debug('component:Segments', 'render without currentWord');
@@ -47,7 +47,7 @@ class Segments extends Component {
 Segments.propTypes = {
   segments: customPropTypes.segments.isRequired,
   currentVerse: PropTypes.string,
-  currentTime: PropTypes.number
+  currentTime: PropTypes.number,
 };
 
 export default Segments;

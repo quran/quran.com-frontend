@@ -27,7 +27,7 @@ class Pdf extends Component {
       options,
       isPlaying,
       isAuthenticated,
-      currentVerse
+      currentVerse,
     } = this.props; // eslint-disable-line no-shadow
 
     return Object.values(verses).map(verse => (
@@ -68,8 +68,8 @@ class Pdf extends Component {
                 options.fontSize.arabic
               }rem;} .text-translation{font-size: ${
                 options.fontSize.translation
-              }rem;}` // eslint-disable-line max-len
-            }
+              }rem;}`, // eslint-disable-line max-len
+            },
           ]}
         />
         <Container className="container-fluid">
@@ -92,7 +92,7 @@ Pdf.propTypes = {
   isAuthenticated: PropTypes.bool,
   options: PropTypes.object.isRequired, // eslint-disable-line
   verses: customPropTypes.verses,
-  isPlaying: PropTypes.bool
+  isPlaying: PropTypes.bool,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -123,7 +123,7 @@ function mapStateToProps(state, ownProps) {
     isLoading: state.verses.loading,
     isLoaded: state.verses.loaded,
     lines: state.lines.lines,
-    options: state.options
+    options: state.options,
   };
 }
 

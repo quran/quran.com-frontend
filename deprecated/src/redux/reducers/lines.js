@@ -2,13 +2,13 @@
 import {
   LOAD as AYAHS_LOAD,
   LOAD_SUCCESS as AYAHS_LOAD_SUCCESS,
-  LOAD_FAIL as AYAHS_LOAD_FAIL
+  LOAD_FAIL as AYAHS_LOAD_FAIL,
 } from '../constants/verses';
 
 import { SET_CURRENT as SURAHS_SET_CURRENT } from '../constants/chapters';
 
 const initialState = {
-  lines: {}
+  lines: {},
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -16,27 +16,27 @@ export default function reducer(state = initialState, action = {}) {
     case SURAHS_SET_CURRENT:
       return {
         ...state,
-        lines: {}
+        lines: {},
       };
     case AYAHS_LOAD:
       return {
         ...state,
         loaded: false,
-        loading: true
+        loading: true,
       };
     case AYAHS_LOAD_SUCCESS:
       const ayahs = action.result.entities.verses;
       const stateLines = state.lines;
       const lines = { ...stateLines };
 
-      action.result.result.verses.forEach((ayahId) => {
+      action.result.result.verses.forEach(ayahId => {
         const ayah = ayahs[ayahId];
 
-        ayah.words.forEach((word) => {
+        ayah.words.forEach(word => {
           if (lines[`${word.pageNumber}-${word.lineNumber}`]) {
             const isInArray = lines[
               `${word.pageNumber}-${word.lineNumber}`
-            ].find((item) => {
+            ].find(item => {
               const itemChecksum = `${item.lineNumber}${item.code}${
                 item.verseKey
               }${item.position}`;
@@ -61,7 +61,7 @@ export default function reducer(state = initialState, action = {}) {
         loaded: true,
         loading: false,
         errored: false,
-        lines
+        lines,
       };
     case AYAHS_LOAD_FAIL:
       return state;

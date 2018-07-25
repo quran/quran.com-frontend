@@ -43,7 +43,7 @@ export default () => (
     <Helmet
       {...makeHeadTags({
         title,
-        description
+        description,
       })}
     />
     <div className="row">

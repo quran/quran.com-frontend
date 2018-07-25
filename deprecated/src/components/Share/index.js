@@ -3,7 +3,7 @@ import {
   FacebookShareButton,
   FacebookIcon,
   TwitterShareButton,
-  TwitterIcon
+  TwitterIcon,
 } from 'react-share';
 import styled, { css } from 'styled-components';
 import * as customPropTypes from 'customPropTypes';
@@ -78,7 +78,7 @@ const Share = ({ chapter, verse, inline }) => {
 Share.propTypes = {
   chapter: customPropTypes.chapterType.isRequired,
   verse: customPropTypes.verseType,
-  inline: PropTypes.bool
+  inline: PropTypes.bool,
 };
 
 export default Share;

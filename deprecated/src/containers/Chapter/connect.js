@@ -20,7 +20,7 @@ import { isJuzsLoaded, loadJuzs } from '../../redux/actions/juzs.js';
 
 import { debug } from '../../helpers';
 
-const determinePage = (range) => {
+const determinePage = range => {
   let from;
   let to;
 

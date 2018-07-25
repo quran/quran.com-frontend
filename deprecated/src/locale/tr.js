@@ -88,6 +88,6 @@ export default {
     'error.invalid-surah':
       "Surah aralık dışı. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah seçin",
     'error.invalid-ayah':
-      "Ayah menzilin dışında. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah / Ayah seçin"
-  }
+      "Ayah menzilin dışında. Lütfen <a href='/'> ana sayfaya </a> gidin ve bir Surah / Ayah seçin",
+  },
 };

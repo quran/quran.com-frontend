@@ -22,7 +22,7 @@ const TopOptions = ({ title, chapter }) => (
 
 TopOptions.propTypes = {
   title: PropTypes.string,
-  chapter: customPropTypes.chapterType.isRequired
+  chapter: customPropTypes.chapterType.isRequired,
 };
 
 export default TopOptions;

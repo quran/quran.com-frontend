@@ -53,13 +53,13 @@ LazyLoad.propTypes = {
   onLazyLoad: PropTypes.func.isRequired,
   loadingComponent: PropTypes.element,
   endComponent: PropTypes.element,
-  offset: PropTypes.number
+  offset: PropTypes.number,
 };
 
 LazyLoad.defaultProps = {
   loadingComponent: 'Loading...',
   endComponent: 'End.',
-  offset: 1000
+  offset: 1000,
 };
 
 export default LazyLoad;

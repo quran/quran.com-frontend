@@ -35,7 +35,7 @@ const Progress = styled.div`
 export default class Track extends Component {
   static propTypes = {
     progress: PropTypes.number.isRequired,
-    onTrackChange: PropTypes.func.isRequired
+    onTrackChange: PropTypes.func.isRequired,
   };
 
   constructor(props) {
@@ -43,7 +43,7 @@ export default class Track extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick = (event) => {
+  handleClick = event => {
     const { onTrackChange } = this.props;
 
     const fraction =
@@ -57,7 +57,7 @@ export default class Track extends Component {
 
     return (
       <Container
-        innerRef={(container) => {
+        innerRef={container => {
           this.container = container;
         }}
         onClick={this.handleClick}

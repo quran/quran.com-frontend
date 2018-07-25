@@ -10,7 +10,7 @@ const error = {
   'invalid-surah':
     "Surah is out of range. Please go to <a href='/'> home page</a> and select a Surah",
   'invalid-ayah':
-    "Ayah is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah"
+    "Ayah is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah",
 };
 
 const ErrorPage = ({ match: { params } }) => (
@@ -33,7 +33,7 @@ const ErrorPage = ({ match: { params } }) => (
 );
 
 ErrorPage.propTypes = {
-  match: PropTypes.object.isRequired // eslint-disable-line
+  match: PropTypes.object.isRequired, // eslint-disable-line
 };
 
 export default ErrorPage;

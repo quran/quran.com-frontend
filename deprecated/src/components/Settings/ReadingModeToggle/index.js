@@ -17,7 +17,7 @@ const ReadingModeToggle = ({ onToggle, isToggled }) => (
 
 ReadingModeToggle.propTypes = {
   onToggle: PropTypes.func.isRequired,
-  isToggled: PropTypes.bool.isRequired
+  isToggled: PropTypes.bool.isRequired,
 };
 
 export default ReadingModeToggle;

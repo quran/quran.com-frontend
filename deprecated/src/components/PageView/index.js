@@ -12,7 +12,7 @@ const PageView = ({
   currentVerse,
   options,
   isPlaying,
-  audioActions
+  audioActions,
 }) => {
   // eslint-disable-line
   const elements = keys.map((lineNum, index) => {
@@ -32,7 +32,7 @@ const PageView = ({
           isPlaying={isPlaying}
           useTextFont={renderText}
         />,
-        <PageBreak pageNum={parseInt(pageNum, 10) + 1} />
+        <PageBreak pageNum={parseInt(pageNum, 10) + 1} />,
       ];
     }
 
@@ -59,9 +59,9 @@ PageView.propTypes = {
   currentVerse: PropTypes.string,
   bookmarks: PropTypes.object.isRequired, // eslint-disable-line
   options: PropTypes.object.isRequired, // eslint-disable-line
-  isPlaying: PropTypes.bool
+  isPlaying: PropTypes.bool,
 };
 
 export default connect(state => ({
-  userAgent: state.options.userAgent
+  userAgent: state.options.userAgent,
 }))(PageView);

@@ -6,14 +6,14 @@ export const INITIAL_STATE = {
   errored: false,
   loaded: false,
   loading: false,
-  entities: {}
+  entities: {},
 };
 
 export default handleActions(
   {
     [FETCH_CHAPTER_INFO.ACTION]: state => ({
       ...state,
-      loading: true
+      loading: true,
     }),
     [FETCH_CHAPTER_INFO.SUCCESS]: (state, { id, result }) => ({
       ...state,
@@ -21,9 +21,9 @@ export default handleActions(
       loaded: true,
       entities: {
         ...state.entities,
-        [id]: result.chapterInfo
-      }
-    })
+        [id]: result.chapterInfo,
+      },
+    }),
   },
   INITIAL_STATE
 );

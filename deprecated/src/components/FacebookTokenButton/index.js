@@ -35,7 +35,7 @@ const FacebookTokenButton = ({ save, push }) => {
 
     window.addEventListener(
       'message',
-      (event) => {
+      event => {
         // eslint-disable-line
         if (event.data.uid) {
           save(event.data);
@@ -62,4 +62,7 @@ const FacebookTokenButton = ({ save, push }) => {
   );
 };
 
-export default connect(null, { save, push })(FacebookTokenButton);
+export default connect(
+  null,
+  { save, push }
+)(FacebookTokenButton);

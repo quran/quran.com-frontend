@@ -31,7 +31,7 @@ const LastVisit = ({ chapter, verse }) => {
 
 LastVisit.propTypes = {
   chapter: customPropTypes.chapterType.isRequired,
-  verse: PropTypes.number.isRequired
+  verse: PropTypes.number.isRequired,
 };
 
 export default LastVisit;

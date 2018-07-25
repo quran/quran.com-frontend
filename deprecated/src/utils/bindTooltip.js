@@ -43,7 +43,7 @@ const positionTooltip = (target, tooltip) => {
 };
 
 export default {
-  onMouseEnter: (event) => {
+  onMouseEnter: event => {
     const target = event.target;
     const title = target.getAttribute('title');
     const tooltip = document.createElement('div');
@@ -60,12 +60,12 @@ export default {
     document.body.appendChild(tooltip);
     return positionTooltip(target, tooltip);
   },
-  onMouseLeave: (event) => {
+  onMouseLeave: event => {
     const target = event.target;
     const tooltip = document.getElementById(`tooltip-${target.id}`);
 
     if (tooltip) {
       document.body.removeChild(tooltip);
     }
-  }
+  },
 };

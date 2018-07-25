@@ -90,6 +90,6 @@ export default {
       "Surah is out of range. Please go to <a href='/'> home page</a> and select a Surah",
     'error.invalid-ayah':
       "Ayah is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah",
-    'error.not-found': 'Sorry, this page does not exist'
-  }
+    'error.not-found': 'Sorry, this page does not exist',
+  },
 };

@@ -136,7 +136,7 @@ class Chapter extends Component {
     return [...verseIds][0];
   }
 
-  handleLazyLoadAyahs = (callback) => {
+  handleLazyLoadAyahs = callback => {
     const { verseIds, chapter, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     const range = [this.getFirst(), this.getLast()];
 
@@ -156,7 +156,10 @@ class Chapter extends Component {
   };
 
   title() {
-    const { match: { params }, chapter } = this.props;
+    const {
+      match: { params },
+      chapter,
+    } = this.props;
 
     if (params.range) {
       return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}:${
@@ -168,7 +171,12 @@ class Chapter extends Component {
   }
 
   description() {
-    const { match: { params }, verses, chapter, info } = this.props;
+    const {
+      match: { params },
+      verses,
+      chapter,
+      info,
+    } = this.props;
 
     if (params.range) {
       if (params.range.includes('-')) {
@@ -497,4 +505,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Chapter);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Chapter);

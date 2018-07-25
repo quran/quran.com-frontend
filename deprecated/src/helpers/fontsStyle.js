@@ -20,7 +20,7 @@ const makeFont = pageNumber => `
 
 const makePageNumberFonts = () =>
   range(604)
-    .map((number) => {
+    .map(number => {
       const pageNumber = number + 1;
 
       return makeFont(pageNumber);

@@ -7,7 +7,7 @@ import { COPY_EVENTS } from '../../events';
 
 class Copy extends Component {
   state = {
-    isCopied: false
+    isCopied: false,
   };
 
   handleCopy = () => {
@@ -45,7 +45,7 @@ class Copy extends Component {
 
 Copy.propTypes = {
   text: PropTypes.string.isRequired,
-  verseKey: PropTypes.string.isRequired
+  verseKey: PropTypes.string.isRequired,
 };
 
 export default Copy;

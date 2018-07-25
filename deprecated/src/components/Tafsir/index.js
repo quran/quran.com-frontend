@@ -21,7 +21,7 @@ const Tafsir = ({ tafsir, verse }) => {
 
 Tafsir.propTypes = {
   tafsir: customPropTypes.tafsirType.isRequired,
-  verse: customPropTypes.verseType
+  verse: customPropTypes.verseType,
 };
 
 export default Tafsir;

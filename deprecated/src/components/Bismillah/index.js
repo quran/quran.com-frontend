@@ -19,7 +19,7 @@ const Bismillah = ({ chapter }) => {
 };
 
 Bismillah.propTypes = {
-  chapter: customPropTypes.chapterType.isRequired
+  chapter: customPropTypes.chapterType.isRequired,
 };
 
 export default Bismillah;

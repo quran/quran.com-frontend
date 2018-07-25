@@ -5,7 +5,7 @@ import {
   LOAD_TAFISRS,
   LOAD_TAFISRS_SUCCESS,
   LOAD_FOOT_NOTE,
-  LOAD_FOOT_NOTE_SUCCESS
+  LOAD_FOOT_NOTE_SUCCESS,
 } from '../constants/media';
 
 const initialState = {
@@ -13,7 +13,7 @@ const initialState = {
   show: false,
   loading: false,
   size: 'large',
-  wrapperClass: ''
+  wrapperClass: '',
 };
 
 export default function reducer(state = initialState, action = {}) {
@@ -25,15 +25,15 @@ export default function reducer(state = initialState, action = {}) {
         size: 'large',
         content: {
           title: action.content.authorName,
-          body: action.content.embedText
-        }
+          body: action.content.embedText,
+        },
       };
     }
     case REMOVE_MEDIA: {
       return {
         ...state,
         show: false,
-        content: { title: null, body: null }
+        content: { title: null, body: null },
       };
     }
     case LOAD_TAFISRS: {
@@ -44,8 +44,8 @@ export default function reducer(state = initialState, action = {}) {
         size: 'small',
         wrapperClass: '',
         content: {
-          title: action.title
-        }
+          title: action.title,
+        },
       };
     }
     case LOAD_TAFISRS_SUCCESS: {
@@ -54,8 +54,8 @@ export default function reducer(state = initialState, action = {}) {
         loading: false,
         content: {
           body: buildTafsirList(action.result.tafsirs, action.verse),
-          title: action.title
-        }
+          title: action.title,
+        },
       };
     }
     case LOAD_FOOT_NOTE: {
@@ -64,8 +64,8 @@ export default function reducer(state = initialState, action = {}) {
         show: true,
         loading: true,
         content: {
-          title: 'Foot note'
-        }
+          title: 'Foot note',
+        },
       };
     }
     case LOAD_FOOT_NOTE_SUCCESS: {
@@ -78,8 +78,8 @@ export default function reducer(state = initialState, action = {}) {
           body: `<small class='${action.result.footNote.languageName}'>${
             action.result.footNote.text
           }</small>`,
-          title: 'Foot note'
-        }
+          title: 'Foot note',
+        },
       };
     }
     default:

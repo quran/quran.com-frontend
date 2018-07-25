@@ -114,7 +114,7 @@ const content = {
   111: 'e96f',
   112: 'e970',
   113: 'e971',
-  114: 'e972'
+  114: 'e972',
 };
 
 export default styled.span`

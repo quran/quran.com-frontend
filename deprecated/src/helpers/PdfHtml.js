@@ -45,7 +45,7 @@ PdfHtml.propTypes = {
   store: PropTypes.object, // eslint-disable-line
   assets: PropTypes.object, // eslint-disable-line
   component: PropTypes.element,
-  url: PropTypes.string.isRequired
+  url: PropTypes.string.isRequired,
 };
 
 export default PdfHtml;

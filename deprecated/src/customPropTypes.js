@@ -4,26 +4,26 @@ export const bookmarkActions = PropTypes.shape({
   isLoaded: PropTypes.func.isRequired,
   load: PropTypes.func.isRequired,
   addBookmark: PropTypes.func.isRequired,
-  removeBookmark: PropTypes.func.isRequired
+  removeBookmark: PropTypes.func.isRequired,
 });
 
 export const bookmarkType = PropTypes.shape({
   id: PropTypes.string.isRequired,
   verseKey: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  updatedAt: PropTypes.string.isRequired
+  updatedAt: PropTypes.string.isRequired,
 });
 
 export const contentType = PropTypes.shape({
   id: PropTypes.number,
   authorName: PropTypes.string,
-  languageName: PropTypes.string
+  languageName: PropTypes.string,
 });
 
 export const footNoteType = PropTypes.shape({
   id: PropTypes.number,
   text: PropTypes.string,
-  language_name: PropTypes.string
+  language_name: PropTypes.string,
 });
 
 export const infoType = PropTypes.shape({
@@ -31,23 +31,23 @@ export const infoType = PropTypes.shape({
   text: PropTypes.string.isRequired,
   source: PropTypes.string.isRequired,
   shortText: PropTypes.string.isRequired,
-  languageName: PropTypes.string.isRequired
+  languageName: PropTypes.string.isRequired,
 });
 
 export const media = PropTypes.shape({
-  content: PropTypes.object
+  content: PropTypes.object,
 });
 
 export const mediaActions = PropTypes.shape({
   setMedia: PropTypes.func.isRequired,
-  removeMedia: PropTypes.func.isRequired
+  removeMedia: PropTypes.func.isRequired,
 });
 
 export const audioActions = PropTypes.shape({
   pause: PropTypes.func.isRequired,
   setAyah: PropTypes.func.isRequired,
   play: PropTypes.func.isRequired,
-  setCurrentWord: PropTypes.func.isRequired
+  setCurrentWord: PropTypes.func.isRequired,
 });
 
 export const language = PropTypes.shape({
@@ -57,7 +57,7 @@ export const language = PropTypes.shape({
   esAnalyzerDefault: PropTypes.string,
   languageCode: PropTypes.string.isRequired,
   priority: PropTypes.number.isRequired,
-  unicode: PropTypes.string
+  unicode: PropTypes.string,
 });
 
 export const matchType = PropTypes.shape({
@@ -74,12 +74,12 @@ export const matchType = PropTypes.shape({
   type: PropTypes.string.isRequired,
   authorId: PropTypes.number.isRequired,
   slug: PropTypes.string.isRequired,
-  isAvailable: PropTypes.bool
+  isAvailable: PropTypes.bool,
 });
 
 export const fontSize = PropTypes.shape({
   arabic: PropTypes.number,
-  translations: PropTypes.number
+  translations: PropTypes.number,
 });
 
 export const location = PropTypes.shape({
@@ -87,7 +87,7 @@ export const location = PropTypes.shape({
   hash: PropTypes.string,
   pathname: PropTypes.string,
   search: PropTypes.string,
-  query: PropTypes.objectOf(PropTypes.string)
+  query: PropTypes.objectOf(PropTypes.string),
 });
 
 export const optionsType = PropTypes.shape({
@@ -97,13 +97,13 @@ export const optionsType = PropTypes.shape({
   quran: PropTypes.number,
   content: PropTypes.arrayOf(PropTypes.number),
   tooltip: PropTypes.string,
-  fontSize: fontSize.isRequired
+  fontSize: fontSize.isRequired,
 });
 
 export const recitationTypes = PropTypes.shape({
   id: PropTypes.number,
   style: PropTypes.string,
-  reciter_name_eng: PropTypes.string
+  reciter_name_eng: PropTypes.string,
 });
 
 export const chapterType = PropTypes.shape({
@@ -115,35 +115,35 @@ export const chapterType = PropTypes.shape({
   pages: PropTypes.arrayOf(PropTypes.number).isRequired,
   nameComplex: PropTypes.string.isRequired,
   nameSimple: PropTypes.string.isRequired,
-  nameArabic: PropTypes.string.isRequired
+  nameArabic: PropTypes.string.isRequired,
 });
 
 export const juzType = PropTypes.shape({
   id: PropTypes.number.isRequired,
   juzNumber: PropTypes.number.isRequired,
-  verseMapping: PropTypes.object.isRequired
+  verseMapping: PropTypes.object.isRequired,
 });
 
 export const timeInterval = PropTypes.shape({
   from: PropTypes.number,
   to: PropTypes.number,
-  time: PropTypes.number
+  time: PropTypes.number,
 });
 
 export const translationType = PropTypes.shape({
   languageName: PropTypes.string.isRequired,
   text: PropTypes.string.isRequired,
-  resourceName: PropTypes.string.isRequired
+  resourceName: PropTypes.string.isRequired,
 });
 
 export const translation = PropTypes.shape({
   languageName: PropTypes.string,
-  text: PropTypes.string
+  text: PropTypes.string,
 });
 
 export const transliteration = PropTypes.shape({
   languageName: PropTypes.string,
-  text: PropTypes.string
+  text: PropTypes.string,
 });
 
 export const translationOptions = PropTypes.arrayOf(contentType);
@@ -157,7 +157,7 @@ export const userType = PropTypes.shape({
   link: PropTypes.string,
   image: PropTypes.string,
   email: PropTypes.string,
-  name: PropTypes.string
+  name: PropTypes.string,
 });
 
 export const wordType = PropTypes.shape({
@@ -171,7 +171,7 @@ export const wordType = PropTypes.shape({
   position: PropTypes.number.isRequired,
   translation,
   transliteration,
-  wordId: PropTypes.number
+  wordId: PropTypes.number,
 });
 
 export const verseType = PropTypes.shape({
@@ -187,7 +187,7 @@ export const verseType = PropTypes.shape({
   textMadani: PropTypes.string.isRequired,
   textSimple: PropTypes.string.isRequired,
   translations: PropTypes.arrayOf(translationType), // NOTE: In search, it is not required.
-  audio: PropTypes.object // NOTE: In search, it is not required.
+  audio: PropTypes.object, // NOTE: In search, it is not required.
 });
 
 export const verses = PropTypes.objectOf(verseType);
@@ -198,19 +198,19 @@ export const tafsirType = PropTypes.shape({
   verseKey: PropTypes.string.isRequired,
   verseId: PropTypes.number.isRequired,
   languageName: PropTypes.string.isRequired,
-  resourceName: PropTypes.string.isRequired
+  resourceName: PropTypes.string.isRequired,
 });
 
 export const words = PropTypes.shape({
   startTime: PropTypes.number.isRequired,
   endTime: PropTypes.number.isRequired,
-  duration: PropTypes.number.isRequired
+  duration: PropTypes.number.isRequired,
 });
 
 export const segmentType = PropTypes.shape({
   words,
   // eslint-disable-next-line max-len
-  intervals: PropTypes.oneOfType([PropTypes.array, PropTypes.object]) // TODO: This should be done a better way.
+  intervals: PropTypes.oneOfType([PropTypes.array, PropTypes.object]), // TODO: This should be done a better way.
 });
 
 export const segments = PropTypes.arrayOf(segmentType);
@@ -228,7 +228,7 @@ export const recitations = PropTypes.arrayOf(recitationTypes);
 export const suggestion = PropTypes.shape({
   ayah: PropTypes.string,
   href: PropTypes.string.isRequired,
-  text: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
 });
 
 export const suggestions = PropTypes.arrayOf(suggestion);
@@ -237,5 +237,5 @@ export const storeText = PropTypes.shape({
   ios: PropTypes.string.isRequired,
   android: PropTypes.string.isRequired,
   windows: PropTypes.string.isRequired,
-  kindle: PropTypes.string.isRequired
+  kindle: PropTypes.string.isRequired,
 });

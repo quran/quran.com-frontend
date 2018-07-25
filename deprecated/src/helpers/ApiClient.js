@@ -8,7 +8,7 @@ import config from '../config';
 const contentLanguage = () =>
   cookie.load('currentLocale') || config.defaultLocale;
 
-const formatUrl = (path) => {
+const formatUrl = path => {
   const adjustedPath = path[0] !== '/' ? `/${path}` : path;
 
   if (__SERVER__) {
@@ -39,7 +39,7 @@ class ApiClient {
     queryParams.language = params.language || this.language;
 
     const query = qs.stringify(decamelizeKeys(params), {
-      arrayFormat: arrayFormat || 'brackets'
+      arrayFormat: arrayFormat || 'brackets',
     });
 
     const request = fetch(formatUrl(`${path}?${query}`), options);

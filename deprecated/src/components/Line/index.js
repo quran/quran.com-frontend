@@ -34,7 +34,7 @@ class Line extends Component {
       audioActions,
       isPlaying,
       line,
-      useTextFont
+      useTextFont,
     } = this.props;
 
     // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
@@ -87,7 +87,7 @@ Line.propTypes = {
   currentVerse: PropTypes.string.isRequired,
   audioActions: customPropTypes.audioActions,
   isPlaying: PropTypes.bool,
-  useTextFont: PropTypes.bool
+  useTextFont: PropTypes.bool,
 };
 
 export default Line;

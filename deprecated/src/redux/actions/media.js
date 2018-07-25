@@ -4,7 +4,7 @@ import {
   LOAD_TAFISRS,
   LOAD_TAFISRS_SUCCESS,
   LOAD_FOOT_NOTE,
-  LOAD_FOOT_NOTE_SUCCESS
+  LOAD_FOOT_NOTE_SUCCESS,
 } from '../constants/media';
 import ApiClient from '../../helpers/ApiClient';
 
@@ -12,21 +12,21 @@ const client = new ApiClient();
 
 export const setMedia = content => ({
   type: SET_MEDIA,
-  content
+  content,
 });
 
 export const removeMedia = () => ({
-  type: REMOVE_MEDIA
+  type: REMOVE_MEDIA,
 });
 
 export const loadTafsirs = (verse, title) => ({
   types: [LOAD_TAFISRS, LOAD_TAFISRS_SUCCESS],
   promise: client.get('/api/v3/options/tafsirs'),
   verse,
-  title
+  title,
 });
 
 export const loadFootNote = footNoteId => ({
   types: [LOAD_FOOT_NOTE, LOAD_FOOT_NOTE_SUCCESS],
-  promise: client.get(`/api/v3/foot_notes/${footNoteId}`)
+  promise: client.get(`/api/v3/foot_notes/${footNoteId}`),
 });

@@ -14,7 +14,7 @@ const InformationToggle = ({ isToggled, onToggle }) => (
 
 InformationToggle.propTypes = {
   isToggled: PropTypes.bool.isRequired,
-  onToggle: PropTypes.func.isRequired
+  onToggle: PropTypes.func.isRequired,
 };
 
 export default InformationToggle;

@@ -37,7 +37,7 @@ class GlobalNavChapter extends Component {
     drawerOpen: false,
   };
 
-  handleVerseDropdownClick = (verseNum) => {
+  handleVerseDropdownClick = verseNum => {
     const { versesIds, chapter } = this.props; // eslint-disable-line no-shadow
 
     if (versesIds.has(verseNum)) {
@@ -54,7 +54,7 @@ class GlobalNavChapter extends Component {
     );
   };
 
-  handleDrawerToggle = (open) => {
+  handleDrawerToggle = open => {
     this.setState({ drawerOpen: open });
   };
 
@@ -157,8 +157,11 @@ GlobalNavChapter.propTypes = {
   replace: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, {
-  load,
-  replace,
-  setCurrentVerse,
-})(GlobalNavChapter);
+export default connect(
+  mapStateToProps,
+  {
+    load,
+    replace,
+    setCurrentVerse,
+  }
+)(GlobalNavChapter);

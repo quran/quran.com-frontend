@@ -11,9 +11,9 @@ export function search(params) {
     schema: { results: [versesSchema] },
     // TODO: We are doing this because of a weird obj.hasOwnProperty method missing on `params`
     promise: client.get('/api/v3/search', {
-      params: { q: params.q, p: params.p }
+      params: { q: params.q, p: params.p },
     }),
-    params
+    params,
   };
 }
 

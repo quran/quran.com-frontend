@@ -10,7 +10,7 @@ const success = (state, action) => {
   const classNames = {};
 
   if (verses) {
-    Object.keys(verses).forEach((ayahId) => {
+    Object.keys(verses).forEach(ayahId => {
       const verse = verses[ayahId];
 
       if (!state[`p${verse.pageNumber}`]) {
@@ -21,7 +21,7 @@ const success = (state, action) => {
 
   return {
     ...state,
-    ...classNames
+    ...classNames,
   };
 };
 
@@ -31,8 +31,8 @@ export default handleActions(
     [SEARCH.SUCCESS]: success,
     [FONT_FACE.ACTION]: (state, action) => ({
       ...state,
-      [action.className]: true
-    })
+      [action.className]: true,
+    }),
   },
   INITIAL_STATE
 );

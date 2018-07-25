@@ -84,11 +84,11 @@ VersesDropdown.propTypes = {
   chapter: customPropTypes.chapterType.isRequired, // Set
   onClick: PropTypes.func.isRequired,
   isReadingMode: PropTypes.bool,
-  className: PropTypes.string
+  className: PropTypes.string,
 };
 
 VersesDropdown.defaultProps = {
-  className: ''
+  className: '',
 };
 
 export default VersesDropdown;

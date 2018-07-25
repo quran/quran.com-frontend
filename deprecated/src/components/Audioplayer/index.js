@@ -222,17 +222,17 @@ export class Audioplayer extends Component {
       currentVerse,
       load,
       verseIds,
-      files
+      files,
     } = this.props;
 
-    const firstVerse = verseIds[0]
-    if(!files[firstVerse]) {
+    const firstVerse = verseIds[0];
+    if (!files[firstVerse]) {
       const nextVerse = verses[this.getNext()];
-      if(__CLIENT__) {
+      if (__CLIENT__) {
         window.scrollTo({
           top: 0,
-          behavior: "smooth"
-        })
+          behavior: 'smooth',
+        });
       }
 
       load({
@@ -316,7 +316,7 @@ export class Audioplayer extends Component {
     return verseIds[index + 1];
   }
 
-  handleKeyboardEvent = (event) => {
+  handleKeyboardEvent = event => {
     const { code } = event;
     const { isPlaying, pause } = this.props;
 
@@ -360,7 +360,7 @@ export class Audioplayer extends Component {
     scroller.scrollTo(`verse:${ayahNum}`, -45);
   };
 
-  handleScrollTo = (ayahNum) => {
+  handleScrollTo = ayahNum => {
     const { shouldScroll } = this.props;
 
     if (shouldScroll) {
@@ -391,7 +391,7 @@ export class Audioplayer extends Component {
     }
   }
 
-  handleRepeat = (file) => {
+  handleRepeat = file => {
     const {
       repeat,
       currentVerse,
@@ -520,7 +520,7 @@ export class Audioplayer extends Component {
     return file;
   }
 
-  handleRemoveFileListeners = (file) => {
+  handleRemoveFileListeners = file => {
     file.pause();
     file.currentTime = 0; // eslint-disable-line no-param-reassign
     file.onloadeddata = null; // eslint-disable-line no-param-reassign
@@ -531,7 +531,7 @@ export class Audioplayer extends Component {
     file.onprogress = null; // eslint-disable-line no-param-reassign
   };
 
-  handleTrackChange = (fraction) => {
+  handleTrackChange = fraction => {
     const { currentFile, update } = this.props; // eslint-disable-line no-shadow
 
     update({
@@ -633,7 +633,7 @@ export class Audioplayer extends Component {
         <Wrapper>
           {currentFile && (
             <Track
-              progress={currentTime / duration * 100}
+              progress={(currentTime / duration) * 100}
               onTrackChange={this.handleTrackChange}
             />
           )}
@@ -727,4 +727,7 @@ Audioplayer.propTypes = {
   verseIds: PropTypes.arrayOf(PropTypes.string), // eslint-disable-line
 };
 
-export default connect(mapStateToProps, AudioActions)(Audioplayer);
+export default connect(
+  mapStateToProps,
+  AudioActions
+)(Audioplayer);

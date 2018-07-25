@@ -38,14 +38,14 @@ class FontSizeOptions extends Component {
     const { onOptionChange, fontSize } = this.props;
     const changeFactor = {
       translation: 0.5,
-      arabic: 0.5
+      arabic: 0.5,
     };
 
     return onOptionChange({
       fontSize: {
         ...fontSize,
-        [type]: fontSize[type] + changeFactor[type] * direction
-      }
+        [type]: fontSize[type] + changeFactor[type] * direction,
+      },
     });
   };
 
@@ -55,8 +55,8 @@ class FontSizeOptions extends Component {
     return onOptionChange({
       fontSize: {
         arabic: 3.5,
-        translation: 2
-      }
+        translation: 2,
+      },
     });
   };
 
@@ -147,7 +147,7 @@ class FontSizeOptions extends Component {
 
 FontSizeOptions.propTypes = {
   onOptionChange: PropTypes.func,
-  fontSize: customPropTypes.fontSize.isRequired
+  fontSize: customPropTypes.fontSize.isRequired,
 };
 
 export default FontSizeOptions;

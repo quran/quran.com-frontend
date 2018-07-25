@@ -5,7 +5,7 @@ import { SEARCH } from '../constants/search.js';
 export const INITIAL_STATE = {
   errored: false,
   loaded: false,
-  results: []
+  results: [],
 };
 
 export default handleActions(
@@ -13,7 +13,7 @@ export default handleActions(
     [SEARCH.ACTION]: state => ({
       ...state,
       loaded: false,
-      loading: true
+      loading: true,
       // query: action.params.q || action.params.query,
       // page: action.params.p || action.params.page
     }),
@@ -29,12 +29,12 @@ export default handleActions(
       took: action.result.result.took,
       query: action.result.result.query,
       results: action.result.result.results,
-      entities: action.result.entities.verses
+      entities: action.result.entities.verses,
     }),
     [SEARCH.FAILURE]: state => ({
       ...state,
-      errored: true
-    })
+      errored: true,
+    }),
   },
   INITIAL_STATE
 );

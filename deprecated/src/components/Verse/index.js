@@ -389,4 +389,7 @@ Verse.defaultProps = {
   isPdf: false,
 };
 
-export default connect(null, { loadTafsirs })(Verse);
+export default connect(
+  null,
+  { loadTafsirs }
+)(Verse);

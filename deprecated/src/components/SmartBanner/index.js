@@ -10,14 +10,14 @@ const androidIcon = require('../../../static/images/app-banner-android.png');
 
 const ICONS = {
   apple: appleIcon,
-  android: androidIcon
+  android: androidIcon,
 };
 
 class SmartBanner extends Component {
   state = {
     settings: {},
     deviceType: '',
-    appId: ''
+    appId: '',
   };
 
   componentDidMount() {
@@ -57,24 +57,24 @@ class SmartBanner extends Component {
         icon: 'app-banner-ios.jpg',
         appMeta: 'apple-itunes-app',
         getStoreLink: () =>
-          `https://itunes.apple.com/${this.props.appStoreLanguage}/app/id`
+          `https://itunes.apple.com/${this.props.appStoreLanguage}/app/id`,
       },
       android: {
         icon: 'app-banner-android.png',
         appMeta: 'google-play-app',
-        getStoreLink: () => 'http://play.google.com/store/apps/details?id='
-      }
+        getStoreLink: () => 'http://play.google.com/store/apps/details?id=',
+      },
     };
 
     if (mixins[deviceType]) {
       this.setState({
         settings: mixins[deviceType],
-        appId: this.parseAppId(mixins[deviceType].appMeta)
+        appId: this.parseAppId(mixins[deviceType].appMeta),
       });
     }
   }
 
-  parseAppId = (metaName) => {
+  parseAppId = metaName => {
     const meta = window.document.querySelector(`meta[name="${metaName}"]`);
     return /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];
   };
@@ -97,7 +97,7 @@ class SmartBanner extends Component {
 
     cookie.save('smartbanner-closed', 'true', {
       path: '/',
-      expires: expireDate
+      expires: expireDate,
     });
   }
 
@@ -110,7 +110,7 @@ class SmartBanner extends Component {
     this.hide();
     cookie.save('smartbanner-installed', 'true', {
       path: '/',
-      expires: expireDate
+      expires: expireDate,
     });
   }
 
@@ -125,7 +125,7 @@ class SmartBanner extends Component {
     return {
       icon,
       link,
-      inStore
+      inStore,
     };
   }
 
@@ -154,7 +154,7 @@ class SmartBanner extends Component {
     const { icon, link, inStore } = this.retrieveInfo();
     const wrapperClassName = `smartbanner smartbanner-${this.state.deviceType}`;
     const iconStyle = {
-      backgroundImage: `url(${icon})`
+      backgroundImage: `url(${icon})`,
     };
 
     return (
@@ -198,7 +198,7 @@ SmartBanner.propTypes = {
   price: customPropTypes.storeText,
   force: PropTypes.string,
   title: PropTypes.string,
-  author: PropTypes.string
+  author: PropTypes.string,
 };
 
 SmartBanner.defaultProps = {
@@ -210,17 +210,17 @@ SmartBanner.defaultProps = {
     ios: 'On the App Store',
     android: 'In Google Play',
     windows: 'In Windows Store',
-    kindle: 'In the Amazon Appstore'
+    kindle: 'In the Amazon Appstore',
   },
   price: {
     ios: 'Free',
     android: 'Free',
     windows: 'Free',
-    kindle: 'Free'
+    kindle: 'Free',
   },
   force: '',
   title: '',
-  author: ''
+  author: '',
 };
 
 export default SmartBanner;

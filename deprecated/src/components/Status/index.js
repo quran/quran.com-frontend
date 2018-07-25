@@ -4,7 +4,7 @@ import { Route } from 'react-router';
 
 const propTypes = {
   code: PropTypes.number.isRequired,
-  children: PropTypes.node.isRequired
+  children: PropTypes.node.isRequired,
 };
 
 const Status = ({ code, children }) => (

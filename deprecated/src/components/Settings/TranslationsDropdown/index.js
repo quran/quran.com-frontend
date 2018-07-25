@@ -46,7 +46,7 @@ class TranslationsDropdown extends Component {
     const { onOptionChange, translations } = this.props;
     if (translations.find(option => option === id)) {
       onOptionChange({
-        translations: translations.filter(option => option !== id)
+        translations: translations.filter(option => option !== id),
       });
     } else {
       onOptionChange({ translations: [...translations, id] });
@@ -56,7 +56,7 @@ class TranslationsDropdown extends Component {
   renderItems(items, render) {
     const { translations } = this.props;
 
-    return items.map((translation) => {
+    return items.map(translation => {
       const checked = translations.find(option => option === translation.id);
 
       return (
@@ -151,14 +151,14 @@ TranslationsDropdown.propTypes = {
   translations: PropTypes.arrayOf(PropTypes.number).isRequired,
   translationOptions: customPropTypes.translationOptions,
   loadTranslations: PropTypes.func.isRequired,
-  loadingTranslations: PropTypes.bool.isRequired
+  loadingTranslations: PropTypes.bool.isRequired,
 };
 
 export default connect(
   state => ({
     translationOptions: state.options.options.translations,
     loadingTranslations: state.options.loadingTranslations,
-    translations: state.options.translations
+    translations: state.options.translations,
   }),
   { loadTranslations }
 )(TranslationsDropdown);

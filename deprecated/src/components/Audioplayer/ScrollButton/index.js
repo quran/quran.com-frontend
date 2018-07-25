@@ -47,7 +47,7 @@ const ScrollButton = ({ shouldScroll, onScrollToggle }) => {
 
 ScrollButton.propTypes = {
   shouldScroll: PropTypes.bool.isRequired,
-  onScrollToggle: PropTypes.func.isRequired
+  onScrollToggle: PropTypes.func.isRequired,
 };
 
 export default ScrollButton;

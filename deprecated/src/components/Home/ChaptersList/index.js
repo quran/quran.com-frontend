@@ -14,7 +14,7 @@ const ChaptersList = ({ chapters }) => (
 );
 
 ChaptersList.propTypes = {
-  chapters: PropTypes.arrayOf(chapterType).isRequired
+  chapters: PropTypes.arrayOf(chapterType).isRequired,
 };
 
 export default ChaptersList;

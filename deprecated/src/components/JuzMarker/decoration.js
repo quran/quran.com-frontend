@@ -47,7 +47,7 @@ const Decoration = ({ juzNumber }) => (
 );
 
 Decoration.propTypes = {
-  juzNumber: PropTypes.number.isRequired
+  juzNumber: PropTypes.number.isRequired,
 };
 
 export default Decoration;

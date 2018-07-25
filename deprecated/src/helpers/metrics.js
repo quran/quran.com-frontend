@@ -3,7 +3,7 @@ import debug from '../helpers/debug';
 
 const DEFAULT_PARAMS = {
   action: 'Click',
-  label: 'Interactions'
+  label: 'Interactions',
 };
 
 export default {
@@ -30,17 +30,17 @@ export default {
             hitType: 'event',
             eventCategory,
             eventAction,
-            eventLabel
+            eventLabel,
           });
         },
         user(user) {
-          return new Promise((resolve) => {
+          return new Promise(resolve => {
             resolve({
-              user
+              user,
             });
           });
-        }
-      }
-    }
-  ]
+        },
+      },
+    },
+  ],
 };
