@@ -41,7 +41,7 @@ export default function reducer(state = initialState, action = {}) {
         ...state,
         show: true,
         loading: true,
-        size: 'small',
+        size: 'medium',
         wrapperClass: '',
         content: {
           title: action.title

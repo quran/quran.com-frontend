@@ -14,21 +14,23 @@ const Tafsir = asyncComponent({
   LoadingComponent: ComponentLoader,
 });
 
-const VerseTafsir = ({ verse, tafsir }) => (
-  <div className="row" style={{ marginTop: 20 }}>
-    <Helmet
-      {...makeHeadTags({
-        title: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${
-          verse.verseKey
-        }`,
-        description: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${
-          verse.verseKey
-        } - ${verse.textMadani}`, // eslint-disable-line max-len
-      })}
-      script={[
-        {
-          type: 'application/ld+json',
-          innerHTML: `{
+const VerseTafsir = ({ verse, tafsir }) => {
+  if(verse) {
+    return (
+      <div className="row" style={{ marginTop: 20 }}>
+        <Helmet
+          {...makeHeadTags({
+            title: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${
+              verse.verseKey
+              }`,
+            description: `${tafsir ? tafsir.resourceName : 'Tafsir'} of ${
+              verse.verseKey
+              } - ${verse.textMadani}`, // eslint-disable-line max-len
+          })}
+          script={[
+            {
+              type: 'application/ld+json',
+              innerHTML: `{
           "@context": "http://schema.org",
           "@type": "BreadcrumbList",
           "itemListElement": [{
@@ -47,28 +49,32 @@ const VerseTafsir = ({ verse, tafsir }) => (
             }
           }]
         }`,
-        },
-      ]}
-    />
+            },
+          ]}
+        />
 
-    <div className={'container-fluid'}>
-      <div className="row">
-        <Tafsir tafsir={tafsir} verse={verse} />
+        <div className={'container-fluid'}>
+          <div className="row">
+            <Tafsir tafsir={tafsir} verse={verse} />
 
-        <div className="col-md-12">
-          <div className="text-center">
-            <Button href={`/${verse.chapterId}/${verse.verseNumber}`}>
-              <LocaleFormattedMessage
-                id="verse.backToAyah"
-                defaultMessage="Back to Ayah"
-              />
-            </Button>
+            <div className="col-md-12">
+              <div className="text-center">
+                <Button href={`/${verse.chapterId}/${verse.verseNumber}`}>
+                  <LocaleFormattedMessage
+                    id="verse.backToAyah"
+                    defaultMessage="Back to Ayah"
+                  />
+                </Button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-);
+    )
+  } else {
+    return <ComponentLoader/>
+  }
+};
 
 VerseTafsir.propTypes = {
   verse: customPropTypes.verseType,

@@ -48,6 +48,21 @@ const NoScriptWarning = styled.div`
   padding: 5px 0 5px 0;
 `;
 
+const LoaderWrapper = styled.div`
+  position:absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  &>div {
+    width: 100%;
+    height: 100%; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
 class App extends Component {
   static contextTypes = {
     store: PropTypes.object.isRequired,
@@ -62,9 +77,9 @@ class App extends Component {
 
     if (media.loading) {
       return (
-        <div className="embed-responsive embed-responsive-16by9">
+        <LoaderWrapper className="embed-responsive embed-responsive-16by9">
           <Loader isActive relative />
-        </div>
+        </LoaderWrapper>
       );
     }
 
