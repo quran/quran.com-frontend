@@ -11,11 +11,11 @@ const Container = styled.footer`
   font-size: 14px;
   margin-top: 50px;
 
-  @media (max-width: ${props => props.theme.screen.lg}) {
+  @media (max-width: ${props => props.theme.screen.lg}px) {
     padding-bottom: 7%;
   }
 
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     padding-bottom: 9%;
   }
 `;

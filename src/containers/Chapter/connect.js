@@ -60,7 +60,9 @@ export const chaptersConnect = ({ store: { getState, dispatch } }) => {
     return true;
   }
 
-  return dispatch(loadAll());
+  return dispatch(loadAll()).then(() => {
+    return true;
+  });
 };
 
 export const juzsConnect = ({ store: { getState, dispatch } }) => {
@@ -87,7 +89,9 @@ export const chapterInfoConnect = ({
     return true;
   }
 
-  return dispatch(loadChapterInfo(params));
+  return dispatch(loadChapterInfo(params)).then(() => {
+    return true;
+  });
 };
 
 export const versesConnect = ({
@@ -120,7 +124,9 @@ export const versesConnect = ({
 
     return dispatch(
       loadVerses(chapterId, paging, { translations }, getState().options)
-    );
+    ).then(() => {
+      return true;
+    });
   }
 
   return true;
@@ -138,5 +144,7 @@ export const tafsirConnect = ({ store: { dispatch, getState }, params }) => {
     return true;
   }
 
-  return dispatch(loadTafsir(params.chapterId, params.range, params.tafsirId));
+  return dispatch(loadTafsir(params.chapterId, params.range, params.tafsirId)).then(() => {
+    return true;
+  });
 };

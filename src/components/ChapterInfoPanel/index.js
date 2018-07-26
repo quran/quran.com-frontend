@@ -28,14 +28,14 @@ const List = styled.dl`
   }
 
   dd {
-    color: $brand-primary;
+    color: ${props => props.theme.brandPrimary};
     font-weight: 300;
   }
 `;
 
 const Close = styled.button`
   position: absolute;
-  right: 15px;
+  right: 25px;
   top: 15px;
   background: ${props => lighten(0.1, props.theme.textMuted)};
   height: 26px;
@@ -86,9 +86,10 @@ const Container = styled.div`
   max-height: 70vh;
   height: 1000px;
   padding: 0;
-
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     margin-bottom: 0;
+    z-index: 15;
   }
 `;
 
@@ -99,7 +100,7 @@ const Image = styled.div`
   background-repeat: no-repeat;
 
   background: url(${props => images[props.background]});
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     height: 30%;
   }
 `;
@@ -108,7 +109,7 @@ const ListContainer = styled.div`
   background: ${props => props.theme.textMuted};
   height: 100%;
 
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     height: 30%;
   }
 `;

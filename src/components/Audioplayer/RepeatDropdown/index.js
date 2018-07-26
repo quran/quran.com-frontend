@@ -78,15 +78,7 @@ class RepeatButton extends Component {
             <FormControl
               componentClass="select"
               value={repeat.from}
-              onChange={(event) => {
-                let to = parseInt(event.target.value, 10) + 3;
-                to = to < chapter.versesCount ? to : chapter.versesCount;
-                setRepeat({
-                  ...repeat,
-                  from: parseInt(event.target.value, 10),
-                  to
-                });
-              }}
+              onChange={this.handleRangeAyahChange}
             >
               {array.reduce((options, ayah, index) => {
                 if (index + 1 < chapter.versesCount) {
@@ -136,9 +128,56 @@ class RepeatButton extends Component {
       </div>
     );
   }
+  handleSingleAyahChange = (event) => {
+    const { setRepeat, repeat, chapter, setAyah, files, load, audio, isPlaying, verses } = this.props
+    const from = event.target.value
+    setRepeat({
+      ...repeat,
+      from: parseInt(from, 10),
+      to: parseInt(from, 10)
+    });
 
+    if(!isPlaying) {
+      const currentVerseKey = `${ chapter.id }:${ from }`
+      setAyah(currentVerseKey);
+      if(!files[currentVerseKey]) {
+        load({
+          chapterId: chapter.id,
+          verseId: verses[currentVerseKey].id,
+          verseKey: currentVerseKey,
+          audio,
+        });
+      }
+    }
+
+  }
+  handleRangeAyahChange= (event) => {
+    const { setRepeat, repeat, chapter, setAyah, files, load, audio, isPlaying, verses } = this.props
+
+    let to = parseInt(event.target.value, 10) + 3
+      ,from = parseInt(event.target.value, 10);
+
+    to = to < chapter.versesCount ? to : chapter.versesCount;
+    setRepeat({
+      ...repeat,
+      from,
+      to
+    });
+    if(!isPlaying) {
+      const currentVerseKey = `${ chapter.id }:${ from }`
+      setAyah(currentVerseKey);
+      if(!files[currentVerseKey]) {
+        load({
+          chapterId: chapter.id,
+          verseId: verses[currentVerseKey].id,
+          verseKey: currentVerseKey,
+          audio,
+        });
+      }
+    }
+  }
   renderSingleAyah() {
-    const { repeat, setRepeat, chapter } = this.props;
+    const { repeat, chapter } = this.props;
     const array = Array(chapter.versesCount)
       .join()
       .split(',');
@@ -153,13 +192,7 @@ class RepeatButton extends Component {
         <FormControl
           componentClass="select"
           value={repeat.from}
-          onChange={event =>
-            setRepeat({
-              ...repeat,
-              from: parseInt(event.target.value, 10),
-              to: parseInt(event.target.value, 10)
-            })
-          }
+          onChange={this.handleSingleAyahChange}
         >
           {array.map((ayah, index) => (
             <option key={index} value={index + 1}>
@@ -300,6 +333,8 @@ class RepeatButton extends Component {
     );
   }
 }
+
+
 
 RepeatButton.propTypes = {
   chapter: customPropTypes.chapterType,

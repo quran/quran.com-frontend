@@ -17,7 +17,12 @@ const Container = styled.div`
   position: relative;
   top: 7px;
   display: inline-block;
-
+  div[role='button'] {
+    display: inline-block;  
+    &:last-child {
+      padding-left: 5px;
+    }
+  }
   ${prop => prop.inline && inlineStyle} .social-icon {
     &:hover {
       cursor: pointer;

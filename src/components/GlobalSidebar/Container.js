@@ -25,7 +25,7 @@ export default styled.div`
     }
   }
 
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     width: ${CONTAINER_WIDTH}px;
     left: ${CONTAINER_WIDTH * -1}px;
 

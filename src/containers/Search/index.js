@@ -35,7 +35,7 @@ const Header = styled.div`
     & > li {
       &.active {
         a {
-          color: $brand-primary;
+          color: ${props => props.theme.brandPrimary};
         }
       }
 
@@ -67,7 +67,7 @@ const Header = styled.div`
       color: ${props => props.theme.brandPrimary};
     }
 
-    @media (max-width: ${props => props.theme.screen.sm}) {
+    @media (max-width: ${props => props.theme.screen.sm}px) {
       padding-top: 5px;
     }
   }

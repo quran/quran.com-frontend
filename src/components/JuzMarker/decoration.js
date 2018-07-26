@@ -13,7 +13,6 @@ const StyledContainer = styled.div`
   margin-left: calc((100% - 31px) / 2);
   margin-top: 0.6px;
   margin-bottom: 1.4px;
-}
 `;
 
 const StyledJuzArt = styled.img`
@@ -28,6 +27,9 @@ const StyledJuzNumber = styled.div`
   width: 100%;
   text-align: center;
   display: block;
+  @media (max-width: ${props => props.theme.screen.sm}px) {
+    line-height: 2 ;
+  }
 `;
 
 const Decoration = ({ juzNumber }) => (

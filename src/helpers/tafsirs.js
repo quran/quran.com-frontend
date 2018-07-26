@@ -4,7 +4,7 @@ export const buildTafsirList = (tafsirs, verse) => {
   const list = tafsirs
     .map((tafsir) => {
       const url = `${verseLink}/tafsirs/${tafsir.slug || tafsir.id}`;
-      const link = `<a href=${url}>${tafsir.name}</a>`;
+      const link = `<h5><a href=${url} >${tafsir.name}</a></h5>`;
       return `<li>${link}</li>`;
     })
     .join('');

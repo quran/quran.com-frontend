@@ -31,7 +31,7 @@ const Container = styled(Element)`
   padding: 2.5% 0;
   border-bottom: 1px solid rgba(${props => props.textMuted}, 0.5);
 
-  ${props => (props.highlight ? 'background-color: #F5FBF7;' : '')} .text-info {
+  ${props => (props["data-highlight"] ? 'background-color: #F5FBF7;' : '')} .text-info {
     color: ${props => props.theme.brandInfo};
     &:hover {
       color: ${props => props.theme.brandPrimary};
@@ -89,11 +89,11 @@ const Controls = styled.div`
     }
   }
 
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     h4,
     a {
       display: inline-block;
-      margin: 0 10;
+      margin: 0 10px;
     }
 
     h4 {
@@ -120,9 +120,9 @@ class Verse extends Component {
     return conditions.some(condition => condition);
   }
 
-  handlePlay(verse) {
-    const { isPlaying, audioActions, iscurrentVerse } = this.props;
-    const { pause, setAyah, play } = audioActions;
+  async handlePlay(verse) {
+    const { isPlaying, audioActions, iscurrentVerse, files, currentVerse, audio } = this.props;
+    const { pause, setAyah, play, load } = audioActions;
 
     if (isPlaying) {
       pause();
@@ -132,13 +132,27 @@ class Verse extends Component {
       return;
     }
 
-    setAyah(verse.verseKey);
+    await setAyah(verse.verseKey);
+
+    if(!files[verse.verseKey]) {
+      load({
+        chapterId: verse.chapterId,
+        verseId: verse.id,
+        verseKey: verse.verseKey,
+        audio,
+      });
+    }
+
     play();
   }
 
   renderTranslations() {
-    const { verse, match } = this.props;
-    const array = match || verse.translations || [];
+    const { verse, match, translations } = this.props;
+    let array = match || verse.translations || [];
+
+    if (translations.length === 0) {
+      array = []
+    }
 
     return array.map(translation => (
       <Translation
@@ -353,7 +367,7 @@ class Verse extends Component {
       <Container
         name={`verse:${verse.verseKey}`}
         className="row"
-        highlight={iscurrentVerse}
+        data-highlight={iscurrentVerse}
       >
         {this.renderControls()}
         <div className="col-md-11 col-sm-11">
@@ -365,6 +379,16 @@ class Verse extends Component {
     );
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  const files = state.audioplayer.files[ownProps.chapter.id];
+
+  return {
+    files,
+    audio: state.options.audio,
+    translations: state.options.translations,
+  };
+};
 
 Verse.propTypes = {
   isSearched: PropTypes.bool,
@@ -389,4 +413,4 @@ Verse.defaultProps = {
   isPdf: false,
 };
 
-export default connect(null, { loadTafsirs })(Verse);
+export default connect(mapStateToProps, { loadTafsirs })(Verse);

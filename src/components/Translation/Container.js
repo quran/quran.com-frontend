@@ -7,7 +7,7 @@ export default styled.div`
     text-transform: uppercase;
     font-size: 14px;
     font-weight: 400;
-    @media (max-width: ${props => props.theme.screenMd}) {
+    @media (max-width: ${props => props.theme.screen.md}px) {
       font-size: 12px;
     }
   }

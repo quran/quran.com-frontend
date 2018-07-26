@@ -7,6 +7,7 @@ import * as customPropTypes from 'customPropTypes';
 import { connect } from 'react-redux';
 import { camelize } from 'humps';
 import { asyncComponent } from 'react-async-component';
+import cookies from 'react-cookie';
 
 import Loader from 'quran-components/lib/Loader';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
@@ -24,6 +25,8 @@ import Popover from 'react-bootstrap/lib/Popover';
 import Track from './Track';
 import Segments from './Segments';
 import ScrollButton from './ScrollButton';
+import SpeedButton from './SpeedButton';
+import VolumeButton from './VolumeButton';
 
 const RepeatDropdown = asyncComponent({
   resolve: () =>
@@ -73,7 +76,7 @@ const Container = styled.div`
     margin: 5px;
   }
 
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${props => props.theme.screen.sm}px) {
     bottom: 0;
     width: 100%;
   }
@@ -131,6 +134,7 @@ export const StyledPopover = styled(Popover)`
     padding-top: 15px;
     padding-bottom: 15px;
     font-size: 0.75em;
+    text-align: center;
   }
   .popover-content {
     text-align: center;
@@ -143,6 +147,8 @@ export const StyledPopover = styled(Popover)`
 export class Audioplayer extends Component {
   state = {
     loadingFile: false,
+    currentSpeed: cookies.load("speed") || "1.",
+    currentVolume: cookies.load("volume") || "0.75",
   };
 
   componentDidMount() {
@@ -372,7 +378,6 @@ export class Audioplayer extends Component {
     this.handleScrollTo();
 
     this.props.play();
-    this.preloadNext();
   };
 
   preloadNext() {
@@ -484,11 +489,15 @@ export class Audioplayer extends Component {
       });
     };
 
-    const onTimeupdate = () =>
+    const onTimeupdate = () =>{
       update({
         currentTime: file.currentTime,
         duration: file.duration,
       });
+      file.playbackRate = parseFloat(this.state.currentSpeed)
+      file.volume = parseFloat(this.state.currentVolume)
+    }
+
 
     const onEnded = () => {
       const { repeat } = this.props;
@@ -506,6 +515,11 @@ export class Audioplayer extends Component {
 
     const onPlay = () => {
       file.ontimeupdate = onTimeupdate; // eslint-disable-line no-param-reassign
+
+      file.playbackRate = parseFloat(this.state.currentSpeed)
+      file.volume = parseFloat(this.state.currentVolume)
+
+      this.preloadNext()
     };
 
     const onPause = () => {
@@ -540,7 +554,20 @@ export class Audioplayer extends Component {
 
     currentFile.currentTime = fraction * currentFile.duration;
   };
-
+  handleSpeedChange = (speed) => {
+    this.setState({
+      currentSpeed: speed
+    }, () => {
+      cookies.save("speed", speed)
+    })
+  }
+  handleVolumeChange = (volume) => {
+    this.setState({
+      currentVolume: volume
+    }, () => {
+      cookies.save("volume", volume)
+    })
+  }
   renderPlayStopButtons() {
     const { isPlaying, pause, currentVerse } = this.props; // eslint-disable-line no-shadow
     const playPauseBtn = (
@@ -613,7 +640,15 @@ export class Audioplayer extends Component {
       repeat, // eslint-disable-line no-shadow
       shouldScroll, // eslint-disable-line no-shadow
       setRepeat, // eslint-disable-line no-shadow
+      setAyah,
+      load,
+      audio,
+      files,
+      isPlaying,
+      verses
     } = this.props;
+
+    const { currentSpeed, currentVolume } = this.state
 
     if (isLoading || !currentFile) {
       return (
@@ -663,6 +698,12 @@ export class Audioplayer extends Component {
               setRepeat={setRepeat}
               current={parseInt(currentVerse.verseKey.split(':')[1], 10)}
               chapter={chapter}
+              setAyah={setAyah}
+              load={load}
+              audio={audio}
+              files={files}
+              isPlaying={isPlaying}
+              verses={verses}
             />
           </ControlItem>
           <ControlItem>
@@ -670,6 +711,12 @@ export class Audioplayer extends Component {
               shouldScroll={shouldScroll}
               onScrollToggle={this.handleScrollToggle}
             />
+          </ControlItem>
+          <ControlItem>
+            <SpeedButton onChange={this.handleSpeedChange} currentSpeed={currentSpeed} />
+          </ControlItem>
+          <ControlItem>
+            <VolumeButton onChange={this.handleVolumeChange} currentVolume={currentVolume} />
           </ControlItem>
         </ul>
       </Container>
