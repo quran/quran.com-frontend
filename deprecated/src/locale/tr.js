@@ -56,7 +56,8 @@ export default {
     [KEYS.AUDIOPLAYER_REPEAT_RANGEEND]: 'E',
     [KEYS.AUDIOPLAYER_REPEAT_TIMES]: 'Kez',
     [KEYS.AUDIOPLAYER_REPEAT_LOOP]: 'döngü',
-    [KEYS.AUDIOPLAYER_SCROLLBUTTONTIP]: 'Otomatik olarak çalmakta olan ayete git', // eslint-disable-line max-len
+    [KEYS.AUDIOPLAYER_SCROLLBUTTONTIP]:
+      'Otomatik olarak çalmakta olan ayete git', // eslint-disable-line max-len
 
     [KEYS.APP_LOADING]: 'Yükleniyor...',
     [KEYS.ACTIONS_COPY]: 'Kopyala',

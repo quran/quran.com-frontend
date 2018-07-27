@@ -3,7 +3,8 @@ export default {
   messages: {
     local: 'indonesian',
     [KEYS.LOCAL_SITELOCALE]: 'Bahasa Situs',
-    [KEYS.LOCAL_CHANGELOCALE]: 'Pilih bahasa yang diinginkan untuk tampilan situs',
+    [KEYS.LOCAL_CHANGELOCALE]:
+      'Pilih bahasa yang diinginkan untuk tampilan situs',
     [KEYS.LOCAL_NATIVENAME]: 'Indonesia',
     [KEYS.LOCAL_SELECTLABEL]: 'Bahasa',
     [KEYS.SETTING_TITLE]: 'Pengaturan',

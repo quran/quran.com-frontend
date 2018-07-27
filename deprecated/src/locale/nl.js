@@ -33,7 +33,8 @@ export default {
     [KEYS.SEARCH_PLACEHOLDER]: 'Zoek "Noah"',
     [KEYS.SEARCH_RESULTHEADING]:
       '{from}-{to} VAN <span> {total} </span> ZOEKRESULTATEN VOOR: <span>{query}</span>', // eslint-disable-line max-len
-    [KEYS.SEARCH_ERROR]: 'Sorry, er is een fout opgetreden bij uw zoekopdracht.',
+    [KEYS.SEARCH_ERROR]:
+      'Sorry, er is een fout opgetreden bij uw zoekopdracht.',
     [KEYS.SEARCH_NOTHING]: 'Geen zoekopdracht.',
     [KEYS.SEARCH_NO_RESULT]: 'Geen resultaten gevonden.',
 
@@ -56,7 +57,8 @@ export default {
     [KEYS.AUDIOPLAYER_REPEAT_RANGEEND]: 'Naar',
     [KEYS.AUDIOPLAYER_REPEAT_TIMES]: 'Keer',
     [KEYS.AUDIOPLAYER_REPEAT_LOOP]: 'lus',
-    [KEYS.AUDIOPLAYER_SCROLLBUTTONTIP]: 'Scroll automatisch naar de huidige ayah', // eslint-disable-line max-len
+    [KEYS.AUDIOPLAYER_SCROLLBUTTONTIP]:
+      'Scroll automatisch naar de huidige ayah', // eslint-disable-line max-len
 
     [KEYS.APP_LOADING]: 'Laden...',
     [KEYS.ACTIONS_COPY]: 'Kopiëren',

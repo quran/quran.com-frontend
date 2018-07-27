@@ -3,7 +3,8 @@ export default {
   messages: {
     local: 'shqip',
     [KEYS.LOCAL_SITELOCALE]: 'Gjuha e Faqes',
-    [KEYS.LOCAL_CHANGELOCALE]: 'Zgjidhni gjuhën në të cilën doni ta shihni këtë faqe',
+    [KEYS.LOCAL_CHANGELOCALE]:
+      'Zgjidhni gjuhën në të cilën doni ta shihni këtë faqe',
     [KEYS.LOCAL_NATIVENAME]: 'Shqip',
     [KEYS.LOCAL_SELECTLABEL]: 'Gjuha',
     [KEYS.SETTING_TITLE]: 'Opsionet',
@@ -34,7 +35,8 @@ export default {
     [KEYS.SEARCH_RESULTHEADING]:
       '{from}-{to} OF <span> {total} </span> REZULTATET E KËRKIMIT PËR <span>{query}</span>', // eslint-disable-line max-len
     [KEYS.SEARCH_ERROR]: 'Na vjen keq, ndodhi një problem me kërkimin tuaj.',
-    [KEYS.SEARCH_NOTHING]: 'Nuk keni shkruar ndonjë gjë për të filluar kërkimin.',
+    [KEYS.SEARCH_NOTHING]:
+      'Nuk keni shkruar ndonjë gjë për të filluar kërkimin.',
     [KEYS.SEARCH_NO_RESULT]: 'Nuk u gjet ndonjë rezultat.',
 
     [KEYS.CHAPTER_NEXT]: 'VAZHDONI',

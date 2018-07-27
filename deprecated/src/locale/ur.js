@@ -57,7 +57,8 @@ export default {
     [KEYS.AUDIOPLAYER_REPEAT_RANGEEND]: 'تک',
     [KEYS.AUDIOPLAYER_REPEAT_TIMES]: 'کتنی بار',
     [KEYS.AUDIOPLAYER_REPEAT_LOOP]: 'چلاتے رہو',
-    [KEYS.AUDIOPLAYER_SCROLLBUTTONTIP]: 'جو آیت چل رہی ہو اس کو  صفہ پر سامنے رکھو',
+    [KEYS.AUDIOPLAYER_SCROLLBUTTONTIP]:
+      'جو آیت چل رہی ہو اس کو  صفہ پر سامنے رکھو',
 
     [KEYS.APP_LOADING]: 'لوڈ ہو رہا ہے',
     [KEYS.ACTIONS_COPY]: 'کاپی',
