@@ -3,7 +3,8 @@ import config from '../../config';
 
 export default (req?: $TsFixMe) => {
   let currentLocal;
-  const availableLocals = Object.keys(config('locales'));
+  const locales = config('locales');
+  const availableLocals = Object.keys(locales);
   const expireDate = new Date();
   expireDate.setFullYear(expireDate.getFullYear() + 1);
 
@@ -21,8 +22,9 @@ export default (req?: $TsFixMe) => {
     path: '/',
     expires: new Date(expireDate),
   });
-
-  const localeData = require('../locale/' + currentLocal + '.js'); // eslint-disable-line
+  // TODO: ideally, the server sends the locales via ClientConfig component
+  // and the client picks up the configs and uses them accordingly
+  const localeData = require('../locale/' + currentLocal + '.ts'); // eslint-disable-line
 
   return localeData.default.messages;
 };

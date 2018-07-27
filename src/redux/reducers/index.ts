@@ -11,6 +11,7 @@ import suggest from './suggest';
 import fontFaces from './fontFaces';
 import media from './media';
 import juzs from './juzs';
+import settings from './settings';
 
 export default combineReducers({
   audioplayer,
@@ -24,4 +25,5 @@ export default combineReducers({
   search,
   suggest,
   verses,
+  settings,
 });

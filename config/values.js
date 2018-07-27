@@ -20,15 +20,6 @@ const locales = {
 };
 
 const values = {
-  api: EnvVars.string('API_URL'),
-  oneQuran: EnvVars.string('ONE_QURAN_URL'),
-  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT'),
-  sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
-  facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
-  fontsURL: EnvVars.string('FONTS_URL'),
-  locales,
-  defaultLocale: 'en',
-
   // The configuration values that should be exposed to our client bundle.
   // This value gets passed through the /utils/objects/filterWithRules
   // util to create a filter object that can be serialised and included
@@ -47,7 +38,20 @@ const values = {
     polyfillIO: true,
     // We need to expose all the htmlPage settings.
     htmlPage: true,
+
+    fontsURL: true,
+    locales: true,
+    defaultLocale: true,
   },
+
+  api: EnvVars.string('API_URL'),
+  oneQuran: EnvVars.string('ONE_QURAN_URL'),
+  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT'),
+  sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
+  facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
+  fontsURL: EnvVars.string('FONTS_URL'),
+  locales,
+  defaultLocale: 'en',
 
   // The host on which the server should run.
   host: EnvVars.string('HOST', 'localhost'),
@@ -247,6 +251,9 @@ const values = {
           'react-router-dom',
           'styled-components',
           'react-bootstrap',
+          'react-intl',
+          'react-metrics',
+          'prop-types',
         ],
 
         // The name of the vendor DLL.

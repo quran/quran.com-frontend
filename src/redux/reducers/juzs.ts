@@ -1,34 +1,39 @@
-import { handleActions } from 'redux-actions';
+import { handle } from 'redux-pack';
+import keyBy from 'lodash/keyBy';
+import { camelizeKeys } from 'humps';
 
 import { FETCH_JUZS } from '../constants/juzs';
 
 export const INITIAL_STATE = {
   errored: false,
   loaded: false,
-  entities: {}
+  entities: {},
 };
 
-export default handleActions(
-  {
-    [FETCH_JUZS.SUCCESS]: (state, { result }) => {
-      const { juzs } = result.entities;
+export default (state = INITIAL_STATE, action: $TsFixMe) => {
+  switch (action.type) {
+    case FETCH_JUZS: {
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isLoading: true,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoading: false,
+        }),
+        success: prevState => ({
+          ...prevState,
+          loaded: true,
+          entities: {
+            ...state.entities,
+            ...camelizeKeys(keyBy(action.payload.juzs, 'id')),
+          },
+        }),
+      });
+    }
 
-      return {
-        ...state,
-        loaded: true,
-        entities: {
-          ...state.entities,
-          ...juzs
-        }
-      };
-    },
-    [FETCH_JUZS.FAILURE]: state => ({
-      ...state,
-      errored: true
-    }),
-    [FETCH_JUZS.ACTION]: state => ({
-      ...state
-    })
-  },
-  INITIAL_STATE
-);
+    default:
+      return state;
+  }
+};

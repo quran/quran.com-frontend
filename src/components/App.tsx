@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import Navbars from './Navbars';
 import Routes from './Routes';
+import Footer from './Footer';
 
-const App = () => {
-  return <Routes />;
-};
+const App = () => (
+  <Fragment>
+    <Navbars />
+    <Routes />
+    <Footer />
+  </Fragment>
+);
 
 export default App;

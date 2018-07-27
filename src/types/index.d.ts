@@ -8,4 +8,6 @@ export interface ReduxState {
   lines: $TsFixMe;
   options: $TsFixMe;
   juzs: $TsFixMe;
+  settings: $TsFixMe;
+  chapterInfos: $TsFixMe;
 }

@@ -1,4 +1,5 @@
-import { handleActions } from 'redux-actions';
+import keyBy from 'lodash/keyBy';
+import { camelizeKeys } from 'humps';
 import { handle } from 'redux-pack';
 
 import {
@@ -9,41 +10,61 @@ import {
   CLEAR_CURRENT_WORD,
 } from '../constants/verses';
 
-export const INITIAL_STATE: $TsFixMe = {
+type State = {
+  current?: string;
+  currentWord?: $TsFixMe;
+  error: $TsFixMe;
+  isLoading: boolean;
+  entities: $TsFixMe;
+  result: $TsFixMe;
+};
+
+export const INITIAL_STATE: State = {
   current: null,
   currentWord: null,
   error: null,
-  loading: false,
+  isLoading: false,
   entities: {},
   result: [],
 };
 
-export default handleActions(
-  {
-    [SET_CURRENT_VERSE]: (state, action) => ({
-      ...state,
-      current: action.id,
-      currentWord: state.current === action.id ? state.currentWord : null,
-    }),
-    [SET_CURRENT_WORD]: (state, action) => {
+export default (state = INITIAL_STATE, action: $TsFixMe) => {
+  switch (action.type) {
+    case SET_CURRENT_VERSE: {
+      return {
+        ...state,
+        current: action.id,
+        currentWord: state.current === action.id ? state.currentWord : null,
+      };
+    }
+
+    case SET_CURRENT_WORD: {
       let currentVerse = state.current;
+
       if (action.id && currentVerse) {
         if (!new RegExp(`^${currentVerse}:`).test(action.id)) {
+          // eslint-disable-next-line
           currentVerse = action.id.match(/^\d+:\d+/g)[0];
         }
       }
+
       return {
         ...state,
         current: currentVerse,
         currentWord: action.id,
       };
-    },
-    [CLEAR_CURRENT_WORD]: state => ({
-      ...state,
-      currentWord: null,
-    }),
-    [CLEAR_CURRENT]: (state, action) => {
-      const entities = state.entities;
+    }
+
+    case CLEAR_CURRENT_WORD: {
+      return {
+        ...state,
+        currentWord: null,
+      };
+    }
+
+    case CLEAR_CURRENT: {
+      const { entities } = state;
+
       return {
         ...state,
         current: null,
@@ -53,30 +74,36 @@ export default handleActions(
           [action.id]: {},
         },
       };
-    },
-    [FETCH_VERSES]: (state, action) =>
-      handle(state, action, {
+    }
+
+    case FETCH_VERSES: {
+      return handle(state, action, {
         start: prevState => ({
           ...prevState,
           isLoading: true,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoading: false,
         }),
         success: prevState => ({
           ...prevState,
           entities: {
             ...state.entities,
-            [action.chapterId]: Object.assign(
-              {},
-              state.entities[action.chapterId],
-              action.result.entities.verses
-            ),
+            [action.meta.chapterId]: {
+              ...state.entities[action.chapterId],
+              ...camelizeKeys(keyBy(action.payload.verses, 'verse_key')),
+            },
           },
-          result: Object.assign({}, state.result, action.result.result),
         }),
         failure: prevState => ({
           ...prevState,
           error: action.payload,
         }),
-      }),
-  },
-  INITIAL_STATE
-);
+      });
+    }
+
+    default:
+      return state;
+  }
+};

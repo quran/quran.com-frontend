@@ -28,7 +28,7 @@ export const ShowAyahAndJuzMark = ({
           <Tooltip
             arrow
             title={`${intl.formatMessage({
-              id: 'juz.index.heading',
+              id: [KEYS.JUZ_INDEX_HEADING],
               defaultMessage: 'juz',
             })} ${juzNumber}`}
           >

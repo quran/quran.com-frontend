@@ -22,14 +22,14 @@ import fontsStyle from '../../../helpers/fontsStyle';
 
 // PRIVATES
 
-function KeyedComponent({ children }) {
+function KeyedComponent({ children }: $TsFixMe) {
   return Children.only(children);
 }
 
 // Resolve the assets (js/css) for the client bundle's entry chunk.
 const clientEntryAssets = getClientBundleEntryAssets();
 
-function stylesheetTag(stylesheetFilePath) {
+function stylesheetTag(stylesheetFilePath: $TsFixMe) {
   return (
     <link
       href={stylesheetFilePath}
@@ -40,17 +40,15 @@ function stylesheetTag(stylesheetFilePath) {
   );
 }
 
-function scriptTag(jsFilePath) {
+function scriptTag(jsFilePath: string) {
   return <script type="text/javascript" src={jsFilePath} />;
 }
 
-function inlineStyle(body) {
+function inlineStyle(body: $TsFixMe) {
   return <style dangerouslySetInnerHTML={{ __html: body }} />;
 }
 
-// COMPONENT
-
-function ServerHTML(props) {
+const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
   const {
     asyncComponentsState,
     helmet,
@@ -63,7 +61,7 @@ function ServerHTML(props) {
   const isProd = process.env.NODE_ENV === 'production';
 
   // Creates an inline script definition that is protected by the nonce.
-  const inlineScript = body => (
+  const inlineScript = (body: $TsFixMe) => (
     <script
       nonce={nonce}
       type="text/javascript"
@@ -123,7 +121,7 @@ function ServerHTML(props) {
     // Binds the client configuration object to the window object so
     // that we can safely expose some configuration values to the
     // client bundle that gets executed in the browser.
-    <ClientConfig nonce={nonce} />,
+    <ClientConfig key="nonce" nonce={nonce} />,
     // Bind our async components state so the client knows which ones
     // to initialise so that the checksum matches the server response.
     // @see https://github.com/ctrlplusb/react-async-component
@@ -184,17 +182,20 @@ function ServerHTML(props) {
       appBodyString={reactAppString}
     />
   );
-}
+};
 
 ServerHTML.propTypes = {
-  // eslint-disable-next-line react/forbid-prop-types
+  // eslint-disable-next-line
   asyncComponentsState: PropTypes.object,
-  // eslint-disable-next-line react/forbid-prop-types
+  // eslint-disable-next-line
   reduxData: PropTypes.object,
-  // eslint-disable-next-line react/forbid-prop-types
+  // eslint-disable-next-line
   helmet: PropTypes.object,
+  // eslint-disable-next-line
   nonce: PropTypes.string,
+  // eslint-disable-next-line
   reactAppString: PropTypes.string,
+  // eslint-disable-next-line
   styleTags: PropTypes.arrayOf(PropTypes.element),
 };
 

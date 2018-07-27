@@ -8,13 +8,13 @@ const propTypes = {
 };
 
 type Props = {
-  code: number,
-  children: ReactNode,
+  code: number;
+  children: ReactNode;
 };
 
 const Status: React.SFC<Props> = ({ code, children }: Props) => (
   <Route
-    render={({ staticContext }) => {
+    render={({ staticContext }: $TsFixMe) => {
       if (staticContext) {
         // eslint-disable-next-line
         staticContext.status = code;

@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
-import { loadFootNote } from '../redux/actions/media';
+import { fetchFootNote } from '../redux/actions/footNotes';
 import Translation from '../components/Translation';
 
 export default connect(
   null,
-  { loadFootNote }
+  { fetchFootNote }
 )(Translation);

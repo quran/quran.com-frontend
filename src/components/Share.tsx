@@ -7,13 +7,13 @@ import {
 } from 'react-share';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
-import { ChapterShape, VerseShape } from '../../shapes';
+import { ChapterShape, VerseShape } from '../shapes';
 
 const inlineStyle = css`
   display: inline-flex;
 `;
 
-const Container = styled.div<{inline?: boolean}>`
+const Container = styled.div<{ inline?: boolean }>`
   position: relative;
   top: 7px;
   display: inline-block;
@@ -41,7 +41,7 @@ type Props = {
   chapter: ChapterShape;
   verse?: VerseShape;
   inline?: boolean;
-}
+};
 
 const Share: React.SFC<Props> = ({ chapter, verse, inline }: Props) => {
   // Fallback to Surah Id
@@ -83,8 +83,12 @@ const Share: React.SFC<Props> = ({ chapter, verse, inline }: Props) => {
 
 Share.propTypes = {
   chapter: ChapterShape.isRequired,
-  verse: VerseShape,
+  verse: VerseShape.isRequired,
   inline: PropTypes.bool,
+};
+
+Share.defaultProps = {
+  inline: false,
 };
 
 export default Share;

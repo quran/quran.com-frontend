@@ -1,5 +1,6 @@
 import { ChapterShape } from '../shapes';
 
+// eslint-disable-next-line
 export const chapterLdJson = (chapter: ChapterShape) => [
   {
     type: 'application/ld+json',

@@ -7,66 +7,66 @@ const routes = [
     exact: true,
     component: HomeContainer,
   },
-  // {
-  //   path: '/donations',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Donations" */ './containers/Donations'),
-  //   }),
-  // },
-  // {
-  //   path: '/contributions',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Donations" */ './containers/Donations'),
-  //   }),
-  // },
-  // {
-  //   path: '/about',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "About" */ './containers/About'),
-  //   }),
-  // },
-  // {
-  //   path: '/contact',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Contact" */ './containers/Contact'),
-  //   }),
-  // },
-  // {
-  //   path: '/contactus',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Contact" */ './containers/Contact'),
-  //   }),
-  // },
-  // {
-  //   path: '/mobile',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Mobile" */ './containers/MobileLanding'),
-  //   }),
-  // },
-  // {
-  //   path: '/apps',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Mobile" */ './containers/MobileLanding'),
-  //   }),
-  // },
-  // {
-  //   path: '/error/:errorKey',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Error" */ './containers/Error'),
-  //   }),
-  //   setContext: context => ({
-  //     ...context,
-  //     status: 400,
-  //   }),
-  // },
+  {
+    path: '/donations',
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Donations" */ './components/Donations'),
+    }),
+  },
+  {
+    path: '/contributions',
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Donations" */ './components/Donations'),
+    }),
+  },
+  {
+    path: '/about',
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "About" */ './components/About'),
+    }),
+  },
+  {
+    path: '/contact',
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Contact" */ './components/Contact'),
+    }),
+  },
+  {
+    path: '/contactus',
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Contact" */ './components/Contact'),
+    }),
+  },
+  {
+    path: '/mobile',
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Mobile" */ './components/MobileLanding'),
+    }),
+  },
+  {
+    path: '/apps',
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Mobile" */ './components/MobileLanding'),
+    }),
+  },
+  {
+    path: '/error/:errorKey',
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Error" */ './components/Error'),
+    }),
+    setContext: (context: $TsFixMe) => ({
+      ...context,
+      status: 400,
+    }),
+  },
   // {
   //   path: '/search',
   //   component: asyncComponent({
@@ -149,18 +149,13 @@ const routes = [
   //   }),
 
   // },
-  // {
-  //   path: '/:chapterId(\\d+)(:|-)?:range?',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Chapter" */ './containers/Chapter'),
-  //   }),
-  //   navbar: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter'),
-  //   }),
-
-  // },
+  {
+    path: '/:chapterId(\\d+)(:|-)?:range?',
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Chapter" */ './containers/ChapterContainer'),
+    }),
+  },
 ];
 
 export default routes;

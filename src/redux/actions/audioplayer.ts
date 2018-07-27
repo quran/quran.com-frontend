@@ -1,3 +1,4 @@
+import { ChapterId, VerseId } from '../../types';
 import {
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
@@ -14,105 +15,88 @@ import {
   UPDATE,
 } from '../constants/audioplayer';
 import apiClient from '../../apiClient';
+import { VerseShape } from '../../shapes';
 
-export function setCurrentFile(file) {
-  return {
-    type: SET_CURRENT_FILE,
-    file,
-  };
-}
+export const setCurrentFile = (file: $TsFixMe) => ({
+  type: SET_CURRENT_FILE,
+  file,
+});
 
-export function setCurrentWord(word) {
-  return {
-    type: SET_CURRENT_WORD,
-    word,
-  };
-}
+export const setCurrentWord = (word: $TsFixMe) => ({
+  type: SET_CURRENT_WORD,
+  word,
+});
 
-export function playCurrentWord(payload) {
-  return {
-    type: PLAY_CURRENT_WORD,
-    payload,
-  };
-}
+export const playCurrentWord = (payload: $TsFixMe) => ({
+  type: PLAY_CURRENT_WORD,
+  payload,
+});
 
-export function play() {
-  return {
-    type: PLAY,
-  };
-}
+export const play = () => ({
+  type: PLAY,
+});
 
-export function pause() {
-  return {
-    type: PAUSE,
-  };
-}
+export const pause = () => ({
+  type: PAUSE,
+});
 
-export function next(currentVerse) {
-  return {
-    type: NEXT,
-    currentVerse,
-  };
-}
+export const next = (currentVerse: string) => ({
+  type: NEXT,
+  currentVerse,
+});
 
-export function setVerse(currentVerse) {
-  return {
-    type: SET_AYAH,
-    currentVerse,
-  };
-}
+export const setVerse = (currentVerse: string) => ({
+  type: SET_AYAH,
+  currentVerse,
+});
 
-export function previous(currentVerse) {
-  return {
-    type: PREVIOUS,
-    currentVerse,
-  };
-}
+export const previous = (currentVerse: string) => ({
+  type: PREVIOUS,
+  currentVerse,
+});
 
-export function setRepeat(repeat) {
-  return {
-    type: SET_REPEAT,
-    repeat,
-  };
-}
+export const setRepeat = (repeat: boolean) => ({
+  type: SET_REPEAT,
+  repeat,
+});
 
-export function toggleScroll() {
-  return {
-    type: TOGGLE_SCROLL,
-  };
-}
+export const toggleScroll = () => ({
+  type: TOGGLE_SCROLL,
+});
 
-export function buildOnClient(chapterId) {
-  return {
-    type: BUILD_ON_CLIENT,
-    chapterId,
-  };
-}
+export const buildOnClient = (chapterId: ChapterId) => ({
+  type: BUILD_ON_CLIENT,
+  chapterId,
+});
 
-export function update(payload) {
-  return {
-    type: UPDATE,
-    payload,
-  };
-}
+export const update = (payload: $TsFixMe) => ({
+  type: UPDATE,
+  payload,
+});
 
-export function load({ chapterId, verseId, verseKey, audio }) {
-  // eslint-disable-line
-  return {
-    type: FETCH_AUDIOPLAYER,
-    promise: apiClient.get(
-      `/api/v3/chapters/${chapterId}/verses/${verseId}/audio_files`,
-      {
-        params: {
-          recitation: audio || 7, // NOTE: default, but should never be used
-        },
-      }
-    ),
-    verseKey,
-    chapterId,
-  };
-}
+export const fetchAudio = ({
+  chapterId,
+  verseId,
+  verseKey,
+  audio,
+}: {
+  chapterId: ChapterId;
+  verseId: VerseId;
+  verseKey: string;
+  audio: number;
+}) => ({
+  type: FETCH_AUDIOPLAYER,
+  promise: apiClient.get(
+    `/api/v3/chapters/${chapterId}/verses/${verseId}/audio_files`,
+    {
+      params: {
+        recitation: audio || 7, // NOTE: default, but should never be used
+      },
+    }
+  ),
+  verseKey,
+  chapterId,
+});
 
-export function isLoaded(files, verse) {
-  return files[verse.verseKey];
-}
+export const isLoaded = (files: $TsFixMe, verse: VerseShape) =>
+  files[verse.verseKey];

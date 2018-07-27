@@ -45,7 +45,7 @@ type Props = {
   chapter: ChapterShape;
 };
 
-const ChapterItem: React.SFC<Props> = ({ chapter }: Props) => (
+const ChapterLink: React.SFC<Props> = ({ chapter }: Props) => (
   <Item key={chapter.id}>
     <StyledLink
       to={`/${chapter.id}`}
@@ -63,9 +63,7 @@ const ChapterItem: React.SFC<Props> = ({ chapter }: Props) => (
         </TableItem>
       </Table>
       <Translated>
-        <span
-          className={`text-uppercase ${chapter.translatedName.languageName}`}
-        >
+        <span className={`text-uppercase ${''}`}>
           {chapter.translatedName.name}
         </span>
       </Translated>
@@ -73,8 +71,8 @@ const ChapterItem: React.SFC<Props> = ({ chapter }: Props) => (
   </Item>
 );
 
-ChapterItem.propTypes = {
+ChapterLink.propTypes = {
   chapter: ChapterShape.isRequired,
 };
 
-export default ChapterItem;
+export default ChapterLink;

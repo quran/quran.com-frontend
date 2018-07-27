@@ -5,7 +5,7 @@ const FontSizeShape = PropTypes.shape({
   translation: PropTypes.number.isRequired,
 }).isRequired;
 
-const OptionsShape = PropTypes.shape({
+const SettingsShape = PropTypes.shape({
   isReadingMode: PropTypes.bool.isRequired,
   isNightMode: PropTypes.bool.isRequired,
   isShowingChapterInfo: PropTypes.bool.isRequired,
@@ -32,7 +32,7 @@ interface FetchedOptionShape {
   translations: $TsFixMe;
 }
 
-interface OptionsShape {
+interface SettingsShape {
   isReadingMode: boolean;
   isNightMode: boolean;
   isShowingChapterInfo: boolean;
@@ -46,4 +46,4 @@ interface OptionsShape {
   loadingTranslations: boolean;
 }
 
-export default OptionsShape;
+export default SettingsShape;

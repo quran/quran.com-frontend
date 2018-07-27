@@ -9,8 +9,7 @@ type Props = {
   onLazyLoad(): void;
   loadingComponent: ReactNode;
   endComponent: ReactNode;
-}
-
+};
 
 class LazyLoad extends Component<Props> {
   public static propTypes = {
@@ -46,15 +45,13 @@ class LazyLoad extends Component<Props> {
     }
 
     if (isLoading) {
-
       return loadingComponent;
     }
 
-
     return (
-    <Waypoint
-      onEnter={this.handleWaypointEnter}
-    />
+      <Waypoint onEnter={this.handleWaypointEnter}>
+        <div />
+      </Waypoint>
     );
   }
 }

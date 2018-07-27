@@ -35,6 +35,7 @@ interface WordShape {
   textMadani: string;
   highlight?: string;
   audio: $TsFixMe;
+  [key: string]: $TsFixMe;
 }
 
 export default WordShape;

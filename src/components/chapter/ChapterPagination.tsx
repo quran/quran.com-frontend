@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Loader from 'quran-components/lib/Loader';
 import { ChapterShape, VerseShape } from '../../shapes';
-import T from '../T';
+import T, { KEYS } from '../T';
 import LazyLoad from '../LazyLoad';
 import { NUMBER_OF_CHAPTERS } from '../../constants';
-import OptionsShape from '../../shapes/OptionsShape';
+import SettingsShape from '../../shapes/SettingsShape';
 
 const propTypes = {
   chapter: ChapterShape.isRequired,
   setCurrentVerse: PropTypes.func.isRequired,
   isEndOfChapter: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
-  options: OptionsShape.isRequired,
+  settings: SettingsShape.isRequired,
   isSingleVerse: PropTypes.bool.isRequired,
   verses: PropTypes.objectOf(VerseShape).isRequired,
   onLazyLoad: PropTypes.func.isRequired,
@@ -25,7 +25,7 @@ type Props = {
   isEndOfChapter: boolean;
   chapter: ChapterShape;
   verses: { [verseKey: string]: VerseShape };
-  options: $TsFixMe;
+  settings: SettingsShape;
   setCurrentVerse(verseKey: string): void;
   onLazyLoad(): void;
 };
@@ -37,12 +37,12 @@ const ChapterPagination: React.SFC<Props> = ({
   isLoading,
   isEndOfChapter,
   chapter,
-  options,
+  settings,
   setCurrentVerse,
   verses,
   onLazyLoad,
 }: Props) => {
-  const translations = (options.translations || []).join(',');
+  const translations = (settings.translations || []).join(',');
   const verseIds = Object.values(verses).map(
     (verse: VerseShape) => verse.verseNumber
   );
@@ -63,7 +63,7 @@ const ChapterPagination: React.SFC<Props> = ({
               chapter.chapterNumber
             }/${firstVerseId}-${to}?translations=${translations}`}
           >
-            <T id="chapter.index.continue" defaultMessage="Continue" />
+            <T id={KEYS.CHAPTER_INDEX_CONTINUE} />
           </Link>
         </li>
       </ul>
@@ -84,7 +84,7 @@ const ChapterPagination: React.SFC<Props> = ({
                   1}?translations=${translations}`}
               >
                 ←
-                <T id="chapter.previous" defaultMessage="Previous Surah" />
+                <T id={KEYS.CHAPTER_PREVIOUS} />
               </Link>
             </li>
           )}
@@ -95,10 +95,7 @@ const ChapterPagination: React.SFC<Props> = ({
                 setCurrentVerse(`${chapter.chapterNumber}:${firstVerseId}`)
               }
             >
-              <T
-                id="chapter.goToBeginning"
-                defaultMessage="Beginning of Surah"
-              />
+              <T id={KEYS.CHAPTER_GOTOBEGINNING} />
             </Link>
           </li>
           {chapter.chapterNumber < NUMBER_OF_CHAPTERS && (
@@ -110,7 +107,7 @@ const ChapterPagination: React.SFC<Props> = ({
                   setCurrentVerse(`${chapter.chapterNumber + 1}:1`)
                 }
               >
-                <T id="chapter.next" defaultMessage="Next Surah" />
+                <T id={KEYS.CHAPTER_NEXT} />
                 →
               </Link>
             </li>

@@ -22,8 +22,8 @@ export default req => {
     path: '/',
     expires: new Date(expireDate),
   });
-
-  const localeData = require('../locale/' + currentLocal + '.js'); // eslint-disable-line
+  // TODO: Optimization: this should come from the backend on the client side
+  const localeData = require('../locale/' + currentLocal); // eslint-disable-line
 
   return localeData.default.messages;
 };

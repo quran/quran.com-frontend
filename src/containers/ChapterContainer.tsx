@@ -11,13 +11,13 @@ type Props = {
 };
 
 const mapStateToProps = (state: ReduxState, ownProps: Props) => {
-  const chapterId = parseInt(ownProps.match.params.chapterId, 10);
+  const { chapterId } = ownProps.match.params;
   const chapter = state.chapters.entities[chapterId];
   const verses = state.verses.entities[chapterId];
 
   const currentVerse = state.audioplayer.currentVerse
     ? state.audioplayer.currentVerse
-    : Object.keys(verses)[0];
+    : verses && Object.keys(verses)[0];
 
   return {
     chapter,
@@ -27,9 +27,11 @@ const mapStateToProps = (state: ReduxState, ownProps: Props) => {
     isPlaying: state.audioplayer.isPlaying,
     currentWord: state.verses.currentWord,
     chapters: state.chapters.entities,
-    isLoading: state.verses.loading,
+    chapterInfo: state.chapterInfos.entities[chapterId],
+    isVersesLoading: state.verses.isLoading,
+    isChapterLoading: state.chapters.isLoading,
     lines: state.lines.lines,
-    options: state.options,
+    settings: state.settings,
   };
 };
 

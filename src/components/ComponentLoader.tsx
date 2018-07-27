@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 type Props = {
-  isLoading: boolean,
-  error: any,
-  pastDelay: boolean,
+  isLoading: boolean;
+  error: any;
+  pastDelay: boolean;
 };
 
 const ComponentLoader: React.SFC<Props> = ({
@@ -15,7 +15,7 @@ const ComponentLoader: React.SFC<Props> = ({
   if (isLoading) {
     return pastDelay ? <noscript /> : null;
   } else if (error) {
-    // TODO: translation
+    // TODO: Translation
     return <div>Error! Component failed to load</div>;
   }
 

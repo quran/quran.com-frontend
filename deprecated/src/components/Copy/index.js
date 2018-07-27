@@ -35,7 +35,7 @@ class Copy extends Component {
       >
         <i className="ss-icon ss-attach vertical-align-middle" />{' '}
         <LocaleFormattedMessage
-          id={isCopied ? 'actions.copied' : 'actions.copy'}
+          id={isCopied ? [KEYS.ACTIONS_COPIED] : [KEYS.ACTIONS_COPY]}
           defaultMessage={isCopied ? 'Copied!' : 'Copy'}
         />
       </a>

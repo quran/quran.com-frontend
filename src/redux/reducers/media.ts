@@ -1,22 +1,14 @@
-import { buildTafsirList } from 'helpers/tafsirs';
-import {
-  SET_MEDIA,
-  REMOVE_MEDIA,
-  LOAD_TAFISRS,
-  LOAD_TAFISRS_SUCCESS,
-  LOAD_FOOT_NOTE,
-  LOAD_FOOT_NOTE_SUCCESS
-} from '../constants/media';
+import { SET_MEDIA, REMOVE_MEDIA } from '../constants/media';
 
-const initialState = {
-  content: { title: null, body: null },
+const INITIAL_STATE = {
+  content: { title: '', body: '' },
   show: false,
   loading: false,
   size: 'large',
-  wrapperClass: ''
+  wrapperClass: '',
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default (state = INITIAL_STATE, action: $TsFixMe) => {
   switch (action.type) {
     case SET_MEDIA: {
       return {
@@ -25,64 +17,18 @@ export default function reducer(state = initialState, action = {}) {
         size: 'large',
         content: {
           title: action.content.authorName,
-          body: action.content.embedText
-        }
+          body: action.content.embedText,
+        },
       };
     }
     case REMOVE_MEDIA: {
       return {
         ...state,
         show: false,
-        content: { title: null, body: null }
-      };
-    }
-    case LOAD_TAFISRS: {
-      return {
-        ...state,
-        show: true,
-        loading: true,
-        size: 'small',
-        wrapperClass: '',
-        content: {
-          title: action.title
-        }
-      };
-    }
-    case LOAD_TAFISRS_SUCCESS: {
-      return {
-        ...state,
-        loading: false,
-        content: {
-          body: buildTafsirList(action.result.tafsirs, action.verse),
-          title: action.title
-        }
-      };
-    }
-    case LOAD_FOOT_NOTE: {
-      return {
-        ...state,
-        show: true,
-        loading: true,
-        content: {
-          title: 'Foot note'
-        }
-      };
-    }
-    case LOAD_FOOT_NOTE_SUCCESS: {
-      return {
-        ...state,
-        loading: false,
-        size: 'large',
-        wrapperClass: 'text-translation foote-note-text',
-        content: {
-          body: `<small class='${action.result.footNote.languageName}'>${
-            action.result.footNote.text
-          }</small>`,
-          title: 'Foot note'
-        }
+        content: { title: null, body: null },
       };
     }
     default:
       return state;
   }
-}
+};

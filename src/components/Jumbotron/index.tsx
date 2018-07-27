@@ -48,7 +48,7 @@ const Jumbotron: React.SFC<Props> = ({ noSearch }: Props) => (
           <StyledLink to="/" data-metrics-event-name="Jumbotron:Link:Index">
             <Logo src={logo} alt="logo" />
           </StyledLink>
-          {/* TODO: translate */}
+          {/* TODO: Translations */}
           <Title>THE NOBLE QURAN</Title>
           {noSearch}
           {/* {!noSearch && <SearchInput />} */}

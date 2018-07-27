@@ -1,16 +1,19 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-
 import Line from '../Line';
 import PageBreak from '../PageBreak';
 import { LineShape } from '../../shapes';
 
 const propTypes = {
-  lines: LineShape,
+  lines: PropTypes.objectOf(LineShape),
 };
 
 type Props = {
-  lines: LineShape;
+  lines: { [key: string]: LineShape };
+};
+
+const defaultProps: Props = {
+  lines: null,
 };
 
 const PageView: React.SFC<Props> = ({ lines }: Props) => {
@@ -35,5 +38,6 @@ const PageView: React.SFC<Props> = ({ lines }: Props) => {
 };
 
 PageView.propTypes = propTypes;
+PageView.defaultProps = defaultProps;
 
 export default PageView;

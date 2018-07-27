@@ -6,7 +6,7 @@ import Loader from 'quran-components/lib/Loader';
 import Title from './Title';
 import ChaptersList from '../ChaptersList';
 import QuickChapters from '../QuickChapters';
-import T from '../T';
+import T, { KEYS } from '../T';
 import Jumbotron from '../Jumbotron';
 import { FetchChapters } from '../../redux/actions/chapters';
 import { FetchJuzs } from '../../redux/actions/juzs';
@@ -28,6 +28,7 @@ const loaderStyle = { position: 'relative', overflow: 'hidden' };
 
 class Home extends Component<Props> {
   fetchChapters = () => {
+    // TODO: check if it's in the store
     const { fetchChapters } = this.props;
 
     if (__CLIENT__) {
@@ -40,6 +41,7 @@ class Home extends Component<Props> {
   };
 
   fetchJuzs = () => {
+    // TODO: check if it's in the store
     const { fetchJuzs } = this.props;
 
     if (__CLIENT__) {
@@ -56,17 +58,19 @@ class Home extends Component<Props> {
 
     return Promise.all(promises);
   }
+
   render() {
     const { chapters, juzs, loadingJuzs, loadingChapters } = this.props;
+
     const chapterTitle = (
       <Title className="text-muted">
-        <T id="surah.index.heading" defaultMessage="SURAHS (CHAPTERS)" />
+        <T id={KEYS.CHAPTER_INDEX_HEADING} />
       </Title>
     );
 
     const juzTitle = (
       <Title className="text-muted">
-        <T id="juz.index.heading" defaultMessage="Juz" />
+        <T id={KEYS.JUZ_INDEX_HEADING} />
       </Title>
     );
 
@@ -116,7 +120,6 @@ class Home extends Component<Props> {
               <QuickChapters />
               <Tabs>
                 <Tab title={chapterTitle}>{chaptersTab}</Tab>
-
                 <Tab title={juzTitle}>{juzsTab}</Tab>
               </Tabs>
             </div>

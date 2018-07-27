@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { JUZ_AND_HIZB_ARABIC_NUMBERS } from '../constants';
 
-const juzMarkTop = require('../../../static/images/juzTopArt.svg');
-const juzMarkBottom = require('../../../static/images/juzBottomArt.svg');
+const juzMarkTop = require('../../static/images/juzTopArt.svg');
+const juzMarkBottom = require('../../static/images/juzBottomArt.svg');
 
 const StyledContainer = styled.div`
   padding: 1px;
@@ -35,7 +35,7 @@ const propTypes = {
 };
 
 type Props = {
-  juzNumber: number,
+  juzNumber: number;
 };
 
 const JuzDecoration: React.SFC<Props> = ({ juzNumber }) => (

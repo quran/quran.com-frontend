@@ -9,7 +9,9 @@ export const fetchChapterInfo = (chapterId: ChapterId, language?: string) => ({
       language: language || 'en',
     },
   }),
-  id: chapterId,
+  meta: {
+    chapterId,
+  },
 });
 
 export function isChapterInfoLoaded(globalState: any, id: ChapterId) {

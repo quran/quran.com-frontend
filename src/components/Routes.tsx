@@ -11,7 +11,7 @@ const defaultSetContext = (context: any) => ({
 
 const Routes: React.SFC = () => (
   <Switch>
-    {routes.map(({ component: Component, setContext, ...route }) => (
+    {routes.map(({ component: Component, setContext, ...route }: $TsFixMe) => (
       <Route
         key={route.path}
         {...route}

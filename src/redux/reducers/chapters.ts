@@ -1,33 +1,37 @@
-import { handleActions } from 'redux-actions';
+import { handle } from 'redux-pack';
+import { camelizeKeys } from 'humps';
+import keyBy from 'lodash/keyBy';
 
-import { FETCH_CHAPTERS, SET_CURRENT } from '../constants/chapters';
+import { FETCH_CHAPTERS } from '../constants/chapters';
 
 export const INITIAL_STATE = {
   errored: false,
-  loaded: false,
-  loading: false,
-  current: null,
+  isLoading: false,
   entities: {},
-  infos: {}
 };
 
-export default handleActions(
-  {
-    [FETCH_CHAPTERS.SUCCESS]: (state, { result }) => {
-      const { chapters } = result.entities;
-
-      return {
-        ...state,
-        loaded: true,
-        errored: false,
-        entities: { ...state.entities, ...chapters }
-      };
-    },
-    [FETCH_CHAPTERS.FAILURE]: state => ({ ...state, errored: true }),
-    [SET_CURRENT.ACTION]: (state, { current }) => ({
-      ...state,
-      current
-    })
-  },
-  INITIAL_STATE
-);
+export default (state = INITIAL_STATE, action: $TsFixMe) => {
+  switch (action.type) {
+    case FETCH_CHAPTERS: {
+      return handle(state, action, {
+        start: prevState => ({
+          ...prevState,
+          isLoading: true,
+        }),
+        finish: prevState => ({
+          ...prevState,
+          isLoading: false,
+        }),
+        success: prevState => ({
+          ...prevState,
+          entities: {
+            ...state.entities,
+            ...camelizeKeys(keyBy(action.payload.chapters, 'id')),
+          },
+        }),
+      });
+    }
+    default:
+      return state;
+  }
+};

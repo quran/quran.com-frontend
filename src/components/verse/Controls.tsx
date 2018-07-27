@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { asyncComponent } from 'react-async-component';
 import Badge from './Badge';
 import { VerseShape, ChapterShape } from '../../shapes';
-import T from '../T';
+import T, { KEYS } from '../T';
 
 const VerseCopy = asyncComponent({
   resolve: () => import(/* webpackChunkName: "VerseCopy" */ '../VerseCopy'),
@@ -73,12 +73,12 @@ const defaultProps: $TsFixMe = {
 };
 
 type Props = {
-  isSearched?: boolean,
-  verse: VerseShape,
-  chapter: ChapterShape,
-  isPlaying: boolean,
-  currentVerse?: string,
-  isPdf?: boolean,
+  isSearched?: boolean;
+  verse: VerseShape;
+  chapter: ChapterShape;
+  isPlaying: boolean;
+  currentVerse?: string;
+  isPdf?: boolean;
   onPlayClick(): void;
   onTafsirsClick(): void;
 };
@@ -103,7 +103,7 @@ const Controls: React.SFC<Props> = ({
           <button
             type="button"
             onClick={onPlayClick}
-            className="text-muted"
+            className="text-muted btn btn-link"
           >
             <i
               className={`ss-icon ${
@@ -111,8 +111,9 @@ const Controls: React.SFC<Props> = ({
               } vertical-align-middle`}
             />{' '}
             <T
-              id={isCurrentVersePlaying ? 'actions.pause' : 'actions.play'}
-              defaultMessage={isCurrentVersePlaying ? 'Pause' : 'Play'}
+              id={
+                isCurrentVersePlaying ? KEYS.ACTIONS_PAUSE : KEYS.ACTIONS_PLAY
+              }
             />
           </button>
         )}
@@ -126,7 +127,7 @@ const Controls: React.SFC<Props> = ({
         onClick={onTafsirsClick}
       >
         <i className="ss-book vertical-align-middle" />{' '}
-        <T id="actions.tafsir" defaultMessage="Tafsir" />
+        <T id={KEYS.ACTIONS_TAFSIRS} />
       </button>
       {!isSearched && !isPdf && <Share chapter={chapter} verse={verse} />}
     </ControlsNode>

@@ -6,7 +6,6 @@ import {
   SET_CURRENT_VERSE,
   SET_CURRENT_WORD,
   CLEAR_CURRENT_WORD,
-  FETCH_TAFSIR,
 } from '../constants/verses';
 import apiClient from '../../apiClient';
 import { ChapterId, VerseId, TafsirId } from '../../types';
@@ -29,18 +28,12 @@ const prepareParams = (params: any, options: any) => {
         ? params.translations.split(',')
         : params.translations;
   } else {
+    // eslint-disable-next-line
     translations = options.translations; // || defaultOptions.translations;
   }
 
   return { translations };
 };
-
-// export type FetchVerses = (
-//   chapterId: ChapterId,
-//   paging: $TsFixMe,
-//   params: $TsFixMe,
-//   options: $TsFixMe
-// ) => $TsFixMe;
 
 export const fetchVerses = (
   chapterId: ChapterId,
@@ -59,7 +52,9 @@ export const fetchVerses = (
         ...apiOptions,
       },
     }),
-    chapterId,
+    meta: {
+      chapterId,
+    },
   };
 };
 
@@ -115,25 +110,6 @@ export const isLoaded = (
   );
 };
 
-export const fetchTafsir = (
-  chapterId: ChapterId,
-  verseId: VerseId,
-  tafsirId: TafsirId
-) => {
-  return {
-    type: FETCH_TAFSIR,
-    promise: apiClient.get(
-      `/api/v3/chapters/${chapterId}/verses/${verseId}/tafsirs`,
-      {
-        params: {
-          tafsirs: tafsirId,
-        },
-      }
-    ),
-    tafsirId,
-  };
-};
-
 export const isTafsirLoaded = (
   globalState: any,
   chapterId: ChapterId,
@@ -146,5 +122,8 @@ export const isTafsirLoaded = (
   return !!verses && globalState.verses.tafsirs[`${verseKey}-${tafsirId}`];
 };
 
-export type ActionTypes = typeof fetchVerses | typeof fetchTafsir;
+export type ActionTypes =
+  | typeof fetchVerses
+  | typeof clearCurrent
+  | typeof setCurrentVerse;
 export type FetchVerses = typeof fetchVerses;

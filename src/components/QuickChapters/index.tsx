@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import T from '../T';
+import T, { KEYS } from '../T';
 import Title from '../Home/Title';
 
 import { QUICK_LINKS_EVENTS } from '../../events';
@@ -24,7 +24,7 @@ const isFriday = new Date().getDay() === 5;
 const QuickChapters: React.SFC<{}> = () => (
   <div>
     <Title muted>
-      <T id="surah.index.quickLinks" defaultMessage="Quick links" />
+      <T id={KEYS.CHAPTER_INDEX_QUICKLINKS} />
       {__CLIENT__ &&
         isFriday && (
           <Span>

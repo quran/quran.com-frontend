@@ -244,7 +244,7 @@ class Verse extends Component {
             } vertical-align-middle`}
           />{' '}
           <LocaleFormattedMessage
-            id={playing ? 'actions.pause' : 'actions.play'}
+            id={playing ? [KEYS.ACTIONS_PAUSE] : [KEYS.ACTIONS_PLAY]}
             defaultMessage={playing ? 'Pause' : 'Play'}
           />
         </a>

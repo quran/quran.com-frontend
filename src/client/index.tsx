@@ -82,8 +82,6 @@ function renderApp(TheApp: $TsFixMe) {
   // We use the react-async-component in order to support code splitting of
   // our bundle output. It's important to use this helper.
   // @see https://github.com/ctrlplusb/react-async-component
-  // TODO: Add this later
-  // asyncBootstrapper(app).then(() => {
   asyncBootstrapper(app).then(() => {
     ReactDOM.render(app, mountNode, () => {
       console.log('client', 'React Rendered');
@@ -102,7 +100,7 @@ require('./registerServiceWorker');
 // The following is needed so that we can support hot reloading our application.
 if (process.env.BUILD_FLAG_IS_DEV === 'true' && (module as $TsFixMe).hot) {
   // Accept changes to this file for hot reloading.
-  (module as $TsFixMe).hot.accept('./index.js');
+  (module as $TsFixMe).hot.accept('./index.tsx');
   // Any changes to our App will cause a hotload re-render.
   (module as $TsFixMe).hot.accept('../components/App', () => {
     renderApp(require('../components/App').default);

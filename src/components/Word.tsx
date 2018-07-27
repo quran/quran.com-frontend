@@ -12,12 +12,26 @@ const propTypes = {
   pause: PropTypes.func.isRequired,
   setVerse: PropTypes.func.isRequired,
   playCurrentWord: PropTypes.func.isRequired,
-  tooltip: PropTypes.string,
+  tooltip: PropTypes.string.isRequired,
   audioPosition: PropTypes.number,
   currentVerse: PropTypes.string,
-  isPlaying: PropTypes.bool,
+  isPlaying: PropTypes.bool.isRequired,
   isSearched: PropTypes.bool,
   useTextFont: PropTypes.bool, // tmp change to compare text and code based rendering
+};
+
+type DefaultProps = {
+  audioPosition?: number;
+  isSearched?: boolean;
+  useTextFont?: boolean;
+  currentVerse?: string;
+};
+
+const defaultProps: DefaultProps = {
+  isSearched: false,
+  useTextFont: false,
+  audioPosition: null,
+  currentVerse: '',
 };
 
 type Props = {
@@ -29,20 +43,23 @@ type Props = {
   tooltip: 'translation' | 'transliteration';
   audioPosition?: number;
   currentVerse?: string;
-  isPlaying?: boolean;
+  isPlaying: boolean;
   isSearched?: boolean;
   useTextFont?: boolean;
 };
 
 class Word extends Component<Props> {
   public static propTypes = propTypes;
+  public static defaultProps = defaultProps;
 
-  buildTooltip = (word: WordShape, tooltip: string) => {
+  buildTooltip = () => {
+    const { word, tooltip } = this.props;
+
     let title;
 
     if (word.charType === WORD_TYPES.CHAR_TYPE_END) {
       title = `Verse ${word.verseKey.split(':')[1]}`;
-    } else if (word.charType === WORD_TYPES.CHAR_TYPE_WORD) {
+    } else if (word.charType === WORD_TYPES.CHAR_TYPE_WORD && word[tooltip]) {
       title = word[tooltip].text;
     } else {
       title = '';
@@ -87,7 +104,7 @@ class Word extends Component<Props> {
   };
 
   render() {
-    const { tooltip, word, currentVerse, isPlaying, useTextFont } = this.props;
+    const { word, currentVerse, isPlaying, useTextFont } = this.props;
 
     let text;
     let spacer;
@@ -100,7 +117,7 @@ class Word extends Component<Props> {
 
     if (useTextFont) {
       if (word.charType === WORD_TYPES.CHAR_TYPE_END) {
-        text = zeroPad(word.verseKey.split(':')[1], 3, 0);
+        text = zeroPad(word.verseKey.split(':')[1], 3, '0');
       } else {
         text = word.textMadani;
       }
@@ -114,7 +131,7 @@ class Word extends Component<Props> {
 
     return (
       <span>
-        <Tooltip arrow title={this.buildTooltip(word, tooltip)}>
+        <Tooltip arrow title={this.buildTooltip()}>
           <a // eslint-disable-line
             key={word.code}
             id={id}

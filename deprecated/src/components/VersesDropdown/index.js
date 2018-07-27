@@ -62,7 +62,7 @@ class VersesDropdown extends Component {
 
     const title = (
       <LocaleFormattedMessage
-        id={'setting.verses'}
+        id={[KEYS.SETTING_VERSES]}
         defaultMessage={'Go to verse'}
       />
     );

@@ -86,7 +86,7 @@ class SearchInput extends Component {
     const { showAutocomplete } = this.state;
     const { className, intl } = this.props;
     const placeholder = intl.formatMessage({
-      id: 'search.placeholder',
+      id: [KEYS.SEARCH_PLACEHOLDER],
       defaultMessage: 'Search',
     });
 

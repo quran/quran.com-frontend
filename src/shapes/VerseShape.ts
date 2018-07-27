@@ -33,7 +33,7 @@ interface VerseShape {
   textSimple: string;
   sajdah?: boolean;
   translations?: Array<TranslationShape>;
-  audio?: object;
+  audio?: $TsFixMe;
 }
 
 export default VerseShape;

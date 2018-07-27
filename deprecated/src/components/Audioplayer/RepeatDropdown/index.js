@@ -238,7 +238,7 @@ class RepeatButton extends Component {
           >
             <option value={'Infinity'}>
               {intl.formatMessage({
-                id: 'player.repeat.loop',
+                id: [KEYS.AUDIOPLAYER_REPEAT_LOOP],
                 defaultMessage: 'Loop',
               })}
             </option>

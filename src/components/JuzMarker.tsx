@@ -5,6 +5,7 @@ import { Tooltip } from 'react-tippy';
 import { JUZ_START } from '../constants';
 import JuzDecoration from './JuzDecoration';
 import { VerseShape } from '../shapes';
+import T, { KEYS } from './T';
 
 const StyledAyah = styled.div`
   margin-top: 3%;
@@ -12,12 +13,12 @@ const StyledAyah = styled.div`
 
 const propTypes = {
   verse: VerseShape.isRequired,
-  text: PropTypes.instanceOf(Array),
+  text: PropTypes.instanceOf(Array).isRequired,
 };
 
 type Props = {
-  verse: VerseShape,
-  text: $TsFixMe,
+  verse: VerseShape;
+  text: $TsFixMe;
 };
 
 export const JuzMarker: React.SFC<Props> = ({
@@ -30,10 +31,7 @@ export const JuzMarker: React.SFC<Props> = ({
         <b className="col-xs-1">
           <Tooltip
             arrow
-            title={`${intl.formatMessage({
-              id: 'juz.index.heading',
-              defaultMessage: 'juz',
-            })} ${juzNumber}`}
+            title={<T id={KEYS.JUZ_INDEX_HEADING} values={{ juzNumber }} />}
           >
             <JuzDecoration juzNumber={juzNumber} />
           </Tooltip>
@@ -49,5 +47,5 @@ export const JuzMarker: React.SFC<Props> = ({
 };
 
 JuzMarker.propTypes = propTypes;
-// TODO: why are we injecting?
+
 export default JuzMarker;

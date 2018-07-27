@@ -295,20 +295,22 @@ export default function webpackConfigFactory(buildOptions) {
       // as we need to interogate these files in order to know what JS/CSS
       // we need to inject into our HTML. We only need to know the assets for
       // our client bundle.
-      ifClient(
-        () =>
-          new AssetsPlugin({
-            filename: config('bundleAssetsFileName'),
-            path: path.resolve(appRootDir.get(), bundleConfig.outputPath),
-          })
-      ),
+      // ifClient(
+      //   () =>
+      //     new AssetsPlugin({
+      //       filename: config('bundleAssetsFileName'),
+      //       path: path.resolve(appRootDir.get(), bundleConfig.outputPath),
+      //     })
+      // ),
 
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.
       ifDev(() => new webpack.NoEmitOnErrorsPlugin()),
 
       // We need this plugin to enable hot reloading of our client.
-      ifDevClient(() => new webpack.HotModuleReplacementPlugin()),
+      ifDevClient(
+        () => new webpack.HotModuleReplacementPlugin({ multiStep: true })
+      ),
 
       // For our production client we need to make sure we pass the required
       // configuration to ensure that the output is minimized/optimized.
@@ -509,20 +511,20 @@ export default function webpackConfigFactory(buildOptions) {
           // "file" loader at the end of the loader list.
           oneOf: removeNil([
             // JAVASCRIPT
-            {
-              test: /\.jsx?$/,
-              // We will defer all our js processing to the happypack plugin
-              // named "happypack-javascript".
-              // See the respective plugin within the plugins section for full
-              // details on what loader is being implemented.
-              loader: 'happypack/loader?id=happypack-javascript',
-              include: removeNil([
-                ...bundleConfig.srcPaths.map(srcPath =>
-                  path.resolve(appRootDir.get(), srcPath)
-                ),
-                ifProdClient(path.resolve(appRootDir.get(), 'src/html')),
-              ]),
-            },
+            // {
+            //   test: /\.jsx?$/,
+            //   // We will defer all our js processing to the happypack plugin
+            //   // named "happypack-javascript".
+            //   // See the respective plugin within the plugins section for full
+            //   // details on what loader is being implemented.
+            //   loader: 'happypack/loader?id=happypack-javascript',
+            //   include: removeNil([
+            //     ...bundleConfig.srcPaths.map(srcPath =>
+            //       path.resolve(appRootDir.get(), srcPath)
+            //     ),
+            //     ifProdClient(path.resolve(appRootDir.get(), 'src/html')),
+            //   ]),
+            // },
             // TYPESCRIPT
             {
               test: /\.tsx?$/,

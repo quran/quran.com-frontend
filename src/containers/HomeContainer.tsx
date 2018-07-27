@@ -5,8 +5,8 @@ import { fetchChapters } from '../redux/actions/chapters';
 import { fetchJuzs } from '../redux/actions/juzs';
 
 const mapStateToProps = (state: ReduxState) => ({
-  loadingChapters: !state.chapters.loaded,
-  loadingJuzs: !state.juzs.loaded,
+  loadingChapters: state.chapters.isLoading,
+  loadingJuzs: state.juzs.isLoading,
   chapters: state.chapters.entities,
   juzs: state.juzs.entities,
 });

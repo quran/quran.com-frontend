@@ -1,13 +1,14 @@
-import React, { Component, ReactNode } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Element from 'react-scroll/lib/components/Element';
-import T from './T';
+import Element from 'react-scroll/modules/components/Element';
+import T, { KEYS } from './T';
 import Translation from './Translation';
 
 import { VerseShape, ChapterShape } from '../shapes';
 import Text from './verse/Text';
 import Controls from './verse/Controls';
+import { FetchTafsirs } from '../redux/actions/tafsirs';
 
 // TODO: Change this
 const VerseNode = styled(Element)<{ highlight?: boolean; textMuted: string }>`
@@ -29,7 +30,6 @@ const propTypes = {
   chapter: ChapterShape.isRequired,
   match: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isPlaying: PropTypes.bool,
-  tooltip: PropTypes.string,
   isCurrentVerse: PropTypes.bool,
   currentVerse: PropTypes.string,
   fetchTafsirs: PropTypes.func.isRequired,
@@ -44,7 +44,6 @@ const defaultProps: $TsFixMe = {
   isPdf: false,
   match: null,
   isPlaying: false,
-  tooltip: null,
   isCurrentVerse: false,
   currentVerse: null,
 };
@@ -53,17 +52,17 @@ type Props = {
   isSearched?: boolean;
   verse: VerseShape;
   chapter: ChapterShape;
-  match: $TsFixMe;
+  match?: $TsFixMe;
   isPlaying?: boolean;
   tooltip?: string;
   currentWord?: number;
   isCurrentVerse?: boolean;
   currentVerse?: string;
   userAgent?: { [key: string]: boolean };
-  fetchTafsirs(verse: VerseShape, title: ReactNode | string): $TsFixMe;
-  play(): $TsFixMe;
-  pause(): $TsFixMe;
-  setVerse(verseKey: string): $TsFixMe;
+  fetchTafsirs: FetchTafsirs;
+  play(): any;
+  pause(): any;
+  setVerse(verseKey: string): any;
   isPdf?: boolean;
 };
 
@@ -96,11 +95,9 @@ class Verse extends Component<Props> {
 
   handleTafsirsClick = () => {
     const { verse, fetchTafsirs } = this.props;
+    // TODO: Fix this
 
-    return fetchTafsirs(
-      verse,
-      <T id="tafsir.select" defaultMessage="Select a tafsir" />
-    );
+    return fetchTafsirs(verse.chapterId, verse.id, 1);
   };
 
   render() {

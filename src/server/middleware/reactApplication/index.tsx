@@ -8,7 +8,7 @@ import {
 } from 'react-async-component';
 import asyncBootstrapper from 'react-async-bootstrapper';
 
-import Provider from 'react-redux/lib/components/Provider';
+import { Provider } from 'react-redux';
 import { IntlProvider } from 'react-intl';
 import {
   ThemeProvider,
@@ -17,29 +17,24 @@ import {
 } from 'styled-components';
 import cookie from 'react-cookie';
 
-import getLocalMessages from '../../../helpers/setLocal';
+import getLocalMessages from '../../../helpers/setLocale';
 import theme from '../../../theme';
 import config from '../../../../config';
-import ApiClient from '../../../helpers/ApiClient';
-import createStore from '../../../redux/create';
+import createStore from '../../../redux/createStore';
 
 import ServerHTML from './ServerHTML';
-import App from '../../../containers/App';
-import { setOption, setUserAgent } from '../../../redux/actions/options.js';
-import { getPromises, checkOnEnterResult } from '../../../routes';
+import App from '../../../components/App';
+import { setOption, setUserAgent } from '../../../redux/actions/settings';
 import { log } from '../../../../internal/utils';
 
 /**
  * React application middleware, supports server side rendering.
  */
-export default function reactApplicationMiddleware(request, response) {
+export default function reactApplicationMiddleware(
+  request: $TsFixMe,
+  response: $TsFixMe
+) {
   cookie.plugToRequest(request, response);
-
-  const result = checkOnEnterResult(request.url);
-
-  if (result) {
-    return response.status(result.status).redirect(result.url);
-  }
 
   // Ensure a nonce has been provided to us.
   // See the server/middleware/security.js for more info.
@@ -47,7 +42,7 @@ export default function reactApplicationMiddleware(request, response) {
     throw new Error('A "nonce" value has not been attached to the response');
   }
 
-  const nonce = response.locals.nonce;
+  const { nonce } = response.locals;
 
   // It's possible to disable SSR, which can be useful in development mode.
   // In this case traditional client side only rendering will occur.
@@ -64,6 +59,7 @@ export default function reactApplicationMiddleware(request, response) {
     // rely on the client to initialize and render the react application.
     const html = renderToStaticMarkup(<ServerHTML nonce={nonce} />);
     response.status(200).send(`<!DOCTYPE html>${html}`);
+
     return null;
   }
 
@@ -72,10 +68,9 @@ export default function reactApplicationMiddleware(request, response) {
 
   // Create a context for <StaticRouter>, which will allow us to
   // query for the results of the render.
-  const reactRouterContext = {};
+  const reactRouterContext: $TsFixMe = {};
   const localMessages = getLocalMessages(request);
-  const client = new ApiClient(request);
-  const store = createStore(null, client);
+  const store = createStore({});
   const sheet = new ServerStyleSheet();
 
   // setup store dispatches
@@ -101,14 +96,7 @@ export default function reactApplicationMiddleware(request, response) {
 
   // Pass our app into the react-async-component helper so that any async
   // components are resolved for the render.
-  // TODO: use bootstrapper
-  // asyncBootstrapper(app).then(() => {
-
-  // inside a request
-  const promises = getPromises(request.url, store);
-  promises.push(asyncBootstrapper(app));
-
-  return Promise.all(promises)
+  return asyncBootstrapper(app)
     .then(() => {
       const appString = renderToString(app);
       const styleTags = sheet.getStyleElement();
@@ -130,6 +118,7 @@ export default function reactApplicationMiddleware(request, response) {
       if (reactRouterContext.url) {
         response.status(302).setHeader('Location', reactRouterContext.url);
         response.end();
+
         return;
       }
 
@@ -137,5 +126,5 @@ export default function reactApplicationMiddleware(request, response) {
         .status(reactRouterContext.status || 200)
         .send(`<!DOCTYPE html>${html}`);
     })
-    .catch(error => console.error(error));
+    .catch((error: $TsFixMe) => console.error(error));
 }

@@ -21,13 +21,14 @@ type Props = {
 
 const ListView: React.SFC<Props> = ({ chapter, verses, isLoading }: Props) => (
   <Fragment>
-    {Object.values(verses).map((verse: VerseShape) => (
-      <VerseContainer
-        verse={verse}
-        chapter={chapter}
-        key={`${verse.chapterId}-${verse.id}-verse`}
-      />
-    ))}
+    {!isLoading &&
+      Object.values(verses).map((verse: VerseShape) => (
+        <VerseContainer
+          verse={verse}
+          chapter={chapter}
+          key={`${verse.chapterId}-${verse.id}-verse`}
+        />
+      ))}
   </Fragment>
 );
 
