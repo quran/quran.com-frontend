@@ -34,7 +34,7 @@ const EN: Shape = {
     [KEYS.VERSE_MEDIA_LECTURE_FROM]: 'Watch video commentary from {from}',
     [KEYS.VERSE_BOOKMARKED]: 'Bookmarked',
     [KEYS.VERSE_BOOKMARK]: 'Bookmark',
-    [KEYS.VERSE_NOT_FOUND]: 'Ayah not found',
+    [KEYS.VERSE_NOT_FOUND]: 'Verse not found',
 
     [KEYS.SEARCH_PLACEHOLDER]: 'Search "Noah"',
     [KEYS.SEARCH_RESULTHEADING]:
@@ -52,9 +52,9 @@ const EN: Shape = {
     [KEYS.CHAPTER_GOTOBEGINNING]: 'Beginning of Surah',
     [KEYS.CHAPTER_READ]: 'Read full Surah',
 
-    [KEYS.AUDIOPLAYER_CURRENTVERSE]: 'Ayah',
-    [KEYS.AUDIOPLAYER_NEXT_VERSE]: 'Next Ayah',
-    [KEYS.AUDIOPLAYER_PREVIOUS_VERSE]: 'Previous Ayah',
+    [KEYS.AUDIOPLAYER_CURRENTVERSE]: 'Verse',
+    [KEYS.AUDIOPLAYER_NEXT_VERSE]: 'Next verse',
+    [KEYS.AUDIOPLAYER_PREVIOUS_VERSE]: 'Previous verse',
     [KEYS.AUDIOPLAYER_REPEAT_TITLE]: 'TOGGLE REPEAT',
     [KEYS.AUDIOPLAYER_REPEAT_SINGLE]: 'Single',
     [KEYS.AUDIOPLAYER_REPEAT_RANGE]: 'Range',
@@ -98,7 +98,7 @@ const EN: Shape = {
     [KEYS.ERROR_INVALID_CHAPTER]:
       "Surah is out of range. Please go to <a href='/'> home page</a> and select a Surah",
     [KEYS.ERROR_INVALID_VERSE]:
-      "Ayah is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah",
+      "Verse is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah",
     [KEYS.ERROR_NOT_FOUND]: 'Sorry, this page does not exist',
   },
 };

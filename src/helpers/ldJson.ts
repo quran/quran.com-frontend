@@ -14,7 +14,7 @@ export const chapterLdJson = (chapter: ChapterShape) => [
         "@id": "https://quran.com/",
         "name": "Quran"
       }
-    },{
+    }, {
       "@type": "ListItem",
       "position": 2,
       "item": {

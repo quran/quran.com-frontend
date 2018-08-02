@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { ReduxState } from '../types';
-import { pause, setVerse, play } from '../redux/actions/audioplayer';
+import { pause, setCurrentVerse, play } from '../redux/actions/audioplayer';
 import { fetchTafsirs } from '../redux/actions/tafsirs';
 import Verse from '../components/Verse';
 
@@ -12,5 +12,5 @@ export const mapStateToProps = (state: ReduxState) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchTafsirs, pause, setVerse, play }
+  { fetchTafsirs, pause, setCurrentVerse, play }
 )(Verse);

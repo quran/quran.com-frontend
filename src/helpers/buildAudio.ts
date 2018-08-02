@@ -8,14 +8,14 @@ export function buildAudioURL(audio: $TsFixMe) {
   return `${config('audioCDN')}/${audio.url}`;
 }
 
-export function buildAudioForVerse(audio: $TsFixMe) {
+export function buildAudioForVerse(audio: $TsFixMe, preload: string = 'none') {
   const scopedAudio = new Audio();
 
-  scopedAudio.preload = 'none';
+  scopedAudio.preload = preload;
 
   if (audio.url) {
     scopedAudio.src = buildAudioURL(audio);
-    const { segments } = audio.segments;
+    const { segments } = audio;
 
     return { audio: scopedAudio, segments };
   }

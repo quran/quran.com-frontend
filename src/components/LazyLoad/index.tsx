@@ -18,13 +18,11 @@ class LazyLoad extends Component<Props> {
     onLazyLoad: PropTypes.func.isRequired,
     loadingComponent: PropTypes.element,
     endComponent: PropTypes.element,
-    offset: PropTypes.number,
   };
 
   public static defaultProps = {
     loadingComponent: 'Loading...',
     endComponent: 'End.',
-    offset: 1000,
   };
 
   handleWaypointEnter = () => {

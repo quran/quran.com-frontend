@@ -5,7 +5,6 @@ import VerseContainer from '../../containers/VerseContainer';
 
 const propTypes = {
   chapter: ChapterShape.isRequired,
-  isLoading: PropTypes.bool.isRequired,
   verses: PropTypes.objectOf(VerseShape),
 };
 
@@ -16,19 +15,17 @@ const defaultProps = {
 type Props = {
   chapter: ChapterShape;
   verses?: { [verseKey: string]: VerseShape };
-  isLoading: boolean;
 };
 
-const ListView: React.SFC<Props> = ({ chapter, verses, isLoading }: Props) => (
+const ListView: React.SFC<Props> = ({ chapter, verses }: Props) => (
   <Fragment>
-    {!isLoading &&
-      Object.values(verses).map((verse: VerseShape) => (
-        <VerseContainer
-          verse={verse}
-          chapter={chapter}
-          key={`${verse.chapterId}-${verse.id}-verse`}
-        />
-      ))}
+    {Object.values(verses).map((verse: VerseShape) => (
+      <VerseContainer
+        verse={verse}
+        chapter={chapter}
+        key={`${verse.chapterId}-${verse.id}-verse`}
+      />
+    ))}
   </Fragment>
 );
 

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export default styled.h4<{ muted?: boolean }>`
   font-size: 14px;
 
-  ${props => (props.muted ? `color: ${props.theme.textMuted};` : '')} span {
+  ${({ muted, theme }) => (muted ? `color: ${theme.textMuted};` : '')} span {
     margin: 0;
     line-height: 2;
     a {

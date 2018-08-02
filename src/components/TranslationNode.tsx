@@ -1,10 +1,6 @@
 import styled from 'styled-components';
 
-type Props = {
-  arabic?: boolean,
-};
-
-export default styled.div<Props>`
+export default styled.div<{ arabic?: boolean }>`
   ${({ arabic }) => (arabic ? 'text-align: right;' : '')} h4 {
     color: ${({ theme }) => theme.brandPrimary};
     margin-bottom: 5px;

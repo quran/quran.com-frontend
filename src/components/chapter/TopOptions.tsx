@@ -1,13 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import Share from '../Share';
+import Title from '../dls/Title';
 import { ChapterShape } from '../../shapes';
-
-const Title = styled.h1`
-  color: #000;
-  font-size: 18px;
-`;
 
 const propTypes = {
   title: PropTypes.string,

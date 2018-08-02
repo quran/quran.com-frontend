@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import {
   pause,
-  setVerse,
+  setCurrentVerse,
   setCurrentWord,
   playCurrentWord,
 } from '../redux/actions/audioplayer';
@@ -19,7 +19,7 @@ export default connect(
   {
     setCurrentWord,
     pause,
-    setVerse,
+    setCurrentVerse,
     playCurrentWord,
   }
 )(Word);

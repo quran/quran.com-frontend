@@ -1,3 +1,4 @@
+import { camelizeKeys } from 'humps';
 import { handle } from 'redux-pack';
 import { buildAudioForVerse } from '../../helpers/buildAudio';
 import { buildSegments } from '../../helpers/buildSegments';
@@ -5,24 +6,15 @@ import { buildSegments } from '../../helpers/buildSegments';
 import {
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
+  SET_CURRENT_VERSE,
   PLAY_CURRENT_WORD,
   PLAY,
   PAUSE,
-  NEXT,
-  SET_AYAH,
-  PREVIOUS,
   SET_REPEAT,
   TOGGLE_SCROLL,
   UPDATE,
   FETCH_AUDIOPLAYER,
 } from '../constants/audioplayer';
-
-import {
-  CLEAR_CURRENT as VERSES_CLEAR_CURRENT,
-  SET_CURRENT_VERSE,
-} from '../constants/verses';
-
-export { NEXT, SET_AYAH };
 
 type RepeatType = {
   from: $TsFixMe;
@@ -46,7 +38,7 @@ type State = {
 
 export const INITIAL_STATE: State = {
   files: {},
-  currentFile: null,
+
   currentVerse: null,
   currentWord: null,
   currentTime: 0,
@@ -64,21 +56,21 @@ export const INITIAL_STATE: State = {
 
 export default (state = INITIAL_STATE, action: $TsFixMe) => {
   switch (action.type) {
-    case VERSES_CLEAR_CURRENT: {
-      const stateFilesCurrent = state.files;
+    // case VERSES_CLEAR_CURRENT: {
+    //   const stateFilesCurrent = state.files;
 
-      return {
-        ...state,
-        files: {
-          ...stateFilesCurrent,
-          [action.id]: {},
-        },
-      };
-    }
+    //   return {
+    //     ...state,
+    //     files: {
+    //       ...stateFilesCurrent,
+    //       [action.id]: {},
+    //     },
+    //   };
+    // }
     case FETCH_AUDIOPLAYER: {
       return handle(state, action, {
         success: prevState => {
-          const data = buildAudioForVerse(action.result.audioFile);
+          const audioFile: $TsFixMe = camelizeKeys(action.payload.audio_file);
 
           return {
             ...prevState,
@@ -87,18 +79,24 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
             errored: false,
             files: {
               ...state.files,
-              [action.chapterId]: {
-                ...state.files[action.chapterId],
-                [action.verseKey]: data.audio,
+              [action.meta.chapterId]: {
+                ...state.files[action.meta.chapterId],
+                [action.meta.verseKey]: buildAudioForVerse(
+                  audioFile,
+                  action.meta.isCurrentVerse && 'auto'
+                ).audio,
               },
             },
             segments: {
               ...state.segments,
-              [action.chapterId]: {
-                ...state.segments[action.chapterId],
-                [action.verseKey]: buildSegments(data.segments),
+              [action.meta.chapterId]: {
+                ...state.segments[action.meta.chapterId],
+                [action.meta.verseKey]: buildSegments(audioFile.segments),
               },
             },
+            ...(action.meta.isCurrentVerse
+              ? { currentVerse: action.meta.verseKey }
+              : {}),
           };
         },
       });
@@ -112,6 +110,16 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
       };
     }
     case PLAY: {
+      const { payload } = action;
+
+      if (payload) {
+        return {
+          ...state,
+          isPlaying: true,
+          currentVerse: payload,
+        };
+      }
+
       return {
         ...state,
         isPlaying: true,
@@ -121,40 +129,6 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
       return {
         ...state,
         isPlaying: false,
-      };
-    }
-    case NEXT: {
-      const [chapterId, ayahNum] = action.currentVerse.split(':');
-      const nextId = `${chapterId}:${parseInt(ayahNum, 10) + 1}`;
-
-      return {
-        ...state,
-        currentVerse: nextId,
-        currentFile: state.files[chapterId][nextId],
-        currentTime: 0,
-      };
-    }
-    case PREVIOUS: {
-      const [chapterId, ayahNum] = action.currentVerse.split(':');
-      const nextId = `${chapterId}:${parseInt(ayahNum, 10) - 1}`;
-
-      return {
-        ...state,
-        currentVerse: nextId,
-        currentFile: state.files[chapterId][nextId],
-        currentTime: 0,
-      };
-    }
-    case SET_AYAH: {
-      const [chapterId, ayahNum] = action.currentVerse.split(':');
-      const currentVerse = `${chapterId}:${parseInt(ayahNum, 10)}`;
-      const currentFile = state.files[chapterId][currentVerse];
-
-      return {
-        ...state,
-        currentVerse,
-        currentFile,
-        currentTime: 0,
       };
     }
     case SET_REPEAT: {
@@ -174,7 +148,6 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
     case SET_CURRENT_FILE: {
       return {
         ...state,
-        currentFile: action.file,
       };
     }
     case SET_CURRENT_WORD: {
@@ -256,7 +229,8 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
     case SET_CURRENT_VERSE: {
       return {
         ...state,
-        currentVerse: action.id,
+        currentVerse: action.payload,
+        isPlaying: action.meta.shouldPlay,
       };
     }
     default: {

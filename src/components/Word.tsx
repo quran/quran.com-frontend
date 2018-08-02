@@ -1,16 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
-import { zeroPad } from '../helpers/stringHelpers';
+import pad from 'lodash/pad';
 import { buildAudioURL } from '../helpers/buildAudio';
 import { WordShape } from '../shapes';
 import { WORD_TYPES } from '../constants';
+import { SetCurrentVerse } from '../redux/actions/audioplayer';
 
 const propTypes = {
   word: WordShape.isRequired,
   setCurrentWord: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
-  setVerse: PropTypes.func.isRequired,
+  setCurrentVerse: PropTypes.func.isRequired,
   playCurrentWord: PropTypes.func.isRequired,
   tooltip: PropTypes.string.isRequired,
   audioPosition: PropTypes.number,
@@ -38,7 +39,7 @@ type Props = {
   word: WordShape;
   setCurrentWord(wordCode: string): any;
   pause(): any;
-  setVerse(verseKey: string): any;
+  setCurrentVerse: SetCurrentVerse;
   playCurrentWord(data: { word: WordShape; position: number }): any;
   tooltip: 'translation' | 'transliteration';
   audioPosition?: number;
@@ -55,14 +56,12 @@ class Word extends Component<Props> {
   buildTooltip = () => {
     const { word, tooltip } = this.props;
 
-    let title;
+    let title = '';
 
     if (word.charType === WORD_TYPES.CHAR_TYPE_END) {
       title = `Verse ${word.verseKey.split(':')[1]}`;
     } else if (word.charType === WORD_TYPES.CHAR_TYPE_WORD && word[tooltip]) {
       title = word[tooltip].text;
-    } else {
-      title = '';
     }
 
     return title;
@@ -86,7 +85,7 @@ class Word extends Component<Props> {
       isSearched,
       setCurrentWord,
       pause,
-      setVerse,
+      setCurrentVerse,
       playCurrentWord,
     } = this.props;
 
@@ -98,7 +97,7 @@ class Word extends Component<Props> {
       setCurrentWord(word.code);
     } else {
       pause();
-      setVerse(word.verseKey);
+      setCurrentVerse(word.verseKey);
       playCurrentWord({ word, position: audioPosition });
     }
   };
@@ -117,7 +116,7 @@ class Word extends Component<Props> {
 
     if (useTextFont) {
       if (word.charType === WORD_TYPES.CHAR_TYPE_END) {
-        text = zeroPad(word.verseKey.split(':')[1], 3, '0');
+        text = pad(word.verseKey.split(':')[1], 3, '0');
       } else {
         text = word.textMadani;
       }

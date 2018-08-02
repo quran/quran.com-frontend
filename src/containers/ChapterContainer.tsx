@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import { match } from 'react-router';
-import { fetchVerses, setCurrentVerse } from '../redux/actions/verses';
+import { fetchVerses } from '../redux/actions/verses';
 import { fetchChapters } from '../redux/actions/chapters';
 import { fetchChapterInfo } from '../redux/actions/chapterInfos';
 import { ReduxState } from '../types';
@@ -41,6 +41,5 @@ export default connect(
     fetchVerses,
     fetchChapters,
     fetchChapterInfo,
-    setCurrentVerse,
   }
 )(Chapter);

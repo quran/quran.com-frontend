@@ -2,12 +2,10 @@ import { ChapterId, VerseId } from '../../types';
 import {
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
+  SET_CURRENT_VERSE,
   PLAY_CURRENT_WORD,
   PLAY,
   PAUSE,
-  NEXT,
-  SET_AYAH,
-  PREVIOUS,
   SET_REPEAT,
   TOGGLE_SCROLL,
   BUILD_ON_CLIENT,
@@ -27,32 +25,26 @@ export const setCurrentWord = (word: $TsFixMe) => ({
   word,
 });
 
+export const setCurrentVerse = (verseKey: string, shouldPlay?: boolean) => ({
+  type: SET_CURRENT_VERSE,
+  payload: verseKey,
+  meta: {
+    shouldPlay,
+  },
+});
+
 export const playCurrentWord = (payload: $TsFixMe) => ({
   type: PLAY_CURRENT_WORD,
   payload,
 });
 
-export const play = () => ({
+export const play = (verseKey?: string) => ({
   type: PLAY,
+  payload: verseKey,
 });
 
 export const pause = () => ({
   type: PAUSE,
-});
-
-export const next = (currentVerse: string) => ({
-  type: NEXT,
-  currentVerse,
-});
-
-export const setVerse = (currentVerse: string) => ({
-  type: SET_AYAH,
-  currentVerse,
-});
-
-export const previous = (currentVerse: string) => ({
-  type: PREVIOUS,
-  currentVerse,
 });
 
 export const setRepeat = (repeat: boolean) => ({
@@ -69,7 +61,13 @@ export const buildOnClient = (chapterId: ChapterId) => ({
   chapterId,
 });
 
-export const update = (payload: $TsFixMe) => ({
+type UpdatePayload = {
+  duration?: number;
+  currentTime?: number;
+  isLoading?: boolean;
+};
+
+export const update = (payload: UpdatePayload) => ({
   type: UPDATE,
   payload,
 });
@@ -79,11 +77,13 @@ export const fetchAudio = ({
   verseId,
   verseKey,
   audio,
+  isCurrentVerse,
 }: {
   chapterId: ChapterId;
   verseId: VerseId;
   verseKey: string;
   audio: number;
+  isCurrentVerse?: boolean;
 }) => ({
   type: FETCH_AUDIOPLAYER,
   promise: apiClient.get(
@@ -94,9 +94,19 @@ export const fetchAudio = ({
       },
     }
   ),
-  verseKey,
-  chapterId,
+  meta: {
+    verseKey,
+    chapterId,
+    isCurrentVerse,
+  },
 });
 
 export const isLoaded = (files: $TsFixMe, verse: VerseShape) =>
   files[verse.verseKey];
+
+export type FetchAudio = typeof fetchAudio;
+export type Play = typeof play;
+export type Pause = typeof pause;
+export type Update = typeof update;
+export type ToggleScroll = typeof toggleScroll;
+export type SetCurrentVerse = typeof setCurrentVerse;

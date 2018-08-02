@@ -2,6 +2,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import Button from 'react-bootstrap/lib/Button';
 import styled from 'styled-components';
+import Title from './dls/Title';
 
 import makeHeadTags from '../helpers/makeHelmetTags';
 
@@ -32,10 +33,6 @@ const StyledButton = styled(Button)`
       margin-top: 15px;
     }
   }
-`;
-
-const Title = styled.h1`
-  color: #000000;
 `;
 
 // TODO: Translations

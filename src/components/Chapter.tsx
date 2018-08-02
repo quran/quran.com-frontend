@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import last from 'lodash/last';
+import isEmpty from 'lodash/isEmpty';
 import { match as MatchType } from 'react-router';
 import Loader from 'quran-components/lib/Loader';
 import {
@@ -24,6 +25,7 @@ import { FetchVerses } from '../redux/actions/verses';
 import { FetchChapters } from '../redux/actions/chapters';
 import { FetchChapterInfo } from '../redux/actions/chapterInfos';
 import { NUMBER_OF_CHAPTERS } from '../constants';
+import AudioplayerContainer from '../containers/AudioplayerContainer';
 
 const propTypes = {
   chapter: ChapterShape.isRequired,
@@ -77,10 +79,27 @@ class Chapter extends Component<Props> {
     this.bootstrap();
   }
 
+  componentDidUpdate({
+    match: {
+      params: { chapterId: prevChapterId },
+    },
+  }: Props) {
+    const {
+      match: {
+        params: { chapterId },
+      },
+    } = this.props;
+
+    if (chapterId !== prevChapterId) {
+      this.bootstrap();
+    }
+  }
+
   fetchVerses = () => {
-    // TODO: check if it's in the store
     const { match, fetchVerses, settings, location } = this.props;
     const { params } = match;
+
+    if (this.isVersesFetched()) return null;
 
     const chapterId = parseInt(params.chapterId, 10);
     const paging = determinePage(params.range);
@@ -129,6 +148,27 @@ class Chapter extends Component<Props> {
     return fetchChapterInfo(params.chapterId, params.language);
   };
 
+  isVersesFetched = () => {
+    const { match, verses } = this.props;
+    const { params } = match;
+    const paging = determinePage(params.range);
+
+    if (paging.offset) {
+      return (
+        verses[
+          `${params.chapterId}:${paging.offset ? paging.offset + 1 : 1}`
+        ] &&
+        verses[
+          `${params.chapterId}:${
+            paging.offset && paging.limit ? paging.offset + paging.limit : 10
+          }`
+        ]
+      );
+    }
+
+    return verses[`${params.chapterId}:1`];
+  };
+
   bootstrap() {
     const promises = [
       this.fetchVerses(),
@@ -144,6 +184,11 @@ class Chapter extends Component<Props> {
     const versesArray = Object.values(verses);
     const firstVerse = versesArray[0];
     const lastVerse: VerseShape = last(versesArray);
+
+    if (!firstVerse && !lastVerse) {
+      return null;
+    }
+
     const range = [firstVerse.verseNumber, lastVerse.verseNumber];
     const isEndOfSurah = lastVerse.verseNumber === chapter.versesCount;
 
@@ -173,13 +218,14 @@ class Chapter extends Component<Props> {
       isVersesLoading,
     } = this.props;
 
-    const lastVerse: VerseShape = last(Object.values(verses));
+    const versesArray = Object.values(verses);
+    const lastVerse: VerseShape = last(versesArray);
     const isEndOfChapter: boolean =
       lastVerse && lastVerse.verseNumber === chapter.versesCount;
     const isSingleVerse =
       !!match.params.range && !match.params.range.includes('-');
 
-    if (!chapter || isVersesLoading) {
+    if ((!chapter || isVersesLoading) && isEmpty(versesArray)) {
       return <Loader />;
     }
 
@@ -211,11 +257,7 @@ class Chapter extends Component<Props> {
               {settings.isReadingMode ? (
                 <PageView lines={lines} />
               ) : (
-                <ListView
-                  chapter={chapter}
-                  verses={verses}
-                  isLoading={isVersesLoading}
-                />
+                <ListView chapter={chapter} verses={verses} />
               )}
             </div>
             <div className="col-md-10 col-md-offset-1">
@@ -233,14 +275,13 @@ class Chapter extends Component<Props> {
           </div>
         </PageContainer>
 
-        {/* {__CLIENT__ && (
-          <Audioplayer
+        {__CLIENT__ && (
+          <AudioplayerContainer
             chapter={chapter}
             verses={verses}
-            currentVerse={verses[currentVerse]}
-            onLoadAyahs={this.handleLazyLoadAyahs}
+            onLoadAyahs={this.handleLazyLoad}
           />
-        )} */}
+        )}
       </div>
     );
   }

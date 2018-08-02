@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 import T, { KEYS } from './T';
 import { FOOTER_EVENTS } from '../events';
@@ -39,7 +39,7 @@ const List = styled.ul`
   }
 `;
 
-const StyledLink = styled.a`
+const linkCss = css`
   font-size: 13px;
   color: rgba(255, 255, 255, 0.5);
   transition: color 0.15s ease-in-out;
@@ -49,14 +49,12 @@ const StyledLink = styled.a`
   }
 `;
 
-const StyledRouterLink = styled(Link)`
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.5);
-  transition: color 0.15s ease-in-out;
+const StyledLink = styled.a`
+  ${linkCss};
+`;
 
-  &:hover {
-    color: #fff;
-  }
+const StyledRouterLink = styled(Link)`
+  ${linkCss};
 `;
 
 const Footer = () => (

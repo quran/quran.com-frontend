@@ -1,11 +1,13 @@
+import toNumber from 'lodash/toNumber';
+
 // eslint-disable-next-line
-export const determinePage = (range: string) => {
+export const determinePage = (range?: string) => {
   let from;
   let to;
 
   if (range) {
     if (range.includes('-')) {
-      [from, to] = range.split('-').map(value => parseInt(value, 10));
+      [from, to] = range.split('-').map(toNumber);
 
       if (isNaN(from) || isNaN(to)) return {};
 
@@ -15,7 +17,7 @@ export const determinePage = (range: string) => {
       };
     }
 
-    const offset = parseInt(range, 10);
+    const offset = toNumber(range);
 
     if (isNaN(offset)) return {};
 

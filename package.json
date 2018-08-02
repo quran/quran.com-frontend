@@ -38,32 +38,6 @@
       "maxSize": "20 kB"
     }
   ],
-  "jest": {
-    "moduleDirectories": [
-      "node_modules",
-      "src",
-      "src/shared"
-    ],
-    "coveragePathIgnorePatterns": [
-      "/node_modules/",
-      "/dist/"
-    ],
-    "testPathIgnorePatterns": [
-      "/node_modules/",
-      "/dist/"
-    ],
-    "automock": false,
-    "setupFiles": [
-      "./setupJest.js"
-    ],
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/tests/__mocks__/fileMock.js",
-      "\\.(css|scss)$": "<rootDir>/tests/__mocks__/styleMock.js"
-    },
-    "globals": {
-      "__CLIENT__": true
-    }
-  },
   "pre-commit": [
     "test:stylelint",
     "precommit"
@@ -234,6 +208,7 @@
     "@storybook/addon-info": "3.3.15",
     "@storybook/addon-links": "3.3.15",
     "@storybook/react": "3.3.15",
+    "@types/jest": "23.3.1",
     "babel-eslint": "7.1.1",
     "babel-jest": "^21.2.0",
     "babel-plugin-react-transform": "2.0.2",
@@ -272,6 +247,7 @@
     "sinon-chai": "2.8.0",
     "stylelint": "7.1.0",
     "stylelint-webpack-plugin": "0.2.0",
+    "ts-jest": "23.0.1",
     "typescript-eslint-parser": "16.0.1",
     "webpack-bundle-analyzer": "2.11.1",
     "webpack-dashboard": "^0.4.0",

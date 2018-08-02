@@ -10,6 +10,7 @@ import T, { KEYS } from '../T';
 import Jumbotron from '../Jumbotron';
 import { FetchChapters } from '../../redux/actions/chapters';
 import { FetchJuzs } from '../../redux/actions/juzs';
+import { NUMBER_OF_CHAPTERS, NUMBER_OF_JUZS } from '../../constants';
 
 const JuzList = asyncComponent({
   resolve: () => import(/* webpackChunkName: "JuzList" */ '../JuzList'),
@@ -28,8 +29,9 @@ const loaderStyle = { position: 'relative', overflow: 'hidden' };
 
 class Home extends Component<Props> {
   fetchChapters = () => {
-    // TODO: check if it's in the store
-    const { fetchChapters } = this.props;
+    const { fetchChapters, chapters } = this.props;
+
+    if (Object.keys(chapters).length === NUMBER_OF_CHAPTERS) return null;
 
     if (__CLIENT__) {
       fetchChapters();
@@ -41,8 +43,9 @@ class Home extends Component<Props> {
   };
 
   fetchJuzs = () => {
-    // TODO: check if it's in the store
-    const { fetchJuzs } = this.props;
+    const { fetchJuzs, juzs } = this.props;
+
+    if (Object.keys(juzs).length === NUMBER_OF_JUZS) return null;
 
     if (__CLIENT__) {
       fetchJuzs();

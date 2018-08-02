@@ -5,7 +5,8 @@ export default {
 
     if (!node) {
       console.warn(`node [name=${name}] not found, could not scroll`); // eslint-disable-line
-      return;
+
+      return null;
     }
 
     const nodeRect = node.getBoundingClientRect();

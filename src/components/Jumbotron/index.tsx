@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import backgroundImage from '../../../static/images/background.jpg';
 import logo from '../../../static/images/logo-lg-w.png';
+import Title from '../dls/Title';
 
 const StyledLink = styled(Link)`
   display: inline-block;
@@ -18,12 +19,6 @@ const Logo = styled.img`
   padding-bottom: 10px;
   height: auto;
   width: 100%;
-`;
-
-const Title = styled.h4`
-  color: ${({ theme }) => theme.colors.white};
-  font-size: 160%;
-  padding-bottom: 3.5%;
 `;
 
 const Container = styled.div`
@@ -49,7 +44,9 @@ const Jumbotron: React.SFC<Props> = ({ noSearch }: Props) => (
             <Logo src={logo} alt="logo" />
           </StyledLink>
           {/* TODO: Translations */}
-          <Title>THE NOBLE QURAN</Title>
+          <Title level={1} white>
+            THE NOBLE QURAN
+          </Title>
           {noSearch}
           {/* {!noSearch && <SearchInput />} */}
         </div>

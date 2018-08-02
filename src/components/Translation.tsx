@@ -9,8 +9,8 @@ const propTypes = {
 };
 
 type Props = {
-  translation: TranslationShape,
-  loadFootNote?(value: string): void,
+  translation: TranslationShape;
+  loadFootNote?(value: string): void;
 };
 
 class Translation extends Component<Props> {
@@ -51,4 +51,4 @@ class Translation extends Component<Props> {
   }
 }
 
-export default Translation
+export default Translation;

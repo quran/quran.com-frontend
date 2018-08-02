@@ -9,6 +9,7 @@ import { VerseShape, ChapterShape } from '../shapes';
 import Text from './verse/Text';
 import Controls from './verse/Controls';
 import { FetchTafsirs } from '../redux/actions/tafsirs';
+import { SetCurrentVerse } from '../redux/actions/audioplayer';
 
 // TODO: Change this
 const VerseNode = styled(Element)<{ highlight?: boolean; textMuted: string }>`
@@ -34,7 +35,7 @@ const propTypes = {
   currentVerse: PropTypes.string,
   fetchTafsirs: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
-  setVerse: PropTypes.func.isRequired,
+  setCurrentVerse: PropTypes.func.isRequired,
   play: PropTypes.func.isRequired,
   isPdf: PropTypes.bool,
 };
@@ -62,7 +63,7 @@ type Props = {
   fetchTafsirs: FetchTafsirs;
   play(): any;
   pause(): any;
-  setVerse(verseKey: string): any;
+  setCurrentVerse: SetCurrentVerse;
   isPdf?: boolean;
 };
 
@@ -76,7 +77,7 @@ class Verse extends Component<Props> {
       isPlaying,
       verse,
       pause,
-      setVerse,
+      setCurrentVerse,
       play,
       isCurrentVerse,
     } = this.props;
@@ -89,7 +90,7 @@ class Verse extends Component<Props> {
       return;
     }
 
-    setVerse(verse.verseKey);
+    setCurrentVerse(verse.verseKey);
     play();
   };
 

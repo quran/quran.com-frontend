@@ -1,12 +1,6 @@
 import { versesSchema } from '../schemas';
 
-import {
-  FETCH_VERSES,
-  CLEAR_CURRENT,
-  SET_CURRENT_VERSE,
-  SET_CURRENT_WORD,
-  CLEAR_CURRENT_WORD,
-} from '../constants/verses';
+import { FETCH_VERSES } from '../constants/verses';
 import apiClient from '../../apiClient';
 import { ChapterId, VerseId, TafsirId } from '../../types';
 
@@ -58,33 +52,6 @@ export const fetchVerses = (
   };
 };
 
-export const clearCurrent = (chapterId: ChapterId) => {
-  return {
-    type: CLEAR_CURRENT,
-    chapterId,
-  };
-};
-
-export const clearCurrentWord = () => {
-  return {
-    type: CLEAR_CURRENT_WORD,
-  };
-};
-
-export const setCurrentVerse = (chapterId: ChapterId) => {
-  return {
-    type: SET_CURRENT_VERSE,
-    chapterId,
-  };
-};
-
-export const setCurrentWord = (chapterId: ChapterId) => {
-  return {
-    type: SET_CURRENT_WORD,
-    chapterId,
-  };
-};
-
 export const isLoaded = (
   globalState: any,
   chapterId: ChapterId,
@@ -122,8 +89,5 @@ export const isTafsirLoaded = (
   return !!verses && globalState.verses.tafsirs[`${verseKey}-${tafsirId}`];
 };
 
-export type ActionTypes =
-  | typeof fetchVerses
-  | typeof clearCurrent
-  | typeof setCurrentVerse;
+export type ActionTypes = typeof fetchVerses;
 export type FetchVerses = typeof fetchVerses;

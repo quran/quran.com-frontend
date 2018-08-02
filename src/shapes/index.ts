@@ -10,6 +10,7 @@ import TransliterationShape from './TransliterationShape';
 import UserShape from './UserShape';
 import VerseShape from './VerseShape';
 import WordShape from './WordShape';
+import SegmentShape from './SegmentShape';
 
 export {
   ChapterInfoShape,
@@ -23,6 +24,7 @@ export {
   UserShape,
   VerseShape,
   WordShape,
+  SegmentShape,
 };
 
 export const bookmarkActions = PropTypes.shape({
@@ -116,26 +118,6 @@ export const recitationTypes = PropTypes.shape({
   style: PropTypes.string,
   reciter_name_eng: PropTypes.string,
 });
-
-export const timeInterval = PropTypes.shape({
-  from: PropTypes.number,
-  to: PropTypes.number,
-  time: PropTypes.number,
-});
-
-export const words = PropTypes.shape({
-  startTime: PropTypes.number.isRequired,
-  endTime: PropTypes.number.isRequired,
-  duration: PropTypes.number.isRequired,
-});
-
-export const segmentType = PropTypes.shape({
-  words,
-  // eslint-disable-next-line max-len
-  intervals: PropTypes.oneOfType([PropTypes.array, PropTypes.object]), // TODO: This should be done a better way.
-});
-
-export const segments = PropTypes.arrayOf(segmentType);
 
 export const match = PropTypes.arrayOf(matchType);
 
