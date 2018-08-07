@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import RouterStatus from '../RouterStatus';
-import T, { KEYS } from '../T';
-import Jumbotron from '../Jumbotron';
+import RouterStatus from './RouterStatus';
+import T, { KEYS } from './T';
+import Jumbotron from './Jumbotron';
 
 const Container = styled.div`
   padding: 20vh 0;

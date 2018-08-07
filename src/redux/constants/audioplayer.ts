@@ -2,8 +2,8 @@ export const SET_CURRENT_FILE: 'quran/audioplayer/SET_CURRENT_FILE' =
   'quran/audioplayer/SET_CURRENT_FILE';
 export const SET_CURRENT_WORD: 'quran/audioplayer/SET_CURRENT_WORD' =
   'quran/audioplayer/SET_CURRENT_WORD';
-export const SET_CURRENT_VERSE: 'quran/audioplayer/SET_CURRENT_VERSE' =
-  'quran/audioplayer/SET_CURRENT_VERSE';
+export const SET_CURRENT_VERSE_KEY: 'quran/audioplayer/SET_CURRENT_VERSE_KEY' =
+  'quran/audioplayer/SET_CURRENT_VERSE_KEY';
 export const PLAY_CURRENT_WORD: 'quran/audioplayer/PLAY_CURRENT_WORD' =
   'quran/audioplayer/PLAY_CURRENT_WORD';
 export const PLAY: 'quran/audioplayer/PLAY' = 'quran/audioplayer/PLAY';

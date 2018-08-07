@@ -2,14 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Element from 'react-scroll/modules/components/Element';
-import T, { KEYS } from './T';
 import Translation from './Translation';
 
 import { VerseShape, ChapterShape } from '../shapes';
 import Text from './verse/Text';
 import Controls from './verse/Controls';
 import { FetchTafsirs } from '../redux/actions/tafsirs';
-import { SetCurrentVerse } from '../redux/actions/audioplayer';
+import { setCurrentVerseKey } from '../redux/actions/audioplayer';
 
 // TODO: Change this
 const VerseNode = styled(Element)<{ highlight?: boolean; textMuted: string }>`
@@ -30,12 +29,10 @@ const propTypes = {
   verse: VerseShape.isRequired,
   chapter: ChapterShape.isRequired,
   match: PropTypes.object, // eslint-disable-line react/forbid-prop-types
-  isPlaying: PropTypes.bool,
-  isCurrentVerse: PropTypes.bool,
-  currentVerse: PropTypes.string,
+  isCurrentVersePlaying: PropTypes.bool.isRequired,
   fetchTafsirs: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
-  setCurrentVerse: PropTypes.func.isRequired,
+  setCurrentVerseKey: PropTypes.func.isRequired,
   play: PropTypes.func.isRequired,
   isPdf: PropTypes.bool,
 };
@@ -44,8 +41,6 @@ const defaultProps: $TsFixMe = {
   isSearched: false,
   isPdf: false,
   match: null,
-  isPlaying: false,
-  isCurrentVerse: false,
   currentVerse: null,
 };
 
@@ -54,16 +49,15 @@ type Props = {
   verse: VerseShape;
   chapter: ChapterShape;
   match?: $TsFixMe;
-  isPlaying?: boolean;
+  isCurrentVersePlaying: boolean;
   tooltip?: string;
   currentWord?: number;
-  isCurrentVerse?: boolean;
   currentVerse?: string;
   userAgent?: { [key: string]: boolean };
   fetchTafsirs: FetchTafsirs;
   play(): any;
   pause(): any;
-  setCurrentVerse: SetCurrentVerse;
+  setCurrentVerseKey: setCurrentVerseKey;
   isPdf?: boolean;
 };
 
@@ -73,25 +67,13 @@ class Verse extends Component<Props> {
   public static defaultProps = defaultProps;
 
   handlePlay = () => {
-    const {
-      isPlaying,
-      verse,
-      pause,
-      setCurrentVerse,
-      play,
-      isCurrentVerse,
-    } = this.props;
+    const { isCurrentVersePlaying, verse, pause, setCurrentVerseKey } = this.props;
 
-    if (isPlaying) {
+    if (isCurrentVersePlaying) {
       pause();
     }
 
-    if (isCurrentVerse) {
-      return;
-    }
-
-    setCurrentVerse(verse.verseKey);
-    play();
+    setCurrentVerseKey(verse.verseKey, true);
   };
 
   handleTafsirsClick = () => {
@@ -104,9 +86,7 @@ class Verse extends Component<Props> {
   render() {
     const {
       verse,
-      isCurrentVerse,
-      currentVerse,
-      isPlaying,
+      isCurrentVersePlaying,
       isSearched,
       match,
       chapter,
@@ -118,14 +98,13 @@ class Verse extends Component<Props> {
       <VerseNode
         name={`verse:${verse.verseKey}`}
         className="row"
-        highlight={isCurrentVerse}
+        highlight={isCurrentVersePlaying}
       >
         <Controls
           isSearched={isSearched}
           verse={verse}
           chapter={chapter}
-          isPlaying={isPlaying}
-          currentVerse={currentVerse}
+          isCurrentVersePlaying={isCurrentVersePlaying}
           isPdf={isPdf}
           onPlayClick={this.handlePlay}
           onTafsirsClick={this.handleTafsirsClick}

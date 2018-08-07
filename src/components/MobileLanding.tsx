@@ -46,7 +46,7 @@ const MobileLanding: React.SFC = () => (
     />
     <div className="row">
       <div className="col-md-5">
-        <Title>
+        <Title level={1}>
           <strong>Quran</strong>
           <br />
           by quran.com القرآن

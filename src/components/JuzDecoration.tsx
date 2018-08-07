@@ -38,7 +38,7 @@ type Props = {
   juzNumber: number;
 };
 
-const JuzDecoration: React.SFC<Props> = ({ juzNumber }) => (
+const JuzDecoration: React.SFC<Props> = ({ juzNumber }: Props) => (
   <Fragment>
     <StyledJuzArt src={juzMarkTop} alt="juz top Art" />
     <StyledContainer>

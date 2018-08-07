@@ -2,7 +2,7 @@ import { ChapterId, VerseId } from '../../types';
 import {
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
-  SET_CURRENT_VERSE,
+  SET_CURRENT_VERSE_KEY,
   PLAY_CURRENT_WORD,
   PLAY,
   PAUSE,
@@ -25,8 +25,8 @@ export const setCurrentWord = (word: $TsFixMe) => ({
   word,
 });
 
-export const setCurrentVerse = (verseKey: string, shouldPlay?: boolean) => ({
-  type: SET_CURRENT_VERSE,
+export const setCurrentVerseKey = (verseKey: string, shouldPlay?: boolean) => ({
+  type: SET_CURRENT_VERSE_KEY,
   payload: verseKey,
   meta: {
     shouldPlay,
@@ -109,4 +109,4 @@ export type Play = typeof play;
 export type Pause = typeof pause;
 export type Update = typeof update;
 export type ToggleScroll = typeof toggleScroll;
-export type SetCurrentVerse = typeof setCurrentVerse;
+export type SetCurrentVerseKey = typeof setCurrentVerseKey;

@@ -24,7 +24,7 @@ import createStore from '../../../redux/createStore';
 
 import ServerHTML from './ServerHTML';
 import App from '../../../components/App';
-import { setOption, setUserAgent } from '../../../redux/actions/settings';
+import { setSetting, setUserAgent } from '../../../redux/actions/settings';
 import { log } from '../../../../internal/utils';
 
 /**
@@ -75,7 +75,7 @@ export default function reactApplicationMiddleware(
 
   // setup store dispatches
   store.dispatch(setUserAgent(request.useragent));
-  store.dispatch(setOption(cookie.load('options') || {}));
+  store.dispatch(setSetting(cookie.load('options') || {}));
 
   // Declare our React application.
   const app = (

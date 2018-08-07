@@ -223,3 +223,5 @@ export enum WORD_TYPES {
   CHAR_TYPE_RUB = 'rub-el-hizb',
   CHAR_TYPE_SAJDAH = 'sajdah',
 }
+
+export const COOKIE_SETTINGS_KEY = 'options';

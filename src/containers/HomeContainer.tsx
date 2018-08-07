@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
 import Home from '../components/Home';
-import { ReduxState } from '../types';
+import ReduxState from '../types/ReduxState';
 import { fetchChapters } from '../redux/actions/chapters';
 import { fetchJuzs } from '../redux/actions/juzs';
 

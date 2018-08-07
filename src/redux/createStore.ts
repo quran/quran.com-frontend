@@ -6,7 +6,11 @@ import logger from 'redux-logger';
 import reducer from './reducers';
 
 export default function createStore(data: $TsFixMe) {
-  const middleware = [thunk, reduxPackMiddleware, logger];
+  const middleware = [thunk, reduxPackMiddleware];
+
+  if (__CLIENT__) {
+    middleware.push(logger);
+  }
 
   let finalCreateStore;
   if (__DEVELOPMENT__ && __CLIENT__ && __DEVTOOLS__) {

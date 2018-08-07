@@ -16,7 +16,7 @@ import {
   Play,
   Pause,
   Update,
-  SetCurrentVerse,
+  SetCurrentVerseKey,
   ToggleScroll,
 } from '../redux/actions/audioplayer';
 import { nextVerseKey, previousVerseKey } from '../helpers/verseKeys';
@@ -31,8 +31,8 @@ import RepeatShape from '../shapes/RepeatShape';
 //   LoadingComponent: ComponentLoader,
 // });
 
-const PERCENTAGE_OF_CURRENT_FILE_TO_PRELOAD_NEXT = 0.5;
-const DIRECTIONS: { [key: string]: string } = {
+export const PERCENTAGE_OF_CURRENT_FILE_TO_PRELOAD_NEXT = 0.5;
+export const DIRECTIONS: { [key: string]: string } = {
   NEXT: 'NEXT',
   PREVIOUS: 'PREVIOUS',
 };
@@ -41,12 +41,11 @@ const propTypes = {
   chapter: ChapterShape.isRequired,
   segments: SegmentShape,
   files: PropTypes.object,
-  currentVerse: PropTypes.string,
+  currentVerseKey: PropTypes.string,
   play: PropTypes.func.isRequired,
-  setCurrentVerse: PropTypes.func.isRequired,
+  setCurrentVerseKey: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
   update: PropTypes.func.isRequired,
-  repeat: PropTypes.object.isRequired,
   shouldScroll: PropTypes.bool.isRequired,
   setRepeat: PropTypes.func.isRequired,
   toggleScroll: PropTypes.func.isRequired,
@@ -67,7 +66,7 @@ type DefaultProps = {
   duration: null;
   currentFile: null;
   currentTime: null;
-  currentVerse: null;
+  currentVerseKey: null;
 };
 
 const defaultProps: DefaultProps = {
@@ -77,19 +76,19 @@ const defaultProps: DefaultProps = {
   duration: null,
   currentFile: null,
   currentTime: null,
-  currentVerse: null,
+  currentVerseKey: null,
 };
 
 type Props = {
   verses: { [verseKey: string]: VerseShape };
   fetchAudio: FetchAudio;
-  setCurrentVerse: SetCurrentVerse;
+  setCurrentVerseKey: SetCurrentVerseKey;
   play: Play;
   pause: Pause;
   update: Update;
   toggleScroll: ToggleScroll;
   audioSetting: number;
-  currentVerse: string;
+  currentVerseKey: string;
   isPlaying: boolean;
   currentFile: $TsFixMe;
   files?: $TsFixMe;
@@ -105,9 +104,9 @@ class Audioplayer extends Component<Props> {
   public static defaultProps = defaultProps;
 
   componentDidMount() {
-    const { currentVerse, audioSetting, verses, fetchAudio } = this.props;
+    const { currentVerseKey, audioSetting, verses, fetchAudio } = this.props;
     const versesArray = Object.values(verses);
-    const verse = verses[currentVerse] || versesArray[0];
+    const verse = verses[currentVerseKey] || versesArray[0];
 
     // document.addEventListener('keydown', this.handleKeyboardEvent);
 
@@ -116,7 +115,7 @@ class Audioplayer extends Component<Props> {
       verseId: verse.id,
       verseKey: verse.verseKey,
       audio: audioSetting,
-      isCurrentVerse: !currentVerse,
+      isCurrentVerse: !currentVerseKey,
     });
 
     return false;
@@ -141,9 +140,9 @@ class Audioplayer extends Component<Props> {
   }
 
   get nextVerseKey() {
-    const { currentVerse } = this.props;
+    const { currentVerseKey } = this.props;
 
-    return nextVerseKey(currentVerse);
+    return nextVerseKey(currentVerseKey);
   }
 
   get nextVerse() {
@@ -152,10 +151,16 @@ class Audioplayer extends Component<Props> {
     return verses[this.nextVerseKey];
   }
 
-  get previousVerseKey() {
-    const { currentVerse } = this.props;
+  get currentVerse() {
+    const { currentVerseKey, verses } = this.props;
 
-    return previousVerseKey(currentVerse);
+    return verses[currentVerseKey];
+  }
+
+  get previousVerseKey() {
+    const { currentVerseKey } = this.props;
+
+    return previousVerseKey(currentVerseKey);
   }
 
   get previousVerse() {
@@ -165,7 +170,6 @@ class Audioplayer extends Component<Props> {
   }
 
   addFileListeners = (file: HTMLAudioElement) => {
-    console.log('HANDLING', file, file.src);
     // NOTE: if no file, just wait.
     if (!file) return false;
 
@@ -177,7 +181,6 @@ class Audioplayer extends Component<Props> {
     const onLoadeddata = () => {
       // Default current time to zero. This will change
       file.currentTime = 0; // eslint-disable-line
-      // file.currentTime || currentTime || 0;
 
       return update({
         duration: file.duration,
@@ -207,11 +210,11 @@ class Audioplayer extends Component<Props> {
         return this.handleRepeat(file);
       }
 
-      if (file.readyState >= 3 && file.paused) {
-        pause();
-      }
+      // if (file.readyState >= 3 && file.paused) {
+      //   pause();
+      // }
 
-      return this.handleNextVerse();
+      return this.handleVerseChange();
     };
 
     const onPlay = () => {
@@ -257,7 +260,13 @@ class Audioplayer extends Component<Props> {
   preloadNextAudioFile = () => {
     const { files } = this.props;
 
-    files[this.nextVerseKey].setAttribute('preload', 'auto');
+    if (files[this.nextVerseKey]) {
+      files[this.nextVerseKey].setAttribute('preload', 'auto');
+    }
+  };
+
+  scrollToVerse = (verseNumber: number | string) => {
+    scrollTo(`verse:${verseNumber}`, -45);
   };
 
   handleIsPlayingChange = (prevProps: Props) => {
@@ -275,12 +284,27 @@ class Audioplayer extends Component<Props> {
   };
 
   handleCurrentFileChange = (prevProps: Props) => {
-    const { currentFile } = this.props;
+    const {
+      currentFile,
+      fetchAudio,
+      audioSetting,
+      currentVerseKey,
+      files,
+    } = this.props;
 
     if (currentFile && !prevProps.currentFile) {
       this.fetchNextAudioFile();
 
       return this.addFileListeners(currentFile);
+    }
+
+    if (!files[currentVerseKey] && files[prevProps.currentVerseKey]) {
+      return fetchAudio({
+        chapterId: this.currentVerse.chapterId,
+        verseId: this.currentVerse.id,
+        verseKey: this.currentVerse.verseKey,
+        audio: audioSetting,
+      });
     }
 
     if (currentFile.src !== prevProps.currentFile.src) {
@@ -289,25 +313,28 @@ class Audioplayer extends Component<Props> {
       // TODO: scroll
       // this.handleScrollTo();
 
-      return this.addFileListeners(currentFile);
+      this.addFileListeners(currentFile);
+
+      if (prevProps.isPlaying) {
+        currentFile.play();
+      }
     }
   };
 
-  handleNextVerse = (direction = DIRECTIONS.NEXT as string) => {
-    const { setCurrentVerse } = this.props;
+  handleVerseChange = (direction = DIRECTIONS.NEXT as string) => {
+    const { setCurrentVerseKey } = this.props;
 
     const VERSE_DIRECTIONS: { [key: string]: string } = {
       [DIRECTIONS.NEXT]: this.nextVerseKey,
       [DIRECTIONS.PREVIOUS]: this.previousVerseKey,
     };
 
-    //   this.handleScrollTo(nextVerseKey);
+    const verseKey = VERSE_DIRECTIONS[direction];
 
-    setCurrentVerse(VERSE_DIRECTIONS[direction], true);
-  };
-
-  scrollToVerse = (verseNumber: number | string) => {
-    scrollTo(`verse:${verseNumber}`, -45);
+    if (verseKey) {
+      //   this.handleScrollTo(nextVerseKey);
+      setCurrentVerseKey(verseKey, true);
+    }
   };
 
   handleScrollTo = (verseNumber: number) => {
@@ -329,11 +356,11 @@ class Audioplayer extends Component<Props> {
   // handleRepeat = file => {
   //   const {
   //     repeat,
-  //     currentVerse,
+  //     currentVerseKey,
   //     setRepeat,
   //     setAyah,
   //   } = this.props;
-  //   const [chapter, ayah] = currentVerse.verseKey
+  //   const [chapter, ayah] = currentVerseKey.verseKey
   //     .split(':')
   //     .map(val => parseInt(val, 10));
 
@@ -341,18 +368,18 @@ class Audioplayer extends Component<Props> {
 
   //   if (repeat.from > ayah && repeat.to < ayah) {
   //     // user selected a range where current ayah is outside
-  //     return this.handleNextVerse();
+  //     return this.handleVerseChange();
   //   }
 
   //   if (repeat.from === repeat.to) {
   //     // user selected single ayah repeat
-  //     if (ayah !== repeat.from) return this.handleNextVerse();
+  //     if (ayah !== repeat.from) return this.handleVerseChange();
 
   //     if (repeat.times === 1) {
   //       // end of times
   //       setRepeat({});
 
-  //       return this.handleNextVerse();
+  //       return this.handleVerseChange();
   //     }
 
   //     setRepeat({ ...repeat, times: repeat.times - 1 });
@@ -365,7 +392,7 @@ class Audioplayer extends Component<Props> {
   //     // user selected a range
   //     if (ayah < repeat.to) {
   //       // still in range
-  //       return this.handleNextVerse();
+  //       return this.handleVerseChange();
   //     }
 
   //     if (ayah === repeat.to) {
@@ -374,7 +401,7 @@ class Audioplayer extends Component<Props> {
   //         // end of times
   //         setRepeat({});
 
-  //         return this.handleNextVerse();
+  //         return this.handleVerseChange();
   //       }
 
   //       setRepeat({ ...repeat, times: repeat.times - 1 });
@@ -388,11 +415,16 @@ class Audioplayer extends Component<Props> {
   // };
 
   handleScrollToggle = () => {
-    const { shouldScroll, currentVerse, isPlaying, toggleScroll } = this.props;
+    const {
+      shouldScroll,
+      currentVerseKey,
+      isPlaying,
+      toggleScroll,
+    } = this.props;
 
     if (!shouldScroll && isPlaying) {
       // we use the inverse (!) here because we're toggling, so false is true
-      this.scrollToVerse(currentVerse);
+      this.scrollToVerse(currentVerseKey);
     }
 
     toggleScroll();
@@ -410,7 +442,7 @@ class Audioplayer extends Component<Props> {
 
   render() {
     const {
-      currentVerse,
+      currentVerseKey,
       currentFile,
       currentTime,
       duration,
@@ -431,45 +463,47 @@ class Audioplayer extends Component<Props> {
           />
         )}
         {segments &&
-          segments[currentVerse] && (
+          segments[currentVerseKey] && (
             <Segments
-              segments={segments[currentVerse]}
-              currentVerse={currentVerse}
+              segments={segments[currentVerseKey]}
+              currentVerseKey={currentVerseKey}
               currentTime={currentTime}
             />
           )}
         <ul className="list-inline">
           <ControlItem>
             <T id={KEYS.AUDIOPLAYER_CURRENTVERSE} />
-            : {currentVerse && currentVerse.split(':')[1]}
+            : {currentVerseKey && currentVerseKey.split(':')[1]}
           </ControlItem>
           <ControlItem>
             <PreviousButton
-              currentVerse={currentVerse}
+              currentVerseKey={currentVerseKey}
               files={files}
-              onPreviousClick={() => this.handleNextVerse(DIRECTIONS.PREVIOUS)}
+              onPreviousClick={() =>
+                this.handleVerseChange(DIRECTIONS.PREVIOUS)
+              }
             />
           </ControlItem>
           <ControlItem>
             <PlayStopButton
               isPlaying={isPlaying}
-              currentVerse={currentVerse}
+              currentVerseKey={currentVerseKey}
               onPause={pause}
               onPlay={this.handlePlay}
             />
           </ControlItem>
           <ControlItem>
             <NextButton
-              currentVerse={currentVerse}
+              currentVerseKey={currentVerseKey}
               chapter={chapter}
-              onNextClick={() => this.handleNextVerse(DIRECTIONS.NEXT)}
+              onNextClick={() => this.handleVerseChange(DIRECTIONS.NEXT)}
             />
           </ControlItem>
           {/* <ControlItem>
             <RepeatDropdown
               repeat={repeat}
               setRepeat={setRepeat}
-              current={parseInt(currentVerse.verseKey.split(':')[1], 10)}
+              current={parseInt(currentVerseKey.verseKey.split(':')[1], 10)}
               chapter={chapter}
             />
           </ControlItem> */}

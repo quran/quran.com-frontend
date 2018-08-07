@@ -10,9 +10,9 @@ export const chapter = {
   versesCount: 7,
   translatedName: {
     languageName: 'english',
-    name: 'The Opener'
+    name: 'The Opener',
   },
-  pages: [1, 2]
+  pages: [1, 2],
 };
 
 export const chapter2 = {
@@ -26,7 +26,7 @@ export const chapter2 = {
   nameSimple: 'Al-Baqarah',
   versesCount: 286,
   pages: [2, 49],
-  translatedName: { languageName: 'english', name: 'The Cow' }
+  translatedName: { languageName: 'english', name: 'The Cow' },
 };
 
 export const chapter3 = {
@@ -40,7 +40,7 @@ export const chapter3 = {
   nameSimple: "Ali 'Imran",
   versesCount: 200,
   pages: [50, 76],
-  translatedName: { languageName: 'english', name: 'Family of Imran' }
+  translatedName: { languageName: 'english', name: 'Family of Imran' },
 };
 
 export const chapters = [chapter, chapter2, chapter3];

@@ -14,8 +14,7 @@ const WordShape = PropTypes.shape({
   translation: TranslationShape,
   transliteration: TransliterationShape,
   wordId: PropTypes.number,
-  lineNum: PropTypes.number.isRequired,
-  textMadani: PropTypes.string.isRequired,
+  textMadani: PropTypes.string,
   highlight: PropTypes.string,
 });
 
@@ -26,13 +25,12 @@ interface WordShape {
   className: string;
   code: string;
   lineNumber: number;
-  lineNum: number;
   pageNumber: number;
   position: number;
   translation?: TranslationShape;
   transliteration?: TransliterationShape;
   wordId?: number;
-  textMadani: string;
+  textMadani?: string | null;
   highlight?: string;
   audio: $TsFixMe;
   [key: string]: $TsFixMe;

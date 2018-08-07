@@ -58,8 +58,7 @@ const propTypes = {
   isSearched: PropTypes.bool,
   verse: VerseShape.isRequired,
   chapter: ChapterShape.isRequired,
-  isPlaying: PropTypes.bool,
-  currentVerse: PropTypes.string,
+  isCurrentVersePlaying: PropTypes.bool.isRequired,
   isPdf: PropTypes.bool,
   onPlayClick: PropTypes.func.isRequired,
   onTafsirsClick: PropTypes.func.isRequired,
@@ -68,16 +67,13 @@ const propTypes = {
 const defaultProps: $TsFixMe = {
   isSearched: false,
   isPdf: false,
-  isPlaying: false,
-  currentVerse: null,
 };
 
 type Props = {
   isSearched?: boolean;
   verse: VerseShape;
   chapter: ChapterShape;
-  isPlaying: boolean;
-  currentVerse?: string;
+  isCurrentVersePlaying: boolean;
   isPdf?: boolean;
   onPlayClick(): void;
   onTafsirsClick(): void;
@@ -88,13 +84,10 @@ const Controls: React.SFC<Props> = ({
   isSearched,
   verse,
   chapter,
-  currentVerse,
-  isPlaying,
+  isCurrentVersePlaying,
   onPlayClick,
   onTafsirsClick,
 }: Props) => {
-  const isCurrentVersePlaying = verse.verseKey === currentVerse && isPlaying;
-
   return (
     <ControlsNode className="col-md-1 col-sm-1">
       <Badge isSearched={isSearched} verse={verse} />

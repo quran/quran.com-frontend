@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import styled from 'styled-components';
 
 type StyledProps = {
@@ -7,6 +7,7 @@ type StyledProps = {
 
 type Props = {
   level: number;
+  children: ReactNode;
 };
 
 const LEVELS_TO_TAGS: $TsFixMe = {

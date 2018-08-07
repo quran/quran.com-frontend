@@ -10,32 +10,16 @@ import LOCALE_KEYS from '../locale/keys';
 
 type Props = {
   id: LOCALE_KEYS;
-  values?: $TsFixMe;
-  className?: string;
+  values?: { [key: string]: string };
 };
 
-const T: React.SFC<Props> = ({
-  id,
-  values,
-  className,
-}: Props & InjectedIntlProps) => (
-  <span className={`${className}`}>
-    <FormattedMessage
-      id={id}
-      defaultMessage={en.messages[id]}
-      values={values}
-    />
-  </span>
+const T: React.SFC<Props> = ({ id, values }: Props & InjectedIntlProps) => (
+  <FormattedMessage id={id} defaultMessage={en.messages[id]} values={values} />
 );
 
 T.propTypes = {
   id: PropTypes.string.isRequired,
-  className: PropTypes.string,
   values: PropTypes.object, // eslint-disable-line
-};
-
-T.defaultProps = {
-  className: '',
 };
 
 export const KEYS = LOCALE_KEYS;

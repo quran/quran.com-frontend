@@ -4,8 +4,12 @@ import ControlButton from './ControlButton';
 
 const propTypes = {
   onPreviousClick: PropTypes.func.isRequired,
-  currentVerse: PropTypes.string.isRequired,
+  currentVerse: PropTypes.string,
   files: PropTypes.object.isRequired,
+};
+
+const defaultProps = {
+  currentVerse: '',
 };
 
 type Props = {
@@ -23,7 +27,6 @@ const PreviousButton: React.SFC<Props> = ({
 
   return (
     <ControlButton
-      tabIndex="-1"
       className="pointer"
       onClick={() => index && onPreviousClick()}
       disabled={!index}
@@ -34,5 +37,6 @@ const PreviousButton: React.SFC<Props> = ({
 };
 
 PreviousButton.propTypes = propTypes;
+PreviousButton.defaultProps = defaultProps;
 
 export default PreviousButton;

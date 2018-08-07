@@ -16,21 +16,25 @@ const propTypes = {
   isPlaying: PropTypes.bool.isRequired,
   onPause: PropTypes.func.isRequired,
   onPlay: PropTypes.func.isRequired,
-  currentVerse: PropTypes.string,
+  currentVerseKey: PropTypes.string,
+};
+
+const defaultProps = {
+  currentVerseKey: '',
 };
 
 type Props = {
   isPlaying: boolean;
   onPause(): void;
   onPlay(): void;
-  currentVerse?: string;
+  currentVerseKey?: string;
 };
 
 const PlayStopButton: React.SFC<Props> = ({
   isPlaying,
   onPause,
   onPlay,
-  currentVerse,
+  currentVerseKey,
 }: Props) => {
   const icon = (
     <i className={`ss-icon ${isPlaying ? 'ss-pause' : 'ss-play'}`} />
@@ -44,11 +48,12 @@ const PlayStopButton: React.SFC<Props> = ({
       onClick={isPlaying ? onPause : onPlay}
       playingButton
     >
-      {currentVerse ? icon : loader}
+      {currentVerseKey ? icon : loader}
     </ControlButton>
   );
 };
 
 PlayStopButton.propTypes = propTypes;
+PlayStopButton.defaultProps = defaultProps;
 
 export default PlayStopButton;

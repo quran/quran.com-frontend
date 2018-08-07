@@ -4,10 +4,15 @@ import WordContainer from '../../containers/WordContainer';
 import FontText from '../FontText';
 import JuzMarker from '../JuzMarker';
 import { VerseShape } from '../../shapes';
+import { WORD_TYPES } from '../../constants';
 
 const propTypes = {
   verse: VerseShape.isRequired,
   isSearched: PropTypes.bool,
+};
+
+const defaultProps = {
+  isSearched: false,
 };
 
 type Props = {
@@ -22,7 +27,9 @@ const Text: React.SFC<Props> = ({ verse, isSearched }: Props) => {
 
   const text = verse.words.map(word => {
     const audioPosition =
-      word.charType === 'word' ? (wordAudioPosition += 1) : null;
+      word.charType === WORD_TYPES.CHAR_TYPE_WORD
+        ? (wordAudioPosition += 1)
+        : null;
 
     return (
       <WordContainer
@@ -43,5 +50,6 @@ const Text: React.SFC<Props> = ({ verse, isSearched }: Props) => {
 };
 
 Text.propTypes = propTypes;
+Text.defaultProps = defaultProps;
 
 export default Text;

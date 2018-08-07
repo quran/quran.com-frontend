@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import T, { KEYS } from '../T';
-import Title from '../Home/Title';
+import T, { KEYS } from './T';
+import Title from './Home/Title';
 
-import { QUICK_LINKS_EVENTS } from '../../events';
+import { QUICK_LINKS_EVENTS } from '../events';
 
 const Span = styled.span`
   &:after {

@@ -6,7 +6,7 @@ import { buildSegments } from '../../helpers/buildSegments';
 import {
   SET_CURRENT_FILE,
   SET_CURRENT_WORD,
-  SET_CURRENT_VERSE,
+  SET_CURRENT_VERSE_KEY,
   PLAY_CURRENT_WORD,
   PLAY,
   PAUSE,
@@ -25,7 +25,7 @@ type RepeatType = {
 type State = {
   files: $TsFixMe;
   currentFile?: $TsFixMe;
-  currentVerse?: string;
+  currentVerseKey?: string;
   currentWord?: $TsFixMe;
   currentTime: number;
   duration: number;
@@ -39,7 +39,7 @@ type State = {
 export const INITIAL_STATE: State = {
   files: {},
 
-  currentVerse: null,
+  currentVerseKey: null,
   currentWord: null,
   currentTime: 0,
   duration: 1,
@@ -95,7 +95,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
               },
             },
             ...(action.meta.isCurrentVerse
-              ? { currentVerse: action.meta.verseKey }
+              ? { currentVerseKey: action.meta.verseKey }
               : {}),
           };
         },
@@ -116,7 +116,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         return {
           ...state,
           isPlaying: true,
-          currentVerse: payload,
+          currentVerseKey: payload,
         };
       }
 
@@ -184,7 +184,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
       return {
         ...state,
         currentWord: action.word,
-        currentVerse: nextId,
+        currentVerseKey: nextId,
         isPlaying: false,
         currentTime,
         currentFile,
@@ -226,11 +226,12 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         currentWord: word,
       };
     }
-    case SET_CURRENT_VERSE: {
+    case SET_CURRENT_VERSE_KEY: {
       return {
         ...state,
-        currentVerse: action.payload,
+        currentVerseKey: action.payload,
         isPlaying: action.meta.shouldPlay,
+        currentTime: 0,
       };
     }
     default: {

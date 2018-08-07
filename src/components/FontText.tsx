@@ -17,8 +17,8 @@ export default styled.div`
     border-style: solid;
     float: right;
     &.active {
-      color: ${props => darken(0.05, props.theme.brandPrimary)};
-      border-color: ${props => darken(0.15, props.theme.brandPrimary)};
+      color: ${({ theme }) => darken(0.05, theme.brandPrimary)};
+      border-color: ${({ theme }) => darken(0.15, theme.brandPrimary)};
     }
   }
   .line {
@@ -35,11 +35,11 @@ export default styled.div`
     padding: 0 2px;
     color: #000;
     &:hover {
-      color: ${props => props.theme.brandPrimary};
+      color: ${({ theme }) => theme.brandPrimary};
       cursor: help;
     }
     &:focus {
-      color: ${props => darken(0.1, props.theme.brandPrimary)};
+      color: ${({ theme }) => darken(0.1, theme.brandPrimary)};
       outline: none;
     }
   }
@@ -50,7 +50,7 @@ export default styled.div`
     direction: rtl;
     float: right;
   }
-  @media (max-width: ${props => props.theme.screen.sm}) {
+  @media (max-width: ${({ theme }) => theme.screen.sm}) {
     font-size: 300%;
     line-height: 130%;
   }

@@ -6,8 +6,12 @@ import { ChapterShape } from '../../shapes';
 
 const propTypes = {
   onNextClick: PropTypes.func.isRequired,
-  currentVerse: PropTypes.string.isRequired,
+  currentVerse: PropTypes.string,
   chapter: ChapterShape.isRequired,
+};
+
+const defaultProps = {
+  currentVerse: '',
 };
 
 type Props = {
@@ -39,5 +43,6 @@ const NextButton: React.SFC<Props> = ({
 };
 
 NextButton.propTypes = propTypes;
+NextButton.defaultProps = defaultProps;
 
 export default NextButton;

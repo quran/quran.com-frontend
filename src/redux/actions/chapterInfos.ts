@@ -14,10 +14,4 @@ export const fetchChapterInfo = (chapterId: ChapterId, language?: string) => ({
   },
 });
 
-export function isChapterInfoLoaded(globalState: any, id: ChapterId) {
-  return (
-    globalState.chapters.entities[id] && globalState.chapterInfos.entities[id]
-  );
-}
-
 export type FetchChapterInfo = typeof fetchChapterInfo;

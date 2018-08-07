@@ -18,8 +18,8 @@ interface SegmentWord {
 }
 
 interface SegmentShape {
-  words: SegmentWord;
-  intervals: $TsFixMe;
+  words: { [key: string]: SegmentWord };
+  intervals: Array<Array<string | number>>;
 }
 
 export default SegmentShape;

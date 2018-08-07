@@ -41,9 +41,6 @@ interface SettingsShape {
   tooltip: 'translation' | 'transliteration';
   fontSize: FontSizeShape;
   userAgent?: { [key: string]: string };
-  options: FetchedOptionShape;
-  loadingRecitations: boolean;
-  loadingTranslations: boolean;
 }
 
 export default SettingsShape;

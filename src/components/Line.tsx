@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import Word from '../Word';
-import FontText from '../FontText';
-import { LineShape } from '../../shapes';
-import WordContainer from '../../containers/WordContainer';
+import FontText from './FontText';
+import { LineShape } from '../shapes';
+import WordContainer from '../containers/WordContainer';
 
 const StyledLine = styled.span`
   line-height: 150%;
@@ -16,6 +15,10 @@ const StyledLine = styled.span`
 const propTypes = {
   line: LineShape.isRequired,
   useTextFont: PropTypes.bool,
+};
+
+const defaultProps = {
+  useTextFont: false,
 };
 
 type Props = {
@@ -50,5 +53,6 @@ const Line: React.SFC<Props> = ({ line, useTextFont }: Props) => {
 };
 
 Line.propTypes = propTypes;
+Line.defaultProps = defaultProps;
 
 export default Line;

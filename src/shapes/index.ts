@@ -11,6 +11,7 @@ import UserShape from './UserShape';
 import VerseShape from './VerseShape';
 import WordShape from './WordShape';
 import SegmentShape from './SegmentShape';
+import SettingsShape from './SettingsShape';
 
 export {
   ChapterInfoShape,
@@ -25,6 +26,7 @@ export {
   VerseShape,
   WordShape,
   SegmentShape,
+  SettingsShape,
 };
 
 export const bookmarkActions = PropTypes.shape({

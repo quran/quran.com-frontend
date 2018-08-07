@@ -1,63 +1,64 @@
 import { asyncComponent } from 'react-async-component';
 import HomeContainer from './containers/HomeContainer';
+import { PATHS, CHAPTER_PATHS } from './constants/router';
 
 const routes = [
   {
-    path: '/',
+    path: PATHS.HOME,
     exact: true,
     component: HomeContainer,
   },
   {
-    path: '/donations',
+    path: PATHS.DONATIONS,
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "Donations" */ './components/Donations'),
     }),
   },
   {
-    path: '/contributions',
+    path: PATHS.CONTRIBUTIONS,
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "Donations" */ './components/Donations'),
     }),
   },
   {
-    path: '/about',
+    path: PATHS.ABOUT,
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "About" */ './components/About'),
     }),
   },
   {
-    path: '/contact',
+    path: PATHS.CONTACT,
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "Contact" */ './components/Contact'),
     }),
   },
   {
-    path: '/contactus',
+    path: PATHS.CONTACTUS,
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "Contact" */ './components/Contact'),
     }),
   },
   {
-    path: '/mobile',
+    path: PATHS.MOBILE,
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "Mobile" */ './components/MobileLanding'),
     }),
   },
   {
-    path: '/apps',
+    path: PATHS.APPS,
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "Mobile" */ './components/MobileLanding'),
     }),
   },
   {
-    path: '/error/:errorKey',
+    path: PATHS.ERROR,
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "Error" */ './components/Error'),
@@ -67,22 +68,13 @@ const routes = [
       status: 400,
     }),
   },
-  // {
-  //   path: '/search',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Search" */ './containers/Search'),
-  //   }),
-  //     ({ store: { dispatch }, location }) => {
-  //       if (__CLIENT__) {
-  //         dispatch(search(location.query || location.q));
-  //         return false;
-  //       }
-
-  //       return dispatch(search(location.query || location.q));
-  //     },
-  //   ],
-  // },
+  {
+    path: PATHS.SEARCH,
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "Search" */ './containers/SearchContainer'),
+    }),
+  },
   // {
   //   path: '/ayatul-kursi',
   //   component: asyncComponent({
@@ -107,55 +99,13 @@ const routes = [
   //       import(/* webpackChunkName: "ChapterInfo" */ './containers/ChapterInfo'),
   //   }),
   // },
-  // {
-  //   path: '/:chapterId(\\d+)/:range/tafsirs/:tafsirId',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "VerseTafsir" */ './containers/VerseTafsir'),
-  //   }),
-  // },
-  // {
-  //   path: '/:chapterId(\\d+)/:range/:translations',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Chapter" */ './containers/Chapter'),
-  //   }),
-  //   navbar: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter'),
-  //   }),
-
-  // },
-  // {
-  //   path: '/:chapterId(\\d+)/:range?.pdf',
-  //   component: asyncComponent({
-  //     resolve: () => import(/* webpackChunkName: "Pdf" */ './containers/Pdf'),
-  //   }),
-  //   footer: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "PdfFooter" */ './components/Footer/PdfFooter'),
-  //   }),
-
-  // },
-  // {
-  //   path: '/:chapterId(\\d+)/:range?',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "Chapter" */ './containers/Chapter'),
-  //   }),
-  //   navbar: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter'),
-  //   }),
-
-  // },
-  {
-    path: '/:chapterId(\\d+)(:|-)?:range?',
+  ...Object.values(CHAPTER_PATHS).map((path: string) => ({
+    path,
     component: asyncComponent({
       resolve: () =>
         import(/* webpackChunkName: "Chapter" */ './containers/ChapterContainer'),
     }),
-  },
+  })),
 ];
 
 export default routes;

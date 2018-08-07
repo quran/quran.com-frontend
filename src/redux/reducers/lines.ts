@@ -1,6 +1,5 @@
 import { handle } from 'redux-pack';
 import { FETCH_VERSES } from '../constants/verses';
-import { SET_CURRENT } from '../constants/chapters';
 
 type State = {
   isLoading: boolean;
@@ -14,11 +13,6 @@ const INITIAL_STATE: State = {
 
 export default (state = INITIAL_STATE, action: $TsFixMe) => {
   switch (action.type) {
-    case SET_CURRENT:
-      return {
-        ...state,
-        lines: {},
-      };
     case FETCH_VERSES:
       return handle(state, action, {
         start: prevState => ({

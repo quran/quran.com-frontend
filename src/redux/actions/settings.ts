@@ -1,21 +1,27 @@
 import cookie from 'react-cookie';
+import merge from 'lodash/merge';
+import { COOKIE_SETTINGS_KEY } from '../../constants/index';
 import { SET_OPTION, SET_USER_AGENT } from '../constants/settings';
 
-export const isReadingMode = (globalState: any) => {
-  return !!globalState.options.isReadingMode;
+type FontSize = {
+  arabic?: number;
+  translation?: number;
 };
 
-export const isNightMode = (globalState: any) => {
-  return !!globalState.options.isNightMode;
+type Payload = {
+  audio?: number;
+  translations?: Array<number>;
+  tooltip?: 'translation' | 'transliteration';
+  fontSize?: FontSize;
+  isShowingChapterInfo?: boolean;
 };
 
-export const setOption = (payload: any) => {
-  const options = cookie.load('options') || {}; // protect against first timers.
+export const setSetting = (payload: Payload) => {
+  const options = cookie.load(COOKIE_SETTINGS_KEY) || {}; // protect against first timers.
 
-  Object.keys(payload).forEach(option => {
-    options[option] = payload[option];
-  });
-  cookie.save('options', JSON.stringify(options));
+  merge(options, payload);
+
+  cookie.save(COOKIE_SETTINGS_KEY, JSON.stringify(options));
 
   return {
     type: SET_OPTION,
@@ -23,9 +29,9 @@ export const setOption = (payload: any) => {
   };
 };
 
-export const setUserAgent = (userAgent: string) => {
-  return {
-    type: SET_USER_AGENT,
-    userAgent,
-  };
-};
+export const setUserAgent = (userAgent: $TsFixMe) => ({
+  type: SET_USER_AGENT,
+  payload: userAgent,
+});
+
+export type SetSetting = typeof setSetting;

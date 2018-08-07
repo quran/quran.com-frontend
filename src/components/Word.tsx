@@ -5,18 +5,17 @@ import pad from 'lodash/pad';
 import { buildAudioURL } from '../helpers/buildAudio';
 import { WordShape } from '../shapes';
 import { WORD_TYPES } from '../constants';
-import { SetCurrentVerse } from '../redux/actions/audioplayer';
+import { SetCurrentVerseKey } from '../redux/actions/audioplayer';
 
 const propTypes = {
   word: WordShape.isRequired,
   setCurrentWord: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
-  setCurrentVerse: PropTypes.func.isRequired,
+  setCurrentVerseKey: PropTypes.func.isRequired,
   playCurrentWord: PropTypes.func.isRequired,
   tooltip: PropTypes.string.isRequired,
   audioPosition: PropTypes.number,
-  currentVerse: PropTypes.string,
-  isPlaying: PropTypes.bool.isRequired,
+  isCurrentVersePlaying: PropTypes.bool.isRequired,
   isSearched: PropTypes.bool,
   useTextFont: PropTypes.bool, // tmp change to compare text and code based rendering
 };
@@ -32,19 +31,17 @@ const defaultProps: DefaultProps = {
   isSearched: false,
   useTextFont: false,
   audioPosition: null,
-  currentVerse: '',
 };
 
 type Props = {
   word: WordShape;
   setCurrentWord(wordCode: string): any;
   pause(): any;
-  setCurrentVerse: SetCurrentVerse;
+  setCurrentVerseKey: SetCurrentVerseKey;
   playCurrentWord(data: { word: WordShape; position: number }): any;
   tooltip: 'translation' | 'transliteration';
   audioPosition?: number;
-  currentVerse?: string;
-  isPlaying: boolean;
+  isCurrentVersePlaying: boolean;
   isSearched?: boolean;
   useTextFont?: boolean;
 };
@@ -79,40 +76,42 @@ class Word extends Component<Props> {
   handleSegmentPlay = () => {
     const {
       word,
-      currentVerse,
       audioPosition,
-      isPlaying,
       isSearched,
       setCurrentWord,
       pause,
-      setCurrentVerse,
+      setCurrentVerseKey,
       playCurrentWord,
+      isCurrentVersePlaying,
     } = this.props;
 
     if (isSearched || !word.audio) {
       return;
     }
 
-    if (currentVerse === word.verseKey && isPlaying) {
+    if (isCurrentVersePlaying) {
       setCurrentWord(word.code);
     } else {
       pause();
-      setCurrentVerse(word.verseKey);
+      setCurrentVerseKey(word.verseKey);
       playCurrentWord({ word, position: audioPosition });
     }
   };
 
   render() {
-    const { word, currentVerse, isPlaying, useTextFont } = this.props;
+    const {
+      audioPosition,
+      isCurrentVersePlaying,
+      word,
+      useTextFont,
+    } = this.props;
 
     let text;
-    let spacer;
-    const highlight =
-      currentVerse === word.verseKey && isPlaying ? 'highlight' : '';
+    const highlight = isCurrentVersePlaying ? 'highlight' : '';
     const className = `${useTextFont ? 'text-' : ''}${word.className} ${
       word.charType
     } ${highlight} ${word.highlight ? word.highlight : ''}`;
-    const id = `word-${word.verseKey.replace(/:/, '-')}-${word.position}`;
+    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
 
     if (useTextFont) {
       if (word.charType === WORD_TYPES.CHAR_TYPE_END) {
@@ -122,10 +121,6 @@ class Word extends Component<Props> {
       }
     } else {
       text = word.code;
-    }
-
-    if (word.charType === WORD_TYPES.CHAR_TYPE_WORD) {
-      spacer = '&nbsp;';
     }
 
     return (
@@ -140,10 +135,9 @@ class Word extends Component<Props> {
             dangerouslySetInnerHTML={{ __html: text }}
           />
         </Tooltip>
-        <small
-          dangerouslySetInnerHTML={{ __html: spacer }}
-          style={{ letterSpacing: -15 }}
-        />
+        {word.charType === WORD_TYPES.CHAR_TYPE_WORD && (
+          <small style={{ letterSpacing: -15 }}>&nbsp;</small>
+        )}
       </span>
     );
   }

@@ -1,10 +1,11 @@
-import { ReduxState, ChapterId } from '../types';
+import { ChapterId, Paging } from '../types';
+import ReduxState from '../types/ReduxState';
 
 // eslint-disable-next-line
 export const isLoaded = (
   state: ReduxState,
   chapterId: ChapterId,
-  paging: $TsFixMe = {},
+  paging = {} as Paging,
   perPage: 20 = 20
 ) => {
   if (paging.offset) {

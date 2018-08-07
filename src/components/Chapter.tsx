@@ -33,7 +33,7 @@ const propTypes = {
   fetchVerses: PropTypes.func.isRequired,
   fetchChapters: PropTypes.func.isRequired,
   fetchChapterInfo: PropTypes.func.isRequired,
-  setCurrentVerse: PropTypes.func.isRequired,
+  setCurrentVerseKey: PropTypes.func.isRequired,
   lines: PropTypes.object.isRequired,
   chapterInfo: ChapterInfoShape.isRequired,
   isVersesLoading: PropTypes.bool.isRequired,
@@ -67,7 +67,7 @@ type Props = {
   isSingleVerse: boolean;
   isEndOfChapter: boolean;
   isVersesLoading: boolean;
-  setCurrentVerse(verseKey: string): $TsFixMe;
+  setCurrentVerseKey(verseKey: string): $TsFixMe;
   location: $TsFixMe;
 };
 
@@ -214,7 +214,7 @@ class Chapter extends Component<Props> {
       lines,
       settings,
       match,
-      setCurrentVerse,
+      setCurrentVerseKey,
       isVersesLoading,
     } = this.props;
 
@@ -262,7 +262,7 @@ class Chapter extends Component<Props> {
             </div>
             <div className="col-md-10 col-md-offset-1">
               <ChapterPagination
-                setCurrentVerse={setCurrentVerse}
+                setCurrentVerseKey={setCurrentVerseKey}
                 chapter={chapter}
                 isSingleVerse={isSingleVerse}
                 isEndOfChapter={isEndOfChapter}

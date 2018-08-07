@@ -1,16 +1,17 @@
 import { connect } from 'react-redux';
 import {
   pause,
-  setCurrentVerse,
+  setCurrentVerseKey,
   setCurrentWord,
   playCurrentWord,
 } from '../redux/actions/audioplayer';
 import Word from '../components/Word';
-import { ReduxState } from '../types';
+import ReduxState from '../types/ReduxState';
 
-const mapStateToProps = (state: ReduxState) => ({
-  currentVerse: state.audioplayer.currentVerse,
-  isPlaying: state.audioplayer.isPlaying,
+const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => ({
+  isCurrentVersePlaying:
+    state.audioplayer.currentVerse === ownProps.word.verseKey &&
+    state.audioplayer.isPlaying,
   tooltip: state.settings.tooltip,
 });
 
@@ -19,7 +20,7 @@ export default connect(
   {
     setCurrentWord,
     pause,
-    setCurrentVerse,
+    setCurrentVerseKey,
     playCurrentWord,
   }
 )(Word);

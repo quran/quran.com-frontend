@@ -6,12 +6,26 @@ type State = {
   errored: boolean;
   isLoading: boolean;
   results: $TsFixMe;
+  totalCount: number | null;
+  totalPages: number | null;
+  currentPage: number | null;
+  perPage: number | null;
+  took: number | null;
+  query: string | null;
+  entities: $TsFixMe;
 };
 
 export const INITIAL_STATE: State = {
   errored: false,
   isLoading: false,
   results: [],
+  totalCount: null,
+  totalPages: null,
+  currentPage: null,
+  perPage: null,
+  took: null,
+  query: null,
+  entities: [],
 };
 
 export default (state = INITIAL_STATE, action: $TsFixMe) => {

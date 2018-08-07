@@ -1,5 +1,5 @@
 module.exports = {
-  moduleDirectories: ['node_modules', 'src', 'src/shared'],
+  moduleDirectories: ['node_modules', 'src', 'src/shared', 'tests'],
   coveragePathIgnorePatterns: ['/node_modules/', '/dist/'],
   testPathIgnorePatterns: ['/node_modules/', '/dist/'],
   automock: false,
@@ -15,6 +15,8 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
+    '^.+\\.jsx?$': '<rootDir>/node_modules/babel-jest',
   },
   testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
+  clearMocks: true,
 };

@@ -443,7 +443,7 @@ export default function webpackConfigFactory(buildOptions) {
           ...ifProd(() => [strip.loader('debug')], []),
           {
             path: 'awesome-typescript-loader',
-            exclude: /node_modules/,
+            exclude: /node_modules|tests/,
             query: {
               happyPackMode: true,
             },
@@ -539,6 +539,7 @@ export default function webpackConfigFactory(buildOptions) {
                 ),
                 ifProdClient(path.resolve(appRootDir.get(), 'src/html')),
               ]),
+              exclude: /tests/,
             },
 
             // CSS
