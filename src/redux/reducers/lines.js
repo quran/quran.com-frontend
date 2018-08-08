@@ -32,6 +32,18 @@ export default function reducer(state = initialState, action = {}) {
       action.result.result.verses.forEach((ayahId) => {
         const ayah = ayahs[ayahId];
 
+        let pauses = 0
+        ayah.words.forEach((word, index) => {
+          if(word.charType === 'pause') {
+            pauses += 1
+          }
+          ayah.words[index].position -= (pauses + 1)
+
+          if(word.charType !== 'word') {
+            ayah.words[index].position = -1
+          }
+        })
+
         ayah.words.forEach((word) => {
           if (lines[`${word.pageNumber}-${word.lineNumber}`]) {
             const isInArray = lines[
