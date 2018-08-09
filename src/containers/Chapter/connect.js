@@ -2,7 +2,7 @@ import {
   isAllLoaded,
   loadAll,
   setCurrent as setCurrentSurah,
-} from '../../redux/actions/chapters.js';
+} from '../../redux/actions/chapters';
 import {
   isChapterInfoLoaded,
   loadChapterInfo,
