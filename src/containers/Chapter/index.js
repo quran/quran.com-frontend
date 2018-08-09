@@ -24,7 +24,7 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import makeHeadTags from 'helpers/makeHeadTags';
 import debug from 'helpers/debug';
 
-import * as MediaActions from 'redux/actions/media.js';
+import * as MediaActions from '../../redux/actions/media.js';
 import * as AudioActions from '../../redux/actions/audioplayer';
 import * as AyahActions from '../../redux/actions/verses';
 import * as OptionsActions from '../../redux/actions/options.js';
@@ -156,7 +156,10 @@ class Chapter extends Component {
   };
 
   title() {
-    const { match: { params }, chapter } = this.props;
+    const { match: { params }, chapter, loadingChapters } = this.props;
+
+    if(loadingChapters)
+      return "loading";
 
     if (params.range) {
       return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}:${
@@ -168,7 +171,10 @@ class Chapter extends Component {
   }
 
   description() {
-    const { match: { params }, verses, chapter, info } = this.props;
+    const { match: { params }, verses, chapter, info, loadingChapters } = this.props;
+
+    if(loadingChapters)
+      return "Loading";
 
     if (params.range) {
       if (params.range.includes('-')) {
@@ -379,8 +385,8 @@ class Chapter extends Component {
                 "@type": "ListItem",
                 "position": 2,
                 "item": {
-                  "@id": "https://quran.com/${chapter.chapterNumber}",
-                  "name": "${chapter.nameSimple}"
+                  "@id": "https://quran.com/${chapter && chapter.chapterNumber}",
+                  "name": "${chapter && chapter.nameSimple}"
                 }
               }]
             }`,
@@ -389,9 +395,9 @@ class Chapter extends Component {
           style={[
             {
               cssText: `.text-arabic{font-size: ${
-                options.fontSize.arabic
+                2//options.fontSize.arabic
               }rem;} .text-translation{font-size: ${
-                options.fontSize.translation
+                2//options.fontSize.translation
               }rem;}`, // eslint-disable-line max-len
             },
           ]}
@@ -424,6 +430,7 @@ class Chapter extends Component {
 }
 
 Chapter.propTypes = {
+  loadingChapters: PropTypes.bool.isRequired,
   chapter: customPropTypes.chapterType.isRequired,
   chapters: customPropTypes.chapters.isRequired,
   actions: PropTypes.object.isRequired, // eslint-disable-line
@@ -447,6 +454,10 @@ Chapter.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
+  const loadingChapters = !state.chapters.loaded;
+  if(loadingChapters){
+    return {loadingChapters};
+  }
   const chapterId = parseInt(ownProps.match.params.chapterId, 10);
   const chapter = state.chapters.entities[chapterId];
   const verses = state.verses.entities[chapterId];

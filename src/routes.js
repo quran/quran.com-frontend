@@ -2,6 +2,7 @@ import { asyncComponent } from 'react-async-component';
 import { matchPath } from 'react-router';
 
 import Home from './containers/Home';
+import Chapter from './containers/Chapter';
 
 import {
   chaptersConnect,
@@ -158,15 +159,8 @@ const routes = [
   },
   {
     path: '/:chapterId/:range?',
-    component: asyncComponent({
-      resolve: () =>
-        import(/* webpackChunkName: "Chapter" */ './containers/Chapter'),
-    }),
-    loadData: [chaptersConnect, chapterInfoConnect, versesConnect],
-    navbar: asyncComponent({
-      resolve: () =>
-        import(/* webpackChunkName: "GlobalNavChapter" */ './components/GlobalNav/Chapter'),
-    }),
+    component: Chapter,
+    loadData: [chaptersConnect, versesConnect],
     onEnter: validators,
   },
   {
