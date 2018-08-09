@@ -1,6 +1,7 @@
 import { asyncComponent } from 'react-async-component';
 import HomeContainer from './containers/HomeContainer';
 import { PATHS, CHAPTER_PATHS } from './constants/router';
+import ChapterRoute from './components/ChapterRoute';
 
 const routes = [
   {
@@ -101,10 +102,7 @@ const routes = [
   // },
   ...Object.values(CHAPTER_PATHS).map((path: string) => ({
     path,
-    component: asyncComponent({
-      resolve: () =>
-        import(/* webpackChunkName: "Chapter" */ './containers/ChapterContainer'),
-    }),
+    component: ChapterRoute,
   })),
 ];
 

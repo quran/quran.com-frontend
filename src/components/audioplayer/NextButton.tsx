@@ -6,29 +6,29 @@ import { ChapterShape } from '../../shapes';
 
 const propTypes = {
   onNextClick: PropTypes.func.isRequired,
-  currentVerse: PropTypes.string,
+  currentVerseKey: PropTypes.string,
   chapter: ChapterShape.isRequired,
 };
 
 const defaultProps = {
-  currentVerse: '',
+  currentVerseKey: '',
 };
 
 type Props = {
   onNextClick(): void;
-  currentVerse: string;
+  currentVerseKey: string;
   chapter: ChapterShape;
 };
 
 const NextButton: React.SFC<Props> = ({
   onNextClick,
   chapter,
-  currentVerse,
+  currentVerseKey,
 }: Props) => {
   let isEnd = true;
 
-  if (currentVerse) {
-    isEnd = chapter.versesCount === toNumber(currentVerse.split(':')[1]);
+  if (currentVerseKey) {
+    isEnd = chapter.versesCount === toNumber(currentVerseKey.split(':')[1]);
   }
 
   return (

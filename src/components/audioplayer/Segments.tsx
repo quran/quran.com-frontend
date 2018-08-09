@@ -5,24 +5,24 @@ import SegmentShape from '../../shapes/SegmentShape';
 
 const propTypes = {
   segments: SegmentShape.isRequired,
-  currentVerse: PropTypes.string,
+  currentVerseKey: PropTypes.string,
   currentTime: PropTypes.number,
 };
 
-const defaultProps: { currentVerse: null; currentTime: null } = {
-  currentVerse: null,
+const defaultProps: { currentVerseKey: null; currentTime: null } = {
+  currentVerseKey: null,
   currentTime: null,
 };
 
 type Props = {
   segments: SegmentShape;
-  currentVerse?: string;
+  currentVerseKey?: string;
   currentTime?: number;
 };
 
 const Segments: React.SFC<Props> = ({
   segments,
-  currentVerse,
+  currentVerseKey,
   currentTime,
 }: Props) => {
   const style = [];
@@ -34,13 +34,11 @@ const Segments: React.SFC<Props> = ({
     const word = segments.words[wordIndex];
 
     if (currentTime >= word.startTime && currentTime < word.endTime) {
-      currentWord = `${currentVerse}:${wordIndex}`;
+      currentWord = `${currentVerseKey}:${wordIndex}`;
     }
   });
 
   if (currentWord) {
-    console.log('component:Segments', `render with currentWord ${currentWord}`);
-
     style.push({
       cssText: `#word-${currentWord.replace(/:/g, '-')}{
           color: #279197;

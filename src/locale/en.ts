@@ -13,7 +13,7 @@ const EN: Shape = {
     [KEYS.LOCAL_NATIVENAME]: 'English',
     [KEYS.LOCAL_SELECTLABEL]: 'Language',
     [KEYS.SETTING_TITLE]: 'Settings',
-    [KEYS.SETTING_CHAPTERS]: 'Surahs',
+    [KEYS.SETTING_CHAPTERS]: 'Chapters',
     [KEYS.SETTING_VERSES]: 'Go to verse',
     [KEYS.SETTING_RECITERS_TITLE]: 'Reciters',
     [KEYS.SETTING_TRANSLATIONS_TITLE]: 'Translations',
@@ -47,12 +47,12 @@ const EN: Shape = {
     [KEYS.CHAPTER_PREVIOUS]: 'PREVIOUS',
     [KEYS.CHAPTER_VERSES]: 'VERSES',
     [KEYS.CHAPTER_PAGES]: 'PAGES',
-    [KEYS.CHAPTER_INFO]: 'Surah Info',
-    [KEYS.CHAPTER_INDEX_HEADING]: 'SURAHS (CHAPTERS)',
+    [KEYS.CHAPTER_INFO]: 'Chapter Info',
+    [KEYS.CHAPTER_INDEX_HEADING]: 'CHAPTERS',
     [KEYS.CHAPTER_INDEX_CONTINUE]: 'Continue',
     [KEYS.CHAPTER_INDEX_QUICKLINKS]: 'Quick links',
-    [KEYS.CHAPTER_GOTOBEGINNING]: 'Beginning of Surah',
-    [KEYS.CHAPTER_READ]: 'Read full Surah',
+    [KEYS.CHAPTER_GOTOBEGINNING]: 'Beginning of chapter',
+    [KEYS.CHAPTER_READ]: 'Read full chapter',
 
     [KEYS.AUDIOPLAYER_CURRENTVERSE]: 'Verse',
     [KEYS.AUDIOPLAYER_NEXT_VERSE]: 'Next verse',
@@ -98,9 +98,8 @@ const EN: Shape = {
     [KEYS.LOGIN_MESSAGE]:
       'Sign in to Quran.com to store all your bookmarks, notes, and activities.',
     [KEYS.ERROR_INVALID_CHAPTER]:
-      "Surah is out of range. Please go to <a href='/'> home page</a> and select a Surah",
-    [KEYS.ERROR_INVALID_VERSE]:
-      "Verse is out of range. Please go to <a href='/'> home page </a> and select a Surah/Ayah",
+      'Chapter is out of range. Please go to home page',
+    [KEYS.ERROR_INVALID_VERSE]: 'Verse is out of range. Please go to home page',
     [KEYS.ERROR_NOT_FOUND]: 'Sorry, this page does not exist',
   },
 };

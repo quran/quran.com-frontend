@@ -104,7 +104,7 @@ export const fetchAudio = ({
 export const isLoaded = (files: $TsFixMe, verse: VerseShape) =>
   files[verse.verseKey];
 
-export type FetchAudio = typeof fetchAudio;
+export type FetchAudio = PackType<typeof fetchAudio>;
 export type Play = typeof play;
 export type Pause = typeof pause;
 export type Update = typeof update;

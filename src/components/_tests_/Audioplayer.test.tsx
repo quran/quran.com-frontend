@@ -26,7 +26,7 @@ describe('<Audioplayer', () => {
       setCurrentVerseKey: jest.fn(),
       update: jest.fn(),
       setRepeat: jest.fn(),
-      fetchAudio: jest.fn(),
+      fetchAudio: jest.fn(() => Promise.resolve({})),
       shouldScroll: false,
       toggleScroll: jest.fn(),
       isPlaying: false,

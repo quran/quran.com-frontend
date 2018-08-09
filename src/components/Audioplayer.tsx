@@ -1,10 +1,9 @@
 /* global document */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { asyncComponent } from 'react-async-component';
+import toNumber from 'lodash/toNumber';
 import T, { KEYS } from './T';
 import { scrollTo } from '../helpers/scroller';
-import ComponentLoader from './ComponentLoader';
 import Track from './audioplayer/Track';
 import Segments from './audioplayer/Segments';
 import ScrollButton from './audioplayer/ScrollButton';
@@ -25,12 +24,6 @@ import NextButton from './audioplayer/NextButton';
 import PlayStopButton from './audioplayer/PlayStopButton';
 import RepeatShape from '../shapes/RepeatShape';
 
-// const RepeatDropdown = asyncComponent({
-//   resolve: () =>
-//     import(/* webpackChunkName: "RepeatDropdown" */ './audioplayer/RepeatDropdown'),
-//   LoadingComponent: ComponentLoader,
-// });
-
 export const PERCENTAGE_OF_CURRENT_FILE_TO_PRELOAD_NEXT = 0.5;
 export const DIRECTIONS: { [key: string]: string } = {
   NEXT: 'NEXT',
@@ -39,7 +32,9 @@ export const DIRECTIONS: { [key: string]: string } = {
 
 const propTypes = {
   chapter: ChapterShape.isRequired,
-  segments: SegmentShape,
+  segments: PropTypes.shape({
+    verseKey: SegmentShape,
+  }),
   files: PropTypes.object,
   currentVerseKey: PropTypes.string,
   play: PropTypes.func.isRequired,
@@ -83,6 +78,7 @@ type Props = {
   verses: { [verseKey: string]: VerseShape };
   fetchAudio: FetchAudio;
   setCurrentVerseKey: SetCurrentVerseKey;
+  setRepeat: $TsFixMe;
   play: Play;
   pause: Pause;
   update: Update;
@@ -97,6 +93,7 @@ type Props = {
   currentTime: number;
   shouldScroll: boolean;
   repeat: RepeatShape;
+  segments: { [verseKey: string]: SegmentShape };
 };
 
 class Audioplayer extends Component<Props> {
@@ -104,27 +101,15 @@ class Audioplayer extends Component<Props> {
   public static defaultProps = defaultProps;
 
   componentDidMount() {
-    const { currentVerseKey, audioSetting, verses, fetchAudio } = this.props;
-    const versesArray = Object.values(verses);
-    const verse = verses[currentVerseKey] || versesArray[0];
-
-    // document.addEventListener('keydown', this.handleKeyboardEvent);
-
-    fetchAudio({
-      chapterId: verse.chapterId,
-      verseId: verse.id,
-      verseKey: verse.verseKey,
-      audio: audioSetting,
-      isCurrentVerse: !currentVerseKey,
-    });
-
-    return false;
+    this.fetchInitialFile();
   }
 
   componentDidUpdate(prevProps: Props) {
-    this.handleIsPlayingChange(prevProps);
+    this.handleIsPlayingChange();
 
-    this.handleCurrentFileChange(prevProps);
+    this.handleCurrentVerseKeyChange(prevProps);
+
+    this.handleChapterChange();
   }
 
   componentWillUnmount() {
@@ -169,11 +154,33 @@ class Audioplayer extends Component<Props> {
     return verses[this.previousVerseKey];
   }
 
+  fetchInitialFile = () => {
+    const { currentVerseKey, audioSetting, verses, fetchAudio } = this.props;
+    const versesArray = Object.values(verses);
+    const verse = verses[currentVerseKey] || versesArray[0];
+
+    // document.addEventListener('keydown', this.handleKeyboardEvent);
+
+    return fetchAudio({
+      chapterId: verse.chapterId,
+      verseId: verse.id,
+      verseKey: verse.verseKey,
+      audio: audioSetting,
+      isCurrentVerse: !currentVerseKey,
+    }).then(() => {
+      const { files } = this.props;
+
+      this.addFileListeners(files[verse.verseKey]);
+
+      this.fetchNextAudioFile();
+    });
+  };
+
   addFileListeners = (file: HTMLAudioElement) => {
     // NOTE: if no file, just wait.
     if (!file) return false;
 
-    const { update, pause } = this.props;
+    const { update } = this.props;
 
     // Preload file
     file.setAttribute('preload', 'auto');
@@ -210,10 +217,6 @@ class Audioplayer extends Component<Props> {
         return this.handleRepeat(file);
       }
 
-      // if (file.readyState >= 3 && file.paused) {
-      //   pause();
-      // }
-
       return this.handleVerseChange();
     };
 
@@ -234,14 +237,16 @@ class Audioplayer extends Component<Props> {
   };
 
   removeFileListeners = (file: HTMLAudioElement) => {
-    file.pause();
-    file.currentTime = 0; // eslint-disable-line no-param-reassign
-    file.onloadeddata = null; // eslint-disable-line no-param-reassign
-    file.ontimeupdate = null; // eslint-disable-line no-param-reassign
-    file.onplay = null; // eslint-disable-line no-param-reassign
-    file.onpause = null; // eslint-disable-line no-param-reassign
-    file.onended = null; // eslint-disable-line no-param-reassign
-    file.onprogress = null; // eslint-disable-line no-param-reassign
+    if (file) {
+      file.pause();
+      file.currentTime = 0; // eslint-disable-line no-param-reassign
+      file.onloadeddata = null; // eslint-disable-line no-param-reassign
+      file.ontimeupdate = null; // eslint-disable-line no-param-reassign
+      file.onplay = null; // eslint-disable-line no-param-reassign
+      file.onpause = null; // eslint-disable-line no-param-reassign
+      file.onended = null; // eslint-disable-line no-param-reassign
+      file.onprogress = null; // eslint-disable-line no-param-reassign
+    }
   };
 
   fetchNextAudioFile = () => {
@@ -265,25 +270,45 @@ class Audioplayer extends Component<Props> {
     }
   };
 
-  scrollToVerse = (verseNumber: number | string) => {
-    scrollTo(`verse:${verseNumber}`, -45);
+  scrollToVerse = (verseKey: string) => {
+    scrollTo(`verse:${verseKey}`, -45);
   };
 
-  handleIsPlayingChange = (prevProps: Props) => {
+  handleIsPlayingChange = () => {
     const { isPlaying, currentFile } = this.props;
 
-    if (isPlaying && !prevProps.isPlaying) {
-      return currentFile.play();
+    if (!currentFile) {
+      return null;
     }
 
-    if (!isPlaying && prevProps.isPlaying) {
+    if (!isPlaying && !currentFile.paused) {
       return currentFile.pause();
+    }
+
+    if (isPlaying && currentFile.paused && !currentFile.ended) {
+      return currentFile.play();
     }
 
     return null;
   };
 
-  handleCurrentFileChange = (prevProps: Props) => {
+  handleChapterChange = (): null => {
+    const { verses, chapter, currentVerseKey, setCurrentVerseKey } = this.props;
+    const [chapterId] = currentVerseKey.split(':').map(toNumber);
+    const versesArray = Object.values(verses);
+
+    if (
+      chapter.id !== chapterId &&
+      versesArray.length &&
+      versesArray[0].chapterId === chapter.id
+    ) {
+      setCurrentVerseKey(versesArray[0].verseKey);
+    }
+
+    return null;
+  };
+
+  handleCurrentVerseKeyChange = (prevProps: Props) => {
     const {
       currentFile,
       fetchAudio,
@@ -292,33 +317,39 @@ class Audioplayer extends Component<Props> {
       files,
     } = this.props;
 
-    if (currentFile && !prevProps.currentFile) {
-      this.fetchNextAudioFile();
-
-      return this.addFileListeners(currentFile);
+    // If nothing changed, don't do anything
+    if (currentVerseKey === prevProps.currentVerseKey) {
+      return null;
     }
 
-    if (!files[currentVerseKey] && files[prevProps.currentVerseKey]) {
+    // If we set a current verse, don't do anything
+    if (currentVerseKey && !prevProps.currentVerseKey) {
+      return null;
+    }
+
+    // if we don't have the file for this verse
+    if (!files[currentVerseKey]) {
       return fetchAudio({
         chapterId: this.currentVerse.chapterId,
         verseId: this.currentVerse.id,
         verseKey: this.currentVerse.verseKey,
         audio: audioSetting,
+      }).then(() => {
+        const { files: afterFiles } = this.props;
+
+        this.addFileListeners(afterFiles[this.currentVerse.verseKey]);
+
+        this.fetchNextAudioFile();
       });
     }
 
-    if (currentFile.src !== prevProps.currentFile.src) {
-      this.fetchNextAudioFile();
-      this.removeFileListeners(prevProps.currentFile);
-      // TODO: scroll
-      // this.handleScrollTo();
+    // current verse change
+    this.fetchNextAudioFile();
+    this.removeFileListeners(prevProps.currentFile);
+    this.addFileListeners(currentFile);
+    this.handleScrollTo(currentVerseKey);
 
-      this.addFileListeners(currentFile);
-
-      if (prevProps.isPlaying) {
-        currentFile.play();
-      }
-    }
+    return null;
   };
 
   handleVerseChange = (direction = DIRECTIONS.NEXT as string) => {
@@ -332,87 +363,80 @@ class Audioplayer extends Component<Props> {
     const verseKey = VERSE_DIRECTIONS[direction];
 
     if (verseKey) {
-      //   this.handleScrollTo(nextVerseKey);
+      this.handleScrollTo(verseKey);
       setCurrentVerseKey(verseKey, true);
     }
   };
 
-  handleScrollTo = (verseNumber: number) => {
+  handleScrollTo = (verseKey: string) => {
     const { shouldScroll } = this.props;
 
     if (shouldScroll) {
-      this.scrollToVerse(verseNumber);
+      this.scrollToVerse(verseKey);
     }
   };
 
   handlePlay = () => {
     const { play } = this.props;
-    // TODO: scroll
-    // this.handleScrollTo();
 
     play();
   };
 
-  // handleRepeat = file => {
-  //   const {
-  //     repeat,
-  //     currentVerseKey,
-  //     setRepeat,
-  //     setAyah,
-  //   } = this.props;
-  //   const [chapter, ayah] = currentVerseKey.verseKey
-  //     .split(':')
-  //     .map(val => parseInt(val, 10));
+  handleRepeat = (file: HTMLAudioElement) => {
+    const { repeat, currentVerseKey, setRepeat } = this.props;
+    const [, verseNumber] = currentVerseKey
+      .split(':')
+      .map(val => toNumber(val));
 
-  //   file.pause();
+    file.pause();
 
-  //   if (repeat.from > ayah && repeat.to < ayah) {
-  //     // user selected a range where current ayah is outside
-  //     return this.handleVerseChange();
-  //   }
+    if (repeat.from > verseNumber && repeat.to < verseNumber) {
+      // user selected a range where current verseNumber is outside
+      return this.handleVerseChange();
+    }
 
-  //   if (repeat.from === repeat.to) {
-  //     // user selected single ayah repeat
-  //     if (ayah !== repeat.from) return this.handleVerseChange();
+    if (repeat.from === repeat.to) {
+      // user selected single verseNumber repeat
+      if (verseNumber !== repeat.from) return this.handleVerseChange();
 
-  //     if (repeat.times === 1) {
-  //       // end of times
-  //       setRepeat({});
+      if (repeat.times === 1) {
+        // end of times
+        setRepeat({});
 
-  //       return this.handleVerseChange();
-  //     }
+        return this.handleVerseChange();
+      }
 
-  //     setRepeat({ ...repeat, times: repeat.times - 1 });
-  //     file.currentTime = 0; // eslint-disable-line no-param-reassign
+      setRepeat({ ...repeat, times: repeat.times - 1 });
 
-  //     return file.play();
-  //   }
+      file.currentTime = 0; // eslint-disable-line no-param-reassign
 
-  //   if (repeat.from !== repeat.to) {
-  //     // user selected a range
-  //     if (ayah < repeat.to) {
-  //       // still in range
-  //       return this.handleVerseChange();
-  //     }
+      return file.play();
+    }
 
-  //     if (ayah === repeat.to) {
-  //       // end of range
-  //       if (repeat.times === 1) {
-  //         // end of times
-  //         setRepeat({});
+    if (repeat.from !== repeat.to) {
+      // user selected a range
+      if (verseNumber < repeat.to) {
+        // still in range
+        return this.handleVerseChange();
+      }
 
-  //         return this.handleVerseChange();
-  //       }
+      if (verseNumber === repeat.to) {
+        // end of range
+        if (repeat.times === 1) {
+          // end of times
+          setRepeat({});
 
-  //       setRepeat({ ...repeat, times: repeat.times - 1 });
-  //       setAyah(`${chapter}:${repeat.from}`);
+          return this.handleVerseChange();
+        }
 
-  //       return this.play();
-  //     }
-  //   }
+        setRepeat({ ...repeat, times: repeat.times - 1 });
 
-  //   return false;
-  // };
+        return file.play();
+      }
+    }
+
+    return null;
+  };
 
   handleScrollToggle = () => {
     const {
@@ -473,7 +497,7 @@ class Audioplayer extends Component<Props> {
         <ul className="list-inline">
           <ControlItem>
             <T id={KEYS.AUDIOPLAYER_CURRENTVERSE} />
-            : {currentVerseKey && currentVerseKey.split(':')[1]}
+            : {currentVerseKey}
           </ControlItem>
           <ControlItem>
             <PreviousButton

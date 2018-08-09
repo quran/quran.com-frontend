@@ -3,13 +3,13 @@ import PropTypes from 'prop-types';
 const RepeatShape = PropTypes.shape({
   from: PropTypes.number,
   to: PropTypes.number,
-  time: PropTypes.number,
+  times: PropTypes.number,
 });
 
 interface RepeatShape {
   from?: number;
   to?: number;
-  time?: number;
+  times?: number;
 }
 
 export default RepeatShape;

@@ -4,26 +4,26 @@ import ControlButton from './ControlButton';
 
 const propTypes = {
   onPreviousClick: PropTypes.func.isRequired,
-  currentVerse: PropTypes.string,
+  currentVerseKey: PropTypes.string,
   files: PropTypes.object.isRequired,
 };
 
 const defaultProps = {
-  currentVerse: '',
+  currentVerseKey: '',
 };
 
 type Props = {
   onPreviousClick(): void;
-  currentVerse: string;
+  currentVerseKey: string;
   files: { [key: string]: HTMLAudioElement };
 };
 
 const PreviousButton: React.SFC<Props> = ({
   onPreviousClick,
   files,
-  currentVerse,
+  currentVerseKey,
 }: Props) => {
-  const index = Object.keys(files).findIndex(id => id === currentVerse);
+  const index = Object.keys(files).findIndex(id => id === currentVerseKey);
 
   return (
     <ControlButton

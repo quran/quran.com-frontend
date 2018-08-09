@@ -8,9 +8,9 @@ import {
 import Word from '../components/Word';
 import ReduxState from '../types/ReduxState';
 
-const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => ({
+export const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => ({
   isCurrentVersePlaying:
-    state.audioplayer.currentVerse === ownProps.word.verseKey &&
+    state.audioplayer.currentVerseKey === ownProps.word.verseKey &&
     state.audioplayer.isPlaying,
   tooltip: state.settings.tooltip,
 });

@@ -44,7 +44,6 @@ const propTypes = {
     }),
   }).isRequired,
   verses: PropTypes.objectOf(VerseShape),
-  isSingleVerse: PropTypes.bool.isRequired,
   isEndOfChapter: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
 };
@@ -64,10 +63,7 @@ type Props = {
   lines: { [key: string]: LineShape };
   chapterInfo: ChapterInfoShape;
   settings: SettingsShape;
-  isSingleVerse: boolean;
-  isEndOfChapter: boolean;
   isVersesLoading: boolean;
-  setCurrentVerseKey(verseKey: string): $TsFixMe;
   location: $TsFixMe;
 };
 
@@ -201,7 +197,7 @@ class Chapter extends Component<Props> {
       !isEndOfSurah &&
       !versesArray.find((verse: VerseShape) => verse.verseNumber === to)
     ) {
-      fetchVerses(chapter.chapterNumber, paging, settings);
+      fetchVerses(chapter.chapterNumber, paging, {}, settings);
     }
 
     return false;
@@ -214,7 +210,6 @@ class Chapter extends Component<Props> {
       lines,
       settings,
       match,
-      setCurrentVerseKey,
       isVersesLoading,
     } = this.props;
 
@@ -253,7 +248,7 @@ class Chapter extends Component<Props> {
             {/* <ChapterInfoPanelContainer chapter={chapter} /> */}
             <div className="col-md-10 col-md-offset-1">
               {__CLIENT__ && <TopOptions chapter={chapter} />}
-              <Bismillah chapter={chapter} />
+              {chapter.bismillahPre && <Bismillah />}
               {settings.isReadingMode ? (
                 <PageView lines={lines} />
               ) : (
@@ -262,7 +257,6 @@ class Chapter extends Component<Props> {
             </div>
             <div className="col-md-10 col-md-offset-1">
               <ChapterPagination
-                setCurrentVerseKey={setCurrentVerseKey}
                 chapter={chapter}
                 isSingleVerse={isSingleVerse}
                 isEndOfChapter={isEndOfChapter}

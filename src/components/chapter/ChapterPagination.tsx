@@ -10,7 +10,6 @@ import SettingsShape from '../../shapes/SettingsShape';
 
 const propTypes = {
   chapter: ChapterShape.isRequired,
-  setCurrentVerseKey: PropTypes.func.isRequired,
   isEndOfChapter: PropTypes.bool.isRequired,
   isLoading: PropTypes.bool.isRequired,
   settings: SettingsShape.isRequired,
@@ -26,7 +25,6 @@ type Props = {
   chapter: ChapterShape;
   verses: { [verseKey: string]: VerseShape };
   settings: SettingsShape;
-  setCurrentVerseKey(verseKey: string): void;
   onLazyLoad(): void;
 };
 
@@ -38,7 +36,6 @@ const ChapterPagination: React.SFC<Props> = ({
   isEndOfChapter,
   chapter,
   settings,
-  setCurrentVerseKey,
   verses,
   onLazyLoad,
 }: Props) => {
@@ -89,12 +86,7 @@ const ChapterPagination: React.SFC<Props> = ({
             </li>
           )}
           <li className="text-center">
-            <Link
-              to={`/${chapter.chapterNumber}?translations=${translations}`}
-              onClick={() =>
-                setCurrentVerseKey(`${chapter.chapterNumber}:${firstVerseId}`)
-              }
-            >
+            <Link to={`/${chapter.chapterNumber}?translations=${translations}`}>
               <T id={KEYS.CHAPTER_GOTOBEGINNING} />
             </Link>
           </li>
@@ -103,9 +95,6 @@ const ChapterPagination: React.SFC<Props> = ({
               <Link
                 to={`/${Number(chapter.chapterNumber) +
                   1}?translations=${translations}`}
-                onClick={() =>
-                  setCurrentVerseKey(`${chapter.chapterNumber + 1}:1`)
-                }
               >
                 <T id={KEYS.CHAPTER_NEXT} />
                 →

@@ -50,7 +50,7 @@ class Word extends Component<Props> {
   public static propTypes = propTypes;
   public static defaultProps = defaultProps;
 
-  buildTooltip = () => {
+  getTooltipTitle = () => {
     const { word, tooltip } = this.props;
 
     let title = '';
@@ -125,7 +125,7 @@ class Word extends Component<Props> {
 
     return (
       <span>
-        <Tooltip arrow title={this.buildTooltip()}>
+        <Tooltip arrow title={this.getTooltipTitle()}>
           <a // eslint-disable-line
             key={word.code}
             id={id}

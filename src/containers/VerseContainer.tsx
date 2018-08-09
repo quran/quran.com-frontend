@@ -9,7 +9,7 @@ export const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => ({
   userAgent: state.options.userAgent,
   audio: state.options.audio,
   isCurrentVersePlaying:
-    state.audioplayer.currentVerse === ownProps.verse.verseKey &&
+    state.audioplayer.currentVerseKey === ownProps.verse.verseKey &&
     state.audioplayer.isPlaying,
 });
 
