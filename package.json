@@ -22,7 +22,7 @@
     "storybook": "start-storybook -p 6006",
     "test:stylelint": "stylelint './src/**/*.scss' --config ./.stylelintrc",
     "test": "npm run lint; npm run jest",
-    "type": "tsc src/**/*",
+    "type": "tsc --build tsconfig.json",
     "validate": "npm ls"
   },
   "bundlesize": [
