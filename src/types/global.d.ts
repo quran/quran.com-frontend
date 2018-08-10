@@ -7,6 +7,8 @@ interface Window {
   __REDUX_DATA__: any;
   __ASYNC_COMPONENTS_REHYDRATE_STATE__: any;
   Raven: any;
+  mixpanel: any;
+  ga: any;
 }
 
 type ArgumentTypes<T extends (...args: any[]) => any> = T extends (

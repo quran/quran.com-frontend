@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Icon from 'quran-components/lib/Icon';
-import T from '../T';
+import T, { KEYS } from '../T';
+import { SetSetting } from '../../redux/actions/settings';
+import { FontSizeSettingShape } from '../../shapes';
 
 const Title = styled.div`
   padding: 10px 15px;
@@ -33,30 +35,22 @@ const Reset = styled(Icon)`
 `;
 
 const propTypes = {
-  onOptionChange: PropTypes.func,
-  fontSize: customPropTypes.fontSize.isRequired,
+  onChange: PropTypes.func.isRequired,
+  fontSize: FontSizeSettingShape.isRequired,
 };
 
-class FontSizeOptions extends Component {
-  handleOptionSelected = (type, direction) => {
-    const { onOptionChange, fontSize } = this.props;
-    const changeFactor = {
-      translation: 0.5,
-      arabic: 0.5,
-    };
+type Props = {
+  onChange: SetSetting;
+  fontSize: FontSizeSettingShape;
+};
 
-    return onOptionChange({
-      fontSize: {
-        ...fontSize,
-        [type]: fontSize[type] + changeFactor[type] * direction,
-      },
-    });
-  };
+class FontSizeOptions extends Component<Props> {
+  static propTypes = propTypes;
 
-  resetFontSize = () => {
-    const { onOptionChange } = this.props;
+  handleFontSizeReset = () => {
+    const { onChange } = this.props;
 
-    return onOptionChange({
+    return onChange({
       fontSize: {
         arabic: 3.5,
         translation: 2,
@@ -64,83 +58,88 @@ class FontSizeOptions extends Component {
     });
   };
 
-  renderOptions() {
-    return (
-      <div>
-        <List>
-          <Item className="text-center">
-            <a
-              tabIndex="-1"
-              onClick={() => this.handleOptionSelected('arabic', -1)}
-              className="pointer"
-            >
-              <i className="ss-icon ss-hyphen" />
-            </a>
-          </Item>
-          <Item className="text-center">
-            <T id="setting.fontSize.arabic" defaultMessage="Arabic" />
-          </Item>
-          <Item className="text-center">
-            <a
-              tabIndex="-1"
-              onClick={() => this.handleOptionSelected('arabic', 1)}
-              className="pointer"
-            >
-              <i className="ss-icon ss-plus" />
-            </a>
-          </Item>
-        </List>
-        <br />
-        <List>
-          <Item className="text-center">
-            <a
-              tabIndex="-1"
-              onClick={() => this.handleOptionSelected('translation', -1)}
-              className="pointer"
-            >
-              <i className="ss-icon ss-hyphen" />
-            </a>
-          </Item>
-          <Item className="text-center">
-            <T id="setting.translations.title" defaultMessage="Translations" />
-          </Item>
-          <Item className="text-center">
-            <a
-              tabIndex="-1"
-              onClick={() => this.handleOptionSelected('translation', 1)}
-              className="pointer"
-            >
-              <i className="ss-icon ss-plus" />
-            </a>
-          </Item>
-        </List>
-      </div>
-    );
-  }
+  handleOptionSelected = (type: string, direction: number) => {
+    const { onChange, fontSize } = this.props;
+    const changeFactor: { [key: string]: number } = {
+      translation: 0.5,
+      arabic: 0.5,
+    };
 
-  renderTitle() {
-    return (
-      <Title>
-        <T id="setting.fontSize" defaultMessage="Font Size" />
-        <Reset
-          type="refresh"
-          className="text-right"
-          onClick={this.resetFontSize}
-        />
-      </Title>
-    );
-  }
+    return onChange({
+      fontSize: {
+        ...fontSize,
+        [type]:
+          (fontSize as FontSizeSettingShape & { [key: string]: number })[type] +
+          changeFactor[type] * direction,
+      },
+    });
+  };
 
   render() {
     return (
       <div>
-        {this.renderTitle()}
-        <ItemLink>{this.renderOptions()}</ItemLink>
+        <Title>
+          <T id={KEYS.SETTING_FONTSIZE} />
+          <Reset
+            type="refresh"
+            className="text-right"
+            onClick={this.handleFontSizeReset}
+          />
+        </Title>
+        <ItemLink>
+          <div>
+            <List>
+              <Item className="text-center">
+                <button
+                  type="button"
+                  onClick={() => this.handleOptionSelected('arabic', -1)}
+                  className="pointer btn btn-link"
+                >
+                  <i className="ss-icon ss-hyphen" />
+                </button>
+              </Item>
+              <Item className="text-center">
+                <T id={KEYS.SETTING_FONTSIZE_ARABIC} />
+              </Item>
+              <Item className="text-center">
+                <button
+                  type="button"
+                  onClick={() => this.handleOptionSelected('arabic', 1)}
+                  className="pointer btn btn-link"
+                >
+                  <i className="ss-icon ss-plus" />
+                </button>
+              </Item>
+            </List>
+            <br />
+            <List>
+              <Item className="text-center">
+                <button
+                  type="button"
+                  onClick={() => this.handleOptionSelected('translation', -1)}
+                  className="pointer btn btn-link"
+                >
+                  <i className="ss-icon ss-hyphen" />
+                </button>
+              </Item>
+              <Item className="text-center">
+                <T id={KEYS.SETTING_TRANSLATIONS_TITLE} />
+              </Item>
+              <Item className="text-center">
+                <button
+                  type="button"
+                  onClick={() => this.handleOptionSelected('translation', 1)}
+                  className="btn btn-link"
+                >
+                  <i className="ss-icon ss-plus" />
+                </button>
+              </Item>
+            </List>
+          </div>
+        </ItemLink>
       </div>
     );
   }
 }
-
-FontSizeOptions.propTypes = propTypes;
 
 export default FontSizeOptions;

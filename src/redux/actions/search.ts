@@ -7,7 +7,7 @@ type Params = {
 };
 
 // eslint-disable-next-line
-export function search(params: Params) {
+export function fetchSearch(params: Params) {
   return {
     type: FETCH_SEARCH,
     // TODO: We are doing this because of a weird obj.hasOwnProperty method missing on `params`
@@ -19,3 +19,5 @@ export function search(params: Params) {
     },
   };
 }
+
+export type FetchSearch = typeof fetchSearch;

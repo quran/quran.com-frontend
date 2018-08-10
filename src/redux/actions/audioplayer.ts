@@ -47,9 +47,13 @@ export const pause = () => ({
   type: PAUSE,
 });
 
-export const setRepeat = (repeat: boolean) => ({
+export const setRepeat = (repeat: {
+  from?: number;
+  to?: number;
+  times?: number;
+}) => ({
   type: SET_REPEAT,
-  repeat,
+  payload: repeat,
 });
 
 export const toggleScroll = () => ({
@@ -104,9 +108,10 @@ export const fetchAudio = ({
 export const isLoaded = (files: $TsFixMe, verse: VerseShape) =>
   files[verse.verseKey];
 
-export type FetchAudio = PackType<typeof fetchAudio>;
+export type FetchAudio = typeof fetchAudio;
 export type Play = typeof play;
 export type Pause = typeof pause;
 export type Update = typeof update;
 export type ToggleScroll = typeof toggleScroll;
 export type SetCurrentVerseKey = typeof setCurrentVerseKey;
+export type SetRepeat = typeof setRepeat;

@@ -10,11 +10,14 @@ import {
 } from '../redux/actions/audioplayer';
 
 const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => {
+  const { chapter } = ownProps;
   const { currentVerseKey, files } = state.audioplayer;
+  const currentFile =
+    files[ownProps.chapter.id] && files[ownProps.chapter.id][currentVerseKey];
 
   return {
-    segments: state.audioplayer.segments[ownProps.chapter.id],
-    chapterId: ownProps.chapter.id,
+    segments: state.audioplayer.segments[chapter.id],
+    chapterId: chapter.id,
     isPlaying: state.audioplayer.isPlaying,
     isLoading: state.audioplayer.isLoading,
     repeat: state.audioplayer.repeat,
@@ -22,9 +25,8 @@ const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => {
     duration: state.audioplayer.duration,
     currentTime: state.audioplayer.currentTime,
     currentVerseKey,
-    currentFile:
-      files[ownProps.chapter.id] && files[ownProps.chapter.id][currentVerseKey],
-    files: state.audioplayer.files[ownProps.chapter.id],
+    currentFile,
+    files: state.audioplayer.files[chapter.id],
     audioSetting: state.settings.audio,
   };
 };

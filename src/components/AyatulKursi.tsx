@@ -13,7 +13,6 @@ import {
 } from '../shapes';
 import makeHelmetTags from '../helpers/makeHelmetTags';
 import { chapterLdJson } from '../helpers/ldJson';
-import { determinePage } from '../helpers/determinePage';
 import PageContainer from './dls/PageContainer';
 import Bismillah from './Bismillah';
 import ChapterPagination from './chapter/ChapterPagination';
@@ -23,7 +22,6 @@ import TopOptions from './chapter/TopOptions';
 import SettingsShape from '../shapes/SettingsShape';
 import { FetchVerses } from '../redux/actions/verses';
 import { FetchChapters } from '../redux/actions/chapters';
-import { FetchChapterInfo } from '../redux/actions/chapterInfos';
 import { NUMBER_OF_CHAPTERS } from '../constants';
 import AudioplayerContainer from '../containers/AudioplayerContainer';
 import ChapterInfoPanelContainer from '../containers/ChapterInfoPanelContainer';
@@ -33,7 +31,6 @@ const propTypes = {
   chapters: PropTypes.objectOf(ChapterShape).isRequired,
   fetchVerses: PropTypes.func.isRequired,
   fetchChapters: PropTypes.func.isRequired,
-  fetchChapterInfo: PropTypes.func.isRequired,
   setCurrentVerseKey: PropTypes.func.isRequired,
   lines: PropTypes.object.isRequired,
   chapterInfo: ChapterInfoShape.isRequired,
@@ -56,7 +53,6 @@ const defaultProps = {
 type Props = {
   fetchVerses: FetchVerses;
   fetchChapters: FetchChapters;
-  fetchChapterInfo: FetchChapterInfo;
   match: MatchType<$TsFixMe>;
   chapter: ChapterShape;
   verses: { [verseKey: string]: VerseShape };
@@ -68,7 +64,7 @@ type Props = {
   location: $TsFixMe;
 };
 
-class Chapter extends Component<Props> {
+class AyatulKursi extends Component<Props> {
   public static propTypes = propTypes;
   public static defaultProps = defaultProps;
 
@@ -96,21 +92,22 @@ class Chapter extends Component<Props> {
     const { match, fetchVerses, settings, location } = this.props;
     const { params } = match;
 
-    if (this.isVersesFetched()) return null;
-
-    const chapterId = parseInt(params.chapterId, 10);
-    const paging = determinePage(params.range);
     const translations =
       params.translations ||
       (location && location.query && location.query.translations);
 
     if (__CLIENT__) {
-      fetchVerses(chapterId, paging, { translations }, settings);
+      fetchVerses(2, { offset: 254, limit: 1 }, { translations }, settings);
 
       return null;
     }
 
-    return fetchVerses(chapterId, paging, { translations }, settings);
+    return fetchVerses(
+      2,
+      { offset: 254, limit: 1 },
+      { translations },
+      settings
+    );
   };
 
   fetchChapters = () => {
@@ -127,82 +124,13 @@ class Chapter extends Component<Props> {
     return fetchChapters();
   };
 
-  fetchChapterInfo = () => {
-    const {
-      match: { params },
-      fetchChapterInfo,
-      chapterInfo,
-    } = this.props;
-
-    if (chapterInfo) return null;
-
-    if (__CLIENT__) {
-      fetchChapterInfo(params.chapterId, params.language);
-
-      return null;
-    }
-
-    return fetchChapterInfo(params.chapterId, params.language);
-  };
-
-  isVersesFetched = () => {
-    const { match, verses } = this.props;
-    const { params } = match;
-    const paging = determinePage(params.range);
-
-    if (paging.offset) {
-      return (
-        verses[
-          `${params.chapterId}:${paging.offset ? paging.offset + 1 : 1}`
-        ] &&
-        verses[
-          `${params.chapterId}:${
-            paging.offset && paging.limit ? paging.offset + paging.limit : 10
-          }`
-        ]
-      );
-    }
-
-    return verses[`${params.chapterId}:1`];
-  };
-
   bootstrap() {
-    const promises = [
-      this.fetchVerses(),
-      this.fetchChapters(),
-      this.fetchChapterInfo(),
-    ];
+    const promises = [this.fetchVerses(), this.fetchChapters()];
 
     return Promise.all(promises);
   }
 
-  handleLazyLoad = () => {
-    const { chapter, verses, settings, fetchVerses } = this.props;
-    const versesArray = Object.values(verses);
-    const firstVerse = versesArray[0];
-    const lastVerse: VerseShape = last(versesArray);
-
-    if (!firstVerse && !lastVerse) {
-      return null;
-    }
-
-    const range = [firstVerse.verseNumber, lastVerse.verseNumber];
-    const isEndOfSurah = lastVerse.verseNumber === chapter.versesCount;
-
-    const size = 10;
-    const from = range[1];
-    const to = from + size;
-    const paging = { offset: from, limit: to - from };
-
-    if (
-      !isEndOfSurah &&
-      !versesArray.find((verse: VerseShape) => verse.verseNumber === to)
-    ) {
-      fetchVerses(chapter.chapterNumber, paging, {}, settings);
-    }
-
-    return false;
-  };
+  handleLazyLoad = () => {};
 
   render() {
     const {
@@ -282,4 +210,4 @@ class Chapter extends Component<Props> {
   }
 }
 
-export default Chapter;
+export default AyatulKursi;

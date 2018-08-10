@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import toNumber from 'lodash/toNumber';
+import range from 'lodash/range';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
@@ -13,6 +14,7 @@ import ControlButton from './ControlButton';
 import Popover from './Popover';
 import { ChapterShape } from '../../shapes';
 import RepeatShape from '../../shapes/RepeatShape';
+import { SetRepeat } from '../../redux/actions/audioplayer';
 
 const Pill = styled(NavItem)`
   a {
@@ -31,15 +33,22 @@ const Item = styled.div<{ disabled?: boolean }>`
 `;
 
 const propTypes = {
-  chapter: ChapterShape,
-  repeat: RepeatShape,
+  chapter: ChapterShape.isRequired,
+  repeat: RepeatShape.isRequired,
   setRepeat: PropTypes.func.isRequired,
   current: PropTypes.number.isRequired,
 };
 
-type Props = {};
+type Props = {
+  chapter: ChapterShape;
+  repeat: RepeatShape;
+  setRepeat: SetRepeat;
+  current: number;
+};
 
-class RepeatButton extends Component {
+class RepeatButton extends Component<Props> {
+  static propTypes = propTypes;
+
   handleToggle = () => {
     const { repeat, setRepeat, current } = this.props;
 
@@ -53,7 +62,7 @@ class RepeatButton extends Component {
     });
   };
 
-  handleNavChange = nav => {
+  handleNavChange = (nav: number) => {
     const { setRepeat, current } = this.props;
 
     if (nav === 1) {
@@ -70,11 +79,10 @@ class RepeatButton extends Component {
     });
   };
 
+  // TODO: PLEASE DON'T DO renderXYZ
   renderRangeAyahs() {
     const { chapter, repeat, setRepeat } = this.props;
-    const array = Array(chapter.versesCount)
-      .join()
-      .split(',');
+    const array = range(chapter.versesCount);
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
@@ -85,9 +93,11 @@ class RepeatButton extends Component {
             <FormControl
               componentClass="select"
               value={repeat.from}
-              onChange={event => {
+              onChange={(event: $TsFixMe) => {
                 let to = toNumber(event.target.value) + 3;
+
                 to = to < chapter.versesCount ? to : chapter.versesCount;
+
                 setRepeat({
                   ...repeat,
                   from: toNumber(event.target.value),
@@ -95,15 +105,16 @@ class RepeatButton extends Component {
                 });
               }}
             >
-              {array.reduce((options, ayah, index) => {
-                if (index + 1 < chapter.versesCount) {
+              {array.reduce((options, time) => {
+                if (time + 1 < chapter.versesCount) {
                   // Exclude last verse
                   options.push(
-                    <option key={index} value={index + 1}>
-                      {index + 1}
+                    <option key={time} value={time + 1}>
+                      {time + 1}
                     </option>
                   );
                 }
+
                 return options;
               }, [])}
             </FormControl>
@@ -115,22 +126,23 @@ class RepeatButton extends Component {
             <FormControl
               componentClass="select"
               value={repeat.to}
-              onChange={event =>
+              onChange={(event: $TsFixMe) =>
                 setRepeat({ ...repeat, to: parseInt(event.target.value, 10) })
               }
             >
-              {array.reduce((options, ayah, index) => {
+              {array.reduce((options, time) => {
                 if (
-                  (repeat.from ? repeat.from : 1) < index + 1 &&
-                  index + 1 <= chapter.versesCount
+                  (repeat.from ? repeat.from : 1) < time + 1 &&
+                  time + 1 <= chapter.versesCount
                 ) {
                   // eslint-disable-line max-len
                   options.push(
-                    <option key={index} value={index + 1}>
-                      {index + 1}
+                    <option key={time} value={time + 1}>
+                      {time + 1}
                     </option>
                   );
                 }
+
                 return options;
               }, [])}
             </FormControl>
@@ -140,11 +152,10 @@ class RepeatButton extends Component {
     );
   }
 
+  // TODO: PLEASE DON'T DO renderXYZ
   renderSingleAyah() {
     const { repeat, setRepeat, chapter } = this.props;
-    const array = Array(chapter.versesCount)
-      .join()
-      .split(',');
+    const array = range(chapter.versesCount);
 
     return (
       <div className="col-md-12" style={{ paddingTop: 15 }}>
@@ -152,7 +163,7 @@ class RepeatButton extends Component {
         <FormControl
           componentClass="select"
           value={repeat.from}
-          onChange={event =>
+          onChange={(event: $TsFixMe) =>
             setRepeat({
               ...repeat,
               from: parseInt(event.target.value, 10),
@@ -160,9 +171,9 @@ class RepeatButton extends Component {
             })
           }
         >
-          {array.map((ayah, index) => (
-            <option key={index} value={index + 1}>
-              {index + 1}
+          {array.map(time => (
+            <option key={time} value={time + 1}>
+              {time + 1}
             </option>
           ))}
         </FormControl>
@@ -170,78 +181,9 @@ class RepeatButton extends Component {
     );
   }
 
-  renderNav() {
-    const { repeat } = this.props;
-
-    return (
-      <Item className="row" disabled={!repeat.from}>
-        <div className="col-md-12">
-          <Nav
-            bsStyle="pills"
-            activeKey={repeat.from === repeat.to ? 1 : 2}
-            onSelect={this.handleNavChange}
-          >
-            <Pill eventKey={1} title="Single Ayah">
-              <T id={KEYS.AUDIOPLAYER_REPEAT_SINGLE} />
-            </Pill>
-            <Pill eventKey={2} title="Range">
-              <T id={KEYS.AUDIOPLAYER_REPEAT_RANGE} />
-            </Pill>
-          </Nav>
-        </div>
-      </Item>
-    );
-  }
-
-  renderOptions() {
-    const { repeat } = this.props;
-
-    return (
-      <Item className="row" disabled={!repeat.from}>
-        {repeat.from === repeat.to
-          ? this.renderSingleAyah()
-          : this.renderRangeAyahs()}
-      </Item>
-    );
-  }
-
-  renderTimes() {
-    const { repeat, setRepeat } = this.props;
-    const times = Array(10)
-      .join()
-      .split(',');
-
-    return (
-      <Item className="row" disabled={!repeat.from}>
-        <div className="col-md-12" style={{ paddingTop: 15 }}>
-          <T id={KEYS.AUDIOPLAYER_REPEAT_TITLE} />
-          : <br />
-          <FormControl
-            componentClass="select"
-            value={repeat.times}
-            onChange={event =>
-              setRepeat({
-                ...repeat,
-                times: toNumber(event.target.value),
-              })
-            }
-          >
-            <option value="Infinity">
-              <T id={KEYS.AUDIOPLAYER_REPEAT_LOOP} />
-            </option>
-            {times.map((ayah, index) => (
-              <option key={index} value={index + 1}>
-                {index + 1}
-              </option>
-            ))}
-          </FormControl>
-        </div>
-      </Item>
-    );
-  }
-
   render() {
-    const { repeat } = this.props;
+    const { repeat, setRepeat } = this.props;
+    const times = range(10);
 
     const popover = (
       <Popover
@@ -250,7 +192,6 @@ class RepeatButton extends Component {
           <div className="row">
             <div className="col-md-12 text-center">
               <T id={KEYS.AUDIOPLAYER_REPEAT_TITLE} />
-              " '}"{' '}
               <SwitchToggle
                 checked={repeat.from}
                 onToggle={this.handleToggle}
@@ -262,9 +203,52 @@ class RepeatButton extends Component {
           </div>
         }
       >
-        {this.renderNav()}
-        {this.renderOptions()}
-        {this.renderTimes()}
+        <Item className="row" disabled={!repeat.from}>
+          <div className="col-md-12">
+            <Nav
+              bsStyle="pills"
+              activeKey={repeat.from === repeat.to ? 1 : 2}
+              onSelect={this.handleNavChange}
+            >
+              <Pill eventKey={1} title="Single Ayah">
+                <T id={KEYS.AUDIOPLAYER_REPEAT_SINGLE} />
+              </Pill>
+              <Pill eventKey={2} title="Range">
+                <T id={KEYS.AUDIOPLAYER_REPEAT_RANGE} />
+              </Pill>
+            </Nav>
+          </div>
+        </Item>
+        <Item className="row" disabled={!repeat.from}>
+          {repeat.from === repeat.to
+            ? this.renderSingleAyah()
+            : this.renderRangeAyahs()}
+        </Item>
+        <Item className="row" disabled={!repeat.from}>
+          <div className="col-md-12" style={{ paddingTop: 15 }}>
+            <T id={KEYS.AUDIOPLAYER_REPEAT_TITLE} />
+            : <br />
+            <FormControl
+              componentClass="select"
+              value={repeat.times}
+              onChange={(event: $TsFixMe) =>
+                setRepeat({
+                  ...repeat,
+                  times: toNumber(event.target.value),
+                })
+              }
+            >
+              <option value="Infinity">
+                <T id={KEYS.AUDIOPLAYER_REPEAT_LOOP} />
+              </option>
+              {times.map(time => (
+                <option key={time} value={time + 1}>
+                  {time + 1}
+                </option>
+              ))}
+            </FormControl>
+          </div>
+        </Item>
       </Popover>
     );
 

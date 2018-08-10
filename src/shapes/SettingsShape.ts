@@ -1,9 +1,5 @@
 import PropTypes from 'prop-types';
-
-const FontSizeShape = PropTypes.shape({
-  arabic: PropTypes.number.isRequired,
-  translation: PropTypes.number.isRequired,
-}).isRequired;
+import FontSizeSettingShape from './FontSizeSettingShape';
 
 const SettingsShape = PropTypes.shape({
   isReadingMode: PropTypes.bool.isRequired,
@@ -12,7 +8,7 @@ const SettingsShape = PropTypes.shape({
   audio: PropTypes.number.isRequired,
   translations: PropTypes.arrayOf(PropTypes.number).isRequired,
   tooltip: PropTypes.oneOf(['translation', 'transliteration']),
-  fontSize: FontSizeShape,
+  fontSize: FontSizeSettingShape.isRequired,
   userAgent: PropTypes.object,
   options: PropTypes.shape({
     recitations: PropTypes.arrayOf(PropTypes.number).isRequired,
@@ -22,16 +18,6 @@ const SettingsShape = PropTypes.shape({
   loadingTranslations: PropTypes.bool.isRequired,
 });
 
-interface FontSizeShape {
-  arabic: number;
-  translation: number;
-}
-
-interface FetchedOptionShape {
-  recitations: $TsFixMe;
-  translations: $TsFixMe;
-}
-
 interface SettingsShape {
   isReadingMode: boolean;
   isNightMode: boolean;
@@ -39,7 +25,7 @@ interface SettingsShape {
   audio: number;
   translations: Array<number>;
   tooltip: 'translation' | 'transliteration';
-  fontSize: FontSizeShape;
+  fontSize: FontSizeSettingShape;
   userAgent?: { [key: string]: string };
 }
 

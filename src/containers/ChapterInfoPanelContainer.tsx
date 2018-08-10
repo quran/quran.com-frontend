@@ -10,7 +10,7 @@ type Props = {
 
 const mapStateToProps = (state: ReduxState, ownProps: Props) => ({
   chapterInfo: state.chapterInfos.entities[ownProps.chapter.id],
-  isShowingChapterInfo: state.options.isShowingChapterInfo,
+  isShowingChapterInfo: state.settings.isShowingChapterInfo,
 });
 
 export default connect(

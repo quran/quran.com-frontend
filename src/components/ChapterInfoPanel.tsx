@@ -139,7 +139,7 @@ const ChapterInfo: React.SFC<Props> = ({
   setSetting,
 }: Props) => {
   // So we don't need to load images and files unless needed
-  if (!isShowingChapterInfo) return <noscript />;
+  if (!isShowingChapterInfo) return null;
   if (!chapterInfo) return <Loader isActive />;
 
   const handleClose = () =>

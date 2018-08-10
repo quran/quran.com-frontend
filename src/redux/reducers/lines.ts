@@ -1,14 +1,17 @@
+import { camelizeKeys } from 'humps';
+import keyBy from 'lodash/keyBy';
 import { handle } from 'redux-pack';
 import { FETCH_VERSES } from '../constants/verses';
+import { VerseShape } from '../../shapes';
 
 type State = {
   isLoading: boolean;
-  lines: { [key: string]: $TsFixMe };
+  entities: { [key: string]: $TsFixMe };
 };
 
 const INITIAL_STATE: State = {
   isLoading: false,
-  lines: {},
+  entities: {},
 };
 
 export default (state = INITIAL_STATE, action: $TsFixMe) => {
@@ -24,15 +27,13 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
           isLoading: false,
         }),
         success: prevState => {
-          return prevState;
-          const ayahs = action.result.entities.verses;
-          const stateLines = state.lines;
-          const lines = { ...stateLines };
+          const verses = camelizeKeys(
+            keyBy(action.payload.verses, 'verse_key')
+          );
+          const lines = prevState.entities;
 
-          action.result.result.verses.forEach((ayahId: $TsFixMe) => {
-            const ayah = ayahs[ayahId];
-
-            ayah.words.forEach((word: $TsFixMe) => {
+          Object.values(verses).forEach((verse: VerseShape) => {
+            verse.words.forEach((word: $TsFixMe) => {
               if (lines[`${word.pageNumber}-${word.lineNumber}`]) {
                 const isInArray = lines[
                   `${word.pageNumber}-${word.lineNumber}`
@@ -58,9 +59,6 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
 
           return {
             ...prevState,
-            loaded: true,
-            loading: false,
-            errored: false,
             lines,
           };
         },

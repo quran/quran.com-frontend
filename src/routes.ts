@@ -76,23 +76,13 @@ const routes = [
         import(/* webpackChunkName: "Search" */ './containers/SearchContainer'),
     }),
   },
-  // {
-  //   path: '/ayatul-kursi',
-  //   component: asyncComponent({
-  //     resolve: () =>
-  //       import(/* webpackChunkName: "AyatulKursi" */ './containers/AyatulKursi'),
-  //   }),
-  //     chaptersConnect,
-  //     ({ store }) =>
-  //       versesConnect({
-  //         store,
-  //         params: {
-  //           chapterId: '2',
-  //           range: '255',
-  //         },
-  //       }),
-  //   ],
-  // },
+  {
+    path: '/ayatul-kursi',
+    component: asyncComponent({
+      resolve: () =>
+        import(/* webpackChunkName: "AyatulKursi" */ './containers/AyatulKursiContainer'),
+    }),
+  },
   // {
   //   path: '/:chapterId/info/:language?',
   //   component: asyncComponent({

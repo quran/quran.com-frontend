@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { MenuItem } from 'quran-components/lib/Menu';
 import T, { KEYS } from '../T';
+import { SetSetting } from '../../redux/actions/settings';
 
 const propTypes = {
   isToggled: PropTypes.bool.isRequired,
@@ -10,7 +11,7 @@ const propTypes = {
 
 type Props = {
   isToggled: boolean;
-  onToggle(payload: { isReadingMode: boolean }): void;
+  onToggle: SetSetting;
 };
 
 const ReadingModeToggle: React.SFC<Props> = ({

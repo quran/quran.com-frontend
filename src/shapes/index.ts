@@ -12,6 +12,8 @@ import VerseShape from './VerseShape';
 import WordShape from './WordShape';
 import SegmentShape from './SegmentShape';
 import SettingsShape from './SettingsShape';
+import FontSizeSettingShape from './FontSizeSettingShape';
+import ReciterShape from './ReciterShape';
 
 export {
   ChapterInfoShape,
@@ -27,6 +29,8 @@ export {
   WordShape,
   SegmentShape,
   SettingsShape,
+  FontSizeSettingShape,
+  ReciterShape,
 };
 
 export const bookmarkActions = PropTypes.shape({

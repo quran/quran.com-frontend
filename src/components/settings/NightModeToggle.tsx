@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { MenuItem } from 'quran-components/lib/Menu';
 import T from '../T';
 import KEYS from '../../locale/keys';
+import { SetSetting } from '../../redux/actions/settings';
 
 const propTypes = {
   isNightMode: PropTypes.bool.isRequired,
@@ -12,7 +13,7 @@ const propTypes = {
 
 type Props = {
   isNightMode: boolean;
-  onToggle(payload: { isNightMode: boolean }): void;
+  onToggle: SetSetting;
 };
 
 class NightModeToggle extends Component<Props> {

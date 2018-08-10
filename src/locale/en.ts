@@ -101,6 +101,11 @@ const EN: Shape = {
       'Chapter is out of range. Please go to home page',
     [KEYS.ERROR_INVALID_VERSE]: 'Verse is out of range. Please go to home page',
     [KEYS.ERROR_NOT_FOUND]: 'Sorry, this page does not exist',
+
+    [KEYS.NO_SCRIPT_DESCRIPTION]:
+      'Looks like either your browser does not support Javascript or its disabled. Quran.com workes best with JavaScript enabled. For more instruction on how to enable javascript',
+
+    [KEYS.CLICK_HERE]: 'Click here',
   },
 };
 

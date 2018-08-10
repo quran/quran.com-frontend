@@ -6,8 +6,8 @@ import Audioplayer, { DIRECTIONS } from '../Audioplayer';
 import { chapter } from '../../../tests/fixtures/chapters';
 import verse, { getVerse } from '../../../tests/fixtures/verse';
 
-let getProps: $TsFixMe;
-let fileMock: $TsFixMe;
+let getProps: any;
+let fileMock: any;
 
 describe('<Audioplayer', () => {
   beforeEach(() => {

@@ -6,11 +6,13 @@ import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
 import Loader from 'quran-components/lib/Loader';
 import { FormattedHTMLMessage } from 'react-intl';
+import { History } from 'history';
 import Jumbotron from './Jumbotron';
 import VerseContainer from '../containers/VerseContainer';
 import T, { KEYS } from './T';
 import { VerseShape } from '../shapes';
 import SettingsShape from '../shapes/SettingsShape';
+import { FetchSearch } from '../redux/actions/search';
 
 const Header = styled.div`
   background-color: #e7e6e6;
@@ -90,6 +92,7 @@ const propTypes = {
     }),
   }).isRequired,
   settings: SettingsShape.isRequired,
+  fetchSearch: PropTypes.func.isRequired,
 };
 
 const defaultProps: { results: Array<string>; entities: Array<string> } = {
@@ -113,6 +116,8 @@ type Props = {
   entities: Array<VerseShape>;
   location: { query: { q?: string; p?: string } };
   settings: SettingsShape;
+  fetchSearch: FetchSearch;
+  history: History;
 };
 
 class Search extends Component<Props> {
@@ -122,7 +127,13 @@ class Search extends Component<Props> {
 
   static contextTypes = contextTypes;
 
-  handlePageChange = payload => {
+  bootstrap() {
+    const { fetchSearch, location } = this.props;
+
+    return fetchSearch(location.query || location.q);
+  }
+
+  handlePageChange = (payload: $TsFixMe) => {
     const {
       history: { push },
       query,
@@ -140,7 +151,7 @@ class Search extends Component<Props> {
 
       return push({
         pathname: '/search',
-        query: { p: selectedPage, q: query },
+        search: '{ p: selectedPage, q: query }',
       });
     }
 

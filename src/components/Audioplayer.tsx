@@ -158,10 +158,11 @@ class Audioplayer extends Component<Props> {
     const { currentVerseKey, audioSetting, verses, fetchAudio } = this.props;
     const versesArray = Object.values(verses);
     const verse = verses[currentVerseKey] || versesArray[0];
+    const fetchAudioPromise: $TsFixMe = fetchAudio;
 
     // document.addEventListener('keydown', this.handleKeyboardEvent);
 
-    return fetchAudio({
+    return fetchAudioPromise({
       chapterId: verse.chapterId,
       verseId: verse.id,
       verseKey: verse.verseKey,
@@ -294,6 +295,11 @@ class Audioplayer extends Component<Props> {
 
   handleChapterChange = (): null => {
     const { verses, chapter, currentVerseKey, setCurrentVerseKey } = this.props;
+
+    if (!currentVerseKey) {
+      return null;
+    }
+
     const [chapterId] = currentVerseKey.split(':').map(toNumber);
     const versesArray = Object.values(verses);
 
@@ -329,7 +335,9 @@ class Audioplayer extends Component<Props> {
 
     // if we don't have the file for this verse
     if (!files[currentVerseKey]) {
-      return fetchAudio({
+      const fetchAudioPromise: $TsFixMe = fetchAudio;
+
+      return fetchAudioPromise({
         chapterId: this.currentVerse.chapterId,
         verseId: this.currentVerse.id,
         verseKey: this.currentVerse.verseKey,

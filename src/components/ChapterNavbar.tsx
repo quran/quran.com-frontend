@@ -5,14 +5,19 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import BootstrapNavbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
+import NavItem from 'react-bootstrap/lib/NavItem';
 import Drawer from 'quran-components/lib/Drawer';
 
 import ChaptersDropdown from './ChaptersDropdown';
 import VersesDropdown from './VersesDropdown';
+import Settings from './Settings';
 
 import { NAVBAR_EVENTS } from '../events';
 import { SettingsShape, VerseShape, ChapterShape } from '../shapes';
 import T, { KEYS } from './T';
+import { FetchVerses } from '../redux/actions/verses';
+import { SetSetting } from '../redux/actions/settings';
+import { SetCurrentVerseKey } from '../redux/actions/audioplayer';
 
 const scrolledStyle = {
   boxShadow:
@@ -39,6 +44,8 @@ const propTypes = {
   }).isRequired,
   chapter: ChapterShape.isRequired,
   setCurrentVerse: PropTypes.func.isRequired,
+  setSetting: PropTypes.func.isRequired,
+  fetchVerses: PropTypes.func.isRequired,
 };
 
 type Props = {
@@ -49,6 +56,9 @@ type Props = {
   verses?: { [verseKey: string]: VerseShape };
   chapters?: { [chapterId: string]: ChapterShape };
   chapter?: ChapterShape;
+  setSetting: SetSetting;
+  fetchVerses: FetchVerses;
+  setCurrentVerse: SetCurrentVerseKey;
 };
 
 type State = {
@@ -56,7 +66,7 @@ type State = {
   drawerOpen: boolean;
 };
 
-class Navbar extends Component<Props, State> {
+class ChapterNavbar extends Component<Props, State> {
   public static propTypes = propTypes;
 
   state = {
@@ -118,18 +128,16 @@ class Navbar extends Component<Props, State> {
       chapter,
       chapters,
       verses,
+      setSetting,
+      fetchVerses,
     } = this.props;
     const { scrolled, drawerOpen } = this.state;
 
     const drawerToggle = (
-      <button
-        type="button"
-        className="pointer btn btn-link"
-        onClick={() => this.handleDrawerToggle(true)}
-      >
+      <NavItem onClick={() => this.handleDrawerToggle(true)}>
         <i className="ss-icon ss-settings text-align" />
         <T id={KEYS.SETTING_TITLE} />
-      </button>
+      </NavItem>
     );
 
     return (
@@ -188,20 +196,21 @@ class Navbar extends Component<Props, State> {
               </h4>
             }
           >
-            {/* <Settings
+            <Settings
               chapter={chapter}
               verses={verses}
               setSetting={setSetting}
+              fetchVerses={fetchVerses}
               settings={settings}
-            /> */}
+            />
           </Drawer>
         </StyledNav>
         <Nav pullRight className="hidden-xs hidden-sm">
-          <li>{drawerToggle}</li>
+          {drawerToggle}
         </Nav>
       </BootstrapNavbar>
     );
   }
 }
 
-export default Navbar;
+export default ChapterNavbar;

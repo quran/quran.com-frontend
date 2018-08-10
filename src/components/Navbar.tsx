@@ -31,14 +31,13 @@ type Props = {
 
 class Navbar extends Component<Props> {
   public static propTypes = {
-    // handleToggleSidebar: PropTypes.func.isRequired,
     handleSidebarToggle: PropTypes.func.isRequired,
     isStatic: PropTypes.bool,
     location: PropTypes.object.isRequired,
   };
 
   public static defaultProps = {
-    isStatic: false,
+    isStatic: true,
   };
 
   state = {

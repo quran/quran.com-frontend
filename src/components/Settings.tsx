@@ -7,8 +7,8 @@ import FontSizeOptions from './settings/FontSizeOptions';
 import ReadingModeToggle from './settings/ReadingModeToggle';
 import NightModeToggle from './settings/NightModeToggle';
 import ChapterInfoToggle from './settings/ChapterInfoToggle';
-import ReciterDropdown from './settings/ReciterDropdown';
-import TranslationsDropdown from './settings/TranslationsDropdown';
+import ReciterDropdownContainer from '../containers/settings/ReciterDropdownContainer';
+import TranslationsDropdownContainer from '../containers/settings/TranslationsDropdownContainer';
 import TooltipOptions from './settings/TooltipOptions';
 import { VerseShape, ChapterShape, SettingsShape } from '../shapes';
 import { SetSetting } from '../redux/actions/settings';
@@ -76,17 +76,11 @@ class Settings extends Component<Props> {
           onToggle={setSetting}
         />
         <hr />
-        <ReciterDropdown onOptionChange={this.handleSettingChange} />
-        <TranslationsDropdown onOptionChange={this.handleSettingChange} />
-        <TooltipOptions
-          tooltip={settings.tooltip}
-          onOptionChange={setSetting}
-        />
+        <ReciterDropdownContainer />
+        <TranslationsDropdownContainer />
+        <TooltipOptions tooltip={settings.tooltip} onChange={setSetting} />
         <hr />
-        <FontSizeOptions
-          fontSize={settings.fontSize}
-          onOptionChange={setSetting}
-        />
+        <FontSizeOptions fontSize={settings.fontSize} onChange={setSetting} />
         <hr />
         <LocaleSwitcher renderAs="menu" />
       </Menu>

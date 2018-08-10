@@ -14,6 +14,8 @@ type Payload = {
   tooltip?: 'translation' | 'transliteration';
   fontSize?: FontSize;
   isShowingChapterInfo?: boolean;
+  isReadingMode?: boolean;
+  isNightMode?: boolean;
 };
 
 export const setSetting = (payload: Payload) => {

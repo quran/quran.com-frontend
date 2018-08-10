@@ -6,12 +6,12 @@ import {
 import apiClient from '../../apiClient';
 
 export const fetchTranslations = () => ({
-  types: FETCH_TRANSLATIONS,
+  type: FETCH_TRANSLATIONS,
   promise: apiClient.get('/api/v3/options/translations'),
 });
 
-export const fetchRecitations = () => ({
-  types: FETCH_RECITERS,
+export const fetchReciters = () => ({
+  type: FETCH_RECITERS,
   promise: apiClient.get('/api/v3/options/recitations'),
 });
 
@@ -19,3 +19,7 @@ export const fetchTafsirs = () => ({
   type: FETCH_TAFSIRS,
   promise: apiClient.get('/api/v3/options/tafsirs'),
 });
+
+export type FetchTranslations = typeof fetchTranslations;
+export type FetchReciters = typeof fetchReciters;
+export type FetchTafsirs = typeof fetchTafsirs;
