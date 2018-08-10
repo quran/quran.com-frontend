@@ -8,7 +8,7 @@ import { VerseShape, ChapterShape } from '../shapes';
 import Text from './verse/Text';
 import Controls from './verse/Controls';
 import { FetchTafsirs } from '../redux/actions/tafsirs';
-import { SetCurrentVerseKey } from '../redux/actions/audioplayer';
+import { SetCurrentVerseKey, Play, Pause } from '../redux/actions/audioplayer';
 
 // TODO: Change this
 const VerseNode = styled(Element)<{ highlight?: boolean; textMuted: string }>`
@@ -28,7 +28,6 @@ const propTypes = {
   isSearched: PropTypes.bool,
   verse: VerseShape.isRequired,
   chapter: ChapterShape.isRequired,
-  match: PropTypes.object, // eslint-disable-line react/forbid-prop-types
   isCurrentVersePlaying: PropTypes.bool.isRequired,
   fetchTafsirs: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
@@ -47,15 +46,14 @@ type Props = {
   isSearched?: boolean;
   verse: VerseShape;
   chapter: ChapterShape;
-  match?: $TsFixMe;
   isCurrentVersePlaying: boolean;
-  tooltip?: string;
+  tooltip: 'translation' | 'transliteration';
   currentWord?: number;
   currentVerse?: string;
   userAgent?: { [key: string]: boolean };
   fetchTafsirs: FetchTafsirs;
-  play(): any;
-  pause(): any;
+  play: Play;
+  pause: Pause;
   setCurrentVerseKey: SetCurrentVerseKey;
   isPdf?: boolean;
 };
@@ -92,11 +90,10 @@ class Verse extends Component<Props> {
       verse,
       isCurrentVersePlaying,
       isSearched,
-      match,
       chapter,
       isPdf,
     } = this.props;
-    const translations: Array<$TsFixMe> = match || verse.translations || [];
+    const translations: Array<$TsFixMe> = verse.translations || [];
 
     return (
       <VerseNode

@@ -18,6 +18,7 @@
   ],
   "exclude": [
     "./tests/**/*",
-    "./src/**/_tests_/**/*"
+    "./src/**/_tests_/**/*",
+    "*.scss"
   ]
 }

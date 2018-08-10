@@ -1,12 +1,13 @@
 import appRootDir from 'app-root-dir';
 import AssetsPlugin from 'assets-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import nodeExternals from 'webpack-node-externals';
 import path from 'path';
 import webpack from 'webpack';
 import WebpackMd5Hash from 'webpack-md5-hash';
 import strip from 'strip-loader';
 import { CheckerPlugin } from 'awesome-typescript-loader';
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
 import { happyPackPlugin, log } from '../utils';
 import { ifElse } from '../../shared/utils/logic';
@@ -141,6 +142,25 @@ export default function webpackConfigFactory(buildOptions) {
       __dirname: true,
       __filename: true,
     },
+
+    optimization: ifProdClient(
+      {
+        minimizer: [
+          new UglifyJsPlugin({
+            sourceMap: config('includeSourceMapsForOptimisedClientBundle'),
+            uglifyOptions: {
+              compress: {
+                warnings: false,
+              },
+              output: {
+                comments: false,
+              },
+            },
+          }),
+        ],
+      },
+      {}
+    ),
 
     // Source map settings.
     devtool: ifElse(
@@ -321,31 +341,11 @@ export default function webpackConfigFactory(buildOptions) {
           })
       ),
 
-      // For our production client we need to make sure we pass the required
-      // configuration to ensure that the output is minimized/optimized.
-      ifProdClient(
-        () =>
-          new webpack.optimize.UglifyJsPlugin({
-            sourceMap: config('includeSourceMapsForOptimisedClientBundle'),
-            compress: {
-              screw_ie8: true,
-              warnings: false,
-            },
-            mangle: {
-              screw_ie8: true,
-            },
-            output: {
-              comments: false,
-              screw_ie8: true,
-            },
-          })
-      ),
-
       // For the production build of the client we need to extract the CSS into
       // CSS files.
       ifProdClient(
         () =>
-          new ExtractTextPlugin({
+          new MiniCssExtractPlugin({
             filename: '[name]-[contenthash].css',
             allChunks: true,
           })
@@ -566,27 +566,25 @@ export default function webpackConfigFactory(buildOptions) {
                 // Note: The ExtractTextPlugin needs to be registered within the
                 // plugins section too.
                 ifProdClient(() => ({
-                  loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                      {
-                        loader: 'css-loader',
-                        query: {
-                          minimize: true,
-                          importLoaders: 2,
-                          sourceMap: true,
-                        },
+                  use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                      loader: 'css-loader',
+                      query: {
+                        minimize: true,
+                        importLoaders: 2,
+                        sourceMap: true,
                       },
-                      {
-                        loader: 'sass-loader',
-                        options: {
-                          outputStyle: 'compressed',
-                          sourceMap: true,
-                          sourceMapContents: true,
-                        },
+                    },
+                    {
+                      loader: 'sass-loader',
+                      options: {
+                        outputStyle: 'compressed',
+                        sourceMap: true,
+                        sourceMapContents: true,
                       },
-                    ],
-                  }),
+                    },
+                  ],
                 })),
                 // When targetting the server we use the "/locals" version of the
                 // css loader, as we don't need any css files for the server.
@@ -616,27 +614,25 @@ export default function webpackConfigFactory(buildOptions) {
                 // Note: The ExtractTextPlugin needs to be registered within the
                 // plugins section too.
                 ifProdClient(() => ({
-                  loader: ExtractTextPlugin.extract({
-                    fallback: 'style-loader',
-                    use: [
-                      {
-                        loader: 'css-loader',
-                        query: {
-                          minimize: true,
-                          importLoaders: 2,
-                          sourceMap: false,
-                        },
+                  use: [
+                    MiniCssExtractPlugin.loader,
+                    {
+                      loader: 'css-loader',
+                      query: {
+                        minimize: true,
+                        importLoaders: 2,
+                        sourceMap: false,
                       },
-                      {
-                        loader: 'sass-loader',
-                        options: {
-                          outputStyle: 'compressed',
-                          sourceMap: false,
-                          sourceMapContents: false,
-                        },
+                    },
+                    {
+                      loader: 'sass-loader',
+                      options: {
+                        outputStyle: 'compressed',
+                        sourceMap: false,
+                        sourceMapContents: false,
                       },
-                    ],
-                  }),
+                    },
+                  ],
                 })),
                 // When targetting the server we use the "/locals" version of the
                 // css loader, as we don't need any css files for the server.

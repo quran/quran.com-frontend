@@ -22,6 +22,7 @@
     "storybook": "start-storybook -p 6006",
     "test:stylelint": "stylelint './src/**/*.scss' --config ./.stylelintrc",
     "test": "npm run lint; npm run jest",
+    "type": "tsc src/**/*",
     "validate": "npm ls"
   },
   "bundlesize": [
@@ -147,10 +148,11 @@
     "json-loader": "0.5.4",
     "lodash": "4.17.5",
     "md5": "2.2.1",
+    "mini-css-extract-plugin": "0.4.1",
     "morgan": "1.9.0",
     "node-sass": "4.9.3",
     "normalizr": "3.0.2",
-    "offline-plugin": "4.9.0",
+    "offline-plugin": "5.0.5",
     "polished": "1.9.2",
     "postcss-loader": "0.9.1",
     "precss": "1.4.0",
@@ -199,6 +201,7 @@
     "styled-components": "3.2.6",
     "ts-loader": "4.4.2",
     "typescript": "3.0.1",
+    "uglifyjs-webpack-plugin": "1.2.7",
     "url": "0.11.0",
     "url-loader": "1.0.1",
     "webpack": "4.16.5",
