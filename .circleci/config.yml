@@ -9,8 +9,11 @@ jobs:
         name: install
         command: npm install
     - run:
-        name: test
-        command: npm run test
+        name: lint
+        command: npm run lint
+    - run:
+        name: jest
+        command: npm run jest
     - run:
         name: rebuildSass
         command: npm rebuild node-sass
