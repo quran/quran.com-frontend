@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import qs from 'qs';
 import last from 'lodash/last';
 import isEmpty from 'lodash/isEmpty';
 import { match as MatchType } from 'react-router';
 import Loader from 'quran-components/lib/Loader';
+import { Location } from 'history';
 import {
   ChapterShape,
   VerseShape,
@@ -65,7 +67,7 @@ type Props = {
   chapterInfo: ChapterInfoShape;
   settings: SettingsShape;
   isVersesLoading: boolean;
-  location: $TsFixMe;
+  location: Location;
 };
 
 class Chapter extends Component<Props> {
@@ -102,7 +104,7 @@ class Chapter extends Component<Props> {
     const paging = determinePage(params.range);
     const translations =
       params.translations ||
-      (location && location.query && location.query.translations);
+      (location && location.search && qs.parse(location.search).translations);
 
     if (__CLIENT__) {
       fetchVerses(chapterId, paging, { translations }, settings);

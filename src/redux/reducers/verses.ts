@@ -1,25 +1,20 @@
 import keyBy from 'lodash/keyBy';
-import { camelizeKeys } from 'humps';
+import camelcaseKeys from 'camelcase-keys';
 import { handle } from 'redux-pack';
 
 import { FETCH_VERSES } from '../constants/verses';
+import { VerseShape } from '../../shapes';
 
 type State = {
-  current?: string;
-  currentWord?: $TsFixMe;
   error: $TsFixMe;
   isLoading: boolean;
-  entities: $TsFixMe;
-  result: $TsFixMe;
+  entities: { [chapterId: string]: { [verseKey: string]: VerseShape } };
 };
 
 export const INITIAL_STATE: State = {
-  current: null,
-  currentWord: null,
   error: null,
   isLoading: false,
   entities: {},
-  result: [],
 };
 
 export default (state = INITIAL_STATE, action: $TsFixMe) => {
@@ -40,7 +35,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
             ...state.entities,
             [action.meta.chapterId]: {
               ...state.entities[action.meta.chapterId],
-              ...camelizeKeys(keyBy(action.payload.verses, 'verse_key')),
+              ...camelcaseKeys(keyBy(action.payload.verses, 'verse_key')),
             },
           },
         }),

@@ -1,9 +1,16 @@
-import { camelizeKeys } from 'humps';
+import camelcaseKeys from 'camelcase-keys';
 import { handle } from 'redux-pack';
 
 import { FETCH_CHAPTER_INFO } from '../constants/chapterInfos';
+import { ChapterInfoShape } from '../../shapes';
 
-export const INITIAL_STATE = {
+type State = {
+  errored: $TsFixMe;
+  isLoading: boolean;
+  entities: { [chapterId: string]: ChapterInfoShape };
+};
+
+export const INITIAL_STATE: State = {
   errored: false,
   isLoading: false,
   entities: {},
@@ -25,7 +32,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
           ...prevState,
           entities: {
             ...state.entities,
-            [action.meta.chapterId]: camelizeKeys(action.payload.chapter_info),
+            [action.meta.chapterId]: camelcaseKeys(action.payload.chapter_info),
           },
         }),
       });

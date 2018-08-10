@@ -1,26 +1,11 @@
 import cookie from 'react-cookie';
 
 import { SET_OPTION, SET_USER_AGENT } from '../constants/settings';
+import { SettingsShape } from '../../shapes';
 
 const options = cookie.load('options') || {};
 
-type FontSize = {
-  arabic: number;
-  translation: number;
-};
-
-type State = {
-  isReadingMode: boolean;
-  isNightMode: boolean;
-  isShowingChapterInfo: boolean;
-  audio: number;
-  translations: Array<number>;
-  tooltip: 'translation' | 'transliteration';
-  fontSize: FontSize;
-  userAgent: $TsFixMe;
-};
-
-export const INITIAL_STATE: State = {
+export const INITIAL_STATE: SettingsShape = {
   isReadingMode: options.isReadingMode || false,
   isNightMode: options.isNightMode || false,
   isShowingChapterInfo: options.isShowingChapterInfo || false,

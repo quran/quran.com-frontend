@@ -31,7 +31,12 @@ export const JuzMarker: React.SFC<Props> = ({
         <b className="col-xs-1">
           <Tooltip
             arrow
-            title={<T id={KEYS.JUZ_INDEX_HEADING} values={{ juzNumber }} />}
+            title={
+              <T
+                id={KEYS.JUZ_INDEX_HEADING}
+                values={{ juzNumber: `${juzNumber}` }}
+              />
+            }
           >
             <JuzDecoration juzNumber={juzNumber} />
           </Tooltip>

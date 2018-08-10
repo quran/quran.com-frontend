@@ -1,24 +1,24 @@
+import camelcaseKeys from 'camelcase-keys';
 import { handle } from 'redux-pack';
 
 import { FETCH_SEARCH } from '../constants/search';
+import { VerseShape } from '../../shapes';
 
 type State = {
   errored: boolean;
   isLoading: boolean;
-  results: $TsFixMe;
   totalCount: number | null;
   totalPages: number | null;
   currentPage: number | null;
   perPage: number | null;
   took: number | null;
   query: string | null;
-  entities: $TsFixMe;
+  entities: Array<VerseShape>;
 };
 
 export const INITIAL_STATE: State = {
   errored: false,
   isLoading: false,
-  results: [],
   totalCount: null,
   totalPages: null,
   currentPage: null,
@@ -43,14 +43,13 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         success: prevState => ({
           ...prevState,
           isLoading: false,
-          totalCount: action.result.result.totalCount,
-          totalPages: action.result.result.totalPages,
-          currentPage: action.result.result.currentPage,
-          perPage: action.result.result.perPage,
-          took: action.result.result.took,
-          query: action.result.result.query,
-          results: action.result.result.results,
-          entities: action.result.entities.verses,
+          totalCount: action.payload.total_count,
+          totalPages: action.payload.total_pages,
+          currentPage: action.payload.current_page,
+          perPage: action.payload.per_page,
+          took: action.payload.took,
+          query: action.payload.query,
+          entities: camelcaseKeys(action.payload.results),
         }),
       });
     }

@@ -1,15 +1,15 @@
-import { camelizeKeys } from 'humps';
+import camelcaseKeys from 'camelcase-keys';
 import keyBy from 'lodash/keyBy';
 import { handle } from 'redux-pack';
 import { FETCH_VERSES } from '../constants/verses';
-import { VerseShape } from '../../shapes';
+import { VerseShape, LineShape } from '../../shapes';
 
 type State = {
   isLoading: boolean;
-  entities: { [key: string]: $TsFixMe };
+  entities: { [key: string]: LineShape };
 };
 
-const INITIAL_STATE: State = {
+export const INITIAL_STATE: State = {
   isLoading: false,
   entities: {},
 };
@@ -27,7 +27,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
           isLoading: false,
         }),
         success: prevState => {
-          const verses = camelizeKeys(
+          const verses = camelcaseKeys(
             keyBy(action.payload.verses, 'verse_key')
           );
           const lines = prevState.entities;

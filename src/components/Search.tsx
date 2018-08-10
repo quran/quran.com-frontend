@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import qs from 'qs';
 import { PropTypes as MetricsPropTypes } from 'react-metrics';
 import Helmet from 'react-helmet';
 import ReactPaginate from 'react-paginate';
 import Loader from 'quran-components/lib/Loader';
 import { FormattedHTMLMessage } from 'react-intl';
-import { History } from 'history';
+import { History, Location } from 'history';
 import Jumbotron from './Jumbotron';
 import VerseContainer from '../containers/VerseContainer';
 import T, { KEYS } from './T';
@@ -65,10 +66,10 @@ const Header = styled.div`
     }
 
     .selected a {
-      color: ${props => props.theme.brandPrimary};
+      color: ${({ theme }) => theme.brandPrimary};
     }
 
-    @media (max-width: ${props => props.theme.screen.sm}) {
+    @media (max-width: ${({ theme }) => theme.screen.sm}) {
       padding-top: 5px;
     }
   }
@@ -82,21 +83,16 @@ const propTypes = {
   currentPage: PropTypes.number.isRequired,
   perPage: PropTypes.number.isRequired,
   query: PropTypes.string.isRequired,
-  results: PropTypes.arrayOf(PropTypes.string),
   entities: PropTypes.arrayOf(VerseShape),
   history: PropTypes.object.isRequired,
   location: PropTypes.shape({
-    query: PropTypes.shape({
-      q: PropTypes.string,
-      p: PropTypes.string,
-    }),
+    search: PropTypes.string.isRequired,
   }).isRequired,
   settings: SettingsShape.isRequired,
   fetchSearch: PropTypes.func.isRequired,
 };
 
-const defaultProps: { results: Array<string>; entities: Array<string> } = {
-  results: [],
+const defaultProps: { entities: Array<VerseShape> } = {
   entities: [],
 };
 
@@ -112,9 +108,8 @@ type Props = {
   currentPage: number;
   perPage: number;
   query: string;
-  results: Array<string>;
   entities: Array<VerseShape>;
-  location: { query: { q?: string; p?: string } };
+  location: Location;
   settings: SettingsShape;
   fetchSearch: FetchSearch;
   history: History;
@@ -130,7 +125,9 @@ class Search extends Component<Props> {
   bootstrap() {
     const { fetchSearch, location } = this.props;
 
-    return fetchSearch(location.query || location.q);
+    const query = qs.parse(location.search);
+
+    return fetchSearch(query.query || query.q);
   }
 
   handlePageChange = (payload: $TsFixMe) => {
@@ -210,10 +207,11 @@ class Search extends Component<Props> {
     const {
       isErrored,
       isLoading,
-      results,
       entities,
-      location: { query },
+      location: { search },
     } = this.props;
+
+    const query = qs.parse(search);
 
     if (!query || !query.q) {
       return (
@@ -235,7 +233,7 @@ class Search extends Component<Props> {
       return <Loader isActive={isLoading} />;
     }
 
-    if (!results.length) {
+    if (!entities.length) {
       return (
         <h3 className="text-center" style={{ padding: '15%' }}>
           <T id={KEYS.SEARCH_NO_RESULT} />
@@ -243,13 +241,8 @@ class Search extends Component<Props> {
       );
     }
 
-    return results.map(result => (
-      <VerseContainer
-        verse={entities[result]}
-        match={entities[result].match}
-        key={entities[result].verseKey}
-        isSearched
-      />
+    return entities.map(verse => (
+      <VerseContainer verse={verse} key={verse.verseKey} isSearched />
     ));
   }
 

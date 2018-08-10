@@ -1,14 +1,15 @@
-import { camelizeKeys } from 'humps';
+import camelcaseKeys from 'camelcase-keys';
 import { handle } from 'redux-pack';
 import {
   FETCH_RECITERS,
   FETCH_TRANSLATIONS,
   FETCH_TAFSIRS,
 } from '../constants/options';
+import { TranslationShape, ReciterShape } from '../../shapes';
 
 type State = {
-  recitations: Array<number>;
-  translations: Array<number>;
+  recitations: Array<ReciterShape>;
+  translations: Array<TranslationShape>;
   tafsirs: Array<$TsFixMe>;
   isLoadingRecitations: boolean;
   isLoadingTranslations: boolean;
@@ -39,7 +40,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         success: prevState => ({
           ...prevState,
           recitations: action.payload.recitations.map((obj: $TsFixMe) =>
-            camelizeKeys(obj)
+            camelcaseKeys(obj)
           ),
         }),
       });
@@ -57,7 +58,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         success: prevState => ({
           ...prevState,
           translations: action.payload.translations.map((obj: $TsFixMe) =>
-            camelizeKeys(obj)
+            camelcaseKeys(obj)
           ),
         }),
       });
@@ -75,7 +76,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         success: prevState => ({
           ...prevState,
           tafsirs: action.payload.tafsirs.map((obj: $TsFixMe) =>
-            camelizeKeys(obj)
+            camelcaseKeys(obj)
           ),
         }),
       });

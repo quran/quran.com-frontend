@@ -1,6 +1,5 @@
 /* global fetch */
 import qs from 'qs';
-import { decamelizeKeys } from 'humps';
 import cookie from 'react-cookie';
 
 import config from '../config';
@@ -43,7 +42,7 @@ const apiClient = {
 
     queryParams.language = params.language || contentLanguage();
 
-    const query = qs.stringify(decamelizeKeys(params), {
+    const query = qs.stringify(params, {
       arrayFormat: arrayFormat || 'brackets',
     });
 

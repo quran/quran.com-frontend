@@ -10,12 +10,6 @@ const SettingsShape = PropTypes.shape({
   tooltip: PropTypes.oneOf(['translation', 'transliteration']),
   fontSize: FontSizeSettingShape.isRequired,
   userAgent: PropTypes.object,
-  options: PropTypes.shape({
-    recitations: PropTypes.arrayOf(PropTypes.number).isRequired,
-    translations: PropTypes.arrayOf(PropTypes.number).isRequired,
-  }).isRequired,
-  loadingRecitations: PropTypes.bool.isRequired,
-  loadingTranslations: PropTypes.bool.isRequired,
 });
 
 interface SettingsShape {

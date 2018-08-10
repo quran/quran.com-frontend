@@ -1,4 +1,4 @@
-import { camelizeKeys } from 'humps';
+import camelcaseKeys from 'camelcase-keys';
 import { handle } from 'redux-pack';
 import { buildAudioForVerse } from '../../helpers/buildAudio';
 import { buildSegments } from '../../helpers/buildSegments';
@@ -15,12 +15,7 @@ import {
   UPDATE,
   FETCH_AUDIOPLAYER,
 } from '../constants/audioplayer';
-
-type RepeatType = {
-  from: $TsFixMe;
-  to: $TsFixMe;
-  times: number;
-};
+import { RepeatShape } from '../../shapes';
 
 type State = {
   files: $TsFixMe;
@@ -30,7 +25,7 @@ type State = {
   currentTime: number;
   duration: number;
   isPlaying: boolean;
-  repeat: RepeatType;
+  repeat: RepeatShape;
   shouldScroll: boolean;
   isLoading: boolean;
   segments: $TsFixMe;
@@ -70,7 +65,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
     case FETCH_AUDIOPLAYER: {
       return handle(state, action, {
         success: prevState => {
-          const audioFile: $TsFixMe = camelizeKeys(action.payload.audio_file);
+          const audioFile: $TsFixMe = camelcaseKeys(action.payload.audio_file);
 
           return {
             ...prevState,

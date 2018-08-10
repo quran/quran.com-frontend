@@ -1,11 +1,18 @@
 import { handle } from 'redux-pack';
-import { camelizeKeys } from 'humps';
+import camelcaseKeys from 'camelcase-keys';
 import keyBy from 'lodash/keyBy';
 
 import { FETCH_CHAPTERS } from '../constants/chapters';
+import { ChapterShape } from '../../shapes';
 
-export const INITIAL_STATE = {
-  errored: false,
+type State = {
+  error: $TsFixMe;
+  isLoading: boolean;
+  entities: { [chapterId: string]: ChapterShape };
+};
+
+export const INITIAL_STATE: State = {
+  error: false,
   isLoading: false,
   entities: {},
 };
@@ -25,8 +32,8 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         success: prevState => ({
           ...prevState,
           entities: {
-            ...state.entities,
-            ...camelizeKeys(keyBy(action.payload.chapters, 'id')),
+            ...prevState.entities,
+            ...camelcaseKeys(keyBy(action.payload.chapters, 'id')),
           },
         }),
       });

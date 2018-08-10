@@ -1,12 +1,19 @@
 import { handle } from 'redux-pack';
 import keyBy from 'lodash/keyBy';
-import { camelizeKeys } from 'humps';
+import camelcaseKeys from 'camelcase-keys';
 
 import { FETCH_JUZS } from '../constants/juzs';
+import { JuzShape } from '../../shapes';
 
-export const INITIAL_STATE = {
-  errored: false,
-  loaded: false,
+type State = {
+  error: $TsFixMe;
+  isLoading: boolean;
+  entities: { [chapterId: string]: JuzShape };
+};
+
+export const INITIAL_STATE: State = {
+  error: null,
+  isLoading: false,
   entities: {},
 };
 
@@ -24,10 +31,9 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         }),
         success: prevState => ({
           ...prevState,
-          loaded: true,
           entities: {
             ...state.entities,
-            ...camelizeKeys(keyBy(action.payload.juzs, 'id')),
+            ...camelcaseKeys(keyBy(action.payload.juzs, 'id')),
           },
         }),
       });

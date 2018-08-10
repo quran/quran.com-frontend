@@ -5,9 +5,9 @@ import { fetchTafsirs } from '../redux/actions/tafsirs';
 import Verse from '../components/Verse';
 
 export const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => ({
-  tooltip: state.options.tooltip,
-  userAgent: state.options.userAgent,
-  audio: state.options.audio,
+  tooltip: state.settings.tooltip,
+  userAgent: state.settings.userAgent,
+  audio: state.settings.audio,
   isCurrentVersePlaying:
     state.audioplayer.currentVerseKey === ownProps.verse.verseKey &&
     state.audioplayer.isPlaying,

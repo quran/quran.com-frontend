@@ -12,7 +12,6 @@ const mapStateToProps = (state: ReduxState) => ({
   perPage: state.search.perPage,
   took: state.search.took,
   query: state.search.query,
-  results: state.search.results,
   entities: state.search.entities,
   settings: state.settings,
 });

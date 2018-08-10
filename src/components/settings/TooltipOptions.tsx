@@ -17,7 +17,7 @@ type Props = {
 };
 
 const TooltipOptions: React.SFC<Props> = ({ tooltip, onChange }: Props) => {
-  const handleOptionChange = (type: string) =>
+  const handleOptionChange = (type: 'translation' | 'transliteration') =>
     onChange({
       tooltip: type,
     });
@@ -28,7 +28,9 @@ const TooltipOptions: React.SFC<Props> = ({ tooltip, onChange }: Props) => {
         id={type}
         name="type"
         checked={type === tooltip}
-        handleChange={() => handleOptionChange(type)}
+        handleChange={() =>
+          handleOptionChange(type as 'translation' | 'transliteration')
+        }
       >
         <T
           id={
