@@ -48,9 +48,6 @@ type Props = {
   chapter: ChapterShape;
   isCurrentVersePlaying: boolean;
   tooltip: 'translation' | 'transliteration';
-  currentWord?: number;
-  currentVerse?: string;
-  userAgent?: { [key: string]: boolean };
   fetchTafsirs: FetchTafsirs;
   play: Play;
   pause: Pause;
