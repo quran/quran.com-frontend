@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-export default PropTypes.shape({
+const TafsirShape = PropTypes.shape({
   id: PropTypes.number.isRequired,
   text: PropTypes.string.isRequired,
   verseKey: PropTypes.string.isRequired,
@@ -8,3 +8,14 @@ export default PropTypes.shape({
   languageName: PropTypes.string.isRequired,
   resourceName: PropTypes.string.isRequired,
 });
+
+interface TafsirShape {
+  id: number;
+  text: string;
+  verseKey: string;
+  verseId: number;
+  languageName: string;
+  resourceName: string;
+}
+
+export default TafsirShape;

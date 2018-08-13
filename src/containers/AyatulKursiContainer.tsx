@@ -4,7 +4,7 @@ import { fetchChapters } from '../redux/actions/chapters';
 import ReduxState from '../types/ReduxState';
 import AyatulKursi from '../components/AyatulKursi';
 
-const mapStateToProps = (state: ReduxState) => {
+export const mapStateToProps = (state: ReduxState) => {
   const chapter = state.chapters.entities[2];
   const verses = state.verses.entities[2];
 

@@ -1,6 +1,5 @@
 import { ChapterId, VerseId } from '../../types';
 import {
-  SET_CURRENT_FILE,
   SET_CURRENT_WORD,
   SET_CURRENT_VERSE_KEY,
   PLAY_CURRENT_WORD,
@@ -8,17 +7,11 @@ import {
   PAUSE,
   SET_REPEAT,
   TOGGLE_SCROLL,
-  BUILD_ON_CLIENT,
   FETCH_AUDIOPLAYER,
   UPDATE,
 } from '../constants/audioplayer';
 import apiClient from '../../apiClient';
 import { VerseShape } from '../../shapes';
-
-export const setCurrentFile = (file: $TsFixMe) => ({
-  type: SET_CURRENT_FILE,
-  file,
-});
 
 export const setCurrentWord = (word: $TsFixMe) => ({
   type: SET_CURRENT_WORD,
@@ -58,11 +51,6 @@ export const setRepeat = (repeat: {
 
 export const toggleScroll = () => ({
   type: TOGGLE_SCROLL,
-});
-
-export const buildOnClient = (chapterId: ChapterId) => ({
-  type: BUILD_ON_CLIENT,
-  chapterId,
 });
 
 type UpdatePayload = {

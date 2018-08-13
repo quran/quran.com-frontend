@@ -9,12 +9,6 @@ jobs:
         name: install
         command: npm install
     - run:
-        name: lint
-        command: npm run lint
-    - run:
-        name: jest
-        command: npm run jest
-    - run:
         name: rebuildSass
         command: npm rebuild node-sass
     - run:
@@ -23,6 +17,20 @@ jobs:
     - run:
         name: bundlesize
         command: npm run bundlesize
+  test:
+    docker:
+      - image: circleci/node:latest
+    steps:
+    - checkout
+    - run:
+        name: install
+        command: npm install
+    - run:
+        name: lint
+        command: npm run lint
+    - run:
+        name: jest
+        command: npm run jest
 workflows:
   version: 2
   test_and_build:

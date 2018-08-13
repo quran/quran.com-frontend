@@ -9,7 +9,7 @@ import {
   setCurrentVerseKey,
 } from '../redux/actions/audioplayer';
 
-const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => {
+export const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => {
   const { chapter } = ownProps;
   const { currentVerseKey, files } = state.audioplayer;
   const currentFile =

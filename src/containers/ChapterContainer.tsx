@@ -10,7 +10,7 @@ type Props = {
   match: match<$TsFixMe>;
 };
 
-const mapStateToProps = (state: ReduxState, ownProps: Props) => {
+export const mapStateToProps = (state: ReduxState, ownProps: Props) => {
   const { chapterId } = ownProps.match.params;
   const chapter = state.chapters.entities[chapterId];
   const verses = state.verses.entities[chapterId];

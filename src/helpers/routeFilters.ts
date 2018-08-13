@@ -1,12 +1,9 @@
 import toNumber from 'lodash/toNumber';
-import isNumber from 'lodash/isNumber';
-import { CHAPTERS_TO_VERSES } from '../constants';
+import isInteger from 'lodash/isInteger';
+import { CHAPTERS_TO_VERSES, HTTP_STATUS_CODES } from '../constants';
 
 export const INVALID_VERSE_URL = '/error/ERROR_INVALID_VERSE';
 export const INVALID_CHAPTER_URL = '/error/ERROR_INVALID_CHAPTER';
-
-const REDIRECT_STATUS = 301;
-const BAD_REQUEST_STATUS = 400;
 
 type RouteArgs = {
   params: { chapterId?: string; range?: string; verseId?: string };
@@ -24,17 +21,19 @@ const replaceChapterOrRange = ({
   (verseId && verseId.length !== toNumber(verseId).toString().length);
 
 const validateChapter = ({ params: { chapterId }, location }: RouteArgs) => {
-  if (isNaN(toNumber(chapterId))) {
-    return { status: BAD_REQUEST_STATUS, url: INVALID_CHAPTER_URL };
+  const chapterIdNumber = toNumber(chapterId);
+
+  if (!isInteger(chapterIdNumber)) {
+    return { status: HTTP_STATUS_CODES.BAD_REQUEST, url: INVALID_CHAPTER_URL };
   }
 
-  if (toNumber(chapterId) < 1 || toNumber(chapterId) > 114) {
-    return { status: BAD_REQUEST_STATUS, url: INVALID_CHAPTER_URL };
+  if (chapterIdNumber < 1 || chapterIdNumber > 114) {
+    return { status: HTTP_STATUS_CODES.BAD_REQUEST, url: INVALID_CHAPTER_URL };
   }
 
   if (location.pathname.match(/\b0+/g)) {
     return {
-      status: REDIRECT_STATUS,
+      status: HTTP_STATUS_CODES.REDIRECT,
       url: location.pathname.replace(/\b0+/g, ''),
     };
   }
@@ -46,14 +45,20 @@ const validateVerse = ({ params: { chapterId, range } }: RouteArgs) => {
   if (range) {
     if (!range.includes('-') && !range.includes(':')) {
       // range is just a verse number
-      if (!isNumber(range)) {
-        return { status: BAD_REQUEST_STATUS, url: INVALID_VERSE_URL };
+      if (!isInteger(toNumber(range))) {
+        return {
+          status: HTTP_STATUS_CODES.BAD_REQUEST,
+          url: INVALID_VERSE_URL,
+        };
       }
 
       const verseNumber = toNumber(range);
 
       if (verseNumber > CHAPTERS_TO_VERSES[chapterId]) {
-        return { status: BAD_REQUEST_STATUS, url: INVALID_VERSE_URL };
+        return {
+          status: HTTP_STATUS_CODES.BAD_REQUEST,
+          url: INVALID_VERSE_URL,
+        };
       }
     }
   }
@@ -79,15 +84,24 @@ const validateRange = ({ params, location }: RouteArgs) => {
         from < 1 ||
         to > CHAPTERS_TO_VERSES[chapterId]
       ) {
-        return { status: BAD_REQUEST_STATUS, url: INVALID_VERSE_URL };
+        return {
+          status: HTTP_STATUS_CODES.BAD_REQUEST,
+          url: INVALID_VERSE_URL,
+        };
       }
 
       if (from === to) {
-        return { status: REDIRECT_STATUS, url: `/${chapterId}/${from}` };
+        return {
+          status: HTTP_STATUS_CODES.REDIRECT,
+          url: `/${chapterId}/${from}`,
+        };
       }
 
       if (from > to) {
-        return { status: REDIRECT_STATUS, url: `/${chapterId}/${to}-${from}` };
+        return {
+          status: HTTP_STATUS_CODES.REDIRECT,
+          url: `/${chapterId}/${to}-${from}`,
+        };
       }
 
       if (
@@ -95,14 +109,14 @@ const validateRange = ({ params, location }: RouteArgs) => {
         _to.length !== to.toString().length
       ) {
         return {
-          status: REDIRECT_STATUS,
+          status: HTTP_STATUS_CODES.REDIRECT,
           url: `/${chapterId}/${from}-${to}${location.search}`,
         };
       }
 
       if (range.includes(':')) {
         return {
-          status: REDIRECT_STATUS,
+          status: HTTP_STATUS_CODES.REDIRECT,
           url: `/${chapterId}/${range.replace(':', '-')}${
             location.search ? location.search : ''
           }`,
@@ -112,7 +126,7 @@ const validateRange = ({ params, location }: RouteArgs) => {
 
     if (location.pathname.match(/\b0+/g)) {
       return {
-        status: REDIRECT_STATUS,
+        status: HTTP_STATUS_CODES.REDIRECT,
         url: location.pathname.replace(/\b0+/g, ''),
       };
     }
@@ -130,7 +144,7 @@ const validateRangeLimit = ({ params, location }: RouteArgs) => {
 
     scopedLocation = scopedLocation.replace(/\/([0-9]+)/, `/${chapterId}`);
 
-    return { status: REDIRECT_STATUS, url: scopedLocation };
+    return { status: HTTP_STATUS_CODES.REDIRECT, url: scopedLocation };
   }
 
   return null;
@@ -139,7 +153,7 @@ const validateRangeLimit = ({ params, location }: RouteArgs) => {
 const validateEmptyRange = ({ location }: RouteArgs) => {
   if (location.pathname.match(/\/\d+:$/g)) {
     return {
-      status: REDIRECT_STATUS,
+      status: HTTP_STATUS_CODES.REDIRECT,
       url: location.pathname.replace(':', ''),
     };
   }

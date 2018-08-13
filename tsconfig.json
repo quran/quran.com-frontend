@@ -11,7 +11,8 @@
     "lib": ["es2015", "es2017", "dom"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "keyofStringsOnly": true
+    "keyofStringsOnly": true,
+    "strictNullChecks": true
   },
   "include": [
     "./src/**/*"

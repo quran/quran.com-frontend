@@ -30,11 +30,11 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
       };
     }
     case SET_USER_AGENT: {
-      const { userAgent } = action;
+      const { payload } = action;
 
       return {
         ...state,
-        userAgent,
+        userAgent: payload,
       };
     }
     default:

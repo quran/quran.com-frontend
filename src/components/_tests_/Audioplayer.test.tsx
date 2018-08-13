@@ -7,16 +7,19 @@ import { chapter } from '../../../tests/fixtures/chapters';
 import verse, { getVerse } from '../../../tests/fixtures/verse';
 
 let getProps: any;
+let getFileMock: any;
 let fileMock: any;
 
 describe('<Audioplayer', () => {
   beforeEach(() => {
-    const getFileMock = () => ({
+    getFileMock = (overrides = {}) => ({
       play: jest.fn(),
       pause: jest.fn(),
       setAttribute: jest.fn(),
       src: sampleSize('abcdefg', 3).join(''),
       duration: 1000,
+      paused: true,
+      ...overrides,
     });
 
     getProps = (overrides = {}) => ({
@@ -93,12 +96,16 @@ describe('<Audioplayer', () => {
     });
 
     it('calls currentFile.pause when isPlaying changes to false', () => {
-      const props = getProps({ currentFile: fileMock, isPlaying: true });
+      const currentFile = getFileMock({ paused: false });
+      const props = getProps({
+        currentFile,
+        isPlaying: true,
+      });
       const wrapper = shallow(<Audioplayer {...props} />);
 
       wrapper.setProps({ isPlaying: false });
 
-      expect(fileMock.pause).toHaveBeenCalled();
+      expect(currentFile.pause).toHaveBeenCalled();
     });
 
     it('calls fetchNextAudioFile for next verse when currentFile is set', () => {
@@ -108,7 +115,7 @@ describe('<Audioplayer', () => {
 
       wrapper.setProps({ currentFile: fileMock });
 
-      expect(fetchAudio).toHaveBeenCalledTimes(2);
+      expect(fetchAudio).toHaveBeenCalledTimes(1);
       expect(fetchAudio).toHaveBeenLastCalledWith({
         audio: 7,
         chapterId: 1,

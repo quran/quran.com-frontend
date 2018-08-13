@@ -4,7 +4,6 @@ import { buildAudioForVerse } from '../../helpers/buildAudio';
 import { buildSegments } from '../../helpers/buildSegments';
 
 import {
-  SET_CURRENT_FILE,
   SET_CURRENT_WORD,
   SET_CURRENT_VERSE_KEY,
   PLAY_CURRENT_WORD,
@@ -51,17 +50,6 @@ export const INITIAL_STATE: State = {
 
 export default (state = INITIAL_STATE, action: $TsFixMe) => {
   switch (action.type) {
-    // case VERSES_CLEAR_CURRENT: {
-    //   const stateFilesCurrent = state.files;
-
-    //   return {
-    //     ...state,
-    //     files: {
-    //       ...stateFilesCurrent,
-    //       [action.id]: {},
-    //     },
-    //   };
-    // }
     case FETCH_AUDIOPLAYER: {
       return handle(state, action, {
         success: prevState => {
@@ -127,22 +115,17 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
       };
     }
     case SET_REPEAT: {
-      const { repeat } = action;
+      const { payload } = action;
 
       return {
         ...state,
-        repeat,
+        repeat: payload,
       };
     }
     case TOGGLE_SCROLL: {
       return {
         ...state,
         shouldScroll: !state.shouldScroll,
-      };
-    }
-    case SET_CURRENT_FILE: {
-      return {
-        ...state,
       };
     }
     case SET_CURRENT_WORD: {

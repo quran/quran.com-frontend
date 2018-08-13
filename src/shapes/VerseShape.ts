@@ -22,7 +22,7 @@ const VerseShape = PropTypes.shape({
 interface VerseShape {
   id: number;
   verseNumber: number;
-  chapterId: number;
+  chapterId: number | string;
   pageNumber: number;
   juzNumber: number;
   hizbNumber: number;

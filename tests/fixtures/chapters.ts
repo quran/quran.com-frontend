@@ -12,6 +12,7 @@ export const chapter = {
     languageName: 'english',
     name: 'The Opener',
   },
+  languageName: 'english',
   pages: [1, 2],
 };
 

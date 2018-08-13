@@ -15,7 +15,7 @@ interface TranslationShape {
   text?: string;
   resourceName?: string | null;
   resourceId: number;
-  authorName: string;
+  authorName?: string;
 }
 
 export default TranslationShape;

@@ -8,7 +8,7 @@ type Props = {
   chapter: ChapterShape;
 };
 
-const mapStateToProps = (state: ReduxState, ownProps: Props) => ({
+export const mapStateToProps = (state: ReduxState, ownProps: Props) => ({
   chapterInfo: state.chapterInfos.entities[ownProps.chapter.id],
   isShowingChapterInfo: state.settings.isShowingChapterInfo,
 });

@@ -2,10 +2,11 @@ import cookie from 'react-cookie';
 import config from '../../config';
 
 export default (req?: $TsFixMe) => {
-  let currentLocal;
   const locales = config('locales');
   const availableLocals = Object.keys(locales);
   const expireDate = new Date();
+  let currentLocal;
+
   expireDate.setFullYear(expireDate.getFullYear() + 1);
 
   if (req && req.query.local) {

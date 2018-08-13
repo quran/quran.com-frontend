@@ -5,7 +5,7 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import reducer from './reducers';
 
-export default function createStore(data: $TsFixMe) {
+export default function createStore(data?: $TsFixMe) {
   const middleware = [thunk, reduxPackMiddleware];
 
   if (__CLIENT__) {

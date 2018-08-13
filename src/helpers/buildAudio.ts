@@ -22,27 +22,3 @@ export function buildAudioForVerse(audio: $TsFixMe, preload: string = 'none') {
 
   return { audio: scopedAudio, segments: null };
 }
-
-export function buildAudioFromHash(
-  versesObject = {} as { [verseKey: string]: VerseShape }
-) {
-  const audioFromHash: $TsFixMe = { files: {}, segments: {} };
-
-  Object.keys(versesObject).forEach(verseId => {
-    const verse: VerseShape = versesObject[verseId];
-    const audioForAyah: $TsFixMe = buildAudioForVerse(verse.audio);
-
-    audioFromHash.files[verseId] = audioForAyah.audio;
-    audioFromHash.segments[verseId] = audioForAyah.segments;
-  });
-
-  return audioFromHash;
-}
-
-export default function buildAudio(verses: Array<VerseShape>) {
-  if (!verses.length) {
-    return null;
-  }
-
-  return verses.map(verse => buildAudioForVerse(verse));
-}

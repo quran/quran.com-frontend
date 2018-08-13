@@ -1,4 +1,5 @@
 import { INITIAL_STATE as SEARCH_INITIAL_STATE } from '../redux/reducers/search';
+import { INITIAL_STATE as SUGGEST_INITIAL_STATE } from '../redux/reducers/suggest';
 import { INITIAL_STATE as CHAPTERS_INITIAL_STATE } from '../redux/reducers/chapters';
 import { INITIAL_STATE as VERSES_INITIAL_STATE } from '../redux/reducers/verses';
 import { INITIAL_STATE as AUDIOPLAYER_INITIAL_STATE } from '../redux/reducers/audioplayer';
@@ -18,6 +19,7 @@ interface ReduxState {
   settings: typeof SETTINGS_INITIAL_STATE;
   chapterInfos: typeof CHAPTER_INFOS_INITIAL_STATE;
   search: typeof SEARCH_INITIAL_STATE;
+  suggest: typeof SUGGEST_INITIAL_STATE;
 }
 
 export default ReduxState;

@@ -225,3 +225,8 @@ export enum WORD_TYPES {
 }
 
 export const COOKIE_SETTINGS_KEY = 'options';
+
+export enum HTTP_STATUS_CODES {
+  REDIRECT = 301,
+  BAD_REQUEST = 400,
+}
