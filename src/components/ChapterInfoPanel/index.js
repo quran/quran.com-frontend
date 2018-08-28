@@ -35,8 +35,8 @@ const List = styled.dl`
 
 const Close = styled.button`
   position: absolute;
-  right: 15px;
-  top: 15px;
+  right: 50px;
+  top: 50px;
   background: ${props => lighten(0.1, props.theme.textMuted)};
   height: 26px;
   width: 26px;
@@ -127,7 +127,7 @@ const ChapterInfo = ({
     setOption({ isShowingChapterInfo: !isShowingChapterInfo });
 
   return (
-    <Container className="col-xs-12 chapter-info">
+    <Container className="container-fluid chapter-info">
       {setOption && (
         <Close tabIndex="-1" className="ss-delete" onClick={handleClose} />
       )}
