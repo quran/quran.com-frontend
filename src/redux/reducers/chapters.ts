@@ -8,7 +8,7 @@ import { ChapterShape } from '../../shapes';
 type State = {
   error: $TsFixMe;
   isLoading: boolean;
-  entities: { [chapterId: string]: ChapterShape };
+  entities: { [chapterId: string]: ChapterShape | undefined };
 };
 
 export const INITIAL_STATE: State = {

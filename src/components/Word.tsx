@@ -26,7 +26,7 @@ const propTypes = {
 };
 
 type DefaultProps = {
-  audioPosition?: number | null;
+  audioPosition?: number | undefined;
   isSearched?: boolean;
   useTextFont?: boolean;
   currentVerse?: string | null;
@@ -35,7 +35,7 @@ type DefaultProps = {
 const defaultProps: DefaultProps = {
   isSearched: false,
   useTextFont: false,
-  audioPosition: null,
+  audioPosition: undefined,
   currentVerse: null,
 };
 

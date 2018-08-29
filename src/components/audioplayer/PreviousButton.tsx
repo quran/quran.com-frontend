@@ -14,7 +14,7 @@ const defaultProps = {
 
 type Props = {
   onPreviousClick(): void;
-  currentVerseKey: string;
+  currentVerseKey?: string;
   files: { [key: string]: HTMLAudioElement };
 };
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import T, { KEYS } from './T';
-import Title from './Home/Title';
+import Title from './home/Title';
 
 import { QUICK_LINKS_EVENTS } from '../events';
 

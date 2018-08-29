@@ -16,7 +16,7 @@ export const INITIAL_STATE: SettingsShape = {
     arabic: 3.5,
     translation: 2,
   },
-  userAgent: null,
+  userAgent: undefined,
 };
 
 export default (state = INITIAL_STATE, action: $TsFixMe) => {

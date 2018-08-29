@@ -182,9 +182,9 @@ class Chapter extends Component<Props> {
     const { chapter, verses, settings, fetchVerses } = this.props;
     const versesArray = Object.values(verses);
     const firstVerse = versesArray[0];
-    const lastVerse: VerseShape = last(versesArray);
+    const lastVerse: VerseShape | undefined = last(versesArray);
 
-    if (!firstVerse && !lastVerse) {
+    if (!firstVerse || !lastVerse) {
       return null;
     }
 
@@ -217,8 +217,8 @@ class Chapter extends Component<Props> {
     } = this.props;
 
     const versesArray = Object.values(verses);
-    const lastVerse: VerseShape = last(versesArray);
-    const isEndOfChapter: boolean =
+    const lastVerse: VerseShape | undefined = last(versesArray);
+    const isEndOfChapter: boolean | undefined =
       lastVerse && lastVerse.verseNumber === chapter.versesCount;
     const isSingleVerse =
       !!match.params.range && !match.params.range.includes('-');
@@ -262,7 +262,7 @@ class Chapter extends Component<Props> {
               <ChapterPagination
                 chapter={chapter}
                 isSingleVerse={isSingleVerse}
-                isEndOfChapter={isEndOfChapter}
+                isEndOfChapter={!!isEndOfChapter}
                 isLoading={isVersesLoading}
                 settings={settings}
                 verses={verses}

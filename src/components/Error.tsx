@@ -10,7 +10,7 @@ import { AboutText } from './About';
 type Props = {
   match: {
     params: {
-      errorKey?: 'ERROR_INVALID_CHAPTER' | 'ERROR_INVALID_VERSE';
+      errorKey: 'ERROR_INVALID_CHAPTER' | 'ERROR_INVALID_VERSE';
     };
   };
 };

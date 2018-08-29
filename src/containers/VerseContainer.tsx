@@ -3,6 +3,7 @@ import ReduxState from '../types/ReduxState';
 import { pause, setCurrentVerseKey, play } from '../redux/actions/audioplayer';
 import { fetchTafsirs } from '../redux/actions/tafsirs';
 import Verse from '../components/Verse';
+import { fetchFootNote } from '../redux/actions/footNotes';
 
 export const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => ({
   tooltip: state.settings.tooltip,
@@ -15,5 +16,5 @@ export const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchTafsirs, pause, setCurrentVerseKey, play }
+  { fetchTafsirs, pause, setCurrentVerseKey, play, fetchFootNote }
 )(Verse);

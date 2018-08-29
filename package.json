@@ -26,8 +26,7 @@
     "type": "tsc --build tsconfig.json",
     "validate": "npm ls"
   },
-  "bundlesize": [
-    {
+  "bundlesize": [{
       "path": "./build/client/index-*.js",
       "maxSize": "210 kB"
     },

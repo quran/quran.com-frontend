@@ -120,9 +120,9 @@ const propTypes = {
   chapterInfo: ChapterInfoShape,
 };
 
-const defaultProps: { chapter: null; chapterInfo: null } = {
-  chapter: null,
-  chapterInfo: null,
+const defaultProps: { chapter: undefined; chapterInfo: undefined } = {
+  chapter: undefined,
+  chapterInfo: undefined,
 };
 
 type Props = {
@@ -149,20 +149,24 @@ const ChapterInfo: React.SFC<Props> = ({
     <Container className="col-xs-12 chapter-info">
       {setSetting && <Close className="ss-delete" onClick={handleClose} />}
       <div className="row" style={{ width: '100%', height: '100%', margin: 0 }}>
-        <Image
-          className="col-md-3 col-xs-6"
-          background={chapter.revelationPlace}
-        />
+        {chapter && (
+          <Image
+            className="col-md-3 col-xs-6"
+            background={chapter.revelationPlace}
+          />
+        )}
         <ListContainer className="col-md-1 col-xs-6">
           <List>
             <dt>
               <T id={KEYS.CHAPTER_VERSES} />
             </dt>
-            <dd className="text-uppercase">{chapter.versesCount}</dd>
+            <dd className="text-uppercase">{chapter && chapter.versesCount}</dd>
             <dt>
               <T id={KEYS.CHAPTER_PAGES} />
             </dt>
-            <dd className="text-uppercase">{chapter.pages.join('-')}</dd>
+            <dd className="text-uppercase">
+              {chapter && chapter.pages.join('-')}
+            </dd>
           </List>
         </ListContainer>
         <Info className={`${chapterInfo.languageName} times-new col-md-8`}>
@@ -179,7 +183,6 @@ const ChapterInfo: React.SFC<Props> = ({
 };
 
 ChapterInfo.propTypes = propTypes;
-
 ChapterInfo.defaultProps = defaultProps;
 
 export default ChapterInfo;

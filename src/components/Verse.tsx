@@ -9,6 +9,7 @@ import Text from './verse/Text';
 import Controls from './verse/Controls';
 import { FetchTafsirs } from '../redux/actions/tafsirs';
 import { SetCurrentVerseKey, Play, Pause } from '../redux/actions/audioplayer';
+import { FetchFootNote } from '../redux/actions/footNotes';
 
 // TODO: Change this
 const VerseNode = styled(Element)<{ highlight?: boolean; textMuted: string }>`
@@ -32,6 +33,7 @@ const propTypes = {
   fetchTafsirs: PropTypes.func.isRequired,
   pause: PropTypes.func.isRequired,
   setCurrentVerseKey: PropTypes.func.isRequired,
+  fetchFootNote: PropTypes.func.isRequired,
   isPdf: PropTypes.bool,
 };
 
@@ -52,6 +54,7 @@ type Props = {
   play: Play;
   pause: Pause;
   setCurrentVerseKey: SetCurrentVerseKey;
+  fetchFootNote: FetchFootNote;
   isPdf?: boolean;
 };
 
@@ -89,6 +92,7 @@ class Verse extends Component<Props> {
       isSearched,
       chapter,
       isPdf,
+      fetchFootNote,
     } = this.props;
     const translations: Array<$TsFixMe> = verse.translations || [];
 
@@ -110,7 +114,11 @@ class Verse extends Component<Props> {
         <div className="col-md-11 col-sm-11">
           <Text verse={verse} isSearched={isSearched} />
           {translations.map(translation => (
-            <Translation key={translation.id} translation={translation} />
+            <Translation
+              key={translation.id}
+              translation={translation}
+              fetchFootNote={fetchFootNote}
+            />
           ))}
         </div>
       </VerseNode>

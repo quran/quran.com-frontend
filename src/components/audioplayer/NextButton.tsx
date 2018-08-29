@@ -16,7 +16,7 @@ const defaultProps = {
 
 type Props = {
   onNextClick(): void;
-  currentVerseKey: string;
+  currentVerseKey?: string;
   chapter: ChapterShape;
 };
 

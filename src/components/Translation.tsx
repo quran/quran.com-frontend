@@ -11,7 +11,7 @@ const propTypes = {
 
 type Props = {
   translation: TranslationShape;
-  fetchFootNote?: FetchFootNote;
+  fetchFootNote: FetchFootNote;
 };
 
 class Translation extends Component<Props> {

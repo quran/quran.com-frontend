@@ -5,6 +5,7 @@ import { match } from '../../node_modules/@types/react-router';
 import ChapterNavbar from '../components/ChapterNavbar';
 import { setSetting } from '../redux/actions/settings';
 import { fetchVerses } from '../redux/actions/verses';
+import { setCurrentVerseKey } from '../redux/actions/audioplayer';
 
 type Props = {
   match: match<{ chapterId: string }>;
@@ -28,5 +29,6 @@ export default connect(
   {
     setSetting,
     fetchVerses,
+    setCurrentVerseKey,
   }
 )(ChapterNavbar);

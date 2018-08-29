@@ -143,8 +143,8 @@ class AyatulKursi extends Component<Props> {
     } = this.props;
 
     const versesArray = Object.values(verses);
-    const lastVerse: VerseShape = last(versesArray);
-    const isEndOfChapter: boolean =
+    const lastVerse: VerseShape | undefined = last(versesArray);
+    const isEndOfChapter: boolean | undefined =
       lastVerse && lastVerse.verseNumber === chapter.versesCount;
     const isSingleVerse =
       !!match.params.range && !match.params.range.includes('-');
@@ -188,7 +188,7 @@ class AyatulKursi extends Component<Props> {
               <ChapterPagination
                 chapter={chapter}
                 isSingleVerse={isSingleVerse}
-                isEndOfChapter={isEndOfChapter}
+                isEndOfChapter={!!isEndOfChapter}
                 isLoading={isVersesLoading}
                 settings={settings}
                 verses={verses}

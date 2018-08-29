@@ -42,9 +42,9 @@ class Settings extends Component<Props> {
 
     if (chapter) {
       const from = Object.values(verses)[0].verseNumber;
-      const lastVerse: VerseShape = last(Object.values(verses));
-      const to = lastVerse.verseNumber;
-      const paging = { offset: from - 1, limit: to - from + 1 };
+      const lastVerse: VerseShape | undefined = last(Object.values(verses));
+      const to = lastVerse && lastVerse.verseNumber;
+      const paging = { offset: from - 1, limit: to ? to - from + 1 : 10 };
 
       fetchVerses(
         chapter.chapterNumber,

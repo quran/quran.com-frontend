@@ -33,32 +33,37 @@ const StyledNav = styled(Nav)`
 `;
 
 const propTypes = {
-  handleSidebarToggle: PropTypes.func.isRequired,
-  location: PropTypes.object.isRequired,
   settings: SettingsShape.isRequired,
   verses: PropTypes.shape({
     verseKey: VerseShape,
-  }).isRequired,
+  }),
   chapters: PropTypes.shape({
     chapterId: ChapterShape,
   }).isRequired,
-  chapter: ChapterShape.isRequired,
-  setCurrentVerse: PropTypes.func.isRequired,
+  chapter: ChapterShape,
+  setCurrentVerseKey: PropTypes.func.isRequired,
   setSetting: PropTypes.func.isRequired,
   fetchVerses: PropTypes.func.isRequired,
 };
 
 type Props = {
-  isStatic?: boolean;
-  location: $TsFixMe;
-  handleSidebarToggle: $TsFixMe;
-  settings: SettingsShape;
-  verses?: { [verseKey: string]: VerseShape };
-  chapters?: { [chapterId: string]: ChapterShape };
+  verses: { [verseKey: string]: VerseShape };
   chapter?: ChapterShape;
+  chapters: { [chapterId: string]: ChapterShape };
+  settings: SettingsShape;
   setSetting: SetSetting;
   fetchVerses: FetchVerses;
-  setCurrentVerse: SetCurrentVerseKey;
+  setCurrentVerseKey: SetCurrentVerseKey;
+};
+
+type DefaultProps = {
+  verses?: undefined;
+  chapter?: undefined;
+};
+
+const defaultProps: DefaultProps = {
+  verses: undefined,
+  chapter: undefined,
 };
 
 type State = {
@@ -68,6 +73,7 @@ type State = {
 
 class ChapterNavbar extends Component<Props, State> {
   public static propTypes = propTypes;
+  public static defaultProps = defaultProps;
 
   state = {
     scrolled: false,
@@ -80,16 +86,6 @@ class ChapterNavbar extends Component<Props, State> {
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleNavbar, true);
-  }
-
-  isHome() {
-    const { location } = this.props;
-
-    if (location) {
-      return location.pathname === '/';
-    }
-
-    return true;
   }
 
   handleNavbar = () => {
@@ -111,10 +107,10 @@ class ChapterNavbar extends Component<Props, State> {
   };
 
   handleVerseDropdownClick = (verseKey: string) => {
-    const { verses, setCurrentVerse } = this.props;
+    const { verses, setCurrentVerseKey } = this.props;
 
-    if (verses[verseKey]) {
-      return setCurrentVerse(verseKey);
+    if (verses && verses[verseKey]) {
+      return setCurrentVerseKey(verseKey);
     }
     // TODO: go to that verse
 
@@ -123,7 +119,6 @@ class ChapterNavbar extends Component<Props, State> {
 
   render() {
     const {
-      handleSidebarToggle,
       settings,
       chapter,
       chapters,
@@ -150,7 +145,6 @@ class ChapterNavbar extends Component<Props, State> {
         <button
           type="button"
           className="navbar-toggle collapsed"
-          onClick={handleSidebarToggle}
           {...NAVBAR_EVENTS.CLICK.SIDEBAR_TOGGLE.PROPS}
         >
           <span className="sr-only">Toggle navigation</span>
@@ -164,7 +158,10 @@ class ChapterNavbar extends Component<Props, State> {
               <i className="ss-icon ss-home" />
             </Link>
           </li>
-          <ChaptersDropdown chapter={chapter} chapters={chapters} />
+          {chapter &&
+            chapters && (
+              <ChaptersDropdown chapter={chapter} chapters={chapters} />
+            )}
           <VersesDropdown
             chapter={chapter}
             verses={verses}
@@ -189,20 +186,23 @@ class ChapterNavbar extends Component<Props, State> {
             open={drawerOpen}
             // eslint-disable-next-line
             handleOpen={this.handleDrawerToggle}
-            toggle={<noscript />}
+            toggle={null}
             header={
               <h4>
                 <T id={KEYS.SETTING_TITLE} />
               </h4>
             }
           >
-            <Settings
-              chapter={chapter}
-              verses={verses}
-              setSetting={setSetting}
-              fetchVerses={fetchVerses}
-              settings={settings}
-            />
+            {chapter &&
+              verses && (
+                <Settings
+                  chapter={chapter}
+                  verses={verses}
+                  setSetting={setSetting}
+                  fetchVerses={fetchVerses}
+                  settings={settings}
+                />
+              )}
           </Drawer>
         </StyledNav>
         <Nav pullRight className="hidden-xs hidden-sm">

@@ -73,7 +73,7 @@ class SmartBanner extends Component<Props> {
   componentDidMount() {
     const { force } = this.props;
 
-    if (__CLIENT__) {
+    if (__CLIENT__ && force) {
       this.setSettings(force);
     }
   }
@@ -132,19 +132,35 @@ class SmartBanner extends Component<Props> {
   parseAppId = (metaName: string) => {
     const meta = window.document.querySelector(`meta[name="${metaName}"]`);
 
-    return /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];
+    if (meta && meta.getAttribute('content')) {
+      const content: $TsFixMe = meta.getAttribute('content');
+
+      return (/app-id=([^\s,]+)/ as $TsFixMe).exec(content)[1];
+    }
+
+    return null;
   };
 
   hide = () => {
-    window.document.querySelector('html').classList.remove('smartbanner-show');
+    if (window.document && window.document.querySelector('html')) {
+      (window.document.querySelector('html') as Element).classList.remove(
+        'smartbanner-show'
+      );
+    }
   };
 
   show = () => {
-    window.document.querySelector('html').classList.add('smartbanner-show');
+    if (window.document && window.document.querySelector('html')) {
+      (window.document.querySelector('html') as Element).classList.add(
+        'smartbanner-show'
+      );
+    }
   };
 
   close() {
     const { daysHidden } = this.props;
+
+    if (!daysHidden) return null;
 
     this.hide();
 
@@ -157,10 +173,14 @@ class SmartBanner extends Component<Props> {
       path: '/',
       expires: expireDate,
     });
+
+    return null;
   }
 
   install() {
     const { daysReminder } = this.props;
+
+    if (!daysReminder) return null;
 
     let expireDate = new Date();
     expireDate = new Date(
@@ -172,6 +192,8 @@ class SmartBanner extends Component<Props> {
       path: '/',
       expires: expireDate,
     });
+
+    return null;
   }
 
   retrieveInfo() {

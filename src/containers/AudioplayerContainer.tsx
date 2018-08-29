@@ -13,13 +13,13 @@ export const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => {
   const { chapter } = ownProps;
   const { currentVerseKey, files } = state.audioplayer;
   const currentFile =
-    files[ownProps.chapter.id] && files[ownProps.chapter.id][currentVerseKey];
+    currentVerseKey &&
+    files[ownProps.chapter.id] &&
+    files[ownProps.chapter.id][currentVerseKey];
 
   return {
     segments: state.audioplayer.segments[chapter.id],
-    chapterId: chapter.id,
     isPlaying: state.audioplayer.isPlaying,
-    isLoading: state.audioplayer.isLoading,
     repeat: state.audioplayer.repeat,
     shouldScroll: state.audioplayer.shouldScroll,
     duration: state.audioplayer.duration,
