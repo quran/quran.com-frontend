@@ -1,4 +1,4 @@
-import { suggest } from '../suggest';
+import { fetchSuggest } from '../suggest';
 import apiClient from '../../../apiClient';
 
 jest.mock('../../../apiClient.ts');
@@ -6,10 +6,10 @@ jest.mock('../../../apiClient.ts');
 const lang = 'en';
 const query = 'Noah';
 
-describe('suggest actions', () => {
-  describe('suggest', () => {
+describe('fetchSuggest actions', () => {
+  describe('fetchSuggest', () => {
     it('returns a promise', () => {
-      suggest(query, lang);
+      fetchSuggest(query, lang);
 
       expect(apiClient.get).toHaveBeenCalled();
       expect(apiClient.get).toHaveBeenCalledWith(`/api/v3/suggest`, {

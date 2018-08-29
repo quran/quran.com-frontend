@@ -5,7 +5,12 @@ import pad from 'lodash/pad';
 import { buildAudioURL } from '../helpers/buildAudio';
 import { WordShape } from '../shapes';
 import { WORD_TYPES } from '../constants';
-import { SetCurrentVerseKey } from '../redux/actions/audioplayer';
+import {
+  SetCurrentVerseKey,
+  SetCurrentWord,
+  Pause,
+  PlayCurrentWord,
+} from '../redux/actions/audioplayer';
 
 const propTypes = {
   word: WordShape.isRequired,
@@ -21,24 +26,25 @@ const propTypes = {
 };
 
 type DefaultProps = {
-  audioPosition?: number;
+  audioPosition?: number | null;
   isSearched?: boolean;
   useTextFont?: boolean;
-  currentVerse?: string;
+  currentVerse?: string | null;
 };
 
 const defaultProps: DefaultProps = {
   isSearched: false,
   useTextFont: false,
   audioPosition: null,
+  currentVerse: null,
 };
 
 type Props = {
   word: WordShape;
-  setCurrentWord(wordCode: string): any;
-  pause(): any;
+  setCurrentWord: SetCurrentWord;
+  pause: Pause;
   setCurrentVerseKey: SetCurrentVerseKey;
-  playCurrentWord(data: { word: WordShape; position: number }): any;
+  playCurrentWord: PlayCurrentWord;
   tooltip: 'translation' | 'transliteration';
   audioPosition?: number;
   isCurrentVersePlaying: boolean;
@@ -57,8 +63,10 @@ class Word extends Component<Props> {
 
     if (word.charType === WORD_TYPES.CHAR_TYPE_END) {
       title = `Verse ${word.verseKey.split(':')[1]}`;
-    } else if (word.charType === WORD_TYPES.CHAR_TYPE_WORD && word[tooltip]) {
-      title = word[tooltip].text;
+    } else if (word.charType === WORD_TYPES.CHAR_TYPE_WORD) {
+      if (word[tooltip]) {
+        title = (word[tooltip] || {}).text || '';
+      }
     }
 
     return title;
@@ -106,7 +114,8 @@ class Word extends Component<Props> {
       useTextFont,
     } = this.props;
 
-    let text;
+    let text = '';
+
     const highlight = isCurrentVersePlaying ? 'highlight' : '';
     const className = `${useTextFont ? 'text-' : ''}${word.className} ${
       word.charType
@@ -116,7 +125,7 @@ class Word extends Component<Props> {
     if (useTextFont) {
       if (word.charType === WORD_TYPES.CHAR_TYPE_END) {
         text = pad(word.verseKey.split(':')[1], 3, '0');
-      } else {
+      } else if (word.textMadani) {
         text = word.textMadani;
       }
     } else {

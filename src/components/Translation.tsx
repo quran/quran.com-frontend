@@ -2,26 +2,32 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TranslationNode from './TranslationNode';
 import { TranslationShape } from '../shapes';
+import { FetchFootNote } from '../redux/actions/footNotes';
 
 const propTypes = {
   translation: TranslationShape.isRequired,
-  loadFootNote: PropTypes.func.isRequired,
+  fetchFootNote: PropTypes.func.isRequired,
 };
 
 type Props = {
   translation: TranslationShape;
-  loadFootNote?(value: string): void;
+  fetchFootNote?: FetchFootNote;
 };
 
 class Translation extends Component<Props> {
   public static propTypes = propTypes;
 
   handleNodeClick = (event: $TsFixMe) => {
-    const { loadFootNote } = this.props;
+    const { fetchFootNote } = this.props;
 
-    if (event.target.nodeName === 'SUP' && event.target.attributes.foot_note) {
+    if (
+      event.target.nodeName === 'SUP' &&
+      event.target.attributes.foot_note &&
+      fetchFootNote
+    ) {
       event.preventDefault();
-      loadFootNote(event.target.attributes.foot_note.value);
+
+      fetchFootNote(event.target.attributes.foot_note.value);
     }
   };
 

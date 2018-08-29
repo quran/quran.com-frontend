@@ -87,11 +87,12 @@ class TranslationsDropdown extends Component<Props> {
       const checked = translationSettings.find(
         translationSetting => translationSetting === translationOption.id
       );
+      const id = translationOption.id + (translationOption.languageName || '');
 
       return (
         <MenuItem key={translationOption.id}>
           <Checkbox
-            id={translationOption.id + translationOption.languageName}
+            id={id}
             name="translation"
             checked={checked || false}
             disabled={
@@ -116,7 +117,7 @@ class TranslationsDropdown extends Component<Props> {
 
     return this.renderItems(
       list,
-      (translation: TranslationShape) => translation.authorName
+      (translation: TranslationShape) => translation.authorName || ''
     );
   }
 

@@ -108,43 +108,6 @@ describe('<Audioplayer', () => {
       expect(currentFile.pause).toHaveBeenCalled();
     });
 
-    it('calls fetchNextAudioFile for next verse when currentFile is set', () => {
-      const props = getProps({ currentVerseKey: '1:1' });
-      const wrapper = shallow(<Audioplayer {...props} />);
-      const { fetchAudio } = props;
-
-      wrapper.setProps({ currentFile: fileMock });
-
-      expect(fetchAudio).toHaveBeenCalledTimes(1);
-      expect(fetchAudio).toHaveBeenLastCalledWith({
-        audio: 7,
-        chapterId: 1,
-        verseId: 2,
-        verseKey: '1:2',
-      });
-    });
-
-    it('calls sets attribute preload on currentFile', () => {
-      const props = getProps({ currentVerseKey: '1:1' });
-      const wrapper = shallow(<Audioplayer {...props} />);
-
-      wrapper.setProps({ currentFile: fileMock });
-
-      expect(fileMock.setAttribute).toHaveBeenCalled();
-    });
-
-    it('assigns listeneres to currentFile', () => {
-      const props = getProps({ currentVerseKey: '1:1' });
-      const wrapper = shallow(<Audioplayer {...props} />);
-
-      wrapper.setProps({ currentFile: fileMock });
-
-      expect(fileMock.onloadeddata).toBeDefined();
-      expect(fileMock.onpause).toBeDefined();
-      expect(fileMock.onplay).toBeDefined();
-      expect(fileMock.onended).toBeDefined();
-    });
-
     it('fetches next audio when currentFile changes', () => {
       const props = getProps({ currentVerseKey: '1:1', currentFile: fileMock });
       const wrapper = shallow(<Audioplayer {...props} />);

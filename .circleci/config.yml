@@ -31,6 +31,9 @@ jobs:
     - run:
         name: jest
         command: npm run jest
+    - run:
+        name: typescript
+        command: npm run type
 workflows:
   version: 2
   test_and_build:

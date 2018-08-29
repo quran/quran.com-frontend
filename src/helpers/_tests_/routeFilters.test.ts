@@ -140,19 +140,19 @@ describe('routeFilters', () => {
   test('should validate /1:1', () => {
     expect(
       routeFilters({
-        params: { chapterId: '1', range: '1' },
+        params: { chapterId: '1', range: '1', s: ':' },
         location: { pathname: '/1:1', search: '' },
       })
     ).toEqual({
       status: HTTP_STATUS_CODES.REDIRECT,
-      url: '1/1',
+      url: '/1/1',
     });
   });
 
   test('should validate /1-1', () => {
     expect(
       routeFilters({
-        params: { chapterId: '1', range: '1' },
+        params: { chapterId: '1', range: '1', s: '-' },
         location: { pathname: '/1-1', search: '' },
       })
     ).toEqual({
@@ -169,7 +169,7 @@ describe('routeFilters', () => {
       })
     ).toEqual({
       status: HTTP_STATUS_CODES.REDIRECT,
-      url: '1/2',
+      url: '/1/1-2',
     });
   });
 
@@ -181,14 +181,14 @@ describe('routeFilters', () => {
       })
     ).toEqual({
       status: HTTP_STATUS_CODES.REDIRECT,
-      url: '/1/2',
+      url: '/1/1-2',
     });
   });
 
   test('should be valid /1-1-2', () => {
     expect(
       routeFilters({
-        params: { chapterId: '1', range: '1-2' },
+        params: { chapterId: '1', range: '1-2', s: '-' },
         location: { pathname: '/1-1-2', search: '' },
       })
     ).toEqual({
@@ -200,12 +200,12 @@ describe('routeFilters', () => {
   test('should be valid /1:1:2', () => {
     expect(
       routeFilters({
-        params: { chapterId: '1', range: '1:2' },
+        params: { chapterId: '1', range: '1:2', s: ':' },
         location: { pathname: '/1:1:2', search: '' },
       })
     ).toEqual({
       status: HTTP_STATUS_CODES.REDIRECT,
-      url: '/1/2',
+      url: '/1/1:2',
     });
   });
 });

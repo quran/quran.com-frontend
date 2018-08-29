@@ -12,8 +12,9 @@ import {
 } from '../constants/audioplayer';
 import apiClient from '../../apiClient';
 import { VerseShape } from '../../shapes';
+import WordShape from '../../shapes/WordShape';
 
-export const setCurrentWord = (word: $TsFixMe) => ({
+export const setCurrentWord = (word: string) => ({
   type: SET_CURRENT_WORD,
   word,
 });
@@ -26,7 +27,10 @@ export const setCurrentVerseKey = (verseKey: string, shouldPlay?: boolean) => ({
   },
 });
 
-export const playCurrentWord = (payload: $TsFixMe) => ({
+export const playCurrentWord = (payload: {
+  word: WordShape;
+  position: number | undefined;
+}) => ({
   type: PLAY_CURRENT_WORD,
   payload,
 });
@@ -103,3 +107,5 @@ export type Update = typeof update;
 export type ToggleScroll = typeof toggleScroll;
 export type SetCurrentVerseKey = typeof setCurrentVerseKey;
 export type SetRepeat = typeof setRepeat;
+export type SetCurrentWord = typeof setCurrentWord;
+export type PlayCurrentWord = typeof playCurrentWord;

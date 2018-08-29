@@ -6,7 +6,7 @@ export const INVALID_VERSE_URL = '/error/ERROR_INVALID_VERSE';
 export const INVALID_CHAPTER_URL = '/error/ERROR_INVALID_CHAPTER';
 
 type RouteArgs = {
-  params: { chapterId?: string; range?: string; verseId?: string };
+  params: { chapterId?: string; range?: string; verseId?: string; s?: string };
   location: $TsFixMe;
 };
 
@@ -14,10 +14,10 @@ const replaceChapterOrRange = ({
   chapterId,
   verseId,
 }: {
-  chapterId?: string;
-  verseId?: string;
+  chapterId: string | undefined;
+  verseId: string | undefined;
 }) =>
-  chapterId.length !== toNumber(chapterId).toString().length ||
+  (chapterId && chapterId.length !== toNumber(chapterId).toString().length) ||
   (verseId && verseId.length !== toNumber(verseId).toString().length);
 
 const validateChapter = ({ params: { chapterId }, location }: RouteArgs) => {
@@ -42,7 +42,7 @@ const validateChapter = ({ params: { chapterId }, location }: RouteArgs) => {
 };
 
 const validateVerse = ({ params: { chapterId, range } }: RouteArgs) => {
-  if (range) {
+  if (range && chapterId) {
     if (!range.includes('-') && !range.includes(':')) {
       // range is just a verse number
       if (!isInteger(toNumber(range))) {
@@ -66,10 +66,18 @@ const validateVerse = ({ params: { chapterId, range } }: RouteArgs) => {
   return null;
 };
 
-const validateRange = ({ params, location }: RouteArgs) => {
-  const { chapterId, range } = params;
+const validateRange = ({
+  params: { chapterId, range, s },
+  location,
+}: RouteArgs) => {
+  if (s) {
+    return {
+      status: HTTP_STATUS_CODES.REDIRECT,
+      url: `/${chapterId}/${range}`,
+    };
+  }
 
-  if (range) {
+  if (range && chapterId) {
     // Maybe use:
     // range.match(/\d+:\d+$/g)
 
@@ -139,7 +147,12 @@ const validateRangeLimit = ({ params, location }: RouteArgs) => {
   const chapterId = toNumber(params.chapterId);
 
   // TODO: Add check to make sure the range is within the ayah limit
-  if (replaceChapterOrRange(params)) {
+  if (
+    replaceChapterOrRange({
+      chapterId: params.chapterId,
+      verseId: params.verseId,
+    })
+  ) {
     let scopedLocation = `${location.pathname}${location.search}`;
 
     scopedLocation = scopedLocation.replace(/\/([0-9]+)/, `/${chapterId}`);
@@ -172,7 +185,6 @@ const validators = [
 const validate = ({ params, location }: RouteArgs) => {
   /*
    validation & redirection rules
-
    /2:2 => /2/2
    /2:2:3 => 1/2-3
    /2-2-3 => 1/2-3
@@ -184,7 +196,6 @@ const validate = ({ params, location }: RouteArgs) => {
    /2:20:2 => /2/2-20
    /120 => invalid-surah
    /1/8 => invalid ayah
-
   */
   const trigger = validators.find(
     validator => validator({ params, location }) as $TsFixMe

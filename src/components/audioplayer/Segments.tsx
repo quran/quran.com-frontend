@@ -9,9 +9,9 @@ const propTypes = {
   currentTime: PropTypes.number,
 };
 
-const defaultProps: { currentVerseKey: null; currentTime: null } = {
-  currentVerseKey: null,
-  currentTime: null,
+const defaultProps: { currentVerseKey: undefined; currentTime: undefined } = {
+  currentVerseKey: undefined,
+  currentTime: undefined,
 };
 
 type Props = {
@@ -25,10 +25,10 @@ const Segments: React.SFC<Props> = ({
   currentVerseKey,
   currentTime,
 }: Props) => {
+  if (!Object.keys(segments).length || !currentTime) return null;
+
   const style = [];
   let currentWord: string | null = null;
-
-  if (!Object.keys(segments).length) return <noscript />;
 
   Object.keys(segments.words).forEach(wordIndex => {
     const word = segments.words[wordIndex];
@@ -40,7 +40,7 @@ const Segments: React.SFC<Props> = ({
 
   if (currentWord) {
     style.push({
-      cssText: `#word-${currentWord.replace(/:/g, '-')}{
+      cssText: `#word-${(currentWord as string).replace(/:/g, '-')}{
           color: #279197;
           border-color: #279197;
         }`,

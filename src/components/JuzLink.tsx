@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link as RouterLink } from 'react-router-dom';
 import { JUZ_LIST_EVENTS } from '../events';
 import { ChapterShape } from '../shapes';
+import JuzShape from '../shapes/JuzShape';
 
 const Name = styled.span`
   margin-right: 5px;
@@ -28,7 +29,7 @@ const Link = styled(RouterLink)`
 `;
 
 type Props = {
-  juz: $TsFixMe;
+  juz: JuzShape;
   chapters: { [id: string]: ChapterShape };
 };
 

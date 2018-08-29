@@ -117,7 +117,7 @@ const CONTENT: { [key: string]: string } = {
   114: 'e972',
 };
 
-export default styled.span`
+export default styled.span<{ id: string }>`
   font-family: 'surah_names' !important;
   font-style: normal;
   font-weight: normal;

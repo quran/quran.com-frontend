@@ -12,7 +12,7 @@ const TranslationShape = PropTypes.shape({
 interface TranslationShape {
   id: number;
   languageName?: string;
-  text?: string;
+  text: string;
   resourceName?: string | null;
   resourceId: number;
   authorName?: string;

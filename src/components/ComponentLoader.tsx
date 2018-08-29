@@ -14,7 +14,8 @@ const ComponentLoader: React.SFC<Props> = ({
 }: Props) => {
   if (isLoading) {
     return pastDelay ? <noscript /> : null;
-  } else if (error) {
+  }
+  if (error) {
     // TODO: Translation
     return <div>Error! Component failed to load</div>;
   }

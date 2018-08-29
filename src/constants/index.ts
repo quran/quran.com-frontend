@@ -1,6 +1,6 @@
 export const NUMBER_OF_CHAPTERS: number = 114;
 export const NUMBER_OF_JUZS: number = 30;
-export const JUZ_START: { [juzNumber: number]: Array<number> } = {
+export const JUZ_START: { [juzNumber: string]: Array<number> } = {
   /* Find number of juzs in chapters
   ex. 2:[142, 253] ⇒ in chapter 2 verse 142 is a juz same goes for verse 253
   Resource obtained from https://wajibad.wordpress.com/2015/11/15/the-30-juz-of-al-quran/ */

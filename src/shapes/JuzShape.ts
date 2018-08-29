@@ -9,7 +9,7 @@ const JuzShape = PropTypes.shape({
 interface JuzShape {
   id: number;
   juzNumber: number;
-  verseMapping: object;
+  verseMapping: { [key: string]: string };
 }
 
 export default JuzShape;

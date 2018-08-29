@@ -105,18 +105,21 @@ class RepeatButton extends Component<Props> {
                 });
               }}
             >
-              {array.reduce((options, time) => {
-                if (time + 1 < chapter.versesCount) {
-                  // Exclude last verse
-                  options.push(
-                    <option key={time} value={time + 1}>
-                      {time + 1}
-                    </option>
-                  );
-                }
+              {array.reduce(
+                (options, time) => {
+                  if (time + 1 < chapter.versesCount) {
+                    // Exclude last verse
+                    options.push(
+                      <option key={time} value={time + 1}>
+                        {time + 1}
+                      </option>
+                    );
+                  }
 
-                return options;
-              }, [])}
+                  return options;
+                },
+                [] as Array<JSX.Element>
+              )}
             </FormControl>
           </li>
           <li> - </li>
@@ -130,21 +133,24 @@ class RepeatButton extends Component<Props> {
                 setRepeat({ ...repeat, to: parseInt(event.target.value, 10) })
               }
             >
-              {array.reduce((options, time) => {
-                if (
-                  (repeat.from ? repeat.from : 1) < time + 1 &&
-                  time + 1 <= chapter.versesCount
-                ) {
-                  // eslint-disable-line max-len
-                  options.push(
-                    <option key={time} value={time + 1}>
-                      {time + 1}
-                    </option>
-                  );
-                }
+              {array.reduce(
+                (options, time) => {
+                  if (
+                    (repeat.from ? repeat.from : 1) < time + 1 &&
+                    time + 1 <= chapter.versesCount
+                  ) {
+                    // eslint-disable-line max-len
+                    options.push(
+                      <option key={time} value={time + 1}>
+                        {time + 1}
+                      </option>
+                    );
+                  }
 
-                return options;
-              }, [])}
+                  return options;
+                },
+                [] as Array<JSX.Element>
+              )}
             </FormControl>
           </li>
         </ul>

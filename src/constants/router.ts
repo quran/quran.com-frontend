@@ -14,7 +14,7 @@ export enum PATHS {
 }
 
 export enum CHAPTER_PATHS {
-  WITH_COLON = '/:chapterId(\\d+)(:|-)?:range?',
+  WITH_COLON = '/:chapterId(\\d+):s(:|-)?:range?',
   WITH_RANGE = '/:chapterId(\\d+)/:range?',
   WITH_TRANSLATIONS = '/:chapterId(\\d+)/:range/:translations',
   WITH_TAFSIR = '/:chapterId(\\d+)/:range/tafsirs/:tafsirId',

@@ -165,7 +165,6 @@ class SearchAutocomplete extends Component<Props & typeof defaultProps> {
 
   getSuggestions() {
     const { value, suggestions } = this.props;
-    const totalSuggestions = [];
 
     const chapterSuggestions = this.getChapterSuggestions(value);
 
@@ -224,7 +223,7 @@ class SearchAutocomplete extends Component<Props & typeof defaultProps> {
 
   render() {
     return (
-      <Container className={!this.getSuggestions().length ? 'hidden' : ''}>
+      <Container className={this.getSuggestions().length ? '' : 'hidden'}>
         <List role="menu">
           {!!this.getSuggestions().length &&
             this.getSuggestions().map((item: SuggestionShape) => (

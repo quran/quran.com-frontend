@@ -9,14 +9,18 @@ const propTypes = {
 };
 
 type Props = {
+  lines?: { [key: string]: LineShape };
+};
+
+type DefaultProps = {
   lines: { [key: string]: LineShape };
 };
 
-const defaultProps: Props = {
-  lines: null,
+const defaultProps: DefaultProps = {
+  lines: {},
 };
 
-const PageView: React.SFC<Props> = ({ lines }: Props) => {
+const PageView: React.SFC<Props> = ({ lines = {} }: Props) => {
   const keys = Object.keys(lines);
   const elements = keys.map((lineNum, index) => {
     const nextNum = keys[index + 1];

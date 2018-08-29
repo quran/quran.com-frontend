@@ -19,7 +19,7 @@ import { RepeatShape } from '../../shapes';
 type State = {
   files: $TsFixMe;
   currentFile?: $TsFixMe;
-  currentVerseKey?: string;
+  currentVerseKey?: string | null;
   currentWord?: $TsFixMe;
   currentTime: number;
   duration: number;
@@ -32,7 +32,6 @@ type State = {
 
 export const INITIAL_STATE: State = {
   files: {},
-
   currentVerseKey: null,
   currentWord: null,
   currentTime: 0,
