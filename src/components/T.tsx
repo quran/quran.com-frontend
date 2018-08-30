@@ -5,7 +5,7 @@ import {
   FormattedMessage,
   InjectedIntlProps, // eslint-disable-line
 } from 'react-intl';
-import en from '../locale/en';
+import config from '../../config';
 import LOCALE_KEYS from '../locale/keys';
 
 type Props = {
@@ -13,6 +13,8 @@ type Props = {
   values?: { [key: string]: string };
   children?: (...formattedMessage: Array<string | JSX.Element>) => ReactNode;
 };
+
+const { en } = config('localeMessages');
 
 const T: React.SFC<Props> = ({
   id,

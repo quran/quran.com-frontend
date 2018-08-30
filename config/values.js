@@ -6,6 +6,7 @@
  */
 
 import * as EnvVars from './utils/envVars';
+import localeMessages from '../src/locale';
 
 const locales = {
   en: 'English',
@@ -42,7 +43,11 @@ const values = {
     fontsURL: true,
     locales: true,
     defaultLocale: true,
+
+    localeMessages: true,
   },
+
+  localeMessages,
 
   api: EnvVars.string('API_URL'),
   oneQuran: EnvVars.string('ONE_QURAN_URL'),

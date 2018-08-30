@@ -9,3 +9,5 @@ import tr from './tr';
 import ur from './ur';
 
 export { ar, en, fa, fr, id, nl, sq, tr, ur };
+
+export default { ar, en, fa, fr, id, nl, sq, tr, ur };

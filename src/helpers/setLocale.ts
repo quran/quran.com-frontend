@@ -23,9 +23,8 @@ export default (req?: $TsFixMe) => {
     path: '/',
     expires: new Date(expireDate),
   });
-  // TODO: ideally, the server sends the locales via ClientConfig component
-  // and the client picks up the configs and uses them accordingly
-  const localeData = require('../locale/' + currentLocal + '.ts'); // eslint-disable-line
 
-  return localeData.default.messages;
+  const localeData = config('localeMessages')[currentLocal];
+
+  return localeData.messages;
 };

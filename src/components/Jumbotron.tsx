@@ -2,11 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { asyncComponent } from 'react-async-component';
 
 import backgroundImage from '../../static/images/background.jpg';
 import logo from '../../static/images/logo-lg-w.png';
 import Title from './dls/Title';
-import SearchInput from './SearchInput';
+
+const SearchInput = asyncComponent({
+  resolve: () => import(/* webpackChunkName: "SearchInput" */ './SearchInput'),
+});
 
 const StyledLink = styled(Link)`
   display: inline-block;
