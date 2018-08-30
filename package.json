@@ -44,7 +44,12 @@
     "precommit"
   ],
   "lint-staged": {
-    "*.js": [
+    "*.tsx": [
+      "npm run prettier",
+      "npm run lint:fix",
+      "git add"
+    ],
+    "*.ts": [
       "npm run prettier",
       "npm run lint:fix",
       "git add"

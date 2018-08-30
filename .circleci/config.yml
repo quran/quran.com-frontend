@@ -20,6 +20,8 @@ jobs:
   test:
     docker:
       - image: circleci/node:latest
+        environment:
+            JOBS: 1  # https://github.com/emberjs/ember.js/issues/15641
     steps:
     - checkout
     - run:
