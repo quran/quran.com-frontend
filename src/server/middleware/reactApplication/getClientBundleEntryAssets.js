@@ -51,5 +51,6 @@ export default function getClientBundleEntryAssets() {
     );
   }
   resultCache = assetsJSONCache.index;
+
   return resultCache;
 }

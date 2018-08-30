@@ -6,6 +6,7 @@
  */
 
 import * as EnvVars from './utils/envVars';
+import localeMessages from '../src/locale';
 
 const locales = {
   en: 'English',
@@ -20,15 +21,6 @@ const locales = {
 };
 
 const values = {
-  api: EnvVars.string('API_URL'),
-  oneQuran: EnvVars.string('ONE_QURAN_URL'),
-  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT'),
-  sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
-  facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
-  fontsURL: EnvVars.string('FONTS_URL'),
-  locales,
-  defaultLocale: 'en',
-
   // The configuration values that should be exposed to our client bundle.
   // This value gets passed through the /utils/objects/filterWithRules
   // util to create a filter object that can be serialised and included
@@ -47,7 +39,24 @@ const values = {
     polyfillIO: true,
     // We need to expose all the htmlPage settings.
     htmlPage: true,
+
+    fontsURL: true,
+    locales: true,
+    defaultLocale: true,
+
+    localeMessages: true,
   },
+
+  localeMessages,
+
+  api: EnvVars.string('API_URL'),
+  oneQuran: EnvVars.string('ONE_QURAN_URL'),
+  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT'),
+  sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
+  facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
+  fontsURL: EnvVars.string('FONTS_URL'),
+  locales,
+  defaultLocale: 'en',
 
   // The host on which the server should run.
   host: EnvVars.string('HOST', 'localhost'),
@@ -157,7 +166,7 @@ const values = {
   includeSourceMapsForOptimisedClientBundle: false,
 
   // These extensions are tried when resolving src files for our bundles..
-  bundleSrcTypes: ['js', 'jsx', 'json'],
+  bundleSrcTypes: ['js', 'jsx', 'json', 'tsx', 'ts'],
 
   // What should we name the json output file that webpack generates
   // containing details of all output files for a bundle?
@@ -204,7 +213,7 @@ const values = {
   bundles: {
     client: {
       // Src entry file.
-      srcEntryFile: './src/client/index.js',
+      srcEntryFile: './src/client/index.tsx',
 
       // Src paths.
       srcPaths: [
@@ -247,6 +256,9 @@ const values = {
           'react-router-dom',
           'styled-components',
           'react-bootstrap',
+          'react-intl',
+          'react-metrics',
+          'prop-types',
         ],
 
         // The name of the vendor DLL.

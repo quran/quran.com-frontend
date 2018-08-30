@@ -1,12 +1,13 @@
 # Contributing
 
-You want to help? You rock! Now, take a moment to be sure your contributions make sense to everyone else.
+Thank you very much for your interest to help. We could use as much help as possible from our community.
 
 ## Reporting Issues
 
 Found a problem? Want a new feature?
 
 - See if your issue or idea has [already been reported].
+- File a new issue in Github.
 
 
 ## Submitting Pull Requests
