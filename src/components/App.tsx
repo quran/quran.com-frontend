@@ -6,6 +6,7 @@ import Navbars from './Navbars';
 import Routes from './Routes';
 import Footer from './Footer';
 import NoScript from './NoScript';
+import AppHelmet from './AppHelmet';
 
 const SmartBanner = asyncComponent({
   resolve: () => import(/* webpackChunkName: "SmartBanner" */ './SmartBanner'),
@@ -13,6 +14,7 @@ const SmartBanner = asyncComponent({
 
 const App = () => (
   <Fragment>
+    <AppHelmet />
     <Navbars />
     <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
     <NoScript />
