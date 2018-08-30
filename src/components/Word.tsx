@@ -14,6 +14,7 @@ import {
 } from '../redux/actions/audioplayer';
 
 const WordTag = styled.a<{ highlight?: boolean }>`
+  -webkit-font-smoothing: antialiased;
   color: ${({ highlight, theme }) =>
     highlight ? theme.brandPrimary : theme.colors.textColor};
 `;
