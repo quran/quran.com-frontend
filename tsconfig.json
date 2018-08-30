@@ -15,7 +15,8 @@
     "strictNullChecks": true
   },
   "include": [
-    "./src/**/*"
+    "./src/**/*",
+    "./config/**/*"
   ],
   "exclude": [
     "./tests/**/*",
