@@ -32,10 +32,6 @@
       "maxSize": "210 kB"
     },
     {
-      "path": "./build/client/Home-*.js",
-      "maxSize": "40 kB"
-    },
-    {
       "path": "./build/client/Chapter-*.js",
       "maxSize": "40 kB"
     },
