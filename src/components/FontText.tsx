@@ -50,7 +50,7 @@ export default styled.div`
     direction: rtl;
     float: right;
   }
-  @media (max-width: ${({ theme }) => theme.screen.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     font-size: 300%;
     line-height: 130%;
   }

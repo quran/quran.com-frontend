@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import debounce from 'lodash/debounce';
+import { Link } from 'react-router-dom';
 import { ChapterShape, SuggestionShape } from '../shapes';
 import { FetchSuggest } from '../redux/actions/suggest';
 
@@ -232,8 +233,8 @@ class SearchAutocomplete extends Component<Props & typeof defaultProps> {
                   <a href={item.href}>{item.ayah}</a>
                 </StyledLink>
                 <div className="text">
-                  <a
-                    href={item.href}
+                  <Link
+                    to={item.href}
                     dangerouslySetInnerHTML={{ __html: item.text }}
                   />
                 </div>

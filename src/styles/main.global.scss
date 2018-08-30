@@ -7,11 +7,13 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import 'partials/tooltip';
 @import 'nightmode';
 @import 'partials/_tooltip';
+
 html,
 body {
   height: 100%;
   min-height: 100%;
-  font-size: 14px;
+  font-size: 16px; // 2x unit
+
   @media (max-width: $screen-sm-max) {
     font-size: 12px;
   }
@@ -51,6 +53,7 @@ li em {
     width: 100px;
     padding-top: 100px;
   }
+
   h3 {
     margin: 0;
     padding-bottom: 50%;
@@ -79,6 +82,7 @@ li em {
   .btn-link {
     color: inherit;
   }
+
   .btn-link:hover,
   .btn-link:focus {
     text-decoration: none;
@@ -104,6 +108,7 @@ li em {
   direction: rtl;
   font-family: 'Nafees';
   text-align: right;
+
   #arabic {
     font-family: monospace;
   }
@@ -143,6 +148,7 @@ li em {
     margin-bottom: 0;
     margin-top: 5px;
   }
+
   .navbar-nav .open .dropdown-menu {
     position: absolute;
     float: left;
@@ -152,14 +158,17 @@ li em {
     border: 1px solid rgba(0, 0, 0, 0.15);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
   }
+
   .navbar-nav .open .dropdown-menu > li > a,
   .navbar-nav .open .dropdown-menu .dropdown-header {
     padding: 5px 15px;
   }
+
   .pager .next,
   .pager .previous {
     display: block;
     margin: 10px 0;
+
     & > a {
       float: none;
     }

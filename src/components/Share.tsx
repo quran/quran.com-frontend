@@ -16,7 +16,7 @@ const inlineStyle = css`
 const Container = styled.div<{ inline?: boolean }>`
   position: relative;
   top: 7px;
-  display: inline-block;
+  display: block;
 
   ${prop => prop.inline && inlineStyle} .social-icon {
     &:hover {

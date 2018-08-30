@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import pad from 'lodash/pad';
+import styled from 'styled-components';
 import { buildAudioURL } from '../helpers/buildAudio';
 import { WordShape } from '../shapes';
 import { WORD_TYPES } from '../constants';
@@ -11,6 +12,11 @@ import {
   Pause,
   PlayCurrentWord,
 } from '../redux/actions/audioplayer';
+
+const WordTag = styled.a<{ highlight?: boolean }>`
+  color: ${({ highlight, theme }) =>
+    highlight ? theme.brandPrimary : theme.colors.textColor};
+`;
 
 const propTypes = {
   word: WordShape.isRequired,
@@ -116,10 +122,9 @@ class Word extends Component<Props> {
 
     let text = '';
 
-    const highlight = isCurrentVersePlaying ? 'highlight' : '';
     const className = `${useTextFont ? 'text-' : ''}${word.className} ${
       word.charType
-    } ${highlight} ${word.highlight ? word.highlight : ''}`;
+    } ${word.highlight ? word.highlight : ''}`;
     const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
 
     if (useTextFont) {
@@ -133,21 +138,24 @@ class Word extends Component<Props> {
     }
 
     return (
-      <span>
+      <Fragment>
         <Tooltip arrow title={this.getTooltipTitle()}>
-          <a // eslint-disable-line
-            key={word.code}
+          <WordTag
+            role="button"
+            tabIndex={audioPosition}
+            highlight={isCurrentVersePlaying}
             id={id}
             onDoubleClick={this.handleSegmentPlay}
             onClick={this.handleWordPlay}
-            className={`${className} pointer`}
+            onKeyPress={this.handleWordPlay}
+            className={className}
             dangerouslySetInnerHTML={{ __html: text }}
           />
         </Tooltip>
         {word.charType === WORD_TYPES.CHAR_TYPE_WORD && (
           <small style={{ letterSpacing: -15 }}>&nbsp;</small>
         )}
-      </span>
+      </Fragment>
     );
   }
 }

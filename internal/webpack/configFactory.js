@@ -1,5 +1,6 @@
 import appRootDir from 'app-root-dir';
 // import AssetsPlugin from 'assets-webpack-plugin';
+import ManifestPlugin from 'webpack-manifest-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import nodeExternals from 'webpack-node-externals';
 import path from 'path';
@@ -320,6 +321,13 @@ export default function webpackConfigFactory(buildOptions) {
       //       path: path.resolve(appRootDir.get(), bundleConfig.outputPath),
       //     })
       // ),
+      ifClient(
+        () =>
+          new ManifestPlugin({
+            filename: config('bundleAssetsFileName'),
+            publicPath: path.resolve(appRootDir.get(), bundleConfig.outputPath),
+          })
+      ),
 
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.

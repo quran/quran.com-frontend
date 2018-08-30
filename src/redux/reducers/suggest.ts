@@ -1,4 +1,5 @@
 import { handle } from 'redux-pack';
+import camelcaseKeys from 'camelcase-keys';
 
 import { FETCH_SUGGEST } from '../constants/suggest';
 
@@ -30,7 +31,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
           ...prevState,
           results: {
             ...state.results,
-            [action.query]: action.result,
+            [action.meta.query]: camelcaseKeys(action.payload, { deep: true }),
           },
         }),
       });

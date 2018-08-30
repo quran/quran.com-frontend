@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
+import { Padding } from 'styled-components-spacing';
 import T from './T';
 import LOCALE_KEYS from '../locale/keys';
 
 import Jumbotron from './Jumbotron';
-import { AboutText } from './About';
+import Title from './dls/Title';
 
 type Props = {
   match: {
@@ -19,15 +20,17 @@ const ErrorPage: React.SFC<Props> = ({ match: { params } }: Props) => (
   <div>
     <Helmet title={`Error ${LOCALE_KEYS[params.errorKey]}`} />
     <Jumbotron noSearch />
-    <AboutText className="container-fluid about-text">
-      <div className="row">
-        <div className="col-md-8 col-md-offset-2">
-          <h4 className="source-sans text-center">
-            <T id={LOCALE_KEYS[params.errorKey]} />
-          </h4>
+    <Padding vertical={3}>
+      <div className="container-fluid about-text">
+        <div className="row">
+          <div className="col-md-8 col-md-offset-2">
+            <Title level={4} align="center">
+              <T id={LOCALE_KEYS[params.errorKey]} />
+            </Title>
+          </div>
         </div>
       </div>
-    </AboutText>
+    </Padding>
   </div>
 );
 

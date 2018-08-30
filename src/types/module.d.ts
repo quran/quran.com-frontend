@@ -33,6 +33,8 @@ declare module 'react-router-bootstrap/lib/LinkContainer';
 declare module 'react-scroll';
 declare module 'react-metrics';
 declare module 'express-useragent';
+declare module 'react-outside-click-handler';
+declare module 'styled-components-spacing';
 declare module 'i';
 declare module '*.png';
 declare module '*.jpg';

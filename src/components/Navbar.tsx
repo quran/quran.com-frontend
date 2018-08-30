@@ -5,10 +5,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import BootstrapNavbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
-
 import LocaleSwitcher from './LocaleSwitcher';
-
 import { NAVBAR_EVENTS } from '../events';
+import NavLogo from '../../static/images/logo-nav.png';
 
 const scrolledStyle = {
   boxShadow:
@@ -26,12 +25,10 @@ const StyledNav = styled(Nav)`
 type Props = {
   isStatic?: boolean;
   location: $TsFixMe;
-  handleSidebarToggle: $TsFixMe;
 };
 
 class Navbar extends Component<Props> {
   public static propTypes = {
-    handleSidebarToggle: PropTypes.func.isRequired,
     isStatic: PropTypes.bool,
     location: PropTypes.object.isRequired,
   };
@@ -78,7 +75,7 @@ class Navbar extends Component<Props> {
   };
 
   render() {
-    const { handleSidebarToggle, isStatic } = this.props;
+    const { isStatic } = this.props;
     const { scrolled } = this.state;
 
     return (
@@ -88,25 +85,10 @@ class Navbar extends Component<Props> {
         fixedTop={!isStatic}
         fluid
       >
-        <button
-          type="button"
-          className="navbar-toggle collapsed"
-          onClick={handleSidebarToggle}
-          {...NAVBAR_EVENTS.CLICK.SIDEBAR_TOGGLE.PROPS}
-        >
-          <span className="sr-only">Toggle navigation</span>
-          <span className="icon-bar" />
-          <span className="icon-bar" />
-          <span className="icon-bar" />
-        </button>
+        <Link className="navbar-brand" to="/">
+          <img alt="Brand" src={NavLogo} style={{ height: 30 }} />
+        </Link>
         <StyledNav>
-          {!this.isHome() && (
-            <li>
-              <Link to="/" {...NAVBAR_EVENTS.CLICK.HOME_LINK.PROPS}>
-                <i className="ss-icon ss-home" />
-              </Link>
-            </li>
-          )}
           {this.isHome() && (
             <LocaleSwitcher className="visible-xs-inline-block" />
           )}

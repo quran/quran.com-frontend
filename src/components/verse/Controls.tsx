@@ -1,18 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { asyncComponent } from 'react-async-component';
 import Badge from './Badge';
+import VerseCopy from '../VerseCopy';
+import Share from '../Share';
 import { VerseShape, ChapterShape } from '../../shapes';
 import T, { KEYS } from '../T';
-
-const VerseCopy = asyncComponent({
-  resolve: () => import(/* webpackChunkName: "VerseCopy" */ '../VerseCopy'),
-});
-
-const Share = asyncComponent({
-  resolve: () => import(/* webpackChunkName: "Share" */ '../Share'),
-});
+import ButtonLink from '../dls/ButtonLink';
 
 const ControlsNode = styled.div<{ textMuted?: $TsFixMe }>`
   a {
@@ -39,7 +33,7 @@ const ControlsNode = styled.div<{ textMuted?: $TsFixMe }>`
     }
   }
 
-  @media (max-width: ${({ theme }) => theme.screen.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     h4,
     a {
       display: inline-block;
@@ -87,45 +81,33 @@ const Controls: React.SFC<Props> = ({
   isCurrentVersePlaying,
   onPlayClick,
   onTafsirsClick,
-}: Props) => {
-  return (
-    <ControlsNode className="col-md-1 col-sm-1">
-      <Badge isSearched={isSearched} verse={verse} />
-      {!isSearched &&
-        !isPdf && (
-          <button
-            type="button"
-            onClick={onPlayClick}
-            className="text-muted btn btn-link"
-          >
-            <i
-              className={`ss-icon ${
-                isCurrentVersePlaying ? 'ss-pause' : 'ss-play'
-              } vertical-align-middle`}
-            />{' '}
-            <T
-              id={
-                isCurrentVersePlaying ? KEYS.ACTIONS_PAUSE : KEYS.ACTIONS_PLAY
-              }
-            />
-          </button>
-        )}
-      {!isPdf &&
-        !isSearched && (
-          <VerseCopy text={verse.textMadani} verseKey={verse.verseKey} />
-        )}
-      <button
-        type="button"
-        className="text-muted btn btn-link"
-        onClick={onTafsirsClick}
-      >
-        <i className="ss-book vertical-align-middle" />{' '}
-        <T id={KEYS.ACTIONS_TAFSIRS} />
-      </button>
-      {!isSearched && !isPdf && <Share chapter={chapter} verse={verse} />}
-    </ControlsNode>
-  );
-};
+}: Props) => (
+  <ControlsNode className="col-md-1 col-sm-1">
+    <Badge isSearched={isSearched} verse={verse} />
+    {!isSearched &&
+      !isPdf && (
+        <ButtonLink type="button" onClick={onPlayClick}>
+          <i
+            className={`ss-icon ${
+              isCurrentVersePlaying ? 'ss-pause' : 'ss-play'
+            } vertical-align-middle`}
+          />{' '}
+          <T
+            id={isCurrentVersePlaying ? KEYS.ACTIONS_PAUSE : KEYS.ACTIONS_PLAY}
+          />
+        </ButtonLink>
+      )}
+    {!isPdf &&
+      !isSearched && (
+        <VerseCopy text={verse.textMadani} verseKey={verse.verseKey} />
+      )}
+    <ButtonLink type="button" onClick={onTafsirsClick}>
+      <i className="ss-book vertical-align-middle" />{' '}
+      <T id={KEYS.ACTIONS_TAFSIRS} />
+    </ButtonLink>
+    {!isSearched && !isPdf && <Share chapter={chapter} verse={verse} />}
+  </ControlsNode>
+);
 
 Controls.propTypes = propTypes;
 Controls.defaultProps = defaultProps;

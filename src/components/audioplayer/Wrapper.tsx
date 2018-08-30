@@ -19,7 +19,7 @@ const Wrapper = styled.div`
     margin: 5px;
   }
 
-  @media (max-width: ${({ theme }) => theme.screen.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     bottom: 0;
     width: 100%;
   }

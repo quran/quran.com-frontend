@@ -11,11 +11,11 @@ const Container = styled.footer`
   font-size: 14px;
   margin-top: 50px;
 
-  @media (max-width: ${({ theme }) => theme.screen.lg}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.lg}) {
     padding-bottom: 7%;
   }
 
-  @media (max-width: ${({ theme }) => theme.screen.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     padding-bottom: 9%;
   }
 `;
@@ -69,6 +69,16 @@ const Footer = () => (
               </Header>
               <List className="source-sans">
                 <li>
+                  <StyledRouterLink to="/apps">
+                    <T id={KEYS.NAV_MOBILE} />
+                  </StyledRouterLink>
+                </li>
+                <li>
+                  <StyledRouterLink to="/contribute">
+                    <T id={KEYS.NAV_CONTRIBUTE} />
+                  </StyledRouterLink>
+                </li>
+                <li>
                   <StyledRouterLink to="/about">
                     <T id={KEYS.NAV_ABOUTUS} />
                   </StyledRouterLink>
@@ -95,6 +105,16 @@ const Footer = () => (
                 <T id={KEYS.NAV_USEFULSITES} />
               </Header>
               <List className="source-sans">
+                <li>
+                  <StyledLink
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="http://legacy.quran.com/"
+                    {...FOOTER_EVENTS.CLICK.LEGACY_LINK.PROPS}
+                  >
+                    <T id={KEYS.NAV_LEGACY_SITE} />
+                  </StyledLink>
+                </li>
                 <li>
                   <StyledLink
                     target="_blank"

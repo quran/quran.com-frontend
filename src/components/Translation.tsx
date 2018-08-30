@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import styled from 'styled-components';
 import TranslationNode from './TranslationNode';
 import { TranslationShape } from '../shapes';
 import { FetchFootNote } from '../redux/actions/footNotes';
+
+const TranslationText = styled.small`
+  font-family: ${({ theme }) => theme.fonts.timesNew};
+`;
 
 const propTypes = {
   translation: TranslationShape.isRequired,
@@ -45,9 +50,9 @@ class Translation extends Component<Props> {
         <h2
           className={`${
             isArabic ? 'text-right' : 'text-left'
-          } text-translation times-new`}
+          } text-translation`}
         >
-          <small
+          <TranslationText
             className={`${lang || 'times-new'}`}
             dangerouslySetInnerHTML={{ __html: translation.text }}
           />

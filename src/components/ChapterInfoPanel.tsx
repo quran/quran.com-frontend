@@ -87,7 +87,7 @@ const Container = styled.div`
   height: 1000px;
   padding: 0;
 
-  @media (max-width: ${({ theme }) => theme.screen.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     margin-bottom: 0;
   }
 `;
@@ -99,7 +99,7 @@ const Image = styled.div<{ background: string }>`
   background-repeat: no-repeat;
 
   background: url(${({ background }) => IMAGES[background]});
-  @media (max-width: ${({ theme }) => theme.screen.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     height: 30%;
   }
 `;
@@ -108,7 +108,7 @@ const ListContainer = styled.div`
   background: ${({ theme }) => theme.textMuted};
   height: 100%;
 
-  @media (max-width: ${({ theme }) => theme.screen.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     height: 30%;
   }
 `;

@@ -28,7 +28,7 @@ const Container = styled.div`
 const StyledButton = styled(Button)`
   border-radius: 50px;
 
-  @media (max-width: ${({ theme }) => theme.screen.sm}) {
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
     &:last-child {
       margin-top: 15px;
     }

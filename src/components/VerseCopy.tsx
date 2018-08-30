@@ -4,6 +4,7 @@ import copyToClipboard from 'copy-to-clipboard';
 import T, { KEYS } from './T';
 
 import { COPY_EVENTS } from '../events';
+import ButtonLink from './dls/ButtonLink';
 
 const propTypes = {
   text: PropTypes.string.isRequired,
@@ -40,10 +41,10 @@ class VerseCopy extends Component<Props, State> {
     const { isCopied } = this.state;
 
     return (
-      <button
+      <ButtonLink
         type="button"
         onClick={this.handleCopy}
-        className={`${!isCopied && 'text-muted'} btn btn-link`}
+        active={isCopied}
         {...COPY_EVENTS.CLICK.VERSE.PROPS}
         data-metrics-verse-key={verseKey}
         data-metrics-chapter-id={verseKey.split(':')[0]}
@@ -51,7 +52,7 @@ class VerseCopy extends Component<Props, State> {
       >
         <i className="ss-icon ss-attach vertical-align-middle" />{' '}
         <T id={isCopied ? KEYS.ACTIONS_COPIED : KEYS.ACTIONS_COPY} />
-      </button>
+      </ButtonLink>
     );
   }
 }

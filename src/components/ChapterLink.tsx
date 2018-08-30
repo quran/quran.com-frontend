@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { CHAPTERS_LIST_EVENTS } from '../events';
 import { ChapterShape } from '../shapes';
+import ChapterIcon from './ChapterIcon';
 
 const Item = styled.li`
   list-style: none;
@@ -58,7 +59,7 @@ const ChapterLink: React.SFC<Props> = ({ chapter }: Props) => (
         <TableItem width={7 / 12}>{chapter.nameSimple}</TableItem>
         <TableItem width={3 / 12} className="text-left">
           <Arabic>
-            <span className={`icon-surah${chapter.id}`} />
+            <ChapterIcon id={String(chapter.id)} />
           </Arabic>
         </TableItem>
       </Table>

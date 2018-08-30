@@ -66,13 +66,13 @@ class Home extends Component<Props> {
     const { chapters, juzs, loadingJuzs, loadingChapters } = this.props;
 
     const chapterTitle = (
-      <Title className="text-muted">
+      <Title muted>
         <T id={KEYS.CHAPTER_INDEX_HEADING} />
       </Title>
     );
 
     const juzTitle = (
-      <Title className="text-muted">
+      <Title muted>
         <T id={KEYS.JUZ_INDEX_HEADING} />
       </Title>
     );
@@ -114,7 +114,7 @@ class Home extends Component<Props> {
     }
 
     return (
-      <div className="index-page">
+      <div>
         <Helmet title="The Noble Quran - القرآن الكريم" titleTemplate="%s" />
         <Jumbotron />
         <div className="container">

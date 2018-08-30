@@ -128,8 +128,11 @@ class ChapterNavbar extends Component<Props, State> {
     } = this.props;
     const { scrolled, drawerOpen } = this.state;
 
-    const drawerToggle = (
-      <NavItem onClick={() => this.handleDrawerToggle(true)}>
+    const drawerToggle = (isMobile?: boolean) => (
+      <NavItem
+        onClick={() => this.handleDrawerToggle(true)}
+        className={isMobile ? 'visible-xs visible-sm' : ''}
+      >
         <i className="ss-icon ss-settings text-align" />
         <T id={KEYS.SETTING_TITLE} />
       </NavItem>
@@ -142,16 +145,6 @@ class ChapterNavbar extends Component<Props, State> {
         fixedTop
         fluid
       >
-        <button
-          type="button"
-          className="navbar-toggle collapsed"
-          {...NAVBAR_EVENTS.CLICK.SIDEBAR_TOGGLE.PROPS}
-        >
-          <span className="sr-only">Toggle navigation</span>
-          <span className="icon-bar" />
-          <span className="icon-bar" />
-          <span className="icon-bar" />
-        </button>
         <StyledNav>
           <li>
             <Link to="/" {...NAVBAR_EVENTS.CLICK.HOME_LINK.PROPS}>
@@ -179,14 +172,14 @@ class ChapterNavbar extends Component<Props, State> {
               />
             </Link>
           </li>
-          <li className="visible-xs visible-sm">{drawerToggle}</li>
+          {drawerToggle(true)}
           <Drawer
             right
             drawerClickClose={false}
             open={drawerOpen}
             // eslint-disable-next-line
             handleOpen={this.handleDrawerToggle}
-            toggle={null}
+            toggle={<div />}
             header={
               <h4>
                 <T id={KEYS.SETTING_TITLE} />
@@ -206,7 +199,7 @@ class ChapterNavbar extends Component<Props, State> {
           </Drawer>
         </StyledNav>
         <Nav pullRight className="hidden-xs hidden-sm">
-          {drawerToggle}
+          {drawerToggle()}
         </Nav>
       </BootstrapNavbar>
     );

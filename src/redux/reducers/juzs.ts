@@ -33,7 +33,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
           ...prevState,
           entities: {
             ...state.entities,
-            ...camelcaseKeys(keyBy(action.payload.juzs, 'id')),
+            ...keyBy(camelcaseKeys(action.payload.juzs, { deep: true }), 'id'),
           },
         }),
       });

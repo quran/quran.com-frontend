@@ -69,7 +69,7 @@ const Header = styled.div`
       color: ${({ theme }) => theme.brandPrimary};
     }
 
-    @media (max-width: ${({ theme }) => theme.screen.sm}) {
+    @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
       padding-top: 5px;
     }
   }
@@ -250,7 +250,7 @@ class Search extends Component<Props> {
     const { query, settings } = this.props;
 
     return (
-      <div className="index-page">
+      <div>
         <Helmet
           title={query}
           style={[
