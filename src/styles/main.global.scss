@@ -6,9 +6,7 @@ $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import 'partials/dropdown';
 @import 'partials/tooltip';
 @import 'nightmode';
-@import 'partials/surah_names';
 @import 'partials/_tooltip';
-
 html,
 body {
   height: 100%;
@@ -22,6 +20,7 @@ body {
 .row {
   margin-right: 0em !important;
 }
+
 .highlight {
   background-color: #f5fbf7;
 }

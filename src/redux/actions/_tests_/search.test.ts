@@ -1,4 +1,4 @@
-import { search } from '../search';
+import { fetchSearch } from '../search';
 import apiClient from '../../../apiClient';
 
 jest.mock('../../../apiClient.ts');
@@ -9,7 +9,7 @@ const query = 'Noah';
 describe('search actions', () => {
   describe('search', () => {
     it('returns a promise', () => {
-      search({
+      fetchSearch({
         q: query,
         p: page,
       });

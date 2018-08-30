@@ -13,9 +13,7 @@ describe('AudioplayerContainer', () => {
         })
       ).toEqual({
         segments: state.audioplayer.segments[chapter.id],
-        chapterId: chapter.id,
         isPlaying: state.audioplayer.isPlaying,
-        isLoading: state.audioplayer.isLoading,
         repeat: state.audioplayer.repeat,
         shouldScroll: state.audioplayer.shouldScroll,
         duration: state.audioplayer.duration,

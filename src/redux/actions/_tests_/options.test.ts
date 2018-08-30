@@ -1,4 +1,4 @@
-import { fetchTranslations, fetchRecitations, fetchTafsirs } from '../options';
+import { fetchTranslations, fetchReciters, fetchTafsirs } from '../options';
 import apiClient from '../../../apiClient';
 
 jest.mock('../../../apiClient.ts');
@@ -15,9 +15,9 @@ describe('options actions', () => {
     });
   });
 
-  describe('fetchRecitations', () => {
+  describe('fetchReciters', () => {
     it('returns a promise', () => {
-      fetchRecitations();
+      fetchReciters();
 
       expect(apiClient.get).toHaveBeenCalled();
       expect(apiClient.get).toHaveBeenCalledWith(`/api/v3/options/recitations`);

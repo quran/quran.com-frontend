@@ -6,7 +6,7 @@ const TranslationShape = PropTypes.shape({
   text: PropTypes.string,
   resourceName: PropTypes.string,
   resourceId: PropTypes.number.isRequired,
-  authorName: PropTypes.string.isRequired,
+  authorName: PropTypes.string,
 });
 
 interface TranslationShape {
