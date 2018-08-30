@@ -27,7 +27,8 @@
     "type": "tsc --build tsconfig.json",
     "validate": "npm ls"
   },
-  "bundlesize": [{
+  "bundlesize": [
+    {
       "path": "./build/client/index-*.js",
       "maxSize": "210 kB"
     },
@@ -148,7 +149,7 @@
     "humps": "2.0.0",
     "i": "0.3.6",
     "isomorphic-fetch": "2.2.1",
-    "jest-cli": "22.4.3",
+    "jest-cli": "23.5.0",
     "jest-config": "22.4.3",
     "jest-environment-node": "22.4.3",
     "json-loader": "0.5.4",

@@ -14,8 +14,6 @@ import path from 'path';
 import ifElse from '../../shared/utils/logic/ifElse';
 import removeNil from '../../shared/utils/arrays/removeNil';
 
-import { log } from '../../internal/utils';
-
 // PRIVATES
 
 function registerEnvFile() {
@@ -34,7 +32,7 @@ function registerEnvFile() {
     // e.g. /projects/react-universally/.env.staging
     ifElse(DEPLOYMENT)(
       path.resolve(appRootDir.get(), `${envFile}.${DEPLOYMENT}`)
-    )
+    ),
   ]);
 
   // Find the first env file path match.
@@ -45,12 +43,14 @@ function registerEnvFile() {
   // If we found an env file match the register it.
   if (envFilePath) {
     // eslint-disable-next-line no-console
-    log({
-      title: 'server',
-      level: 'special',
-      message: `Registering environment variables from: ${envFilePath}`
+    // log({
+    //   title: 'server',
+    //   level: 'special',
+    //   message: `Registering environment variables from: ${envFilePath}`,
+    // });
+    dotenv.config({
+      path: envFilePath,
     });
-    dotenv.config({ path: envFilePath });
   }
 }
 
