@@ -3,6 +3,6 @@ import QuickChapters from '../QuickChapters';
 
 describe('<QuickChapters />', () => {
   it('renders valid', () => {
-    expect(React.isValidElement(<QuickChapters />)).toBeTruthy();
+    expect(React.isValidElement(<QuickChapters />)).toBeFalsy();
   });
 });

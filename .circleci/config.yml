@@ -9,15 +9,23 @@ jobs:
         name: install
         command: npm install
     - run:
-        name: rebuildSass
-        command: npm rebuild node-sass
-    - run:
         name: build
         command: npm run build
     - run:
         name: bundlesize
         command: npm run bundlesize
-  test:
+  jest:
+    docker:
+      - image: circleci/node:latest
+    steps:
+    - checkout
+    - run:
+        name: install
+        command: npm install
+    - run:
+        name: jest
+        command: npm run jest -- --forceExit --detectOpenHandles --runInBand
+  eslint:
     docker:
       - image: circleci/node:latest
     steps:
@@ -28,15 +36,22 @@ jobs:
     - run:
         name: lint
         command: npm run lint
+  typescript:
+    docker:
+      - image: circleci/node:latest
+    steps:
+    - checkout
     - run:
-        name: jest
-        command: npm run jest -- --forceExit --detectOpenHandles --runInBand
+        name: install
+        command: npm install
     - run:
-        name: typescript
+        name: lint
         command: npm run type
 workflows:
   version: 2
   test_and_build:
     jobs:
       - build
-      - test
+      - jest
+      - eslint
+      - typescript
