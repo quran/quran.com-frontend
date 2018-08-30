@@ -30,7 +30,7 @@ jobs:
         command: npm run lint
     - run:
         name: jest
-        command: npm run jest
+        command: npm run jest -- --forceExit
     - run:
         name: typescript
         command: npm run type

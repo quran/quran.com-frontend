@@ -1,5 +1,6 @@
 /* global document, window */
 /* eslint-disable global-require */
+import 'isomorphic-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reactCookie from 'react-cookie';
@@ -9,9 +10,6 @@ import { IntlProvider } from 'react-intl';
 import { ThemeProvider } from 'styled-components';
 import { BrowserRouter } from 'react-router-dom';
 import asyncBootstrapper from 'react-async-bootstrapper';
-
-import 'isomorphic-fetch';
-
 import ReactHotLoader from './components/ReactHotLoader';
 import getLocalMessages from '../helpers/setLocale';
 import App from '../components/App';
