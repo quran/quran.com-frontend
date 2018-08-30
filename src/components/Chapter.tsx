@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import qs from 'qs';
+import { asyncComponent } from 'react-async-component';
 import last from 'lodash/last';
 import isEmpty from 'lodash/isEmpty';
 import { match as MatchType } from 'react-router';
@@ -11,22 +12,38 @@ import {
   VerseShape,
   LineShape,
   ChapterInfoShape,
+  SettingsShape,
 } from '../shapes';
 import { determinePage } from '../helpers/determinePage';
 import PageContainer from './dls/PageContainer';
 import Bismillah from './Bismillah';
-import ChapterPagination from './chapter/ChapterPagination';
-import PageView from './chapter/PageView';
 import ListView from './chapter/ListView';
 import TopOptions from './chapter/TopOptions';
-import SettingsShape from '../shapes/SettingsShape';
 import { FetchVerses } from '../redux/actions/verses';
 import { FetchChapters } from '../redux/actions/chapters';
 import { FetchChapterInfo } from '../redux/actions/chapterInfos';
 import { NUMBER_OF_CHAPTERS } from '../constants';
-import AudioplayerContainer from '../containers/AudioplayerContainer';
-import ChapterInfoPanelContainer from '../containers/ChapterInfoPanelContainer';
 import ChapterHelmet from './chapter/ChapterHelmet';
+
+const PageView = asyncComponent({
+  resolve: () =>
+    import(/* webpackChunkName: "PageView" */ './chapter/PageView'),
+});
+
+const ChapterPagination = asyncComponent({
+  resolve: () =>
+    import(/* webpackChunkName: "ChapterPagination" */ './chapter/ChapterPagination'),
+});
+
+const AudioplayerContainer = asyncComponent({
+  resolve: () =>
+    import(/* webpackChunkName: "AudioplayerContainer" */ '../containers/AudioplayerContainer'),
+});
+
+const ChapterInfoPanelContainer = asyncComponent({
+  resolve: () =>
+    import(/* webpackChunkName: "ChapterInfoPanelContainer" */ '../containers/ChapterInfoPanelContainer'),
+});
 
 const propTypes = {
   chapter: ChapterShape.isRequired,
