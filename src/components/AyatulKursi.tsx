@@ -26,6 +26,12 @@ import { NUMBER_OF_CHAPTERS } from '../constants';
 import AudioplayerContainer from '../containers/AudioplayerContainer';
 import ChapterInfoPanelContainer from '../containers/ChapterInfoPanelContainer';
 
+const title = 'Ayatul Kursi';
+const description =
+  'Ayatul Kursi is verse 255 of the second chapter, ' +
+  'Surah al-Baqarah (The Chapter of the Cow), in the ' +
+  'Holy Quran. It is also known as the Throne Verse.';
+
 const propTypes = {
   chapter: ChapterShape.isRequired,
   chapters: PropTypes.objectOf(ChapterShape).isRequired,
@@ -157,9 +163,8 @@ class AyatulKursi extends Component<Props> {
       <Fragment>
         <Helmet
           {...makeHelmetTags({
-            // TODO: add this
-            // title: this.getTitle(),
-            // description: this.getDescription(),
+            title,
+            description,
           })}
           script={chapterLdJson(chapter)}
           style={[

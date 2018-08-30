@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import Helmet from 'react-helmet';
 import qs from 'qs';
 import last from 'lodash/last';
 import isEmpty from 'lodash/isEmpty';
@@ -13,8 +12,6 @@ import {
   LineShape,
   ChapterInfoShape,
 } from '../shapes';
-import makeHelmetTags from '../helpers/makeHelmetTags';
-import { chapterLdJson } from '../helpers/ldJson';
 import { determinePage } from '../helpers/determinePage';
 import PageContainer from './dls/PageContainer';
 import Bismillah from './Bismillah';
@@ -29,6 +26,7 @@ import { FetchChapterInfo } from '../redux/actions/chapterInfos';
 import { NUMBER_OF_CHAPTERS } from '../constants';
 import AudioplayerContainer from '../containers/AudioplayerContainer';
 import ChapterInfoPanelContainer from '../containers/ChapterInfoPanelContainer';
+import ChapterHelmet from './chapter/ChapterHelmet';
 
 const propTypes = {
   chapter: ChapterShape.isRequired,
@@ -209,11 +207,13 @@ class Chapter extends Component<Props> {
   render() {
     const {
       chapter,
+      chapterInfo,
       verses,
       lines,
       settings,
       match,
       isVersesLoading,
+      match: { params },
     } = this.props;
 
     const versesArray = Object.values(verses);
@@ -229,22 +229,12 @@ class Chapter extends Component<Props> {
 
     return (
       <Fragment>
-        <Helmet
-          {...makeHelmetTags({
-            // TODO: add this
-            // title: this.getTitle(),
-            // description: this.getDescription(),
-          })}
-          script={chapterLdJson(chapter)}
-          style={[
-            {
-              cssText: `.text-arabic{font-size: ${
-                settings.fontSize.arabic
-              }rem;} .text-translation{font-size: ${
-                settings.fontSize.translation
-              }rem;}`,
-            },
-          ]}
+        <ChapterHelmet
+          chapter={chapter}
+          chapterInfo={chapterInfo}
+          settings={settings}
+          verses={verses}
+          params={params}
         />
         <PageContainer className="container-fluid">
           <div className="row">
