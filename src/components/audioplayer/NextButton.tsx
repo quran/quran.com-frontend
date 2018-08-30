@@ -32,11 +32,7 @@ const NextButton: React.SFC<Props> = ({
   }
 
   return (
-    <ControlButton
-      className="pointer"
-      onClick={() => !isEnd && onNextClick()}
-      disabled={isEnd}
-    >
+    <ControlButton onClick={() => !isEnd && onNextClick()} disabled={isEnd}>
       <i className="ss-icon ss-skipforward" />
     </ControlButton>
   );

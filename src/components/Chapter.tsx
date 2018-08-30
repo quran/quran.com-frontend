@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Helmet from 'react-helmet';
 import qs from 'qs';
@@ -228,7 +228,7 @@ class Chapter extends Component<Props> {
     }
 
     return (
-      <div className="chapter-body">
+      <Fragment>
         <Helmet
           {...makeHelmetTags({
             // TODO: add this
@@ -279,7 +279,7 @@ class Chapter extends Component<Props> {
             onLoadAyahs={this.handleLazyLoad}
           />
         )}
-      </div>
+      </Fragment>
     );
   }
 }

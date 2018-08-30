@@ -26,11 +26,7 @@ const PreviousButton: React.SFC<Props> = ({
   const index = Object.keys(files).findIndex(id => id === currentVerseKey);
 
   return (
-    <ControlButton
-      className="pointer"
-      onClick={() => index && onPreviousClick()}
-      disabled={!index}
-    >
+    <ControlButton onClick={() => index && onPreviousClick()} disabled={!index}>
       <i className="ss-icon ss-skipback" />
     </ControlButton>
   );

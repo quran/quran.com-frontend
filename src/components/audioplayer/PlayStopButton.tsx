@@ -44,7 +44,6 @@ const PlayStopButton: React.SFC<Props> = ({
 
   return (
     <ControlButton
-      className="pointer text-center"
       onClick={isPlaying ? onPause : onPlay}
       playingButton
     >

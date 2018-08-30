@@ -41,6 +41,8 @@ export const ControlButton = styled.button<{
   box-shadow: none;
   color: ${colorCss};
   outline: none;
+  text-align: center;
+
   &:focus,
   &:active {
     outline: none;
