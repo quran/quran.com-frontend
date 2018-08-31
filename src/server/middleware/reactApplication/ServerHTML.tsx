@@ -26,7 +26,7 @@ function KeyedComponent({ children }: $TsFixMe) {
   return Children.only(children);
 }
 
-// Resolve the assets (js/css) for the client bundle's entry chunk.
+// Resolve the assets (js['index.css']) for the client bundle's entry chunk.
 const clientEntryAssets = getClientBundleEntryAssets();
 
 function stylesheetTag(stylesheetFilePath: $TsFixMe) {
@@ -109,8 +109,8 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
     ...ifElse(helmet)(() => helmet.title.toComponent(), []),
     ...ifElse(helmet)(() => helmet.base.toComponent(), []),
     ...ifElse(helmet)(() => helmet.link.toComponent(), []),
-    ifElse(clientEntryAssets && clientEntryAssets.css)(() =>
-      stylesheetTag(clientEntryAssets.css)
+    ifElse(clientEntryAssets && clientEntryAssets['index.css'])(() =>
+      stylesheetTag(clientEntryAssets['index.css'])
     ),
     ...ifElse(helmet)(() => helmet.style.toComponent(), []),
     ...styleTags,
@@ -160,8 +160,8 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
         )}.js?t=${Date.now()}`
       )
     ),
-    ifElse(clientEntryAssets && clientEntryAssets.js)(() =>
-      scriptTag(clientEntryAssets.js)
+    ifElse(clientEntryAssets && clientEntryAssets['index.js'])(() =>
+      scriptTag(clientEntryAssets['index.js'])
     ),
     ...ifElse(helmet)(() => helmet.script.toComponent(), []),
     ...thirdPartyTags,

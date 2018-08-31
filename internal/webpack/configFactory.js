@@ -324,8 +324,8 @@ export default function webpackConfigFactory(buildOptions) {
       ifClient(
         () =>
           new ManifestPlugin({
-            filename: config('bundleAssetsFileName'),
-            publicPath: path.resolve(appRootDir.get(), bundleConfig.outputPath),
+            fileName: config('bundleAssetsFileName'),
+            writeToFileEmit: true,
           })
       ),
 
