@@ -1,5 +1,5 @@
 import appRootDir from 'app-root-dir';
-// import AssetsPlugin from 'assets-webpack-plugin';
+import AssetsPlugin from 'assets-webpack-plugin';
 import ManifestPlugin from 'webpack-manifest-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import nodeExternals from 'webpack-node-externals';
@@ -314,20 +314,20 @@ export default function webpackConfigFactory(buildOptions) {
       // as we need to interogate these files in order to know what JS/CSS
       // we need to inject into our HTML. We only need to know the assets for
       // our client bundle.
-      // ifClient(
-      //   () =>
-      //     new AssetsPlugin({
-      //       filename: config('bundleAssetsFileName'),
-      //       path: path.resolve(appRootDir.get(), bundleConfig.outputPath),
-      //     })
-      // ),
       ifClient(
         () =>
-          new ManifestPlugin({
-            fileName: config('bundleAssetsFileName'),
-            writeToFileEmit: true,
+          new AssetsPlugin({
+            filename: config('bundleAssetsFileName'),
+            path: path.resolve(appRootDir.get(), bundleConfig.outputPath),
           })
       ),
+      // ifClient(
+      //   () =>
+      //     new ManifestPlugin({
+      //       fileName: config('bundleAssetsFileName'),
+      //       writeToFileEmit: true,
+      //     })
+      // ),
 
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.

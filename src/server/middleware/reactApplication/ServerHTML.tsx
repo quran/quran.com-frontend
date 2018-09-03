@@ -109,8 +109,8 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
     ...ifElse(helmet)(() => helmet.title.toComponent(), []),
     ...ifElse(helmet)(() => helmet.base.toComponent(), []),
     ...ifElse(helmet)(() => helmet.link.toComponent(), []),
-    ifElse(clientEntryAssets && clientEntryAssets['index.css'])(() =>
-      stylesheetTag(clientEntryAssets['index.css'])
+    ifElse(clientEntryAssets && clientEntryAssets.index.css)(() =>
+      stylesheetTag(clientEntryAssets.index.css)
     ),
     ...ifElse(helmet)(() => helmet.style.toComponent(), []),
     ...styleTags,
@@ -160,8 +160,8 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
         )}.js?t=${Date.now()}`
       )
     ),
-    ifElse(clientEntryAssets && clientEntryAssets['index.js'])(() =>
-      scriptTag(clientEntryAssets['index.js'])
+    ifElse(clientEntryAssets && clientEntryAssets.index.js)(() =>
+      scriptTag(clientEntryAssets.index.js)
     ),
     ...ifElse(helmet)(() => helmet.script.toComponent(), []),
     ...thirdPartyTags,
