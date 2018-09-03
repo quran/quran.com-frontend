@@ -8,6 +8,7 @@ import { INITIAL_STATE as OPTIONS_INITIAL_STATE } from '../redux/reducers/option
 import { INITIAL_STATE as SEARCH_INITIAL_STATE } from '../redux/reducers/search';
 import { INITIAL_STATE as SETTINGS_INITIAL_STATE } from '../redux/reducers/settings';
 import { INITIAL_STATE as SUGGEST_INITIAL_STATE } from '../redux/reducers/suggest';
+import { INITIAL_STATE as TAFSIRS_INITIAL_STATE } from '../redux/reducers/tafsirs';
 import { INITIAL_STATE as VERSES_INITIAL_STATE } from '../redux/reducers/verses';
 
 interface ReduxState {
@@ -21,6 +22,7 @@ interface ReduxState {
   search: typeof SEARCH_INITIAL_STATE;
   settings: typeof SETTINGS_INITIAL_STATE;
   suggest: typeof SUGGEST_INITIAL_STATE;
+  tafsirs: typeof TAFSIRS_INITIAL_STATE;
   verses: typeof VERSES_INITIAL_STATE;
 }
 

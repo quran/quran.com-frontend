@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ButtonLink = styled.button<{ active?: boolean }>`
+const ButtonLink = styled.button<{ active?: boolean; bsRole?: string }>`
   color: ${({ theme }) => theme.textMuted};
   text-decoration: none;
   border-color: transparent;

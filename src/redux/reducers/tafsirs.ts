@@ -1,4 +1,5 @@
 import { handle } from 'redux-pack';
+import camelcaseKeys from 'camelcase-keys';
 import { FETCH_TAFSIR } from '../constants/tafsirs';
 
 type State = {
@@ -11,7 +12,7 @@ export const INITIAL_STATE: State = {
   entities: {},
 };
 
-export default (state: State, action: $TsFixMe) => {
+export default (state: State = INITIAL_STATE, action: $TsFixMe) => {
   switch (action.type) {
     case FETCH_TAFSIR:
       return handle(state, action, {
@@ -27,8 +28,7 @@ export default (state: State, action: $TsFixMe) => {
           ...prevState,
           entities: {
             ...prevState.entities,
-            [`${action.result.tafsirs[0].verseKey}-${action.tafsirId}`]: action
-              .result.tafsirs[0],
+            [action.meta.verseKey]: camelcaseKeys(action.payload.tafsirs),
           },
         }),
       });

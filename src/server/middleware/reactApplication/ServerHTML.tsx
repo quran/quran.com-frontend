@@ -118,6 +118,7 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
 
   const bodyElements = removeNil([
     inlineScript(`window.__REDUX_DATA__=${serialize(reduxData)};`),
+    inlineScript(`window.__ASSETS__=${serialize(clientEntryAssets)};`),
     // Binds the client configuration object to the window object so
     // that we can safely expose some configuration values to the
     // client bundle that gets executed in the browser.

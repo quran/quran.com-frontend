@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import DropdownButton from 'react-bootstrap/lib/DropdownButton';
+import Dropdown from 'react-bootstrap/lib/Dropdown';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
 import Badge from './Badge';
 import VerseCopy from '../VerseCopy';
 import Share from '../Share';
@@ -101,10 +104,21 @@ const Controls: React.SFC<Props> = ({
       !isSearched && (
         <VerseCopy text={verse.textMadani} verseKey={verse.verseKey} />
       )}
-    <ButtonLink type="button" onClick={onTafsirsClick}>
-      <i className="ss-book vertical-align-middle" />{' '}
-      <T id={KEYS.ACTIONS_TAFSIRS} />
-    </ButtonLink>
+    <Dropdown>
+      <ButtonLink type="button" bsRole="toggle">
+        <i className="ss-book vertical-align-middle" />{' '}
+        <T id={KEYS.ACTIONS_TAFSIRS} />
+      </ButtonLink>
+      <Dropdown.Menu>
+        <MenuItem eventKey="1">Action</MenuItem>
+        <MenuItem eventKey="2">Another action</MenuItem>
+        <MenuItem eventKey="3" active>
+          Active Item
+        </MenuItem>
+        <MenuItem divider />
+        <MenuItem eventKey="4">Separated link</MenuItem>
+      </Dropdown.Menu>
+    </Dropdown>
     {!isSearched && !isPdf && <Share chapter={chapter} verse={verse} />}
   </ControlsNode>
 );

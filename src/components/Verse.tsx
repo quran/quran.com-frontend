@@ -86,7 +86,12 @@ class Verse extends Component<Props> {
     const { verse, fetchTafsirs } = this.props;
     // TODO: Fix this
 
-    return fetchTafsirs(verse.chapterId, verse.id, 1);
+    return fetchTafsirs({
+      chapterId: verse.chapterId,
+      verseId: verse.id,
+      tafsirIds: [1],
+      verseKey: verse.verseKey,
+    });
   };
 
   render() {

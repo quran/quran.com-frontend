@@ -12,6 +12,7 @@ import options from './options';
 import search from './search';
 import settings from './settings';
 import suggest from './suggest';
+import tafsirs from './tafsirs';
 import verses from './verses';
 
 export default combineReducers({
@@ -27,5 +28,6 @@ export default combineReducers({
   search,
   settings,
   suggest,
+  tafsirs,
   verses,
 });
