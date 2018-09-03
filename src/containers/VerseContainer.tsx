@@ -9,6 +9,7 @@ export const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => ({
   tooltip: state.settings.tooltip,
   userAgent: state.settings.userAgent,
   audio: state.settings.audio,
+  footNote: state.footNotes.entities[ownProps.verse.verseKey],
   isCurrentVersePlaying:
     state.audioplayer.currentVerseKey === ownProps.verse.verseKey &&
     state.audioplayer.isPlaying,
