@@ -3,24 +3,17 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import BootstrapNavbar from 'react-bootstrap/lib/Navbar';
-import Nav from 'react-bootstrap/lib/Nav';
+import DlsNavbar from './dls/navbar/Navbar';
+import Nav from './dls/navbar/Nav';
 import LocaleSwitcher from './LocaleSwitcher';
 import { NAVBAR_EVENTS } from '../events';
 import NavLogo from '../../static/images/logo-nav.png';
+import NavItem from './dls/navbar/NavItem';
 
 const scrolledStyle = {
   boxShadow:
     '0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.2)',
 };
-
-const StyledNav = styled(Nav)`
-  @media (max-width: $screen-sm) {
-    & > li {
-      display: inline-block;
-    }
-  }
-`;
 
 type Props = {
   isStatic?: boolean;
@@ -79,22 +72,22 @@ class Navbar extends Component<Props> {
     const { scrolled } = this.state;
 
     return (
-      <BootstrapNavbar
+      <DlsNavbar
         className="montserrat"
         style={scrolled ? scrolledStyle : {}}
         fixedTop={!isStatic}
         fluid
       >
-        <Link className="navbar-brand" to="/">
+        <NavItem className="navbar-brand" to="/">
           <img alt="Brand" src={NavLogo} style={{ height: 30 }} />
-        </Link>
-        <StyledNav>
+        </NavItem>
+        <Nav>
           {this.isHome() && (
             <LocaleSwitcher className="visible-xs-inline-block" />
           )}
-        </StyledNav>
-        <Nav pullRight className="hidden-xs hidden-sm">
-          <li key="https://quranicaudio.com/">
+        </Nav>
+        <Nav right className="hidden-xs hidden-sm">
+          <NavItem key="https://quranicaudio.com/">
             <a
               href="https://quranicaudio.com/"
               target="_blank"
@@ -103,8 +96,8 @@ class Navbar extends Component<Props> {
             >
               Audio
             </a>
-          </li>
-          <li key="http://salah.com/">
+          </NavItem>
+          <NavItem key="http://salah.com/">
             <a
               href="http://salah.com/"
               target="_blank"
@@ -113,8 +106,8 @@ class Navbar extends Component<Props> {
             >
               Salah
             </a>
-          </li>
-          <li key="http://sunnah.com/">
+          </NavItem>
+          <NavItem key="http://sunnah.com/">
             <a
               href="http://sunnah.com/"
               target="_blank"
@@ -123,10 +116,10 @@ class Navbar extends Component<Props> {
             >
               Sunnah
             </a>
-          </li>
+          </NavItem>
           <LocaleSwitcher key="locale" />,
         </Nav>
-      </BootstrapNavbar>
+      </DlsNavbar>
     );
   }
 }
