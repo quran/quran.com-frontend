@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 const ButtonLink = styled.button<{ active?: boolean }>`
-  color: ${({ theme }) => theme.textMuted}
+  color: ${({ theme }) => theme.textMuted};
   text-decoration: none;
   border-color: transparent;
   background-color: transparent;
@@ -20,12 +20,10 @@ const ButtonLink = styled.button<{ active?: boolean }>`
   line-height: 1.42857;
   border-radius: 4px;
   user-select: none;
-  
-  
-  ${({ active, theme }) => (active ? `color: ${theme.brandPrimary}` : '')}
 
-  &:hover{
-    color: ${({ theme }) => theme.brandPrimary}
+  ${({ active, theme }) =>
+    active ? `color: ${theme.brandPrimary}` : ''} &:hover {
+    color: ${({ theme }) => theme.brandPrimary};
   }
 `;
 

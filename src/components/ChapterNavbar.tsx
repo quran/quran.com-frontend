@@ -1,12 +1,10 @@
 /* global window */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import BootstrapNavbar from 'react-bootstrap/lib/Navbar';
-import Nav from 'react-bootstrap/lib/Nav';
-import NavItem from 'react-bootstrap/lib/NavItem';
 import Drawer from 'quran-components/lib/Drawer';
+import DlsNavbar from './dls/navbar/Navbar';
+import Nav from './dls/navbar/Nav';
 
 import ChaptersDropdown from './ChaptersDropdown';
 import VersesDropdown from './VersesDropdown';
@@ -18,19 +16,6 @@ import T, { KEYS } from './T';
 import { FetchVerses } from '../redux/actions/verses';
 import { SetSetting } from '../redux/actions/settings';
 import { SetCurrentVerseKey } from '../redux/actions/audioplayer';
-
-const scrolledStyle = {
-  boxShadow:
-    '0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12), 0 2px 4px -1px rgba(0,0,0,0.2)',
-};
-
-const StyledNav = styled(Nav)`
-  @media (max-width: $screen-sm) {
-    & > li {
-      display: inline-block;
-    }
-  }
-`;
 
 const propTypes = {
   settings: SettingsShape.isRequired,
@@ -129,23 +114,18 @@ class ChapterNavbar extends Component<Props, State> {
     const { scrolled, drawerOpen } = this.state;
 
     const drawerToggle = (isMobile?: boolean) => (
-      <NavItem
-        onClick={() => this.handleDrawerToggle(true)}
-        className={isMobile ? 'visible-xs visible-sm' : ''}
-      >
-        <i className="ss-icon ss-settings text-align" />
-        <T id={KEYS.SETTING_TITLE} />
-      </NavItem>
+      <li className={isMobile ? 'visible-xs visible-sm' : ''}>
+        {/* eslint-disable-next-line */}
+        <a onClick={() => this.handleDrawerToggle(true)}>
+          <i className="ss-icon ss-settings text-align" />
+          <T id={KEYS.SETTING_TITLE} />
+        </a>
+      </li>
     );
 
     return (
-      <BootstrapNavbar
-        className="montserrat"
-        style={scrolled ? scrolledStyle : {}}
-        fixedTop
-        fluid
-      >
-        <StyledNav>
+      <DlsNavbar scrolled={scrolled} fixed>
+        <Nav>
           <li>
             <Link to="/" {...NAVBAR_EVENTS.CLICK.HOME_LINK.PROPS}>
               <i className="ss-icon ss-home" />
@@ -197,11 +177,11 @@ class ChapterNavbar extends Component<Props, State> {
                 />
               )}
           </Drawer>
-        </StyledNav>
-        <Nav pullRight className="hidden-xs hidden-sm">
+        </Nav>
+        <Nav right className="hidden-xs hidden-sm">
           {drawerToggle()}
         </Nav>
-      </BootstrapNavbar>
+      </DlsNavbar>
     );
   }
 }
