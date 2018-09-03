@@ -35,6 +35,7 @@ const EN: Shape = {
     [KEYS.VERSE_BOOKMARKED]: 'Bookmarked',
     [KEYS.VERSE_BOOKMARK]: 'Bookmark',
     [KEYS.VERSE_NOT_FOUND]: 'Verse not found',
+    [KEYS.VERSE_FOOT_NOTE_TITLE]: 'Footnote',
 
     [KEYS.SEARCH_PLACEHOLDER]: 'Search "Noah"',
     [KEYS.SEARCH_RESULTHEADING]:

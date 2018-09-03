@@ -12,18 +12,20 @@ const TranslationText = styled.small`
 const propTypes = {
   translation: TranslationShape.isRequired,
   fetchFootNote: PropTypes.func.isRequired,
+  verseKey: PropTypes.string.isRequired,
 };
 
 type Props = {
   translation: TranslationShape;
   fetchFootNote: FetchFootNote;
+  verseKey: string;
 };
 
 class Translation extends Component<Props> {
   public static propTypes = propTypes;
 
   handleNodeClick = (event: $TsFixMe) => {
-    const { fetchFootNote } = this.props;
+    const { fetchFootNote, verseKey } = this.props;
 
     if (
       event.target.nodeName === 'SUP' &&
@@ -32,7 +34,10 @@ class Translation extends Component<Props> {
     ) {
       event.preventDefault();
 
-      fetchFootNote(event.target.attributes.foot_note.value);
+      fetchFootNote({
+        footNoteId: event.target.attributes.foot_note.value,
+        verseKey,
+      });
     }
   };
 

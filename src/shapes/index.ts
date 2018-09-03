@@ -2,39 +2,41 @@ import PropTypes from 'prop-types';
 import ChapterInfoShape from './ChapterInfoShape';
 import ChapterShape from './ChapterShape';
 import ContentShape from './ContentShape';
+import FontSizeSettingShape from './FontSizeSettingShape';
+import FootNoteShape from './FootNoteShape';
 import JuzShape from './JuzShape';
 import LineShape from './LineShape';
+import ReciterShape from './ReciterShape';
+import RepeatShape from './RepeatShape';
+import SegmentShape from './SegmentShape';
+import SettingsShape from './SettingsShape';
+import SuggestionShape from './SuggestionShape';
 import TafsirShape from './TafsirShape';
 import TranslationShape from './TranslationShape';
 import TransliterationShape from './TransliterationShape';
 import UserShape from './UserShape';
 import VerseShape from './VerseShape';
 import WordShape from './WordShape';
-import SegmentShape from './SegmentShape';
-import SettingsShape from './SettingsShape';
-import SuggestionShape from './SuggestionShape';
-import FontSizeSettingShape from './FontSizeSettingShape';
-import ReciterShape from './ReciterShape';
-import RepeatShape from './RepeatShape';
 
 export {
   ChapterInfoShape,
   ChapterShape,
   ContentShape,
+  FontSizeSettingShape,
+  FootNoteShape,
   JuzShape,
   LineShape,
+  ReciterShape,
+  RepeatShape,
+  SegmentShape,
+  SettingsShape,
+  SuggestionShape,
   TafsirShape,
   TranslationShape,
   TransliterationShape,
   UserShape,
   VerseShape,
   WordShape,
-  SegmentShape,
-  SettingsShape,
-  FontSizeSettingShape,
-  ReciterShape,
-  RepeatShape,
-  SuggestionShape,
 };
 
 export const bookmarkActions = PropTypes.shape({

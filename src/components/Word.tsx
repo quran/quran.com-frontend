@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import pad from 'lodash/pad';
@@ -139,7 +139,7 @@ class Word extends Component<Props> {
     }
 
     return (
-      <Fragment>
+      <span>
         <Tooltip arrow title={this.getTooltipTitle()}>
           <WordTag
             role="button"
@@ -156,7 +156,7 @@ class Word extends Component<Props> {
         {word.charType === WORD_TYPES.CHAR_TYPE_WORD && (
           <small style={{ letterSpacing: -15 }}>&nbsp;</small>
         )}
-      </Fragment>
+      </span>
     );
   }
 }

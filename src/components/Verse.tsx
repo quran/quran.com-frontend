@@ -4,12 +4,13 @@ import styled from 'styled-components';
 import Element from 'react-scroll/modules/components/Element';
 import Translation from './Translation';
 
-import { VerseShape, ChapterShape } from '../shapes';
+import { VerseShape, ChapterShape, FootNoteShape } from '../shapes';
 import Text from './verse/Text';
 import Controls from './verse/Controls';
 import { FetchTafsirs } from '../redux/actions/tafsirs';
 import { SetCurrentVerseKey, Play, Pause } from '../redux/actions/audioplayer';
 import { FetchFootNote } from '../redux/actions/footNotes';
+import FootNote from './FootNote';
 
 // TODO: Change this
 const VerseNode = styled(Element)<{ highlight?: boolean; textMuted: string }>`
@@ -35,6 +36,7 @@ const propTypes = {
   setCurrentVerseKey: PropTypes.func.isRequired,
   fetchFootNote: PropTypes.func.isRequired,
   isPdf: PropTypes.bool,
+  footNote: FootNoteShape,
 };
 
 const defaultProps: $TsFixMe = {
@@ -42,6 +44,7 @@ const defaultProps: $TsFixMe = {
   isPdf: false,
   match: null,
   currentVerse: null,
+  footNote: null,
 };
 
 type Props = {
@@ -56,6 +59,7 @@ type Props = {
   setCurrentVerseKey: SetCurrentVerseKey;
   fetchFootNote: FetchFootNote;
   isPdf?: boolean;
+  footNote?: FootNoteShape;
 };
 
 class Verse extends Component<Props> {
@@ -88,6 +92,7 @@ class Verse extends Component<Props> {
   render() {
     const {
       verse,
+      footNote,
       isCurrentVersePlaying,
       isSearched,
       chapter,
@@ -118,8 +123,10 @@ class Verse extends Component<Props> {
               key={translation.id}
               translation={translation}
               fetchFootNote={fetchFootNote}
+              verseKey={verse.verseKey}
             />
           ))}
+          {footNote && <FootNote footNote={footNote} />}
         </div>
       </VerseNode>
     );

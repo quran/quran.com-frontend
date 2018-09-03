@@ -1,8 +1,16 @@
 import { handle } from 'redux-pack';
+import camelcaseKeys from 'camelcase-keys';
 import { FETCH_FOOT_NOTE } from '../constants/footNotes';
+import { FootNoteShape } from '../../shapes';
 
-export const INITIAL_STATE = {
+type State = {
+  isLoading: boolean;
+  entities: { [chapterId: string]: FootNoteShape | undefined };
+};
+
+export const INITIAL_STATE: State = {
   isLoading: false,
+  entities: {},
 };
 
 export default (state = INITIAL_STATE, action: $TsFixMe) => {
@@ -19,14 +27,9 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         }),
         success: prevState => ({
           ...prevState,
-          isLoading: false,
-          size: 'large',
-          wrapperClass: 'text-translation foote-note-text',
-          content: {
-            body: `<small class='${action.result.footNote.languageName}'>${
-              action.result.footNote.text
-            }</small>`,
-            title: 'Foot note',
+          entities: {
+            ...prevState.entities,
+            [action.meta.verseKey]: camelcaseKeys(action.payload.foot_note),
           },
         }),
       });
