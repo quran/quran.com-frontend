@@ -457,6 +457,11 @@ export default function webpackConfigFactory(buildOptions) {
                       modules: 'common',
                     },
                   ]),
+                  ifProd([
+                    ["babel-plugin-styled-components", {
+                      "ssr": true
+                    }]
+                  ]),
                 ].filter(x => x !== null),
               },
               buildOptions

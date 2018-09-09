@@ -21,7 +21,9 @@ import config from '../../config';
 import createStore from '../redux/createStore';
 
 try {
-  window.Raven.config(config('sentryClient')).install();
+  if (window.Raven) {
+    window.Raven.config(config('sentryClient')).install();
+  }
 } catch (error) {
   console.log('client', error);
 }
