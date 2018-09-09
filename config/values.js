@@ -152,6 +152,7 @@ const values = {
       'google-analytics.com',
       'www.google-analytics.com',
       'static.zdassets.com',
+      'cdnjs.cloudflare.com',
     ],
     styleSrc: [
       'cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css',
