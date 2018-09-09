@@ -145,7 +145,9 @@ const values = {
       'cdn.polyfill.io',
       'cdn.ravenjs.com',
       'mxpnl.com',
+      'cdn.mxpnl.com',
       'google-analytics.com',
+      'www.google-analytics.com',
     ],
     styleSrc: [
       'cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css',

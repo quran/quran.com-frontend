@@ -117,6 +117,7 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
   ]);
 
   const bodyElements = removeNil([
+    ...thirdPartyTags,
     inlineScript(`window.__REDUX_DATA__=${serialize(reduxData)};`),
     // Binds the client configuration object to the window object so
     // that we can safely expose some configuration values to the
@@ -164,7 +165,6 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
       scriptTag(clientEntryAssets.index.js)
     ),
     ...ifElse(helmet)(() => helmet.script.toComponent(), []),
-    ...thirdPartyTags,
   ]);
 
   return (
