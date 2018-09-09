@@ -39,12 +39,11 @@ const values = {
     polyfillIO: true,
     // We need to expose all the htmlPage settings.
     htmlPage: true,
-
     fontsURL: true,
     locales: true,
     defaultLocale: true,
-
     localeMessages: true,
+    sentryClient: true,
   },
 
   localeMessages,
@@ -69,7 +68,7 @@ const values = {
   // This is an example environment variable which is used within the react
   // application to demonstrate the usage of environment variables across
   // the client and server bundles.
-  welcomeMessage: EnvVars.string('WELCOME_MSG', 'Hello world!'),
+  welcomeMessage: EnvVars.string('WELCOME_MSG', 'Quran.com'),
 
   // Disable server side rendering?
   disableSSR: false,
