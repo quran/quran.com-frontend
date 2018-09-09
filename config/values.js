@@ -102,6 +102,7 @@ const values = {
     url: 'https://cdn.ravenjs.com/3.0.4/raven.min.js',
   },
   zendesk: {
+    id: 'ze-snippet',
     url: 'https://static.zdassets.com/ekr/snippet.js?key=7607c205-2e86-47a9-95f6-8f801c355c92',
   },
 

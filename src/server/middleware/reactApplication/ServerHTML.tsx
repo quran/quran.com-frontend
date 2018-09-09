@@ -40,8 +40,8 @@ function stylesheetTag(stylesheetFilePath: $TsFixMe) {
   );
 }
 
-function scriptTag(jsFilePath: string) {
-  return <script type="text/javascript" src={jsFilePath} />;
+function scriptTag(jsFilePath: string, props = {} as $TsFixMe) {
+  return <script type="text/javascript" src={jsFilePath} {...props} />;
 }
 
 function inlineStyle(body: $TsFixMe) {
@@ -96,7 +96,9 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
     ),
 
     ifElse(isProd)(() => scriptTag(config('sentry.url'))),
-    ifElse(isProd)(() => scriptTag(config('zendesk.url'))),
+    ifElse(isProd)(() =>
+      scriptTag(config('zendesk.url'), { id: config('zendesk.id') })
+    ),
   ];
 
   const headerElements = removeNil([
