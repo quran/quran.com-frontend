@@ -8,7 +8,7 @@ const footNoteId = 1;
 describe('footNotes action', () => {
   describe('fetchFootNote', () => {
     it('returns a promise', () => {
-      fetchFootNote(footNoteId);
+      fetchFootNote({ footNoteId, verseKey: '1:1' });
 
       expect(apiClient.get).toHaveBeenCalled();
       expect(apiClient.get).toHaveBeenCalledWith(

@@ -159,23 +159,25 @@ export default function webpackConfigFactory(buildOptions) {
       {}
     ),
 
+    devtool: 'source-map',
+
     // Source map settings.
-    devtool: ifElse(
-      // Include source maps for ANY node bundle so that we can support
-      // nice stack traces for errors (the source maps get consumed by
-      // the `node-source-map-support` module to allow for this).
-      isNode ||
-        // Always include source maps for any development build.
-        isDev ||
-        // Allow for the following flag to force source maps even for production
-        // builds.
-        config('includeSourceMapsForOptimisedClientBundle')
-    )(
-      // Produces an external source map (lives next to bundle output files).
-      'source-map',
-      // Produces no source map.
-      'hidden-source-map'
-    ),
+    // devtool: ifElse(
+    //   // Include source maps for ANY node bundle so that we can support
+    //   // nice stack traces for errors (the source maps get consumed by
+    //   // the `node-source-map-support` module to allow for this).
+    //   isNode ||
+    //     // Always include source maps for any development build.
+    //     isDev ||
+    //     // Allow for the following flag to force source maps even for production
+    //     // builds.
+    //     config('includeSourceMapsForOptimisedClientBundle')
+    // )(
+    //   // Produces an external source map (lives next to bundle output files).
+    //   'source-map',
+    //   // Produces no source map.
+    //   'hidden-source-map'
+    // ),
 
     // Performance budget feature.
     // This enables checking of the output bundle size, which will result in
@@ -454,6 +456,11 @@ export default function webpackConfigFactory(buildOptions) {
                     {
                       modules: 'common',
                     },
+                  ]),
+                  ifProd([
+                    ["babel-plugin-styled-components", {
+                      "ssr": true
+                    }]
                   ]),
                 ].filter(x => x !== null),
               },

@@ -39,19 +39,18 @@ const values = {
     polyfillIO: true,
     // We need to expose all the htmlPage settings.
     htmlPage: true,
-
     fontsURL: true,
     locales: true,
     defaultLocale: true,
-
     localeMessages: true,
+    sentryClient: true,
   },
 
   localeMessages,
 
   api: EnvVars.string('API_URL'),
   oneQuran: EnvVars.string('ONE_QURAN_URL'),
-  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT'),
+  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT', 'https://44c105328ae544ae9928f9eb74b40061@app.getsentry.com/80639'),
   sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
   facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
   fontsURL: EnvVars.string('FONTS_URL'),
@@ -69,7 +68,7 @@ const values = {
   // This is an example environment variable which is used within the react
   // application to demonstrate the usage of environment variables across
   // the client and server bundles.
-  welcomeMessage: EnvVars.string('WELCOME_MSG', 'Hello world!'),
+  welcomeMessage: EnvVars.string('WELCOME_MSG', 'Quran.com'),
 
   // Disable server side rendering?
   disableSSR: false,
@@ -101,6 +100,10 @@ const values = {
   audioCDN: EnvVars.string('AUDIO_CDN'),
   sentry: {
     url: 'https://cdn.ravenjs.com/3.0.4/raven.min.js',
+  },
+  zendesk: {
+    id: 'ze-snippet',
+    url: 'https://static.zdassets.com/ekr/snippet.js?key=7607c205-2e86-47a9-95f6-8f801c355c92',
   },
 
   google: {
@@ -146,7 +149,11 @@ const values = {
       'cdn.polyfill.io',
       'cdn.ravenjs.com',
       'mxpnl.com',
+      'cdn.mxpnl.com',
       'google-analytics.com',
+      'www.google-analytics.com',
+      'static.zdassets.com',
+      'cdnjs.cloudflare.com',
     ],
     styleSrc: [
       'cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css',

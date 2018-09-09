@@ -40,8 +40,8 @@ function stylesheetTag(stylesheetFilePath: $TsFixMe) {
   );
 }
 
-function scriptTag(jsFilePath: string) {
-  return <script type="text/javascript" src={jsFilePath} />;
+function scriptTag(jsFilePath: string, props = {} as $TsFixMe) {
+  return <script type="text/javascript" src={jsFilePath} {...props} />;
 }
 
 function inlineStyle(body: $TsFixMe) {
@@ -90,18 +90,15 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
     ),
 
     ifElse(isProd)(() =>
-      inlineScript(
-        '/*<![CDATA[*/window.zEmbed||function(e,t){var n,o,d,i,s,a=[],r=document.createElement("iframe");window.zEmbed=function(){a.push(arguments)},window.zE=window.zE||window.zEmbed,r.src="javascript:false",r.title="",r.role="presentation",(r.frameElement||r).style.cssText="display: none",d=document.getElementsByTagName("script"),d=d[d.length-1],d.parentNode.insertBefore(r,d),i=r.contentWindow,s=i.document;try{o=s}catch(c){n=document.domain,r.src=\'javascript:var d=document.open();d.domain="\'+n+\'";void(0);\',o=s}o.open()._l=function(){var o=this.createElement("script");n&&(this.domain=n),o.id="js-iframe-async",o.src=e,this.t=+new Date,this.zendeskHost=t,this.zEQueue=a,this.body.appendChild(o)},o.write(\'<body onload="document._l();">\'),o.close()}("https://assets.zendesk.com/embeddable_framework/main.js","quran.zendesk.com");/*]]>*/'
-      )
-    ),
-
-    ifElse(isProd)(() =>
       inlineScript(`
         (function(e,b){if(!b.__SV){var a,f,i,g;window.mixpanel=b;b._i=[];b.init=function(a,e,d){function f(b,h){var a=h.split(".");2==a.length&&(b=b[a[0]],h=a[1]);b[h]=function(){b.push([h].concat(Array.prototype.slice.call(arguments,0)))}}var c=b;"undefined"!==typeof d?c=b[d]=[]:d="mixpanel";c.people=c.people||[];c.toString=function(b){var a="mixpanel";"mixpanel"!==d&&(a+="."+d);b||(a+=" (stub)");return a};c.people.toString=function(){return c.toString(1)+".people (stub)"};i="disable time_event track track_pageview track_links track_forms register register_once alias unregister identify name_tag set_config reset people.set people.set_once people.increment people.append people.union people.track_charge people.clear_charges people.delete_user".split(" ");for(g=0;g<i.length;g++)f(c,i[g]);b._i.push([a,e,d])};b.__SV=1.2;a=e.createElement("script");a.type="text/javascript";a.async=!0;a.src="undefined"!==typeof MIXPANEL_CUSTOM_LIB_URL?MIXPANEL_CUSTOM_LIB_URL:"file:"===e.location.protocol&&"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js".match(/^\\/\\//)?"https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js":"//cdn.mxpnl.com/libs/mixpanel-2-latest.min.js";f=e.getElementsByTagName("script")[0];f.parentNode.insertBefore(a,f)}})(document,window.mixpanel||[]);mixpanel.init("d3f9b2f15c4bf0509e85845b56921034");
       `)
     ),
 
     ifElse(isProd)(() => scriptTag(config('sentry.url'))),
+    ifElse(isProd)(() =>
+      scriptTag(config('zendesk.url'), { id: config('zendesk.id') })
+    ),
   ];
 
   const headerElements = removeNil([
@@ -117,6 +114,7 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
   ]);
 
   const bodyElements = removeNil([
+    ...thirdPartyTags,
     inlineScript(`window.__REDUX_DATA__=${serialize(reduxData)};`),
     // Binds the client configuration object to the window object so
     // that we can safely expose some configuration values to the
@@ -164,7 +162,6 @@ const ServerHTML: React.SFC<$TsFixMe> = (props: $TsFixMe) => {
       scriptTag(clientEntryAssets.index.js)
     ),
     ...ifElse(helmet)(() => helmet.script.toComponent(), []),
-    ...thirdPartyTags,
   ]);
 
   return (
