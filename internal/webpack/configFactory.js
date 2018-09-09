@@ -159,7 +159,7 @@ export default function webpackConfigFactory(buildOptions) {
       {}
     ),
 
-    devtool: 'source-map',
+    devtool: 'eval-source-map',
 
     // Source map settings.
     // devtool: ifElse(
