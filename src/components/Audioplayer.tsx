@@ -156,6 +156,8 @@ class Audioplayer extends Component<Props> {
       (currentVerseKey && verses[currentVerseKey]) || versesArray[0];
     const fetchAudioPromise: $TsFixMe = fetchAudio;
 
+    if (!verse) return null;
+
     // document.addEventListener('keydown', this.handleKeyboardEvent);
 
     return fetchAudioPromise({
