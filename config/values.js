@@ -148,6 +148,7 @@ const values = {
       'cdn.mxpnl.com',
       'google-analytics.com',
       'www.google-analytics.com',
+      'assets.zendesk.com',
     ],
     styleSrc: [
       'cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css',
