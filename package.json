@@ -208,7 +208,7 @@
     "source-map-support": "0.5.4",
     "strip-loader": "0.1.2",
     "style-loader": "0.20.3",
-    "styled-components": "3.2.6",
+    "styled-components": "3.4.5",
     "styled-components-spacing": "3.1.0",
     "ts-loader": "4.4.2",
     "ts-node": "7.0.1",
