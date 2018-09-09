@@ -50,7 +50,7 @@ const values = {
 
   api: EnvVars.string('API_URL'),
   oneQuran: EnvVars.string('ONE_QURAN_URL'),
-  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT', ''),
+  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT', 'https://44c105328ae544ae9928f9eb74b40061@app.getsentry.com/80639'),
   sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
   facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
   fontsURL: EnvVars.string('FONTS_URL'),
