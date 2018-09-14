@@ -2,7 +2,7 @@ import { FETCH_FOOT_NOTE } from '../constants/footNotes';
 import apiClient from '../../apiClient';
 
 type Payload = {
-  footNoteId: string;
+  footNoteId: string | number;
   verseKey: string;
 };
 
