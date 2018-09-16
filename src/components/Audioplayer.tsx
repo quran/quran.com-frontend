@@ -89,6 +89,7 @@ type Props = {
   currentTime: number;
   repeat: RepeatShape;
   segments: { [verseKey: string]: SegmentShape };
+  isNightMode: boolean;
 };
 
 class Audioplayer extends Component<Props> {
@@ -496,10 +497,11 @@ class Audioplayer extends Component<Props> {
       pause,
       segments,
       shouldScroll,
+      isNightMode
     } = this.props;
 
     return (
-      <Wrapper>
+      <Wrapper isNightMode={isNightMode}>
         {currentFile && (
           <Track
             progress={

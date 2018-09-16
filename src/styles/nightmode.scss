@@ -1,7 +1,20 @@
 .night-mode {
-  background: #1d1f21;
+  background: #1d1f21 !important;
   color: #fff;
 
+  a.word,
+  a.end   {
+    color: #fff;
+  }
+  nav {
+    background: #32312C;
+    ul li a {
+      color: #fff;
+    }
+  }
+  .text-translation small {
+    color: #fff;
+  }
   .ayah-name-svg path {
     fill: #fff;
   }
@@ -12,7 +25,9 @@
   }
 
   .highlight,
-  .sidebar {
+  .sidebar,
+  .dropdown-menu
+  {
     background-color: #2d2d2d;
   }
 
