@@ -22,6 +22,7 @@ describe('AudioplayerContainer', () => {
         currentFile: undefined,
         files: state.audioplayer.files[chapter.id],
         audioSetting: state.settings.audio,
+        isNightMode: state.settings.isNightMode
       });
     });
   });
