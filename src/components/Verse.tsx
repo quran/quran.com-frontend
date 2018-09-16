@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { connect } from "react-redux";
 import Element from 'react-scroll/modules/components/Element';
 import Translation from './Translation';
 
@@ -11,14 +12,14 @@ import { FetchTafsirs } from '../redux/actions/tafsirs';
 import { SetCurrentVerseKey, Play, Pause } from '../redux/actions/audioplayer';
 import { FetchFootNote } from '../redux/actions/footNotes';
 import FootNote from './FootNote';
+import ReduxState from "../types/ReduxState";
 
 // TODO: Change this
-const VerseNode = styled(Element)<{ highlight?: boolean; textMuted: string }>`
+const VerseNode = styled(Element)<{ highlight?: boolean; isNightMode?:boolean; textMuted: string }>`
   padding: 2.5% 0;
   border-bottom: 1px solid rgba(${({ textMuted }) => textMuted}, 0.5);
-
-  ${({ highlight }) =>
-    highlight ? 'background-color: #F5FBF7;' : ''} .text-info {
+  background-color: ${({ highlight, isNightMode }) => highlight ? isNightMode ? "#151414" : "#F5FBF7" : ''}; 
+  .text-info {
     color: ${({ theme }) => theme.brandInfo};
     &:hover {
       color: ${({ theme }) => theme.brandPrimary};
@@ -60,6 +61,7 @@ type Props = {
   fetchFootNote: FetchFootNote;
   isPdf?: boolean;
   footNote?: FootNoteShape;
+  isNightMode: boolean;
 };
 
 class Verse extends Component<Props> {
@@ -98,14 +100,15 @@ class Verse extends Component<Props> {
       chapter,
       isPdf,
       fetchFootNote,
+      isNightMode
     } = this.props;
     const translations: Array<$TsFixMe> = verse.translations || [];
-
     return (
       <VerseNode
         name={`verse:${verse.verseKey}`}
         className="row"
         highlight={isCurrentVersePlaying}
+        isNightMode={isNightMode}
       >
         <Controls
           isSearched={isSearched}
