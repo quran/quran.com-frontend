@@ -7,9 +7,11 @@ import Nav from './dls/navbar/Nav';
 import LocaleSwitcher from './LocaleSwitcher';
 import { NAVBAR_EVENTS } from '../events';
 import NavLogo from '../../static/images/logo-nav.png';
+import nightNavLogo from '../../static/images/logo-lg-w.png';
 
 type Props = {
   isStatic?: boolean;
+  isNightMode: boolean;
   location: $TsFixMe;
 };
 
@@ -17,6 +19,7 @@ class Navbar extends Component<Props> {
   public static propTypes = {
     isStatic: PropTypes.bool,
     location: PropTypes.object.isRequired,
+    isNightMode: PropTypes.bool
   };
 
   public static defaultProps = {
@@ -61,7 +64,7 @@ class Navbar extends Component<Props> {
   };
 
   render() {
-    const { isStatic } = this.props;
+    const { isStatic, isNightMode } = this.props;
     const { scrolled } = this.state;
 
     return (
@@ -72,7 +75,7 @@ class Navbar extends Component<Props> {
               <Link to="/">
                 <img
                   alt="Brand"
-                  src={NavLogo}
+                  src={ isNightMode ? nightNavLogo : NavLogo}
                   style={{ height: 18, transform: 'scale(1.75)' }}
                 />
               </Link>
