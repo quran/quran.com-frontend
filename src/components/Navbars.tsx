@@ -2,7 +2,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router';
 
 import navbars from '../navbars';
-import Navbar from './Navbar';
+import Navbar from '../containers/NavbarContainer';
 
 const Navbars: React.SFC = () => (
   <Switch>

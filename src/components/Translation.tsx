@@ -5,20 +5,23 @@ import TranslationNode from './TranslationNode';
 import { TranslationShape } from '../shapes';
 import { FetchFootNote } from '../redux/actions/footNotes';
 
-const TranslationText = styled.small`
+const TranslationText = styled.small<{ isNightMode?: boolean }>`
   font-family: ${({ theme }) => theme.fonts.timesNew};
+  color: ${({ theme, isNightMode }) => isNightMode ? theme.colors.white : theme.colors.gray};
 `;
 
 const propTypes = {
   translation: TranslationShape.isRequired,
   fetchFootNote: PropTypes.func.isRequired,
   verseKey: PropTypes.string.isRequired,
+  isNightMode: PropTypes.bool
 };
 
 type Props = {
   translation: TranslationShape;
   fetchFootNote: FetchFootNote;
   verseKey: string;
+  isNightMode: boolean;
 };
 
 class Translation extends Component<Props> {
@@ -42,7 +45,7 @@ class Translation extends Component<Props> {
   };
 
   render() {
-    const { translation } = this.props;
+    const { translation, isNightMode } = this.props;
     const lang = translation.languageName;
     const isArabic = lang === 'arabic';
 
@@ -59,6 +62,7 @@ class Translation extends Component<Props> {
         >
           <TranslationText
             className={`${lang || 'times-new'}`}
+            isNightMode={isNightMode}
             dangerouslySetInnerHTML={{ __html: translation.text }}
           />
         </h2>

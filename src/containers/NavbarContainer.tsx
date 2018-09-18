@@ -1,7 +1,6 @@
 import { connect } from 'react-redux';
-import { fetchFootNote } from '../redux/actions/footNotes';
-import Translation from '../components/Translation';
 import ReduxState from "../types/ReduxState";
+import Navbar from "../components/Navbar";
 
 export const mapStateToProps = (state: ReduxState) => ({
   isNightMode: state.settings.isNightMode,
@@ -9,5 +8,4 @@ export const mapStateToProps = (state: ReduxState) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchFootNote }
-)(Translation);
+)(Navbar);

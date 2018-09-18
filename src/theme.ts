@@ -8,8 +8,10 @@ const fonts = {
 
 const colors = {
   white: '#ffffff',
+  whiteSmoke: "#f5f5f5",
   cream: '#c4bda1',
   tuatara: '#32312C',
+  gray: "#777",
   black: '#000000',
 };
 

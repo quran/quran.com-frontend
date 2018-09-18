@@ -12,20 +12,12 @@ const propTypes = {
 };
 
 type Props = {
-  isNightMode: boolean;
+  isNightMode?: boolean;
   onToggle: SetSetting;
 };
 
 class NightModeToggle extends Component<Props> {
   static propTypes = propTypes;
-
-  componentDidMount() {
-    const { isNightMode } = this.props;
-
-    if (isNightMode) {
-      document.body.classList.add('night-mode');
-    }
-  }
 
   handleToggleNightMode = () => {
     const { isNightMode, onToggle } = this.props;
