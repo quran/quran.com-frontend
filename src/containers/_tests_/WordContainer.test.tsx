@@ -12,6 +12,7 @@ describe('WordContainer', () => {
         })
       ).toEqual({
         tooltip: state.settings.tooltip,
+        isNightMode: state.settings.isNightMode,
         isCurrentVersePlaying: false,
       });
     });
