@@ -51,6 +51,7 @@ const propTypes = {
   audioSetting: PropTypes.number.isRequired,
   verses: PropTypes.objectOf(VerseShape),
   repeat: RepeatShape.isRequired,
+  isNightMode: PropTypes.bool
 };
 
 type DefaultProps = {

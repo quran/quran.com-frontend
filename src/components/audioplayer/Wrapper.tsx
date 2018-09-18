@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.div<{ isNightMode: boolean }>`
+const Wrapper = styled.div<{ isNightMode?: boolean }>`
   position: fixed;
   bottom: 0;
   display: block;

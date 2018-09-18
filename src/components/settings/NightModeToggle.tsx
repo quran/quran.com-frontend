@@ -12,7 +12,7 @@ const propTypes = {
 };
 
 type Props = {
-  isNightMode: boolean;
+  isNightMode?: boolean;
   onToggle: SetSetting;
 };
 

@@ -13,6 +13,7 @@ export const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => ({
     state.audioplayer.currentVerseKey === ownProps.word.verseKey &&
     state.audioplayer.isPlaying,
   tooltip: state.settings.tooltip,
+  isNightMode: state.settings.isNightMode,
 });
 
 export default connect(

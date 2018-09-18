@@ -36,6 +36,7 @@ const propTypes = {
   fetchFootNote: PropTypes.func.isRequired,
   isPdf: PropTypes.bool,
   footNote: FootNoteShape,
+  isNightMode: PropTypes.bool
 };
 
 const defaultProps: $TsFixMe = {
@@ -125,6 +126,7 @@ class Verse extends Component<Props> {
               translation={translation}
               fetchFootNote={fetchFootNote}
               verseKey={verse.verseKey}
+              isNightMode={isNightMode}
             />
           ))}
           {footNote && <FootNote footNote={footNote} />}
