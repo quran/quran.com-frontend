@@ -15,7 +15,6 @@ describe('VerseContainer', () => {
         tooltip: state.settings.tooltip,
         userAgent: state.settings.userAgent,
         audio: state.settings.audio,
-        isNightMode: state.settings.isNightMode,
         isCurrentVersePlaying: false,
       });
     });

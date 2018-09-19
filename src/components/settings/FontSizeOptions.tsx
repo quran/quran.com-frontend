@@ -14,10 +14,6 @@ const List = styled.ul`
   display: table;
   width: 100%;
   padding: 15px 0;
-  &:hover {
-    background-color: ${({ theme }) => theme.colors.whiteSmoke }};
-    color: #1D1F21;
-  }
 `;
 
 const Item = styled.li`

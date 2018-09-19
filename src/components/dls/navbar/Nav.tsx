@@ -20,7 +20,7 @@ const Nav = styled.ul<{ right?: boolean }>`
   & > li {
     display: block;
     float: left;
-    cursor:pointer;
+
     a {
       display: block;
       padding: 1rem 1rem;

@@ -51,7 +51,6 @@ const propTypes = {
   audioSetting: PropTypes.number.isRequired,
   verses: PropTypes.objectOf(VerseShape),
   repeat: RepeatShape.isRequired,
-  isNightMode: PropTypes.bool
 };
 
 type DefaultProps = {
@@ -90,7 +89,6 @@ type Props = {
   currentTime: number;
   repeat: RepeatShape;
   segments: { [verseKey: string]: SegmentShape };
-  isNightMode: boolean;
 };
 
 class Audioplayer extends Component<Props> {
@@ -498,11 +496,10 @@ class Audioplayer extends Component<Props> {
       pause,
       segments,
       shouldScroll,
-      isNightMode
     } = this.props;
 
     return (
-      <Wrapper isNightMode={isNightMode}>
+      <Wrapper>
         {currentFile && (
           <Track
             progress={
