@@ -51,7 +51,7 @@ const propTypes = {
   audioSetting: PropTypes.number.isRequired,
   verses: PropTypes.objectOf(VerseShape),
   repeat: RepeatShape.isRequired,
-  isNightMode: PropTypes.bool
+  isNightMode: PropTypes.bool,
 };
 
 type DefaultProps = {
@@ -498,7 +498,7 @@ class Audioplayer extends Component<Props> {
       pause,
       segments,
       shouldScroll,
-      isNightMode
+      isNightMode,
     } = this.props;
 
     return (

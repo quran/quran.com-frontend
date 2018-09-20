@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { asyncComponent } from 'react-async-component';
 import { metrics } from 'react-metrics';
-import cookie from "react-cookie";
+import cookie from 'react-cookie';
 import metricsConfig from '../metrics';
 import Navbars from './Navbars';
 import Routes from './Routes';
@@ -14,10 +14,8 @@ const SmartBanner = asyncComponent({
 });
 
 const App = () => {
-  const { isNightMode } = cookie.load("options");
-  if (__CLIENT__)
-    if (isNightMode)
-      document.body.classList.add('night-mode');
+  const { isNightMode } = cookie.load('options');
+  if (__CLIENT__) if (isNightMode) document.body.classList.add('night-mode');
 
   return (
     <Fragment>
@@ -28,7 +26,7 @@ const App = () => {
       <Routes />
       <Footer />
     </Fragment>
-  )
+  );
 };
 
 export default metrics(metricsConfig)(App);

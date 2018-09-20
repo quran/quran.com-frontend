@@ -19,7 +19,7 @@ class Navbar extends Component<Props> {
   public static propTypes = {
     isStatic: PropTypes.bool,
     location: PropTypes.object.isRequired,
-    isNightMode: PropTypes.bool
+    isNightMode: PropTypes.bool,
   };
 
   public static defaultProps = {
@@ -75,7 +75,7 @@ class Navbar extends Component<Props> {
               <Link to="/">
                 <img
                   alt="Brand"
-                  src={ isNightMode ? nightNavLogo : NavLogo}
+                  src={isNightMode ? nightNavLogo : NavLogo}
                   style={{ height: 18, transform: 'scale(1.75)' }}
                 />
               </Link>

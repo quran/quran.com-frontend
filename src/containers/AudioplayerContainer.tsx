@@ -28,7 +28,7 @@ export const mapStateToProps = (state: ReduxState, ownProps: $TsFixMe) => {
     currentFile,
     files: state.audioplayer.files[chapter.id],
     audioSetting: state.settings.audio,
-    isNightMode: state.settings.isNightMode
+    isNightMode: state.settings.isNightMode,
   };
 };
 

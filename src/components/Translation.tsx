@@ -7,14 +7,15 @@ import { FetchFootNote } from '../redux/actions/footNotes';
 
 const TranslationText = styled.small<{ isNightMode?: boolean }>`
   font-family: ${({ theme }) => theme.fonts.timesNew};
-  color: ${({ theme, isNightMode }) => isNightMode ? theme.colors.white : theme.colors.gray};
+  color: ${({ theme, isNightMode }) =>
+    isNightMode ? theme.colors.white : theme.colors.gray};
 `;
 
 const propTypes = {
   translation: TranslationShape.isRequired,
   fetchFootNote: PropTypes.func.isRequired,
   verseKey: PropTypes.string.isRequired,
-  isNightMode: PropTypes.bool
+  isNightMode: PropTypes.bool,
 };
 
 type Props = {
