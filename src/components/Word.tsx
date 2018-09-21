@@ -13,11 +13,14 @@ import {
   PlayCurrentWord,
 } from '../redux/actions/audioplayer';
 
-const WordTag = styled.a<{ highlight?: boolean, isNightMode?: boolean }>`
+const WordTag = styled.a<{ highlight?: boolean; isNightMode?: boolean }>`
   -webkit-font-smoothing: antialiased;
-  color: ${({ highlight, theme, isNightMode }) => 
-    highlight ? theme.brandPrimary : isNightMode ?
-    theme.colors.white + " !important" : theme.colors.textColor};
+  color: ${({ highlight, theme, isNightMode }) =>
+    highlight
+      ? theme.brandPrimary
+      : isNightMode
+        ? theme.colors.white + ' !important'
+        : theme.colors.textColor};
 `;
 
 const propTypes = {
@@ -31,7 +34,7 @@ const propTypes = {
   isCurrentVersePlaying: PropTypes.bool.isRequired,
   isSearched: PropTypes.bool,
   useTextFont: PropTypes.bool, // tmp change to compare text and code based rendering
-  isNightMode: PropTypes.bool
+  isNightMode: PropTypes.bool,
 };
 
 type DefaultProps = {
@@ -122,7 +125,7 @@ class Word extends Component<Props> {
       isCurrentVersePlaying,
       word,
       useTextFont,
-      isNightMode
+      isNightMode,
     } = this.props;
 
     let text = '';

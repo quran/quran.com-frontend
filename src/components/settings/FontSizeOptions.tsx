@@ -15,8 +15,8 @@ const List = styled.ul`
   width: 100%;
   padding: 15px 0;
   &:hover {
-    background-color: ${({ theme }) => theme.colors.whiteSmoke }};
-    color: #1D1F21;
+    background-color: ${({ theme }) => theme.colors.whiteSmoke}};
+    color: #1d1f21;
   }
 `;
 

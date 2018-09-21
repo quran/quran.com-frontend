@@ -13,10 +13,15 @@ import { FetchFootNote } from '../redux/actions/footNotes';
 import FootNote from './FootNote';
 
 // TODO: Change this
-const VerseNode = styled(Element)<{ highlight?: boolean; isNightMode?:boolean; textMuted: string }>`
+const VerseNode = styled(Element)<{
+  highlight?: boolean;
+  isNightMode?: boolean;
+  textMuted: string;
+}>`
   padding: 2.5% 0;
   border-bottom: 1px solid rgba(${({ textMuted }) => textMuted}, 0.5);
-  background-color: ${({ highlight, isNightMode }) => highlight ? isNightMode ? "#151414" : "#F5FBF7" : ''}; 
+  background-color: ${({ highlight, isNightMode }) =>
+    highlight ? (isNightMode ? '#151414' : '#F5FBF7') : ''};
   .text-info {
     color: ${({ theme }) => theme.brandInfo};
     &:hover {
@@ -36,7 +41,7 @@ const propTypes = {
   fetchFootNote: PropTypes.func.isRequired,
   isPdf: PropTypes.bool,
   footNote: FootNoteShape,
-  isNightMode: PropTypes.bool
+  isNightMode: PropTypes.bool,
 };
 
 const defaultProps: $TsFixMe = {
@@ -99,7 +104,7 @@ class Verse extends Component<Props> {
       chapter,
       isPdf,
       fetchFootNote,
-      isNightMode
+      isNightMode,
     } = this.props;
     const translations: Array<$TsFixMe> = verse.translations || [];
     return (
