@@ -13,14 +13,10 @@ import {
   PlayCurrentWord,
 } from '../redux/actions/audioplayer';
 
-const WordTag = styled.a<{ highlight?: boolean; isNightMode?: boolean }>`
+const WordTag = styled.a<{ highlight?: boolean }>`
   -webkit-font-smoothing: antialiased;
-  color: ${({ highlight, theme, isNightMode }) =>
-    highlight
-      ? theme.brandPrimary
-      : isNightMode
-        ? theme.colors.white + ' !important'
-        : theme.colors.textColor};
+  color: ${({ highlight, theme }) =>
+    highlight ? theme.brandPrimary : 'initial'};
 `;
 
 const propTypes = {
@@ -34,7 +30,6 @@ const propTypes = {
   isCurrentVersePlaying: PropTypes.bool.isRequired,
   isSearched: PropTypes.bool,
   useTextFont: PropTypes.bool, // tmp change to compare text and code based rendering
-  isNightMode: PropTypes.bool,
 };
 
 type DefaultProps = {
@@ -62,7 +57,6 @@ type Props = {
   isCurrentVersePlaying: boolean;
   isSearched?: boolean;
   useTextFont?: boolean;
-  isNightMode: boolean;
 };
 
 class Word extends Component<Props> {
@@ -125,7 +119,6 @@ class Word extends Component<Props> {
       isCurrentVersePlaying,
       word,
       useTextFont,
-      isNightMode,
     } = this.props;
 
     let text = '';
@@ -152,7 +145,6 @@ class Word extends Component<Props> {
             role="button"
             tabIndex={audioPosition}
             highlight={isCurrentVersePlaying}
-            isNightMode={isNightMode}
             id={id}
             onDoubleClick={this.handleSegmentPlay}
             onClick={this.handleWordPlay}

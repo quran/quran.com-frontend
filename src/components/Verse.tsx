@@ -28,6 +28,10 @@ const VerseNode = styled(Element)<{
       color: ${({ theme }) => theme.brandPrimary};
     }
   }
+  a {
+    color: ${({ theme, isNightMode }) =>
+      isNightMode ? theme.colors.white : theme.colors.textColor};
+  }
 `;
 
 const propTypes = {
