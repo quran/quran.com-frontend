@@ -223,11 +223,14 @@ class SearchAutocomplete extends Component<Props & typeof defaultProps> {
   };
 
   render() {
+    const suggestions = this.getSuggestions();
+    const hasSuggestions = !!suggestions.length;
+
     return (
-      <Container className={this.getSuggestions().length ? '' : 'hidden'}>
+      <Container className={hasSuggestions ? '' : 'hidden'}>
         <List role="menu">
-          {!!this.getSuggestions().length &&
-            this.getSuggestions().map((item: SuggestionShape) => (
+          {hasSuggestions &&
+            suggestions.map((item: SuggestionShape) => (
               <li key={item.href}>
                 <StyledLink>
                   <a href={item.href}>{item.ayah}</a>
