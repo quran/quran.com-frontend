@@ -29,7 +29,9 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
           ...prevState,
           entities: {
             ...prevState.entities,
-            [action.meta.verseKey]: camelcaseKeys(action.payload.foot_note),
+            [action.meta.verseKey]: camelcaseKeys(
+              action.payload.foot_note || {}
+            ),
           },
         }),
       });

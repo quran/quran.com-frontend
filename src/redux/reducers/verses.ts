@@ -36,7 +36,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
             [action.meta.chapterId]: {
               ...state.entities[action.meta.chapterId],
               ...keyBy(
-                camelcaseKeys(action.payload.verses, { deep: true }),
+                camelcaseKeys(action.payload.verses || {}, { deep: true }),
                 'verseKey'
               ),
             },

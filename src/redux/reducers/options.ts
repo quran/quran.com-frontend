@@ -40,7 +40,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         success: prevState => ({
           ...prevState,
           recitations: action.payload.recitations.map((obj: $TsFixMe) =>
-            camelcaseKeys(obj)
+            camelcaseKeys(obj || {})
           ),
         }),
       });
@@ -58,7 +58,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         success: prevState => ({
           ...prevState,
           translations: action.payload.translations.map((obj: $TsFixMe) =>
-            camelcaseKeys(obj)
+            camelcaseKeys(obj || {})
           ),
         }),
       });
@@ -76,7 +76,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         success: prevState => ({
           ...prevState,
           tafsirs: action.payload.tafsirs.map((obj: $TsFixMe) =>
-            camelcaseKeys(obj)
+            camelcaseKeys(obj || {})
           ),
         }),
       });
