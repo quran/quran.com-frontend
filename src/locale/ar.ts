@@ -30,6 +30,7 @@ export default {
     [KEYS.VERSE_BOOKMARKED]: 'إشارة مرجعية',
     [KEYS.VERSE_BOOKMARK]: 'المرجعية',
     [KEYS.VERSE_NOT_FOUND]: 'لم يتم العثور على الآية',
+    [KEYS.VERSE_FOOT_NOTE_TITLE]: 'AR Footnote',
 
     [KEYS.SEARCH_PLACEHOLDER]: 'بحث',
     [KEYS.SEARCH_RESULTHEADING]:
@@ -40,6 +41,9 @@ export default {
 
     [KEYS.CHAPTER_NEXT]: 'تالية سورة',
     [KEYS.CHAPTER_PREVIOUS]: 'السابقة سورة',
+    [KEYS.CHAPTER_VERSES]: 'AR VERSES',
+    [KEYS.CHAPTER_PAGES]: 'AR PAGES',
+
     [KEYS.CHAPTER_INFO]: 'سورہ معلومات',
     [KEYS.CHAPTER_INDEX_HEADING]: 'السور',
     [KEYS.CHAPTER_INDEX_CONTINUE]: 'استءنف',
@@ -65,6 +69,7 @@ export default {
     [KEYS.ACTIONS_COPIED]: 'نسخه',
     [KEYS.ACTIONS_PLAY]: 'لعب',
     [KEYS.ACTIONS_PAUSE]: 'وقفة',
+    [KEYS.ACTIONS_TAFSIRS]: 'تفسير',
 
     [KEYS.NAV_TITLE]: 'القرآن',
     [KEYS.NAV_SETTINGS]: 'خيارات',
@@ -83,6 +88,8 @@ export default {
     [KEYS.NAV_LEGACY_SITE]: 'الموقع القديم',
     [KEYS.NAV_BLOG]: 'مدونة',
 
+    [KEYS.TAFSIRS_SELECT]: 'Select a tafsir',
+
     [KEYS.JUZ_INDEX_HEADING]: 'الجوز',
 
     [KEYS.LOGIN_MESSAGE]:
@@ -91,5 +98,11 @@ export default {
       "السورة خارج النطاق. الرجاء الانتقال إلى <a href='/'> الصفحة الرئيسية </a> وتحديد سورة",
     [KEYS.ERROR_INVALID_VERSE]:
       "آية خارج النطاق. الرجاء الانتقال إلى <a href='/'> الصفحة الرئيسية </a> وتحديد سورة / آية",
+    [KEYS.ERROR_NOT_FOUND]: 'Sorry, this page does not exist',
+
+    [KEYS.NO_SCRIPT_DESCRIPTION]:
+      'AR Looks like either your browser does not support Javascript or its disabled. Quran.com workes best with JavaScript enabled. For more instruction on how to enable javascript',
+
+    [KEYS.CLICK_HERE]: 'AR Click here',
   },
 };
