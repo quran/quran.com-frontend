@@ -18,6 +18,7 @@ const locales = {
   tr: 'Türkçe',
   fr: 'Français',
   nl: 'Dutch',
+  it: 'Italiano',
 };
 
 const values = {
