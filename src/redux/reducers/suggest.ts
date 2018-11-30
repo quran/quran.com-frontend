@@ -31,7 +31,9 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
           ...prevState,
           results: {
             ...state.results,
-            [action.meta.query]: camelcaseKeys(action.payload, { deep: true }),
+            [action.meta.query]: camelcaseKeys(action.payload || {}, {
+              deep: true,
+            }),
           },
         }),
       });

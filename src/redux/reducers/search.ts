@@ -49,7 +49,7 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
           perPage: action.payload.per_page,
           took: action.payload.took,
           query: action.payload.query,
-          entities: camelcaseKeys(action.payload.results),
+          entities: camelcaseKeys(action.payload.results || {}),
         }),
       });
     }
