@@ -10,6 +10,11 @@ export default styled.div`
   word-break: break-all;
   text-align: right;
   float: left;
+  -webkit-font-smoothing: antialiased;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   b,
   span {
     border-color: transparent;
