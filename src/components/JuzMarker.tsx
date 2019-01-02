@@ -5,7 +5,6 @@ import { Tooltip } from 'react-tippy';
 import { JUZ_START } from '../constants';
 import JuzDecoration from './JuzDecoration';
 import { VerseShape } from '../shapes';
-import T, { KEYS } from './T';
 
 const StyledAyah = styled.div`
   margin-top: 3%;
@@ -29,15 +28,7 @@ export const JuzMarker: React.SFC<Props> = ({
     return (
       <Fragment>
         <b className="col-xs-1">
-          <Tooltip
-            arrow
-            title={
-              <T
-                id={KEYS.JUZ_INDEX_HEADING}
-                values={{ juzNumber: `${juzNumber}` }}
-              />
-            }
-          >
+          <Tooltip arrow title={`Juz #${juzNumber}`}>
             <JuzDecoration juzNumber={juzNumber} />
           </Tooltip>
         </b>
