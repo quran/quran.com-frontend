@@ -105,7 +105,7 @@ const Controls: React.SFC<Props> = ({
       <i className="ss-book vertical-align-middle" />{' '}
       <T id={KEYS.ACTIONS_TAFSIRS} />
     </ButtonLink>
-    {!isSearched && !isPdf && <Share chapter={chapter} verse={verse} />}
+    {!isSearched && !isPdf && <Share chapter={chapter} verse={verse} inline />}
   </ControlsNode>
 );
 
