@@ -24,7 +24,6 @@ const Text: React.SFC<Props> = ({ verse, isSearched }: Props) => {
   // NOTE: Some 'word's are glyphs (jeem). Not words and should not be clicked for audio
   let wordAudioPosition = -1;
   const renderText = false; // userAgent.isBot;
-
   const text = verse.words.map(word => {
     const audioPosition =
       word.charType === WORD_TYPES.CHAR_TYPE_WORD
@@ -45,6 +44,22 @@ const Text: React.SFC<Props> = ({ verse, isSearched }: Props) => {
   return (
     <FontText className="row text-right text-arabic">
       <JuzMarker verse={verse} text={text} />
+      <br />
+      <h2
+        className="text-left text-translation"
+        style={{ fontFamily: 'Times New Roman,sans-serif' }}
+      >
+        <small>
+          {verse.words
+            .map(
+              word =>
+                word.translation && word.translation.text
+                  ? word.translation.text
+                  : ''
+            )
+            .join(' ')}
+        </small>
+      </h2>
     </FontText>
   );
 };
