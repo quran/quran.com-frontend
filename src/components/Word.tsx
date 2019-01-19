@@ -13,10 +13,22 @@ import {
   PlayCurrentWord,
 } from '../redux/actions/audioplayer';
 
-const WordTag = styled.a<{ highlight?: boolean }>`
+const WordGlyph = styled.a<{ highlight?: boolean }>`
   -webkit-font-smoothing: antialiased;
   color: ${({ highlight, theme }) =>
     highlight ? theme.brandPrimary : 'initial'};
+`;
+
+const WordText = styled.i`
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  color: transparent;
+  -webkit-user-select: text;
+  -moz-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
 `;
 
 const propTypes = {
@@ -140,8 +152,12 @@ class Word extends Component<Props> {
 
     return (
       <span>
-        <Tooltip arrow title={this.getTooltipTitle()}>
-          <WordTag
+        <Tooltip
+          arrow
+          style={{ position: 'relative' }}
+          title={this.getTooltipTitle()}
+        >
+          <WordGlyph
             role="button"
             tabIndex={audioPosition}
             highlight={isCurrentVersePlaying}
@@ -151,6 +167,9 @@ class Word extends Component<Props> {
             onKeyPress={this.handleWordPlay}
             className={className}
             dangerouslySetInnerHTML={{ __html: text }}
+          />
+          <WordText
+            dangerouslySetInnerHTML={{ __html: word.textMadani || '' }}
           />
         </Tooltip>
         {word.charType === WORD_TYPES.CHAR_TYPE_WORD && (
