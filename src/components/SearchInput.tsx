@@ -131,6 +131,8 @@ class SearchInput extends Component<Props> {
       label: value,
     });
 
+    this.handleHideAutocomplete();
+
     return push(`/search?q=${value}`);
   };
 
