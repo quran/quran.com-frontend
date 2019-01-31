@@ -7,7 +7,8 @@ import nl from './nl';
 import sq from './sq';
 import tr from './tr';
 import ur from './ur';
+import it from './it';
 
-export { ar, en, fa, fr, id, nl, sq, tr, ur };
+export { ar, en, fa, fr, id, nl, sq, tr, ur, it };
 
-export default { ar, en, fa, fr, id, nl, sq, tr, ur };
+export default { ar, en, fa, fr, id, nl, sq, tr, ur, it };

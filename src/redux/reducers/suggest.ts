@@ -33,9 +33,9 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
             ...state.results,
             [action.meta.query]: Array.isArray(action.payload)
               ? camelcaseKeys(action.payload, { deep: true })
-              : [],
-          },
-        }),
+              : []
+          }
+        })
       });
     }
     default:

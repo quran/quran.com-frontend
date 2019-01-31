@@ -29,7 +29,7 @@ const Container = styled.div<{ inline?: boolean }>`
 const FacebookButton = styled(FacebookShareButton)`
   background-repeat: no-repeat;
   background-size: 12px;
-  padding-top: 1px;
+  padding: 1px 5px 0px 0px;
 `;
 
 const TwitterButton = styled(TwitterShareButton)`

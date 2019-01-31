@@ -52,7 +52,9 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
     case FETCH_AUDIOPLAYER: {
       return handle(state, action, {
         success: prevState => {
-          const audioFile: $TsFixMe = camelcaseKeys(action.payload.audio_file);
+          const audioFile: $TsFixMe = camelcaseKeys(
+            action.payload.audio_file || {}
+          );
 
           return {
             ...prevState,
