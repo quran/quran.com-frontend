@@ -5,17 +5,17 @@ export default {
     local: 'persian',
     [KEYS.LOCAL_SITELOCALE]: 'زبان سایت',
     [KEYS.LOCAL_CHANGELOCALE]:
-      'زبانی که می خواهید سایت را با آن مشاهده کنید انتخاب نمایید',
+      'زبانی که می‌خواهید سایت را با آن مشاهده کنید انتخاب نمایید',
     [KEYS.LOCAL_NATIVENAME]: 'فارسی',
     [KEYS.LOCAL_SELECTLABEL]: 'زبان',
     [KEYS.SETTING_TITLE]: 'تنظیمات',
-    [KEYS.SETTING_CHAPTERS]: 'سوره ها',
+    [KEYS.SETTING_CHAPTERS]: 'سوره‌ها',
     [KEYS.SETTING_VERSES]: 'برو به آیه',
     [KEYS.SETTING_RECITERS_TITLE]: 'قاریان',
-    [KEYS.SETTING_TRANSLATIONS_TITLE]: 'ترجمه ها',
+    [KEYS.SETTING_TRANSLATIONS_TITLE]: 'ترجمه‌ها',
     [KEYS.SETTING_TRANSLATIONS_REMOVEALL]: 'حذف همه',
     [KEYS.SETTING_TRANSLATIONS_ENGLISH]: 'انگلیسی',
-    [KEYS.SETTING_TRANSLATIONS_OTHER]: 'زبان های دیگر',
+    [KEYS.SETTING_TRANSLATIONS_OTHER]: 'زبان‌های دیگر',
     [KEYS.SETTING_FONTSIZE]: 'اندازه فونت',
     [KEYS.SETTING_FONTSIZE_ARABIC]: 'عربی',
     [KEYS.SETTING_READING]: 'قرائت',
@@ -32,7 +32,7 @@ export default {
     [KEYS.VERSE_BOOKMARK]: 'نشانه گذاری',
     [KEYS.VERSE_NOT_FOUND]: 'آیه پیدا نشد',
 
-    [KEYS.SEARCH_PLACEHOLDER]: 'جستجو "نوح"',
+    [KEYS.SEARCH_PLACEHOLDER]: 'جستجو مثل نوح',
     [KEYS.SEARCH_RESULTHEADING]:
       '{from}-{to} از <span> {total} </span> نتایج جستجو برای: <span>{query}</span>', // eslint-disable-line max-len
     [KEYS.SEARCH_ERROR]: 'با عرض پوذش، خطایی در جستجوی شما وجود دارد.',
@@ -42,9 +42,9 @@ export default {
     [KEYS.CHAPTER_NEXT]: 'بعدی',
     [KEYS.CHAPTER_PREVIOUS]: 'قبلی',
     [KEYS.CHAPTER_INFO]: 'اطلاعات سوره',
-    [KEYS.CHAPTER_INDEX_HEADING]: 'سوره ها',
+    [KEYS.CHAPTER_INDEX_HEADING]: 'سوره‌ها',
     [KEYS.CHAPTER_INDEX_CONTINUE]: 'ادامه',
-    [KEYS.CHAPTER_INDEX_QUICKLINKS]: 'لینک های سریع',
+    [KEYS.CHAPTER_INDEX_QUICKLINKS]: 'لینک‌های سریع',
     [KEYS.CHAPTER_GOTOBEGINNING]: 'ابتدای سوره',
     [KEYS.CHAPTER_READ]: 'خواندن تمام سوره',
 
@@ -59,38 +59,43 @@ export default {
     [KEYS.AUDIOPLAYER_REPEAT_TIMES]: 'دفعه',
     [KEYS.AUDIOPLAYER_REPEAT_LOOP]: 'حلقه',
     [KEYS.AUDIOPLAYER_SCROLLBUTTONTIP]:
-      'موقعیت صفحه به صورت اتومانیک به آیه ی در حال قرائت منتقل می شود.', // eslint-disable-line max-len
+      'موقعیت صفحه به صورت اتومانیک به آیه ی در حال قرائت منتقل می‌شود.', // eslint-disable-line max-len
 
     [KEYS.APP_LOADING]: 'در حال براگذاری...',
     [KEYS.ACTIONS_COPY]: 'کپی',
     [KEYS.ACTIONS_COPIED]: 'کپی شد!',
     [KEYS.ACTIONS_PLAY]: 'پخش',
     [KEYS.ACTIONS_PAUSE]: 'توقف',
+    [KEYS.ACTIONS_TAFSIRS]: 'تفسیر',
 
     [KEYS.NAV_TITLE]: 'قرآن',
     [KEYS.NAV_SETTINGS]: 'تنظیمات',
     [KEYS.NAV_CONTRIBUTE]: 'مشارکت',
     [KEYS.NAV_ABOUTUS]: 'درباره ما',
     [KEYS.NAV_DEVELOPERS]: 'توسعه دهندگان',
-    [KEYS.NAV_USEFULSITES]: 'سایت های مفید',
-    [KEYS.NAV_OTHERLINKS]: 'لینک های دیگر',
+    [KEYS.NAV_USEFULSITES]: 'سایت‌های مفید',
+    [KEYS.NAV_OTHERLINKS]: 'سایر لینک‌ها',
     [KEYS.NAV_CONTACTUS]: 'تماس با ما',
     [KEYS.NAV_HELP]: 'راهنما و بازخورد',
     [KEYS.NAV_ABOUT_QURAN_PROJECT]:
-      'Quran.com (همچنین معروف به اسم قرآن کریم, قرآن, قرآن مجید, فرقان) یک پروژه خیریه می باشد.', // eslint-disable-line max-len
+      'Quran.com (هم‌چنین معروف به اسم قرآن کریم، قرآن، قرآن مجید، فرقان) یک پروژه خیریه می‌باشد.', // eslint-disable-line max-len
     [KEYS.NAV_RIGHTSRESERVED]: 'تمام حقوق محفوظ است.',
-    [KEYS.NAV_MOBILE]: 'اپلیکیشن های موبایل',
-    [KEYS.NAV_NAVIGATE]: 'انتقال',
+    [KEYS.NAV_MOBILE]: 'اپلیکیشن‌های موبایل',
+    [KEYS.NAV_NAVIGATE]: 'ناوبری',
     [KEYS.NAV_LEGACY_SITE]: 'Quran.com قدیمی',
     [KEYS.NAV_BLOG]: 'وبلاگ',
+
+    [KEYS.TAFSIRS_SELECT]: 'انتخاب تفسیر',
 
     [KEYS.JUZ_INDEX_HEADING]: 'جزء',
 
     [KEYS.LOGIN_MESSAGE]:
-      'وارد سایت Quran.com شوید تا تمام نشانه گذاری ها، یادداشت ها و فعالیت های خود را ذخیره کنید.',
+      'وارد سایت Quran.com شوید تا تمام نشانه گذاری‌ها، یادداشت‌ها و فعالیت‌های خود را ذخیره کنید.',
     [KEYS.ERROR_INVALID_CHAPTER]:
-      "سوره خارج از محدوده می باشد. لطفا مراجعه کنید به <a href='/'> صفحه اصلی</a> و یک سوره را انتخاب کنید",
+      "سوره خارج از محدوده می‌باشد. لطفا مراجعه کنید به <a href='/'> صفحه اصلی</a> و یک سوره را انتخاب کنید",
     [KEYS.ERROR_INVALID_VERSE]:
-      "آیه خارج از محدوده می باشد. لطفا مراجعه کنید به <a href='/'> صفحه اصلی </a> و یک سوره/آیه را انتخاب کنید",
+      "آیه خارج از محدوده می‌باشد. لطفا مراجعه کنید به <a href='/'> صفحه اصلی </a> و یک سوره/آیه را انتخاب کنید",
+
+      [KEYS.CLICK_HERE]: 'اینجا کلیک کنید',
   },
 };
