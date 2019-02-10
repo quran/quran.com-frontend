@@ -4,7 +4,7 @@ import config from '../../config';
 
 const baseUrl = config('fontsURL');
 
-const makeFont = (pageNumber: string | number) => `
+export const makeFont = (pageNumber: string | number) => `
 @font-face {
   font-family: p${pageNumber};
   src: url('${baseUrl}/fonts/ttf/p${pageNumber}.ttf')

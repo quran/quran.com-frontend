@@ -12,6 +12,20 @@ import { SetCurrentVerseKey, Play, Pause } from '../redux/actions/audioplayer';
 import { FetchFootNote } from '../redux/actions/footNotes';
 import FootNote from './FootNote';
 
+const backgroundColor = ({
+  highlight,
+  isNightMode,
+}: {
+  highlight?: boolean;
+  isNightMode?: boolean;
+}): string => {
+  if (highlight) {
+    return isNightMode ? '#151414' : '#F5FBF7';
+  }
+
+  return '';
+};
+
 // TODO: Change this
 const VerseNode = styled(Element)<{
   highlight?: boolean;
@@ -20,8 +34,7 @@ const VerseNode = styled(Element)<{
 }>`
   padding: 2.5% 0;
   border-bottom: 1px solid rgba(${({ textMuted }) => textMuted}, 0.5);
-  background-color: ${({ highlight, isNightMode }) =>
-    highlight ? (isNightMode ? '#151414' : '#F5FBF7') : ''};
+  background-color: ${backgroundColor};
   .text-info {
     color: ${({ theme }) => theme.brandInfo};
     &:hover {
@@ -54,6 +67,7 @@ const defaultProps: $TsFixMe = {
   match: null,
   currentVerse: null,
   footNote: null,
+  isNightMode: false,
 };
 
 type Props = {
@@ -110,7 +124,9 @@ class Verse extends Component<Props> {
       fetchFootNote,
       isNightMode,
     } = this.props;
+
     const translations: Array<$TsFixMe> = verse.translations || [];
+
     return (
       <VerseNode
         name={`verse:${verse.verseKey}`}

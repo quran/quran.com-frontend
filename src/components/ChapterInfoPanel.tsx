@@ -37,15 +37,15 @@ const Close = styled.button`
   position: absolute;
   right: 15px;
   top: 15px;
-  background: ${({ theme }) => lighten(0.1, theme.textMuted)};
   height: 26px;
   width: 26px;
   padding: 7px 8px;
   font-size: 10px;
   border-radius: 16px;
-  color: #fff;
+  color: ${({ theme }) => theme.textMuted};
   z-index: 20;
   cursor: pointer;
+  border: none;
   &:hover {
     opacity: 0.8;
   }
@@ -77,6 +77,7 @@ const Info = styled.div`
 const Container = styled.div`
   overflow-y: auto;
   margin-bottom: 30px;
+  position: relative;
   height: 0;
   max-height: 0;
   min-height: 0;
@@ -146,7 +147,7 @@ const ChapterInfo: React.SFC<Props> = ({
     setSetting({ isShowingChapterInfo: !isShowingChapterInfo });
 
   return (
-    <Container className="col-xs-12 chapter-info">
+    <Container>
       {setSetting && <Close className="ss-delete" onClick={handleClose} />}
       <div className="row" style={{ width: '100%', height: '100%', margin: 0 }}>
         {chapter && (
