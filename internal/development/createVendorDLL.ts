@@ -4,9 +4,9 @@ import appRootDir from 'app-root-dir';
 import md5 from 'md5';
 import fs from 'fs';
 import config from '../../config';
-import { log } from '../utils';
+import log from '../../shared/utils/log';
 
-function createVendorDLL(bundleName, bundleConfig) {
+function createVendorDLL(bundleName: $TsFixMe, bundleConfig: $TsFixMe) {
   const dllConfig = config('bundles.client.devVendorDLL');
 
   // $FlowFixMe
@@ -20,10 +20,10 @@ function createVendorDLL(bundleName, bundleConfig) {
   // the vendor dll.
   const currentDependenciesHash = md5(
     JSON.stringify(
-      devDLLDependencies.map(dep => [
+      devDLLDependencies.map((dep: $TsFixMe) => [
         dep,
         pkg.dependencies[dep],
-        pkg.devDependencies[dep]
+        pkg.devDependencies[dep],
       ])
       // We do this to include any possible version numbers we may have for
       // a dependency. If these change then our hash should too, which will
@@ -42,12 +42,12 @@ function createVendorDLL(bundleName, bundleConfig) {
       // We only use this for development, so lets always include source maps.
       devtool: 'inline-source-map',
       entry: {
-        [dllConfig.name]: devDLLDependencies
+        [dllConfig.name]: devDLLDependencies,
       },
       output: {
         path: pathResolve(appRootDir.get(), bundleConfig.outputPath),
         filename: `${dllConfig.name}.js`,
-        library: dllConfig.name
+        library: dllConfig.name,
       },
       plugins: [
         new webpack.DllPlugin({
@@ -56,9 +56,9 @@ function createVendorDLL(bundleName, bundleConfig) {
             bundleConfig.outputPath,
             `./${dllConfig.name}.json`
           ),
-          name: dllConfig.name
-        })
-      ]
+          name: dllConfig.name,
+        }),
+      ],
     };
   }
 
@@ -69,14 +69,15 @@ function createVendorDLL(bundleName, bundleConfig) {
         level: 'info',
         message: `Vendor DLL build complete. The following dependencies have been included:\n\t-${devDLLDependencies.join(
           '\n\t-'
-        )}\n`
+        )}\n`,
       });
 
       const webpackConfig = webpackConfigFactory();
       const vendorDLLCompiler = webpack(webpackConfig);
-      vendorDLLCompiler.run((err) => {
+      vendorDLLCompiler.run((err: $TsFixMe) => {
         if (err) {
           reject(err);
+
           return;
         }
         // Update the dependency hash
@@ -88,18 +89,7 @@ function createVendorDLL(bundleName, bundleConfig) {
   }
 
   return new Promise((resolve, reject) => {
-    if (!fs.existsSync(vendorDLLHashFilePath)) {
-      // builddll
-      log({
-        title: 'vendorDLL',
-        level: 'warn',
-        message: `Generating a new "${bundleName}" Vendor DLL for boosted development performance.
-The Vendor DLL helps to speed up your development workflow by reducing Webpack build times.  It does this by seperating Vendor DLLs from your primary bundles, thereby allowing Webpack to ignore them when having to rebuild your code for changes.  We recommend that you add all your client bundle specific dependencies to the Vendor DLL configuration (within /config).`
-      });
-      buildVendorDLL()
-        .then(resolve)
-        .catch(reject);
-    } else {
+    if (fs.existsSync(vendorDLLHashFilePath)) {
       // first check if the md5 hashes match
       const dependenciesHash = fs.readFileSync(vendorDLLHashFilePath, 'utf8');
       const dependenciesChanged = dependenciesHash !== currentDependenciesHash;
@@ -108,7 +98,7 @@ The Vendor DLL helps to speed up your development workflow by reducing Webpack b
         log({
           title: 'vendorDLL',
           level: 'warn',
-          message: `New "${bundleName}" vendor dependencies detected. Regenerating the vendor dll...`
+          message: `New "${bundleName}" vendor dependencies detected. Regenerating the vendor dll...`,
         });
         buildVendorDLL()
           .then(resolve)
@@ -117,10 +107,21 @@ The Vendor DLL helps to speed up your development workflow by reducing Webpack b
         log({
           title: 'vendorDLL',
           level: 'info',
-          message: `No changes to existing "${bundleName}" vendor dependencies. Using the existing vendor dll.`
+          message: `No changes to existing "${bundleName}" vendor dependencies. Using the existing vendor dll.`,
         });
         resolve();
       }
+    } else {
+      // builddll
+      log({
+        title: 'vendorDLL',
+        level: 'warn',
+        message: `Generating a new "${bundleName}" Vendor DLL for boosted development performance.
+The Vendor DLL helps to speed up your development workflow by reducing Webpack build times.  It does this by seperating Vendor DLLs from your primary bundles, thereby allowing Webpack to ignore them when having to rebuild your code for changes.  We recommend that you add all your client bundle specific dependencies to the Vendor DLL configuration (within /config).`,
+      });
+      buildVendorDLL()
+        .then(resolve)
+        .catch(reject);
     }
   });
 }

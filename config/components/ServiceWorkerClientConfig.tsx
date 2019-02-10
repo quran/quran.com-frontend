@@ -23,7 +23,7 @@ const serializedClientConfig = serialize(clientConfig);
  * They get bound to window.__CLIENT_CONFIG__
  */
 // TODO: Combine with tsx
-const ClientConfig = ({ nonce }) => (
+const ClientConfig = ({ nonce }: { nonce: string }) => (
   <script
     type="text/javascript"
     nonce={nonce}

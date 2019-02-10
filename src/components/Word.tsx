@@ -134,11 +134,11 @@ class Word extends Component<Props> {
     } = this.props;
 
     let text = '';
-    const { verseKey } = word;
+
     const className = `${useTextFont ? 'text-' : ''}${word.className} ${
       word.charType
     } ${word.highlight ? word.highlight : ''}`;
-    const id = `word-${(verseKey || '').replace(/:/, '-')}-${audioPosition}`;
+    const id = `word-${word.verseKey.replace(/:/, '-')}-${audioPosition}`;
 
     if (useTextFont) {
       if (word.charType === WORD_TYPES.CHAR_TYPE_END) {

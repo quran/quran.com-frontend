@@ -17,7 +17,8 @@ import removeNil from '../../shared/utils/arrays/removeNil';
 // PRIVATES
 
 function registerEnvFile() {
-  const DEPLOYMENT = process.env.DEPLOYMENT;
+  // @ts-ignore
+  const { DEPLOYMENT } = process.env;
   const envFile = '.env';
 
   // This is the order in which we will try to resolve an environment configuration
@@ -30,13 +31,14 @@ function registerEnvFile() {
     // Is there an environment config file at the app root for our target
     // environment name?
     // e.g. /projects/react-universally/.env.staging
+    // @ts-ignore
     ifElse(DEPLOYMENT)(
       path.resolve(appRootDir.get(), `${envFile}.${DEPLOYMENT}`)
     ),
   ]);
 
   // Find the first env file path match.
-  const envFilePath = envFileResolutionOrder.find(filePath =>
+  const envFilePath = envFileResolutionOrder.find((filePath: $TsFixMe) =>
     fs.existsSync(filePath)
   );
 
@@ -68,7 +70,7 @@ registerEnvFile();
  *
  * @return {String} The value.
  */
-export function string(name, defaultVal) {
+export function string(name: $TsFixMe, defaultVal: $TsFixMe) {
   return process.env[name] || defaultVal;
 }
 
@@ -80,11 +82,12 @@ export function string(name, defaultVal) {
  *
  * @return {number} The value.
  */
-export function number(name, defaultVal) {
+export function number(name: $TsFixMe, defaultVal: $TsFixMe) {
+  // @ts-ignore
   return process.env[name] ? parseInt(process.env[name], 10) : defaultVal;
 }
 
-export function bool(name, defaultVal) {
+export function bool(name: $TsFixMe, defaultVal: $TsFixMe) {
   return process.env[name]
     ? process.env[name] === 'true' || process.env[name] === '1'
     : defaultVal;

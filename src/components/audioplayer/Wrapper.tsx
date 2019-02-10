@@ -7,7 +7,7 @@ const Wrapper = styled.div<{ isNightMode?: boolean }>`
   user-select: none;
   height: auto;
   z-index: 1;
-  padding: 1rem 1rem 0.5rem;
+  padding: 20px 20px 10px;
   background: ${({ theme, isNightMode }) =>
     isNightMode ? theme.colors.tuatara : theme.colors.white};
   box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);

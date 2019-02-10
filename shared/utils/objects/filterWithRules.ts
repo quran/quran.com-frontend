@@ -1,11 +1,16 @@
-function filterWithRulesLoop(rules, obj, basePropPath = '') {
+function filterWithRulesLoop(
+  rules: $TsFixMe,
+  obj: $TsFixMe,
+  basePropPath = ''
+) {
   return Object.keys(rules).reduce((acc, key) => {
-    const propPath = basePropPath !== '' ? `${basePropPath}.${key}` : key;
+    const propPath = basePropPath === '' ? key : `${basePropPath}.${key}`;
 
     if (typeof rules[key] === 'object') {
       if (typeof obj[key] !== 'object') {
         throw new Error(`Expected prop at path "${propPath}" to be an object`);
       }
+      // @ts-ignore
       acc[key] = filterWithRulesLoop(rules[key], obj[key], propPath); // eslint-disable-line no-param-reassign,max-len
     } else if (rules[key]) {
       if (typeof obj[key] === 'undefined') {
@@ -13,8 +18,10 @@ function filterWithRulesLoop(rules, obj, basePropPath = '') {
           `Filter set an "allow" on path "${propPath}", however, this path was not found on the source object.`
         );
       }
+      // @ts-ignore
       acc[key] = obj[key]; // eslint-disable-line no-param-reassign
     }
+
     return acc;
   }, {});
 }
@@ -48,6 +55,6 @@ function filterWithRulesLoop(rules, obj, basePropPath = '') {
  *     },
  *   )
  */
-export default function filterWithRules(rules, obj) {
+export default function filterWithRules(rules: $TsFixMe, obj: $TsFixMe) {
   return filterWithRulesLoop(rules, obj);
 }

@@ -3,10 +3,11 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 const Container = styled.div`
-  height: ${({ theme }) => `${theme.unit}px`};
+  height: 10px;
   width: 100%;
   background-color: #f7f7f7;
   cursor: pointer;
+  margin-bottom: 5px;
   position: absolute;
   top: 0;
   left: 0;
@@ -21,8 +22,8 @@ const Progress = styled.div`
 
   &:after {
     content: '';
-    height: ${({ theme }) => `${theme.unit * 2}px`};
-    width: ${({ theme }) => `${theme.unit * 2}px`};
+    height: 20px;
+    width: 20px;
     border-radius: 10px;
     position: absolute;
     right: -3px;

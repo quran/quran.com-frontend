@@ -1,5 +1,13 @@
-const execIfFunc = x => (typeof x === 'function' ? x() : x);
+const execIfFunc = (x?: functionOrNull | boolean | string) =>
+  typeof x === 'function' ? x() : x;
 
+type aFunction = () => void;
+type functionOrNull =
+  | string
+  | null
+  | aFunction
+  | { [key: string]: $TsFixMe }
+  | boolean;
 /**
  * This is a higher order function that accepts a boolean condition and will
  * return a function allowing you to provide if/else values that should be
@@ -16,8 +24,8 @@ const execIfFunc = x => (typeof x === 'function' ? x() : x);
  *   const ifDev = ifElse(process.env.NODE_ENV === 'development');
  *   ifDev('foo', () => 'lazy resolved');  // => 'foo'
  */
-export default function ifElse(condition) {
+export default function ifElse(condition: boolean) {
   // eslint-disable-next-line
-  return (then, or) =>
+  return (then?: functionOrNull, or?: functionOrNull) =>
     execIfFunc(condition) ? execIfFunc(then) : execIfFunc(or);
 }

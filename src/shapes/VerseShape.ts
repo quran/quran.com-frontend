@@ -31,7 +31,7 @@ interface VerseShape {
   words: Array<WordShape>;
   textMadani: string;
   textSimple: string;
-  sajdah?: boolean;
+  sajdah?: boolean | null;
   translations?: Array<TranslationShape>;
   audio?: $TsFixMe;
 }

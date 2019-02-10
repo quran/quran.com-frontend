@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { darken } from 'polished';
 
-export default styled.div<{ readingMode?: boolean }>`
+export default styled.div`
   white-space: pre-line;
   color: #000;
   width: 100%;
@@ -15,13 +15,12 @@ export default styled.div<{ readingMode?: boolean }>`
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  font-size: 3.5rem;
   b,
   span {
     border-color: transparent;
     border-width: 0 0 1px 0;
     border-style: solid;
-    float: ${({ readingMode }) => (readingMode ? 'none' : 'right')};
+    float: right;
     &.active {
       color: ${({ theme }) => darken(0.05, theme.brandPrimary)};
       border-color: ${({ theme }) => darken(0.15, theme.brandPrimary)};

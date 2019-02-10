@@ -1,3 +1,4 @@
+/* tslint:disable */
 /**
  * Unified Configuration Reader
  *
@@ -15,7 +16,7 @@
 
 // PRIVATES
 
-let configCache;
+let configCache: $TsFixMe;
 
 /**
  * This resolves the correct configuration source based on the execution
@@ -49,8 +50,10 @@ function resolveConfigForBrowserOrServer() {
 
   if (
     typeof window !== 'undefined' &&
+    // @ts-ignore
     typeof window.__CLIENT_CONFIG__ === 'object'
   ) {
+    // @ts-ignore
     configCache = window.__CLIENT_CONFIG__;
   } else {
     // To get here we must be running in the browser.
@@ -93,7 +96,7 @@ function resolveConfigForBrowserOrServer() {
  * an error will be thrown indicating that a respective configuration value
  * could not be found at the given path.
  */
-export default function configGet(path) {
+export default function configGet(path: $TsFixMe) {
   const parts = typeof path === 'string' ? path.split('.') : path;
 
   if (parts.length === 0) {

@@ -13,8 +13,9 @@ import serviceWorker from './middleware/serviceWorker';
 import offlinePage from './middleware/offlinePage';
 import errorHandlers from './middleware/errorHandlers';
 import config from '../../config';
-import { log } from '../../internal/utils';
+
 import expressConfig from './config/express';
+import log from '../../shared/utils/log';
 
 // Create our express based server.
 const app = express();
@@ -78,6 +79,7 @@ app.use(Raven.errorHandler());
 app.use(...errorHandlers);
 
 // Create an http listener for our express app.
+console.log(log, config);
 const listener = app.listen(config('port'), () =>
   log({
     title: 'server',

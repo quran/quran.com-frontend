@@ -27,8 +27,8 @@ interface WordShape {
   lineNumber: number;
   pageNumber: number;
   position: number;
-  translation?: TranslationShape;
-  transliteration?: TransliterationShape;
+  translation?: TranslationShape | null;
+  transliteration?: TransliterationShape | null;
   wordId?: number;
   textMadani?: string | null;
   highlight?: string;

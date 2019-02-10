@@ -3,20 +3,25 @@
     "outDir": "./dist/",
     "sourceMap": true,
     "noImplicitAny": true,
+    "noEmit": true,
+    "isolatedModules": true,
     "module": "esnext",
     "moduleResolution": "node",
-    "target": "es6",
+    "target": "es5",
     "jsx": "react",
     "allowJs": true,
-    "lib": ["es2015", "es2017", "dom"],
+    "lib": ["es5", "es2015", "es2017", "dom"],
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "keyofStringsOnly": true,
+    "importHelpers": true,
     "strictNullChecks": true
   },
   "include": [
     "./src/**/*",
-    "./config/**/*"
+    "./config/**/*",
+    "./shared/**/*",
+    "./internal/**/*"
   ],
   "exclude": [
     "./tests/**/*",

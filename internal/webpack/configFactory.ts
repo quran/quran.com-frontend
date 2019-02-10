@@ -1,6 +1,8 @@
+// eslint-disable
+// @ts-nocheck
 import appRootDir from 'app-root-dir';
 import AssetsPlugin from 'assets-webpack-plugin';
-import ManifestPlugin from 'webpack-manifest-plugin';
+// import ManifestPlugin from 'webpack-manifest-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import nodeExternals from 'webpack-node-externals';
 import path from 'path';
@@ -10,12 +12,14 @@ import strip from 'strip-loader';
 import { CheckerPlugin } from 'awesome-typescript-loader';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
-import { happyPackPlugin, log } from '../utils';
+import { happyPackPlugin } from '../utils';
 import { ifElse } from '../../shared/utils/logic';
 import { mergeDeep } from '../../shared/utils/objects';
 import { removeNil } from '../../shared/utils/arrays';
+import log from '../../shared/utils/log';
 import withServiceWorker from './withServiceWorker';
 import config from '../../config';
+import babelLoader from './babelLoader';
 
 /**
  * Generates a webpack configuration for the target configuration.
@@ -30,7 +34,7 @@ import config from '../../config';
  *
  * @return {Object} The webpack configuration.
  */
-export default function webpackConfigFactory(buildOptions) {
+export default function webpackConfigFactory(buildOptions: $TsFixMe) {
   const { target, optimize = false } = buildOptions;
 
   const isProd = optimize;
@@ -62,7 +66,7 @@ export default function webpackConfigFactory(buildOptions) {
       : config(['additionalNodeBundles', target]);
 
   if (!bundleConfig) {
-    throw new Error('No bundle configuration exists for target:', target);
+    throw new Error(`No bundle configuration exists for target: ${target}`);
   }
 
   let webpackConfig = {
@@ -196,7 +200,7 @@ export default function webpackConfigFactory(buildOptions) {
 
     resolve: {
       // These extensions are tried when resolving a file.
-      extensions: config('bundleSrcTypes').map(ext => `.${ext}`),
+      extensions: config('bundleSrcTypes').map((ext: string) => `.${ext}`),
 
       // This is required for the modernizr-loader
       // @see https://github.com/peerigon/modernizr-loader
@@ -240,6 +244,7 @@ export default function webpackConfigFactory(buildOptions) {
       // source maps support installed.
       ifNode(
         () =>
+          // @ts-ignore
           new webpack.BannerPlugin({
             banner: 'require("source-map-support").install();',
             raw: true,
@@ -250,6 +255,7 @@ export default function webpackConfigFactory(buildOptions) {
       // Implement webpack 3 scope hoisting that will remove function wrappers
       // around your modules you may see some small size improvements. However,
       // the significant improvement will be how fast the JavaScript loads in the browser.
+      // @ts-ignore
       ifProdClient(new webpack.optimize.ModuleConcatenationPlugin()),
 
       // We use this so that our generated [chunkhash]'s are only different if
@@ -288,6 +294,7 @@ export default function webpackConfigFactory(buildOptions) {
       // NOTE: We are stringifying the values to keep them in line with the
       // expected type of a typical process.env member (i.e. string).
       // @see https://github.com/ctrlplusb/react-universally/issues/395
+      // @ts-ignore
       new webpack.EnvironmentPlugin({
         // It is really important to use NODE_ENV=production in order to use
         // optimised versions of some node_modules, such as React.
@@ -301,7 +308,7 @@ export default function webpackConfigFactory(buildOptions) {
         // Is this a development build?
         BUILD_FLAG_IS_DEV: JSON.stringify(isDev),
       }),
-
+      // @ts-ignore
       new webpack.DefinePlugin({
         __SERVER__: isServer,
         __CLIENT__: isClient,
@@ -333,11 +340,13 @@ export default function webpackConfigFactory(buildOptions) {
 
       // We don't want webpack errors to occur during development as it will
       // kill our dev servers.
+      // @ts-ignore
       ifDev(() => new webpack.NoEmitOnErrorsPlugin()),
 
       // We need this plugin to enable hot reloading of our client.
       ifDevClient(
         () =>
+          // @ts-ignore
           new webpack.HotModuleReplacementPlugin({
             multiStep: true,
           })
@@ -347,6 +356,7 @@ export default function webpackConfigFactory(buildOptions) {
       // configuration to ensure that the output is minimized/optimized.
       ifProdClient(
         () =>
+          // @ts-ignore
           new webpack.LoaderOptionsPlugin({
             minimize: true,
           })
@@ -377,115 +387,6 @@ export default function webpackConfigFactory(buildOptions) {
       // Therefore we employ HappyPack to do threaded execution of our
       // "heavy-weight" loaders.
 
-      // HappyPack 'javascript' instance.
-      happyPackPlugin({
-        name: 'happypack-javascript',
-        // We will use babel to do all our JS processing.
-        loaders: [
-          ...ifProd(() => [strip.loader('debug')], []),
-          {
-            path: 'babel-loader',
-            // We will create a babel config and pass it through the plugin
-            // defined in the project configuration, allowing additional
-            // items to be added.
-            query: config('plugins.babelConfig')(
-              // Our "standard" babel config.
-              {
-                // We need to ensure that we do this otherwise the babelrc will
-                // get interpretted and for the current configuration this will mean
-                // that it will kill our webpack treeshaking feature as the modules
-                // transpilation has not been disabled within in.
-                babelrc: false,
-
-                presets: [
-                  // For our client bundles we transpile all the latest ratified
-                  // ES201X code into ES5, safe for browsers.  We exclude module
-                  // transilation as webpack takes care of this for us, doing
-                  // tree shaking in the process.
-                  ifClient([
-                    'env',
-                    {
-                      es2015: {
-                        modules: false,
-                      },
-                    },
-                  ]),
-                  // For a node bundle we use the specific target against
-                  // babel-preset-env so that only the unsupported features of
-                  // our target node version gets transpiled.
-                  ifNode([
-                    'env',
-                    {
-                      targets: {
-                        node: true,
-                      },
-                    },
-                  ]),
-                  // Stage 3 javascript syntax.
-                  // "Candidate: complete spec and initial browser implementations."
-                  // Add anything lower than stage 3 at your own risk. :)
-                  'stage-2',
-                  // JSX
-                  'react',
-                ].filter(x => x !== null),
-
-                plugins: [
-                  // Required to support react hot loader.
-                  ifDevClient('react-hot-loader/babel'),
-                  // This decorates our components with  __self prop to JSX elements,
-                  // which React will use to generate some runtime warnings.
-                  ifDev('transform-react-jsx-self'),
-                  // Adding this will give us the path to our components in the
-                  // react dev tools.
-                  ifDev('transform-react-jsx-source'),
-                  // Replaces the React.createElement function with one that is
-                  // more optimized for production.
-                  // NOTE: Symbol needs to be polyfilled. Ensure this feature
-                  // is enabled in the polyfill.io configuration.
-                  ifProd('transform-react-inline-elements'),
-                  // Hoists element creation to the top level for subtrees that
-                  // are fully static, which reduces call to React.createElement
-                  // and the resulting allocations. More importantly, it tells
-                  // React that the subtree hasn’t changed so React can completely
-                  // skip it when reconciling.
-                  ifProd('transform-react-constant-elements'),
-
-                  ifClient('syntax-dynamic-import'),
-                  ifNode([
-                    'system-import-transformer',
-                    {
-                      modules: 'common',
-                    },
-                  ]),
-                  ifProd([
-                    ["babel-plugin-styled-components", {
-                      "ssr": true
-                    }]
-                  ]),
-                ].filter(x => x !== null),
-              },
-              buildOptions
-            ),
-          },
-        ],
-      }),
-
-      // HappyPack 'typescript' instance.
-      happyPackPlugin({
-        name: 'happypack-typescript',
-        // We will use babel to do all our JS processing.
-        loaders: [
-          ...ifProd(() => [strip.loader('debug')], []),
-          {
-            path: 'awesome-typescript-loader',
-            exclude: /node_modules|tests/,
-            query: {
-              happyPackMode: true,
-            },
-          },
-        ],
-      }),
-
       // HappyPack 'css' instance for development client.
       ifDevClient(() =>
         happyPackPlugin({
@@ -495,7 +396,7 @@ export default function webpackConfigFactory(buildOptions) {
             {
               path: 'css-loader',
               // Include sourcemaps for dev experience++.
-              query: {
+              options: {
                 modules: true,
                 importLoaders: 2,
                 sourceMap: true,
@@ -520,7 +421,7 @@ export default function webpackConfigFactory(buildOptions) {
             {
               path: 'css-loader',
               // Include sourcemaps for dev experience++.
-              query: {
+              options: {
                 sourceMap: true,
                 importLoaders: 2,
               },
@@ -565,14 +466,17 @@ export default function webpackConfigFactory(buildOptions) {
             // },
             // TYPESCRIPT
             {
-              test: /\.tsx?$/,
+              test: /\.jsx|tsx?$/,
               // We will defer all our js processing to the happypack plugin
-              // named "happypack-typescript".
+              // named "happypack-javascript".
               // See the respective plugin within the plugins section for full
               // details on what loader is being implemented.
-              loader: 'awesome-typescript-loader',
+              use: [
+                ...ifProd(() => [strip.loader('debug')], []),
+                babelLoader({ buildOptions, ifClient }),
+              ],
               include: removeNil([
-                ...bundleConfig.srcPaths.map(srcPath =>
+                ...bundleConfig.srcPaths.map((srcPath: $TsFixMe) =>
                   path.resolve(appRootDir.get(), srcPath)
                 ),
                 ifProdClient(path.resolve(appRootDir.get(), 'src/html')),
@@ -608,7 +512,7 @@ export default function webpackConfigFactory(buildOptions) {
                     MiniCssExtractPlugin.loader,
                     {
                       loader: 'css-loader',
-                      query: {
+                      options: {
                         minimize: true,
                         importLoaders: 2,
                         sourceMap: true,
@@ -656,7 +560,7 @@ export default function webpackConfigFactory(buildOptions) {
                     MiniCssExtractPlugin.loader,
                     {
                       loader: 'css-loader',
-                      query: {
+                      options: {
                         minimize: true,
                         importLoaders: 2,
                         sourceMap: false,
@@ -700,7 +604,7 @@ export default function webpackConfigFactory(buildOptions) {
             ifElse(isClient || isServer)(() => ({
               loader: 'file-loader',
               exclude: [/\.js$/, /\.html$/, /\.json$/],
-              query: {
+              options: {
                 // What is the web path that the client bundle will be served from?
                 // The same value has to be used for both the client and the
                 // server bundles in order to ensure that SSR paths match the

@@ -25,7 +25,7 @@ import createStore from '../../../redux/createStore';
 import ServerHTML from './ServerHTML';
 import App from '../../../components/App';
 import { setSetting, setUserAgent } from '../../../redux/actions/settings';
-import { log } from '../../../../internal/utils';
+import log from '../../../../shared/utils/log';
 
 /**
  * React application middleware, supports server side rendering.

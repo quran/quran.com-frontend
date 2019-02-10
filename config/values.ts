@@ -51,7 +51,10 @@ const values = {
 
   api: EnvVars.string('API_URL'),
   oneQuran: EnvVars.string('ONE_QURAN_URL'),
-  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT', 'https://44c105328ae544ae9928f9eb74b40061@app.getsentry.com/80639'),
+  sentryClient: EnvVars.string(
+    'SENTRY_KEY_CLIENT',
+    'https://44c105328ae544ae9928f9eb74b40061@app.getsentry.com/80639'
+  ),
   sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
   facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
   fontsURL: EnvVars.string('FONTS_URL'),
@@ -104,7 +107,8 @@ const values = {
   },
   zendesk: {
     id: 'ze-snippet',
-    url: 'https://static.zdassets.com/ekr/snippet.js?key=7607c205-2e86-47a9-95f6-8f801c355c92',
+    url:
+      'https://static.zdassets.com/ekr/snippet.js?key=7607c205-2e86-47a9-95f6-8f801c355c92',
   },
 
   google: {
@@ -276,7 +280,7 @@ const values = {
 
     server: {
       // Src entry file.
-      srcEntryFile: './src/server/index.js',
+      srcEntryFile: './src/server/index',
 
       // Src paths.
       srcPaths: ['./src', './shared', './config'],
