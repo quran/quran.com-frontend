@@ -64,7 +64,9 @@ const ChapterLink: React.SFC<Props> = ({ chapter }: Props) => (
         </TableItem>
       </Table>
       <Translated>
-        <span className={`text-uppercase ${''}`}>
+        <span
+          className={`text-uppercase ${chapter.translatedName.languageName}`}
+        >
           {chapter.translatedName.name}
         </span>
       </Translated>
