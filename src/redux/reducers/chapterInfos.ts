@@ -33,7 +33,8 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
           entities: {
             ...state.entities,
             [action.meta.chapterId]: camelcaseKeys(
-              action.payload.chapter_info || {}
+              action.payload.chapter_info || {},
+              { deep: true }
             ),
           },
         }),

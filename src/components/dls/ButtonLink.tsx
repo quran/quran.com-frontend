@@ -6,7 +6,7 @@ const ButtonLink = styled.button<{ active?: boolean }>`
   border-color: transparent;
   background-color: transparent;
   box-shadow: none;
-  display: inline-block;
+  display: block;
   margin-bottom: 0;
   font-weight: normal;
   text-align: center;
@@ -20,6 +20,7 @@ const ButtonLink = styled.button<{ active?: boolean }>`
   line-height: 1.42857;
   border-radius: 4px;
   user-select: none;
+  padding: 0.25rem 0rem;
 
   ${({ active, theme }) =>
     active ? `color: ${theme.brandPrimary}` : ''} &:hover {

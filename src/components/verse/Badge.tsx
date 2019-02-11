@@ -10,7 +10,7 @@ const Label = styled.span`
   display: inline-block;
   margin-bottom: 15px;
   font-weight: 300;
-  color: ${props => props.theme.textColor};
+  color: ${({ theme }) => theme.textColor};
   &:hover {
     opacity: 0.7;
   }
@@ -21,9 +21,13 @@ const propTypes = {
   verse: VerseShape.isRequired,
 };
 
+const defaultProps = {
+  isSearched: false,
+};
+
 type Props = {
-  isSearched?: boolean,
-  verse: VerseShape,
+  isSearched?: boolean;
+  verse: VerseShape;
 };
 
 const Badge: React.SFC<Props> = ({ isSearched, verse }: Props) => {
@@ -57,5 +61,6 @@ const Badge: React.SFC<Props> = ({ isSearched, verse }: Props) => {
 };
 
 Badge.propTypes = propTypes;
+Badge.defaultProps = defaultProps;
 
 export default Badge;

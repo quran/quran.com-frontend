@@ -28,7 +28,8 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         }),
         success: prevState => {
           const verses = camelcaseKeys(
-            keyBy(action.payload.verses, 'verse_key')
+            keyBy(action.payload.verses, 'verse_key'),
+            { deep: true }
           );
           const lines = prevState.entities;
 

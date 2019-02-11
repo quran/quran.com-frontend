@@ -44,7 +44,7 @@ const Line: React.SFC<Props> = ({ line, useTextFont }: Props) => {
   });
 
   return (
-    <FontText className="row text-arabic">
+    <FontText className="row text-arabic" readingMode>
       <div className="col-md-12">
         <StyledLine className="text-center">{text}</StyledLine>
       </div>

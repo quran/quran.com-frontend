@@ -29,12 +29,15 @@ const Container = styled.div<{ inline?: boolean }>`
 const FacebookButton = styled(FacebookShareButton)`
   background-repeat: no-repeat;
   background-size: 12px;
-  padding: 1px 5px 0px 0px;
+  padding-top: 1px;
+  display: inline-block;
+  padding-right: 8px;
 `;
 
 const TwitterButton = styled(TwitterShareButton)`
   background-repeat: no-repeat;
   background-size: 21px;
+  display: inline-block;
 `;
 
 type Props = {

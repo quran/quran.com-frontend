@@ -30,7 +30,8 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
           entities: {
             ...prevState.entities,
             [action.meta.verseKey]: camelcaseKeys(
-              action.payload.foot_note || {}
+              action.payload.foot_note || {},
+              { deep: true }
             ),
           },
         }),

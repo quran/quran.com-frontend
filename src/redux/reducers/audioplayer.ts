@@ -53,7 +53,8 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
       return handle(state, action, {
         success: prevState => {
           const audioFile: $TsFixMe = camelcaseKeys(
-            action.payload.audio_file || {}
+            action.payload.audio_file || {},
+            { deep: true }
           );
 
           return {
