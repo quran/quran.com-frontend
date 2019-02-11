@@ -7,6 +7,8 @@ export default styled.div<{ arabic?: boolean }>`
     text-transform: uppercase;
     font-size: 14px;
     font-weight: 400;
+    display: block;
+    clear: both;
     @media (max-width: ${({ theme }) => theme.breakpointsMd}) {
       font-size: 12px;
     }
