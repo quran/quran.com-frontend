@@ -98,8 +98,13 @@ class Word extends Component<Props> {
 
   getLanguageName = () => {
     const { word, tooltip } = this.props;
+    const content = word[tooltip];
 
-    return word[tooltip] && word[tooltip].languageName;
+    if (content) {
+      return content.languageName;
+    }
+
+    return '';
   };
 
   handleWordPlay = () => {
@@ -172,7 +177,6 @@ class Word extends Component<Props> {
         <Tooltip
           arrow
           interactive
-          style={{ position: 'relative' }}
           title={tooltipText}
           html={tooltipHtml}
           style={{ position: 'relative', float: 'right', overflow: 'hidden' }}
