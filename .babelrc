@@ -12,7 +12,7 @@
     // "@babel/plugin-transform-react-display-name",
     // "@babel/plugin-proposal-export-default-from",
     // "@babel/plugin-proposal-export-namespace-from",
-    // "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-syntax-dynamic-import",
     // "@babel/plugin-syntax-import-meta",
     "@babel/plugin-proposal-class-properties",
     // "@babel/plugin-proposal-json-strings",
@@ -37,6 +37,9 @@
         "@babel/plugin-transform-react-inline-elements",
         "@babel/plugin-transform-react-constant-elements"
       ]
+    },
+    "test": {
+      "plugins": ["dynamic-import-node"]
     }
   }
 }

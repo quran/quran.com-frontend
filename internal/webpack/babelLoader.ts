@@ -2,7 +2,12 @@ import { removeNil } from '../../shared/utils/arrays';
 import config from '../../config';
 
 // @ts-ignore
-const babelLoader = ({ buildOptions }: $TsFixMe) => ({
+const babelLoader = ({
+  buildOptions,
+  ifDevClient,
+  ifDev,
+  ifProd,
+}: $TsFixMe) => ({
   loader: 'babel-loader',
   // We will create a babel config and pass it through the plugin
   // defined in the project configuration, allowing additional
@@ -68,18 +73,18 @@ const babelLoader = ({ buildOptions }: $TsFixMe) => ({
         // '@babel/plugin-proposal-do-expressions',
         // '@babel/plugin-proposal-function-bind',
         // // Required to support react hot loader.
-        // // ifDevClient('react-hot-loader/babel'),
+        ifDevClient('react-hot-loader/babel'),
         // // This decorates our components with  __self prop to JSX elements,
         // // which React will use to generate some runtime warnings.
-        // ifDev('@babel/plugin-transform-react-jsx-self'),
+        ifDev('@babel/plugin-transform-react-jsx-self'),
         // // // Adding this will give us the path to our components in the
         // // // react dev tools.
-        // ifDev('@babel/plugin-transform-react-jsx-source'),
+        ifDev('@babel/plugin-transform-react-jsx-source'),
         // // // Replaces the React.createElement function with one that is
         // // // more optimized for production.
         // // // NOTE: Symbol needs to be polyfilled. Ensure this feature
         // // // is enabled in the polyfill.io configuration.
-        // ifProd('@babel/plugin-transform-react-inline-elements'),
+        ifProd('@babel/plugin-transform-react-inline-elements'),
         // // // Hoists element creation to the top level for subtrees that
         // // // are fully static, which reduces call to React.createElement
         // // // and the resulting allocations. More importantly, it tells

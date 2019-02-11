@@ -41,7 +41,7 @@ const clientCompiler = webpack(
     },
   })
 );
-
+// @ts-ignore
 clientCompiler.run((err, stats) => {
   if (err) {
     console.error(err);

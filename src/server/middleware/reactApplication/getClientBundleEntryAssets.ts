@@ -6,7 +6,7 @@ import fs from 'fs';
 import { resolve as pathResolve } from 'path';
 import appRootDir from 'app-root-dir';
 import config from '../../../../config';
-
+// @ts-ignore
 let resultCache;
 
 /**
@@ -26,7 +26,9 @@ export default function getClientBundleEntryAssets() {
   // Return the assets json cache if it exists.
   // In development mode we always read the assets json file from disk to avoid
   // any cases where an older version gets cached.
+  // @ts-ignore
   if (process.env.BUILD_FLAG_IS_DEV === 'false' && resultCache) {
+    // @ts-ignore
     return resultCache;
   }
 

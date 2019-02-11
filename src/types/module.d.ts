@@ -58,6 +58,7 @@ declare module 'offline-plugin';
 declare module 'glob';
 declare module 'chokidar';
 declare module 'md5';
+declare module 'rimraf';
 declare module 'uglifyjs-webpack-plugin';
 declare module 'i';
 declare module '*.png';

@@ -29,6 +29,7 @@ Object.keys(config('bundles'))
         optimize,
       })
     );
+    // @ts-ignore
     compiler.run((err, stats) => {
       if (err) {
         console.error(err);

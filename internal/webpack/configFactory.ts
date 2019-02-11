@@ -9,7 +9,6 @@ import path from 'path';
 import webpack from 'webpack';
 import WebpackMd5Hash from 'webpack-md5-hash';
 import strip from 'strip-loader';
-import { CheckerPlugin } from 'awesome-typescript-loader';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
 import { happyPackPlugin } from '../utils';
@@ -316,8 +315,6 @@ export default function webpackConfigFactory(buildOptions: $TsFixMe) {
         __DEVTOOLS__: true,
       }),
 
-      new CheckerPlugin(),
-
       // Generates a JSON file containing a map of all the output files for
       // our webpack bundle.  A necessisty for our server rendering process
       // as we need to interogate these files in order to know what JS/CSS
@@ -473,7 +470,13 @@ export default function webpackConfigFactory(buildOptions: $TsFixMe) {
               // details on what loader is being implemented.
               use: [
                 ...ifProd(() => [strip.loader('debug')], []),
-                babelLoader({ buildOptions, ifClient }),
+                babelLoader({
+                  buildOptions,
+                  ifClient,
+                  ifDevClient,
+                  ifDev,
+                  ifProd,
+                }),
               ],
               include: removeNil([
                 ...bundleConfig.srcPaths.map((srcPath: $TsFixMe) =>

@@ -79,7 +79,6 @@ app.use(Raven.errorHandler());
 app.use(...errorHandlers);
 
 // Create an http listener for our express app.
-console.log(log, config);
 const listener = app.listen(config('port'), () =>
   log({
     title: 'server',
