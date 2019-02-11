@@ -57,12 +57,13 @@ const ChapterLink: React.SFC<Props> = ({ chapter }: Props) => (
           {chapter.chapterNumber}
         </TableItem>
         <TableItem width={7 / 12}>{chapter.nameSimple}</TableItem>
-        <TableItem width={3 / 12} className="text-left">
+        <TableItem width={3 / 12}>
           <Arabic>
             <ChapterIcon id={String(chapter.id)} />
           </Arabic>
         </TableItem>
       </Table>
+
       <Translated>
         <span
           className={`text-uppercase ${chapter.translatedName.languageName}`}

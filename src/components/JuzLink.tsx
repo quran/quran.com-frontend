@@ -4,6 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { JUZ_LIST_EVENTS } from '../events';
 import { ChapterShape } from '../shapes';
 import JuzShape from '../shapes/JuzShape';
+import ChapterIcon from './ChapterIcon';
 
 const Name = styled.span`
   margin-right: 5px;
@@ -16,7 +17,6 @@ const Arabic = styled.div`
 
 const Translated = styled.div`
   font-size: 10px;
-  color: #777;
 `;
 
 const Link = styled(RouterLink)`
@@ -26,6 +26,17 @@ const Link = styled(RouterLink)`
   &:hover {
     background: #f1f1f1;
   }
+`;
+
+const Table = styled.div`
+  display: table;
+  width: 100%;
+`;
+
+const TableItem = styled.div<{ width: number }>`
+  display: table-cell;
+  vertical-align: middle;
+  width: ${({ width }) => `${width * 100}%`};
 `;
 
 type Props = {
@@ -43,23 +54,30 @@ const JuzLink: React.SFC<Props> = ({ juz, chapters }: Props) => {
         className="row"
         {...JUZ_LIST_EVENTS.CLICK.JUZ_LINK.PROPS}
       >
-        <div className="col-xs-9">
-          <Name>{chapters[chapterId].nameSimple}</Name>
+        <Table>
+          <TableItem width={9 / 12}>
+            <Name>{chapters[chapterId].nameSimple}</Name>
 
-          <span className="h5">
-            <small>{juz.verseMapping[chapterId]}</small>
+            <span className="h5">
+              <small>{juz.verseMapping[chapterId]}</small>
+            </span>
+          </TableItem>
+
+          <TableItem width={3 / 12}>
+            <Arabic>
+              <ChapterIcon id={String(chapterId)} />
+            </Arabic>
+          </TableItem>
+        </Table>
+
+        <Translated>
+          <span
+            className={`text-uppercase ${
+              chapters[chapterId].translatedName.languageName
+            }`}
+          >
+            {chapters[chapterId].translatedName.name}
           </span>
-        </div>
-        <Arabic className="col-xs-3 text-left">
-          <span className={`icon-surah${chapters[chapterId].id}`} />
-        </Arabic>
-
-        <Translated
-          className={`col-xs-10 text-uppercase ${
-            chapters[chapterId].languageName
-          }`}
-        >
-          <small>{chapters[chapterId].translatedName.name}</small>
         </Translated>
       </Link>
     </Translated>
