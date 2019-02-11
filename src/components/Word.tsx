@@ -96,6 +96,17 @@ class Word extends Component<Props> {
     return title;
   };
 
+  getLanguageName = () => {
+    const { word, tooltip } = this.props;
+    const content = word[tooltip];
+
+    if (content) {
+      return content.languageName;
+    }
+
+    return '';
+  };
+
   handleWordPlay = () => {
     const { word } = this.props;
 
@@ -143,6 +154,7 @@ class Word extends Component<Props> {
     const className = `${useTextFont ? 'text-' : ''}${word.className} ${
       word.charType
     } ${word.highlight ? word.highlight : ''}`;
+
     const id = `word-${(verseKey || '').replace(/:/, '-')}-${audioPosition}`;
 
     if (useTextFont) {
@@ -155,12 +167,19 @@ class Word extends Component<Props> {
       text = word.code;
     }
 
+    const tooltipText = this.getTooltipTitle();
+    const tooltipHtml = (
+      <div className={this.getLanguageName()}>{tooltipText}</div>
+    );
+
     return (
       <span>
         <Tooltip
           arrow
+          interactive
+          title={tooltipText}
+          html={tooltipHtml}
           style={{ position: 'relative', float: 'right', overflow: 'hidden' }}
-          title={this.getTooltipTitle()}
         >
           <WordWrap
             role="button"

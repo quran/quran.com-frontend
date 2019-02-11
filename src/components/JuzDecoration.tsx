@@ -40,7 +40,7 @@ type Props = {
 
 const JuzDecoration: React.SFC<Props> = ({ juzNumber }: Props) => (
   <Fragment>
-    <StyledJuzArt src={juzMarkTop} alt="juz top Art" />
+    <StyledJuzArt src={juzMarkTop} alt={`Juz ${juzNumber}`} />
     <StyledContainer>
       <StyledJuzNumber>جزء</StyledJuzNumber>
       <StyledJuzNumber>
@@ -51,7 +51,7 @@ const JuzDecoration: React.SFC<Props> = ({ juzNumber }: Props) => (
         {JUZ_AND_HIZB_ARABIC_NUMBERS[juzNumber * 2 - 1]}
       </StyledJuzNumber>
     </StyledContainer>
-    <StyledJuzArt src={juzMarkBottom} alt="juz top Art" />
+    <StyledJuzArt src={juzMarkBottom} alt={`Juz ${juzNumber}`} />
   </Fragment>
 );
 
