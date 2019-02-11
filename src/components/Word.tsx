@@ -13,8 +13,13 @@ import {
   PlayCurrentWord,
 } from '../redux/actions/audioplayer';
 
-const WordGlyph = styled.a<{ highlight?: boolean }>`
+const WordGlyph = styled.span`
   -webkit-font-smoothing: antialiased;
+`;
+
+const WordWrap = styled.a<{ highlight?: boolean }>`
+  -webkit-font-smoothing: antialiased;
+  float: right;
   color: ${({ highlight, theme }) =>
     highlight ? theme.brandPrimary : 'initial'};
 `;
@@ -154,10 +159,10 @@ class Word extends Component<Props> {
       <span>
         <Tooltip
           arrow
-          style={{ position: 'relative' }}
+          style={{ position: 'relative', float: 'right', overflow: 'hidden' }}
           title={this.getTooltipTitle()}
         >
-          <WordGlyph
+          <WordWrap
             role="button"
             tabIndex={audioPosition}
             highlight={isCurrentVersePlaying}
@@ -165,12 +170,16 @@ class Word extends Component<Props> {
             onDoubleClick={this.handleSegmentPlay}
             onClick={this.handleWordPlay}
             onKeyPress={this.handleWordPlay}
-            className={className}
-            dangerouslySetInnerHTML={{ __html: text }}
-          />
-          <WordText
-            dangerouslySetInnerHTML={{ __html: word.textMadani || '' }}
-          />
+          >
+            <WordGlyph
+              className={className}
+              dangerouslySetInnerHTML={{ __html: text }}
+            />
+
+            <WordText
+              dangerouslySetInnerHTML={{ __html: `${word.textMadani} ` || ' ' }}
+            />
+          </WordWrap>
         </Tooltip>
         {word.charType === WORD_TYPES.CHAR_TYPE_WORD && (
           <small style={{ letterSpacing: -15 }}>&nbsp;</small>
