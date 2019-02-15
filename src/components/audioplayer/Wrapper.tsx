@@ -1,0 +1,29 @@
+import styled from 'styled-components';
+
+const Wrapper = styled.div<{ isNightMode?: boolean }>`
+  position: fixed;
+  bottom: 0;
+  display: block;
+  user-select: none;
+  height: auto;
+  z-index: 1;
+  padding: 1rem 1rem 0.5rem;
+  background: ${({ theme, isNightMode }) =>
+    isNightMode ? theme.colors.tuatara : theme.colors.white};
+  box-shadow: 0 0 0.5rem 0 rgba(0, 0, 0, 0.2);
+  width: 100%;
+
+  .list-inline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px;
+  }
+
+  @media (max-width: ${({ theme }) => theme.breakpoints.sm}) {
+    bottom: 0;
+    width: 100%;
+  }
+`;
+
+export default Wrapper;

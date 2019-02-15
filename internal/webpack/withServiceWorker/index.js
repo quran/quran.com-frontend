@@ -6,7 +6,7 @@ import OfflinePlugin from 'offline-plugin';
 
 import config from '../../../config';
 
-import ClientConfig from '../../../config/components/ClientConfig';
+import ClientConfig from '../../../config/components/ServiceWorkerClientConfig';
 
 export default function withServiceWorker(webpackConfig, bundleConfig) {
   if (!config('serviceWorker.enabled')) {
@@ -114,10 +114,10 @@ export default function withServiceWorker(webpackConfig, bundleConfig) {
       // Add the polyfill io script as an external if it is enabled.
       externals: (config('polyfillIO.enabled')
         ? [
-          `${config('polyfillIO.url')}?features=${config(
+            `${config('polyfillIO.url')}?features=${config(
               'polyfillIO.features'
             ).join(',')}`,
-        ]
+          ]
         : []
       )
         // Add any included public folder assets.
@@ -143,6 +143,7 @@ export default function withServiceWorker(webpackConfig, bundleConfig) {
                 // off the root of the application.
                 .map(relativePath => `/${relativePath}`)
             );
+
             return publicFileWebPaths;
           }, [])
         ),

@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "es6",
+    "jsx": "react",
+    "allowJs": true,
+    "lib": ["es2015", "es2017", "dom"],
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "keyofStringsOnly": true,
+    "strictNullChecks": true
+  },
+  "include": [
+    "./src/**/*",
+    "./config/**/*"
+  ],
+  "exclude": [
+    "./tests/**/*",
+    "./src/**/_tests_/**/*",
+    "*.scss"
+  ]
+}

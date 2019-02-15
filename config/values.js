@@ -6,6 +6,7 @@
  */
 
 import * as EnvVars from './utils/envVars';
+import localeMessages from '../src/locale';
 
 const locales = {
   en: 'English',
@@ -17,18 +18,10 @@ const locales = {
   tr: 'Türkçe',
   fr: 'Français',
   nl: 'Dutch',
+  it: 'Italiano',
 };
 
 const values = {
-  api: EnvVars.string('API_URL'),
-  oneQuran: EnvVars.string('ONE_QURAN_URL'),
-  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT'),
-  sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
-  facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
-  fontsURL: EnvVars.string('FONTS_URL'),
-  locales,
-  defaultLocale: 'en',
-
   // The configuration values that should be exposed to our client bundle.
   // This value gets passed through the /utils/objects/filterWithRules
   // util to create a filter object that can be serialised and included
@@ -47,7 +40,23 @@ const values = {
     polyfillIO: true,
     // We need to expose all the htmlPage settings.
     htmlPage: true,
+    fontsURL: true,
+    locales: true,
+    defaultLocale: true,
+    localeMessages: true,
+    sentryClient: true,
   },
+
+  localeMessages,
+
+  api: EnvVars.string('API_URL'),
+  oneQuran: EnvVars.string('ONE_QURAN_URL'),
+  sentryClient: EnvVars.string('SENTRY_KEY_CLIENT', 'https://44c105328ae544ae9928f9eb74b40061@app.getsentry.com/80639'),
+  sentryServer: EnvVars.string('SENTRY_KEY_SERVER'),
+  facebookAppId: EnvVars.string('FACEBOOK_APP_ID'),
+  fontsURL: EnvVars.string('FONTS_URL'),
+  locales,
+  defaultLocale: 'en',
 
   // The host on which the server should run.
   host: EnvVars.string('HOST', 'localhost'),
@@ -60,7 +69,7 @@ const values = {
   // This is an example environment variable which is used within the react
   // application to demonstrate the usage of environment variables across
   // the client and server bundles.
-  welcomeMessage: EnvVars.string('WELCOME_MSG', 'Hello world!'),
+  welcomeMessage: EnvVars.string('WELCOME_MSG', 'Quran.com'),
 
   // Disable server side rendering?
   disableSSR: false,
@@ -92,6 +101,10 @@ const values = {
   audioCDN: EnvVars.string('AUDIO_CDN'),
   sentry: {
     url: 'https://cdn.ravenjs.com/3.0.4/raven.min.js',
+  },
+  zendesk: {
+    id: 'ze-snippet',
+    url: 'https://static.zdassets.com/ekr/snippet.js?key=7607c205-2e86-47a9-95f6-8f801c355c92',
   },
 
   google: {
@@ -137,7 +150,11 @@ const values = {
       'cdn.polyfill.io',
       'cdn.ravenjs.com',
       'mxpnl.com',
+      'cdn.mxpnl.com',
       'google-analytics.com',
+      'www.google-analytics.com',
+      'static.zdassets.com',
+      'cdnjs.cloudflare.com',
     ],
     styleSrc: [
       'cdn.rawgit.com/milligram/milligram/master/dist/milligram.min.css',
@@ -157,7 +174,7 @@ const values = {
   includeSourceMapsForOptimisedClientBundle: false,
 
   // These extensions are tried when resolving src files for our bundles..
-  bundleSrcTypes: ['js', 'jsx', 'json'],
+  bundleSrcTypes: ['js', 'jsx', 'json', 'tsx', 'ts'],
 
   // What should we name the json output file that webpack generates
   // containing details of all output files for a bundle?
@@ -204,7 +221,7 @@ const values = {
   bundles: {
     client: {
       // Src entry file.
-      srcEntryFile: './src/client/index.js',
+      srcEntryFile: './src/client/index.tsx',
 
       // Src paths.
       srcPaths: [
@@ -247,6 +264,9 @@ const values = {
           'react-router-dom',
           'styled-components',
           'react-bootstrap',
+          'react-intl',
+          'react-metrics',
+          'prop-types',
         ],
 
         // The name of the vendor DLL.

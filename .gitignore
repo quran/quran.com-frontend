@@ -16,3 +16,4 @@ webpack-stats.debug.json
 *.DS_Store
 .vscode
 coverage/
+.awcache

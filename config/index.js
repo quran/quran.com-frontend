@@ -41,6 +41,7 @@ function resolveConfigForBrowserOrServer() {
     // i.e. running in our server/node process.
     // eslint-disable-next-line global-require
     configCache = require('./values').default;
+
     return configCache;
   }
 
@@ -101,6 +102,7 @@ export default function configGet(path) {
     );
   }
   let result = resolveConfigForBrowserOrServer();
+
   for (let i = 0; i < parts.length; i += 1) {
     if (result === undefined) {
       const errorMessage = `Failed to resolve configuration value at "${parts.join(
@@ -119,5 +121,6 @@ export default function configGet(path) {
     }
     result = result[parts[i]];
   }
+
   return result;
 }
