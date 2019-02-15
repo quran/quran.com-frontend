@@ -96,6 +96,8 @@ const listener = app.listen(config('port'), () =>
     ).join(', ')})
 
       Server is now listening on Port ${config('port')}
+      API URL ${config('api')}
+      
       You can access it in the browser at http://${config('host')}:${config(
       'port'
     )}

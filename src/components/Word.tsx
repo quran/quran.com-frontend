@@ -13,8 +13,13 @@ import {
   PlayCurrentWord,
 } from '../redux/actions/audioplayer';
 
-const WordGlyph = styled.a<{ highlight?: boolean }>`
+const WordGlyph = styled.span`
   -webkit-font-smoothing: antialiased;
+`;
+
+const WordWrap = styled.a<{ highlight?: boolean }>`
+  -webkit-font-smoothing: antialiased;
+  float: right;
   color: ${({ highlight, theme }) =>
     highlight ? theme.brandPrimary : 'initial'};
 `;
@@ -91,6 +96,17 @@ class Word extends Component<Props> {
     return title;
   };
 
+  getLanguageName = () => {
+    const { word, tooltip } = this.props;
+    const content = word[tooltip];
+
+    if (content) {
+      return content.languageName;
+    }
+
+    return '';
+  };
+
   handleWordPlay = () => {
     const { word } = this.props;
 
@@ -138,6 +154,7 @@ class Word extends Component<Props> {
     const className = `${useTextFont ? 'text-' : ''}${word.className} ${
       word.charType
     } ${word.highlight ? word.highlight : ''}`;
+
     const id = `word-${(verseKey || '').replace(/:/, '-')}-${audioPosition}`;
 
     if (useTextFont) {
@@ -150,14 +167,21 @@ class Word extends Component<Props> {
       text = word.code;
     }
 
+    const tooltipText = this.getTooltipTitle();
+    const tooltipHtml = (
+      <div className={this.getLanguageName()}>{tooltipText}</div>
+    );
+
     return (
       <span>
         <Tooltip
           arrow
-          style={{ position: 'relative' }}
-          title={this.getTooltipTitle()}
+          interactive
+          title={tooltipText}
+          html={tooltipHtml}
+          style={{ position: 'relative', float: 'right', overflow: 'hidden' }}
         >
-          <WordGlyph
+          <WordWrap
             role="button"
             tabIndex={audioPosition}
             highlight={isCurrentVersePlaying}
@@ -165,12 +189,16 @@ class Word extends Component<Props> {
             onDoubleClick={this.handleSegmentPlay}
             onClick={this.handleWordPlay}
             onKeyPress={this.handleWordPlay}
-            className={className}
-            dangerouslySetInnerHTML={{ __html: text }}
-          />
-          <WordText
-            dangerouslySetInnerHTML={{ __html: word.textMadani || '' }}
-          />
+          >
+            <WordGlyph
+              className={className}
+              dangerouslySetInnerHTML={{ __html: text }}
+            />
+
+            <WordText
+              dangerouslySetInnerHTML={{ __html: `${word.textMadani} ` || ' ' }}
+            />
+          </WordWrap>
         </Tooltip>
         {word.charType === WORD_TYPES.CHAR_TYPE_WORD && (
           <small style={{ letterSpacing: -15 }}>&nbsp;</small>
