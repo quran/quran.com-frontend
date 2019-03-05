@@ -66,9 +66,9 @@ const QuickChapters: React.SFC<{}> = () => (
       </Span>
       <Span>
         <Link
-          to="/2/225"
+          to="/2/255"
           {...QUICK_LINKS_EVENTS.CLICK.VERSE.PROPS}
-          data-metrics-verse-key="2:225"
+          data-metrics-verse-key="2:255"
         >
           Ayatul Kursi
         </Link>
