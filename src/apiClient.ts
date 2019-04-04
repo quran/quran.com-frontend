@@ -22,11 +22,7 @@ const formatUrl = (path: string): string => {
     return `${config('api')}${adjustedPath}`;
   }
 
-  if (adjustedPath.startsWith('/onequran')) {
-    return adjustedPath;
-  }
-
-  return `/api${adjustedPath}`;
+  return adjustedPath;
 };
 
 interface Options {
