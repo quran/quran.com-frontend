@@ -9,7 +9,7 @@ type Params = {
 };
 
 const prepareParams = (params: any, options: any) => {
-  if (params.translations && params.translations.length) {
+  if (params.translations && Array.isArray(params.translations)) {
     const translations =
       typeof params.translations === 'string'
         ? params.translations.split(',')

@@ -4,7 +4,7 @@ import Menu, { MenuItem } from 'quran-components/lib/Menu';
 import Checkbox from 'quran-components/lib/Checkbox';
 import Icon from 'quran-components/lib/Icon';
 import T, { KEYS } from '../T';
-import { SetSetting } from '../../redux/actions/settings';
+import { SetSetting, SetSettingPayload } from '../../redux/actions/settings';
 import { TranslationShape } from '../../shapes';
 import { FetchTranslations } from '../../redux/actions/options';
 
@@ -40,7 +40,7 @@ const defaultProps: { translationOptions: Array<TranslationShape> } = {
 };
 
 type Props = {
-  setSetting: SetSetting;
+  setSetting: (payload: SetSettingPayload) => void;
   translationOptions: Array<TranslationShape>;
   translationSettings: Array<number>;
   fetchTranslations: FetchTranslations;
@@ -81,7 +81,7 @@ class TranslationsDropdown extends Component<Props> {
     items: Array<TranslationShape>,
     render: (translation: TranslationShape) => string
   ) {
-    const { translationSettings, translationOptions } = this.props;
+    const { translationSettings } = this.props;
 
     return items.map(translationOption => {
       const checked = translationSettings.find(
@@ -97,7 +97,7 @@ class TranslationsDropdown extends Component<Props> {
             checked={checked || false}
             disabled={
               !checked &&
-              translationOptions.length >= TRANSLATIONS_SELECTION_LIMIT
+              translationSettings.length >= TRANSLATIONS_SELECTION_LIMIT
             }
             handleChange={() => this.handleOptionSelected(translationOption.id)}
           >
@@ -136,14 +136,17 @@ class TranslationsDropdown extends Component<Props> {
   }
 
   render() {
+    const { translationSettings } = this.props;
     return (
       <MenuItem
         icon={<Icon type="list" />}
         menu={
           <Menu>
-            <MenuItem onClick={this.handleRemoveContent}>
-              <T id={KEYS.SETTING_TRANSLATIONS_REMOVEALL} />
-            </MenuItem>
+            {translationSettings.length > 0 && (
+              <MenuItem onClick={this.handleRemoveContent}>
+                <T id={KEYS.SETTING_TRANSLATIONS_REMOVEALL} />
+              </MenuItem>
+            )}
 
             <MenuItem divider>
               <T id={KEYS.SETTING_TRANSLATIONS_ENGLISH} />
