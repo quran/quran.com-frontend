@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { Tooltip } from 'react-tippy';
+import { Tooltip } from 'react-tippy';
 import pad from 'lodash/pad';
-import styled from 'styled-components';
+import styled, { StyledFunction } from 'styled-components';
 import { buildAudioURL } from '../helpers/buildAudio';
 import { WordShape } from '../shapes';
 import { WORD_TYPES } from '../constants';
@@ -17,7 +17,14 @@ const WordGlyph = styled.span`
   -webkit-font-smoothing: antialiased;
 `;
 
-const WordWrap = styled.a<{ highlight?: boolean }>`
+interface WordWrapProps {
+  highlight?: boolean;
+}
+const WordWrapStyled: StyledFunction<
+  WordWrapProps & React.HTMLProps<HTMLAnchorElement>
+> =
+  styled.a;
+const WordWrap = WordWrapStyled`
   -webkit-font-smoothing: antialiased;
   float: right;
   color: ${({ highlight, theme }) =>
@@ -183,39 +190,37 @@ class Word extends Component<Props> {
       text = word.code;
     }
 
-    // const tooltipText = this.getTooltipTitle();
-    // const tooltipHtml = (
-    //   <div className={this.getLanguageName()}>{tooltipText}</div>
-    // );
+    const tooltipText = this.getTooltipTitle();
+    const tooltipHtml = (
+      <div className={this.getLanguageName()}>{tooltipText}</div>
+    );
 
     return (
       <span>
-        {/* <Tooltip
+        <Tooltip
           arrow
           interactive
-          title={tooltipText}
           html={tooltipHtml}
           style={{ position: 'relative', float: 'right', overflow: 'hidden' }}
-        > */}
-        <WordWrap
-          role="button"
-          tabIndex={audioPosition}
-          highlight={isCurrentVersePlaying}
-          id={id}
-          // onDoubleClick={this.handleSegmentPlay}
-          onClick={this.handleClick}
-          onKeyPress={this.handleWordPlay}
         >
-          <WordGlyph
-            className={className}
-            dangerouslySetInnerHTML={{ __html: text }}
-          />
+          <WordWrap
+            role="button"
+            tabIndex={audioPosition}
+            highlight={isCurrentVersePlaying}
+            id={id}
+            onClick={this.handleClick}
+            onKeyPress={this.handleWordPlay}
+          >
+            <WordGlyph
+              className={className}
+              dangerouslySetInnerHTML={{ __html: text }}
+            />
 
-          <WordText
-            dangerouslySetInnerHTML={{ __html: `${word.textMadani} ` || ' ' }}
-          />
-        </WordWrap>
-        {/* </Tooltip> */}
+            <WordText
+              dangerouslySetInnerHTML={{ __html: `${word.textMadani} ` || ' ' }}
+            />
+          </WordWrap>
+        </Tooltip>
         {word.charType === WORD_TYPES.CHAR_TYPE_WORD && (
           <small style={{ letterSpacing: -15 }}>&nbsp;</small>
         )}
