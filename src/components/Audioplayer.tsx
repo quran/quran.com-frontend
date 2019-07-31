@@ -60,6 +60,7 @@ type DefaultProps = {
   segments: undefined;
   currentFile?: $TsFixMe;
   currentVerseKey?: string;
+  isNightMode: boolean;
 };
 
 const defaultProps: DefaultProps = {
@@ -68,6 +69,7 @@ const defaultProps: DefaultProps = {
   segments: undefined,
   currentFile: undefined,
   currentVerseKey: undefined,
+  isNightMode: false,
 };
 
 type Props = {
@@ -342,15 +344,20 @@ class Audioplayer extends Component<Props> {
         verseId: this.currentVerse.id,
         verseKey: this.currentVerse.verseKey,
         audio: audioSetting,
-      }).then(() => {
-        const { files: afterFiles } = this.props;
+      })
+        .then(() => {
+          const { files: afterFiles } = this.props;
 
-        if (this.currentVerse) {
-          this.addFileListeners(afterFiles[this.currentVerse.verseKey]);
-        }
+          if (this.currentVerse) {
+            this.addFileListeners(afterFiles[this.currentVerse.verseKey]);
+          }
 
-        this.fetchNextAudioFile();
-      });
+          this.fetchNextAudioFile();
+        })
+        .catch(() => {
+          // try again
+          this.handleCurrentVerseKeyChange(prevProps);
+        });
     }
 
     // current verse change

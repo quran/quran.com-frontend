@@ -13,6 +13,7 @@ import {
   TOGGLE_SCROLL,
   UPDATE,
   FETCH_AUDIOPLAYER,
+  RESET,
 } from '../constants/audioplayer';
 import { RepeatShape } from '../../shapes';
 
@@ -212,6 +213,11 @@ export default (state = INITIAL_STATE, action: $TsFixMe) => {
         currentVerseKey: action.payload,
         isPlaying: action.meta.shouldPlay,
         currentTime: 0,
+      };
+    }
+    case RESET: {
+      return {
+        ...INITIAL_STATE,
       };
     }
     default: {

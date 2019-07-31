@@ -27,6 +27,7 @@ import { NUMBER_OF_CHAPTERS } from '../constants';
 import AudioplayerContainer from '../containers/AudioplayerContainer';
 import ChapterInfoPanelContainer from '../containers/ChapterInfoPanelContainer';
 import ChapterHelmet from './chapter/ChapterHelmet';
+import { ResetAudioPlayer } from '../redux/actions/audioplayer';
 
 const propTypes = {
   chapter: ChapterShape.isRequired,
@@ -47,6 +48,7 @@ const propTypes = {
   verses: PropTypes.objectOf(VerseShape),
   isEndOfChapter: PropTypes.bool.isRequired,
   location: PropTypes.object.isRequired,
+  resetAudioPlayer: PropTypes.func.isRequired,
 };
 
 const defaultProps = {
@@ -66,6 +68,7 @@ type Props = {
   settings: SettingsShape;
   isVersesLoading: boolean;
   location: Location;
+  resetAudioPlayer: ResetAudioPlayer;
 };
 
 class Chapter extends Component<Props> {
@@ -73,7 +76,9 @@ class Chapter extends Component<Props> {
   public static defaultProps = defaultProps;
 
   componentDidMount() {
+    const { resetAudioPlayer } = this.props;
     this.bootstrap();
+    resetAudioPlayer();
   }
 
   componentDidUpdate({
@@ -219,11 +224,11 @@ class Chapter extends Component<Props> {
     const versesArray = Object.values(verses);
     const lastVerse: VerseShape | undefined = last(versesArray);
     const isEndOfChapter: boolean | undefined =
-      lastVerse && lastVerse.verseNumber === chapter.versesCount;
+      lastVerse && lastVerse.verseNumber === (chapter && chapter.versesCount);
     const isSingleVerse =
       !!match.params.range && !match.params.range.includes('-');
 
-    if ((!chapter || isVersesLoading) && isEmpty(versesArray)) {
+    if (!chapter || isVersesLoading || isEmpty(versesArray)) {
       return <Loader />;
     }
 

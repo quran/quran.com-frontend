@@ -9,6 +9,7 @@ import {
   TOGGLE_SCROLL,
   FETCH_AUDIOPLAYER,
   UPDATE,
+  RESET,
 } from '../constants/audioplayer';
 import apiClient from '../../apiClient';
 import { VerseShape } from '../../shapes';
@@ -100,6 +101,10 @@ export const fetchAudio = ({
 export const isLoaded = (files: $TsFixMe, verse: VerseShape) =>
   files[verse.verseKey];
 
+export const reset = () => ({
+  type: RESET,
+});
+
 export type FetchAudio = typeof fetchAudio;
 export type Play = typeof play;
 export type Pause = typeof pause;
@@ -109,3 +114,4 @@ export type SetCurrentVerseKey = typeof setCurrentVerseKey;
 export type SetRepeat = typeof setRepeat;
 export type SetCurrentWord = typeof setCurrentWord;
 export type PlayCurrentWord = typeof playCurrentWord;
+export type ResetAudioPlayer = typeof reset;

@@ -101,9 +101,10 @@ class Verse extends Component<Props> {
 
     if (isCurrentVersePlaying) {
       pause();
+    } else {
+      // automatically plays verse (again if paused)
+      setCurrentVerseKey(verse.verseKey, true);
     }
-
-    setCurrentVerseKey(verse.verseKey, true);
   };
 
   handleTafsirsClick = () => {
