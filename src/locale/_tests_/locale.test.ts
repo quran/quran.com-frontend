@@ -7,6 +7,7 @@ import nl from '../nl';
 import sq from '../sq';
 import tr from '../tr';
 import ur from '../ur';
+import th from '../th';
 
 describe('locale files', () => {
   const enLength = Object.keys(en).length;
@@ -20,6 +21,7 @@ describe('locale files', () => {
     const sqLength = Object.keys(sq).length;
     const trLength = Object.keys(tr).length;
     const urLength = Object.keys(ur).length;
+    const thLength = Object.keys(th).length;
 
     expect(arLength).toEqual(enLength);
     expect(faLength).toEqual(enLength);
@@ -29,5 +31,6 @@ describe('locale files', () => {
     expect(sqLength).toEqual(enLength);
     expect(trLength).toEqual(enLength);
     expect(urLength).toEqual(enLength);
+    expect(thLength).toEqual(enLength);
   });
 });

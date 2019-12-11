@@ -8,7 +8,8 @@ import sq from './sq';
 import tr from './tr';
 import ur from './ur';
 import it from './it';
+import th from './th';
 
-export { ar, en, fa, fr, id, nl, sq, tr, ur, it };
+export { ar, en, fa, fr, id, nl, sq, tr, ur, it, th };
 
-export default { ar, en, fa, fr, id, nl, sq, tr, ur, it };
+export default { ar, en, fa, fr, id, nl, sq, tr, ur, it, th };

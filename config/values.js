@@ -19,6 +19,7 @@ const locales = {
   fr: 'Français',
   nl: 'Dutch',
   it: 'Italiano',
+  th: 'ภาษาไทย',
 };
 
 const values = {
