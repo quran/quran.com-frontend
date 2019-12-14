@@ -1,4 +1,6 @@
-# Quran.com [![CircleCI](https://circleci.com/gh/quran/quran.com-frontend.svg?style=svg)](https://circleci.com/gh/quran/common-components)
+# NOTE: THE CURRENT DEVELOPMENT IS GOING ON IN [THIS REPO](https://github.com/quran/quran.com-frontend-v2) PlEASE FEEL FREE TO IGNORE THIS REPO AS IT'S STALE NOW. YOU ARE MORE THAN WELCOME TO CONTRIBUTE [HERE](https://github.com/quran/quran.com-frontend-v2).
+
+##  Quran.com [![CircleCI](https://circleci.com/gh/quran/quran.com-frontend.svg?style=svg)](https://circleci.com/gh/quran/common-components)
 
 This project is the frontend for Quran.com. It is built using
 [Reactjs] + [Redux] + [Expressjs] + [Webpack]. It is isomorphic (javascript shared
