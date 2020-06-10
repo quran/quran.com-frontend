@@ -10,7 +10,7 @@ export default {
     [KEYS.SETTING_TITLE]: 'خيارات',
     [KEYS.SETTING_CHAPTERS]: 'السورة',
     [KEYS.SETTING_VERSES]: 'انتقال إلى آية',
-    [KEYS.SETTING_RECITERS_TITLE]: 'القراء',
+    [KEYS.SETTING_RECITERS_TITLE]: 'القرّاء',
     [KEYS.SETTING_TRANSLATIONS_TITLE]: 'الترجمات',
     [KEYS.SETTING_TRANSLATIONS_REMOVEALL]: 'حذف الكل',
     [KEYS.SETTING_TRANSLATIONS_ENGLISH]: 'الإنجليزية',
@@ -23,8 +23,8 @@ export default {
     [KEYS.SETTING_TOOLTIP_TRANSLATION]: 'ترجمة معنوية',
     [KEYS.SETTING_TOOLTIP_TRANSLITERATION]: 'ترجمة حرفية',
     [KEYS.SETTING_NIGHTMODE]: 'الوضع الليلي',
-    [KEYS.SETTING_NIGHTMODE_DAY_TIP]: 'حول إلى الوضع الصباحي',
-    [KEYS.SETTING_NIGHTMODE_NIGHT_TIP]: 'حول إلى الوضع الليلي',
+    [KEYS.SETTING_NIGHTMODE_DAY_TIP]: 'حَوّل إلى الوضع الصباحي',
+    [KEYS.SETTING_NIGHTMODE_NIGHT_TIP]: 'حَوّل إلى الوضع الليلي',
 
     [KEYS.VERSE_MEDIA_LECTURE_FROM]: 'مشاهدة محاضرة {from}',
     [KEYS.VERSE_BOOKMARKED]: 'لها إشارة مرجعية',
@@ -35,7 +35,7 @@ export default {
     [KEYS.SEARCH_PLACEHOLDER]: 'بحث',
     [KEYS.SEARCH_RESULTHEADING]:
       '{from}-{to} من <span> {total} </span> نتائج البحث عن: <span>{query}</span>', // eslint-disable-line max-len
-    [KEYS.SEARCH_ERROR]: 'حدث خطأ أوقف البحث',
+    [KEYS.SEARCH_ERROR]: 'حدث خطأ! أوقف البحث',
     [KEYS.SEARCH_NOTHING]: 'بحث بلا كلمات',
     [KEYS.SEARCH_NO_RESULT]: 'لم يعثر على نتائج',
 
@@ -93,11 +93,11 @@ export default {
     [KEYS.JUZ_INDEX_HEADING]: 'الجزء',
 
     [KEYS.LOGIN_MESSAGE]:
-      'لتخزين عناوينك وملاحظاتك وأنشطتك ، سجل دخولك في الموقع Quran.com',
+      'لتخزين عناوينك وملاحظاتك وأنشطتك، سجل دخولك في الموقع Quran.com',
     [KEYS.ERROR_INVALID_CHAPTER]:
-      "السورة خارج النطاق. الرجاء الانتقال إلى <a href='/'> الصفحة الرئيسية </a> وتحديد سورة",
+      "السورة خارج النطاق. الرجاء الانتقال إلى <a href='/'> الصفحة الرئيسة </a> وتحديد سورة",
     [KEYS.ERROR_INVALID_VERSE]:
-      "آية خارج النطاق. الرجاء الانتقال إلى <a href='/'> الصفحة الرئيسية </a> وتحديد سورة / آية",
+      "آية خارج النطاق. الرجاء الانتقال إلى <a href='/'> الصفحة الرئيسة </a> وتحديد سورة / آية",
     [KEYS.ERROR_NOT_FOUND]: 'عذرا، الصفحة غير موجودة',
 
     [KEYS.NO_SCRIPT_DESCRIPTION]:
