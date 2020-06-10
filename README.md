@@ -1,4 +1,4 @@
-# NOTE: THE CURRENT DEVELOPMENT IS GOING ON IN [THIS REPO](https://github.com/quran/quran.com-frontend-v2) PlEASE FEEL FREE TO IGNORE THIS REPO AS IT'S STALE NOW. YOU ARE MORE THAN WELCOME TO CONTRIBUTE [HERE](https://github.com/quran/quran.com-frontend-v2).
+# NOTE: THE CURRENT DEVELOPMENT IS GOING ON IN [THIS REPO](https://github.com/quran/quran.com-frontend-next) PlEASE FEEL FREE TO IGNORE THIS REPO AS IT'S STALE NOW. YOU ARE MORE THAN WELCOME TO CONTRIBUTE [HERE](https://github.com/quran/quran.com-frontend-next).
 
 ##  Quran.com [![CircleCI](https://circleci.com/gh/quran/quran.com-frontend.svg?style=svg)](https://circleci.com/gh/quran/common-components)
 
