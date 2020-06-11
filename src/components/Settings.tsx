@@ -11,7 +11,7 @@ import ReciterDropdownContainer from '../containers/settings/ReciterDropdownCont
 import TranslationsDropdownContainer from '../containers/settings/TranslationsDropdownContainer';
 import TooltipOptions from './settings/TooltipOptions';
 import { VerseShape, ChapterShape, SettingsShape } from '../shapes';
-import { SetSetting } from '../redux/actions/settings';
+import { SetSetting, SetSettingPayload } from '../redux/actions/settings';
 import { FetchVerses } from '../redux/actions/verses';
 
 const propTypes = {
@@ -35,7 +35,7 @@ type Props = {
 class Settings extends Component<Props> {
   static propTypes = propTypes;
 
-  handleSettingChange = (payload: $TsFixMe) => {
+  handleSettingChange = (payload: SetSettingPayload) => {
     const { chapter, setSetting, settings, fetchVerses, verses } = this.props;
 
     setSetting(payload);
@@ -50,8 +50,7 @@ class Settings extends Component<Props> {
         chapter.chapterNumber,
         paging,
         {
-          ...settings,
-          ...payload,
+          translations: payload.translations || settings.translations,
         },
         settings
       );
@@ -77,7 +76,7 @@ class Settings extends Component<Props> {
         />
         <hr />
         <ReciterDropdownContainer />
-        <TranslationsDropdownContainer />
+        <TranslationsDropdownContainer setSetting={this.handleSettingChange} />
         <TooltipOptions tooltip={settings.tooltip} onChange={setSetting} />
         <hr />
         <FontSizeOptions fontSize={settings.fontSize} onChange={setSetting} />

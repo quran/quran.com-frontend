@@ -18,6 +18,8 @@ type Payload = {
   isNightMode?: boolean;
 };
 
+export type SetSettingPayload = Payload;
+
 export const setSetting = (payload: Payload) => {
   const options = cookie.load(COOKIE_SETTINGS_KEY) || {}; // protect against first timers.
 

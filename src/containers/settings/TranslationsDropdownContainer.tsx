@@ -11,5 +11,5 @@ export const mapStateToProps = (state: ReduxState) => ({
 
 export default connect(
   mapStateToProps,
-  { fetchTranslations, setSetting }
+  { fetchTranslations }
 )(TranslationsDropdown);
