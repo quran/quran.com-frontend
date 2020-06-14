@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Tooltip } from 'react-tippy';
 import pad from 'lodash/pad';
-import styled from 'styled-components';
+import styled, { StyledFunction } from 'styled-components';
 import { buildAudioURL } from '../helpers/buildAudio';
 import { WordShape } from '../shapes';
 import { WORD_TYPES } from '../constants';
@@ -17,7 +17,14 @@ const WordGlyph = styled.span`
   -webkit-font-smoothing: antialiased;
 `;
 
-const WordWrap = styled.a<{ highlight?: boolean }>`
+interface WordWrapProps {
+  highlight?: boolean;
+}
+const WordWrapStyled: StyledFunction<
+  WordWrapProps & React.HTMLProps<HTMLAnchorElement>
+> =
+  styled.a;
+const WordWrap = WordWrapStyled`
   -webkit-font-smoothing: antialiased;
   float: right;
   color: ${({ highlight, theme }) =>
@@ -80,6 +87,8 @@ class Word extends Component<Props> {
   public static propTypes = propTypes;
   public static defaultProps = defaultProps;
 
+  timer: number | undefined = undefined;
+
   getTooltipTitle = () => {
     const { word, tooltip } = this.props;
 
@@ -105,6 +114,20 @@ class Word extends Component<Props> {
     }
 
     return '';
+  };
+
+  handleClick = () => {
+    if (this.timer && this.timer < 300) {
+      this.handleSegmentPlay();
+      window.clearTimeout(this.timer);
+      this.timer = undefined;
+    } else {
+      this.timer = window.setTimeout(() => {
+        this.handleWordPlay();
+        window.clearTimeout(this.timer);
+        this.timer = undefined;
+      }, 300);
+    }
   };
 
   handleWordPlay = () => {
@@ -177,7 +200,6 @@ class Word extends Component<Props> {
         <Tooltip
           arrow
           interactive
-          title={tooltipText}
           html={tooltipHtml}
           style={{ position: 'relative', float: 'right', overflow: 'hidden' }}
         >
@@ -186,8 +208,7 @@ class Word extends Component<Props> {
             tabIndex={audioPosition}
             highlight={isCurrentVersePlaying}
             id={id}
-            onDoubleClick={this.handleSegmentPlay}
-            onClick={this.handleWordPlay}
+            onClick={this.handleClick}
             onKeyPress={this.handleWordPlay}
           >
             <WordGlyph

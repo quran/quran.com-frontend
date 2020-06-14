@@ -5,6 +5,7 @@ import { fetchChapters } from '../redux/actions/chapters';
 import { fetchChapterInfo } from '../redux/actions/chapterInfos';
 import ReduxState from '../types/ReduxState';
 import Chapter from '../components/Chapter';
+import { reset } from '../redux/actions/audioplayer';
 
 type Props = {
   match: match<$TsFixMe>;
@@ -33,5 +34,6 @@ export default connect(
     fetchVerses,
     fetchChapters,
     fetchChapterInfo,
+    resetAudioPlayer: reset,
   }
 )(Chapter);

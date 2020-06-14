@@ -13,3 +13,4 @@ export const TOGGLE_SCROLL: 'quran/audioplayer/TOGGLE_SCROLL' =
 export const UPDATE: 'quran/audioplayer/UPDATE' = 'quran/audioplayer/UPDATE';
 export const FETCH_AUDIOPLAYER: 'quran/audioplayer/FETCH_AUDIOPLAYER' =
   'quran/audioplayer/FETCH_AUDIOPLAYER';
+export const RESET: 'quran/audioplayer/RESET' = 'quran/audioplayer/RESET';
