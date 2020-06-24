@@ -1,7 +1,6 @@
 $icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
 @import 'bootstrap';
 @import 'components/MasterHeader';
-@import 'components/SmartBanner';
 @import 'partials/search-input';
 @import 'partials/dropdown';
 @import 'partials/tooltip';
@@ -136,6 +135,14 @@ li em {
 
 .foote-note-text {
   overflow-y: auto;
+}
+
+.smartbanner-show {
+  margin-top: 80px;
+}
+
+.smartbanner-show .smartbanner {
+  display: block;
 }
 
 // NOTE: This is for dropdown in navbar on mobile

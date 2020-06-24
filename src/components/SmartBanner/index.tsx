@@ -4,10 +4,16 @@ import PropTypes from 'prop-types';
 import useragent from 'express-useragent';
 import toNumber from 'lodash/toNumber';
 import cookie from 'react-cookie';
-import StoreTextShape from '../shapes/StoreTextShape';
+import StoreTextShape from '../../shapes/StoreTextShape';
 
-const appleIcon = require('../../static/images/app-banner-ios.jpg');
-const androidIcon = require('../../static/images/app-banner-android.png');
+import Container from "./Container";
+import Close from "./Close";
+import Icon from "./Icon";
+import { Button, ButtonText } from "./Button";
+import { Info, Title } from "./Info";
+
+const appleIcon = require('../../../static/images/app-banner-ios.jpg');
+const androidIcon = require('../../../static/images/app-banner-android.png');
 
 const ICONS: { [key: string]: string } = {
   apple: appleIcon,
@@ -238,39 +244,34 @@ class SmartBanner extends Component<Props> {
     this.show();
 
     const { icon, link, inStore } = this.retrieveInfo();
-    const wrapperClassName = `smartbanner smartbanner-${deviceType}`;
-    const iconStyle = {
-      backgroundImage: `url(${icon})`,
-    };
 
     return (
-      <div className={wrapperClassName}>
-        <div className="smartbanner-container">
-          <button
+      <Container className={`smartbanner ${deviceType}`}>
+        <div className="wrapper">
+          <Close
             type="button"
-            className="smartbanner-close btn btn-link"
+            className="btn btn-link"
             onClick={() => this.close()}
             data-metrics-event-name="SmartBanner:close"
           >
             <i className="fa fa-times-circle" />
-          </button>
-          <span className="smartbanner-icon" style={iconStyle} />
-          <div className="smartbanner-info">
-            <div className="smartbanner-title">{title}</div>
+          </Close>
+          <Icon icon={icon} />
+          <Info>
+            <Title>{title}</Title>
             <div>{author}</div>
             <span>{inStore}</span>
-          </div>
+          </Info>
 
-          <a
+          <Button
             href={link}
             onClick={() => this.install()}
-            className="smartbanner-button"
             data-metrics-event-name="SmartBanner:InstallAapp"
           >
-            <span className="smartbanner-button-text">{button}</span>
-          </a>
+            <ButtonText>{button}</ButtonText>
+          </Button>
         </div>
-      </div>
+      </Container>
     );
   }
 }
