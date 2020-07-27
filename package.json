@@ -106,7 +106,7 @@
     "pretty-error": "2.0.0",
     "promise": "7.1.1",
     "proxy-middleware": "0.14.0",
-    "qs": "6.2.1",
+    "qs": "6.2.3",
     "quran-components": "^0.0.78",
     "raven": "1.1.1",
     "raw-loader": "0.5.1",
