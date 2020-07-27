@@ -69,7 +69,7 @@
     "babili-webpack-plugin": "^0.0.11",
     "body-parser": "1.15.2",
     "bootstrap-loader": "^2.1.0",
-    "bootstrap-sass": "3.3.7",
+    "bootstrap-sass": "3.4.1",
     "bundle-loader": "0.5.4",
     "cache-manager": "1.5.0",
     "caniuse-db": "1.0.30000613",
