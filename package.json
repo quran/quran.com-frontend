@@ -81,7 +81,7 @@
     "cors": "2.7.1",
     "css-loader": "0.26.1",
     "cssnano": "3.10.0",
-    "debug": "2.2.0",
+    "debug": "2.6.9",
     "dotenv": "2.0.0",
     "errorhandler": "1.4.3",
     "express": "4.14.0",
