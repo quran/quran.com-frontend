@@ -178,6 +178,18 @@ class Surah extends Component {
     return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`;
   }
 
+  // Generates the url for the open graph image
+  ogImage() {
+    const { params, chapter } = this.props;
+    const hasAyahNumber = params.range && !isNaN(params.range);
+
+    if (hasAyahNumber) {
+      return `https://quran-og-image.vercel.app/${chapter.chapterNumber}/${params.range}`;
+    }
+
+    return `https://quran-og-image.vercel.app/${chapter.chapterNumber}`;
+  }
+
   description() {
     const { params, verses, chapter, info } = this.props;
 
@@ -249,7 +261,6 @@ class Surah extends Component {
       const to = this.getFirst() + 10 > chapter.versesCount
         ? chapter.versesCount
         : this.getFirst() + 10;
-
       return (
         <ul className="pager">
           <li className="text-center">
@@ -392,7 +403,8 @@ class Surah extends Component {
         <Helmet
           {...makeHeadTags({
             title: this.title(),
-            description: this.description()
+            description: this.description(),
+            image: this.ogImage()
           })}
           script={[
             {

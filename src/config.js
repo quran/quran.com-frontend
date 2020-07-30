@@ -116,16 +116,12 @@ const config = {
           content: description
         },
         {
-          property: 'og:url',
-          content: 'https://quran.com'
-        },
-        {
           property: 'og:type',
           content: 'website'
         },
         {
           name: 'twitter:card',
-          content: 'summary'
+          content: 'summary_large_image'
         },
         {
           name: 'twitter:title',
@@ -138,14 +134,6 @@ const config = {
         {
           name: 'twitter:image',
           content: 'https://quran.com/images/thumbnail.png'
-        },
-        {
-          name: 'twitter:image:width',
-          content: '200'
-        },
-        {
-          name: 'twitter:image:height',
-          content: '200'
         },
         {
           name: 'google-play-app',
