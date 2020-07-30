@@ -266,7 +266,6 @@ class Surah extends Component {
         this.getFirst() + 10 > chapter.versesCount
           ? chapter.versesCount
           : this.getFirst() + 10;
-
       return (
         <ul className="pager">
           <li className="text-center">
