@@ -184,10 +184,10 @@ class Surah extends Component {
     const hasAyahNumber = params.range && !isNaN(params.range);
 
     if (hasAyahNumber) {
-      return `https://og.tarteel.io/${chapter.chapterNumber}/${params.range}`;
+      return `https://quran-og-image.vercel.app/${chapter.chapterNumber}/${params.range}`;
     }
 
-    return `https://og.tarteel.io/${chapter.chapterNumber}`;
+    return `https://quran-og-image.vercel.app/${chapter.chapterNumber}`;
   }
 
   description() {
