@@ -178,6 +178,18 @@ class Surah extends Component {
     return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`;
   }
 
+  // Generates the url for the open graph image
+  ogImage() {
+    const { params, chapter } = this.props;
+    const hasAyahNumber = params.range && !isNaN(params.range);
+
+    if (hasAyahNumber) {
+      return `https://og.tarteel.io/${chapter.chapterNumber}/${params.ragne}`;
+    }
+
+    return `https://og.tarteel.io/${chapter.chapterNumber}`;
+  }
+
   description() {
     const { params, verses, chapter, info } = this.props;
 
@@ -205,13 +217,17 @@ class Surah extends Component {
       const verse = verses[`${chapter.chapterNumber}:${params.range}`];
 
       if (verse && verse.content && verse.content[0]) {
-        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${verse.content[0].text}`;
+        return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${verse
+          .content[0].text}`;
       }
 
       return `Surat ${chapter.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${info ? info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${info
+      ? info.shortText
+      : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter
+      .pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
   }
 
   renderNoAyah() {
@@ -246,9 +262,10 @@ class Surah extends Component {
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
-      const to = this.getFirst() + 10 > chapter.versesCount
-        ? chapter.versesCount
-        : this.getFirst() + 10;
+      const to =
+        this.getFirst() + 10 > chapter.versesCount
+          ? chapter.versesCount
+          : this.getFirst() + 10;
 
       return (
         <ul className="pager">
@@ -276,7 +293,8 @@ class Surah extends Component {
             {chapter.chapterNumber > 1 &&
               <li className="previous">
                 <Link
-                  to={`/${chapter.chapterNumber * 1 - 1}?translations=${translations}`}
+                  to={`/${chapter.chapterNumber * 1 -
+                    1}?translations=${translations}`}
                 >
                   ←
                   <LocaleFormattedMessage
@@ -302,7 +320,8 @@ class Surah extends Component {
             {chapter.chapterNumber < 114 &&
               <li className="next">
                 <Link
-                  to={`/${chapter.chapterNumber * 1 + 1}?translations=${translations}`}
+                  to={`/${chapter.chapterNumber * 1 +
+                    1}?translations=${translations}`}
                 >
                   <LocaleFormattedMessage
                     id="chapter.next"
@@ -332,7 +351,7 @@ class Surah extends Component {
       currentVerse
     } = this.props; // eslint-disable-line no-shadow
 
-    return Object.values(verses).map(verse => (
+    return Object.values(verses).map(verse =>
       <Verse
         verse={verse}
         chapter={chapter}
@@ -349,7 +368,7 @@ class Surah extends Component {
         userAgent={options.userAgent}
         audio={options.audio}
       />
-    ));
+    );
   }
 
   renderLines() {
@@ -392,7 +411,8 @@ class Surah extends Component {
         <Helmet
           {...makeHeadTags({
             title: this.title(),
-            description: this.description()
+            description: this.description(),
+            image: this.ogImage()
           })}
           script={[
             {
@@ -420,7 +440,9 @@ class Surah extends Component {
           ]}
           style={[
             {
-              cssText: `.text-arabic{font-size: ${options.fontSize.arabic}rem;} .text-translation{font-size: ${options.fontSize.translation}rem;}` // eslint-disable-line max-len
+              cssText: `.text-arabic{font-size: ${options.fontSize
+                .arabic}rem;} .text-translation{font-size: ${options.fontSize
+                .translation}rem;}` // eslint-disable-line max-len
             }
           ]}
         />

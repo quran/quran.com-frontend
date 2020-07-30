@@ -8,14 +8,15 @@ const environment = {
 }[process.env.NODE_ENV || 'development'];
 
 const title = "Al-Qur'an al-Kareem - القرآن الكريم";
-const description = 'The Quran translated into many languages in a simple and easy interface.';
+const description =
+  'The Quran translated into many languages in a simple and easy interface.';
 const keywords = [
   'القران الكريم',
   'قران كريم',
   'القرآن',
   'قران',
   'quran',
-  'qur\'an',
+  "qur'an",
   'koran',
   'kareem',
   'surah',
@@ -85,7 +86,8 @@ const config = {
         },
         {
           name: 'viewport',
-          content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+          content:
+            'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
         },
         {
           name: 'google-site-verification',
@@ -116,16 +118,12 @@ const config = {
           content: description
         },
         {
-          property: 'og:url',
-          content: 'https://quran.com'
-        },
-        {
           property: 'og:type',
           content: 'website'
         },
         {
           name: 'twitter:card',
-          content: 'summary'
+          content: 'summary_large_image'
         },
         {
           name: 'twitter:title',
@@ -138,14 +136,6 @@ const config = {
         {
           name: 'twitter:image',
           content: 'https://quran.com/images/thumbnail.png'
-        },
-        {
-          name: 'twitter:image:width',
-          content: '200'
-        },
-        {
-          name: 'twitter:image:height',
-          content: '200'
         },
         {
           name: 'google-play-app',
@@ -316,7 +306,8 @@ const config = {
       /* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */
       script: [
         {
-          src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en',
+          src:
+            'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en',
           async: '',
           defer: ''
         },
