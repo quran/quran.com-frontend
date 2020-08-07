@@ -76,7 +76,7 @@ module.exports = {
       {
         test: /\.scss$/,
         loader: ExtractTextPlugin.extract({
-          fallbackLoader: 'style-loader',
+          fallback: 'style-loader',
           //   loader: [
           //     {
           //       loader: 'css-loader',
