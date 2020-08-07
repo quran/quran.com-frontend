@@ -4,6 +4,7 @@ import PrettyError from 'pretty-error';
 import React from 'react';
 import ReactDOM from 'react-dom/server';
 import { match } from 'react-router';
+import { ThemeProvider } from 'styled-components';
 import { ReduxAsyncConnect, loadOnServer } from 'redux-connect';
 import createHistory from 'react-router/lib/createMemoryHistory';
 import { Provider } from 'react-redux';
@@ -19,7 +20,7 @@ import routes from './routes';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import debug from './helpers/debug';
-
+import theme from './theme';
 import Html from './helpers/Html';
 import PdfHtml from './helpers/PdfHtml';
 
@@ -30,7 +31,7 @@ const pretty = new PrettyError();
 const server = express();
 Raven.config(config.sentryServer, {
   captureUnhandledRejections: true,
-  autoBreadcrumbs: true
+  autoBreadcrumbs: true,
 }).install();
 
 expressConfig(server);
@@ -50,9 +51,11 @@ server.use((req, res, next) => {
 
   if (req.query.DISABLE_SSR) {
     return res.status(200).send(
-      `<!doctype html>\n${ReactDOM.renderToString(<IntlProvider locale="en" messages={localMessages}>
-        <Html store={store} assets={webpack_isomorphic_tools.assets()} />
-      </IntlProvider>)}`
+      `<!doctype html>\n${ReactDOM.renderToString(
+        <IntlProvider locale="en" messages={localMessages}>
+          <Html store={store} assets={webpack_isomorphic_tools.assets()} />
+        </IntlProvider>,
+      )}`,
     );
   }
 
@@ -71,16 +74,16 @@ server.use((req, res, next) => {
         console.error('ROUTER ERROR:', pretty.render(error));
         res.status(500).send(error);
       } else if (renderProps) {
-        const status = renderProps.location.pathname.indexOf('/error') > -1
-          ? 404
-          : 200;
+        const status = renderProps.location.pathname.indexOf('/error') > -1 ? 404 : 200;
 
         loadOnServer({ ...renderProps, store, helpers: { client } })
           .then(() => {
             const component = (
               <IntlProvider messages={localMessages} locale="en">
                 <Provider store={store}>
-                  <ReduxAsyncConnect {...renderProps} />
+                  <ThemeProvider theme={theme}>
+                    <ReduxAsyncConnect {...renderProps} />
+                  </ThemeProvider>
                 </Provider>
               </IntlProvider>
             );
@@ -96,7 +99,7 @@ server.use((req, res, next) => {
                   url={`${req.protocol}://${req.get('host')}`}
                   component={component}
                   assets={webpack_isomorphic_tools.assets()}
-                />
+                />,
               );
               const html = `<!doctype html>\n${body}`;
 
@@ -113,13 +116,19 @@ server.use((req, res, next) => {
             }
 
             const html = `<!doctype html>
-            ${ReactDOM.renderToString(<Html component={component} store={store} assets={webpack_isomorphic_tools.assets()} />)}`;
+            ${ReactDOM.renderToString(
+              <Html
+                component={component}
+                store={store}
+                assets={webpack_isomorphic_tools.assets()}
+              />,
+            )}`;
 
             return res.send(html);
           })
           .catch(next);
       }
-    }
+    },
   );
 
   return false;
@@ -145,9 +154,7 @@ export default function serve(cb) {
     console.info(`==> ✅  Server is listening at http://localhost:${port}`);
     console.info(`==> 🎯  API at ${process.env.API_URL}`);
     Object.keys(config).forEach(
-      key =>
-        config[key].constructor.name !== 'Object' &&
-        console.info(`==> ${key}`, config[key])
+      key => config[key].constructor.name !== 'Object' && console.info(`==> ${key}`, config[key]),
     );
 
     return cb && cb(this);
