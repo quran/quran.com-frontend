@@ -1,59 +1,59 @@
 /* global window, document */
-import React, { Component, PropTypes } from "react";
-import * as customPropTypes from "customPropTypes";
-import Link from "react-router/lib/Link";
+import React, { Component, PropTypes } from 'react';
+import * as customPropTypes from 'customPropTypes';
+import Link from 'react-router/lib/Link';
 // redux
-import { bindActionCreators } from "redux";
-import { connect } from "react-redux";
-import { asyncConnect } from "redux-connect";
-import { push } from "react-router-redux";
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { asyncConnect } from 'redux-connect';
+import { push } from 'react-router-redux';
 
-import Helmet from "react-helmet";
-import Loadable from "react-loadable";
+import Helmet from 'react-helmet';
+import Loadable from 'react-loadable';
 
 // components
-import Loader from "quran-components/lib/Loader";
-import LazyLoad from "components/LazyLoad";
-import Verse from "components/Verse";
-import ComponentLoader from "components/ComponentLoader";
-import Bismillah from "components/Bismillah";
-import LocaleFormattedMessage from "components/LocaleFormattedMessage";
+import Loader from 'quran-components/lib/Loader';
+import LazyLoad from 'components/LazyLoad';
+import Verse from 'components/Verse';
+import ComponentLoader from 'components/ComponentLoader';
+import Bismillah from 'components/Bismillah';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 
 // Helpers
-import makeHeadTags from "helpers/makeHeadTags";
-import debug from "helpers/debug";
+import makeHeadTags from 'helpers/makeHeadTags';
+import debug from 'helpers/debug';
 
-import * as AudioActions from "redux/actions/audioplayer.js";
-import * as AyahActions from "redux/actions/verses.js";
-import * as BookmarkActions from "redux/actions/bookmarks.js";
-import * as OptionsActions from "redux/actions/options.js";
-import * as MediaActions from "redux/actions/media.js";
+import * as AudioActions from 'redux/actions/audioplayer.js';
+import * as AyahActions from 'redux/actions/verses.js';
+import * as BookmarkActions from 'redux/actions/bookmarks.js';
+import * as OptionsActions from 'redux/actions/options.js';
+import * as MediaActions from 'redux/actions/media.js';
 
-import { chaptersConnect, chapterInfoConnect, versesConnect } from "./connect";
+import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
 
-const LoaderStyle = { width: "10em", height: "10em" };
+const LoaderStyle = { width: '10em', height: '10em' };
 
-const style = require("./style.scss");
+const style = require('./style.scss');
 
 const PageView = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "pageview" */ "components/PageView"),
+    import(/* webpackChunkName: "pageview" */ 'components/PageView'),
   LoadingComponent: ComponentLoader
 });
 
 const Audioplayer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "audioplayer" */ "components/Audioplayer"),
+    import(/* webpackChunkName: "audioplayer" */ 'components/Audioplayer'),
   LoadingComponent: ComponentLoader
 });
 const SurahInfo = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "surahinfo" */ "components/SurahInfo"),
+    import(/* webpackChunkName: "surahinfo" */ 'components/SurahInfo'),
   LoadingComponent: ComponentLoader
 });
 const TopOptions = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "topoptions" */ "components/TopOptions"),
+    import(/* webpackChunkName: "topoptions" */ 'components/TopOptions'),
   LoadingComponent: ComponentLoader
 });
 
@@ -66,11 +66,11 @@ class Surah extends Component {
   componentWillMount() {
     const { params, chapter, actions } = this.props; // eslint-disable-line no-shadow
 
-    if (params.range && params.range.includes("-")) {
-      const start = parseInt(params.range.split("-")[0], 10);
+    if (params.range && params.range.includes('-')) {
+      const start = parseInt(params.range.split('-')[0], 10);
 
       if (start > chapter.versesCount || isNaN(start)) {
-        return actions.push.push("/error/invalid-verse-range");
+        return actions.push.push('/error/invalid-verse-range');
       }
 
       return false;
@@ -85,7 +85,7 @@ class Surah extends Component {
       options: { audio }
     } = this.props;
 
-    Object.values(verses).forEach(verse => {
+    Object.values(verses).forEach((verse) => {
       this.props.actions.audio.load({
         chapterId: verse.chapterId,
         verseId: verse.id,
@@ -103,7 +103,7 @@ class Surah extends Component {
         options: { audio }
       } = nextProps;
 
-      Object.values(verses).forEach(verse => {
+      Object.values(verses).forEach((verse) => {
         this.props.actions.audio.load({
           chapterId: verse.chapterId,
           verseId: verse.id,
@@ -149,7 +149,7 @@ class Surah extends Component {
     return Object.keys(this.props.verses).length;
   }
 
-  handleLazyLoadAyahs = callback => {
+  handleLazyLoadAyahs = (callback) => {
     const { verseIds, chapter, isEndOfSurah, options, actions } = this.props; // eslint-disable-line no-shadow, max-len
     const range = [this.getFirst(), this.getLast()];
 
@@ -168,7 +168,7 @@ class Surah extends Component {
     return false;
   };
 
-  handleSurahInfoToggle = payload => {
+  handleSurahInfoToggle = (payload) => {
     const { actions } = this.props; // eslint-disable-line no-shadow
 
     return actions.options.setOption(payload);
@@ -200,9 +200,9 @@ class Surah extends Component {
     const { params, verses, chapter, info } = this.props;
 
     if (params.range) {
-      if (params.range.includes("-")) {
+      if (params.range.includes('-')) {
         const [from, to] = params.range
-          .split("-")
+          .split('-')
           .map(num => parseInt(num, 10));
         const array = Array(to - from).fill(from);
         const translations = array.map((fromAyah, index) => {
@@ -212,10 +212,10 @@ class Surah extends Component {
             return verse.content[0].text;
           }
 
-          return "";
+          return '';
         });
 
-        const content = translations.join(" - ").slice(0, 250);
+        const content = translations.join(' - ').slice(0, 250);
 
         return `Surat ${chapter.nameSimple} [verse ${params.range}] - ${content}`;
       }
@@ -229,7 +229,7 @@ class Surah extends Component {
       return `Surat ${chapter.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${info ? info.shortText : ""} This Surah has ${
+    return `${info ? info.shortText : ''} This Surah has ${
       chapter.versesCount
     } verses and resides between pages ${chapter.pages[0]} to ${
       chapter.pages[1]
@@ -261,7 +261,7 @@ class Surah extends Component {
       chapter,
       options
     } = this.props;
-    const translations = (options.translations || []).join(",");
+    const translations = (options.translations || []).join(',');
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
@@ -390,11 +390,11 @@ class Surah extends Component {
 
   render() {
     const { chapter, verses, options, info, actions } = this.props; // eslint-disable-line no-shadow
-    debug("component:Surah", "Render");
+    debug('component:Surah', 'Render');
 
     if (!this.hasVerses()) {
       return (
-        <div className={style.container} style={{ margin: "50px auto" }}>
+        <div className={style.container} style={{ margin: '50px auto' }}>
           {this.renderNoAyah()}
         </div>
       );
@@ -410,7 +410,7 @@ class Surah extends Component {
           })}
           script={[
             {
-              type: "application/ld+json",
+              type: 'application/ld+json',
               innerHTML: `{
               "@context": "http://schema.org",
               "@type": "BreadcrumbList",
@@ -502,12 +502,12 @@ function mapStateToProps(state, ownProps) {
   const chapter: Object = state.chapters.entities[chapterId];
   const verses: Object = state.verses.entities[chapterId];
   const verseArray = verses
-    ? Object.keys(verses).map(key => parseInt(key.split(":")[1], 10))
+    ? Object.keys(verses).map(key => parseInt(key.split(':')[1], 10))
     : [];
   const verseIds = new Set(verseArray);
   const lastAyahInArray = verseArray.slice(-1)[0];
   const isSingleAyah =
-    !!ownProps.params.range && !ownProps.params.range.includes("-");
+    !!ownProps.params.range && !ownProps.params.range.includes('-');
   const currentVerse = state.audioplayer.currentVerse || Object.keys(verses)[0];
 
   return {
