@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import Link from 'react-router/lib/Link';
+import { connect } from 'react-redux';
 import Element from 'react-scroll/lib/components/Element';
 import Loadable from 'react-loadable';
 import ComponentLoader from 'components/ComponentLoader';
@@ -8,6 +9,8 @@ import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
 import Word from 'components/Word';
 import Translation from 'components/Translation';
 import debug from 'helpers/debug';
+
+import { loadTafsirs } from 'redux/actions/media';
 
 const styles = require('./style.scss');
 
@@ -168,6 +171,25 @@ class Verse extends Component {
     return false;
   }
 
+  renderTafsirLink() {
+    const { verse } = this.props;
+
+    return (
+      <a
+        tabIndex="-1"
+        className="text-muted"
+        onClick={() => this.props.loadTafsirs(verse)}
+      >
+        <i className="ss-book vertical-align-middle" />
+        {' '}
+        <LocaleFormattedMessage
+          id={'actions.tafsir'}
+          defaultMessage={'Tafsir'}
+        />
+      </a>
+    );
+  }
+
   renderCopyLink() {
     const { isSearched, verse, isPdf } = this.props;
 
@@ -268,6 +290,7 @@ class Verse extends Component {
         {this.renderBadge()}
         {this.renderPlayLink()}
         {this.renderCopyLink()}
+        {this.renderTafsirLink()}
         {this.renderBookmark()}
         {!isPdf && this.renderShare()}
       </div>
@@ -310,6 +333,7 @@ Verse.propTypes = {
   iscurrentVerse: PropTypes.bool,
   currentVerse: PropTypes.string,
   userAgent: PropTypes.object, // eslint-disable-line
+  loadTafsirs: PropTypes.func.isRequired,
   isPdf: PropTypes.bool
 };
 
@@ -319,4 +343,4 @@ Verse.defaultProps = {
   isPdf: false
 };
 
-export default Verse;
+export default connect(() => ({}), { loadTafsirs })(Verse);

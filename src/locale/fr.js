@@ -4,7 +4,7 @@ export default {
     local: 'french',
     'local.siteLocale': 'Langue du Site',
     'local.changeLocal': 'Choisir la langue du site',
-    'local.navtiveName': 'Français',
+    'local.nativeName': 'Français',
     'local.selectLabel': 'Langue',
     'setting.title': 'Paramètres',
     'setting.chapters': 'Sourates',
@@ -77,6 +77,8 @@ export default {
     'nav.mobile': 'Applications Mobile',
     'nav.navigate': 'Naviguer',
     'nav.legacySite': 'Version précédente de Quran.com',
+
+    'juz.index.heading': 'Juz',
 
     'login.message': 'Identifiez-vous sur Quran.com pour enregistrer tous vos favoris, notes et activités. ',
     'error.invalid-surah': "La sourate est hors de portée. Accédez à <a href='/'> page d'accueil </a> et sélectionnez une Sourate",
