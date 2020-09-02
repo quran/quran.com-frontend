@@ -50,9 +50,9 @@ const TopOptions = Loadable({
 });
 
 const title = 'Ayatul Kursi';
-
-const description =
-  'Ayatul Kursi is verse 255 of the second chapter, surah Baqarah of the Holy Quran, Surah al-Baqarah (The Chapter of the Cow).  It is also known as the Throne Verse.';
+const description = 'Ayatul Kursi is verse 255 of the second chapter, ' +
+                    'Surah al-Baqarah (The Chapter of the Cow), in the ' +
+                    'Holy Quran. It is also known as the Throne Verse.';
 
 class AyatulKursi extends Component {
   state = {
@@ -109,7 +109,13 @@ class AyatulKursi extends Component {
   }
 
   renderLines() {
-    const { lines, options, currentVerse, isPlaying, actions } = this.props;
+    const {
+      lines,
+      options,
+      currentVerse,
+      isPlaying,
+      actions
+    } = this.props;
     const keys = Object.keys(lines);
 
     return (
@@ -125,7 +131,11 @@ class AyatulKursi extends Component {
   }
 
   render() {
-    const { chapter, verses, options } = this.props; // eslint-disable-line no-shadow
+    const {
+      chapter,
+      verses,
+      options
+    } = this.props; // eslint-disable-line no-shadow
     debug('component:AyatulKursi', 'Render');
 
     return (
