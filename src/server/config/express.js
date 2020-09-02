@@ -9,7 +9,6 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import httpProxy from 'http-proxy';
 
-import sitemap from './sitemap';
 import support from './support';
 
 const proxyApi = httpProxy.createProxyServer({
@@ -67,11 +66,21 @@ export default (server) => {
   server.use(cors());
 
   // Static content
-  server.use(favicon(path.join((process.env.PWD || process.env.pm_cwd), '/static/favicon.ico')));
-  server.use(express.static(path.join(process.env.PWD || process.env.pm_cwd, '/static')));
-  server.use('/public', express.static(path.join((process.env.PWD || process.env.pm_cwd), '/static/dist')));
+  server.use(
+    favicon(
+      path.join(process.env.PWD || process.env.pm_cwd, '/static/favicon.ico')
+    )
+  );
+  server.use(
+    express.static(path.join(process.env.PWD || process.env.pm_cwd, '/static'))
+  );
+  server.use(
+    '/public',
+    express.static(
+      path.join(process.env.PWD || process.env.pm_cwd, '/static/dist')
+    )
+  );
 
-  sitemap(server);
   support(server);
 
   server.get(/^\/(images|fonts)\/.*/, (req, res) => {

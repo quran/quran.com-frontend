@@ -1,8 +1,8 @@
-let loadeddata = new Event('loadeddata');
-let timeupdate = new Event('timeupdate');
-let ended = new Event('ended');
-let play = new Event('play');
-let pause = new Event('pause');
+const loadeddata = new Event('loadeddata');
+const timeupdate = new Event('timeupdate');
+const ended = new Event('ended');
+const play = new Event('play');
+const pause = new Event('pause');
 
 export default class AudioStub {
   constructor(url, time) {
@@ -27,7 +27,7 @@ export default class AudioStub {
       this.element.state = 'paused';
       this.element.dispatchEvent(pause);
       clearInterval(this.incrementTime());
-    }
+    };
 
     return this.element;
   }
@@ -41,10 +41,10 @@ export default class AudioStub {
         this.element.pause();
         this.element.dispatchEvent(ended);
       }
-    }, 100)
+    }, 100);
   }
 
   paused() {
     return this.element.state === 'paused';
   }
-};
+}
