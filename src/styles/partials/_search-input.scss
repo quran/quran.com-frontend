@@ -1,6 +1,6 @@
 .right-inner-addon.search-input{
-  padding: 0px;
-  margin-bottom: 0px;
+  padding: 0;
+  margin-bottom: 0;
   width: auto;
 
   input{
@@ -28,12 +28,12 @@
     height: 100%;
     text-align: center;
     border: 0;
-    right: 0px;
+    right: 0;
   }
 }
 .right-inner-addon {
   position: relative;
-  margin: 0px auto;
+  margin: 0 auto;
   margin-bottom: 50px;
 
   input{
@@ -68,7 +68,7 @@
 
   i.ss-icon {
     position: absolute;
-    right: 0px;
+    right: 0;
     padding: 15px 15px;
     font-size: 150%;
     background-color: $brand-primary;

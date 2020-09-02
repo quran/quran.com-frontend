@@ -13,7 +13,6 @@
     "test:stylelint": "stylelint './src/**/*.scss' --config ./webpack/.stylelintrc",
     "dev-old": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node ./webpack/webpack-dev-server.js & env NODE_PATH='./src' PORT=8000 node ./bin/server.js",
     "dev": "env NODE_PATH='./src' PORT=8000 UV_THREADPOOL_SIZE=100 node --expose-gc ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config ./webpack/dev.config.js --progress  & env NODE_PATH='./src' PORT=8000 node --expose-gc ./bin/server.js",
-    "start": "NODE_PATH='src' node ./start",
     "build": "npm run build:client & npm run build:server",
     "build:server": "babel ./src -d ./dist -D",
     "build:client": "webpack --config ./webpack/prod.config.js",
@@ -32,6 +31,10 @@
     "*.js": [
       "npm run prettier",
       "npm run lint:fix",
+      "git add"
+    ],
+    "*.scss": [
+      "npm run prettier",
       "git add"
     ]
   },
@@ -104,7 +107,7 @@
     "promise": "7.1.1",
     "proxy-middleware": "0.14.0",
     "qs": "6.2.1",
-    "quran-components": "^0.0.73",
+    "quran-components": "^0.0.78",
     "raven": "1.1.1",
     "raw-loader": "0.5.1",
     "react": "15.4.1",
@@ -139,6 +142,7 @@
     "sitemap": "1.8.1",
     "strip-loader": "0.1.2",
     "style-loader": "0.13.1",
+    "styled-components": "^2.1.0",
     "superagent": "3.3.1",
     "url": "0.11.0",
     "url-loader": "0.5.7",
@@ -184,7 +188,7 @@
     "phantomjs-polyfill": "0.0.1",
     "piping": "0.3.0",
     "pre-commit": "1.1.3",
-    "prettier": "^1.2.2",
+    "prettier": "^1.5.2",
     "react-addons-test-utils": "15.4.1",
     "react-transform-catch-errors": "1.0.0",
     "react-transform-hmr": "1.0.1",
@@ -196,7 +200,7 @@
     "sinon-chai": "2.8.0",
     "stylelint": "7.1.0",
     "stylelint-webpack-plugin": "0.2.0",
-    "webpack-bundle-analyzer": "2.2.1",
+    "webpack-bundle-analyzer": "3.3.2",
     "webpack-dashboard": "^0.4.0",
     "webpack-dev-server": "2.1.0-beta.0",
     "webpack-hot-middleware": "2.12.2"
