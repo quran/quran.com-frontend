@@ -14,7 +14,6 @@ import metricsConfig from 'helpers/metrics';
 import Footer from 'components/Footer';
 import NoScript from 'components/NoScript';
 import { removeMedia } from 'redux/actions/media';
-import { removeFootNote } from 'redux/actions/footNote';
 import Loader from 'quran-components/lib/Loader';
 import authConnect from './connect';
 
@@ -49,6 +48,25 @@ class App extends Component {
     sidebarOpen: false
   };
 
+  renderModalBody() {
+    const { media } = this.props;
+
+    if (media.loading) {
+      return (
+        <div className="embed-responsive embed-responsive-16by9">
+          <Loader isActive relative />
+        </div>
+      );
+    }
+
+    return (
+      <div
+        className={`embed-responsive embed-responsive-16by9 ${media.wrapperClass}`}
+        dangerouslySetInnerHTML={{ __html: media.content.body }}
+      />
+    );
+  }
+
   render() {
     const {
       main,
@@ -56,20 +74,10 @@ class App extends Component {
       footer,
       children,
       media,
-      footNote,
-      loadingFootNote,
       removeMedia, // eslint-disable-line no-shadow
-      removeFootNote, // eslint-disable-line no-shadow
       ...props
     } = this.props;
     debug('component:APPLICATION', 'Render');
-    let footNoteText;
-
-    if (footNote) {
-      footNoteText = footNote.text;
-    } else {
-      footNoteText = <Loader isActive={loadingFootNote} />;
-    }
 
     return (
       <div>
@@ -101,41 +109,15 @@ class App extends Component {
         <SmartBanner title="The Noble Quran - القرآن الكريم" button="Install" />
         {footer || <Footer />}
         {__CLIENT__ &&
-          <Modal
-            bsSize="large"
-            show={media && media.content}
-            onHide={removeMedia}
-          >
+          media.show &&
+          <Modal bsSize={media.size} show={media.show} onHide={removeMedia}>
             <ModalHeader closeButton>
               <ModalTitle className="montserrat">
-                {media.content && media.content.authorName}
+                {media.content.title}
               </ModalTitle>
             </ModalHeader>
             <ModalBody>
-              <div
-                className="embed-responsive embed-responsive-16by9"
-                dangerouslySetInnerHTML={{
-                  __html: media.content && media.content.embedText
-                }}
-              />
-            </ModalBody>
-          </Modal>}
-        {__CLIENT__ &&
-          <Modal
-            bsSize="large"
-            show={!!footNote || loadingFootNote}
-            onHide={removeFootNote}
-          >
-            <ModalHeader closeButton>
-              <ModalTitle className="montserrat">
-                Foot note
-              </ModalTitle>
-            </ModalHeader>
-            <ModalBody>
-              <div
-                className={`${footNote && footNote.languageName}`}
-                dangerouslySetInnerHTML={{ __html: footNoteText }}
-              />
+              {this.renderModalBody()}
             </ModalBody>
           </Modal>}
       </div>
@@ -149,7 +131,6 @@ const AsyncApp = asyncConnect([{ promise: authConnect }])(metricsApp);
 App.propTypes = {
   media: customPropTypes.media.isRequired,
   removeMedia: PropTypes.func.isRequired,
-  removeFootNote: PropTypes.func.isRequired,
   children: PropTypes.element,
   main: PropTypes.element,
   nav: PropTypes.element,
@@ -161,9 +142,7 @@ App.propTypes = {
 
 export default connect(
   state => ({
-    media: state.media,
-    footNote: state.footNote.footNote,
-    loadingFootNote: state.footNote.loadingFootNote
+    media: state.media
   }),
-  { removeMedia, removeFootNote }
+  { removeMedia }
 )(AsyncApp);

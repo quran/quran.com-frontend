@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import * as customPropTypes from 'customPropTypes';
 import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+import Icon from 'quran-components/lib/Icon';
 
-const style = require('./style.scss');
+const styles = require('./styles.scss');
 
-class FontSizeDropdown extends Component {
-
+class FontSizeOptions extends Component {
   handleOptionSelected = (type, direction) => {
     const { onOptionChange, fontSize } = this.props;
     const changeFactor = {
@@ -16,16 +16,27 @@ class FontSizeDropdown extends Component {
     return onOptionChange({
       fontSize: {
         ...fontSize,
-        [type]: fontSize[type] + (changeFactor[type] * direction)
+        [type]: fontSize[type] + changeFactor[type] * direction
       }
     });
-  }
+  };
 
-  renderPopup() {
+  resetFontSize = () => {
+    const { onOptionChange } = this.props;
+
+    return onOptionChange({
+      fontSize: {
+        arabic: 3.5,
+        translation: 2
+      }
+    });
+  };
+
+  renderOptions() {
     return (
       <div>
-        <ul className={style.list}>
-          <li className={`text-center ${style.item}`}>
+        <ul className={styles.list}>
+          <li className={`text-center ${styles.item}`}>
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('arabic', -1)}
@@ -34,10 +45,13 @@ class FontSizeDropdown extends Component {
               <i className="ss-icon ss-hyphen" />
             </a>
           </li>
-          <li className={`text-center ${style.item}`}>
-            <LocaleFormattedMessage id="setting.fontSize.arabic" defaultMessage="Arabic" />
+          <li className={`text-center ${styles.item}`}>
+            <LocaleFormattedMessage
+              id="setting.fontSize.arabic"
+              defaultMessage="Arabic"
+            />
           </li>
-          <li className={`text-center ${style.item}`}>
+          <li className={`text-center ${styles.item}`}>
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('arabic', 1)}
@@ -48,8 +62,8 @@ class FontSizeDropdown extends Component {
           </li>
         </ul>
         <br />
-        <ul className={style.list}>
-          <li className={`text-center ${style.item}`}>
+        <ul className={styles.list}>
+          <li className={`text-center ${styles.item}`}>
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('translation', -1)}
@@ -58,10 +72,13 @@ class FontSizeDropdown extends Component {
               <i className="ss-icon ss-hyphen" />
             </a>
           </li>
-          <li className={`text-center ${style.item}`}>
-            <LocaleFormattedMessage id="setting.translations.title" defaultMessage="Translations" />
+          <li className={`text-center ${styles.item}`}>
+            <LocaleFormattedMessage
+              id="setting.translations.title"
+              defaultMessage="Translations"
+            />
           </li>
-          <li className={`text-center ${style.item}`}>
+          <li className={`text-center ${styles.item}`}>
             <a
               tabIndex="-1"
               onClick={() => this.handleOptionSelected('translation', 1)}
@@ -75,18 +92,36 @@ class FontSizeDropdown extends Component {
     );
   }
 
+  renderTitle() {
+    return (
+      <div className={styles.title}>
+        <LocaleFormattedMessage
+          id="setting.fontSize"
+          defaultMessage="Font Size"
+        />
+        <Icon
+          type="refresh"
+          className={`text-right ${styles.reset}`}
+          onClick={this.resetFontSize}
+        />
+      </div>
+    );
+  }
   render() {
     return (
-      <li className={style.link}>
-        {this.renderPopup()}
-      </li>
+      <div>
+        {this.renderTitle()}
+        <li className={styles.link}>
+          {this.renderOptions()}
+        </li>
+      </div>
     );
   }
 }
 
-FontSizeDropdown.propTypes = {
+FontSizeOptions.propTypes = {
   onOptionChange: PropTypes.func,
   fontSize: customPropTypes.fontSize.isRequired
 };
 
-export default FontSizeDropdown;
+export default FontSizeOptions;

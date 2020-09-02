@@ -31,7 +31,7 @@ import * as MediaActions from 'redux/actions/media.js';
 
 import { chaptersConnect, chapterInfoConnect, versesConnect } from './connect';
 
-const LoaderStyle = { width: '10em', height: '10em' };
+const LoaderStyle = {};
 
 const style = require('./style.scss');
 
@@ -79,34 +79,34 @@ class Surah extends Component {
     return false;
   }
 
-  componentDidMount() {
-    const { verses, options: { audio } } = this.props;
+  // componentDidMount() {
+  //   const { verses, options: { audio } } = this.props;
 
-    Object.values(verses).forEach((verse) => {
-      this.props.actions.audio.load({
-        chapterId: verse.chapterId,
-        verseId: verse.id,
-        verseKey: verse.verseKey,
-        audio
-      });
-    });
-  }
+  //   Object.values(verses).forEach((verse) => {
+  //     this.props.actions.audio.load({
+  //       chapterId: verse.chapterId,
+  //       verseId: verse.id,
+  //       verseKey: verse.verseKey,
+  //       audio
+  //     });
+  //   });
+  // }
 
-  // TODO: Should this belong here?
-  componentWillReceiveProps(nextProps) {
-    if (this.props.options.audio !== nextProps.options.audio) {
-      const { verses, options: { audio } } = nextProps;
+  // // TODO: Should this belong here?
+  // componentWillReceiveProps(nextProps) {
+  //   if (this.props.options.audio !== nextProps.options.audio) {
+  //     const { verses, options: { audio } } = nextProps;
 
-      Object.values(verses).forEach((verse) => {
-        this.props.actions.audio.load({
-          chapterId: verse.chapterId,
-          verseId: verse.id,
-          verseKey: verse.verseKey,
-          audio
-        });
-      });
-    }
-  }
+  //     Object.values(verses).forEach((verse) => {
+  //       this.props.actions.audio.load({
+  //         chapterId: verse.chapterId,
+  //         verseId: verse.id,
+  //         verseKey: verse.verseKey,
+  //         audio
+  //       });
+  //     });
+  //   }
+  // }
 
   shouldComponentUpdate(nextProps, nextState) {
     const conditions = [
@@ -178,6 +178,18 @@ class Surah extends Component {
     return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`;
   }
 
+  // Generates the url for the open graph image
+  ogImage() {
+    const { params, chapter } = this.props;
+    const hasAyahNumber = params.range && !isNaN(params.range);
+
+    if (hasAyahNumber) {
+      return `https://quran-og-image.vercel.app/${chapter.chapterNumber}/${params.range}`;
+    }
+
+    return `https://quran-og-image.vercel.app/${chapter.chapterNumber}`;
+  }
+
   description() {
     const { params, verses, chapter, info } = this.props;
 
@@ -228,7 +240,9 @@ class Surah extends Component {
       </div>
     );
 
-    return isLoading ? <Loader isActive style={LoaderStyle} /> : noAyah;
+    return isLoading
+      ? <Loader isActive relative style={LoaderStyle} />
+      : noAyah;
   }
 
   renderPagination() {
@@ -237,7 +251,8 @@ class Surah extends Component {
       isLoading,
       isEndOfSurah,
       chapter,
-      options
+      options,
+      actions
     } = this.props;
     const translations = (options.translations || []).join(',');
 
@@ -246,7 +261,6 @@ class Surah extends Component {
       const to = this.getFirst() + 10 > chapter.versesCount
         ? chapter.versesCount
         : this.getFirst() + 10;
-
       return (
         <ul className="pager">
           <li className="text-center">
@@ -285,6 +299,10 @@ class Surah extends Component {
             <li className="text-center">
               <Link
                 to={`/${chapter.chapterNumber}?translations=${translations}`}
+                onClick={() =>
+                  actions.verse.setCurrentVerse(
+                    `${chapter.chapterNumber}:${this.getFirst()}`
+                  )}
               >
                 <LocaleFormattedMessage
                   id="chapter.goToBeginning"
@@ -306,7 +324,9 @@ class Surah extends Component {
               </li>}
           </ul>
         }
-        loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
+        loadingComponent={
+          <Loader isActive={isLoading} relative style={LoaderStyle} />
+        }
       />
     );
   }
@@ -360,7 +380,14 @@ class Surah extends Component {
   }
 
   render() {
-    const { chapter, verses, options, info, actions } = this.props; // eslint-disable-line no-shadow
+    const {
+      chapter,
+      verses,
+      options,
+      info,
+      actions,
+      currentVerse
+    } = this.props; // eslint-disable-line no-shadow
     debug('component:Surah', 'Render');
 
     if (!this.hasVerses()) {
@@ -376,7 +403,8 @@ class Surah extends Component {
         <Helmet
           {...makeHeadTags({
             title: this.title(),
-            description: this.description()
+            description: this.description(),
+            image: this.ogImage()
           })}
           script={[
             {
@@ -430,7 +458,8 @@ class Surah extends Component {
         {__CLIENT__ &&
           <Audioplayer
             chapter={chapter}
-            startVerse={Object.values(verses)[0]}
+            verses={verses}
+            currentVerse={verses[currentVerse]}
             onLoadAyahs={this.handleLazyLoadAyahs}
           />}
       </div>
