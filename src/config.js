@@ -40,14 +40,16 @@ const config = {
         { name: 'description', content: description },
         {
           name: 'keywords',
-          content: "quran, koran, qur'an, kareem, قران, القرآن, قران كريم, القران الكريم, surah, yasin, yaseen, kahf, mulk, rahman, muslim, islam, Allah"
+          content:
+            "quran, koran, qur'an, kareem, قران, القرآن, قران كريم, القران الكريم, surah, yasin, yaseen, kahf, mulk, rahman, muslim, islam, Allah"
         }, // eslint-disable-line max-l en
         { name: 'Charset', content: 'UTF-8' },
         { name: 'Distribution', content: 'Global' },
         { name: 'Rating', content: 'General' },
         {
           name: 'viewport',
-          content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+          content:
+            'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
         },
         {
           name: 'google-site-verification',
@@ -62,17 +64,16 @@ const config = {
         { property: 'og:locale', content: 'en_US' },
         { property: 'og:title', content: title },
         { property: 'og:description', content: description },
-        { property: 'og:url', content: 'https://quran.com' },
+
         { property: 'og:type', content: 'website' },
-        { name: 'twitter:card', content: 'summary' },
+        { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: title },
         { name: 'twitter:description', content: description },
         {
           name: 'twitter:image',
           content: 'https://quran.com/images/thumbnail.png'
         },
-        { name: 'twitter:image:width', content: '200' },
-        { name: 'twitter:image:height', content: '200' },
+
         {
           name: 'google-play-app',
           content: 'app-id=com.quran.labs.androidquran'
@@ -198,7 +199,8 @@ const config = {
       /* SEO: https://developers.google.com/structured-data/site-name#markup_requirements */
       script: [
         {
-          src: 'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en',
+          src:
+            'https://cdn.polyfill.io/v2/polyfill.min.js?features=Intl.~locale.en',
           async: '',
           defer: ''
         },

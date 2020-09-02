@@ -80,7 +80,10 @@ class Surah extends Component {
   }
 
   componentDidMount() {
-    const { verses, options: { audio } } = this.props;
+    const {
+      verses,
+      options: { audio }
+    } = this.props;
 
     Object.values(verses).forEach((verse) => {
       this.props.actions.audio.load({
@@ -95,7 +98,10 @@ class Surah extends Component {
   // TODO: Should this belong here?
   componentWillReceiveProps(nextProps) {
     if (this.props.options.audio !== nextProps.options.audio) {
-      const { verses, options: { audio } } = nextProps;
+      const {
+        verses,
+        options: { audio }
+      } = nextProps;
 
       Object.values(verses).forEach((verse) => {
         this.props.actions.audio.load({
@@ -178,6 +184,18 @@ class Surah extends Component {
     return `Surah ${chapter.nameSimple} [${chapter.chapterNumber}]`;
   }
 
+  // Generates the url for the open graph image
+  ogImage() {
+    const { params, chapter } = this.props;
+    const hasAyahNumber = params.range && !isNaN(params.range);
+
+    if (hasAyahNumber) {
+      return `https://quran-og-image.vercel.app/${chapter.chapterNumber}/${params.range}`;
+    }
+
+    return `https://quran-og-image.vercel.app/${chapter.chapterNumber}`;
+  }
+
   description() {
     const { params, verses, chapter, info } = this.props;
 
@@ -211,7 +229,11 @@ class Surah extends Component {
       return `Surat ${chapter.nameSimple} [verse ${params.range}]`;
     }
 
-    return `${info ? info.shortText : ''} This Surah has ${chapter.versesCount} verses and resides between pages ${chapter.pages[0]} to ${chapter.pages[1]} in the Quran.`; // eslint-disable-line max-len
+    return `${info ? info.shortText : ''} This Surah has ${
+      chapter.versesCount
+    } verses and resides between pages ${chapter.pages[0]} to ${
+      chapter.pages[1]
+    } in the Quran.`; // eslint-disable-line max-len
   }
 
   renderNoAyah() {
@@ -243,15 +265,18 @@ class Surah extends Component {
 
     // If single verse, eh. /2/30
     if (isSingleAyah) {
-      const to = this.getFirst() + 10 > chapter.versesCount
-        ? chapter.versesCount
-        : this.getFirst() + 10;
+      const to =
+        this.getFirst() + 10 > chapter.versesCount
+          ? chapter.versesCount
+          : this.getFirst() + 10;
 
       return (
         <ul className="pager">
           <li className="text-center">
             <Link
-              to={`/${chapter.chapterNumber}/${this.getFirst()}-${to}?translations=${translations}`}
+              to={`/${
+                chapter.chapterNumber
+              }/${this.getFirst()}-${to}?translations=${translations}`}
             >
               <LocaleFormattedMessage
                 id="chapter.index.continue"
@@ -270,10 +295,11 @@ class Surah extends Component {
         isLoading={isLoading}
         endComponent={
           <ul className="pager">
-            {chapter.chapterNumber > 1 &&
+            {chapter.chapterNumber > 1 && (
               <li className="previous">
                 <Link
-                  to={`/${chapter.chapterNumber * 1 - 1}?translations=${translations}`}
+                  to={`/${chapter.chapterNumber * 1 -
+                    1}?translations=${translations}`}
                 >
                   ←
                   <LocaleFormattedMessage
@@ -281,7 +307,8 @@ class Surah extends Component {
                     defaultMessage="Previous Surah"
                   />
                 </Link>
-              </li>}
+              </li>
+            )}
             <li className="text-center">
               <Link
                 to={`/${chapter.chapterNumber}?translations=${translations}`}
@@ -292,10 +319,11 @@ class Surah extends Component {
                 />
               </Link>
             </li>
-            {chapter.chapterNumber < 114 &&
+            {chapter.chapterNumber < 114 && (
               <li className="next">
                 <Link
-                  to={`/${chapter.chapterNumber * 1 + 1}?translations=${translations}`}
+                  to={`/${chapter.chapterNumber * 1 +
+                    1}?translations=${translations}`}
                 >
                   <LocaleFormattedMessage
                     id="chapter.next"
@@ -303,7 +331,8 @@ class Surah extends Component {
                   />
                   →
                 </Link>
-              </li>}
+              </li>
+            )}
           </ul>
         }
         loadingComponent={<Loader isActive={isLoading} style={LoaderStyle} />}
@@ -376,7 +405,8 @@ class Surah extends Component {
         <Helmet
           {...makeHeadTags({
             title: this.title(),
-            description: this.description()
+            description: this.description(),
+            image: this.ogImage()
           })}
           script={[
             {
@@ -427,12 +457,13 @@ class Surah extends Component {
             </div>
           </div>
         </div>
-        {__CLIENT__ &&
+        {__CLIENT__ && (
           <Audioplayer
             chapter={chapter}
             startVerse={Object.values(verses)[0]}
             onLoadAyahs={this.handleLazyLoadAyahs}
-          />}
+          />
+        )}
       </div>
     );
   }
