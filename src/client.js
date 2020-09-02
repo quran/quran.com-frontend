@@ -10,10 +10,12 @@ import useScroll from 'react-router-scroll';
 import { ReduxAsyncConnect } from 'redux-connect';
 import { syncHistoryWithStore } from 'react-router-redux';
 import { AppContainer } from 'react-hot-loader';
+import { ThemeProvider } from 'styled-components';
 
 import debug from 'debug';
 
 import config from './config';
+import theme from './theme';
 import ApiClient from './helpers/ApiClient';
 import createStore from './redux/create';
 import routes from './routes';
@@ -47,16 +49,18 @@ match(
   { history, routes: routes(store) },
   (error, redirectLocation, renderProps) => {
     const component = (
-      <Router
-        {...renderProps}
-        render={props => (
-          <ReduxAsyncConnect
-            {...props}
-            helpers={{ client }}
-            render={applyRouterMiddleware(useScroll())}
-          />
-        )}
-      />
+      <ThemeProvider theme={theme}>
+        <Router
+          {...renderProps}
+          render={props => (
+            <ReduxAsyncConnect
+              {...props}
+              helpers={{ client }}
+              render={applyRouterMiddleware(useScroll())}
+            />
+          )}
+        />
+      </ThemeProvider>
     );
 
     const mountNode = document.getElementById('app');

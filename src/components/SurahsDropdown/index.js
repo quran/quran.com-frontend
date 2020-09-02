@@ -9,14 +9,18 @@ const styles = require('./style.scss');
 
 class SurahsDropdown extends Component {
   shouldComponentUpdate(nextProps) {
-    return this.props.chapters !== nextProps.chapters;
+    return this.props.chapter.chapterNumber !== nextProps.chapter.chapterNumber;
   }
 
   renderList() {
     const { chapters } = this.props;
 
     return Object.values(chapters).map((chapter, index) => (
-      <LinkContainer to={`/${chapter.chapterNumber}`} activeClass="active" key={`chapter-${index}`}>
+      <LinkContainer
+        to={`/${chapter.chapterNumber}`}
+        activeClass="active"
+        key={`chapter-${index}`}
+      >
         <MenuItem>
           <div className="row">
             <div className="col-xs-2 col-md-2">
@@ -27,9 +31,13 @@ class SurahsDropdown extends Component {
             <div className="col-xs-7 col-md-7">
               <span className="suran-name">{chapter.nameSimple}</span>
               <br />
-              <span className="chapter-meaning">{chapter.translatedName.name}</span>
+              <span className="chapter-meaning">
+                {chapter.translatedName.name}
+              </span>
             </div>
-            <div className={`col-xs-3  col-md-3 text-right ${styles.arabicName}`}>
+            <div
+              className={`col-xs-3  col-md-3 text-right ${styles.arabicName}`}
+            >
               {chapter.nameArabic}
             </div>
           </div>
@@ -46,7 +54,13 @@ class SurahsDropdown extends Component {
         link
         className={styles.dropdown}
         id="chapters-dropdown"
-        title={chapter.nameSimple || <LocaleFormattedMessage id="setting.chapters" defaultMessage="Surahs" />}
+        title={
+          chapter.nameSimple ||
+            <LocaleFormattedMessage
+              id="setting.chapters"
+              defaultMessage="Surahs"
+            />
+        }
       >
         {this.renderList()}
       </NavDropdown>
@@ -56,7 +70,7 @@ class SurahsDropdown extends Component {
 
 SurahsDropdown.propTypes = {
   chapters: customPropTypes.chapters.isRequired,
-  chapter: customPropTypes.chapters.isRequired,
+  chapter: customPropTypes.chapters.isRequired
 };
 
 export default SurahsDropdown;

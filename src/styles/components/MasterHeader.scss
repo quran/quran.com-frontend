@@ -1,9 +1,9 @@
-$content-padding: 10px 15px 5px 15px !important;
-$label-padding: 5px 20px;
+$content-padding: 10 15px 5px 15px !important;
+$label-padding: 5px 20;
 nav.navbar.surah{
   background-color: $beige;
   width: 100%;
-  right: 0px;
+  right: 0;
   left: inherit;
   transition: top 0.5s;
 
@@ -34,7 +34,7 @@ nav.navbar.surah{
 
     a{
       height: 100%;
-      padding: 10px 0px;
+      padding: 10 0;
       display: block;
       color: #fff;
 
@@ -49,14 +49,14 @@ nav.navbar.surah{
 
   .options{
     .col-xs-10{
-      padding: 0px;
+      padding: 0;
     }
     ul{
-      padding: 0px;
+      padding: 0;
       width: 100%;
       text-align: center;
       height: 100%;
-      margin: 0px;
+      margin: 0;
       li{
         width: 25%;
         padding: 0 1.5%;
