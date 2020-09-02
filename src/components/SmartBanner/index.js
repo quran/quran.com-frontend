@@ -5,7 +5,6 @@ import useragent from 'express-useragent';
 import cookie from 'react-cookie';
 
 class SmartBanner extends Component {
-
   state = {
     settings: {},
     deviceType: '',
@@ -30,7 +29,10 @@ class SmartBanner extends Component {
       (agent.isChrome ? osVersion < 44 : true)
     ) {
       deviceType = 'android';
-    } else if ((agent.isiPad || agent.isiPhone) && (agent.isSafari ? osVersion < 6 : true)) {
+    } else if (
+      (agent.isiPad || agent.isiPhone) &&
+      (agent.isSafari ? osVersion < 6 : true)
+    ) {
       deviceType = 'ios';
     }
 
@@ -46,13 +48,12 @@ class SmartBanner extends Component {
         icon: 'app-banner-ios.jpg',
         appMeta: 'apple-itunes-app',
         getStoreLink: () =>
-          `https://itunes.apple.com/${this.props.appStoreLanguage}/app/id`,
+          `https://itunes.apple.com/${this.props.appStoreLanguage}/app/id`
       },
       android: {
         icon: 'app-banner-android.png',
         appMeta: 'google-play-app',
-        getStoreLink: () =>
-          'http://play.google.com/store/apps/details?id=',
+        getStoreLink: () => 'http://play.google.com/store/apps/details?id='
       }
     };
 
@@ -67,36 +68,40 @@ class SmartBanner extends Component {
   parseAppId = (metaName) => {
     const meta = window.document.querySelector(`meta[name="${metaName}"]`);
     return /app-id=([^\s,]+)/.exec(meta.getAttribute('content'))[1];
-  }
+  };
 
   hide = () => {
     window.document.querySelector('html').classList.remove('smartbanner-show');
-  }
+  };
 
   show = () => {
     window.document.querySelector('html').classList.add('smartbanner-show');
-  }
+  };
 
   close() {
     this.hide();
 
     let expireDate = new Date();
-    expireDate = new Date(expireDate.setDate(expireDate.getDate() + this.props.daysHidden));
+    expireDate = new Date(
+      expireDate.setDate(expireDate.getDate() + this.props.daysHidden)
+    );
 
     cookie.save('smartbanner-closed', 'true', {
       path: '/',
-      expires: expireDate,
+      expires: expireDate
     });
   }
 
   install() {
     let expireDate = new Date();
-    expireDate = new Date(expireDate.setDate(expireDate.getDate() + this.props.daysReminder));
+    expireDate = new Date(
+      expireDate.setDate(expireDate.getDate() + this.props.daysReminder)
+    );
 
     this.hide();
     cookie.save('smartbanner-installed', 'true', {
       path: '/',
-      expires: expireDate,
+      expires: expireDate
     });
   }
 
@@ -109,10 +114,9 @@ class SmartBanner extends Component {
     return {
       icon,
       link,
-      inStore,
+      inStore
     };
   }
-
 
   render() {
     // Don't show banner when:
@@ -121,10 +125,12 @@ class SmartBanner extends Component {
     // 3) user dismissed banner,
     // 4) or we have no app id in meta
 
-    if (!this.state.deviceType
-      || window.navigator.standalone
-      || cookie.load('smartbanner-closed')
-      || cookie.load('smartbanner-installed')) {
+    if (
+      !this.state.deviceType ||
+      window.navigator.standalone ||
+      cookie.load('smartbanner-closed') ||
+      cookie.load('smartbanner-installed')
+    ) {
       return null;
     }
 
@@ -137,7 +143,7 @@ class SmartBanner extends Component {
     const { icon, link, inStore } = this.retrieveInfo();
     const wrapperClassName = `smartbanner smartbanner-${this.state.deviceType}`;
     const iconStyle = {
-      backgroundImage: `url(${icon})`,
+      backgroundImage: `url(${icon})`
     };
 
     return (
@@ -158,7 +164,12 @@ class SmartBanner extends Component {
             <span>{inStore}</span>
           </div>
 
-          <a href={link} onClick={() => this.install()} className="smartbanner-button" data-metrics-event-name="SmartBanner:InstallAapp">
+          <a
+            href={link}
+            onClick={() => this.install()}
+            className="smartbanner-button"
+            data-metrics-event-name="SmartBanner:InstallAapp"
+          >
             <span className="smartbanner-button-text">{this.props.button}</span>
           </a>
         </div>
@@ -176,7 +187,7 @@ SmartBanner.propTypes = {
   price: customPropTypes.storeText,
   force: PropTypes.string,
   title: PropTypes.string,
-  author: PropTypes.string,
+  author: PropTypes.string
 };
 
 SmartBanner.defaultProps = {
@@ -188,17 +199,17 @@ SmartBanner.defaultProps = {
     ios: 'On the App Store',
     android: 'In Google Play',
     windows: 'In Windows Store',
-    kindle: 'In the Amazon Appstore',
+    kindle: 'In the Amazon Appstore'
   },
   price: {
     ios: 'Free',
     android: 'Free',
     windows: 'Free',
-    kindle: 'Free',
+    kindle: 'Free'
   },
   force: '',
   title: '',
-  author: '',
+  author: ''
 };
 
 export default SmartBanner;

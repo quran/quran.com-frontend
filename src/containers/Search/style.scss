@@ -3,7 +3,7 @@
 .header{
   background-color: #E7E6E6;
   min-height: 50px;
-  padding: 15px 0px;
+  padding: 15px 0;
   color: #414141;
   font-weight: 400;
 
@@ -12,7 +12,7 @@
   }
 
   :global(.pagination){
-    margin: 0px;
+    margin: 0;
 
     & > li:first-child > a,
     & > li:last-child > a {

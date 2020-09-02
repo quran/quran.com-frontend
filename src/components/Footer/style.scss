@@ -1,7 +1,7 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
 .footer{
   background-color: #32312C;
-  padding: 3% 0% 5% 0%;
+  padding: 3% 0 5% 0;
   font-size: 14px;
   margin-top: 50px;
 
@@ -15,7 +15,7 @@
     }
 
     .list{
-      padding-left: 0px;
+      padding-left: 0;
       :global(li){
         list-style: none;
         padding: 5px 0;
@@ -39,7 +39,7 @@
   @media(max-width: $screen-sm){
     padding-bottom: 9%;
   }
-  
+
   :global(a){
     -webkit-transition: color .15s ease-in-out;
     -moz-transition: color .15s ease-in-out;
