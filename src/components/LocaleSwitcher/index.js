@@ -2,21 +2,27 @@
 import React, { PropTypes, Component } from 'react';
 import cookie from 'react-cookie';
 import NavDropdown from 'react-bootstrap/lib/NavDropdown';
-import MenuItem from 'react-bootstrap/lib/MenuItem';
+import Menu, { MenuItem } from 'quran-components/lib/Menu';
+
+import Icon from 'quran-components/lib/Icon';
+import LocaleFormattedMessage from 'components/LocaleFormattedMessage';
+
 import config from '../../config';
 
 const { locales, defaultLocale } = config;
 
 class LocaleSwitcher extends Component {
-
   state = {
-    currentLocale: defaultLocale,
+    currentLocale: defaultLocale
   };
 
   componentDidMount() {
     if (__CLIENT__) {
       // TODO: This should be passed in as a prop!
-      this.setState({ currentLocale: cookie.load('currentLocale') || defaultLocale }); // eslint-disable-line
+      // eslint-disable-next-line
+      this.setState({
+        currentLocale: cookie.load('currentLocale') || defaultLocale
+      });
     }
   }
 
@@ -29,7 +35,7 @@ class LocaleSwitcher extends Component {
 
     cookie.save('currentLocale', locale, {
       path: '/',
-      expires: new Date(expireDate),
+      expires: new Date(expireDate)
     });
 
     window.location.reload();
@@ -50,7 +56,7 @@ class LocaleSwitcher extends Component {
     ));
   }
 
-  render() {
+  renderAsDropdown() {
     const { className } = this.props;
 
     return (
@@ -64,10 +70,43 @@ class LocaleSwitcher extends Component {
       </NavDropdown>
     );
   }
+
+  renderAsMenu() {
+    return (
+      <MenuItem
+        icon={<Icon type="globe" />}
+        menu={
+          <Menu>
+            {this.renderList()}
+          </Menu>
+        }
+      >
+        <LocaleFormattedMessage
+          id="local.siteLocale"
+          defaultMessage="Site Language"
+        />
+      </MenuItem>
+    );
+  }
+
+  render() {
+    const { renderAs } = this.props;
+
+    if (renderAs === 'dropdown') {
+      return this.renderAsDropdown();
+    }
+
+    return this.renderAsMenu();
+  }
 }
 
 LocaleSwitcher.propTypes = {
-  className: PropTypes.string
+  className: PropTypes.string,
+  renderAs: PropTypes.string
+};
+
+LocaleSwitcher.defaultProps = {
+  renderAs: 'dropdown'
 };
 
 export default LocaleSwitcher;
