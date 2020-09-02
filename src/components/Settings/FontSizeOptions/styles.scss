@@ -1,9 +1,9 @@
-@import '../../styles/variables.scss';
+@import '../../../styles/variables.scss';
 
 .list{
   display: table;
   width: 100%;
-  padding: 15px 0px;
+  padding: 15px 0;
 }
 
 .item{
@@ -17,4 +17,13 @@
   display: block;
   cursor: pointer;
   color: #777;
+}
+
+.title{
+  padding: 10px 15px;
+}
+
+.reset{
+  float: right;
+  cursor: pointer;
 }

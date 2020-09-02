@@ -4,9 +4,9 @@ $transition-speed: 0.75s;
 .container{
   overflow-y: auto;
   margin-bottom: 30px;
-  height: 0px;
-  max-height: 0px;
-  min-height: 0px;
+  height: 0;
+  max-height: 0;
+  min-height: 0;
   transition: max-height $transition-speed, height $transition-speed;
   margin-top: -20px; // To account for the .surah-container padding.
 
