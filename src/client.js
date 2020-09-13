@@ -55,7 +55,7 @@ match(
             helpers={{ client }}
             render={applyRouterMiddleware(useScroll())}
           />
-        )}
+          )}
       />
     );
 
