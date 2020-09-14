@@ -66,7 +66,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe>`
             })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
             ga('create', 'UA-8496014-1', 'auto');
-            ga('require', 'GTM-PNMFTW3');
+            ga('require', 'GTM-M3VQW9V');
             `
           }}
           charSet="UTF-8"
