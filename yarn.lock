@@ -7689,9 +7689,9 @@ querystringify@0.0.x:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/querystringify/-/querystringify-0.0.4.tgz#0cf7f84f9463ff0ae51c4c4b142d95be37724d9c"
 
-quran-components@^0.0.69:
-  version "0.0.69"
-  resolved "https://registry.yarnpkg.com/quran-components/-/quran-components-0.0.69.tgz#d53052355319097ecb91024bd943ef7837fc8860"
+quran-components@^0.0.73:
+  version "0.0.73"
+  resolved "https://registry.yarnpkg.com/quran-components/-/quran-components-0.0.73.tgz#310a51ba9fa9411721b950c8f1bcb422332e24f2"
   dependencies:
     react-icons "^2.2.3"
     react-tether "^0.5.6"
@@ -9766,8 +9766,8 @@ undefsafe@0.0.3:
   resolved "https://registry.yarnpkg.com/undefsafe/-/undefsafe-0.0.3.tgz#ecca3a03e56b9af17385baac812ac83b994a962f"
 
 underscore@^1.7.0:
-  version "1.8.3"
-  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.8.3.tgz#4f3fb53b106e6097fcf9cb4109f2a5e9bdfa5022"
+  version "1.13.1"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.1.tgz#0c1c6bd2df54b6b69f2314066d65b6cde6fcf9d1"
 
 uniq@^1.0.1:
   version "1.0.1"
